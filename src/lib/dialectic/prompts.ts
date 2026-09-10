@@ -50,6 +50,7 @@ export function buildTurnInstruction({ kind, prevName, nextName, isFinalSeat, lo
       `OPENING TURN (max ~${b.opening} words). Answer the question directly in your own framework.`,
       'Do not refer to any other thinker; there is no predecessor yet.',
       'Follow your characteristic movement.',
+      'Write at length in your own diction and rhythm — continuous prose, no headings — the word budget is for development, not padding.',
       nextName
         ? `End by handing ${nextName} a contradiction to negate, by name.`
         : 'End by stating the contradiction the next seat must address.',
@@ -77,6 +78,7 @@ export function buildTurnInstruction({ kind, prevName, nextName, isFinalSeat, lo
     reformulationLine,
     handoffLine,
     'Hegel/Marx method: negation must be determinate (preserve-and-elevate), never mere dismissal. Add something new; do not restate PREV or yourself.',
+    'VOICE: write continuous prose in your own diction, syntax and rhythm (your STYLE ESSENCE governs the sentence) — no headings, no labels, no numbered parts. The dialectical movement (negation of PREV, incorporation of what holds, reformulation, contradiction handed on) must be audible in the argument itself, never announced. Never open with a generic verdict on PREV ("errs", "fails to see", "is mistaken", "overlooks") — begin from the concrete object and criticise with your own toolkit\'s verbs.',
   ].join(' ');
 }
 

@@ -92,14 +92,22 @@ The drag-drop → toggle change left `App.tsx` broken.
 
 ## Phase 2 — Gemini + dialectical engine (replaces `makeMockIntervention`)
 
-**2a Settings** — `src/lib/settings.ts` (localStorage): `geminiApiKey`, `model`
-(`gemini-2.5-flash` default / `gemini-2.5-pro`), `intensity`, `longForm`.
+**2a Settings** — `src/lib/settings.ts` (localStorage): provider
+(`gemini` direct / `openrouter` free cycle), `geminiApiKey`, `openRouterApiKey`,
+`model` (`gemini-3.6-flash` quality default / `gemini-3.5-flash-lite` max-free-tier),
+`intensity`, `longForm`. Settings drawer: provider radio, key input
+(password-style) per provider, Test key, Clear, privacy statement (OpenRouter
+free models may log prompts for training), link to Google AI Studio / openrouter.ai/keys.
 Settings drawer: key input (password-style), Test key, Clear, privacy statement,
 link to Google AI Studio. No key → Begin disabled with explanation.
 
 **2b Client** — `src/lib/gemini.ts`: `fetch` to `generateContent` with
-`responseMimeType: 'application/json'` + `responseSchema`; one retry on 429/5xx;
-errors surfaced in UI. No SDK.
+`responseMimeType: 'application/json'` + `responseSchema` + `thinkingLevel: 'low'`;
+one retry on 429/5xx; errors surfaced in UI with machine-readable codes. No SDK.
+`src/lib/openrouter.ts`: OpenAI-compatible `chat/completions` with
+`response_format: json_object`, cycling an ordered free-model list (per-model
+quotas spread a session); unusable models are skipped mid-run, last-good is
+remembered. Quota halt shows a recovery panel (resume / switch provider / usage link).
 
 **2c Three turn types** — `src/lib/dialectic/prompts.ts`
 
@@ -136,7 +144,8 @@ Stored as `Intervention.sections`; `response_text` kept as a joined string.
 pause flag checked between turns; "X is thinking…" state.
 
 ## Phase 3 — Export rewrite
-Each intervention once, with section headings. Never re-print the previous turn.
+Each intervention once, as continuous prose (no formal section headings — the
+dialectical movement stays in the argument, not in labels). Never re-print the previous turn.
 Append the per-turn `new_contribution` list (display only — the fed-back
 Ledger is a dropped experiment, see 2d) and the final formulation of the
 question. `.md` and `.txt`.
@@ -144,10 +153,12 @@ question. `.md` and `.txt`.
 ## Phase 4 — Accessibility & display
 `src/lib/preferences.ts`: font scale, line height, font family (serif / sans /
 dyslexia-friendly), high contrast, reduce motion (honour `prefers-reduced-motion`),
-parchment / dark theme — applied as CSS custom properties on `<html>`.
-Settings → *Reading & display* tab. Audit: focus rings, `aria-live` on "currently
-speaking", `aria-expanded` on drawers, focus-trap + Esc on modals, `aria-label` on
-seats, lift `/60` text opacities that fail 4.5:1.
+parchment / dim / dark theme — applied as CSS custom properties + data attributes on `<html>`.
+Settings → *Display* tab (Key / Cabinet / Display). Audit: focus rings, `aria-live` on reading
+status + "currently speaking", `aria-expanded` on drawers, Esc on modals, `aria-label` on
+seats. Free TTS via browser SpeechSynthesis: per-turn Listen + full-session read, single
+auto-picked English voice, rate control, voice inventory listed read-only in Settings so the
+user can report which voice sounds best.
 
 ## Phase 5 — RAG with vectorised books (later)
 Migration to `vector(768)`; Python ingestion in the existing `.venv` (chunk ~800

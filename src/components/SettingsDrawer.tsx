@@ -85,7 +85,7 @@ export function SettingsDrawer({
               type="text"
               value={modelInput}
               onChange={(e) => { setModelInput(e.target.value); setKeySaved(false); }}
-              placeholder="gemini-2.0-flash"
+              placeholder="gemini-3.6-flash"
               className="flex-1 bg-[#eae1ca]/60 border border-[#4a392d]/25 rounded-sm p-3 text-sm text-[#465f75] focus:outline-none focus:ring-2 focus:ring-[#8b5254]/30"
             />
             <button className="btn-primary" onClick={handleSaveKey}>Save</button>
