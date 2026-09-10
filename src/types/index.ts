@@ -151,17 +151,21 @@ export interface SpiralSynthesis {
   proposed_action: string;
 }
 
-export const DEFAULT_SEATING_ORDER = [
+// Chronological order by birth year: Spinoza(1632), Kant(1724), Hegel(1770), Marx(1818),
+// Lenin(1870), Bogdanov(1873), Bookchin(1921), Deleuze(1925), Fisher(1968)
+export const CHRONOLOGICAL_ORDER = [
   'spinoza',
   'kant',
-  'marx',
   'hegel',
-  'deleuze',
+  'marx',
   'lenin',
-  'bookchin',
   'bogdanov',
+  'bookchin',
+  'deleuze',
   'fisher',
-];
+] as const;
+
+export const DEFAULT_SEATING_ORDER = [...CHRONOLOGICAL_ORDER];
 
 export const PASS_NAMES = ['Diagnosis', 'Dialectical Critique', 'Reconstruction'] as const;
 export const PASS_DESCRIPTIONS = [
@@ -169,3 +173,21 @@ export const PASS_DESCRIPTIONS = [
   'Each agent encounters criticism and revises.',
   'What can each thinker now construct?',
 ] as const;
+
+export interface AccessibilitySettings {
+  fontScale: number; // 1.0 = normal, range 0.85–1.4
+  highContrast: boolean;
+  reduceMotion: boolean;
+  dyslexiaFont: boolean;
+  lineHeight: number; // 1.4–2.0
+  textAlignment: 'left' | 'justify';
+}
+
+export const DEFAULT_ACCESSIBILITY: AccessibilitySettings = {
+  fontScale: 1,
+  highContrast: false,
+  reduceMotion: false,
+  dyslexiaFont: false,
+  lineHeight: 1.6,
+  textAlignment: 'left',
+};
