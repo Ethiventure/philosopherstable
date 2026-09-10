@@ -16,12 +16,16 @@ export interface TurnOutput {
   works_referenced: string[];
 }
 
+export type GeminiErrorCode = 'quota' | 'auth' | 'model' | 'network' | 'server' | 'parse' | 'unknown';
+
 export class GeminiError extends Error {
   readonly retryable: boolean;
-  constructor(message: string, retryable = false) {
+  readonly code: GeminiErrorCode;
+  constructor(message: string, retryable = false, code: GeminiErrorCode = 'unknown') {
     super(message);
     this.name = 'GeminiError';
     this.retryable = retryable;
+    this.code = code;
   }
 }
 
@@ -53,21 +57,42 @@ function endpoint(model: string, apiKey: string): string {
 
 function friendlyError(status: number, detail: string): GeminiError {
   if (status === 400 || status === 401 || status === 403) {
+    // Key problems and quota problems share these statuses; tell them apart
+    // from Google's own wording so the UI can show the right recovery panel.
+    if (/quota|rate.?limit|rate_limit|exhausted|resource_exhausted|too many requests/i.test(detail)) {
+      return new GeminiError(
+        'Gemini free-tier quota reached. Google caps free use per day and per minute — the cabinet kept everything so far; resume later or switch to the Lite model.' +
+          (detail ? ` Detail: ${detail}` : ''),
+        true,
+        'quota',
+      );
+    }
     return new GeminiError(
       'Gemini rejected the API key. Check it in Settings (Google AI Studio → Get API key) and try Test key again.' +
         (detail ? ` Detail: ${detail}` : ''),
+      false,
+      'auth',
     );
   }
   if (status === 429) {
     return new GeminiError(
-      'Gemini rate limit hit (429). Wait a minute and Resume the cabinet. Consider gemini-2.5-flash, which has the higher free quota.',
+      'Gemini rate limit hit (429). Wait a minute and Resume the cabinet. A full session needs ~27 calls, so if this recurs, switch to gemini-3.5-flash-lite in Settings → Key — it has the most generous free quota.',
       true,
+      'quota',
+    );
+  }
+  if (status === 404) {
+    return new GeminiError(
+      'Gemini returned 404 for this model — it has been retired or is not enabled for your key. Open Settings → Key and pick a current model (gemini-3.6-flash is the safe default).' +
+        (detail ? ` Detail: ${detail}` : ''),
+      false,
+      'model',
     );
   }
   if (status >= 500) {
-    return new GeminiError(`Gemini server error (${status}). Resume the cabinet to retry the turn.`, true);
+    return new GeminiError(`Gemini server error (${status}). Resume the cabinet to retry the turn.`, true, 'server');
   }
-  return new GeminiError(`Gemini request failed (${status}).${detail ? ` Detail: ${detail}` : ''}`);
+  return new GeminiError(`Gemini request failed (${status}).${detail ? ` Detail: ${detail}` : ''}`, false, 'unknown');
 }
 
 async function extractDetail(response: Response): Promise<string> {
@@ -79,7 +104,7 @@ async function extractDetail(response: Response): Promise<string> {
   }
 }
 
-function parseTurnOutput(rawText: string): TurnOutput {
+export function parseTurnOutput(rawText: string): TurnOutput {
   let parsed: unknown = null;
   try {
     parsed = JSON.parse(rawText);
@@ -96,12 +121,12 @@ function parseTurnOutput(rawText: string): TurnOutput {
     }
   }
   if (!parsed || typeof parsed !== 'object') {
-    throw new GeminiError('Gemini returned unparseable output. Resume the cabinet to retry the turn.', true);
+    throw new GeminiError('Gemini returned unparseable output. Resume the cabinet to retry the turn.', true, 'parse');
   }
   const record = parsed as Record<string, unknown>;
   for (const key of ['negation', 'incorporation', 'reformulation', 'contradiction_passed', 'new_contribution']) {
     if (typeof record[key] !== 'string' || !(record[key] as string).trim()) {
-      throw new GeminiError(`Gemini output was missing “${key}”. Resume the cabinet to retry the turn.`, true);
+      throw new GeminiError(`Gemini output was missing “${key}”. Resume the cabinet to retry the turn.`, true, 'parse');
     }
   }
   const works = Array.isArray(record.works_referenced)
@@ -127,6 +152,10 @@ export async function generateTurn({ apiKey, model, systemPrompt, userMessage, l
       responseMimeType: 'application/json',
       responseSchema: RESPONSE_SCHEMA,
       maxOutputTokens: longForm ? MAX_OUTPUT_TOKENS.long : MAX_OUTPUT_TOKENS.normal,
+      // Gemini 3 reasons at HIGH effort when thinkingLevel is unset (tens of
+      // seconds per turn). Our turns are short-form stylised writing, for which
+      // LOW is documented as the right setting — it minimises latency and cost.
+      thinkingConfig: { thinkingLevel: 'low' },
     },
   };
 
@@ -141,7 +170,7 @@ export async function generateTurn({ apiKey, model, systemPrompt, userMessage, l
         body: JSON.stringify(body),
       });
     } catch {
-      lastError = new GeminiError('Network error reaching Gemini. Check the connection and Resume the cabinet.', true);
+      lastError = new GeminiError('Network error reaching Gemini. Check the connection and Resume the cabinet.', true, 'network');
       continue;
     }
     if (!response.ok) {
@@ -158,21 +187,21 @@ export async function generateTurn({ apiKey, model, systemPrompt, userMessage, l
     };
     const text = data.candidates?.[0]?.content?.parts?.map((part) => part.text ?? '').join('') ?? '';
     if (!text.trim()) {
-      throw new GeminiError('Gemini returned an empty response. Resume the cabinet to retry the turn.', true);
+      throw new GeminiError('Gemini returned an empty response. Resume the cabinet to retry the turn.', true, 'server');
     }
     return parseTurnOutput(text);
   }
-  throw lastError ?? new GeminiError('Gemini request failed. Resume the cabinet to retry the turn.', true);
+  throw lastError ?? new GeminiError('Gemini request failed. Resume the cabinet to retry the turn.', true, 'unknown');
 }
 
-/** Cheap key check: one tiny JSON call on flash regardless of chosen model. */
-export async function testApiKey(apiKey: string): Promise<void> {
-  const response = await fetch(endpoint('gemini-2.5-flash', apiKey), {
+/** Cheap key check: one tiny call on the given model (defaults to flash). */
+export async function testApiKey(apiKey: string, model: GeminiModel = 'gemini-3.6-flash'): Promise<void> {
+  const response = await fetch(endpoint(model, apiKey), {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
       contents: [{ role: 'user', parts: [{ text: 'Reply with exactly: ok' }] }],
-      generationConfig: { maxOutputTokens: 10 },
+      generationConfig: { maxOutputTokens: 10, thinkingConfig: { thinkingLevel: 'low' } },
     }),
   });
   if (!response.ok) {

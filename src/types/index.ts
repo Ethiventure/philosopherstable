@@ -197,9 +197,6 @@ export interface SpiralSynthesis {
   proposed_action: string;
 }
 
-// DEFAULT_SEATING_ORDER now lives in `src/philosophers/index.ts`, derived from birth year.
-
-export const PASS_NAMES = ['First Rotation', 'Second Rotation', 'Reconstruction'] as const;
 // Chronological order by birth year: Spinoza(1632), Kant(1724), Hegel(1770), Marx(1818),
 // Lenin(1870), Bogdanov(1873), Bookchin(1921), Deleuze(1925), Fisher(1968)
 export const CHRONOLOGICAL_ORDER = [
@@ -223,6 +220,9 @@ export const PASS_DESCRIPTIONS = [
   'Same chain, reconstructive: what institutions, practices, forms of collective power follow; final seat returns the question to the user.',
 ] as const;
 
+export type DisplayTheme = 'parchment' | 'dim' | 'ink';
+export type DisplayFont = 'academia' | 'sans' | 'dyslexia';
+
 export interface AccessibilitySettings {
   fontScale: number; // 1.0 = normal, range 0.85–1.4
   highContrast: boolean;
@@ -230,6 +230,9 @@ export interface AccessibilitySettings {
   dyslexiaFont: boolean;
   lineHeight: number; // 1.4–2.0
   textAlignment: 'left' | 'justify';
+  theme: DisplayTheme;
+  font: DisplayFont;
+  ttsRate: number; // 0.8–1.3
 }
 
 export const DEFAULT_ACCESSIBILITY: AccessibilitySettings = {
@@ -239,4 +242,7 @@ export const DEFAULT_ACCESSIBILITY: AccessibilitySettings = {
   dyslexiaFont: false,
   lineHeight: 1.6,
   textAlignment: 'left',
+  theme: 'parchment',
+  font: 'academia',
+  ttsRate: 1,
 };
