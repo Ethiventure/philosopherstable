@@ -1,18 +1,14 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import {
   ArrowRight,
   BookOpen,
   ChevronDown,
-  ChevronUp,
   CirclePause,
   CirclePlay,
   Download,
   Feather,
-  GripVertical,
   Library,
-  Pause,
   RotateCcw,
-  Save,
   ScrollText,
   Settings2,
   Sparkles,
@@ -21,54 +17,59 @@ import {
 } from 'lucide-react';
 import { supabase } from '@/lib/supabase';
 import { CORPUS_SOURCES_DATA } from '@/data/corpus-sources';
-import { PHILOSOPHER_DATA } from '@/data/philosophers';
+import { DEFAULT_SEATING_ORDER, PHILOSOPHER_DATA, renderPersona } from '@/philosophers';
 import {
-  DEFAULT_SEATING_ORDER,
   PASS_DESCRIPTIONS,
   PASS_NAMES,
   type Intervention,
   type Philosopher,
+  type StyleEssence,
 } from '@/types';
+import { buildTurnInstruction, buildUserMessage, getTurnKind, STRUCTURED_OUTPUT_HINT } from '@/lib/dialectic/prompts';
+import { generateTurn, testApiKey, type TurnOutput } from '@/lib/gemini';
+import { loadSettings, saveSettings, type CabinetSettings, type GeminiModel } from '@/lib/settings';
 
-const palette = ['#8b7355', '#465f75', '#8b5254', '#6b5b3f', '#5d6b54', '#7d3b3b', '#4a6b3f', '#5a6b8b', '#6b5b73'];
-
-const sampleOpenings: Record<string, string> = {
-  spinoza: 'The question must first be freed from the superstition that treats the instrument as an autonomous cause. We should ask what increases or diminishes the collective power of acting.',
-  kant: 'Before deciding what may be done, we must establish the maxim on which the action rests. Can the principle governing this use of technology be willed as a universal law while preserving every person as an end?',
-  marx: 'The appearance of a neutral instrument conceals a social relation. We must investigate ownership, labour-power, and the conditions under which this technology becomes capital rather than merely a means of production.',
-  hegel: 'The difficulty is that the opposing positions each express a partial truth. The task is not to choose one side immediately, but to grasp the contradiction that gives the question its movement.',
-  deleuze: 'Let us not begin by assuming that the question has one subject, one interest, or one answer. We should map the assemblage: the flows it connects, the controls it introduces, and the lines of flight it may open.',
-  lenin: 'The decisive matter is the concrete balance of forces. Who controls the institution, who sets its programme, and what organisation can turn a technical possibility into political power?',
-  bookchin: 'To be sure, the instrument may enlarge human capacities. But the issue is not merely what it can do; it is what kind of social relations its ownership and institutional setting reproduce.',
-  bogdanov: 'We should identify the organisation beneath the device. Which elements are linked, which feedbacks regulate the system, and where does the present arrangement become incapable of maintaining its own coherence?',
-  fisher: 'The most dangerous feature may be the narrowing of what can be imagined. A technology marketed as emancipation can become another atmosphere of permanent performance unless it helps produce collective alternatives.',
-};
-
-function makeMockIntervention(philosopher: Philosopher, pass: number, question: string, index: number): Intervention {
-  const passLead = pass === 1
-    ? sampleOpenings[philosopher.slug]
-    : pass === 2
-      ? `My first position did not sufficiently account for the pressure introduced by the preceding interventions. The strongest objection is that ${philosopher.analytical_center[0]} cannot be treated in isolation from the other determinations. I revise the emphasis, but I do not abandon the central distinction.`
-      : `After the encounter, the question is no longer simply whether this should be done. It is what institutions, forms of collective power, and safeguards would make the practice emancipatory rather than merely efficient. I preserve my initial concern while incorporating the cabinet's strongest insight.`;
-
-  const citations = philosopher.slug === 'marx'
-    ? [{ label: '[MARX, CAPITAL VOL. I, CH. 1]', verified: true }]
-    : philosopher.slug === 'bookchin'
-      ? [{ label: '[BOOKCHIN, THE ECOLOGY OF FREEDOM]', verified: true }]
-      : philosopher.slug === 'spinoza'
-        ? [{ label: '[SPINOZA, ETHICS, PART III]', verified: true }]
-        : [{ label: `[${philosopher.name.toUpperCase()}, SOURCE-GROUNDED PROFILE]`, verified: false }];
-
+// Shapes a live Gemini turn into an Intervention. Citations stay unverified
+// until the Phase 5 corpus retrieval lands; works_referenced is the model's
+// own claim about which works it drew on.
+function toIntervention(
+  philosopher: Philosopher,
+  pass: number,
+  index: number,
+  output: TurnOutput,
+  previousSpeaker: Philosopher | null,
+): Intervention {
+  const kind = getTurnKind(pass, index + 1);
+  const isOpening = kind === 'opening' && !previousSpeaker;
+  const citations = output.works_referenced.length > 0
+    ? output.works_referenced.map((work) => ({ label: work, verified: false }))
+    : [{ label: `[${philosopher.name.toUpperCase()}, SOURCE-GROUNDED PROFILE]`, verified: false }];
   return {
-    id: `mock-${pass}-${index}`,
-    meeting_id: 'demo',
+    id: `live-${pass}-${index}`,
+    meeting_id: 'live',
     philosopher_id: philosopher.id,
     pass_number: pass,
     seat_position: index,
-    response_text: `${passLead}\n\nThe contemporary formulation — “${question}” — therefore changes as it passes around the table. What appeared to be a question of individual choice becomes a question of conditions, mediation, and collective capacity. I respond to the preceding intervention by preserving what it sees clearly while rejecting its tendency to close the problem too soon.`,
+    response_text: [
+      `Negation — ${output.negation}`,
+      `Incorporation — ${output.incorporation}`,
+      `Reformulation — ${output.reformulation}`,
+      `Contradiction passed on — ${output.contradiction_passed}`,
+    ].join('\n\n'),
+    sections: {
+      negation: output.negation,
+      incorporation: output.incorporation,
+      reformulation: output.reformulation,
+      contradiction_passed: output.contradiction_passed,
+      new_contribution: output.new_contribution,
+    },
     retrieved_chunk_ids: [],
     citations,
-    position_label: pass === 1 ? 'Initial diagnosis' : pass === 2 ? 'Position revised under critique' : 'Reconstructed position',
+    position_label: isOpening
+      ? 'Opening'
+      : kind === 'reconstruction'
+        ? `Reconstruction after ${previousSpeaker?.name ?? 'PREV'}`
+        : `Immanent critique of ${previousSpeaker?.name ?? 'PREV'}`,
     created_at: new Date().toISOString(),
   };
 }
@@ -82,53 +83,142 @@ function App() {
   const [interventions, setInterventions] = useState<Intervention[]>([]);
   const [selectedIntervention, setSelectedIntervention] = useState<Intervention | null>(null);
   const [selectedPhilosopher, setSelectedPhilosopher] = useState<Philosopher | null>(null);
+  const [activeSlugs, setActiveSlugs] = useState<string[]>(DEFAULT_SEATING_ORDER);
   const [showSources, setShowSources] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
-  const [seatingOrder, setSeatingOrder] = useState(DEFAULT_SEATING_ORDER);
-  const [draggedSlug, setDraggedSlug] = useState<string | null>(null);
+  const [settings, setSettings] = useState<CabinetSettings>(() => loadSettings());
+  const [thinkingName, setThinkingName] = useState<string | null>(null);
+  const [runError, setRunError] = useState<string | null>(null);
+  const runRef = useRef(0);
+
+  const updateSettings = (next: CabinetSettings) => {
+    setSettings(next);
+    saveSettings(next);
+  };
 
   useEffect(() => {
     const load = async () => {
+      const local = PHILOSOPHER_DATA.map((item, index) => ({ ...item, id: `local-${item.slug}`, created_at: new Date().toISOString(), seat_order: index }));
+      if (!supabase) { setPhilosophers(local); return; }
       const { data } = await supabase.from('philosophers').select('*').order('seat_order');
-      if (data && data.length === 9) setPhilosophers(data as Philosopher[]);
-      else setPhilosophers(PHILOSOPHER_DATA.map((item, index) => ({ ...item, id: `local-${item.slug}`, created_at: new Date().toISOString(), seat_order: index })));
+      setPhilosophers(data && data.length >= DEFAULT_SEATING_ORDER.length ? (data as Philosopher[]) : local);
     };
     void load();
   }, []);
 
-  const orderedPhilosophers = useMemo(() => seatingOrder.map((slug) => philosophers.find((p) => p.slug === slug)).filter((p): p is Philosopher => Boolean(p)), [philosophers, seatingOrder]);
+  const orderedPhilosophers = useMemo(() => DEFAULT_SEATING_ORDER
+    .map((slug) => philosophers.find((p) => p.slug === slug))
+    .filter((p): p is Philosopher => p !== undefined && activeSlugs.includes(p.slug)), [philosophers, activeSlugs]);
   const currentInterventions = interventions.filter((item) => item.pass_number === activePass + 1);
   const currentSpeaker = orderedPhilosophers[activeAgent];
+  const hasKey = settings.geminiApiKey.trim().length > 0;
+  const isComplete = orderedPhilosophers.length > 0 && interventions.length >= orderedPhilosophers.length * 3;
 
-  const runMeeting = () => {
+  // Async loop over passes × seats (Phase 2f). Each turn sees only the
+  // question, PREV's full text, and the speaker's own prior one-liners.
+  // The pause flag (runRef) is checked between turns and after each call.
+  const runLoop = async (runId: number, seats: Philosopher[], startCount: number, collected: Intervention[]) => {
+    const snap = settings;
+    const total = seats.length * 3;
+    for (let n = startCount; n < total; n += 1) {
+      if (runRef.current !== runId) return;
+      const pass = Math.floor(n / seats.length);
+      const index = n % seats.length;
+      const speaker = seats[index];
+      if (!speaker) continue;
+      const isOpeningTurn = pass === 0 && index === 0;
+      // PREV crosses pass boundaries: pass 2 seat 1 critiques pass 1's last seat.
+      const previousSpeaker = isOpeningTurn
+        ? null
+        : seats[(index - 1 + seats.length) % seats.length] ?? null;
+      const isFinalTurn = pass === 2 && index === seats.length - 1;
+      const nextSpeaker = isFinalTurn
+        ? null
+        : seats[(index + 1) % seats.length] ?? null;
+      const kind = getTurnKind(pass + 1, index + 1);
+      const ownPriorLines = collected
+        .filter((item) => item.philosopher_id === speaker.id && item.sections?.new_contribution)
+        .map((item) => String(item.sections?.new_contribution));
+      const turnInstruction = buildTurnInstruction({
+        kind,
+        prevName: previousSpeaker?.name ?? null,
+        nextName: nextSpeaker?.name ?? null,
+        isFinalSeat: isFinalTurn,
+        longForm: snap.longForm,
+      });
+      const systemPrompt = renderPersona(speaker, snap.intensity);
+      const userMessage = [
+        buildUserMessage({
+          question,
+          prevText: n === 0 ? null : (collected[collected.length - 1]?.response_text ?? null),
+          ownPriorLines,
+          turnInstruction,
+        }),
+        '',
+        STRUCTURED_OUTPUT_HINT,
+      ].join('\n');
+      setActivePass(pass);
+      setActiveAgent(index);
+      setThinkingName(speaker.full_name);
+      let output: TurnOutput;
+      try {
+        output = await generateTurn({
+          apiKey: snap.geminiApiKey,
+          model: snap.model,
+          systemPrompt,
+          userMessage,
+          longForm: snap.longForm,
+        });
+      } catch (error) {
+        if (runRef.current !== runId) return;
+        setRunError(error instanceof Error ? error.message : 'Unknown error from Gemini.');
+        setIsRunning(false);
+        setThinkingName(null);
+        return;
+      }
+      if (runRef.current !== runId) return;
+      collected.push(toIntervention(speaker, pass + 1, index, output, previousSpeaker));
+      setInterventions([...collected]);
+    }
+    setThinkingName(null);
+    setIsRunning(false);
+    setActivePass(2);
+    setActiveAgent(seats.length - 1);
+  };
+
+  const startMeeting = () => {
+    if (orderedPhilosophers.length < 2 || !settings.geminiApiKey.trim()) return;
+    const runId = runRef.current + 1;
+    runRef.current = runId;
     setInterventions([]);
+    setRunError(null);
     setActivePass(0);
     setActiveAgent(0);
     setIsRunning(true);
-    let pass = 0;
-    let index = 0;
-    const timer = window.setInterval(() => {
-      const speaker = orderedPhilosophers[index];
-      if (!speaker) return;
-      setActivePass(pass);
-      setActiveAgent(index);
-      setInterventions((previous) => [...previous, makeMockIntervention(speaker, pass + 1, question, index)]);
-      index += 1;
-      if (index >= orderedPhilosophers.length) {
-        index = 0;
-        pass += 1;
-        if (pass >= 3) {
-          window.clearInterval(timer);
-          setIsRunning(false);
-          setActivePass(2);
-          setActiveAgent(8);
-        }
-      }
-    }, 1250);
+    void runLoop(runId, [...orderedPhilosophers], 0, []);
+  };
+
+  const resumeMeeting = () => {
+    if (orderedPhilosophers.length < 2 || !settings.geminiApiKey.trim()) return;
+    if (interventions.length >= orderedPhilosophers.length * 3) return;
+    const runId = runRef.current + 1;
+    runRef.current = runId;
+    setRunError(null);
+    setIsRunning(true);
+    void runLoop(runId, [...orderedPhilosophers], interventions.length, [...interventions]);
+  };
+
+  const pauseMeeting = () => {
+    runRef.current += 1;
+    setIsRunning(false);
+    setThinkingName(null);
   };
 
   const resetMeeting = () => {
+    runRef.current += 1;
     setIsRunning(false);
+    setThinkingName(null);
+    setRunError(null);
     setActivePass(0);
     setActiveAgent(-1);
     setInterventions([]);
@@ -149,15 +239,12 @@ function App() {
     URL.revokeObjectURL(url);
   };
 
-  const moveSeat = (slug: string) => {
-    if (!draggedSlug || draggedSlug === slug) return;
-    const next = [...seatingOrder];
-    const from = next.indexOf(draggedSlug);
-    const to = next.indexOf(slug);
-    next.splice(from, 1);
-    next.splice(to, 0, draggedSlug);
-    setSeatingOrder(next);
-    setDraggedSlug(null);
+  const togglePhilosopher = (slug: string) => {
+    setActiveSlugs((current) =>
+      current.includes(slug)
+        ? current.filter((s) => s !== slug)
+        : [...current, slug]
+    );
   };
 
   return (
@@ -178,7 +265,7 @@ function App() {
           </div>
           <div className="flex items-center gap-2">
             <button className="btn-secondary !px-3" onClick={() => setShowSources(!showSources)} title="Corpus manifest"><Library size={16} /></button>
-            <button className="btn-secondary !px-3" onClick={() => setShowSettings(!showSettings)} title="Seating order"><Settings2 size={16} /></button>
+            <button className="btn-secondary !px-3" onClick={() => setShowSettings(!showSettings)} title="Settings"><Settings2 size={16} /></button>
           </div>
         </div>
       </header>
@@ -201,10 +288,12 @@ function App() {
               </div>
               <textarea id="question" value={question} onChange={(event) => setQuestion(event.target.value)} disabled={isRunning} className="w-full min-h-[92px] resize-y bg-[#eae1ca]/60 border border-[#4a392d]/25 rounded-sm p-4 text-lg leading-relaxed text-[#465f75] placeholder:text-[#465f75]/45 focus:outline-none focus:ring-2 focus:ring-[#8b5254]/30" />
               <div className="flex flex-wrap gap-3 mt-4">
-                <button className="btn-primary flex items-center gap-2" onClick={isRunning ? () => setIsRunning(false) : runMeeting} disabled={!question.trim() || philosophers.length !== 9}>{isRunning ? <><CirclePause size={17} /> Pause circuit</> : <><CirclePlay size={17} /> {interventions.length ? 'Resume cabinet' : 'Begin cabinet'}</>}</button>
+                <button className="btn-primary flex items-center gap-2" onClick={isRunning ? pauseMeeting : interventions.length ? resumeMeeting : startMeeting} disabled={!question.trim() || orderedPhilosophers.length < 2 || (!isRunning && (!hasKey || isComplete))}>{isRunning ? <><CirclePause size={17} /> Pause circuit</> : <><CirclePlay size={17} /> {isComplete ? 'Cabinet complete' : interventions.length ? 'Resume cabinet' : 'Begin cabinet'}</>}</button>
                 <button className="btn-secondary flex items-center gap-2" onClick={resetMeeting}><RotateCcw size={15} /> Restart</button>
                 <button className="btn-secondary flex items-center gap-2" onClick={exportTranscript} disabled={!interventions.length}><Download size={15} /> Export</button>
               </div>
+              {!hasKey && <p className="text-sm italic text-[#8b5254] mt-3">Add your Gemini API key in <button className="underline" onClick={() => setShowSettings(true)}>Settings</button> to begin — it stays in this browser only, and goes straight to Google.</p>}
+              {runError && <div className="mt-3 p-4 bg-[#8b5254]/8 border-l-2 border-[#8b5254]"><p className="text-xs uppercase tracking-widest text-[#8b5254]">Cabinet halted</p><p className="text-sm mt-1 text-[#465f75]">{runError}</p><div className="flex flex-wrap gap-2 mt-3"><button className="btn-secondary" onClick={resumeMeeting} disabled={!hasKey}>Resume cabinet</button><button className="btn-secondary" onClick={() => setShowSettings(true)}>Open settings</button><button className="btn-secondary" onClick={() => setRunError(null)}>Dismiss</button></div></div>}
             </div>
 
             <div className="dark-academia-card p-5 md:p-8">
@@ -221,14 +310,14 @@ function App() {
 
               <CabinetTable philosophers={orderedPhilosophers} activeAgent={activeAgent} activePass={activePass} interventions={interventions} onSelect={(philosopher) => setSelectedPhilosopher(philosopher)} />
 
-              {currentSpeaker && isRunning && <div className="mt-6 p-4 bg-[#8b5254]/8 border-l-2 border-[#8b5254] slide-in-right"><p className="text-xs uppercase tracking-[0.18em] text-[#8b5254]">Currently speaking</p><p className="font-heading text-xl text-[#4a392d]">{currentSpeaker.full_name}</p><p className="text-sm italic text-[#465f75]/70 mt-1">The intervention will pass clockwise to {orderedPhilosophers[(activeAgent + 1) % 9]?.name}.</p></div>}
+              {currentSpeaker && (isRunning || thinkingName) && <div className="mt-6 p-4 bg-[#8b5254]/8 border-l-2 border-[#8b5254] slide-in-right"><p className="text-xs uppercase tracking-widest text-[#8b5254]">{thinkingName ? `${thinkingName} is thinking…` : 'Currently speaking'}</p><p className="font-heading text-xl text-[#4a392d]">{currentSpeaker.full_name}</p><p className="text-sm italic text-[#465f75]/70 mt-1">The intervention will pass clockwise to {orderedPhilosophers[(activeAgent + 1) % orderedPhilosophers.length]?.name}.</p></div>}
             </div>
           </div>
 
           <aside className="space-y-6">
             <div className="dark-academia-card p-5">
               <div className="flex items-center gap-3 mb-4"><Sparkles size={18} className="text-[#8b5254]" /><h3 className="text-xl">The spiral</h3></div>
-              <SpiralView interventions={interventions} question={question} activePass={activePass} />
+              <SpiralView interventions={interventions} question={question} activePass={activePass} numPhilosophers={orderedPhilosophers.length} />
             </div>
             <div className="dark-academia-card p-5">
               <div className="flex items-center gap-3 mb-4"><BookOpen size={18} className="text-[#8b5254]" /><h3 className="text-xl">Cabinet record</h3></div>
@@ -249,11 +338,11 @@ function App() {
           </div>
         </section>
 
-        {interventions.length > 9 && <PositionComparison philosophers={philosophers} interventions={interventions} />}
+        {interventions.length > orderedPhilosophers.length && <PositionComparison philosophers={orderedPhilosophers} interventions={interventions} />}
       </main>
 
       {showSources && <SourceDrawer onClose={() => setShowSources(false)} />}
-      {showSettings && <SettingsDrawer philosophers={philosophers} seatingOrder={seatingOrder} setSeatingOrder={setSeatingOrder} draggedSlug={draggedSlug} setDraggedSlug={setDraggedSlug} moveSeat={moveSeat} onClose={() => setShowSettings(false)} />}
+      {showSettings && <SettingsDrawer philosophers={philosophers} activeSlugs={activeSlugs} togglePhilosopher={togglePhilosopher} settings={settings} onSettingsChange={updateSettings} onClose={() => setShowSettings(false)} />}
       {selectedIntervention && <InterventionModal intervention={selectedIntervention} philosopher={philosophers.find((p) => p.id === selectedIntervention.philosopher_id)} onClose={() => setSelectedIntervention(null)} />}
       {selectedPhilosopher && <ProfileModal philosopher={selectedPhilosopher} onClose={() => setSelectedPhilosopher(null)} />}
     </div>
@@ -266,16 +355,43 @@ function CabinetTable({ philosophers, activeAgent, activePass, interventions, on
 
 function InterventionCard({ intervention, philosopher, onClick }: { intervention: Intervention; philosopher: Philosopher; onClick: () => void }) { return <button onClick={onClick} className="dark-academia-card text-left p-5 w-full"><div className="flex items-start justify-between gap-3 mb-3"><div className="flex items-center gap-3"><span className="w-9 h-9 rounded-full border flex items-center justify-center font-heading" style={{ borderColor: philosopher.accent_color, color: philosopher.accent_color }}>{philosopher.name.charAt(0)}</span><div><p className="font-heading text-lg text-[#4a392d]">{philosopher.full_name}</p><p className="text-[10px] uppercase tracking-wider text-[#8b5254]">Seat {intervention.seat_position + 1}</p></div></div><ChevronDown size={16} className="text-[#4a392d]/50" /></div><p className="drop-cap line-clamp-4 text-[15px] leading-relaxed text-[#465f75]">{intervention.response_text}</p><div className="flex flex-wrap gap-1 mt-4">{intervention.citations.map((citation) => <span key={citation.label} className={`citation-badge ${citation.verified ? '' : 'citation-unverified'}`}><BookOpen size={10} /> {citation.label}</span>)}</div></button>; }
 
-function SpiralView({ interventions, question, activePass }: { interventions: Intervention[]; question: string; activePass: number }) { const labels = ['The question', 'Problem map', 'Dialectical map', 'Spiral synthesis']; return <div className="space-y-2">{labels.map((label, index) => { const isVisible = index === 0 || interventions.length >= index * 9; const text = index === 0 ? question : index === 1 ? 'The problem has entered the first circuit and gathered distinct conceptual lenses.' : index === 2 ? 'Positions are now encountering their strongest objections; agreement is not the measure.' : 'A revised problem waits for the cabinet to complete its third pass.'; return <div key={label} className={`relative pl-8 ${isVisible ? 'opacity-100' : 'opacity-35'} transition-opacity`}><div className={`absolute left-0 top-1 w-5 h-5 rounded-full border flex items-center justify-center text-[10px] ${index <= activePass + 1 ? 'bg-[#8b5254] text-[#f2ebd9] border-[#8b5254]' : 'border-[#4a392d]/30 text-[#4a392d]/50'}`}>{index}</div>{index < 3 && <div className="absolute left-[9px] top-6 h-8 border-l border-dashed border-[#b89968]" />}<p className="text-xs uppercase tracking-wider text-[#8b5254]">{label}</p><p className="text-sm italic text-[#465f75]/75 leading-snug mt-1">{text}</p></div>; })}</div>; }
+function SpiralView({ interventions, question, activePass, numPhilosophers }: { interventions: Intervention[]; question: string; activePass: number; numPhilosophers: number }) { const labels = ['The question', 'Problem map', 'Dialectical map', 'Spiral synthesis']; return <div className="space-y-2">{labels.map((label, index) => { const isVisible = index === 0 || interventions.length >= index * numPhilosophers; const text = index === 0 ? question : index === 1 ? 'First rotation chained: seat 1 opens, each later seat negates its immediate predecessor.' : index === 2 ? 'Second rotation continues across the boundary; each turn critiques PREV and hands a contradiction on.' : 'Reconstruction rotation: institutions, practices, collective power; final seat returns the question.'; return <div key={label} className={`relative pl-8 ${isVisible ? 'opacity-100' : 'opacity-35'} transition-opacity`}><div className={`absolute left-0 top-1 w-5 h-5 rounded-full border flex items-center justify-center text-[10px] ${index <= activePass + 1 ? 'bg-[#8b5254] text-[#f2ebd9] border-[#8b5254]' : 'border-[#4a392d]/30 text-[#4a392d]/50'}`}>{index}</div>{index < 3 && <div className="absolute left-[9px] top-6 h-8 border-l border-dashed border-[#b89968]" />}<p className="text-xs uppercase tracking-wider text-[#8b5254]">{label}</p><p className="text-sm italic text-[#465f75]/75 leading-snug mt-1">{text}</p></div>; })}</div>; }
 
-function PositionComparison({ philosophers, interventions }: { philosophers: Philosopher[]; interventions: Intervention[] }) { return <section className="mt-12"><div className="ornament-divider mb-6"><span className="text-xl">✦</span></div><p className="pass-indicator text-[#8b5254]">Memory across passes</p><h2 className="text-3xl mb-5">Position changes</h2><div className="grid lg:grid-cols-3 gap-4">{philosophers.slice(0, 3).map((philosopher) => <div key={philosopher.id} className="dark-academia-card p-5"><h3 className="text-xl mb-3">{philosopher.name}</h3>{[1, 2, 3].map((pass) => { const item = interventions.find((entry) => entry.philosopher_id === philosopher.id && entry.pass_number === pass); return <div key={pass} className="border-t border-[#4a392d]/15 pt-3 mt-3"><p className="text-[10px] uppercase tracking-widest text-[#8b5254]">Pass {pass} · {PASS_NAMES[pass - 1]}</p><p className="text-sm mt-1 line-clamp-3 text-[#465f75]/80">{item?.response_text ?? 'Awaiting intervention.'}</p></div>; })}</div>)}</div></section>; }
+function PositionComparison({ philosophers, interventions }: { philosophers: Philosopher[]; interventions: Intervention[] }) { return <section className="mt-12"><div className="ornament-divider mb-6"><span className="text-xl">✦</span></div><p className="pass-indicator text-[#8b5254]">Memory across passes</p><h2 className="text-3xl mb-5">Position changes</h2><div className="grid lg:grid-cols-3 gap-4">{philosophers.map((philosopher) => <div key={philosopher.id} className="dark-academia-card p-5"><h3 className="text-xl mb-3">{philosopher.name}</h3>{[1, 2, 3].map((pass) => { const item = interventions.find((entry) => entry.philosopher_id === philosopher.id && entry.pass_number === pass); return <div key={pass} className="border-t border-[#4a392d]/15 pt-3 mt-3"><p className="text-[10px] uppercase tracking-widest text-[#8b5254]">Pass {pass} · {PASS_NAMES[pass - 1]}</p><p className="text-sm mt-1 line-clamp-3 text-[#465f75]/80">{item?.response_text ?? 'Awaiting intervention.'}</p></div>; })}</div>)}</div></section>; }
 
 function SourceDrawer({ onClose }: { onClose: () => void }) { return <div className="fixed inset-0 z-50 bg-[#4a392d]/30 backdrop-blur-sm" onClick={onClose}><aside className="absolute right-0 top-0 bottom-0 w-full max-w-xl parchment-bg p-6 md:p-8 overflow-y-auto custom-scroll" onClick={(event) => event.stopPropagation()}><div className="flex items-start justify-between mb-6"><div><p className="pass-indicator text-[#8b5254]">Corpus manifest</p><h2 className="text-3xl">The sources</h2><p className="italic text-[#465f75]/65 mt-1">Provenance before performance.</p></div><button className="btn-secondary !px-3" onClick={onClose}><X size={17} /></button></div><div className="space-y-3">{CORPUS_SOURCES_DATA.map((source) => <div key={`${source.author}-${source.title}`} className="border-b border-[#4a392d]/15 pb-3"><div className="flex justify-between gap-3"><p className="font-heading text-base text-[#4a392d]">{source.title}</p><span className={`text-[9px] whitespace-nowrap uppercase tracking-wider ${source.full_text_ingested ? 'text-[#4a6b3f]' : 'text-[#8b5254]'}`}>{source.full_text_ingested ? 'Full text' : 'Metadata'}</span></div><p className="text-sm text-[#465f75]/70">{source.author} · {source.publication_date}</p><p className="text-[10px] uppercase tracking-widest text-[#8b5254]/80 mt-1">{source.licence_status}</p></div>)}</div></aside></div>; }
 
-function SettingsDrawer({ philosophers, seatingOrder, setSeatingOrder, draggedSlug, setDraggedSlug, moveSeat, onClose }: { philosophers: Philosopher[]; seatingOrder: string[]; setSeatingOrder: (order: string[]) => void; draggedSlug: string | null; setDraggedSlug: (slug: string | null) => void; moveSeat: (slug: string) => void; onClose: () => void }) { return <div className="fixed inset-0 z-50 bg-[#4a392d]/30 backdrop-blur-sm" onClick={onClose}><aside className="absolute right-0 top-0 bottom-0 w-full max-w-md parchment-bg p-6 md:p-8 overflow-y-auto" onClick={(event) => event.stopPropagation()}><div className="flex items-start justify-between mb-6"><div><p className="pass-indicator text-[#8b5254]">Experimental variable</p><h2 className="text-3xl">Seating order</h2><p className="italic text-[#465f75]/65 mt-1">Drag the topology; change the encounter.</p></div><button className="btn-secondary !px-3" onClick={onClose}><X size={17} /></button></div><div className="space-y-2">{seatingOrder.map((slug, index) => { const philosopher = philosophers.find((item) => item.slug === slug); return philosopher ? <div key={slug} draggable onDragStart={() => setDraggedSlug(slug)} onDragOver={(event) => event.preventDefault()} onDrop={() => moveSeat(slug)} className="flex items-center gap-3 p-3 border border-[#4a392d]/20 bg-[#f2ebd9]/65 cursor-grab"><GripVertical size={16} className="text-[#4a392d]/40" /><span className="w-6 text-center font-heading text-[#8b5254]">{index + 1}</span><span className="w-8 h-8 rounded-full border flex items-center justify-center font-heading" style={{ borderColor: philosopher.accent_color, color: philosopher.accent_color }}>{philosopher.name.charAt(0)}</span><span className="font-heading text-lg text-[#4a392d]">{philosopher.full_name}</span></div> : null; })}</div><button className="btn-secondary w-full mt-5" onClick={() => setSeatingOrder(DEFAULT_SEATING_ORDER)}>Restore default order</button><p className="text-xs italic text-[#465f75]/60 mt-5">Order is recorded with each meeting. The cabinet treats adjacency as an epistemic variable.</p></aside></div>; }
+function SettingsDrawer({ philosophers, activeSlugs, togglePhilosopher, settings, onSettingsChange, onClose }: { philosophers: Philosopher[]; activeSlugs: string[]; togglePhilosopher: (slug: string) => void; settings: CabinetSettings; onSettingsChange: (next: CabinetSettings) => void; onClose: () => void }) {
+  const [keyInput, setKeyInput] = useState(settings.geminiApiKey);
+  const [testState, setTestState] = useState<'idle' | 'testing' | 'ok' | 'error'>('idle');
+  const [testMessage, setTestMessage] = useState('');
+  const keySaved = keyInput === settings.geminiApiKey && settings.geminiApiKey.length > 0;
+  const runTest = async () => {
+    const key = keyInput.trim();
+    if (!key) return;
+    setTestState('testing');
+    setTestMessage('');
+    try {
+      await testApiKey(key);
+      setTestState('ok');
+      setTestMessage('Key works. Saved for this browser.');
+      onSettingsChange({ ...settings, geminiApiKey: key });
+    } catch (error) {
+      setTestState('error');
+      setTestMessage(error instanceof Error ? error.message : 'Key test failed.');
+    }
+  };
+  return <div className="fixed inset-0 z-50 bg-[#4a392d]/30 backdrop-blur-sm" onClick={onClose}><aside className="absolute right-0 top-0 bottom-0 w-full max-w-md parchment-bg p-6 md:p-8 overflow-y-auto" onClick={(event) => event.stopPropagation()}><div className="flex items-start justify-between mb-6"><div><p className="pass-indicator text-[#8b5254]">Bring your own key</p><h2 className="text-3xl">Settings</h2><p className="italic text-[#465f75]/65 mt-1">The key stays in this browser only, and goes straight to Google. Nothing is logged or collected.</p></div><button className="btn-secondary !px-3" onClick={onClose}><X size={17} /></button></div><div className="space-y-3 border-b border-[#4a392d]/15 pb-6 mb-6"><label htmlFor="gemini-key" className="font-heading text-sm uppercase tracking-[0.16em] text-[#4a392d]">Gemini API key</label><input id="gemini-key" type="password" autoComplete="off" value={keyInput} onChange={(event) => { setKeyInput(event.target.value); setTestState('idle'); setTestMessage(''); }} placeholder="Paste key from Google AI Studio" className="w-full bg-[#eae1ca]/60 border border-[#4a392d]/25 rounded-sm p-3 text-[15px] text-[#465f75] placeholder:text-[#465f75]/45 focus:outline-none focus:ring-2 focus:ring-[#8b5254]/30" /><div className="flex flex-wrap gap-2"><button className="btn-secondary" onClick={runTest} disabled={!keyInput.trim() || testState === 'testing'}>{testState === 'testing' ? 'Testing…' : 'Test key'}</button><button className="btn-secondary" onClick={() => { setKeyInput(''); setTestState('idle'); setTestMessage(''); onSettingsChange({ ...settings, geminiApiKey: '' }); }} disabled={!keyInput && !settings.geminiApiKey}>Clear</button>{keySaved && <span className="text-xs italic self-center text-[#4a6b3f]">Saved in this browser.</span>}</div>{testMessage && <p className={`text-sm italic ${testState === 'ok' ? 'text-[#4a6b3f]' : 'text-[#8b5254]'}`}>{testMessage}</p>}<p className="text-xs text-[#465f75]/70">Get a free key at <a className="underline" href="https://aistudio.google.com/apikey" target="_blank" rel="noreferrer">Google AI Studio</a>. Without a key the cabinet cannot begin.</p><label htmlFor="gemini-model" className="font-heading text-sm uppercase tracking-[0.16em] text-[#4a392d] pt-2 block">Model</label><select id="gemini-model" value={settings.model} onChange={(event) => onSettingsChange({ ...settings, model: event.target.value as GeminiModel })} className="w-full bg-[#eae1ca]/60 border border-[#4a392d]/25 rounded-sm p-3 text-[15px] text-[#465f75] focus:outline-none focus:ring-2 focus:ring-[#8b5254]/30"><option value="gemini-2.5-flash">gemini-2.5-flash (faster, higher free quota)</option><option value="gemini-2.5-pro">gemini-2.5-pro (slower, stronger)</option></select><span className="font-heading text-sm uppercase tracking-[0.16em] text-[#4a392d] pt-2 block">Style intensity (all seats)</span><div className="flex gap-2">{(['low', 'medium', 'high'] as const).map((level) => <button key={level} onClick={() => onSettingsChange({ ...settings, intensity: level })} className={`btn-secondary capitalize ${settings.intensity === level ? '!border-[#8b5254] !text-[#8b5254]' : ''}`}>{level}</button>)}</div><label className="flex items-center gap-3 text-[15px] text-[#465f75] pt-1"><input type="checkbox" checked={settings.longForm} onChange={(event) => onSettingsChange({ ...settings, longForm: event.target.checked })} className="w-4 h-4 accent-[#8b5254]" /> Long form (~400 words/turn instead of ~150)</label></div><div className="flex items-start justify-between mb-4"><div><p className="pass-indicator text-[#8b5254]">Experimental variable</p><h2 className="text-2xl">Cabinet selection</h2></div></div><div className="space-y-2">{DEFAULT_SEATING_ORDER.map((slug) => {
+    const philosopher = philosophers.find((item) => item.slug === slug);
+    const isActive = activeSlugs.includes(slug);
+    if (!philosopher) return null;
+    return <button key={slug} onClick={() => togglePhilosopher(slug)} className={`w-full flex items-center gap-3 p-3 border transition-all ${isActive ? 'bg-[#f2ebd9]/65 border-[#4a392d]/40' : 'bg-transparent border-[#4a392d]/10 opacity-50 hover:opacity-80'}`}><div className={`w-5 h-5 rounded-sm border flex items-center justify-center ${isActive ? 'bg-[#8b5254] border-[#8b5254]' : 'border-[#4a392d]/30'}`}>{isActive && <X size={12} className="text-white" />}</div><span className="w-8 h-8 rounded-full border flex items-center justify-center font-heading" style={{ borderColor: philosopher.accent_color, color: philosopher.accent_color }}>{philosopher.name.charAt(0)}</span><span className="font-heading text-lg text-[#4a392d]">{philosopher.full_name}</span></button>;
+  })}</div><p className="text-xs italic text-[#465f75]/60 mt-5">The baton passes only to active thinkers, always to the immediate next seat. The dialectical order remains fixed to preserve the historical-conceptual movement.</p></aside></div>;
+}
 
 function InterventionModal({ intervention, philosopher, onClose }: { intervention: Intervention; philosopher?: Philosopher; onClose: () => void }) { return <div className="fixed inset-0 z-50 bg-[#4a392d]/35 backdrop-blur-sm flex items-center justify-center p-4" onClick={onClose}><div className="dark-academia-card max-w-3xl max-h-[90vh] overflow-y-auto custom-scroll p-6 md:p-8" onClick={(event) => event.stopPropagation()}><div className="flex justify-between gap-4"><div><p className="pass-indicator text-[#8b5254]">Pass {intervention.pass_number} · {PASS_NAMES[intervention.pass_number - 1]}</p><h2 className="text-3xl">{philosopher?.full_name}</h2><p className="italic text-[#465f75]/65">{intervention.position_label}</p></div><button className="btn-secondary !px-3 h-fit" onClick={onClose}><X size={17} /></button></div><p className="drop-cap text-lg leading-relaxed mt-6 whitespace-pre-line text-[#465f75]">{intervention.response_text}</p><div className="mt-7 border-t border-[#4a392d]/20 pt-5"><p className="font-heading text-xl text-[#4a392d] mb-3">Source status</p>{intervention.citations.map((citation) => <div key={citation.label} className="p-3 bg-[#eae1ca]/60 border border-[#4a392d]/15 mb-2"><span className={`citation-badge ${citation.verified ? '' : 'citation-unverified'}`}><BookOpen size={11} /> {citation.label}</span><p className="text-xs italic mt-2 text-[#465f75]/65">{citation.verified ? 'Retrieved or verified source reference.' : 'Profile-grounded interpretation; underlying passage requires corpus retrieval.'}</p></div>)}</div></div></div>; }
 
-function ProfileModal({ philosopher, onClose }: { philosopher: Philosopher; onClose: () => void }) { const profile = philosopher.profile; const keys = ['identity', 'ontology', 'epistemology', 'conception_of_human_subject', 'conception_of_society', 'conception_of_power', 'conception_of_freedom', 'theory_of_social_change', 'conception_of_technology', 'rhetorical_style', 'what_he_sees_well', 'what_he_overlooks']; return <div className="fixed inset-0 z-50 bg-[#4a392d]/35 backdrop-blur-sm flex items-center justify-center p-4" onClick={onClose}><div className="dark-academia-card max-w-4xl max-h-[90vh] overflow-y-auto custom-scroll p-6 md:p-8" onClick={(event) => event.stopPropagation()}><div className="flex justify-between gap-4 mb-6"><div><p className="pass-indicator text-[#8b5254]">Seat {philosopher.seat_order + 1} · intellectual profile</p><h2 className="text-4xl">{philosopher.full_name}</h2><p className="italic text-[#465f75]/70">{philosopher.birth_year} — {philosopher.death_year}</p></div><button className="btn-secondary !px-3 h-fit" onClick={onClose}><X size={17} /></button></div><div className="flex flex-wrap gap-2 mb-6">{philosopher.analytical_center.map((item) => <span key={item} className="citation-badge">{item}</span>)}</div><div className="grid md:grid-cols-2 gap-5">{keys.map((key) => { const value = profile[key]; return <div key={key} className="border-t border-[#4a392d]/15 pt-3"><p className="text-xs uppercase tracking-widest text-[#8b5254] mb-1">{key.replace(/_/g, ' ')}</p><p className="text-[15px] leading-relaxed text-[#465f75]/85">{Array.isArray(value) ? value.join(' · ') : String(value ?? '')}</p></div>; })}</div></div></div>; }
+function StyleEssenceDisplay({ style }: { style: StyleEssence }) { return <div className="grid md:grid-cols-2 gap-5"><div className="border-t border-[#4a392d]/15 pt-3"><p className="text-xs uppercase tracking-widest text-[#8b5254] mb-1">Style DNA</p><p className="text-[15px] leading-relaxed text-[#465f75]/85">{style.style_dna}</p></div><div className="border-t border-[#4a392d]/15 pt-3"><p className="text-xs uppercase tracking-widest text-[#8b5254] mb-1">Characteristic Movement</p><p className="text-[15px] leading-relaxed text-[#465f75]/85">{style.characteristic_movement}</p></div></div>; }
+function ProfileModal({ philosopher, onClose }: { philosopher: Philosopher; onClose: () => void }) { const profile = philosopher.profile; const style = philosopher.style_essence; const keys = ['identity', 'ontology', 'epistemology', 'conception_of_human_subject', 'conception_of_society', 'conception_of_power', 'conception_of_freedom', 'theory_of_social_change', 'conception_of_technology', 'rhetorical_style', 'what_he_sees_well', 'what_he_overlooks']; return <div className="fixed inset-0 z-50 bg-[#4a392d]/35 backdrop-blur-sm flex items-center justify-center p-4" onClick={onClose}><div className="dark-academia-card max-w-4xl max-h-[90vh] overflow-y-auto custom-scroll p-6 md:p-8" onClick={(event) => event.stopPropagation()}><div className="flex justify-between gap-4 mb-6"><div><p className="pass-indicator text-[#8b5254]">Seat {philosopher.seat_order + 1} · intellectual profile</p><h2 className="text-4xl">{philosopher.full_name}</h2><p className="italic text-[#465f75]/70">{philosopher.birth_year} — {philosopher.death_year}</p></div><button className="btn-secondary !px-3 h-fit" onClick={onClose}><X size={17} /></button></div><div className="flex flex-wrap gap-2 mb-6">{philosopher.analytical_center.map((item) => <span key={item} className="citation-badge">{item}</span>)}</div><div className="grid md:grid-cols-2 gap-5"><StyleEssenceDisplay style={style} /></div><div className="grid md:grid-cols-2 gap-5 mt-5">{keys.map((key) => { const value = profile[key]; return <div key={key} className="border-t border-[#4a392d]/15 pt-3"><p className="text-xs uppercase tracking-widest text-[#8b5254] mb-1">{key.replace(/_/g, ' ')}</p><p className="text-[15px] leading-relaxed text-[#465f75]/85">{Array.isArray(value) ? value.join(' · ') : String(value ?? '')}</p></div>; })}</div></div></div>; }
 
 export default App;
