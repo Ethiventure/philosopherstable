@@ -1,3 +1,36 @@
+export type StyleIntensity = 'low' | 'medium' | 'high';
+
+/**
+ * Forensic generative style model for one philosopher.
+ * Reconstructs the linguistic *mechanisms* (syntax, agency, modality, conceptual
+ * movement, reader positioning) rather than surface vocabulary, so the LLM can
+ * think in the philosopher's machinery instead of decorating prose with their words.
+ */
+export interface StyleEssence {
+  /** Six-part formula, e.g. "Axiomatic Diction + Euclidean Hypotaxis + …" */
+  style_dna: string;
+  core_mechanisms: string;
+  /** Critical Discourse Analysis: agency, binaries, modality, reader effects. */
+  cda_reader_effects: string;
+  generation_rules: string[];
+  /** Compact register instruction used verbatim in the system prompt. */
+  prompt: string;
+  intensity: Record<StyleIntensity, string>;
+  /** The author's distinctive transformation logic, e.g. "Immediate → Negation → Sublation". */
+  characteristic_movement: string;
+  /** Row from the cross-author CDA comparison table. */
+  cda_profile: {
+    agency: string;
+    modality: string;
+    pronouns?: string;
+    presupposition?: string;
+    reader: string;
+    objective: string;
+  };
+  /** Author-specific extras, e.g. Marx's forensic mode or Hegel's dialectical flow. */
+  special_modes?: Record<string, string>;
+}
+
 export interface Philosopher {
   id: string;
   slug: string;
@@ -11,8 +44,12 @@ export interface Philosopher {
   accent_color: string;
   profile: Record<string, unknown>;
   analytical_center: string[];
+  style_essence: StyleEssence;
   created_at: string;
 }
+
+/** Shape of each `src/philosophers/{slug}.ts` file. Seat order is derived from birth year in the index. */
+export type PhilosopherDefinition = Omit<Philosopher, 'id' | 'created_at' | 'seat_order'>;
 
 export interface CorpusSource {
   id: string;
@@ -78,6 +115,14 @@ export interface Citation {
   verified: boolean;
 }
 
+export interface InterventionSections {
+  negation: string;
+  incorporation: string;
+  reformulation: string;
+  contradiction_passed: string;
+  new_contribution: string;
+}
+
 export interface Intervention {
   id: string;
   meeting_id: string;
@@ -85,6 +130,7 @@ export interface Intervention {
   pass_number: number;
   seat_position: number;
   response_text: string;
+  sections?: InterventionSections;
   retrieved_chunk_ids: string[];
   citations: Citation[];
   position_label: string;
@@ -151,6 +197,9 @@ export interface SpiralSynthesis {
   proposed_action: string;
 }
 
+// DEFAULT_SEATING_ORDER now lives in `src/philosophers/index.ts`, derived from birth year.
+
+export const PASS_NAMES = ['First Rotation', 'Second Rotation', 'Reconstruction'] as const;
 // Chronological order by birth year: Spinoza(1632), Kant(1724), Hegel(1770), Marx(1818),
 // Lenin(1870), Bogdanov(1873), Bookchin(1921), Deleuze(1925), Fisher(1968)
 export const CHRONOLOGICAL_ORDER = [
@@ -169,9 +218,9 @@ export const DEFAULT_SEATING_ORDER = [...CHRONOLOGICAL_ORDER];
 
 export const PASS_NAMES = ['Diagnosis', 'Dialectical Critique', 'Reconstruction'] as const;
 export const PASS_DESCRIPTIONS = [
-  'What does each thinker see?',
-  'Each agent encounters criticism and revises.',
-  'What can each thinker now construct?',
+  'Seat 1 opens on the question; every later seat determinately negates its immediate predecessor and hands a contradiction on.',
+  'The baton keeps rotating across the pass boundary; each turn critiques PREV, preserves what holds, reformulates.',
+  'Same chain, reconstructive: what institutions, practices, forms of collective power follow; final seat returns the question to the user.',
 ] as const;
 
 export interface AccessibilitySettings {
