@@ -412,3 +412,59 @@
     to { stroke-dashoffset: 0; }
   }
 }
+
+/* Accessibility: High Contrast */
+.high-contrast {
+  --color-text: #1a2a3a;
+  --color-bg: #f5f0e0;
+  --color-main: #2a1a0d;
+  --color-accent1: #6b1a1c;
+  --color-accent2: #a03040;
+  --color-parchment-light: #faf5e8;
+  --color-ink: #1a0e05;
+  --color-gold: #8a6a38;
+  --color-shadow: rgba(42, 26, 13, 0.25);
+  --color-shadow-deep: rgba(42, 26, 13, 0.45);
+}
+
+.high-contrast .dark-academia-card {
+  border: 2px solid var(--color-main);
+}
+
+.high-contrast .btn-secondary {
+  border: 2px solid var(--color-main);
+}
+
+/* Accessibility: Reduce Motion */
+.reduce-motion *,
+.reduce-motion *::before,
+.reduce-motion *::after {
+  animation-duration: 0.001ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.001ms !important;
+}
+
+.reduce-motion .rotation-arrow {
+  animation: none !important;
+}
+
+.reduce-motion .speaker-glow {
+  animation: none !important;
+  box-shadow: 0 0 12px rgba(204, 95, 104, 0.4) !important;
+}
+
+/* Accessibility: Dyslexia-Friendly Font */
+.dyslexia-font {
+  --font-body: 'Lexia', 'OpenDyslexic', 'Comic Sans MS', sans-serif;
+  --font-heading: 'Lexia', 'OpenDyslexic', 'Comic Sans MS', sans-serif;
+}
+
+.dyslexia-font .drop-cap::first-letter {
+  font-family: var(--font-body);
+}
+
+/* Accessibility: Text alignment */
+.justify-text p,
+.justify-text .drop-cap {
+  text-align: justify;
+}
