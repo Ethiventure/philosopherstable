@@ -23,3 +23,15 @@ ingest_urls.py.depends
 *.sln
 *.sw?
 .env
+.env.*.local
+# NEVER commit a real API key. Local dev key lives in untracked .env
+# (see .env.example). Production key lives in the Netlify dashboard only.
+
+# Netlify local state (netlify dev) — never commit.
+.netlify
+
+# Graphify working files (regenerated via `graphify update .`; report + graph stay).
+graphify-out/manifest.json
+graphify-out/cost.json
+graphify-out/cache/
+graphify-out/20*/

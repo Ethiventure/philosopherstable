@@ -47,7 +47,7 @@ export function buildTurnInstruction({ kind, prevName, nextName, isFinalSeat, lo
 
   if (kind === 'opening') {
     return [
-      `OPENING TURN (max ~${b.opening} words). Answer the question directly in your own framework.`,
+      `OPENING TURN (HARD ceiling: ${b.opening} words — shorter is welcome). Answer the question directly in your own framework.`,
       'Do not refer to any other thinker; there is no predecessor yet.',
       'Follow your characteristic movement.',
       'Write at length in your own diction and rhythm — continuous prose, no headings — the word budget is for development, not padding.',
@@ -72,13 +72,13 @@ export function buildTurnInstruction({ kind, prevName, nextName, isFinalSeat, lo
       : '4. CONTRADICTION PASSED ON: name the next seat and hand them the unresolved contradiction.';
 
   return [
-    `${kind === 'reconstruction' ? 'RECONSTRUCTION' : 'IMMANENT CRITIQUE'} TURN (max ~${b.total} words total; section lengths are guidance, the total is the cap). Respond ONLY to your immediate predecessor ${prev}.`,
+    `${kind === 'reconstruction' ? 'RECONSTRUCTION' : 'IMMANENT CRITIQUE'} TURN (HARD ceiling: ${b.total} words total across all four sections — shorter is welcome; section lengths are guidance, the total is the cap). Respond ONLY to your immediate predecessor ${prev}.`,
     `1. DETERMINATE NEGATION (roughly ${b.negation} words): expose the internal tension in ${prev}'s claim using their own premises. Name ${prev} and the exact claim.`,
     `2. SUBSTANTIVE INCORPORATION (roughly ${b.incorporation} words): preserve what is true in ${prev}. One clause only; do not re-explain it, and do not repeat your own prior turns — name your earlier position in one clause only if you must, then show the shift.`,
     reformulationLine,
     handoffLine,
     'Hegel/Marx method: negation must be determinate (preserve-and-elevate), never mere dismissal. Add something new; do not restate PREV or yourself.',
-    'VOICE: write continuous prose in your own diction, syntax and rhythm (your STYLE ESSENCE governs the sentence) — no headings, no labels, no numbered parts. The dialectical movement (negation of PREV, incorporation of what holds, reformulation, contradiction handed on) must be audible in the argument itself, never announced. Never open with a generic verdict on PREV ("errs", "fails to see", "is mistaken", "overlooks") — begin from the concrete object and criticise with your own toolkit\'s verbs.',
+    'VOICE: write continuous prose in your own diction, syntax and rhythm (your STYLE ESSENCE governs the sentence) — no headings or labels inside your prose. The dialectical movement (negation of PREV, incorporation of what holds, reformulation, contradiction handed on) must be audible in the argument itself, never announced. Never open with a generic verdict on PREV ("errs", "fails to see", "is mistaken", "overlooks") — begin from the concrete object and criticise with your own toolkit\'s verbs.',
   ].join(' ');
 }
 
@@ -103,7 +103,7 @@ export function buildUserMessage({ question, prevText, ownPriorLines, turnInstru
   if (ownPriorLines.length > 0) {
     parts.push(
       '',
-      'YOUR OWN PRIOR TURNS (one-line summaries, for anti-self-repetition only — this is the only history you see besides PREV): do not restate your prior position. Name it in one clause and show how it has shifted.',
+      'YOUR OWN PRIOR TURNS (anti-self-repetition only): name your earlier position in one clause and show how it has shifted.',
       ...ownPriorLines.map((line) => `- ${line}`),
     );
   }
@@ -112,8 +112,9 @@ export function buildUserMessage({ question, prevText, ownPriorLines, turnInstru
 }
 
 export const STRUCTURED_OUTPUT_HINT = [
-  'Respond with JSON only, matching this shape:',
+  'Respond with JSON only, matching this shape exactly (all six keys always present):',
   '{ negation, incorporation, reformulation, contradiction_passed, new_contribution, works_referenced: string[] }',
-  'The four text sections together obey the total word budget above; per-section counts are guidance.',
+  'The JSON envelope is mandatory — but every text value holds continuous label-free prose: no headings, no "Negation —" labels, no numbered parts inside the values.',
+  'The four text sections together must stay under the total word budget above; brevity within it is good. Per-section counts are guidance.',
   'new_contribution is one export-ready line: the single determination this turn adds. It is stored for display, never fed back as model input.',
 ].join(' ');

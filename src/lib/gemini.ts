@@ -59,7 +59,7 @@ function friendlyError(status: number, detail: string): GeminiError {
   if (status === 400 || status === 401 || status === 403) {
     // Key problems and quota problems share these statuses; tell them apart
     // from Google's own wording so the UI can show the right recovery panel.
-    if (/quota|rate.?limit|rate_limit|exhausted|resource_exhausted|too many requests/i.test(detail)) {
+    if (/quota|rate.?limit|rate_limit|exhausted|resource_exhausted|too many requests|limit exceeded|daily limit|spend/i.test(detail)) {
       return new GeminiError(
         'Gemini free-tier quota reached. Google caps free use per day and per minute — the cabinet kept everything so far; resume later or switch to the Lite model.' +
           (detail ? ` Detail: ${detail}` : ''),
@@ -76,7 +76,7 @@ function friendlyError(status: number, detail: string): GeminiError {
   }
   if (status === 429) {
     return new GeminiError(
-      'Gemini rate limit hit (429). Wait a minute and Resume the cabinet. A full session needs ~27 calls, so if this recurs, switch to gemini-3.5-flash-lite in Settings → Key — it has the most generous free quota.',
+      'Gemini rate limit hit (429). Wait a minute and Resume the cabinet. A full session needs ~30 calls, so if this recurs, switch to gemini-3.5-flash-lite in Settings → Key — it has the most generous free quota.',
       true,
       'quota',
     );
@@ -104,7 +104,12 @@ async function extractDetail(response: Response): Promise<string> {
   }
 }
 
-export function parseTurnOutput(rawText: string): TurnOutput {
+export function parseTurnOutput(rawText: string, label = 'Gemini'): TurnOutput {
+  // Short single-line excerpt so halt panels stay readable when pasted back.
+  function snippet(text: string): string {
+    const flat = text.replace(/\s+/g, ' ').trim();
+    return flat.length > 140 ? `${flat.slice(0, 140)}…` : flat || '(empty)';
+  }
   let parsed: unknown = null;
   try {
     parsed = JSON.parse(rawText);
@@ -121,12 +126,12 @@ export function parseTurnOutput(rawText: string): TurnOutput {
     }
   }
   if (!parsed || typeof parsed !== 'object') {
-    throw new GeminiError('Gemini returned unparseable output. Resume the cabinet to retry the turn.', true, 'parse');
+    throw new GeminiError(`${label} returned unparseable output. Resume the cabinet to retry the turn. Got: ${snippet(rawText)}`, true, 'parse');
   }
   const record = parsed as Record<string, unknown>;
   for (const key of ['negation', 'incorporation', 'reformulation', 'contradiction_passed', 'new_contribution']) {
     if (typeof record[key] !== 'string' || !(record[key] as string).trim()) {
-      throw new GeminiError(`Gemini output was missing “${key}”. Resume the cabinet to retry the turn.`, true, 'parse');
+      throw new GeminiError(`${label} output was missing “${key}”. Resume the cabinet to retry the turn. Got: ${snippet(rawText)}`, true, 'parse');
     }
   }
   const works = Array.isArray(record.works_referenced)
@@ -144,10 +149,26 @@ export function parseTurnOutput(rawText: string): TurnOutput {
 
 const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
+/**
+ * Providers that say "try again in Ns" (Groq does: `try again in 9.72s`).
+ * Honor it, clamped, instead of a fixed sleep — our ~4.5K-token prompts mean
+ * per-minute caps are the binding constraint, not daily quotas.
+ */
+export function retryAfterMs(detail: string, fallbackMs: number, capMs = 90000): number {
+  const match = detail.match(/try again in ([\d.]+)\s*s/i);
+  if (!match) return fallbackMs;
+  const ms = Math.ceil(parseFloat(match[1]) * 1000) + 1000;
+  return Math.min(Math.max(ms, 0), capMs);
+}
+
+/** Appended to the user message for a single repair attempt after malformed JSON. */
+export const REPAIR_SUFFIX =
+  ' Your previous reply was not valid JSON. Reply again with JSON only: the complete six-key object, no prose outside it.';
+
 export async function generateTurn({ apiKey, model, systemPrompt, userMessage, longForm }: GenerateTurnArgs): Promise<TurnOutput> {
-  const body = {
+  const makeBody = (msg: string) => ({
     system_instruction: { parts: [{ text: systemPrompt }] },
-    contents: [{ role: 'user', parts: [{ text: userMessage }] }],
+    contents: [{ role: 'user', parts: [{ text: msg }] }],
     generationConfig: {
       responseMimeType: 'application/json',
       responseSchema: RESPONSE_SCHEMA,
@@ -157,41 +178,51 @@ export async function generateTurn({ apiKey, model, systemPrompt, userMessage, l
       // LOW is documented as the right setting — it minimises latency and cost.
       thinkingConfig: { thinkingLevel: 'low' },
     },
-  };
+  });
 
-  let lastError: GeminiError | null = null;
-  for (let attempt = 0; attempt < 2; attempt += 1) {
-    if (attempt > 0) await sleep(1500);
-    let response: Response;
-    try {
-      response = await fetch(endpoint(model, apiKey), {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(body),
-      });
-    } catch {
-      lastError = new GeminiError('Network error reaching Gemini. Check the connection and Resume the cabinet.', true, 'network');
-      continue;
-    }
-    if (!response.ok) {
-      const detail = await extractDetail(response);
-      const error = friendlyError(response.status, detail);
-      if ((response.status === 429 || response.status >= 500) && attempt === 0) {
-        lastError = error;
+  const post = async (msg: string): Promise<string> => {
+    let lastError: GeminiError | null = null;
+    for (let attempt = 0; attempt < 3; attempt += 1) {
+      let response: Response;
+      try {
+        response = await fetch(endpoint(model, apiKey), {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(makeBody(msg)),
+        });
+      } catch {
+        lastError = new GeminiError('Network error reaching Gemini. Check the connection and Resume the cabinet.', true, 'network');
         continue;
       }
-      throw error;
+      if (!response.ok) {
+        const detail = await extractDetail(response);
+        const error = friendlyError(response.status, detail);
+        if ((response.status === 429 || response.status >= 500) && attempt < 2) {
+          lastError = error;
+          await sleep(response.status === 429 ? retryAfterMs(detail, 15000) : 2000);
+          continue;
+        }
+        throw error;
+      }
+      const data = (await response.json()) as {
+        candidates?: { content?: { parts?: { text?: string }[] }; finishReason?: string }[];
+      };
+      const text = data.candidates?.[0]?.content?.parts?.map((part) => part.text ?? '').join('') ?? '';
+      if (!text.trim()) {
+        throw new GeminiError('Gemini returned an empty response. Resume the cabinet to retry the turn.', true, 'server');
+      }
+      return text;
     }
-    const data = (await response.json()) as {
-      candidates?: { content?: { parts?: { text?: string }[] }; finishReason?: string }[];
-    };
-    const text = data.candidates?.[0]?.content?.parts?.map((part) => part.text ?? '').join('') ?? '';
-    if (!text.trim()) {
-      throw new GeminiError('Gemini returned an empty response. Resume the cabinet to retry the turn.', true, 'server');
-    }
+    throw lastError ?? new GeminiError('Gemini request failed. Resume the cabinet to retry the turn.', true, 'unknown');
+  };
+
+  const text = await post(userMessage);
+  try {
     return parseTurnOutput(text);
+  } catch (error) {
+    if (!(error instanceof GeminiError) || error.code !== 'parse') throw error;
+    return parseTurnOutput(await post(userMessage + REPAIR_SUFFIX));
   }
-  throw lastError ?? new GeminiError('Gemini request failed. Resume the cabinet to retry the turn.', true, 'unknown');
 }
 
 /** Cheap key check: one tiny call on the given model (defaults to flash). */

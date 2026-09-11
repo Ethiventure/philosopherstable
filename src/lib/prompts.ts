@@ -47,7 +47,9 @@ function philosopherProfileBlock(philosopher: Philosopher): string {
   ];
   const lines: string[] = [];
   for (const key of keys) {
-    const value = p[key];
+    // She/her variants (Weil) resolve when the he/him key is absent.
+    const alt = key.startsWith('what_he_') ? key.replace('what_he_', 'what_she_') : null;
+    const value = p[key] !== undefined ? p[key] : alt ? p[alt] : undefined;
     if (value === undefined) continue;
     if (Array.isArray(value)) {
       lines.push(`${key.replace(/_/g, ' ')}: ${value.join('; ')}`);

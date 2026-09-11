@@ -198,7 +198,7 @@ export interface SpiralSynthesis {
 }
 
 // Chronological order by birth year: Spinoza(1632), Kant(1724), Hegel(1770), Marx(1818),
-// Lenin(1870), Bogdanov(1873), Bookchin(1921), Deleuze(1925), Fisher(1968)
+// Lenin(1870), Bogdanov(1873), Weil(1909), Bookchin(1921), Deleuze(1925), Fisher(1968)
 export const CHRONOLOGICAL_ORDER = [
   'spinoza',
   'kant',
@@ -206,6 +206,7 @@ export const CHRONOLOGICAL_ORDER = [
   'marx',
   'lenin',
   'bogdanov',
+  'weil',
   'bookchin',
   'deleuze',
   'fisher',
