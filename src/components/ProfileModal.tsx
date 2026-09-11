@@ -8,12 +8,31 @@ interface ProfileModalProps {
 
 export function ProfileModal({ philosopher, onClose }: ProfileModalProps) {
   const profile = philosopher.profile;
-  const keys = [
+  const baseKeys = [
     'identity', 'ontology', 'epistemology', 'conception_of_human_subject',
     'conception_of_society', 'conception_of_power', 'conception_of_freedom',
     'theory_of_social_change', 'conception_of_technology',
     'rhetorical_style', 'what_he_sees_well', 'what_he_overlooks',
   ];
+  const hiddenKeys = new Set(['reasoning', 'self_review', 'meta_fix', 'style', 'historical_boundary']);
+  const altKey = (key: string) =>
+    key.startsWith('what_he_') ? key.replace('what_he_', 'what_she_')
+    : key.startsWith('what_she_') ? key.replace('what_she_', 'what_he_') : null;
+  const rows: { label: string; value: unknown }[] = [];
+  const consumed = new Set<string>();
+  for (const key of baseKeys) {
+    const alt = altKey(key);
+    const value = profile[key] !== undefined ? profile[key] : alt ? profile[alt] : undefined;
+    if (value === undefined) continue;
+    const labelKey = profile[key] !== undefined ? key : (alt ?? key);
+    rows.push({ label: labelKey.replace(/_/g, ' '), value });
+    consumed.add(key);
+    if (alt) consumed.add(alt);
+  }
+  for (const key of Object.keys(profile)) {
+    if (consumed.has(key) || hiddenKeys.has(key)) continue;
+    rows.push({ label: key.replace(/_/g, ' '), value: profile[key] });
+  }
 
   return (
     <div className="fixed inset-0 z-50 bg-[#4a392d]/35 backdrop-blur-sm flex items-center justify-center p-4" onClick={onClose}>
@@ -39,15 +58,14 @@ export function ProfileModal({ philosopher, onClose }: ProfileModalProps) {
           ))}
         </div>
         <div className="grid md:grid-cols-2 gap-5">
-          {keys.map((key) => {
-            const value = profile[key];
+          {rows.map((row) => {
             return (
-              <div key={key} className="border-t border-[#4a392d]/15 pt-3">
+              <div key={row.label} className="border-t border-[#4a392d]/15 pt-3">
                 <p className="text-xs uppercase tracking-widest text-[#8b5254] mb-1">
-                  {key.replace(/_/g, ' ')}
+                  {row.label}
                 </p>
                 <p className="text-[15px] leading-relaxed text-[#465f75]/85">
-                  {Array.isArray(value) ? value.join(' · ') : String(value ?? '')}
+                  {Array.isArray(row.value) ? row.value.join(' · ') : String(row.value ?? '')}
                 </p>
               </div>
             );

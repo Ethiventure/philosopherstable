@@ -1,0 +1,13 @@
+# Netlify: static publish + one serverless function (the shared-LLM proxy).
+# The Groq key lives ONLY in the Netlify dashboard (Site settings → Environment
+# variables → GROQ_API_KEY). It is never in this repo and never in the bundle.
+[build]
+  publish = "dist"
+  command = "npm run build"
+  functions = "netlify/functions"
+
+# SPA fallback — must come after any function/API routes (functions take precedence).
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200

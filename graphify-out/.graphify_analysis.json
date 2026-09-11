@@ -1,0 +1,575 @@
+{
+  "communities": {
+    "0": [
+      "eslint_config",
+      "package",
+      "package_name",
+      "package_private",
+      "package_scripts",
+      "package_scripts_build",
+      "package_scripts_dev",
+      "package_scripts_lint",
+      "package_scripts_preview",
+      "package_scripts_typecheck",
+      "package_type",
+      "package_version",
+      "ref_autoprefixer",
+      "ref_eslint",
+      "ref_eslint_js",
+      "ref_eslint_plugin_react_hooks",
+      "ref_eslint_plugin_react_refresh",
+      "ref_globals",
+      "ref_google_generative_ai",
+      "ref_postcss",
+      "ref_react_dom",
+      "ref_supabase_supabase_js",
+      "ref_tailwindcss",
+      "ref_types_react",
+      "ref_types_react_dom",
+      "ref_typescript",
+      "ref_typescript_eslint",
+      "ref_vite",
+      "ref_vitejs_plugin_react",
+      "src_lib_supabase",
+      "src_lib_supabase_supabase",
+      "src_lib_supabase_supabaseanonkey",
+      "src_lib_supabase_supabaseurl",
+      "vite_config"
+    ],
+    "1": [
+      "ref_lucide_react",
+      "src_components_cabinettable",
+      "src_components_cabinettable_cabinettable",
+      "src_components_cabinettable_cabinettableprops",
+      "src_components_interventioncard",
+      "src_components_interventioncard_interventioncard",
+      "src_components_interventioncard_interventioncardprops",
+      "src_components_interventionmodal",
+      "src_components_interventionmodal_interventionmodal",
+      "src_components_interventionmodal_interventionmodalprops",
+      "src_components_profilemodal",
+      "src_components_profilemodal_profilemodal",
+      "src_components_profilemodal_profilemodalprops",
+      "src_components_settingsdrawer",
+      "src_components_settingsdrawer_settingsdrawer",
+      "src_components_settingsdrawer_settingsdrawerprops",
+      "src_components_settingsdrawer_togglerow",
+      "src_components_sourcedrawer",
+      "src_components_sourcedrawer_sourcedrawer",
+      "src_components_sourcedrawer_sourcedrawerprops",
+      "src_components_spiralview",
+      "src_components_spiralview_cabinetrecord",
+      "src_components_spiralview_cabinetrecordprops",
+      "src_components_spiralview_positioncomparison",
+      "src_components_spiralview_positioncomparisonprops",
+      "src_components_spiralview_spiralview",
+      "src_components_spiralview_spiralviewprops"
+    ],
+    "2": [
+      "src_types_index",
+      "src_types_index_accessibilitysettings",
+      "src_types_index_chronological_order",
+      "src_types_index_citation",
+      "src_types_index_corpuschunk",
+      "src_types_index_corpuspassage",
+      "src_types_index_corpussource",
+      "src_types_index_default_accessibility",
+      "src_types_index_default_seating_order",
+      "src_types_index_dialecticalmap",
+      "src_types_index_displayfont",
+      "src_types_index_displaytheme",
+      "src_types_index_intervention",
+      "src_types_index_interventionsections",
+      "src_types_index_meeting",
+      "src_types_index_pass_descriptions",
+      "src_types_index_pass_names",
+      "src_types_index_passsummary",
+      "src_types_index_philosopher",
+      "src_types_index_philosopherdefinition",
+      "src_types_index_positionmemory",
+      "src_types_index_problemmap",
+      "src_types_index_spiralsynthesis",
+      "src_types_index_styleessence",
+      "src_types_index_styleintensity"
+    ],
+    "3": [
+      "ref_react",
+      "src_app",
+      "src_app_app",
+      "src_app_cabinettable",
+      "src_app_displaytab",
+      "src_app_displaytoggle",
+      "src_app_getreadmoresource",
+      "src_app_interventioncard",
+      "src_app_interventionmodal",
+      "src_app_positioncomparison",
+      "src_app_profilemodal",
+      "src_app_rationale_362",
+      "src_app_readmore",
+      "src_app_settingsdrawer",
+      "src_app_sourcedrawer",
+      "src_app_spiralview",
+      "src_app_styleessencedisplay",
+      "src_app_tointervention",
+      "src_app_welcomemodal",
+      "src_main"
+    ],
+    "4": [
+      "tsconfig_app",
+      "tsconfig_app_compileroptions",
+      "tsconfig_app_compileroptions_allowimportingtsextensions",
+      "tsconfig_app_compileroptions_baseurl",
+      "tsconfig_app_compileroptions_isolatedmodules",
+      "tsconfig_app_compileroptions_jsx",
+      "tsconfig_app_compileroptions_lib",
+      "tsconfig_app_compileroptions_module",
+      "tsconfig_app_compileroptions_moduledetection",
+      "tsconfig_app_compileroptions_moduleresolution",
+      "tsconfig_app_compileroptions_noemit",
+      "tsconfig_app_compileroptions_nofallthroughcasesinswitch",
+      "tsconfig_app_compileroptions_nounusedlocals",
+      "tsconfig_app_compileroptions_nounusedparameters",
+      "tsconfig_app_compileroptions_paths",
+      "tsconfig_app_compileroptions_skiplibcheck",
+      "tsconfig_app_compileroptions_strict",
+      "tsconfig_app_compileroptions_target",
+      "tsconfig_app_compileroptions_usedefineforclassfields",
+      "tsconfig_app_include"
+    ],
+    "5": [
+      "src_lib_openrouter",
+      "src_lib_openrouter_attemptmodel",
+      "src_lib_openrouter_extractdetail",
+      "src_lib_openrouter_free_model_cycle",
+      "src_lib_openrouter_free_router_fallback",
+      "src_lib_openrouter_generateturnopenrouter",
+      "src_lib_openrouter_isavailabilitydetail",
+      "src_lib_openrouter_isfailfast",
+      "src_lib_openrouter_loadlastgood",
+      "src_lib_openrouter_openroutererror",
+      "src_lib_openrouter_openrouterturnargs",
+      "src_lib_openrouter_orderedcycle",
+      "src_lib_openrouter_savelastgood",
+      "src_lib_openrouter_sleep",
+      "src_lib_openrouter_statusisretryablemodel",
+      "src_lib_openrouter_stripfences",
+      "src_lib_openrouter_testopenrouterkey"
+    ],
+    "6": [
+      "tsconfig_node",
+      "tsconfig_node_compileroptions",
+      "tsconfig_node_compileroptions_allowimportingtsextensions",
+      "tsconfig_node_compileroptions_isolatedmodules",
+      "tsconfig_node_compileroptions_lib",
+      "tsconfig_node_compileroptions_module",
+      "tsconfig_node_compileroptions_moduledetection",
+      "tsconfig_node_compileroptions_moduleresolution",
+      "tsconfig_node_compileroptions_noemit",
+      "tsconfig_node_compileroptions_nofallthroughcasesinswitch",
+      "tsconfig_node_compileroptions_nounusedlocals",
+      "tsconfig_node_compileroptions_nounusedparameters",
+      "tsconfig_node_compileroptions_skiplibcheck",
+      "tsconfig_node_compileroptions_strict",
+      "tsconfig_node_compileroptions_target",
+      "tsconfig_node_include"
+    ],
+    "7": [
+      "package_devdependencies",
+      "package_devdependencies_autoprefixer",
+      "package_devdependencies_eslint",
+      "package_devdependencies_eslint_js",
+      "package_devdependencies_eslint_plugin_react_hooks",
+      "package_devdependencies_eslint_plugin_react_refresh",
+      "package_devdependencies_globals",
+      "package_devdependencies_postcss",
+      "package_devdependencies_tailwindcss",
+      "package_devdependencies_types_react",
+      "package_devdependencies_types_react_dom",
+      "package_devdependencies_typescript",
+      "package_devdependencies_typescript_eslint",
+      "package_devdependencies_vite",
+      "package_devdependencies_vitejs_plugin_react"
+    ],
+    "8": [
+      "src_lib_gemini",
+      "src_lib_gemini_endpoint",
+      "src_lib_gemini_extractdetail",
+      "src_lib_gemini_friendlyerror",
+      "src_lib_gemini_geminierror",
+      "src_lib_gemini_geminierror_constructor",
+      "src_lib_gemini_geminierrorcode",
+      "src_lib_gemini_generateturn",
+      "src_lib_gemini_generateturnargs",
+      "src_lib_gemini_parseturnoutput",
+      "src_lib_gemini_response_schema",
+      "src_lib_gemini_sleep",
+      "src_lib_gemini_testapikey",
+      "src_lib_gemini_turnoutput"
+    ],
+    "9": [
+      "src_lib_settings",
+      "src_lib_settings_cabinetsettings",
+      "src_lib_settings_clearapikey",
+      "src_lib_settings_default_settings",
+      "src_lib_settings_gemini_models",
+      "src_lib_settings_geminimodel",
+      "src_lib_settings_groq_models",
+      "src_lib_settings_groqmodel",
+      "src_lib_settings_legacy_model_map",
+      "src_lib_settings_llmprovider",
+      "src_lib_settings_loadsettings",
+      "src_lib_settings_savesettings",
+      "src_lib_settings_turneconomy"
+    ],
+    "10": [
+      "src_lib_tts",
+      "src_lib_tts_chunktext",
+      "src_lib_tts_createttscontroller",
+      "src_lib_tts_createttscontroller_finish",
+      "src_lib_tts_createttscontroller_speakitemchunks",
+      "src_lib_tts_ensurevoices",
+      "src_lib_tts_isttssupported",
+      "src_lib_tts_listvoices",
+      "src_lib_tts_ttscontroller",
+      "src_lib_tts_ttscontrolleroptions",
+      "src_lib_tts_ttsitem",
+      "src_lib_tts_ttsstatus",
+      "src_lib_tts_ttsvoiceinfo"
+    ],
+    "11": [
+      "netlify_functions_cabinet",
+      "netlify_functions_cabinet_clientip",
+      "netlify_functions_cabinet_default_models",
+      "netlify_functions_cabinet_handler",
+      "netlify_functions_cabinet_ismodelfault",
+      "netlify_functions_cabinet_json",
+      "netlify_functions_cabinet_perip",
+      "netlify_functions_cabinet_resetifnewday",
+      "netlify_functions_cabinet_safedetail",
+      "netlify_functions_cabinet_trymodel",
+      "netlify_functions_cabinet_usageday",
+      "netlify_functions_cabinet_utcday"
+    ],
+    "12": [
+      "src_lib_dialectic_prompts",
+      "src_lib_dialectic_prompts_buildturninstruction",
+      "src_lib_dialectic_prompts_buildusermessage",
+      "src_lib_dialectic_prompts_getturnkind",
+      "src_lib_dialectic_prompts_max_output_tokens",
+      "src_lib_dialectic_prompts_structured_output_hint",
+      "src_lib_dialectic_prompts_turninstructionargs",
+      "src_lib_dialectic_prompts_turnkind",
+      "src_lib_dialectic_prompts_usermessageargs",
+      "src_lib_dialectic_prompts_word_budgets"
+    ],
+    "13": [
+      "src_lib_groq",
+      "src_lib_groq_extractdetail",
+      "src_lib_groq_generateturngroq",
+      "src_lib_groq_groqerror",
+      "src_lib_groq_groqturnargs",
+      "src_lib_groq_sleep",
+      "src_lib_groq_stripfences",
+      "src_lib_groq_testgroqkey"
+    ],
+    "14": [
+      "src_lib_preferences",
+      "src_lib_preferences_applydisplay",
+      "src_lib_preferences_clamp",
+      "src_lib_preferences_default_display",
+      "src_lib_preferences_displaypreferences",
+      "src_lib_preferences_loaddisplay",
+      "src_lib_preferences_prefersreducedmotion",
+      "src_lib_preferences_savedisplay"
+    ],
+    "15": [
+      "src_philosophers_index",
+      "src_philosophers_index_default_seating_order",
+      "src_philosophers_index_definitions",
+      "src_philosophers_index_philosopher_by_slug",
+      "src_philosophers_index_philosopher_data",
+      "src_philosophers_index_renderpersona",
+      "src_philosophers_shared_anti_waffle_renderantiwaffle",
+      "src_philosophers_shared_universal_mechanisms_renderuniversalmechanisms"
+    ],
+    "16": [
+      "src_lib_prompts",
+      "src_lib_prompts_buildexportprompt",
+      "src_lib_prompts_buildprompt",
+      "src_lib_prompts_findphilosopher",
+      "src_lib_prompts_interventionsummary",
+      "src_lib_prompts_philosopherprofileblock",
+      "src_lib_prompts_promptcontext"
+    ],
+    "17": [
+      "package_dependencies",
+      "package_dependencies_google_generative_ai",
+      "package_dependencies_lucide_react",
+      "package_dependencies_react",
+      "package_dependencies_react_dom",
+      "package_dependencies_supabase_supabase_js"
+    ],
+    "18": [
+      "src_philosophers_shared_universal_mechanisms",
+      "src_philosophers_shared_universal_mechanisms_avoid_caricature",
+      "src_philosophers_shared_universal_mechanisms_forensic_preamble",
+      "src_philosophers_shared_universal_mechanisms_generative_argument_model",
+      "src_philosophers_shared_universal_mechanisms_style_control_description",
+      "src_philosophers_shared_universal_mechanisms_universal_supporting_mechanisms"
+    ],
+    "19": [
+      "src_philosophers_shared_anti_waffle",
+      "src_philosophers_shared_anti_waffle_anti_waffle_rules",
+      "src_philosophers_shared_anti_waffle_banned_phrases",
+      "src_philosophers_shared_anti_waffle_dialectical_materialism_frame",
+      "src_philosophers_shared_anti_waffle_role_integrity"
+    ],
+    "20": [
+      "src_lib_shared",
+      "src_lib_shared_generateturnshared",
+      "src_lib_shared_sharedturnargs",
+      "src_lib_shared_stripfences"
+    ],
+    "21": [
+      "src_philosophers_bogdanov",
+      "src_philosophers_bogdanov_bogdanov",
+      "src_philosophers_bogdanov_style",
+      "src_philosophers_bogdanov_style_bogdanov_style"
+    ],
+    "22": [
+      "src_philosophers_bookchin",
+      "src_philosophers_bookchin_bookchin",
+      "src_philosophers_bookchin_style",
+      "src_philosophers_bookchin_style_bookchin_style"
+    ],
+    "23": [
+      "src_philosophers_deleuze",
+      "src_philosophers_deleuze_deleuze",
+      "src_philosophers_deleuze_style",
+      "src_philosophers_deleuze_style_deleuze_style"
+    ],
+    "24": [
+      "src_philosophers_fisher",
+      "src_philosophers_fisher_fisher",
+      "src_philosophers_fisher_style",
+      "src_philosophers_fisher_style_fisher_style"
+    ],
+    "25": [
+      "src_philosophers_hegel",
+      "src_philosophers_hegel_hegel",
+      "src_philosophers_hegel_style",
+      "src_philosophers_hegel_style_hegel_style"
+    ],
+    "26": [
+      "src_philosophers_kant",
+      "src_philosophers_kant_kant",
+      "src_philosophers_kant_style",
+      "src_philosophers_kant_style_kant_style"
+    ],
+    "27": [
+      "src_philosophers_lenin",
+      "src_philosophers_lenin_lenin",
+      "src_philosophers_lenin_style",
+      "src_philosophers_lenin_style_lenin_style"
+    ],
+    "28": [
+      "src_philosophers_marx",
+      "src_philosophers_marx_marx",
+      "src_philosophers_marx_style",
+      "src_philosophers_marx_style_marx_style"
+    ],
+    "29": [
+      "src_philosophers_spinoza",
+      "src_philosophers_spinoza_spinoza",
+      "src_philosophers_spinoza_style",
+      "src_philosophers_spinoza_style_spinoza_style"
+    ],
+    "30": [
+      "src_philosophers_weil",
+      "src_philosophers_weil_style",
+      "src_philosophers_weil_style_weil_style",
+      "src_philosophers_weil_weil"
+    ],
+    "31": [
+      "opencode_plugins_graphify",
+      "opencode_plugins_graphify_graphifyplugin",
+      "opencode_plugins_graphify_rationale_4"
+    ],
+    "32": [
+      "tsconfig",
+      "tsconfig_files",
+      "tsconfig_references"
+    ],
+    "33": [
+      "scripts_split_philosophers",
+      "scripts_split_philosophers_rationale_1"
+    ],
+    "34": [
+      "src_data_corpus_sources",
+      "src_data_corpus_sources_corpus_sources_data"
+    ],
+    "35": [
+      "tailwind_config",
+      "tailwindcss"
+    ],
+    "36": [
+      "postcss_config"
+    ],
+    "37": [
+      "src_vite_env_d"
+    ]
+  },
+  "cohesion": {
+    "0": 0.0677361853832442,
+    "1": 0.07407407407407407,
+    "2": 0.08,
+    "3": 0.12631578947368421,
+    "4": 0.1,
+    "5": 0.22794117647058823,
+    "6": 0.125,
+    "7": 0.13333333333333333,
+    "8": 0.26373626373626374,
+    "9": 0.1794871794871795,
+    "10": 0.23076923076923078,
+    "11": 0.30303030303030304,
+    "12": 0.2,
+    "13": 0.4642857142857143,
+    "14": 0.32142857142857145,
+    "15": 0.32142857142857145,
+    "16": 0.5238095238095238,
+    "17": 0.3333333333333333,
+    "18": 0.3333333333333333,
+    "19": 0.4,
+    "20": 0.6666666666666666,
+    "21": 0.6666666666666666,
+    "22": 0.6666666666666666,
+    "23": 0.6666666666666666,
+    "24": 0.6666666666666666,
+    "25": 0.6666666666666666,
+    "26": 0.6666666666666666,
+    "27": 0.6666666666666666,
+    "28": 0.6666666666666666,
+    "29": 0.6666666666666666,
+    "30": 0.6666666666666666,
+    "31": 0.6666666666666666,
+    "32": 0.6666666666666666,
+    "33": 1.0,
+    "34": 1.0,
+    "35": 1.0,
+    "36": 1.0,
+    "37": 1.0
+  },
+  "gods": [
+    {
+      "id": "tsconfig_app_compileroptions",
+      "label": "compilerOptions",
+      "degree": 18
+    },
+    {
+      "id": "tsconfig_node_compileroptions",
+      "label": "compilerOptions",
+      "degree": 14
+    },
+    {
+      "id": "ref_lucide_react",
+      "label": "lucide-react",
+      "degree": 9
+    },
+    {
+      "id": "src_lib_openrouter_attemptmodel",
+      "label": "attemptModel()",
+      "degree": 7
+    },
+    {
+      "id": "src_lib_gemini_generateturn",
+      "label": "generateTurn()",
+      "degree": 7
+    },
+    {
+      "id": "package_scripts",
+      "label": "scripts",
+      "degree": 6
+    },
+    {
+      "id": "src_lib_gemini_geminierror",
+      "label": "GeminiError",
+      "degree": 5
+    },
+    {
+      "id": "src_lib_tts_createttscontroller_speakitemchunks",
+      "label": "speakItemChunks()",
+      "degree": 5
+    },
+    {
+      "id": "netlify_functions_cabinet_handler",
+      "label": "handler()",
+      "degree": 5
+    },
+    {
+      "id": "netlify_functions_cabinet_trymodel",
+      "label": "tryModel()",
+      "degree": 5
+    }
+  ],
+  "surprises": [
+    {
+      "source": "renderPersona()",
+      "target": "renderAntiWaffle()",
+      "source_files": [
+        "src/philosophers/index.ts",
+        "src/philosophers/shared/anti-waffle.ts"
+      ],
+      "confidence": "EXTRACTED",
+      "relation": "calls",
+      "why": "cross-file semantic connection"
+    },
+    {
+      "source": "renderPersona()",
+      "target": "renderUniversalMechanisms()",
+      "source_files": [
+        "src/philosophers/index.ts",
+        "src/philosophers/shared/universal-mechanisms.ts"
+      ],
+      "confidence": "EXTRACTED",
+      "relation": "calls",
+      "why": "cross-file semantic connection"
+    }
+  ],
+  "questions": [
+    {
+      "type": "bridge_node",
+      "question": "Why does `lucide-react` connect `lucide-react` to `package.json`, `App.tsx`?",
+      "why": "High betweenness centrality (0.044) - this node is a cross-community bridge."
+    },
+    {
+      "type": "bridge_node",
+      "question": "Why does `devDependencies` connect `devDependencies` to `package.json`?",
+      "why": "High betweenness centrality (0.023) - this node is a cross-community bridge."
+    },
+    {
+      "type": "bridge_node",
+      "question": "Why does `react` connect `App.tsx` to `package.json`, `lucide-react`?",
+      "why": "High betweenness centrality (0.012) - this node is a cross-community bridge."
+    },
+    {
+      "type": "isolated_nodes",
+      "question": "What connects `CabinetTableProps`, `InterventionCardProps`, `InterventionModalProps` to the rest of the system?",
+      "why": "156 weakly-connected nodes found - possible documentation gaps or missing edges."
+    },
+    {
+      "type": "low_cohesion",
+      "question": "Should `package.json` be split into smaller, more focused modules?",
+      "why": "Cohesion score 0.0677361853832442 - nodes in this community are weakly interconnected."
+    },
+    {
+      "type": "low_cohesion",
+      "question": "Should `lucide-react` be split into smaller, more focused modules?",
+      "why": "Cohesion score 0.07407407407407407 - nodes in this community are weakly interconnected."
+    },
+    {
+      "type": "low_cohesion",
+      "question": "Should `types/index.ts` be split into smaller, more focused modules?",
+      "why": "Cohesion score 0.08 - nodes in this community are weakly interconnected."
+    }
+  ]
+}

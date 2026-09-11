@@ -7,7 +7,26 @@ Phases are ordered by dependency; each should leave the app building.
 
 ## Decisions
 
-### API key: Bring-Your-Own-Key (BYOK)
+### API keys: shared default, BYOK fallback
+Three providers (`CabinetSettings.provider` in `src/lib/settings.ts`):
+`shared` (default, no key needed) / `gemini` / `openrouter`.
+
+- **Shared** = the cabinet's own Groq key, held ONLY in `netlify/functions/cabinet.js`
+  via the `GROQ_API_KEY` env var set in the Netlify dashboard. The browser calls
+  same-origin `/.netlify/functions/cabinet`; the key never enters the repo or the
+  bundle. Never `VITE_*` it, never commit it (`.env` + `.netlify` gitignored,
+  `.env.example` is the template). Per-IP daily cap (default 60 ≈ 2 sessions) +
+  global daily cap (default 900) enforced in-function; quota errors reuse the
+  `quota` code so the halt/resume UI behaves identically. Groq free tier has no
+  billing, so abuse costs shared quota, not money. If the key leaks: rotate in
+  console.groq.com + Netlify env, no code change. Local dev serves functions via
+  `netlify dev` (plain `npm run dev` has no functions → shared shows a friendly
+  unreachable note, BYOK still works).
+- **Gemini direct / OpenRouter free cycle** = visitor's own key, `localStorage`
+  only, sent straight to that provider. Privacy: OpenRouter free models may log
+  prompts for training — the Settings panel says so.
+
+### API key: Bring-Your-Own-Key (BYOK) for personal providers
 Deploy target is public (Netlify / Bolt) with no login. Therefore:
 
 - **Never** put a Gemini key in `.env` for a Vite app — any `VITE_*` variable is inlined
@@ -40,10 +59,9 @@ rotation stays tight:
 
 | Section | Normal | Long form |
 |---|---|---|
-| Determinate negation | 35 | 95 |
+| Determinate negation | 40 | 110 |
 | Substantive incorporation | 20 | 55 |
-| Reformulation | 65 | 175 |
-| Contradiction passed on | 30 | 75 |
+| Reformulation | 90 | 235 |
 | **Total per turn (the cap)** | **~150** | **~400** |
 | Opening turn (seat 1, pass 1) | 90 | 240 |
 
@@ -51,7 +69,7 @@ Per-section counts are guidance for shaping the answer; the total is what
 is enforced. All four parts must be present.
 
 `maxOutputTokens: 300` normal / `600` long form (JSON wrapper needs headroom).
-A full 9 × 3 session ≈ 3.9k words normal — roughly a 15-minute read.
+A full 10 × 3 session ≈ 4.3k words normal — roughly a 18-minute read.
 
 ### Embeddings (Phase 5)
 `test_embeddings.py` uses local Ollama `nomic-embed-text` (768 dims); the schema is
@@ -93,29 +111,45 @@ The drag-drop → toggle change left `App.tsx` broken.
 ## Phase 2 — Gemini + dialectical engine (replaces `makeMockIntervention`)
 
 **2a Settings** — `src/lib/settings.ts` (localStorage): provider
-(`gemini` direct / `openrouter` free cycle), `geminiApiKey`, `openRouterApiKey`,
-`model` (`gemini-3.6-flash` quality default / `gemini-3.5-flash-lite` max-free-tier),
-`intensity`, `longForm`. Settings drawer: provider radio, key input
-(password-style) per provider, Test key, Clear, privacy statement (OpenRouter
-free models may log prompts for training), link to Google AI Studio / openrouter.ai/keys.
+(`shared` default / `gemini` / `openrouter` free cycle or paid pinned model /
+`groq` free BYOK (same models as shared),
+keys per provider, `model` (`gemini-3.6-flash` quality / `gemini-3.5-flash-lite`
+max-free-tier), `groqModel` (qwen3.8-27b default, free tier — no OpenAI models anywhere),
+`economy` (`full` / `efficient` — efficient caps fed-back PREV text at ~1200
+chars; personas are never trimmed), `intensity`, `longForm`.
 Settings drawer: key input (password-style), Test key, Clear, privacy statement,
 link to Google AI Studio. No key → Begin disabled with explanation.
 
-**2b Client** — `src/lib/gemini.ts`: `fetch` to `generateContent` with
+**2b Clients** — `src/lib/gemini.ts`: `fetch` to `generateContent` with
 `responseMimeType: 'application/json'` + `responseSchema` + `thinkingLevel: 'low'`;
-one retry on 429/5xx; errors surfaced in UI with machine-readable codes. No SDK.
-`src/lib/openrouter.ts`: OpenAI-compatible `chat/completions` with
-`response_format: json_object`, cycling an ordered free-model list (per-model
-quotas spread a session); unusable models are skipped mid-run, last-good is
-remembered. Quota halt shows a recovery panel (resume / switch provider / usage link).
+one retry on 429/5xx; errors carry machine-readable codes (`quota`/`auth`/`model`/
+`network`/`server`/`parse`). No SDK.
+`src/lib/openrouter.ts`: OpenAI-compatible `chat/completions` (no `response_format` —
+most free models can't do it; prompt-instructed JSON + salvage instead), cycling an
+ordered free-model list with `openrouter/free` as last-resort fallback; unusable
+models are skipped mid-run, last-good is remembered. Quota halt shows a recovery
+panel (resume / switch provider / usage link).
+`src/lib/shared.ts` + `netlify/functions/cabinet.js`: shared Groq turns through the
+server-side proxy (see Decisions). Client maps function errors to the same codes.
+429s are waited out, not halted on: each client parses Groq's "try again in Ns"
+(`retryAfterMs` in `gemini.ts`) and retries the turn up to 3×. NOTE: Netlify free
+functions time out at 10s — slow Groq turns will die on deploy; client resume
+covers it, but watch this if shared sessions stall live.
+`src/lib/groq.ts`: visitor Groq direct, free tier (OpenAI-compatible, no response_format —
+prompt-instructed JSON plus salvage, same lesson as OpenRouter).
+
+Token discipline (voices never trimmed): only the active speaker's persona is sent
+per turn; `efficient` economy caps PREV feedback; instruction boilerplate deduped;
+seat count is the big lever (5 seats ≈ 15 turns ≈ half the tokens) — the welcome
+modal and Cabinet tab say so.
 
 **2c Three turn types** — `src/lib/dialectic/prompts.ts`
 
 | Turn | When | Shape |
 |---|---|---|
 | Opening | Pass 1, seat 1 | Answer the question directly in own framework; no reference to other thinkers; follow characteristic movement. |
-| Immanent critique | All other turns, passes 1–2 | (1) Determinate negation of PREV using their own premises; (2) Substantive incorporation; (3) Reformulation from own framework; (4) Contradiction passed to NEXT, by name. |
-| Reconstruction | Pass 3 | Same four parts; (3) becomes *what institutions / practices / forms of collective power follow now the contradictions are visible*. Final seat's (4) returns the question, as it now stands, to the user. |
+| Immanent critique | All other turns, passes 1–2 | Cuts in on PREV's closing lines: (1) Determinate negation using PREV's own premises; (2) Substantive incorporation; (3) Reformulation from own framework, ending on the live edge. No handoff, no naming NEXT. |
+| Reconstruction | Pass 3 | Same three parts; (3) becomes *what institutions / practices / forms of collective power follow now the contradictions are visible*. Final seat returns the question, as it now stands, to the user. |
 
 PREV crosses pass boundaries: pass 2 seat 1 critiques pass 1's last seat.
 
@@ -135,7 +169,7 @@ PREV crosses pass boundaries: pass 2 seat 1 critiques pass 1's last seat.
 
 **2e Structured output**
 ```ts
-{ negation, incorporation, reformulation, contradiction_passed,
+{ negation, incorporation, reformulation,
   new_contribution, works_referenced: string[] }
 ```
 Stored as `Intervention.sections`; `response_text` kept as a joined string.
