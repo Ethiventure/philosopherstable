@@ -59,10 +59,9 @@ rotation stays tight:
 
 | Section | Normal | Long form |
 |---|---|---|
-| Determinate negation | 35 | 95 |
+| Determinate negation | 40 | 110 |
 | Substantive incorporation | 20 | 55 |
-| Reformulation | 65 | 175 |
-| Contradiction passed on | 30 | 75 |
+| Reformulation | 90 | 235 |
 | **Total per turn (the cap)** | **~150** | **~400** |
 | Opening turn (seat 1, pass 1) | 90 | 240 |
 
@@ -149,8 +148,8 @@ modal and Cabinet tab say so.
 | Turn | When | Shape |
 |---|---|---|
 | Opening | Pass 1, seat 1 | Answer the question directly in own framework; no reference to other thinkers; follow characteristic movement. |
-| Immanent critique | All other turns, passes 1–2 | (1) Determinate negation of PREV using their own premises; (2) Substantive incorporation; (3) Reformulation from own framework; (4) Contradiction passed to NEXT, by name. |
-| Reconstruction | Pass 3 | Same four parts; (3) becomes *what institutions / practices / forms of collective power follow now the contradictions are visible*. Final seat's (4) returns the question, as it now stands, to the user. |
+| Immanent critique | All other turns, passes 1–2 | Cuts in on PREV's closing lines: (1) Determinate negation using PREV's own premises; (2) Substantive incorporation; (3) Reformulation from own framework, ending on the live edge. No handoff, no naming NEXT. |
+| Reconstruction | Pass 3 | Same three parts; (3) becomes *what institutions / practices / forms of collective power follow now the contradictions are visible*. Final seat returns the question, as it now stands, to the user. |
 
 PREV crosses pass boundaries: pass 2 seat 1 critiques pass 1's last seat.
 
@@ -170,7 +169,7 @@ PREV crosses pass boundaries: pass 2 seat 1 critiques pass 1's last seat.
 
 **2e Structured output**
 ```ts
-{ negation, incorporation, reformulation, contradiction_passed,
+{ negation, incorporation, reformulation,
   new_contribution, works_referenced: string[] }
 ```
 Stored as `Intervention.sections`; `response_text` kept as a joined string.

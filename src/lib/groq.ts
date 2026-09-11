@@ -10,7 +10,7 @@ import type { GroqModel } from '@/lib/settings';
  * thinking before answering — a tight cap truncates the JSON mid-object,
  * which is the usual cause of "unparseable output" halts here.
  */
-const GROQ_MAX_TOKENS = { normal: 2000, long: 4000 } as const;
+const GROQ_MAX_TOKENS = { normal: 4000, long: 8000 } as const;
 
 interface GroqTurnArgs {
   apiKey: string;

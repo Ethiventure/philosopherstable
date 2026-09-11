@@ -1,5 +1,9 @@
-import { MAX_OUTPUT_TOKENS } from '@/lib/dialectic/prompts';
 import { GeminiError, REPAIR_SUFFIX, parseTurnOutput, retryAfterMs, type TurnOutput } from '@/lib/gemini';
+
+// Generous ceiling for the same reason as the other free paths: reasoning
+// models spend output on thinking first, and a tight cap truncates the JSON.
+// Stays under Groq's 8K TPM alongside our ~4.5K-token prompts.
+const SHARED_MAX_TOKENS = { normal: 2000, long: 4000 } as const;
 
 /**
  * Shared provider: the cabinet's own Groq-backed turn, via the same-origin
@@ -36,11 +40,11 @@ export async function generateTurnShared({ systemPrompt, userMessage, longForm }
         response = await fetch('/.netlify/functions/cabinet', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            systemPrompt,
-            userMessage: msg,
-            maxTokens: longForm ? MAX_OUTPUT_TOKENS.long : MAX_OUTPUT_TOKENS.normal,
-          }),
+        body: JSON.stringify({
+          systemPrompt,
+          userMessage: msg,
+          maxTokens: longForm ? SHARED_MAX_TOKENS.long : SHARED_MAX_TOKENS.normal,
+        }),
         });
       } catch {
         throw new GeminiError(

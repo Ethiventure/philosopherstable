@@ -222,7 +222,7 @@
       "file_type": "code",
       "norm_label": "usermessageargs",
       "source_file": "src/lib/dialectic/prompts.ts",
-      "source_location": "L85"
+      "source_location": "L80"
     },
     {
       "id": "src_lib_groq_groqturnargs",
@@ -274,7 +274,7 @@
       "file_type": "code",
       "norm_label": "accessibilitysettings",
       "source_file": "src/types/index.ts",
-      "source_location": "L227"
+      "source_location": "L228"
     },
     {
       "id": "src_types_index_citation",
@@ -287,7 +287,7 @@
       "file_type": "code",
       "norm_label": "citation",
       "source_file": "src/types/index.ts",
-      "source_location": "L110"
+      "source_location": "L112"
     },
     {
       "id": "src_types_index_corpuschunk",
@@ -300,7 +300,7 @@
       "file_type": "code",
       "norm_label": "corpuschunk",
       "source_file": "src/types/index.ts",
-      "source_location": "L74"
+      "source_location": "L76"
     },
     {
       "id": "src_types_index_corpuspassage",
@@ -313,7 +313,7 @@
       "file_type": "code",
       "norm_label": "corpuspassage",
       "source_file": "src/types/index.ts",
-      "source_location": "L86"
+      "source_location": "L88"
     },
     {
       "id": "src_types_index_corpussource",
@@ -339,7 +339,7 @@
       "file_type": "code",
       "norm_label": "dialecticalmap",
       "source_file": "src/types/index.ts",
-      "source_location": "L177"
+      "source_location": "L178"
     },
     {
       "id": "src_types_index_displayfont",
@@ -352,7 +352,7 @@
       "file_type": "code",
       "norm_label": "displayfont",
       "source_file": "src/types/index.ts",
-      "source_location": "L225"
+      "source_location": "L226"
     },
     {
       "id": "src_types_index_displaytheme",
@@ -365,7 +365,7 @@
       "file_type": "code",
       "norm_label": "displaytheme",
       "source_file": "src/types/index.ts",
-      "source_location": "L224"
+      "source_location": "L225"
     },
     {
       "id": "src_types_index_intervention",
@@ -378,7 +378,7 @@
       "file_type": "code",
       "norm_label": "intervention",
       "source_file": "src/types/index.ts",
-      "source_location": "L126"
+      "source_location": "L127"
     },
     {
       "id": "src_types_index_interventionsections",
@@ -391,7 +391,7 @@
       "file_type": "code",
       "norm_label": "interventionsections",
       "source_file": "src/types/index.ts",
-      "source_location": "L118"
+      "source_location": "L120"
     },
     {
       "id": "src_types_index_meeting",
@@ -404,7 +404,7 @@
       "file_type": "code",
       "norm_label": "meeting",
       "source_file": "src/types/index.ts",
-      "source_location": "L97"
+      "source_location": "L99"
     },
     {
       "id": "src_types_index_passsummary",
@@ -417,7 +417,7 @@
       "file_type": "code",
       "norm_label": "passsummary",
       "source_file": "src/types/index.ts",
-      "source_location": "L158"
+      "source_location": "L159"
     },
     {
       "id": "src_types_index_philosopher",
@@ -456,7 +456,7 @@
       "file_type": "code",
       "norm_label": "positionmemory",
       "source_file": "src/types/index.ts",
-      "source_location": "L140"
+      "source_location": "L141"
     },
     {
       "id": "src_types_index_problemmap",
@@ -469,7 +469,7 @@
       "file_type": "code",
       "norm_label": "problemmap",
       "source_file": "src/types/index.ts",
-      "source_location": "L167"
+      "source_location": "L168"
     },
     {
       "id": "src_types_index_spiralsynthesis",
@@ -482,7 +482,7 @@
       "file_type": "code",
       "norm_label": "spiralsynthesis",
       "source_file": "src/types/index.ts",
-      "source_location": "L187"
+      "source_location": "L188"
     },
     {
       "id": "src_types_index_styleessence",
@@ -521,7 +521,7 @@
       "file_type": "code",
       "norm_label": "sharedturnargs",
       "source_file": "src/lib/shared.ts",
-      "source_location": "L17"
+      "source_location": "L21"
     },
     {
       "id": "src_lib_openrouter_openrouterturnargs",
@@ -534,7 +534,7 @@
       "file_type": "code",
       "norm_label": "openrouterturnargs",
       "source_file": "src/lib/openrouter.ts",
-      "source_location": "L78"
+      "source_location": "L77"
     },
     {
       "id": "src_lib_gemini_geminierror",
@@ -547,7 +547,7 @@
       "file_type": "code",
       "norm_label": "geminierror",
       "source_file": "src/lib/gemini.ts",
-      "source_location": "L21"
+      "source_location": "L20"
     },
     {
       "id": "src_lib_gemini_geminierrorcode",
@@ -560,7 +560,7 @@
       "file_type": "code",
       "norm_label": "geminierrorcode",
       "source_file": "src/lib/gemini.ts",
-      "source_location": "L19"
+      "source_location": "L18"
     },
     {
       "id": "src_lib_gemini_generateturnargs",
@@ -573,7 +573,7 @@
       "file_type": "code",
       "norm_label": "generateturnargs",
       "source_file": "src/lib/gemini.ts",
-      "source_location": "L46"
+      "source_location": "L44"
     },
     {
       "id": "src_lib_gemini_turnoutput",
@@ -599,7 +599,7 @@
       "file_type": "code",
       "norm_label": "cabinetsettings",
       "source_file": "src/lib/settings.ts",
-      "source_location": "L30"
+      "source_location": "L28"
     },
     {
       "id": "src_lib_settings_geminimodel",
@@ -651,7 +651,7 @@
       "file_type": "code",
       "norm_label": "turneconomy",
       "source_file": "src/lib/settings.ts",
-      "source_location": "L28"
+      "source_location": "L26"
     },
     {
       "id": "src_components_cabinettable_cabinettable",
@@ -963,7 +963,7 @@
       "file_type": "code",
       "norm_label": "buildturninstruction()",
       "source_file": "src/lib/dialectic/prompts.ts",
-      "source_location": "L45"
+      "source_location": "L44"
     },
     {
       "id": "src_lib_dialectic_prompts_buildusermessage",
@@ -975,7 +975,7 @@
       "file_type": "code",
       "norm_label": "buildusermessage()",
       "source_file": "src/lib/dialectic/prompts.ts",
-      "source_location": "L92"
+      "source_location": "L87"
     },
     {
       "id": "src_lib_dialectic_prompts_getturnkind",
@@ -1059,7 +1059,7 @@
       "file_type": "code",
       "norm_label": "testgroqkey()",
       "source_file": "src/lib/groq.ts",
-      "source_location": "L135"
+      "source_location": "L141"
     },
     {
       "id": "src_lib_preferences_applydisplay",
@@ -1227,7 +1227,7 @@
       "file_type": "code",
       "norm_label": "generateturnshared()",
       "source_file": "src/lib/shared.ts",
-      "source_location": "L28"
+      "source_location": "L32"
     },
     {
       "id": "src_lib_shared_stripfences",
@@ -1239,7 +1239,7 @@
       "file_type": "code",
       "norm_label": "stripfences()",
       "source_file": "src/lib/shared.ts",
-      "source_location": "L23"
+      "source_location": "L27"
     },
     {
       "id": "src_app_app",
@@ -1251,7 +1251,7 @@
       "file_type": "code",
       "norm_label": "app()",
       "source_file": "src/App.tsx",
-      "source_location": "L117"
+      "source_location": "L118"
     },
     {
       "id": "src_app_cabinettable",
@@ -1263,7 +1263,7 @@
       "file_type": "code",
       "norm_label": "cabinettable()",
       "source_file": "src/App.tsx",
-      "source_location": "L555"
+      "source_location": "L666"
     },
     {
       "id": "src_app_displaytab",
@@ -1275,7 +1275,7 @@
       "file_type": "code",
       "norm_label": "displaytab()",
       "source_file": "src/App.tsx",
-      "source_location": "L760"
+      "source_location": "L890"
     },
     {
       "id": "src_app_displaytoggle",
@@ -1287,7 +1287,7 @@
       "file_type": "code",
       "norm_label": "displaytoggle()",
       "source_file": "src/App.tsx",
-      "source_location": "L872"
+      "source_location": "L1002"
     },
     {
       "id": "src_app_getreadmoresource",
@@ -1299,19 +1299,7 @@
       "file_type": "code",
       "norm_label": "getreadmoresource()",
       "source_file": "src/App.tsx",
-      "source_location": "L46"
-    },
-    {
-      "id": "src_app_interventioncard",
-      "label": "InterventionCard()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 3,
-      "community_name": "App.tsx",
-      "file_type": "code",
-      "norm_label": "interventioncard()",
-      "source_file": "src/App.tsx",
-      "source_location": "L559"
+      "source_location": "L47"
     },
     {
       "id": "src_app_interventionmodal",
@@ -1323,7 +1311,7 @@
       "file_type": "code",
       "norm_label": "interventionmodal()",
       "source_file": "src/App.tsx",
-      "source_location": "L882"
+      "source_location": "L1012"
     },
     {
       "id": "src_app_positioncomparison",
@@ -1335,7 +1323,7 @@
       "file_type": "code",
       "norm_label": "positioncomparison()",
       "source_file": "src/App.tsx",
-      "source_location": "L563"
+      "source_location": "L672"
     },
     {
       "id": "src_app_profilemodal",
@@ -1347,7 +1335,19 @@
       "file_type": "code",
       "norm_label": "profilemodal()",
       "source_file": "src/App.tsx",
-      "source_location": "L885"
+      "source_location": "L1015"
+    },
+    {
+      "id": "src_app_readingdeck",
+      "label": "ReadingDeck()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 3,
+      "community_name": "App.tsx",
+      "file_type": "code",
+      "norm_label": "readingdeck()",
+      "source_file": "src/App.tsx",
+      "source_location": "L597"
     },
     {
       "id": "src_app_readmore",
@@ -1359,7 +1359,7 @@
       "file_type": "code",
       "norm_label": "readmore()",
       "source_file": "src/App.tsx",
-      "source_location": "L56"
+      "source_location": "L59"
     },
     {
       "id": "src_app_settingsdrawer",
@@ -1371,7 +1371,7 @@
       "file_type": "code",
       "norm_label": "settingsdrawer()",
       "source_file": "src/App.tsx",
-      "source_location": "L590"
+      "source_location": "L706"
     },
     {
       "id": "src_app_sourcedrawer",
@@ -1383,7 +1383,7 @@
       "file_type": "code",
       "norm_label": "sourcedrawer()",
       "source_file": "src/App.tsx",
-      "source_location": "L588"
+      "source_location": "L697"
     },
     {
       "id": "src_app_spiralview",
@@ -1395,7 +1395,7 @@
       "file_type": "code",
       "norm_label": "spiralview()",
       "source_file": "src/App.tsx",
-      "source_location": "L561"
+      "source_location": "L670"
     },
     {
       "id": "src_app_styleessencedisplay",
@@ -1407,7 +1407,7 @@
       "file_type": "code",
       "norm_label": "styleessencedisplay()",
       "source_file": "src/App.tsx",
-      "source_location": "L884"
+      "source_location": "L1014"
     },
     {
       "id": "src_app_tointervention",
@@ -1419,7 +1419,7 @@
       "file_type": "code",
       "norm_label": "tointervention()",
       "source_file": "src/App.tsx",
-      "source_location": "L75"
+      "source_location": "L78"
     },
     {
       "id": "src_app_welcomemodal",
@@ -1431,7 +1431,7 @@
       "file_type": "code",
       "norm_label": "welcomemodal()",
       "source_file": "src/App.tsx",
-      "source_location": "L565"
+      "source_location": "L674"
     },
     {
       "id": "opencode_plugins_graphify_graphifyplugin",
@@ -1455,7 +1455,7 @@
       "file_type": "code",
       "norm_label": "attemptmodel()",
       "source_file": "src/lib/openrouter.ts",
-      "source_location": "L187"
+      "source_location": "L194"
     },
     {
       "id": "src_lib_openrouter_extractdetail",
@@ -1467,7 +1467,7 @@
       "file_type": "code",
       "norm_label": "extractdetail()",
       "source_file": "src/lib/openrouter.ts",
-      "source_location": "L163"
+      "source_location": "L170"
     },
     {
       "id": "src_lib_openrouter_generateturnopenrouter",
@@ -1479,7 +1479,7 @@
       "file_type": "code",
       "norm_label": "generateturnopenrouter()",
       "source_file": "src/lib/openrouter.ts",
-      "source_location": "L278"
+      "source_location": "L289"
     },
     {
       "id": "src_lib_openrouter_isavailabilitydetail",
@@ -1491,7 +1491,7 @@
       "file_type": "code",
       "norm_label": "isavailabilitydetail()",
       "source_file": "src/lib/openrouter.ts",
-      "source_location": "L85"
+      "source_location": "L92"
     },
     {
       "id": "src_lib_openrouter_isfailfast",
@@ -1503,7 +1503,7 @@
       "file_type": "code",
       "norm_label": "isfailfast()",
       "source_file": "src/lib/openrouter.ts",
-      "source_location": "L274"
+      "source_location": "L285"
     },
     {
       "id": "src_lib_openrouter_loadlastgood",
@@ -1515,7 +1515,7 @@
       "file_type": "code",
       "norm_label": "loadlastgood()",
       "source_file": "src/lib/openrouter.ts",
-      "source_location": "L50"
+      "source_location": "L49"
     },
     {
       "id": "src_lib_openrouter_openroutererror",
@@ -1527,7 +1527,7 @@
       "file_type": "code",
       "norm_label": "openroutererror()",
       "source_file": "src/lib/openrouter.ts",
-      "source_location": "L89"
+      "source_location": "L96"
     },
     {
       "id": "src_lib_openrouter_orderedcycle",
@@ -1539,7 +1539,7 @@
       "file_type": "code",
       "norm_label": "orderedcycle()",
       "source_file": "src/lib/openrouter.ts",
-      "source_location": "L70"
+      "source_location": "L69"
     },
     {
       "id": "src_lib_openrouter_savelastgood",
@@ -1551,7 +1551,7 @@
       "file_type": "code",
       "norm_label": "savelastgood()",
       "source_file": "src/lib/openrouter.ts",
-      "source_location": "L60"
+      "source_location": "L59"
     },
     {
       "id": "src_lib_openrouter_sleep",
@@ -1563,7 +1563,7 @@
       "file_type": "code",
       "norm_label": "sleep()",
       "source_file": "src/lib/openrouter.ts",
-      "source_location": "L180"
+      "source_location": "L187"
     },
     {
       "id": "src_lib_openrouter_statusisretryablemodel",
@@ -1575,7 +1575,7 @@
       "file_type": "code",
       "norm_label": "statusisretryablemodel()",
       "source_file": "src/lib/openrouter.ts",
-      "source_location": "L270"
+      "source_location": "L281"
     },
     {
       "id": "src_lib_openrouter_stripfences",
@@ -1587,7 +1587,7 @@
       "file_type": "code",
       "norm_label": "stripfences()",
       "source_file": "src/lib/openrouter.ts",
-      "source_location": "L182"
+      "source_location": "L189"
     },
     {
       "id": "src_lib_openrouter_testopenrouterkey",
@@ -1599,7 +1599,7 @@
       "file_type": "code",
       "norm_label": "testopenrouterkey()",
       "source_file": "src/lib/openrouter.ts",
-      "source_location": "L313"
+      "source_location": "L382"
     },
     {
       "id": "src_lib_gemini_endpoint",
@@ -1611,7 +1611,7 @@
       "file_type": "code",
       "norm_label": "endpoint()",
       "source_file": "src/lib/gemini.ts",
-      "source_location": "L54"
+      "source_location": "L52"
     },
     {
       "id": "src_lib_gemini_extractdetail",
@@ -1623,7 +1623,7 @@
       "file_type": "code",
       "norm_label": "extractdetail()",
       "source_file": "src/lib/gemini.ts",
-      "source_location": "L98"
+      "source_location": "L96"
     },
     {
       "id": "src_lib_gemini_friendlyerror",
@@ -1635,7 +1635,7 @@
       "file_type": "code",
       "norm_label": "friendlyerror()",
       "source_file": "src/lib/gemini.ts",
-      "source_location": "L58"
+      "source_location": "L56"
     },
     {
       "id": "src_lib_gemini_geminierror_constructor",
@@ -1647,7 +1647,7 @@
       "file_type": "code",
       "norm_label": ".constructor()",
       "source_file": "src/lib/gemini.ts",
-      "source_location": "L24"
+      "source_location": "L23"
     },
     {
       "id": "src_lib_gemini_generateturn",
@@ -1659,7 +1659,7 @@
       "file_type": "code",
       "norm_label": "generateturn()",
       "source_file": "src/lib/gemini.ts",
-      "source_location": "L147"
+      "source_location": "L165"
     },
     {
       "id": "src_lib_gemini_parseturnoutput",
@@ -1671,7 +1671,31 @@
       "file_type": "code",
       "norm_label": "parseturnoutput()",
       "source_file": "src/lib/gemini.ts",
+      "source_location": "L105"
+    },
+    {
+      "id": "src_lib_gemini_parseturnoutput_snippet",
+      "label": "snippet()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 8,
+      "community_name": "gemini.ts",
+      "file_type": "code",
+      "norm_label": "snippet()",
+      "source_file": "src/lib/gemini.ts",
       "source_location": "L107"
+    },
+    {
+      "id": "src_lib_gemini_retryafterms",
+      "label": "retryAfterMs()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 8,
+      "community_name": "gemini.ts",
+      "file_type": "code",
+      "norm_label": "retryafterms()",
+      "source_file": "src/lib/gemini.ts",
+      "source_location": "L154"
     },
     {
       "id": "src_lib_gemini_sleep",
@@ -1683,7 +1707,7 @@
       "file_type": "code",
       "norm_label": "sleep()",
       "source_file": "src/lib/gemini.ts",
-      "source_location": "L145"
+      "source_location": "L147"
     },
     {
       "id": "src_lib_gemini_testapikey",
@@ -1695,7 +1719,7 @@
       "file_type": "code",
       "norm_label": "testapikey()",
       "source_file": "src/lib/gemini.ts",
-      "source_location": "L198"
+      "source_location": "L226"
     },
     {
       "id": "src_lib_settings_clearapikey",
@@ -1707,7 +1731,7 @@
       "file_type": "code",
       "norm_label": "clearapikey()",
       "source_file": "src/lib/settings.ts",
-      "source_location": "L87"
+      "source_location": "L94"
     },
     {
       "id": "src_lib_settings_loadsettings",
@@ -1719,7 +1743,7 @@
       "file_type": "code",
       "norm_label": "loadsettings()",
       "source_file": "src/lib/settings.ts",
-      "source_location": "L56"
+      "source_location": "L58"
     },
     {
       "id": "src_lib_settings_savesettings",
@@ -1731,7 +1755,7 @@
       "file_type": "code",
       "norm_label": "savesettings()",
       "source_file": "src/lib/settings.ts",
-      "source_location": "L79"
+      "source_location": "L86"
     },
     {
       "id": "eslint_config",
@@ -1754,6 +1778,72 @@
       "norm_label": "package.json",
       "source_file": "package.json",
       "source_location": "L1"
+    },
+    {
+      "id": "package_dependencies",
+      "label": "dependencies",
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "package.json",
+      "file_type": "code",
+      "norm_label": "dependencies",
+      "source_file": "package.json",
+      "source_location": "L13"
+    },
+    {
+      "id": "package_dependencies_google_generative_ai",
+      "label": "@google/generative-ai",
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "package.json",
+      "file_type": "code",
+      "norm_label": "@google/generative-ai",
+      "source_file": "package.json",
+      "source_location": "L14"
+    },
+    {
+      "id": "package_dependencies_lucide_react",
+      "label": "lucide-react",
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "package.json",
+      "file_type": "code",
+      "norm_label": "lucide-react",
+      "source_file": "package.json",
+      "source_location": "L16"
+    },
+    {
+      "id": "package_dependencies_react",
+      "label": "react",
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "package.json",
+      "file_type": "code",
+      "norm_label": "react",
+      "source_file": "package.json",
+      "source_location": "L17"
+    },
+    {
+      "id": "package_dependencies_react_dom",
+      "label": "react-dom",
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "package.json",
+      "file_type": "code",
+      "norm_label": "react-dom",
+      "source_file": "package.json",
+      "source_location": "L18"
+    },
+    {
+      "id": "package_dependencies_supabase_supabase_js",
+      "label": "@supabase/supabase-js",
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "package.json",
+      "file_type": "code",
+      "norm_label": "@supabase/supabase-js",
+      "source_file": "package.json",
+      "source_location": "L15"
     },
     {
       "id": "package_name",
@@ -2281,7 +2371,7 @@
       "file_type": "code",
       "norm_label": "structured_output_hint",
       "source_file": "src/lib/dialectic/prompts.ts",
-      "source_location": "L114"
+      "source_location": "L109"
     },
     {
       "id": "src_lib_dialectic_prompts_word_budgets",
@@ -2306,6 +2396,17 @@
       "source_location": "L1"
     },
     {
+      "id": "src_lib_groq_groq_max_tokens",
+      "label": "GROQ_MAX_TOKENS",
+      "_origin": "ast",
+      "community": 13,
+      "community_name": "groq.ts",
+      "file_type": "code",
+      "norm_label": "groq_max_tokens",
+      "source_file": "src/lib/groq.ts",
+      "source_location": "L13"
+    },
+    {
       "id": "src_lib_preferences",
       "label": "preferences.ts",
       "_origin": "ast",
@@ -2326,6 +2427,226 @@
       "norm_label": "default_display",
       "source_file": "src/lib/preferences.ts",
       "source_location": "L6"
+    },
+    {
+      "id": "src_philosophers_bogdanov",
+      "label": "bogdanov.ts",
+      "_origin": "ast",
+      "community": 15,
+      "community_name": "philosophers/index.ts",
+      "file_type": "code",
+      "norm_label": "bogdanov.ts",
+      "source_file": "src/philosophers/bogdanov.ts",
+      "source_location": "L1"
+    },
+    {
+      "id": "src_philosophers_bogdanov_bogdanov",
+      "label": "BOGDANOV",
+      "_origin": "ast",
+      "community": 15,
+      "community_name": "philosophers/index.ts",
+      "file_type": "code",
+      "norm_label": "bogdanov",
+      "source_file": "src/philosophers/bogdanov.ts",
+      "source_location": "L4"
+    },
+    {
+      "id": "src_philosophers_bogdanov_style",
+      "label": "bogdanov.style.ts",
+      "_origin": "ast",
+      "community": 15,
+      "community_name": "philosophers/index.ts",
+      "file_type": "code",
+      "norm_label": "bogdanov.style.ts",
+      "source_file": "src/philosophers/bogdanov.style.ts",
+      "source_location": "L1"
+    },
+    {
+      "id": "src_philosophers_bogdanov_style_bogdanov_style",
+      "label": "BOGDANOV_STYLE",
+      "_origin": "ast",
+      "community": 15,
+      "community_name": "philosophers/index.ts",
+      "file_type": "code",
+      "norm_label": "bogdanov_style",
+      "source_file": "src/philosophers/bogdanov.style.ts",
+      "source_location": "L3"
+    },
+    {
+      "id": "src_philosophers_bookchin",
+      "label": "bookchin.ts",
+      "_origin": "ast",
+      "community": 15,
+      "community_name": "philosophers/index.ts",
+      "file_type": "code",
+      "norm_label": "bookchin.ts",
+      "source_file": "src/philosophers/bookchin.ts",
+      "source_location": "L1"
+    },
+    {
+      "id": "src_philosophers_bookchin_bookchin",
+      "label": "BOOKCHIN",
+      "_origin": "ast",
+      "community": 15,
+      "community_name": "philosophers/index.ts",
+      "file_type": "code",
+      "norm_label": "bookchin",
+      "source_file": "src/philosophers/bookchin.ts",
+      "source_location": "L4"
+    },
+    {
+      "id": "src_philosophers_bookchin_style",
+      "label": "bookchin.style.ts",
+      "_origin": "ast",
+      "community": 15,
+      "community_name": "philosophers/index.ts",
+      "file_type": "code",
+      "norm_label": "bookchin.style.ts",
+      "source_file": "src/philosophers/bookchin.style.ts",
+      "source_location": "L1"
+    },
+    {
+      "id": "src_philosophers_bookchin_style_bookchin_style",
+      "label": "BOOKCHIN_STYLE",
+      "_origin": "ast",
+      "community": 15,
+      "community_name": "philosophers/index.ts",
+      "file_type": "code",
+      "norm_label": "bookchin_style",
+      "source_file": "src/philosophers/bookchin.style.ts",
+      "source_location": "L3"
+    },
+    {
+      "id": "src_philosophers_deleuze",
+      "label": "deleuze.ts",
+      "_origin": "ast",
+      "community": 15,
+      "community_name": "philosophers/index.ts",
+      "file_type": "code",
+      "norm_label": "deleuze.ts",
+      "source_file": "src/philosophers/deleuze.ts",
+      "source_location": "L1"
+    },
+    {
+      "id": "src_philosophers_deleuze_deleuze",
+      "label": "DELEUZE",
+      "_origin": "ast",
+      "community": 15,
+      "community_name": "philosophers/index.ts",
+      "file_type": "code",
+      "norm_label": "deleuze",
+      "source_file": "src/philosophers/deleuze.ts",
+      "source_location": "L4"
+    },
+    {
+      "id": "src_philosophers_deleuze_style",
+      "label": "deleuze.style.ts",
+      "_origin": "ast",
+      "community": 15,
+      "community_name": "philosophers/index.ts",
+      "file_type": "code",
+      "norm_label": "deleuze.style.ts",
+      "source_file": "src/philosophers/deleuze.style.ts",
+      "source_location": "L1"
+    },
+    {
+      "id": "src_philosophers_deleuze_style_deleuze_style",
+      "label": "DELEUZE_STYLE",
+      "_origin": "ast",
+      "community": 15,
+      "community_name": "philosophers/index.ts",
+      "file_type": "code",
+      "norm_label": "deleuze_style",
+      "source_file": "src/philosophers/deleuze.style.ts",
+      "source_location": "L3"
+    },
+    {
+      "id": "src_philosophers_fisher",
+      "label": "fisher.ts",
+      "_origin": "ast",
+      "community": 15,
+      "community_name": "philosophers/index.ts",
+      "file_type": "code",
+      "norm_label": "fisher.ts",
+      "source_file": "src/philosophers/fisher.ts",
+      "source_location": "L1"
+    },
+    {
+      "id": "src_philosophers_fisher_fisher",
+      "label": "FISHER",
+      "_origin": "ast",
+      "community": 15,
+      "community_name": "philosophers/index.ts",
+      "file_type": "code",
+      "norm_label": "fisher",
+      "source_file": "src/philosophers/fisher.ts",
+      "source_location": "L4"
+    },
+    {
+      "id": "src_philosophers_fisher_style",
+      "label": "fisher.style.ts",
+      "_origin": "ast",
+      "community": 15,
+      "community_name": "philosophers/index.ts",
+      "file_type": "code",
+      "norm_label": "fisher.style.ts",
+      "source_file": "src/philosophers/fisher.style.ts",
+      "source_location": "L1"
+    },
+    {
+      "id": "src_philosophers_fisher_style_fisher_style",
+      "label": "FISHER_STYLE",
+      "_origin": "ast",
+      "community": 15,
+      "community_name": "philosophers/index.ts",
+      "file_type": "code",
+      "norm_label": "fisher_style",
+      "source_file": "src/philosophers/fisher.style.ts",
+      "source_location": "L3"
+    },
+    {
+      "id": "src_philosophers_hegel",
+      "label": "hegel.ts",
+      "_origin": "ast",
+      "community": 15,
+      "community_name": "philosophers/index.ts",
+      "file_type": "code",
+      "norm_label": "hegel.ts",
+      "source_file": "src/philosophers/hegel.ts",
+      "source_location": "L1"
+    },
+    {
+      "id": "src_philosophers_hegel_hegel",
+      "label": "HEGEL",
+      "_origin": "ast",
+      "community": 15,
+      "community_name": "philosophers/index.ts",
+      "file_type": "code",
+      "norm_label": "hegel",
+      "source_file": "src/philosophers/hegel.ts",
+      "source_location": "L4"
+    },
+    {
+      "id": "src_philosophers_hegel_style",
+      "label": "hegel.style.ts",
+      "_origin": "ast",
+      "community": 15,
+      "community_name": "philosophers/index.ts",
+      "file_type": "code",
+      "norm_label": "hegel.style.ts",
+      "source_file": "src/philosophers/hegel.style.ts",
+      "source_location": "L1"
+    },
+    {
+      "id": "src_philosophers_hegel_style_hegel_style",
+      "label": "HEGEL_STYLE",
+      "_origin": "ast",
+      "community": 15,
+      "community_name": "philosophers/index.ts",
+      "file_type": "code",
+      "norm_label": "hegel_style",
+      "source_file": "src/philosophers/hegel.style.ts",
+      "source_location": "L3"
     },
     {
       "id": "src_philosophers_index",
@@ -2383,6 +2704,281 @@
       "source_location": "L21"
     },
     {
+      "id": "src_philosophers_kant",
+      "label": "kant.ts",
+      "_origin": "ast",
+      "community": 15,
+      "community_name": "philosophers/index.ts",
+      "file_type": "code",
+      "norm_label": "kant.ts",
+      "source_file": "src/philosophers/kant.ts",
+      "source_location": "L1"
+    },
+    {
+      "id": "src_philosophers_kant_kant",
+      "label": "KANT",
+      "_origin": "ast",
+      "community": 15,
+      "community_name": "philosophers/index.ts",
+      "file_type": "code",
+      "norm_label": "kant",
+      "source_file": "src/philosophers/kant.ts",
+      "source_location": "L4"
+    },
+    {
+      "id": "src_philosophers_kant_style",
+      "label": "kant.style.ts",
+      "_origin": "ast",
+      "community": 15,
+      "community_name": "philosophers/index.ts",
+      "file_type": "code",
+      "norm_label": "kant.style.ts",
+      "source_file": "src/philosophers/kant.style.ts",
+      "source_location": "L1"
+    },
+    {
+      "id": "src_philosophers_kant_style_kant_style",
+      "label": "KANT_STYLE",
+      "_origin": "ast",
+      "community": 15,
+      "community_name": "philosophers/index.ts",
+      "file_type": "code",
+      "norm_label": "kant_style",
+      "source_file": "src/philosophers/kant.style.ts",
+      "source_location": "L3"
+    },
+    {
+      "id": "src_philosophers_lenin",
+      "label": "lenin.ts",
+      "_origin": "ast",
+      "community": 15,
+      "community_name": "philosophers/index.ts",
+      "file_type": "code",
+      "norm_label": "lenin.ts",
+      "source_file": "src/philosophers/lenin.ts",
+      "source_location": "L1"
+    },
+    {
+      "id": "src_philosophers_lenin_lenin",
+      "label": "LENIN",
+      "_origin": "ast",
+      "community": 15,
+      "community_name": "philosophers/index.ts",
+      "file_type": "code",
+      "norm_label": "lenin",
+      "source_file": "src/philosophers/lenin.ts",
+      "source_location": "L4"
+    },
+    {
+      "id": "src_philosophers_lenin_style",
+      "label": "lenin.style.ts",
+      "_origin": "ast",
+      "community": 15,
+      "community_name": "philosophers/index.ts",
+      "file_type": "code",
+      "norm_label": "lenin.style.ts",
+      "source_file": "src/philosophers/lenin.style.ts",
+      "source_location": "L1"
+    },
+    {
+      "id": "src_philosophers_lenin_style_lenin_style",
+      "label": "LENIN_STYLE",
+      "_origin": "ast",
+      "community": 15,
+      "community_name": "philosophers/index.ts",
+      "file_type": "code",
+      "norm_label": "lenin_style",
+      "source_file": "src/philosophers/lenin.style.ts",
+      "source_location": "L3"
+    },
+    {
+      "id": "src_philosophers_marx",
+      "label": "marx.ts",
+      "_origin": "ast",
+      "community": 15,
+      "community_name": "philosophers/index.ts",
+      "file_type": "code",
+      "norm_label": "marx.ts",
+      "source_file": "src/philosophers/marx.ts",
+      "source_location": "L1"
+    },
+    {
+      "id": "src_philosophers_marx_marx",
+      "label": "MARX",
+      "_origin": "ast",
+      "community": 15,
+      "community_name": "philosophers/index.ts",
+      "file_type": "code",
+      "norm_label": "marx",
+      "source_file": "src/philosophers/marx.ts",
+      "source_location": "L4"
+    },
+    {
+      "id": "src_philosophers_marx_style",
+      "label": "marx.style.ts",
+      "_origin": "ast",
+      "community": 15,
+      "community_name": "philosophers/index.ts",
+      "file_type": "code",
+      "norm_label": "marx.style.ts",
+      "source_file": "src/philosophers/marx.style.ts",
+      "source_location": "L1"
+    },
+    {
+      "id": "src_philosophers_marx_style_marx_style",
+      "label": "MARX_STYLE",
+      "_origin": "ast",
+      "community": 15,
+      "community_name": "philosophers/index.ts",
+      "file_type": "code",
+      "norm_label": "marx_style",
+      "source_file": "src/philosophers/marx.style.ts",
+      "source_location": "L3"
+    },
+    {
+      "id": "src_philosophers_shared_anti_waffle",
+      "label": "anti-waffle.ts",
+      "_origin": "ast",
+      "community": 15,
+      "community_name": "philosophers/index.ts",
+      "file_type": "code",
+      "norm_label": "anti-waffle.ts",
+      "source_file": "src/philosophers/shared/anti-waffle.ts",
+      "source_location": "L1"
+    },
+    {
+      "id": "src_philosophers_shared_anti_waffle_anti_waffle_rules",
+      "label": "ANTI_WAFFLE_RULES",
+      "_origin": "ast",
+      "community": 15,
+      "community_name": "philosophers/index.ts",
+      "file_type": "code",
+      "norm_label": "anti_waffle_rules",
+      "source_file": "src/philosophers/shared/anti-waffle.ts",
+      "source_location": "L55"
+    },
+    {
+      "id": "src_philosophers_shared_anti_waffle_banned_phrases",
+      "label": "BANNED_PHRASES",
+      "_origin": "ast",
+      "community": 15,
+      "community_name": "philosophers/index.ts",
+      "file_type": "code",
+      "norm_label": "banned_phrases",
+      "source_file": "src/philosophers/shared/anti-waffle.ts",
+      "source_location": "L9"
+    },
+    {
+      "id": "src_philosophers_shared_anti_waffle_dialectical_materialism_frame",
+      "label": "DIALECTICAL_MATERIALISM_FRAME",
+      "_origin": "ast",
+      "community": 15,
+      "community_name": "philosophers/index.ts",
+      "file_type": "code",
+      "norm_label": "dialectical_materialism_frame",
+      "source_file": "src/philosophers/shared/anti-waffle.ts",
+      "source_location": "L70"
+    },
+    {
+      "id": "src_philosophers_shared_anti_waffle_role_integrity",
+      "label": "ROLE_INTEGRITY",
+      "_origin": "ast",
+      "community": 15,
+      "community_name": "philosophers/index.ts",
+      "file_type": "code",
+      "norm_label": "role_integrity",
+      "source_file": "src/philosophers/shared/anti-waffle.ts",
+      "source_location": "L7"
+    },
+    {
+      "id": "src_philosophers_spinoza",
+      "label": "spinoza.ts",
+      "_origin": "ast",
+      "community": 15,
+      "community_name": "philosophers/index.ts",
+      "file_type": "code",
+      "norm_label": "spinoza.ts",
+      "source_file": "src/philosophers/spinoza.ts",
+      "source_location": "L1"
+    },
+    {
+      "id": "src_philosophers_spinoza_spinoza",
+      "label": "SPINOZA",
+      "_origin": "ast",
+      "community": 15,
+      "community_name": "philosophers/index.ts",
+      "file_type": "code",
+      "norm_label": "spinoza",
+      "source_file": "src/philosophers/spinoza.ts",
+      "source_location": "L4"
+    },
+    {
+      "id": "src_philosophers_spinoza_style",
+      "label": "spinoza.style.ts",
+      "_origin": "ast",
+      "community": 15,
+      "community_name": "philosophers/index.ts",
+      "file_type": "code",
+      "norm_label": "spinoza.style.ts",
+      "source_file": "src/philosophers/spinoza.style.ts",
+      "source_location": "L1"
+    },
+    {
+      "id": "src_philosophers_spinoza_style_spinoza_style",
+      "label": "SPINOZA_STYLE",
+      "_origin": "ast",
+      "community": 15,
+      "community_name": "philosophers/index.ts",
+      "file_type": "code",
+      "norm_label": "spinoza_style",
+      "source_file": "src/philosophers/spinoza.style.ts",
+      "source_location": "L3"
+    },
+    {
+      "id": "src_philosophers_weil",
+      "label": "weil.ts",
+      "_origin": "ast",
+      "community": 15,
+      "community_name": "philosophers/index.ts",
+      "file_type": "code",
+      "norm_label": "weil.ts",
+      "source_file": "src/philosophers/weil.ts",
+      "source_location": "L1"
+    },
+    {
+      "id": "src_philosophers_weil_style",
+      "label": "weil.style.ts",
+      "_origin": "ast",
+      "community": 15,
+      "community_name": "philosophers/index.ts",
+      "file_type": "code",
+      "norm_label": "weil.style.ts",
+      "source_file": "src/philosophers/weil.style.ts",
+      "source_location": "L1"
+    },
+    {
+      "id": "src_philosophers_weil_style_weil_style",
+      "label": "WEIL_STYLE",
+      "_origin": "ast",
+      "community": 15,
+      "community_name": "philosophers/index.ts",
+      "file_type": "code",
+      "norm_label": "weil_style",
+      "source_file": "src/philosophers/weil.style.ts",
+      "source_location": "L3"
+    },
+    {
+      "id": "src_philosophers_weil_weil",
+      "label": "WEIL",
+      "_origin": "ast",
+      "community": 15,
+      "community_name": "philosophers/index.ts",
+      "file_type": "code",
+      "norm_label": "weil",
+      "source_file": "src/philosophers/weil.ts",
+      "source_location": "L4"
+    },
+    {
       "id": "src_lib_prompts",
       "label": "lib/prompts.ts",
       "_origin": "ast",
@@ -2394,70 +2990,208 @@
       "source_location": "L1"
     },
     {
-      "id": "package_dependencies",
-      "label": "dependencies",
+      "id": "plan",
+      "label": "PLAN.md",
       "_origin": "ast",
       "community": 17,
-      "community_name": "dependencies",
-      "file_type": "code",
-      "norm_label": "dependencies",
-      "source_file": "package.json",
-      "source_location": "L13"
+      "community_name": "The Dialectical Cabinet \u2014 Implementation Plan",
+      "file_type": "document",
+      "node_kind": "page",
+      "norm_label": "plan.md",
+      "source_file": "PLAN.md",
+      "source_location": "L1"
     },
     {
-      "id": "package_dependencies_google_generative_ai",
-      "label": "@google/generative-ai",
+      "id": "plan_api_key_bring_your_own_key_byok_for_personal_providers",
+      "label": "API key: Bring-Your-Own-Key (BYOK) for personal providers",
       "_origin": "ast",
       "community": 17,
-      "community_name": "dependencies",
-      "file_type": "code",
-      "norm_label": "@google/generative-ai",
-      "source_file": "package.json",
-      "source_location": "L14"
+      "community_name": "The Dialectical Cabinet \u2014 Implementation Plan",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "api key: bring-your-own-key (byok) for personal providers",
+      "source_file": "PLAN.md",
+      "source_location": "L29"
     },
     {
-      "id": "package_dependencies_lucide_react",
-      "label": "lucide-react",
+      "id": "plan_api_keys_shared_default_byok_fallback",
+      "label": "API keys: shared default, BYOK fallback",
       "_origin": "ast",
       "community": 17,
-      "community_name": "dependencies",
-      "file_type": "code",
-      "norm_label": "lucide-react",
-      "source_file": "package.json",
-      "source_location": "L16"
+      "community_name": "The Dialectical Cabinet \u2014 Implementation Plan",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "api keys: shared default, byok fallback",
+      "source_file": "PLAN.md",
+      "source_location": "L10"
     },
     {
-      "id": "package_dependencies_react",
-      "label": "react",
+      "id": "plan_decisions",
+      "label": "Decisions",
       "_origin": "ast",
       "community": 17,
-      "community_name": "dependencies",
-      "file_type": "code",
-      "norm_label": "react",
-      "source_file": "package.json",
-      "source_location": "L17"
+      "community_name": "The Dialectical Cabinet \u2014 Implementation Plan",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "decisions",
+      "source_file": "PLAN.md",
+      "source_location": "L8"
     },
     {
-      "id": "package_dependencies_react_dom",
-      "label": "react-dom",
+      "id": "plan_embeddings_phase_5",
+      "label": "Embeddings (Phase 5)",
       "_origin": "ast",
       "community": 17,
-      "community_name": "dependencies",
-      "file_type": "code",
-      "norm_label": "react-dom",
-      "source_file": "package.json",
-      "source_location": "L18"
+      "community_name": "The Dialectical Cabinet \u2014 Implementation Plan",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "embeddings (phase 5)",
+      "source_file": "PLAN.md",
+      "source_location": "L74"
     },
     {
-      "id": "package_dependencies_supabase_supabase_js",
-      "label": "@supabase/supabase-js",
+      "id": "plan_length_short_and_punchy",
+      "label": "Length: short and punchy",
       "_origin": "ast",
       "community": 17,
-      "community_name": "dependencies",
-      "file_type": "code",
-      "norm_label": "@supabase/supabase-js",
-      "source_file": "package.json",
-      "source_location": "L15"
+      "community_name": "The Dialectical Cabinet \u2014 Implementation Plan",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "length: short and punchy",
+      "source_file": "PLAN.md",
+      "source_location": "L56"
+    },
+    {
+      "id": "plan_phase_0_make_the_current_tree_build_this_session",
+      "label": "Phase 0 \u2014 Make the current tree build  \u2705 (this session)",
+      "_origin": "ast",
+      "community": 17,
+      "community_name": "The Dialectical Cabinet \u2014 Implementation Plan",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "phase 0 \u2014 make the current tree build  \u2705 (this session)",
+      "source_file": "PLAN.md",
+      "source_location": "L83"
+    },
+    {
+      "id": "plan_phase_1_per_philosopher_files_with_style_essences",
+      "label": "Phase 1 \u2014 Per-philosopher files with style essences",
+      "_origin": "ast",
+      "community": 17,
+      "community_name": "The Dialectical Cabinet \u2014 Implementation Plan",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "phase 1 \u2014 per-philosopher files with style essences",
+      "source_file": "PLAN.md",
+      "source_location": "L96"
+    },
+    {
+      "id": "plan_phase_2_gemini_dialectical_engine_replaces_makemockintervention",
+      "label": "Phase 2 \u2014 Gemini + dialectical engine (replaces `makeMockIntervention`)",
+      "_origin": "ast",
+      "community": 17,
+      "community_name": "The Dialectical Cabinet \u2014 Implementation Plan",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "phase 2 \u2014 gemini + dialectical engine (replaces `makemockintervention`)",
+      "source_file": "PLAN.md",
+      "source_location": "L111"
+    },
+    {
+      "id": "plan_phase_3_export_rewrite",
+      "label": "Phase 3 \u2014 Export rewrite",
+      "_origin": "ast",
+      "community": 17,
+      "community_name": "The Dialectical Cabinet \u2014 Implementation Plan",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "phase 3 \u2014 export rewrite",
+      "source_file": "PLAN.md",
+      "source_location": "L180"
+    },
+    {
+      "id": "plan_phase_4_accessibility_display",
+      "label": "Phase 4 \u2014 Accessibility & display",
+      "_origin": "ast",
+      "community": 17,
+      "community_name": "The Dialectical Cabinet \u2014 Implementation Plan",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "phase 4 \u2014 accessibility & display",
+      "source_file": "PLAN.md",
+      "source_location": "L187"
+    },
+    {
+      "id": "plan_phase_5_rag_with_vectorised_books_later",
+      "label": "Phase 5 \u2014 RAG with vectorised books (later)",
+      "_origin": "ast",
+      "community": 17,
+      "community_name": "The Dialectical Cabinet \u2014 Implementation Plan",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "phase 5 \u2014 rag with vectorised books (later)",
+      "source_file": "PLAN.md",
+      "source_location": "L197"
+    },
+    {
+      "id": "plan_phase_6_richer_philosopher_information",
+      "label": "Phase 6 \u2014 Richer philosopher information",
+      "_origin": "ast",
+      "community": 17,
+      "community_name": "The Dialectical Cabinet \u2014 Implementation Plan",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "phase 6 \u2014 richer philosopher information",
+      "source_file": "PLAN.md",
+      "source_location": "L204"
+    },
+    {
+      "id": "plan_philosopher_data_one_file_each",
+      "label": "Philosopher data: one file each",
+      "_origin": "ast",
+      "community": 17,
+      "community_name": "The Dialectical Cabinet \u2014 Implementation Plan",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "philosopher data: one file each",
+      "source_file": "PLAN.md",
+      "source_location": "L47"
+    },
+    {
+      "id": "plan_style_intensity_global",
+      "label": "Style intensity: global",
+      "_origin": "ast",
+      "community": 17,
+      "community_name": "The Dialectical Cabinet \u2014 Implementation Plan",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "style intensity: global",
+      "source_file": "PLAN.md",
+      "source_location": "L52"
+    },
+    {
+      "id": "plan_supabase_optional_read_only_for_corpus",
+      "label": "Supabase: optional, read-only for corpus",
+      "_origin": "ast",
+      "community": 17,
+      "community_name": "The Dialectical Cabinet \u2014 Implementation Plan",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "supabase: optional, read-only for corpus",
+      "source_file": "PLAN.md",
+      "source_location": "L41"
+    },
+    {
+      "id": "plan_the_dialectical_cabinet_implementation_plan",
+      "label": "The Dialectical Cabinet \u2014 Implementation Plan",
+      "_origin": "ast",
+      "community": 17,
+      "community_name": "The Dialectical Cabinet \u2014 Implementation Plan",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "the dialectical cabinet \u2014 implementation plan",
+      "source_file": "PLAN.md",
+      "source_location": "L1"
     },
     {
       "id": "src_philosophers_shared_universal_mechanisms",
@@ -2526,59 +3260,76 @@
       "source_location": "L8"
     },
     {
-      "id": "src_philosophers_shared_anti_waffle",
-      "label": "anti-waffle.ts",
+      "id": "readme",
+      "label": "README.md",
       "_origin": "ast",
       "community": 19,
-      "community_name": "anti-waffle.ts",
-      "file_type": "code",
-      "norm_label": "anti-waffle.ts",
-      "source_file": "src/philosophers/shared/anti-waffle.ts",
+      "community_name": "The Dialectical Cabinet",
+      "file_type": "document",
+      "node_kind": "page",
+      "norm_label": "readme.md",
+      "source_file": "README.md",
       "source_location": "L1"
     },
     {
-      "id": "src_philosophers_shared_anti_waffle_anti_waffle_rules",
-      "label": "ANTI_WAFFLE_RULES",
+      "id": "readme_for_the_curious",
+      "label": "For the curious",
       "_origin": "ast",
       "community": 19,
-      "community_name": "anti-waffle.ts",
-      "file_type": "code",
-      "norm_label": "anti_waffle_rules",
-      "source_file": "src/philosophers/shared/anti-waffle.ts",
-      "source_location": "L55"
+      "community_name": "The Dialectical Cabinet",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "for the curious",
+      "source_file": "README.md",
+      "source_location": "L23"
     },
     {
-      "id": "src_philosophers_shared_anti_waffle_banned_phrases",
-      "label": "BANNED_PHRASES",
+      "id": "readme_quotas_the_honest_version",
+      "label": "Quotas (the honest version)",
       "_origin": "ast",
       "community": 19,
-      "community_name": "anti-waffle.ts",
-      "file_type": "code",
-      "norm_label": "banned_phrases",
-      "source_file": "src/philosophers/shared/anti-waffle.ts",
-      "source_location": "L9"
+      "community_name": "The Dialectical Cabinet",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "quotas (the honest version)",
+      "source_file": "README.md",
+      "source_location": "L14"
     },
     {
-      "id": "src_philosophers_shared_anti_waffle_dialectical_materialism_frame",
-      "label": "DIALECTICAL_MATERIALISM_FRAME",
+      "id": "readme_run_it_yourself_developers",
+      "label": "Run it yourself (developers)",
       "_origin": "ast",
       "community": 19,
-      "community_name": "anti-waffle.ts",
-      "file_type": "code",
-      "norm_label": "dialectical_materialism_frame",
-      "source_file": "src/philosophers/shared/anti-waffle.ts",
-      "source_location": "L70"
+      "community_name": "The Dialectical Cabinet",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "run it yourself (developers)",
+      "source_file": "README.md",
+      "source_location": "L29"
     },
     {
-      "id": "src_philosophers_shared_anti_waffle_role_integrity",
-      "label": "ROLE_INTEGRITY",
+      "id": "readme_the_dialectical_cabinet",
+      "label": "The Dialectical Cabinet",
       "_origin": "ast",
       "community": 19,
-      "community_name": "anti-waffle.ts",
-      "file_type": "code",
-      "norm_label": "role_integrity",
-      "source_file": "src/philosophers/shared/anti-waffle.ts",
-      "source_location": "L7"
+      "community_name": "The Dialectical Cabinet",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "the dialectical cabinet",
+      "source_file": "README.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "readme_try_it",
+      "label": "Try it",
+      "_origin": "ast",
+      "community": 19,
+      "community_name": "The Dialectical Cabinet",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "try it",
+      "source_file": "README.md",
+      "source_location": "L5"
     },
     {
       "id": "src_types_index",
@@ -2600,7 +3351,7 @@
       "file_type": "code",
       "norm_label": "chronological_order",
       "source_file": "src/types/index.ts",
-      "source_location": "L202"
+      "source_location": "L203"
     },
     {
       "id": "src_types_index_default_accessibility",
@@ -2611,7 +3362,7 @@
       "file_type": "code",
       "norm_label": "default_accessibility",
       "source_file": "src/types/index.ts",
-      "source_location": "L239"
+      "source_location": "L240"
     },
     {
       "id": "src_types_index_default_seating_order",
@@ -2622,7 +3373,7 @@
       "file_type": "code",
       "norm_label": "default_seating_order",
       "source_file": "src/types/index.ts",
-      "source_location": "L215"
+      "source_location": "L216"
     },
     {
       "id": "src_types_index_pass_descriptions",
@@ -2633,7 +3384,7 @@
       "file_type": "code",
       "norm_label": "pass_descriptions",
       "source_file": "src/types/index.ts",
-      "source_location": "L218"
+      "source_location": "L219"
     },
     {
       "id": "src_types_index_pass_names",
@@ -2644,7 +3395,7 @@
       "file_type": "code",
       "norm_label": "pass_names",
       "source_file": "src/types/index.ts",
-      "source_location": "L217"
+      "source_location": "L218"
     },
     {
       "id": "src_lib_shared",
@@ -2658,400 +3409,39 @@
       "source_location": "L1"
     },
     {
-      "id": "src_philosophers_bogdanov",
-      "label": "bogdanov.ts",
+      "id": "src_lib_shared_shared_max_tokens",
+      "label": "SHARED_MAX_TOKENS",
+      "_origin": "ast",
+      "community": 20,
+      "community_name": "shared.ts",
+      "file_type": "code",
+      "norm_label": "shared_max_tokens",
+      "source_file": "src/lib/shared.ts",
+      "source_location": "L6"
+    },
+    {
+      "id": "agents",
+      "label": "AGENTS.md",
       "_origin": "ast",
       "community": 21,
-      "community_name": "bogdanov.ts",
-      "file_type": "code",
-      "norm_label": "bogdanov.ts",
-      "source_file": "src/philosophers/bogdanov.ts",
+      "community_name": "AGENTS.md",
+      "file_type": "document",
+      "node_kind": "page",
+      "norm_label": "agents.md",
+      "source_file": "AGENTS.md",
       "source_location": "L1"
     },
     {
-      "id": "src_philosophers_bogdanov_bogdanov",
-      "label": "BOGDANOV",
+      "id": "agents_graphify",
+      "label": "graphify",
       "_origin": "ast",
       "community": 21,
-      "community_name": "bogdanov.ts",
-      "file_type": "code",
-      "norm_label": "bogdanov",
-      "source_file": "src/philosophers/bogdanov.ts",
-      "source_location": "L4"
-    },
-    {
-      "id": "src_philosophers_bogdanov_style",
-      "label": "bogdanov.style.ts",
-      "_origin": "ast",
-      "community": 21,
-      "community_name": "bogdanov.ts",
-      "file_type": "code",
-      "norm_label": "bogdanov.style.ts",
-      "source_file": "src/philosophers/bogdanov.style.ts",
+      "community_name": "AGENTS.md",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "graphify",
+      "source_file": "AGENTS.md",
       "source_location": "L1"
-    },
-    {
-      "id": "src_philosophers_bogdanov_style_bogdanov_style",
-      "label": "BOGDANOV_STYLE",
-      "_origin": "ast",
-      "community": 21,
-      "community_name": "bogdanov.ts",
-      "file_type": "code",
-      "norm_label": "bogdanov_style",
-      "source_file": "src/philosophers/bogdanov.style.ts",
-      "source_location": "L3"
-    },
-    {
-      "id": "src_philosophers_bookchin",
-      "label": "bookchin.ts",
-      "_origin": "ast",
-      "community": 22,
-      "community_name": "bookchin.ts",
-      "file_type": "code",
-      "norm_label": "bookchin.ts",
-      "source_file": "src/philosophers/bookchin.ts",
-      "source_location": "L1"
-    },
-    {
-      "id": "src_philosophers_bookchin_bookchin",
-      "label": "BOOKCHIN",
-      "_origin": "ast",
-      "community": 22,
-      "community_name": "bookchin.ts",
-      "file_type": "code",
-      "norm_label": "bookchin",
-      "source_file": "src/philosophers/bookchin.ts",
-      "source_location": "L4"
-    },
-    {
-      "id": "src_philosophers_bookchin_style",
-      "label": "bookchin.style.ts",
-      "_origin": "ast",
-      "community": 22,
-      "community_name": "bookchin.ts",
-      "file_type": "code",
-      "norm_label": "bookchin.style.ts",
-      "source_file": "src/philosophers/bookchin.style.ts",
-      "source_location": "L1"
-    },
-    {
-      "id": "src_philosophers_bookchin_style_bookchin_style",
-      "label": "BOOKCHIN_STYLE",
-      "_origin": "ast",
-      "community": 22,
-      "community_name": "bookchin.ts",
-      "file_type": "code",
-      "norm_label": "bookchin_style",
-      "source_file": "src/philosophers/bookchin.style.ts",
-      "source_location": "L3"
-    },
-    {
-      "id": "src_philosophers_deleuze",
-      "label": "deleuze.ts",
-      "_origin": "ast",
-      "community": 23,
-      "community_name": "deleuze.ts",
-      "file_type": "code",
-      "norm_label": "deleuze.ts",
-      "source_file": "src/philosophers/deleuze.ts",
-      "source_location": "L1"
-    },
-    {
-      "id": "src_philosophers_deleuze_deleuze",
-      "label": "DELEUZE",
-      "_origin": "ast",
-      "community": 23,
-      "community_name": "deleuze.ts",
-      "file_type": "code",
-      "norm_label": "deleuze",
-      "source_file": "src/philosophers/deleuze.ts",
-      "source_location": "L4"
-    },
-    {
-      "id": "src_philosophers_deleuze_style",
-      "label": "deleuze.style.ts",
-      "_origin": "ast",
-      "community": 23,
-      "community_name": "deleuze.ts",
-      "file_type": "code",
-      "norm_label": "deleuze.style.ts",
-      "source_file": "src/philosophers/deleuze.style.ts",
-      "source_location": "L1"
-    },
-    {
-      "id": "src_philosophers_deleuze_style_deleuze_style",
-      "label": "DELEUZE_STYLE",
-      "_origin": "ast",
-      "community": 23,
-      "community_name": "deleuze.ts",
-      "file_type": "code",
-      "norm_label": "deleuze_style",
-      "source_file": "src/philosophers/deleuze.style.ts",
-      "source_location": "L3"
-    },
-    {
-      "id": "src_philosophers_fisher",
-      "label": "fisher.ts",
-      "_origin": "ast",
-      "community": 24,
-      "community_name": "fisher.ts",
-      "file_type": "code",
-      "norm_label": "fisher.ts",
-      "source_file": "src/philosophers/fisher.ts",
-      "source_location": "L1"
-    },
-    {
-      "id": "src_philosophers_fisher_fisher",
-      "label": "FISHER",
-      "_origin": "ast",
-      "community": 24,
-      "community_name": "fisher.ts",
-      "file_type": "code",
-      "norm_label": "fisher",
-      "source_file": "src/philosophers/fisher.ts",
-      "source_location": "L4"
-    },
-    {
-      "id": "src_philosophers_fisher_style",
-      "label": "fisher.style.ts",
-      "_origin": "ast",
-      "community": 24,
-      "community_name": "fisher.ts",
-      "file_type": "code",
-      "norm_label": "fisher.style.ts",
-      "source_file": "src/philosophers/fisher.style.ts",
-      "source_location": "L1"
-    },
-    {
-      "id": "src_philosophers_fisher_style_fisher_style",
-      "label": "FISHER_STYLE",
-      "_origin": "ast",
-      "community": 24,
-      "community_name": "fisher.ts",
-      "file_type": "code",
-      "norm_label": "fisher_style",
-      "source_file": "src/philosophers/fisher.style.ts",
-      "source_location": "L3"
-    },
-    {
-      "id": "src_philosophers_hegel",
-      "label": "hegel.ts",
-      "_origin": "ast",
-      "community": 25,
-      "community_name": "hegel.ts",
-      "file_type": "code",
-      "norm_label": "hegel.ts",
-      "source_file": "src/philosophers/hegel.ts",
-      "source_location": "L1"
-    },
-    {
-      "id": "src_philosophers_hegel_hegel",
-      "label": "HEGEL",
-      "_origin": "ast",
-      "community": 25,
-      "community_name": "hegel.ts",
-      "file_type": "code",
-      "norm_label": "hegel",
-      "source_file": "src/philosophers/hegel.ts",
-      "source_location": "L4"
-    },
-    {
-      "id": "src_philosophers_hegel_style",
-      "label": "hegel.style.ts",
-      "_origin": "ast",
-      "community": 25,
-      "community_name": "hegel.ts",
-      "file_type": "code",
-      "norm_label": "hegel.style.ts",
-      "source_file": "src/philosophers/hegel.style.ts",
-      "source_location": "L1"
-    },
-    {
-      "id": "src_philosophers_hegel_style_hegel_style",
-      "label": "HEGEL_STYLE",
-      "_origin": "ast",
-      "community": 25,
-      "community_name": "hegel.ts",
-      "file_type": "code",
-      "norm_label": "hegel_style",
-      "source_file": "src/philosophers/hegel.style.ts",
-      "source_location": "L3"
-    },
-    {
-      "id": "src_philosophers_kant",
-      "label": "kant.ts",
-      "_origin": "ast",
-      "community": 26,
-      "community_name": "kant.ts",
-      "file_type": "code",
-      "norm_label": "kant.ts",
-      "source_file": "src/philosophers/kant.ts",
-      "source_location": "L1"
-    },
-    {
-      "id": "src_philosophers_kant_kant",
-      "label": "KANT",
-      "_origin": "ast",
-      "community": 26,
-      "community_name": "kant.ts",
-      "file_type": "code",
-      "norm_label": "kant",
-      "source_file": "src/philosophers/kant.ts",
-      "source_location": "L4"
-    },
-    {
-      "id": "src_philosophers_kant_style",
-      "label": "kant.style.ts",
-      "_origin": "ast",
-      "community": 26,
-      "community_name": "kant.ts",
-      "file_type": "code",
-      "norm_label": "kant.style.ts",
-      "source_file": "src/philosophers/kant.style.ts",
-      "source_location": "L1"
-    },
-    {
-      "id": "src_philosophers_kant_style_kant_style",
-      "label": "KANT_STYLE",
-      "_origin": "ast",
-      "community": 26,
-      "community_name": "kant.ts",
-      "file_type": "code",
-      "norm_label": "kant_style",
-      "source_file": "src/philosophers/kant.style.ts",
-      "source_location": "L3"
-    },
-    {
-      "id": "src_philosophers_lenin",
-      "label": "lenin.ts",
-      "_origin": "ast",
-      "community": 27,
-      "community_name": "lenin.ts",
-      "file_type": "code",
-      "norm_label": "lenin.ts",
-      "source_file": "src/philosophers/lenin.ts",
-      "source_location": "L1"
-    },
-    {
-      "id": "src_philosophers_lenin_lenin",
-      "label": "LENIN",
-      "_origin": "ast",
-      "community": 27,
-      "community_name": "lenin.ts",
-      "file_type": "code",
-      "norm_label": "lenin",
-      "source_file": "src/philosophers/lenin.ts",
-      "source_location": "L4"
-    },
-    {
-      "id": "src_philosophers_lenin_style",
-      "label": "lenin.style.ts",
-      "_origin": "ast",
-      "community": 27,
-      "community_name": "lenin.ts",
-      "file_type": "code",
-      "norm_label": "lenin.style.ts",
-      "source_file": "src/philosophers/lenin.style.ts",
-      "source_location": "L1"
-    },
-    {
-      "id": "src_philosophers_lenin_style_lenin_style",
-      "label": "LENIN_STYLE",
-      "_origin": "ast",
-      "community": 27,
-      "community_name": "lenin.ts",
-      "file_type": "code",
-      "norm_label": "lenin_style",
-      "source_file": "src/philosophers/lenin.style.ts",
-      "source_location": "L3"
-    },
-    {
-      "id": "src_philosophers_marx",
-      "label": "marx.ts",
-      "_origin": "ast",
-      "community": 28,
-      "community_name": "marx.ts",
-      "file_type": "code",
-      "norm_label": "marx.ts",
-      "source_file": "src/philosophers/marx.ts",
-      "source_location": "L1"
-    },
-    {
-      "id": "src_philosophers_marx_marx",
-      "label": "MARX",
-      "_origin": "ast",
-      "community": 28,
-      "community_name": "marx.ts",
-      "file_type": "code",
-      "norm_label": "marx",
-      "source_file": "src/philosophers/marx.ts",
-      "source_location": "L4"
-    },
-    {
-      "id": "src_philosophers_marx_style",
-      "label": "marx.style.ts",
-      "_origin": "ast",
-      "community": 28,
-      "community_name": "marx.ts",
-      "file_type": "code",
-      "norm_label": "marx.style.ts",
-      "source_file": "src/philosophers/marx.style.ts",
-      "source_location": "L1"
-    },
-    {
-      "id": "src_philosophers_marx_style_marx_style",
-      "label": "MARX_STYLE",
-      "_origin": "ast",
-      "community": 28,
-      "community_name": "marx.ts",
-      "file_type": "code",
-      "norm_label": "marx_style",
-      "source_file": "src/philosophers/marx.style.ts",
-      "source_location": "L3"
-    },
-    {
-      "id": "src_philosophers_spinoza",
-      "label": "spinoza.ts",
-      "_origin": "ast",
-      "community": 29,
-      "community_name": "spinoza.ts",
-      "file_type": "code",
-      "norm_label": "spinoza.ts",
-      "source_file": "src/philosophers/spinoza.ts",
-      "source_location": "L1"
-    },
-    {
-      "id": "src_philosophers_spinoza_spinoza",
-      "label": "SPINOZA",
-      "_origin": "ast",
-      "community": 29,
-      "community_name": "spinoza.ts",
-      "file_type": "code",
-      "norm_label": "spinoza",
-      "source_file": "src/philosophers/spinoza.ts",
-      "source_location": "L4"
-    },
-    {
-      "id": "src_philosophers_spinoza_style",
-      "label": "spinoza.style.ts",
-      "_origin": "ast",
-      "community": 29,
-      "community_name": "spinoza.ts",
-      "file_type": "code",
-      "norm_label": "spinoza.style.ts",
-      "source_file": "src/philosophers/spinoza.style.ts",
-      "source_location": "L1"
-    },
-    {
-      "id": "src_philosophers_spinoza_style_spinoza_style",
-      "label": "SPINOZA_STYLE",
-      "_origin": "ast",
-      "community": 29,
-      "community_name": "spinoza.ts",
-      "file_type": "code",
-      "norm_label": "spinoza_style",
-      "source_file": "src/philosophers/spinoza.style.ts",
-      "source_location": "L3"
     },
     {
       "id": "src_app",
@@ -3087,7 +3477,7 @@
       "source_location": "L17"
     },
     {
-      "id": "src_app_rationale_362",
+      "id": "src_app_rationale_392",
       "label": "NOTE: this is also used directly as an onClick handler, so the first",
       "_origin": "ast",
       "community": 3,
@@ -3095,51 +3485,7 @@
       "file_type": "rationale",
       "norm_label": "note: this is also used directly as an onclick handler, so the first",
       "source_file": "src/App.tsx",
-      "source_location": "L362"
-    },
-    {
-      "id": "src_philosophers_weil",
-      "label": "weil.ts",
-      "_origin": "ast",
-      "community": 30,
-      "community_name": "weil.ts",
-      "file_type": "code",
-      "norm_label": "weil.ts",
-      "source_file": "src/philosophers/weil.ts",
-      "source_location": "L1"
-    },
-    {
-      "id": "src_philosophers_weil_style",
-      "label": "weil.style.ts",
-      "_origin": "ast",
-      "community": 30,
-      "community_name": "weil.ts",
-      "file_type": "code",
-      "norm_label": "weil.style.ts",
-      "source_file": "src/philosophers/weil.style.ts",
-      "source_location": "L1"
-    },
-    {
-      "id": "src_philosophers_weil_style_weil_style",
-      "label": "WEIL_STYLE",
-      "_origin": "ast",
-      "community": 30,
-      "community_name": "weil.ts",
-      "file_type": "code",
-      "norm_label": "weil_style",
-      "source_file": "src/philosophers/weil.style.ts",
-      "source_location": "L3"
-    },
-    {
-      "id": "src_philosophers_weil_weil",
-      "label": "WEIL",
-      "_origin": "ast",
-      "community": 30,
-      "community_name": "weil.ts",
-      "file_type": "code",
-      "norm_label": "weil",
-      "source_file": "src/philosophers/weil.ts",
-      "source_location": "L4"
+      "source_location": "L392"
     },
     {
       "id": "opencode_plugins_graphify",
@@ -3524,7 +3870,7 @@
       "file_type": "code",
       "norm_label": "free_model_cycle",
       "source_file": "src/lib/openrouter.ts",
-      "source_location": "L24"
+      "source_location": "L23"
     },
     {
       "id": "src_lib_openrouter_free_router_fallback",
@@ -3535,7 +3881,18 @@
       "file_type": "code",
       "norm_label": "free_router_fallback",
       "source_file": "src/lib/openrouter.ts",
-      "source_location": "L48"
+      "source_location": "L47"
+    },
+    {
+      "id": "src_lib_openrouter_or_max_tokens",
+      "label": "OR_MAX_TOKENS",
+      "_origin": "ast",
+      "community": 5,
+      "community_name": "openrouter.ts",
+      "file_type": "code",
+      "norm_label": "or_max_tokens",
+      "source_file": "src/lib/openrouter.ts",
+      "source_location": "L90"
     },
     {
       "id": "tsconfig_node",
@@ -3890,6 +4247,17 @@
       "source_location": "L1"
     },
     {
+      "id": "src_lib_gemini_repair_suffix",
+      "label": "REPAIR_SUFFIX",
+      "_origin": "ast",
+      "community": 8,
+      "community_name": "gemini.ts",
+      "file_type": "code",
+      "norm_label": "repair_suffix",
+      "source_file": "src/lib/gemini.ts",
+      "source_location": "L162"
+    },
+    {
       "id": "src_lib_gemini_response_schema",
       "label": "RESPONSE_SCHEMA",
       "_origin": "ast",
@@ -3898,7 +4266,7 @@
       "file_type": "code",
       "norm_label": "response_schema",
       "source_file": "src/lib/gemini.ts",
-      "source_location": "L32"
+      "source_location": "L31"
     },
     {
       "id": "src_lib_settings",
@@ -4074,7 +4442,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "src/App.tsx",
-      "source_location": "L338",
+      "source_location": "L368",
       "weight": 1.0
     },
     {
@@ -4086,7 +4454,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "src/App.tsx",
-      "source_location": "L417",
+      "source_location": "L447",
       "weight": 1.0
     },
     {
@@ -4098,7 +4466,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "src/App.tsx",
-      "source_location": "L57",
+      "source_location": "L60",
       "weight": 1.0
     },
     {
@@ -4110,7 +4478,67 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "src/lib/gemini.ts",
-      "source_location": "L63",
+      "source_location": "L61",
+      "weight": 1.0
+    },
+    {
+      "source": "src_lib_gemini_generateturn",
+      "target": "src_lib_gemini_endpoint",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "src/lib/gemini.ts",
+      "source_location": "L185",
+      "weight": 1.0
+    },
+    {
+      "source": "src_lib_gemini_generateturn",
+      "target": "src_lib_gemini_geminierror",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "src/lib/gemini.ts",
+      "source_location": "L191",
+      "weight": 1.0
+    },
+    {
+      "source": "src_lib_gemini_generateturn",
+      "target": "src_lib_gemini_extractdetail",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "src/lib/gemini.ts",
+      "source_location": "L195",
+      "weight": 1.0
+    },
+    {
+      "source": "src_lib_gemini_generateturn",
+      "target": "src_lib_gemini_friendlyerror",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "src/lib/gemini.ts",
+      "source_location": "L196",
+      "weight": 1.0
+    },
+    {
+      "source": "src_lib_gemini_generateturn",
+      "target": "src_lib_gemini_retryafterms",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "src/lib/gemini.ts",
+      "source_location": "L199",
       "weight": 1.0
     },
     {
@@ -4122,55 +4550,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "src/lib/gemini.ts",
-      "source_location": "L164",
-      "weight": 1.0
-    },
-    {
-      "source": "src_lib_gemini_generateturn",
-      "target": "src_lib_gemini_endpoint",
-      "relation": "calls",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "context": "call",
-      "source_file": "src/lib/gemini.ts",
-      "source_location": "L167",
-      "weight": 1.0
-    },
-    {
-      "source": "src_lib_gemini_generateturn",
-      "target": "src_lib_gemini_geminierror",
-      "relation": "calls",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "context": "call",
-      "source_file": "src/lib/gemini.ts",
-      "source_location": "L173",
-      "weight": 1.0
-    },
-    {
-      "source": "src_lib_gemini_generateturn",
-      "target": "src_lib_gemini_extractdetail",
-      "relation": "calls",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "context": "call",
-      "source_file": "src/lib/gemini.ts",
-      "source_location": "L177",
-      "weight": 1.0
-    },
-    {
-      "source": "src_lib_gemini_generateturn",
-      "target": "src_lib_gemini_friendlyerror",
-      "relation": "calls",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "context": "call",
-      "source_file": "src/lib/gemini.ts",
-      "source_location": "L178",
+      "source_location": "L199",
       "weight": 1.0
     },
     {
@@ -4182,7 +4562,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "src/lib/gemini.ts",
-      "source_location": "L192",
+      "source_location": "L218",
       "weight": 1.0
     },
     {
@@ -4194,7 +4574,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "src/lib/gemini.ts",
-      "source_location": "L124",
+      "source_location": "L127",
       "weight": 1.0
     },
     {
@@ -4206,7 +4586,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "src/lib/gemini.ts",
-      "source_location": "L199",
+      "source_location": "L227",
       "weight": 1.0
     },
     {
@@ -4218,7 +4598,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "src/lib/gemini.ts",
-      "source_location": "L208",
+      "source_location": "L236",
       "weight": 1.0
     },
     {
@@ -4230,7 +4610,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "src/lib/gemini.ts",
-      "source_location": "L208",
+      "source_location": "L236",
       "weight": 1.0
     },
     {
@@ -4254,19 +4634,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "src/lib/groq.ts",
-      "source_location": "L107",
-      "weight": 1.0
-    },
-    {
-      "source": "src_lib_groq_generateturngroq",
-      "target": "src_lib_groq_stripfences",
-      "relation": "calls",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "context": "call",
-      "source_file": "src/lib/groq.ts",
-      "source_location": "L125",
+      "source_location": "L108",
       "weight": 1.0
     },
     {
@@ -4278,7 +4646,19 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "src/lib/groq.ts",
-      "source_location": "L90",
+      "source_location": "L111",
+      "weight": 1.0
+    },
+    {
+      "source": "src_lib_groq_generateturngroq",
+      "target": "src_lib_groq_stripfences",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "src/lib/groq.ts",
+      "source_location": "L133",
       "weight": 1.0
     },
     {
@@ -4290,7 +4670,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "src/lib/groq.ts",
-      "source_location": "L147",
+      "source_location": "L153",
       "weight": 1.0
     },
     {
@@ -4302,19 +4682,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "src/lib/groq.ts",
-      "source_location": "L147",
-      "weight": 1.0
-    },
-    {
-      "source": "src_lib_openrouter_attemptmodel",
-      "target": "src_lib_openrouter_sleep",
-      "relation": "calls",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "context": "call",
-      "source_file": "src/lib/openrouter.ts",
-      "source_location": "L193",
+      "source_location": "L153",
       "weight": 1.0
     },
     {
@@ -4326,7 +4694,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "src/lib/openrouter.ts",
-      "source_location": "L224",
+      "source_location": "L231",
       "weight": 1.0
     },
     {
@@ -4338,7 +4706,19 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "src/lib/openrouter.ts",
-      "source_location": "L228",
+      "source_location": "L234",
+      "weight": 1.0
+    },
+    {
+      "source": "src_lib_openrouter_attemptmodel",
+      "target": "src_lib_openrouter_sleep",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "src/lib/openrouter.ts",
+      "source_location": "L235",
       "weight": 1.0
     },
     {
@@ -4350,7 +4730,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "src/lib/openrouter.ts",
-      "source_location": "L228",
+      "source_location": "L239",
       "weight": 1.0
     },
     {
@@ -4362,19 +4742,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "src/lib/openrouter.ts",
-      "source_location": "L260",
-      "weight": 1.0
-    },
-    {
-      "source": "src_lib_openrouter_generateturnopenrouter",
-      "target": "src_lib_openrouter_orderedcycle",
-      "relation": "calls",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "context": "call",
-      "source_file": "src/lib/openrouter.ts",
-      "source_location": "L291",
+      "source_location": "L271",
       "weight": 1.0
     },
     {
@@ -4386,19 +4754,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "src/lib/openrouter.ts",
-      "source_location": "L294",
-      "weight": 1.0
-    },
-    {
-      "source": "src_lib_openrouter_generateturnopenrouter",
-      "target": "src_lib_openrouter_savelastgood",
-      "relation": "calls",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "context": "call",
-      "source_file": "src/lib/openrouter.ts",
-      "source_location": "L295",
+      "source_location": "L312",
       "weight": 1.0
     },
     {
@@ -4410,7 +4766,31 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "src/lib/openrouter.ts",
-      "source_location": "L298",
+      "source_location": "L314",
+      "weight": 1.0
+    },
+    {
+      "source": "src_lib_openrouter_generateturnopenrouter",
+      "target": "src_lib_openrouter_orderedcycle",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "src/lib/openrouter.ts",
+      "source_location": "L341",
+      "weight": 1.0
+    },
+    {
+      "source": "src_lib_openrouter_generateturnopenrouter",
+      "target": "src_lib_openrouter_savelastgood",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "src/lib/openrouter.ts",
+      "source_location": "L345",
       "weight": 1.0
     },
     {
@@ -4422,7 +4802,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "src/lib/openrouter.ts",
-      "source_location": "L112",
+      "source_location": "L119",
       "weight": 1.0
     },
     {
@@ -4434,19 +4814,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "src/lib/openrouter.ts",
-      "source_location": "L71",
-      "weight": 1.0
-    },
-    {
-      "source": "src_lib_openrouter_testopenrouterkey",
-      "target": "src_lib_openrouter_orderedcycle",
-      "relation": "calls",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "context": "call",
-      "source_file": "src/lib/openrouter.ts",
-      "source_location": "L316",
+      "source_location": "L70",
       "weight": 1.0
     },
     {
@@ -4458,7 +4826,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "src/lib/openrouter.ts",
-      "source_location": "L338",
+      "source_location": "L400",
       "weight": 1.0
     },
     {
@@ -4470,7 +4838,19 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "src/lib/openrouter.ts",
-      "source_location": "L338",
+      "source_location": "L400",
+      "weight": 1.0
+    },
+    {
+      "source": "src_lib_openrouter_testopenrouterkey",
+      "target": "src_lib_openrouter_orderedcycle",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "src/lib/openrouter.ts",
+      "source_location": "L409",
       "weight": 1.0
     },
     {
@@ -4482,7 +4862,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "src/lib/openrouter.ts",
-      "source_location": "L341",
+      "source_location": "L434",
       "weight": 1.0
     },
     {
@@ -4578,7 +4958,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "src/lib/settings.ts",
-      "source_location": "L88",
+      "source_location": "L95",
       "weight": 1.0
     },
     {
@@ -4590,7 +4970,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "src/lib/settings.ts",
-      "source_location": "L89",
+      "source_location": "L96",
       "weight": 1.0
     },
     {
@@ -4602,7 +4982,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "src/lib/shared.ts",
-      "source_location": "L74",
+      "source_location": "L94",
       "weight": 1.0
     },
     {
@@ -4699,6 +5079,18 @@
       "context": "call",
       "source_file": "src/philosophers/index.ts",
       "source_location": "L67",
+      "weight": 1.0
+    },
+    {
+      "source": "src_lib_gemini_parseturnoutput",
+      "target": "src_lib_gemini_parseturnoutput_snippet",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "src/lib/gemini.ts",
+      "source_location": "L107",
       "weight": 1.0
     },
     {
@@ -5710,6 +6102,17 @@
       "weight": 1.0
     },
     {
+      "source": "agents",
+      "target": "agents_graphify",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "AGENTS.md",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
       "source": "netlify_functions_cabinet",
       "target": "netlify_functions_cabinet_ismodelfault",
       "relation": "contains",
@@ -6183,135 +6586,234 @@
       "weight": 1.0
     },
     {
-      "source": "src_app",
-      "target": "src_app_app",
+      "source": "plan",
+      "target": "plan_the_dialectical_cabinet_implementation_plan",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
-      "source_file": "src/App.tsx",
-      "source_location": "L117",
+      "source_file": "PLAN.md",
+      "source_location": "L1",
       "weight": 1.0
     },
     {
-      "source": "src_app",
-      "target": "src_app_getreadmoresource",
+      "source": "plan_decisions",
+      "target": "plan_api_keys_shared_default_byok_fallback",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
-      "source_file": "src/App.tsx",
-      "source_location": "L46",
+      "source_file": "PLAN.md",
+      "source_location": "L10",
       "weight": 1.0
     },
     {
-      "source": "src_app",
-      "target": "src_app_cabinettable",
+      "source": "plan_decisions",
+      "target": "plan_api_key_bring_your_own_key_byok_for_personal_providers",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
-      "source_file": "src/App.tsx",
-      "source_location": "L555",
+      "source_file": "PLAN.md",
+      "source_location": "L29",
       "weight": 1.0
     },
     {
-      "source": "src_app",
-      "target": "src_app_interventioncard",
+      "source": "plan_decisions",
+      "target": "plan_supabase_optional_read_only_for_corpus",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
-      "source_file": "src/App.tsx",
-      "source_location": "L559",
+      "source_file": "PLAN.md",
+      "source_location": "L41",
       "weight": 1.0
     },
     {
-      "source": "src_app",
-      "target": "src_app_readmore",
+      "source": "plan_decisions",
+      "target": "plan_philosopher_data_one_file_each",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
-      "source_file": "src/App.tsx",
+      "source_file": "PLAN.md",
+      "source_location": "L47",
+      "weight": 1.0
+    },
+    {
+      "source": "plan_decisions",
+      "target": "plan_style_intensity_global",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "PLAN.md",
+      "source_location": "L52",
+      "weight": 1.0
+    },
+    {
+      "source": "plan_decisions",
+      "target": "plan_length_short_and_punchy",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "PLAN.md",
       "source_location": "L56",
       "weight": 1.0
     },
     {
-      "source": "src_app",
-      "target": "src_app_spiralview",
+      "source": "plan_decisions",
+      "target": "plan_embeddings_phase_5",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
-      "source_file": "src/App.tsx",
-      "source_location": "L561",
+      "source_file": "PLAN.md",
+      "source_location": "L74",
       "weight": 1.0
     },
     {
-      "source": "src_app",
-      "target": "src_app_positioncomparison",
+      "source": "plan_the_dialectical_cabinet_implementation_plan",
+      "target": "plan_phase_2_gemini_dialectical_engine_replaces_makemockintervention",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
-      "source_file": "src/App.tsx",
-      "source_location": "L563",
+      "source_file": "PLAN.md",
+      "source_location": "L111",
       "weight": 1.0
     },
     {
-      "source": "src_app",
-      "target": "src_app_welcomemodal",
+      "source": "plan_the_dialectical_cabinet_implementation_plan",
+      "target": "plan_phase_3_export_rewrite",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
-      "source_file": "src/App.tsx",
-      "source_location": "L565",
+      "source_file": "PLAN.md",
+      "source_location": "L180",
       "weight": 1.0
     },
     {
-      "source": "src_app",
-      "target": "src_app_sourcedrawer",
+      "source": "plan_the_dialectical_cabinet_implementation_plan",
+      "target": "plan_phase_4_accessibility_display",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
-      "source_file": "src/App.tsx",
-      "source_location": "L588",
+      "source_file": "PLAN.md",
+      "source_location": "L187",
       "weight": 1.0
     },
     {
-      "source": "src_app",
-      "target": "src_app_settingsdrawer",
+      "source": "plan_the_dialectical_cabinet_implementation_plan",
+      "target": "plan_phase_5_rag_with_vectorised_books_later",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
-      "source_file": "src/App.tsx",
-      "source_location": "L590",
+      "source_file": "PLAN.md",
+      "source_location": "L197",
       "weight": 1.0
     },
     {
-      "source": "src_app",
-      "target": "src_app_tointervention",
+      "source": "plan_the_dialectical_cabinet_implementation_plan",
+      "target": "plan_phase_6_richer_philosopher_information",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
-      "source_file": "src/App.tsx",
-      "source_location": "L75",
+      "source_file": "PLAN.md",
+      "source_location": "L204",
       "weight": 1.0
     },
     {
-      "source": "src_app",
-      "target": "src_app_displaytab",
+      "source": "plan_the_dialectical_cabinet_implementation_plan",
+      "target": "plan_decisions",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
-      "source_file": "src/App.tsx",
-      "source_location": "L760",
+      "source_file": "PLAN.md",
+      "source_location": "L8",
+      "weight": 1.0
+    },
+    {
+      "source": "plan_the_dialectical_cabinet_implementation_plan",
+      "target": "plan_phase_0_make_the_current_tree_build_this_session",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "PLAN.md",
+      "source_location": "L83",
+      "weight": 1.0
+    },
+    {
+      "source": "plan_the_dialectical_cabinet_implementation_plan",
+      "target": "plan_phase_1_per_philosopher_files_with_style_essences",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "PLAN.md",
+      "source_location": "L96",
+      "weight": 1.0
+    },
+    {
+      "source": "readme",
+      "target": "readme_the_dialectical_cabinet",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "README.md",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "readme_the_dialectical_cabinet",
+      "target": "readme_quotas_the_honest_version",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "README.md",
+      "source_location": "L14",
+      "weight": 1.0
+    },
+    {
+      "source": "readme_the_dialectical_cabinet",
+      "target": "readme_for_the_curious",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "README.md",
+      "source_location": "L23",
+      "weight": 1.0
+    },
+    {
+      "source": "readme_the_dialectical_cabinet",
+      "target": "readme_run_it_yourself_developers",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "README.md",
+      "source_location": "L29",
+      "weight": 1.0
+    },
+    {
+      "source": "readme_the_dialectical_cabinet",
+      "target": "readme_try_it",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "README.md",
+      "source_location": "L5",
       "weight": 1.0
     },
     {
@@ -6322,7 +6824,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/App.tsx",
-      "source_location": "L872",
+      "source_location": "L1002",
       "weight": 1.0
     },
     {
@@ -6333,7 +6835,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/App.tsx",
-      "source_location": "L882",
+      "source_location": "L1012",
       "weight": 1.0
     },
     {
@@ -6344,7 +6846,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/App.tsx",
-      "source_location": "L884",
+      "source_location": "L1014",
       "weight": 1.0
     },
     {
@@ -6355,7 +6857,139 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/App.tsx",
-      "source_location": "L885",
+      "source_location": "L1015",
+      "weight": 1.0
+    },
+    {
+      "source": "src_app",
+      "target": "src_app_app",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/App.tsx",
+      "source_location": "L118",
+      "weight": 1.0
+    },
+    {
+      "source": "src_app",
+      "target": "src_app_getreadmoresource",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/App.tsx",
+      "source_location": "L47",
+      "weight": 1.0
+    },
+    {
+      "source": "src_app",
+      "target": "src_app_readmore",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/App.tsx",
+      "source_location": "L59",
+      "weight": 1.0
+    },
+    {
+      "source": "src_app",
+      "target": "src_app_readingdeck",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/App.tsx",
+      "source_location": "L597",
+      "weight": 1.0
+    },
+    {
+      "source": "src_app",
+      "target": "src_app_cabinettable",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/App.tsx",
+      "source_location": "L666",
+      "weight": 1.0
+    },
+    {
+      "source": "src_app",
+      "target": "src_app_spiralview",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/App.tsx",
+      "source_location": "L670",
+      "weight": 1.0
+    },
+    {
+      "source": "src_app",
+      "target": "src_app_positioncomparison",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/App.tsx",
+      "source_location": "L672",
+      "weight": 1.0
+    },
+    {
+      "source": "src_app",
+      "target": "src_app_welcomemodal",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/App.tsx",
+      "source_location": "L674",
+      "weight": 1.0
+    },
+    {
+      "source": "src_app",
+      "target": "src_app_sourcedrawer",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/App.tsx",
+      "source_location": "L697",
+      "weight": 1.0
+    },
+    {
+      "source": "src_app",
+      "target": "src_app_settingsdrawer",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/App.tsx",
+      "source_location": "L706",
+      "weight": 1.0
+    },
+    {
+      "source": "src_app",
+      "target": "src_app_tointervention",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/App.tsx",
+      "source_location": "L78",
+      "weight": 1.0
+    },
+    {
+      "source": "src_app",
+      "target": "src_app_displaytab",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/App.tsx",
+      "source_location": "L890",
       "weight": 1.0
     },
     {
@@ -6586,7 +7220,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/lib/dialectic/prompts.ts",
-      "source_location": "L114",
+      "source_location": "L109",
       "weight": 1.0
     },
     {
@@ -6652,7 +7286,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/lib/dialectic/prompts.ts",
-      "source_location": "L45",
+      "source_location": "L44",
       "weight": 1.0
     },
     {
@@ -6663,7 +7297,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/lib/dialectic/prompts.ts",
-      "source_location": "L85",
+      "source_location": "L80",
       "weight": 1.0
     },
     {
@@ -6674,7 +7308,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/lib/dialectic/prompts.ts",
-      "source_location": "L92",
+      "source_location": "L87",
       "weight": 1.0
     },
     {
@@ -6696,7 +7330,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/lib/gemini.ts",
-      "source_location": "L107",
+      "source_location": "L105",
       "weight": 1.0
     },
     {
@@ -6707,7 +7341,29 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/lib/gemini.ts",
-      "source_location": "L145",
+      "source_location": "L147",
+      "weight": 1.0
+    },
+    {
+      "source": "src_lib_gemini",
+      "target": "src_lib_gemini_retryafterms",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/lib/gemini.ts",
+      "source_location": "L154",
+      "weight": 1.0
+    },
+    {
+      "source": "src_lib_gemini",
+      "target": "src_lib_gemini_repair_suffix",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/lib/gemini.ts",
+      "source_location": "L162",
       "weight": 1.0
     },
     {
@@ -6718,7 +7374,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/lib/gemini.ts",
-      "source_location": "L147",
+      "source_location": "L165",
       "weight": 1.0
     },
     {
@@ -6729,18 +7385,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/lib/gemini.ts",
-      "source_location": "L19",
-      "weight": 1.0
-    },
-    {
-      "source": "src_lib_gemini",
-      "target": "src_lib_gemini_testapikey",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "src/lib/gemini.ts",
-      "source_location": "L198",
+      "source_location": "L18",
       "weight": 1.0
     },
     {
@@ -6751,7 +7396,18 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/lib/gemini.ts",
-      "source_location": "L21",
+      "source_location": "L20",
+      "weight": 1.0
+    },
+    {
+      "source": "src_lib_gemini",
+      "target": "src_lib_gemini_testapikey",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/lib/gemini.ts",
+      "source_location": "L226",
       "weight": 1.0
     },
     {
@@ -6762,7 +7418,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/lib/gemini.ts",
-      "source_location": "L32",
+      "source_location": "L31",
       "weight": 1.0
     },
     {
@@ -6773,7 +7429,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/lib/gemini.ts",
-      "source_location": "L46",
+      "source_location": "L44",
       "weight": 1.0
     },
     {
@@ -6784,7 +7440,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/lib/gemini.ts",
-      "source_location": "L54",
+      "source_location": "L52",
       "weight": 1.0
     },
     {
@@ -6795,7 +7451,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/lib/gemini.ts",
-      "source_location": "L58",
+      "source_location": "L56",
       "weight": 1.0
     },
     {
@@ -6806,7 +7462,18 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/lib/gemini.ts",
-      "source_location": "L98",
+      "source_location": "L96",
+      "weight": 1.0
+    },
+    {
+      "source": "src_lib_groq",
+      "target": "src_lib_groq_groq_max_tokens",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/lib/groq.ts",
+      "source_location": "L13",
       "weight": 1.0
     },
     {
@@ -6817,7 +7484,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/lib/groq.ts",
-      "source_location": "L135",
+      "source_location": "L141",
       "weight": 1.0
     },
     {
@@ -6894,7 +7561,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/lib/openrouter.ts",
-      "source_location": "L163",
+      "source_location": "L170",
       "weight": 1.0
     },
     {
@@ -6905,7 +7572,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/lib/openrouter.ts",
-      "source_location": "L180",
+      "source_location": "L187",
       "weight": 1.0
     },
     {
@@ -6916,7 +7583,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/lib/openrouter.ts",
-      "source_location": "L182",
+      "source_location": "L189",
       "weight": 1.0
     },
     {
@@ -6927,7 +7594,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/lib/openrouter.ts",
-      "source_location": "L187",
+      "source_location": "L194",
       "weight": 1.0
     },
     {
@@ -6938,7 +7605,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/lib/openrouter.ts",
-      "source_location": "L24",
+      "source_location": "L23",
       "weight": 1.0
     },
     {
@@ -6949,7 +7616,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/lib/openrouter.ts",
-      "source_location": "L270",
+      "source_location": "L281",
       "weight": 1.0
     },
     {
@@ -6960,7 +7627,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/lib/openrouter.ts",
-      "source_location": "L274",
+      "source_location": "L285",
       "weight": 1.0
     },
     {
@@ -6971,7 +7638,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/lib/openrouter.ts",
-      "source_location": "L278",
+      "source_location": "L289",
       "weight": 1.0
     },
     {
@@ -6982,7 +7649,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/lib/openrouter.ts",
-      "source_location": "L313",
+      "source_location": "L382",
       "weight": 1.0
     },
     {
@@ -6993,7 +7660,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/lib/openrouter.ts",
-      "source_location": "L48",
+      "source_location": "L47",
       "weight": 1.0
     },
     {
@@ -7004,7 +7671,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/lib/openrouter.ts",
-      "source_location": "L50",
+      "source_location": "L49",
       "weight": 1.0
     },
     {
@@ -7015,7 +7682,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/lib/openrouter.ts",
-      "source_location": "L60",
+      "source_location": "L59",
       "weight": 1.0
     },
     {
@@ -7026,7 +7693,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/lib/openrouter.ts",
-      "source_location": "L70",
+      "source_location": "L69",
       "weight": 1.0
     },
     {
@@ -7037,7 +7704,18 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/lib/openrouter.ts",
-      "source_location": "L78",
+      "source_location": "L77",
+      "weight": 1.0
+    },
+    {
+      "source": "src_lib_openrouter",
+      "target": "src_lib_openrouter_or_max_tokens",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/lib/openrouter.ts",
+      "source_location": "L90",
       "weight": 1.0
     },
     {
@@ -7048,7 +7726,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/lib/openrouter.ts",
-      "source_location": "L85",
+      "source_location": "L92",
       "weight": 1.0
     },
     {
@@ -7059,7 +7737,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/lib/openrouter.ts",
-      "source_location": "L89",
+      "source_location": "L96",
       "weight": 1.0
     },
     {
@@ -7257,6 +7935,17 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/lib/settings.ts",
+      "source_location": "L26",
+      "weight": 1.0
+    },
+    {
+      "source": "src_lib_settings",
+      "target": "src_lib_settings_cabinetsettings",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/lib/settings.ts",
       "source_location": "L28",
       "weight": 1.0
     },
@@ -7269,17 +7958,6 @@
       "confidence_score": 1.0,
       "source_file": "src/lib/settings.ts",
       "source_location": "L3",
-      "weight": 1.0
-    },
-    {
-      "source": "src_lib_settings",
-      "target": "src_lib_settings_cabinetsettings",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "src/lib/settings.ts",
-      "source_location": "L30",
       "weight": 1.0
     },
     {
@@ -7312,7 +7990,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/lib/settings.ts",
-      "source_location": "L56",
+      "source_location": "L58",
       "weight": 1.0
     },
     {
@@ -7323,7 +8001,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/lib/settings.ts",
-      "source_location": "L79",
+      "source_location": "L86",
       "weight": 1.0
     },
     {
@@ -7334,7 +8012,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/lib/settings.ts",
-      "source_location": "L87",
+      "source_location": "L94",
       "weight": 1.0
     },
     {
@@ -7345,7 +8023,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/lib/shared.ts",
-      "source_location": "L17",
+      "source_location": "L21",
       "weight": 1.0
     },
     {
@@ -7356,7 +8034,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/lib/shared.ts",
-      "source_location": "L23",
+      "source_location": "L27",
       "weight": 1.0
     },
     {
@@ -7367,7 +8045,18 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/lib/shared.ts",
-      "source_location": "L28",
+      "source_location": "L32",
+      "weight": 1.0
+    },
+    {
+      "source": "src_lib_shared",
+      "target": "src_lib_shared_shared_max_tokens",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/lib/shared.ts",
+      "source_location": "L6",
       "weight": 1.0
     },
     {
@@ -7950,7 +8639,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/types/index.ts",
-      "source_location": "L110",
+      "source_location": "L112",
       "weight": 1.0
     },
     {
@@ -7961,7 +8650,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/types/index.ts",
-      "source_location": "L118",
+      "source_location": "L120",
       "weight": 1.0
     },
     {
@@ -7972,7 +8661,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/types/index.ts",
-      "source_location": "L126",
+      "source_location": "L127",
       "weight": 1.0
     },
     {
@@ -7983,7 +8672,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/types/index.ts",
-      "source_location": "L140",
+      "source_location": "L141",
       "weight": 1.0
     },
     {
@@ -7994,7 +8683,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/types/index.ts",
-      "source_location": "L158",
+      "source_location": "L159",
       "weight": 1.0
     },
     {
@@ -8005,7 +8694,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/types/index.ts",
-      "source_location": "L167",
+      "source_location": "L168",
       "weight": 1.0
     },
     {
@@ -8016,7 +8705,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/types/index.ts",
-      "source_location": "L177",
+      "source_location": "L178",
       "weight": 1.0
     },
     {
@@ -8027,7 +8716,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/types/index.ts",
-      "source_location": "L187",
+      "source_location": "L188",
       "weight": 1.0
     },
     {
@@ -8038,7 +8727,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/types/index.ts",
-      "source_location": "L202",
+      "source_location": "L203",
       "weight": 1.0
     },
     {
@@ -8049,7 +8738,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/types/index.ts",
-      "source_location": "L215",
+      "source_location": "L216",
       "weight": 1.0
     },
     {
@@ -8060,7 +8749,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/types/index.ts",
-      "source_location": "L217",
+      "source_location": "L218",
       "weight": 1.0
     },
     {
@@ -8071,7 +8760,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/types/index.ts",
-      "source_location": "L218",
+      "source_location": "L219",
       "weight": 1.0
     },
     {
@@ -8082,7 +8771,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/types/index.ts",
-      "source_location": "L224",
+      "source_location": "L225",
       "weight": 1.0
     },
     {
@@ -8093,7 +8782,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/types/index.ts",
-      "source_location": "L225",
+      "source_location": "L226",
       "weight": 1.0
     },
     {
@@ -8104,7 +8793,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/types/index.ts",
-      "source_location": "L227",
+      "source_location": "L228",
       "weight": 1.0
     },
     {
@@ -8115,7 +8804,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/types/index.ts",
-      "source_location": "L239",
+      "source_location": "L240",
       "weight": 1.0
     },
     {
@@ -8159,7 +8848,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/types/index.ts",
-      "source_location": "L74",
+      "source_location": "L76",
       "weight": 1.0
     },
     {
@@ -8170,7 +8859,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/types/index.ts",
-      "source_location": "L86",
+      "source_location": "L88",
       "weight": 1.0
     },
     {
@@ -8192,7 +8881,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/types/index.ts",
-      "source_location": "L97",
+      "source_location": "L99",
       "weight": 1.0
     },
     {
@@ -8608,7 +9297,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/lib/gemini.ts",
-      "source_location": "L24",
+      "source_location": "L23",
       "weight": 1.0
     },
     {
@@ -8634,17 +9323,17 @@
       "weight": 1.0
     },
     {
-      "source": "src_app_rationale_362",
+      "source": "src_app_rationale_392",
       "target": "src_app",
       "relation": "rationale_for",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/App.tsx",
-      "source_location": "L362",
+      "source_location": "L392",
       "weight": 1.0
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "6f63aad4b7ed0e957fa3713264b4294f7fff3e7f"
+  "built_at_commit": "2cf13628e3c00858cd8c88f6c55d714d6a812b14"
 }

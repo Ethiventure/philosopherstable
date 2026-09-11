@@ -11,7 +11,6 @@ export interface TurnOutput {
   negation: string;
   incorporation: string;
   reformulation: string;
-  contradiction_passed: string;
   new_contribution: string;
   works_referenced: string[];
 }
@@ -35,12 +34,11 @@ const RESPONSE_SCHEMA = {
     negation: { type: 'STRING' },
     incorporation: { type: 'STRING' },
     reformulation: { type: 'STRING' },
-    contradiction_passed: { type: 'STRING' },
     new_contribution: { type: 'STRING' },
     works_referenced: { type: 'ARRAY', items: { type: 'STRING' } },
   },
-  required: ['negation', 'incorporation', 'reformulation', 'contradiction_passed', 'new_contribution', 'works_referenced'],
-  propertyOrdering: ['negation', 'incorporation', 'reformulation', 'contradiction_passed', 'new_contribution', 'works_referenced'],
+  required: ['negation', 'incorporation', 'reformulation', 'new_contribution', 'works_referenced'],
+  propertyOrdering: ['negation', 'incorporation', 'reformulation', 'new_contribution', 'works_referenced'],
 } as const;
 
 interface GenerateTurnArgs {
@@ -129,7 +127,7 @@ export function parseTurnOutput(rawText: string, label = 'Gemini'): TurnOutput {
     throw new GeminiError(`${label} returned unparseable output. Resume the cabinet to retry the turn. Got: ${snippet(rawText)}`, true, 'parse');
   }
   const record = parsed as Record<string, unknown>;
-  for (const key of ['negation', 'incorporation', 'reformulation', 'contradiction_passed', 'new_contribution']) {
+  for (const key of ['negation', 'incorporation', 'reformulation', 'new_contribution']) {
     if (typeof record[key] !== 'string' || !(record[key] as string).trim()) {
       throw new GeminiError(`${label} output was missing “${key}”. Resume the cabinet to retry the turn. Got: ${snippet(rawText)}`, true, 'parse');
     }
@@ -141,7 +139,6 @@ export function parseTurnOutput(rawText: string, label = 'Gemini'): TurnOutput {
     negation: (record.negation as string).trim(),
     incorporation: (record.incorporation as string).trim(),
     reformulation: (record.reformulation as string).trim(),
-    contradiction_passed: (record.contradiction_passed as string).trim(),
     new_contribution: (record.new_contribution as string).trim(),
     works_referenced: works,
   };
@@ -163,7 +160,7 @@ export function retryAfterMs(detail: string, fallbackMs: number, capMs = 90000):
 
 /** Appended to the user message for a single repair attempt after malformed JSON. */
 export const REPAIR_SUFFIX =
-  ' Your previous reply was not valid JSON. Reply again with JSON only: the complete six-key object, no prose outside it.';
+  ' Your previous reply was not valid JSON. Reply again with JSON only: the complete five-key object, no prose outside it.';
 
 export async function generateTurn({ apiKey, model, systemPrompt, userMessage, longForm }: GenerateTurnArgs): Promise<TurnOutput> {
   const makeBody = (msg: string) => ({

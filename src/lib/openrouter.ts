@@ -87,7 +87,7 @@ interface OpenRouterTurnArgs {
 // Reasoning models spend output budget on thinking before answering (observed:
 // content null, finish_reason=length, at a 300-token cap). Output is cheap or
 // free here, so give thinking room — the word budget still governs length.
-const OR_MAX_TOKENS = { normal: 2000, long: 4000 } as const;
+const OR_MAX_TOKENS = { normal: 4000, long: 8000 } as const;
 
 function isAvailabilityDetail(detail: string): boolean {
   return /only available|agentic harness|\bharness\b|not available|disabled|decommissioned|retired|unsupported|no longer|taken down|removed/i.test(detail);
@@ -118,7 +118,7 @@ function openRouterError(status: number, detail: string, model: string): GeminiE
     // cycle should move on rather than blame the key.
     if (isAvailabilityDetail(detail) || !/auth|token|credential|permission|forbidden/i.test(detail)) {
       return new GeminiError(
-        `Free model ${model} refused this key (403) — restricted or retired. Trying the next one.` +
+        `${tag} ${model} refused this key (403) — restricted or retired. Trying the next one.` +
           (detail ? ` Detail: ${detail}` : ''),
         true,
         'model',
@@ -135,7 +135,7 @@ function openRouterError(status: number, detail: string, model: string): GeminiE
     // Generic provider hiccup ("Provider returned error") — retryable, not a key verdict.
     // Happens on flaky free models; the next model usually works.
     if (/provider returned error|provider error/i.test(detail) || !detail.trim()) {
-      return new GeminiError(`Free model ${model} had a provider error (400). Trying the next one.`, true, 'server');
+      return new GeminiError(`${tag} ${model} had a provider error (400). Trying the next one.`, true, 'server');
     }
     return new GeminiError(
       `OpenRouter request failed on ${model} (400).${detail ? ` Detail: ${detail}` : ''} Trying the next one.`,
@@ -155,7 +155,7 @@ function openRouterError(status: number, detail: string, model: string): GeminiE
     return new GeminiError(`OpenRouter rate limit on ${model} (429). Trying the next free model.`, true, 'quota');
   }
   if (status === 404) {
-    return new GeminiError(`Free model ${model} is gone (404) — the list rotates. Trying the next one.`, true, 'model');
+    return new GeminiError(`${tag} ${model} is gone (404) — the list rotates. Trying the next one.`, true, 'model');
   }
   if (status >= 500) {
     return new GeminiError(`OpenRouter/model error on ${model} (${status}). Trying the next free model.`, true, 'server');
@@ -195,6 +195,7 @@ async function attemptModel(
   model: string,
   apiKey: string,
   body: Record<string, unknown>,
+  tag = 'Free model',
 ): Promise<TurnOutput> {
   for (let attempt = 0; attempt < 2; attempt += 1) {
     let response: Response;
@@ -219,7 +220,7 @@ async function attemptModel(
       if (error instanceof DOMException && error.name === 'TimeoutError') {
         // Cold free models hang — fail over to the next one immediately
         // rather than stalling the cabinet for another minute.
-        throw new GeminiError(`Free model ${model} timed out. Trying the next one.`, true, 'server');
+        throw new GeminiError(`${tag} ${model} timed out. Trying the next one.`, true, 'server');
       }
       throw new GeminiError(
         'Network error reaching OpenRouter. Check the connection and Resume the cabinet.',
@@ -247,7 +248,7 @@ async function attemptModel(
     try {
       data = (await response.json()) as typeof data;
     } catch {
-      throw new GeminiError(`Free model ${model} returned non-JSON. Trying the next one.`, true, 'server');
+      throw new GeminiError(`${tag} ${model} returned non-JSON. Trying the next one.`, true, 'server');
     }
     if (data.error?.message) {
       throw openRouterError(400, data.error.message, model);
@@ -261,7 +262,7 @@ async function attemptModel(
       // they can't follow the JSON instruction.
       const snippet = JSON.stringify(choice ?? {}).slice(0, 300);
       throw new GeminiError(
-        `Free model ${model} returned an empty response (no content). Snippet: ${snippet} — trying the next one.`,
+        `${tag} ${model} returned an empty response (no content). Snippet: ${snippet} — trying the next one.`,
         true,
         'server',
       );
@@ -271,10 +272,10 @@ async function attemptModel(
     } catch (error) {
       // Model can't do the required JSON — a property of the model, so cycle on.
       if (error instanceof GeminiError) throw error;
-      throw new GeminiError(`Free model ${model} broke the JSON shape. Trying the next one.`, true, 'parse');
+      throw new GeminiError(`${tag} ${model} broke the JSON shape. Trying the next one.`, true, 'parse');
     }
   }
-  throw new GeminiError(`Free model ${model} timed out twice. Trying the next one.`, true, 'server');
+  throw new GeminiError(`${tag} ${model} timed out twice. Trying the next one.`, true, 'server');
 }
 
 function statusIsRetryableModel(status: number): boolean {
@@ -297,15 +298,18 @@ export async function generateTurnOpenRouter({ apiKey, systemPrompt, userMessage
     max_tokens: longForm ? OR_MAX_TOKENS.long : OR_MAX_TOKENS.normal,
     // Reasoning models otherwise burn the whole output budget thinking about
     // the JSON contract (observed: content null, finish_reason length) and
-    // ramble past the word budgets. Low effort keeps answers tight.
+    // ramble past the word budgets. Low effort keeps thinking small; the
+    // overall max_tokens above still caps the turn. NOTE: OpenRouter rejects
+    // reasoning.effort + reasoning.max_tokens together (400) — effort only.
     reasoning: { effort: 'low' },
   };
   const paidId = mode === 'paid' ? modelId.trim() : '';
   if (paidId) {
     // Pinned paid model: same-model retry lives in attemptModel; one repair
     // attempt on malformed JSON, mirroring the other single-model clients.
+    // One plain retry on transient server faults (e.g. a mangled 200 body).
     try {
-      return await attemptModel(paidId, apiKey, body);
+      return await attemptModel(paidId, apiKey, body, 'Paid model');
     } catch (error) {
       if (isFailFast(error)) throw error;
       if (error instanceof GeminiError && error.code === 'parse') {
@@ -315,7 +319,10 @@ export async function generateTurnOpenRouter({ apiKey, systemPrompt, userMessage
             { role: 'system', content: systemPrompt },
             { role: 'user', content: userMessage + REPAIR_SUFFIX },
           ],
-        });
+        }, 'Paid model');
+      }
+      if (error instanceof GeminiError && error.code === 'server') {
+        return attemptModel(paidId, apiKey, body, 'Paid model');
       }
       // Quota on a pinned model means the key's cap or credits, not a dead
       // model — say so plainly instead of the cycle's "trying the next one".

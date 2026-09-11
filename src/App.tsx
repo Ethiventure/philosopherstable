@@ -1,8 +1,8 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import {
+  ArrowDown,
   ArrowRight,
   BookOpen,
-  ChevronDown,
   CirclePause,
   CirclePlay,
   Download,
@@ -41,16 +41,19 @@ import { generateTurnOpenRouter, testOpenRouterKey } from '@/lib/openrouter';
 import { createTtsController, ensureVoices, isTtsSupported, listVoices, type TtsItem, type TtsStatus } from '@/lib/tts';
 
 // "Read more" resolution: the philosopher's most relevant text from the corpus
-// manifest. Prefers an ingested magnum opus (readable right now), then any
-// ingested work, then the magnum opus, then whatever is listed first.
+// manifest. Entries flagged with link_note (broken link) are skipped unless
+// nothing else exists. Prefers an ingested magnum opus (readable right now),
+// then any ingested work, then the magnum opus, then whatever is listed first.
 function getReadMoreSource(philosopherName: string) {
   const works = CORPUS_SOURCES_DATA.filter((s) =>
     s.author.toLowerCase().includes(philosopherName.toLowerCase()));
   if (!works.length) return null;
-  return works.find((s) => s.is_magnum_opus && s.full_text_ingested)
-    ?? works.find((s) => s.full_text_ingested)
-    ?? works.find((s) => s.is_magnum_opus)
-    ?? works[0];
+  const usable = works.filter((s) => !s.link_note);
+  const pool = usable.length ? usable : works;
+  return pool.find((s) => s.is_magnum_opus && s.full_text_ingested)
+    ?? pool.find((s) => s.full_text_ingested)
+    ?? pool.find((s) => s.is_magnum_opus)
+    ?? pool[0] ?? null;
 }
 
 function ReadMore({ philosopherName, onNavigate }: { philosopherName: string; onNavigate?: (event: React.MouseEvent) => void }) {
@@ -94,13 +97,11 @@ function toIntervention(
       output.negation,
       output.incorporation,
       output.reformulation,
-      output.contradiction_passed,
     ].join('\n\n'),
     sections: {
       negation: output.negation,
       incorporation: output.incorporation,
       reformulation: output.reformulation,
-      contradiction_passed: output.contradiction_passed,
       new_contribution: output.new_contribution,
     },
     retrieved_chunk_ids: [],
@@ -116,7 +117,7 @@ function toIntervention(
 
 function App() {
   const [philosophers, setPhilosophers] = useState<Philosopher[]>([]);
-  const [question, setQuestion] = useState('Should democratic movements use autonomous AI agents for political organisation?');
+  const [question, setQuestion] = useState('How should autonomous AI agents be best used to bring about positive social change?');
   const [activePass, setActivePass] = useState(0);
   const [activeAgent, setActiveAgent] = useState(-1);
   const [isRunning, setIsRunning] = useState(false);
@@ -200,15 +201,6 @@ function App() {
     ttsRef.current?.speak([describeIntervention(item)]);
   };
 
-  const toggleSessionSpeech = () => {
-    if (!ttsSupported || !interventions.length) return;
-    if (ttsStatus.state !== 'idle') {
-      ttsRef.current?.stop();
-      return;
-    }
-    ttsRef.current?.speak(interventions.map(describeIntervention));
-  };
-
   const updateSettings = (next: CabinetSettings) => {
     setSettings(next);
     saveSettings(next);
@@ -227,7 +219,6 @@ function App() {
   const orderedPhilosophers = useMemo(() => DEFAULT_SEATING_ORDER
     .map((slug) => philosophers.find((p) => p.slug === slug))
     .filter((p): p is Philosopher => p !== undefined && activeSlugs.includes(p.slug)), [philosophers, activeSlugs]);
-  const currentInterventions = interventions.filter((item) => item.pass_number === activePass + 1);
   const currentSpeaker = orderedPhilosophers[activeAgent];
   const providerKey = (s: CabinetSettings) =>
     s.provider === 'shared' ? '' : s.provider === 'openrouter' ? s.openRouterApiKey : s.provider === 'groq' ? s.groqApiKey : s.geminiApiKey;
@@ -239,6 +230,47 @@ function App() {
   const activeKeyReady = (s: CabinetSettings) =>
     s.provider === 'shared' ? true : providerKey(s).trim().length > 0;
   const isComplete = orderedPhilosophers.length > 0 && interventions.length >= orderedPhilosophers.length * 3;
+
+  // Reading deck: always starts at the first card and stays where put — only
+  // the reader's manicule moves it forward. New arrivals collect in the
+  // "up next" pile; the table card always shows the current turn.
+  const [readIdx, setReadIdx] = useState(0);
+  const [freshId, setFreshId] = useState<string | null>(null);
+  const deckRef = useRef<HTMLElement>(null);
+  const prevCountRef = useRef(0);
+  useEffect(() => {
+    const prev = prevCountRef.current;
+    prevCountRef.current = interventions.length;
+    if (interventions.length === 0) {
+      setReadIdx(0);
+      setFreshId(null);
+      return;
+    }
+    if (interventions.length > prev) {
+      const newest = interventions[interventions.length - 1];
+      if (newest) setFreshId(newest.id);
+    }
+  }, [interventions.length]);
+  useEffect(() => {
+    if (!freshId) return;
+    const timer = window.setTimeout(() => setFreshId(null), 2600);
+    return () => window.clearTimeout(timer);
+  }, [freshId]);
+
+  const jumpToLatest = () => {
+    if (!interventions.length) return;
+    setReadIdx(interventions.length - 1);
+    setFreshId(null);
+    deckRef.current?.scrollIntoView({ behavior: display.reduceMotion ? 'auto' : 'smooth', block: 'start' });
+  };
+
+  const latestForTable = (() => {
+    const item = interventions[interventions.length - 1];
+    if (!item) return null;
+    const philosopher = philosophers.find((p) => p.id === item.philosopher_id);
+    if (!philosopher) return null;
+    return { intervention: item, philosopher };
+  })();
 
   // Async loop over passes × seats (Phase 2f). Each turn sees only the
   // question, PREV's full text, and the speaker's own prior one-liners.
@@ -258,9 +290,6 @@ function App() {
         ? null
         : seats[(index - 1 + seats.length) % seats.length] ?? null;
       const isFinalTurn = pass === 2 && index === seats.length - 1;
-      const nextSpeaker = isFinalTurn
-        ? null
-        : seats[(index + 1) % seats.length] ?? null;
       const kind = getTurnKind(pass + 1, index + 1);
       const ownPriorLines = collected
         .filter((item) => item.philosopher_id === speaker.id && item.sections?.new_contribution)
@@ -268,7 +297,6 @@ function App() {
       const turnInstruction = buildTurnInstruction({
         kind,
         prevName: previousSpeaker?.name ?? null,
-        nextName: nextSpeaker?.name ?? null,
         isFinalSeat: isFinalTurn,
         longForm: snap.longForm,
       });
@@ -474,23 +502,23 @@ function App() {
         </div>
       </header>
 
-      <main className="max-w-[1500px] mx-auto px-4 md:px-6 py-8">
+      <main className="max-w-[1500px] mx-auto px-4 md:px-6 py-5">
         <section className="grid lg:grid-cols-[1fr_360px] gap-8 items-start">
           <div>
-            <div className="flex flex-wrap items-end justify-between gap-4 mb-6">
+            <div className="flex flex-wrap items-end justify-between gap-4 mb-4">
               <div>
                 <p className="text-xs uppercase tracking-[0.25em] text-[#8b5254] mb-2">Clockwise protocol / {isRunning ? 'in session' : 'at rest'}</p>
-                <h2 className="text-4xl md:text-5xl">A question enters.<br /><span className="text-[#8b5254]">A problem emerges.</span></h2>
+                <h2 className="text-3xl md:text-4xl">A question enters.<br /><span className="text-[#8b5254]">A problem emerges.</span></h2>
               </div>
               {isRunning && <div className="flex items-center gap-2 text-sm italic text-[#8b5254]"><span className="w-2 h-2 rounded-full bg-[#cc5f68] speaker-glow" /> Cabinet in motion</div>}
             </div>
 
-            <div className="dark-academia-card p-5 md:p-6 mb-8">
+            <div className="dark-academia-card p-4 md:p-5 mb-5">
               <div className="flex items-center justify-between gap-4 mb-3">
                 <label htmlFor="question" className="font-heading text-sm uppercase tracking-[0.16em] text-[#4a392d]">The contemporary problem</label>
                 <span className="text-xs text-[#465f75]/65">The question remains constant; its formulation may change.</span>
               </div>
-              <textarea id="question" value={question} onChange={(event) => setQuestion(event.target.value)} disabled={isRunning} className="w-full min-h-[92px] resize-y bg-[#eae1ca]/60 border border-[#4a392d]/25 rounded-sm p-4 text-lg leading-relaxed text-[#465f75] placeholder:text-[#465f75]/45 focus:outline-none focus:ring-2 focus:ring-[#8b5254]/30" />
+              <textarea id="question" value={question} onChange={(event) => setQuestion(event.target.value)} disabled={isRunning} className="w-full min-h-[72px] resize-y bg-[#eae1ca]/60 border border-[#4a392d]/25 rounded-sm p-3 text-base leading-relaxed text-[#465f75] placeholder:text-[#465f75]/45 focus:outline-none focus:ring-2 focus:ring-[#8b5254]/30" />
               <div className="flex flex-wrap gap-3 mt-4">
                 <button className="btn-primary flex items-center gap-2" onClick={isRunning ? pauseMeeting : interventions.length ? resumeMeeting : startMeeting} disabled={!question.trim() || orderedPhilosophers.length < 2 || (!isRunning && (!hasKey || isComplete))}>{isRunning ? <><CirclePause size={17} /> Pause circuit</> : <><CirclePlay size={17} /> {isComplete ? 'Cabinet complete' : interventions.length ? 'Resume cabinet' : 'Begin cabinet'}</>}</button>
                 <button className="btn-secondary flex items-center gap-2" onClick={resetMeeting}><RotateCcw size={15} /> Restart</button>
@@ -500,7 +528,7 @@ function App() {
               {runError && (runError.code === 'quota' ? <div role="alert" className="mt-3 p-5 bg-[#8b5254]/10 border-l-2 border-[#8b5254]"><p className="text-xs uppercase tracking-widest text-[#8b5254]">Paused — free-tier quota reached</p><p className="text-sm mt-2 text-[#465f75]">{runError.message}</p><p className="text-sm mt-2 text-[#465f75]">Nothing is lost: {interventions.length} of {orderedPhilosophers.length * 3} interventions are kept, and read-aloud plus export keep working. Quotas reset with time — per-minute caps within minutes, daily caps the next day.</p><div className="flex flex-wrap gap-2 mt-3"><button className="btn-secondary" onClick={() => resumeMeeting()} disabled={!hasKey}>Try resume</button>{settings.provider === 'shared' && <button className="btn-secondary" onClick={() => { setRunError(null); setShowSettings(true); }}>Use my own key instead</button>}{settings.provider === 'gemini' && settings.model !== 'gemini-3.5-flash-lite' && <button className="btn-secondary" onClick={switchToLiteAndResume} disabled={!hasKey}>Switch to Lite & resume</button>}{settings.provider === 'gemini' && <button className="btn-secondary" onClick={() => { updateSettings({ ...settings, provider: 'openrouter' }); setRunError(null); setShowSettings(true); }}>Try OpenRouter free models</button>}{settings.provider === 'openrouter' && settings.geminiApiKey.trim() && <button className="btn-secondary" onClick={switchToGeminiAndResume}>Switch to Gemini & resume</button>}{settings.provider === 'groq' && <button className="btn-secondary" onClick={() => { updateSettings({ ...settings, provider: 'shared' }); setRunError(null); }}>Fall back to shared</button>}<button className="btn-secondary" onClick={() => setShowSettings(true)}>Open settings</button>{settings.provider === 'gemini' ? <a className="btn-secondary" href="https://aistudio.google.com/apikey" target="_blank" rel="noreferrer">Check usage</a> : settings.provider === 'openrouter' ? <a className="btn-secondary" href="https://openrouter.ai/activity" target="_blank" rel="noreferrer">Check usage</a> : settings.provider === 'groq' ? <a className="btn-secondary" href="https://console.groq.com" target="_blank" rel="noreferrer">Check usage</a> : null}<button className="btn-secondary" onClick={() => setRunError(null)}>Dismiss</button></div></div> : <div className="mt-3 p-4 bg-[#8b5254]/8 border-l-2 border-[#8b5254]"><p className="text-xs uppercase tracking-widest text-[#8b5254]">Cabinet halted</p><p className="text-sm mt-1 text-[#465f75]">{runError.message}</p><div className="flex flex-wrap gap-2 mt-3"><button className="btn-secondary" onClick={resumeMeeting} disabled={!hasKey}>Resume cabinet</button><button className="btn-secondary" onClick={() => setShowSettings(true)}>Open settings</button><button className="btn-secondary" onClick={() => setRunError(null)}>Dismiss</button></div></div>)}
             </div>
 
-            <div className="dark-academia-card p-5 md:p-8">
+            <div className="dark-academia-card p-4 md:p-5">
               <div className="flex items-center justify-between mb-5">
                 <div>
                   <p className="pass-indicator text-[#8b5254]">Pass {activePass + 1} / 3</p>
@@ -508,11 +536,11 @@ function App() {
                   <p className="italic text-[#465f75]/70">{PASS_DESCRIPTIONS[activePass]}</p>
                 </div>
                 <div className="flex items-center gap-2">
-                  {[0, 1, 2].map((pass) => <button key={pass} onClick={() => setActivePass(pass)} className={`w-9 h-9 rounded-full border text-sm font-semibold transition-all ${activePass === pass ? 'bg-[#4a392d] text-[#eae1ca] border-[#4a392d]' : 'border-[#4a392d]/30 text-[#4a392d]/60 hover:border-[#4a392d]'}`}>{pass + 1}</button>)}
+                  {[0, 1, 2].map((pass) => <button key={pass} onClick={() => setActivePass(pass)} aria-label={`View pass ${pass + 1}`} className={`w-11 h-11 rounded-full border text-sm font-semibold transition-all ${activePass === pass ? 'bg-[#4a392d] text-[#eae1ca] border-[#4a392d]' : 'border-[#4a392d]/30 text-[#4a392d]/60 hover:border-[#4a392d]'}`}>{pass + 1}</button>)}
                 </div>
               </div>
 
-              <CabinetTable philosophers={orderedPhilosophers} activeAgent={activeAgent} activePass={activePass} interventions={interventions} onSelect={(philosopher) => setSelectedPhilosopher(philosopher)} />
+              <CabinetTable philosophers={orderedPhilosophers} activeAgent={activeAgent} activePass={activePass} interventions={interventions} onSelect={(philosopher) => setSelectedPhilosopher(philosopher)} latest={latestForTable} onJumpToLatest={jumpToLatest} />
 
               {currentSpeaker && (isRunning || thinkingName) && <div className="mt-6 p-4 bg-[#8b5254]/8 border-l-2 border-[#8b5254] slide-in-right"><p className="text-xs uppercase tracking-widest text-[#8b5254]">{thinkingName ? `${thinkingName} is thinking…` : 'Currently speaking'}</p><p className="font-heading text-xl text-[#4a392d]">{currentSpeaker.full_name}</p><p className="text-sm italic text-[#465f75]/70 mt-1">The intervention will pass clockwise to {orderedPhilosophers[(activeAgent + 1) % orderedPhilosophers.length]?.name}.</p></div>}
             </div>
@@ -534,13 +562,25 @@ function App() {
           </aside>
         </section>
 
-        <section className="mt-10">
+        <section className="mt-10" ref={deckRef} aria-label="Reading deck">
           <div className="ornament-divider mb-6"><span className="text-xl">✦</span></div>
-          <div className="flex flex-wrap items-end justify-between gap-4 mb-5"><div><p className="pass-indicator text-[#8b5254]">The developing transcript</p><h2 className="text-3xl">Voices around the table</h2></div><div className="flex flex-col items-end gap-2"><p className="hidden md:block max-w-md text-right italic text-[#465f75]/65">Select an intervention to inspect its argument and source status. Earlier positions are preserved.</p>{ttsSupported && interventions.length > 0 && <button className="btn-secondary flex items-center gap-2" onClick={toggleSessionSpeech} aria-label={ttsStatus.state !== 'idle' ? 'Stop reading the full session aloud' : 'Read the full session aloud'}>{ttsStatus.state !== 'idle' ? <><Square size={15} /> Stop reading ({ttsStatus.position}/{ttsStatus.total})</> : <><Volume2 size={15} /> Read full session aloud</>}</button>}</div></div>
-          <p className="sr-only" aria-live="polite">{ttsStatus.state === 'idle' ? '' : ttsStatus.state === 'paused' ? `Reading paused at item ${ttsStatus.position} of ${ttsStatus.total}.` : `Reading item ${ttsStatus.position} of ${ttsStatus.total}.`}</p>
-          <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-4">
-            {currentInterventions.length ? currentInterventions.map((intervention) => { const philosopher = philosophers.find((p) => p.id === intervention.philosopher_id); return philosopher ? <InterventionCard key={intervention.id} intervention={intervention} philosopher={philosopher} onClick={() => setSelectedIntervention(intervention)} ttsSupported={ttsSupported} speaking={ttsStatus.state !== 'idle' && ttsStatus.currentId === intervention.id} paused={ttsStatus.state === 'paused' && ttsStatus.currentId === intervention.id} onToggleSpeech={() => toggleTurnSpeech(intervention)} /> : null; }) : <div className="md:col-span-2 xl:col-span-3 dark-academia-card p-10 text-center"><Feather size={28} className="mx-auto text-[#b89968] mb-3" /><p className="font-heading text-2xl text-[#4a392d]">The cabinet awaits its question.</p><p className="italic text-[#465f75]/65 mt-2">Begin the circuit to watch the problem transform one intervention at a time.</p></div>}
-          </div>
+          <div className="flex flex-wrap items-end justify-between gap-4 mb-5"><div><p className="pass-indicator text-[#8b5254]">The developing transcript</p><h2 className="text-3xl">Voices around the table</h2></div><p className="hidden md:block max-w-md text-right italic text-[#465f75]/65">Read at your own pace with the arrows — new turns collect underneath without pulling you away.</p></div>
+          <p className="sr-only" aria-live="polite">{ttsStatus.state === 'idle' ? '' : ttsStatus.state === 'paused' ? `Reading paused.` : `Reading aloud.`}</p>
+          {interventions.length ? (
+            <ReadingDeck
+              interventions={interventions}
+              philosophers={philosophers}
+              readIdx={Math.min(readIdx, interventions.length - 1)}
+              onNav={(i) => { setReadIdx(i); setFreshId(null); }}
+              freshId={freshId}
+              ttsSupported={ttsSupported}
+              ttsStatus={ttsStatus}
+              onToggleSpeech={toggleTurnSpeech}
+              onInspect={(item) => setSelectedIntervention(item)}
+            />
+          ) : (
+            <div className="dark-academia-card p-10 text-center"><Feather size={28} className="mx-auto text-[#b89968] mb-3" /><p className="font-heading text-2xl text-[#4a392d]">The cabinet awaits its question.</p><p className="italic text-[#465f75]/65 mt-2">Begin the circuit to watch the problem transform one intervention at a time.</p></div>
+          )}
         </section>
 
         {interventions.length > orderedPhilosophers.length && <PositionComparison philosophers={orderedPhilosophers} interventions={interventions} />}
@@ -554,11 +594,78 @@ function App() {
   );
 }
 
-function CabinetTable({ philosophers, activeAgent, activePass, interventions, onSelect }: { philosophers: Philosopher[]; activeAgent: number; activePass: number; interventions: Intervention[]; onSelect: (philosopher: Philosopher) => void }) {
-  return <div className="relative w-full max-w-[760px] mx-auto aspect-square min-h-[390px] md:min-h-[560px] flex items-center justify-center"><div className="absolute w-[48%] h-[34%] rounded-[50%] border-[10px] border-[#4a392d]/80 bg-[#6d4c37]/10 shadow-[inset_0_0_40px_rgba(74,57,45,0.2),0_8px_24px_rgba(74,57,45,0.2)]"><div className="absolute inset-3 rounded-[50%] border border-[#b89968]/50 flex flex-col items-center justify-center text-center"><span className="text-[9px] uppercase tracking-[0.2em] text-[#8b5254]">The cabinet</span><span className="font-heading text-lg md:text-2xl text-[#4a392d]">A dialectical spiral</span><span className="text-xs italic text-[#465f75]/60 mt-1">clockwise · sequential · unresolved</span></div></div><div className="absolute inset-[8%] rotation-arrow pointer-events-none"><div className="absolute top-0 left-1/2 -translate-x-1/2 text-[#8b5254]"><ArrowRight size={22} /></div></div>{philosophers.map((philosopher, index) => { const angle = (index / philosophers.length) * Math.PI * 2 - Math.PI / 2; const x = 50 + Math.cos(angle) * 42; const y = 50 + Math.sin(angle) * 42; const isActive = activeAgent === index; const hasSpoken = interventions.some((item) => item.pass_number === activePass + 1 && item.seat_position === index); return <button key={philosopher.slug} onClick={() => onSelect(philosopher)} aria-label={`Seat ${index + 1}: ${philosopher.full_name}`} className={`cabinet-seat absolute -translate-x-1/2 -translate-y-1/2 flex flex-col items-center gap-1 ${isActive ? 'cabinet-seat-active' : ''} ${hasSpoken ? 'cabinet-seat-spoken' : ''}`} style={{ left: `${x}%`, top: `${y}%` }}><span className={`w-12 h-12 md:w-16 md:h-16 rounded-full border-2 flex items-center justify-center bg-[#f2ebd9] ${isActive ? 'speaker-glow border-[#cc5f68]' : 'border-[#4a392d]/35'}`} style={{ borderColor: isActive ? undefined : philosopher.accent_color }}><span className="font-heading text-lg md:text-2xl" style={{ color: philosopher.accent_color }}>{philosopher.name.charAt(0)}</span></span><span className="font-heading text-xs md:text-sm text-[#4a392d] whitespace-nowrap">{philosopher.name}</span><span className="text-[9px] uppercase tracking-wider text-[#465f75]/55">Seat {index + 1}</span></button>; })}</div>;
+function ReadingDeck({ interventions, philosophers, readIdx, onNav, freshId, ttsSupported, ttsStatus, onToggleSpeech, onInspect }: {
+  interventions: Intervention[];
+  philosophers: Philosopher[];
+  readIdx: number;
+  onNav: (index: number) => void;
+  freshId: string | null;
+  ttsSupported: boolean;
+  ttsStatus: TtsStatus;
+  onToggleSpeech: (item: Intervention) => void;
+  onInspect: (item: Intervention) => void;
+}) {
+  const item = interventions[readIdx];
+  if (!item) return null;
+  const philosopher = philosophers.find((p) => p.id === item.philosopher_id);
+  if (!philosopher) return null;
+  const speaking = ttsStatus.state !== 'idle' && ttsStatus.currentId === item.id;
+  const paused = ttsStatus.state === 'paused' && ttsStatus.currentId === item.id;
+  const upcoming = interventions.slice(readIdx + 1, readIdx + 4);
+  const behind = interventions.length - 1 - readIdx;
+  const label = `Now reading ${readIdx + 1} of ${interventions.length}: ${philosopher.full_name}, pass ${item.pass_number}`;
+  return (
+    <div role="region" aria-roledescription="carousel" aria-label="Reading deck: move through interventions with the arrow buttons">
+      <p className="sr-only" aria-live="polite">{label}</p>
+      <article key={item.id} aria-label={`${philosopher.full_name}, pass ${item.pass_number}`} className={`dark-academia-card p-5 md:p-8 max-w-3xl ${freshId === item.id ? 'card-arrive' : ''} ${speaking ? 'tts-reading' : ''}`}>
+        <div className="flex items-center gap-3 mb-4">
+          <span className="w-10 h-10 rounded-full border-2 flex items-center justify-center font-heading text-lg shrink-0" style={{ borderColor: philosopher.accent_color, color: philosopher.accent_color }} aria-hidden="true">{philosopher.name.charAt(0)}</span>
+          <div>
+            <h3 className="font-heading text-2xl text-[#4a392d] leading-tight">{philosopher.full_name}</h3>
+            <p className="text-[10px] uppercase tracking-wider text-[#8b5254]">Pass {item.pass_number} · Seat {item.seat_position + 1} · Card {readIdx + 1} of {interventions.length}</p>
+          </div>
+        </div>
+        <p className="drop-cap text-[15px] leading-relaxed whitespace-pre-line text-[#465f75]">{item.response_text}</p>
+        <div className="mt-4"><ReadMore philosopherName={philosopher.name} /></div>
+        <div className="flex flex-wrap gap-1 mt-4">{item.citations.map((citation) => <span key={citation.label} className={`citation-badge ${citation.verified ? '' : 'citation-unverified'}`}><BookOpen size={10} /> {citation.label}</span>)}</div>
+        <div className="flex flex-wrap gap-2 mt-5">
+          {ttsSupported && <button onClick={() => onToggleSpeech(item)} className="btn-secondary !text-xs flex items-center gap-2" aria-label={speaking ? `Stop reading intervention by ${philosopher.full_name}` : `Listen to intervention by ${philosopher.full_name}`}>{speaking ? <><Square size={13} /> {paused ? 'Paused — stop' : 'Stop reading'}</> : <><Volume2 size={13} /> Listen</>}</button>}
+          <button onClick={() => onInspect(item)} className="btn-secondary !text-xs">Inspect sources</button>
+        </div>
+        <div className="flex items-center justify-between mt-4">
+          <p aria-hidden="true" className="text-sm italic text-[#465f75]/70">{readIdx + 1} of {interventions.length}</p>
+          <button onClick={() => onNav(Math.min(interventions.length - 1, readIdx + 1))} disabled={readIdx >= interventions.length - 1} className="manicule-next" aria-label={readIdx >= interventions.length - 1 ? 'Latest card — awaiting the next turn' : `Next intervention: ${(philosophers.find((p) => p.id === interventions[readIdx + 1]?.philosopher_id)?.full_name) ?? 'next'}`}>☞</button>
+        </div>
+      </article>
+      <div className="flex items-center gap-3 mt-4 max-w-3xl">
+        <p className="text-sm italic text-[#465f75]/70">Card {readIdx + 1} of {interventions.length}</p>
+        {behind > 0 && <button onClick={() => onNav(interventions.length - 1)} className="btn-secondary !text-xs flex items-center gap-1"><ArrowDown size={13} /> {behind} new — jump to latest</button>}
+      </div>
+      {upcoming.length > 0 && (
+        <div className="mt-4 max-w-3xl" aria-label="Up next">
+          <p className="text-[10px] uppercase tracking-widest text-[#8b5254] mb-2">Up next in the pile</p>
+          <div className="space-y-2">
+            {upcoming.map((next, offset) => {
+              const phil = philosophers.find((p) => p.id === next.philosopher_id);
+              if (!phil) return null;
+              return (
+                <button key={next.id} onClick={() => onNav(readIdx + 1 + offset)} className="w-full text-left dark-academia-card px-4 py-3 flex items-center gap-3" aria-label={`Skip ahead to ${phil.full_name}, pass ${next.pass_number}`}>
+                  <span className="w-7 h-7 rounded-full border flex items-center justify-center font-heading text-sm shrink-0" style={{ borderColor: phil.accent_color, color: phil.accent_color }} aria-hidden="true">{phil.name.charAt(0)}</span>
+                  <span className="font-heading text-base text-[#4a392d]">{phil.full_name}</span>
+                  <span className="text-[10px] uppercase tracking-wider text-[#465f75]/60 ml-auto shrink-0">Pass {next.pass_number}</span>
+                </button>
+              );
+            })}
+          </div>
+        </div>
+      )}
+    </div>
+  );
 }
 
-function InterventionCard({ intervention, philosopher, onClick, ttsSupported, speaking, paused, onToggleSpeech }: { intervention: Intervention; philosopher: Philosopher; onClick: () => void; ttsSupported?: boolean; speaking?: boolean; paused?: boolean; onToggleSpeech?: () => void }) { return <article className={`dark-academia-card text-left p-5 w-full ${speaking ? 'tts-reading' : ''}`}><button onClick={onClick} className="w-full text-left" aria-label={`Inspect intervention by ${philosopher.full_name}`}><div className="flex items-start justify-between gap-3 mb-3"><div className="flex items-center gap-3"><span className="w-9 h-9 rounded-full border flex items-center justify-center font-heading" style={{ borderColor: philosopher.accent_color, color: philosopher.accent_color }}>{philosopher.name.charAt(0)}</span><div><p className="font-heading text-lg text-[#4a392d]">{philosopher.full_name}</p><p className="text-[10px] uppercase tracking-wider text-[#8b5254]">Seat {intervention.seat_position + 1}</p></div></div><ChevronDown size={16} className="text-[#4a392d]/50" /></div><p className="drop-cap text-[15px] leading-relaxed text-[#465f75]">{intervention.response_text}</p></button><div className="mt-3"><ReadMore philosopherName={philosopher.name} onNavigate={(event) => event.stopPropagation()} /></div>{ttsSupported && <div className="mt-3"><button onClick={(event) => { event.stopPropagation(); onToggleSpeech?.(); }} className="btn-secondary !text-xs flex items-center gap-2" aria-label={speaking ? `Stop reading intervention by ${philosopher.full_name}` : `Listen to intervention by ${philosopher.full_name}`}>{speaking ? <><Square size={13} /> {paused ? 'Paused — stop' : 'Stop reading'}</> : <><Volume2 size={13} /> Listen</>}</button></div>}<div className="flex flex-wrap gap-1 mt-4">{intervention.citations.map((citation) => <span key={citation.label} className={`citation-badge ${citation.verified ? '' : 'citation-unverified'}`}><BookOpen size={10} /> {citation.label}</span>)}</div></article>; }
+function CabinetTable({ philosophers, activeAgent, activePass, interventions, onSelect, latest, onJumpToLatest }: { philosophers: Philosopher[]; activeAgent: number; activePass: number; interventions: Intervention[]; onSelect: (philosopher: Philosopher) => void; latest: { intervention: Intervention; philosopher: Philosopher } | null; onJumpToLatest: () => void }) {
+  return <div className="relative w-full max-w-[920px] mx-auto aspect-square min-h-[400px] md:min-h-[560px] flex items-center justify-center"><div className="absolute w-[48%] h-[34%] rounded-[50%] border-[10px] border-[#4a392d]/80 bg-[#6d4c37]/10 shadow-[inset_0_0_40px_rgba(74,57,45,0.2),0_8px_24px_rgba(74,57,45,0.2)]"><div className="absolute inset-3 rounded-[50%] border border-[#b89968]/50 flex flex-col items-center justify-center text-center"><span className="text-[9px] uppercase tracking-[0.2em] text-[#8b5254]">The cabinet</span><span className="font-heading text-lg md:text-2xl text-[#4a392d]">A dialectical spiral</span><span className="text-[10px] italic text-[#465f75]/60 mt-1 px-6 leading-snug">clockwise<br />sequential<br />unresolved</span></div></div>{latest && <div className="absolute z-20 w-[66%] max-w-[430px] left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"><div className="dark-academia-card p-5 text-center"><p className="text-[9px] uppercase tracking-[0.2em] text-[#8b5254]">Now at the table</p><p className="font-heading text-xl text-[#4a392d] mt-1 leading-tight">{latest.philosopher.full_name}</p><p className="text-[10px] uppercase tracking-wider text-[#465f75]/65 mt-1">Pass {latest.intervention.pass_number} · Seat {latest.intervention.seat_position + 1}</p><p className="text-[15px] leading-relaxed mt-3 max-h-[190px] md:max-h-[240px] overflow-y-auto custom-scroll text-left text-[#465f75]">{latest.intervention.response_text}</p><button className="btn-secondary !text-xs mt-3" onClick={onJumpToLatest}>Read in the deck</button></div></div>}<div className="absolute inset-[8%] rotation-arrow pointer-events-none"><div className="absolute top-0 left-1/2 -translate-x-1/2 text-[#8b5254]"><ArrowRight size={22} /></div></div>{philosophers.map((philosopher, index) => { const angle = (index / philosophers.length) * Math.PI * 2 - Math.PI / 2; const x = 50 + Math.cos(angle) * 37; const y = 50 + Math.sin(angle) * 37; const isActive = activeAgent === index; const hasSpoken = interventions.some((item) => item.pass_number === activePass + 1 && item.seat_position === index); return <button key={philosopher.slug} onClick={() => onSelect(philosopher)} aria-label={`Seat ${index + 1}: ${philosopher.full_name}`} className={`cabinet-seat absolute -translate-x-1/2 -translate-y-1/2 flex flex-col items-center gap-1 ${isActive ? 'cabinet-seat-active' : ''} ${hasSpoken ? 'cabinet-seat-spoken' : ''}`} style={{ left: `${x}%`, top: `${y}%` }}><span className={`w-11 h-11 sm:w-16 sm:h-16 md:w-20 md:h-20 rounded-full border-2 flex items-center justify-center bg-[#f2ebd9] ${isActive ? 'speaker-glow border-[#cc5f68]' : 'border-[#4a392d]/35'}`} style={{ borderColor: isActive ? undefined : philosopher.accent_color }}><span className="font-heading text-base sm:text-xl md:text-3xl" style={{ color: philosopher.accent_color }}>{philosopher.name.charAt(0)}</span></span><span className="hidden sm:block font-heading text-sm md:text-base text-[#4a392d] whitespace-nowrap">{philosopher.name}</span><span className="hidden sm:block text-[9px] uppercase tracking-wider text-[#465f75]/55">Seat {index + 1}</span></button>; })}</div>;
+}
 
 function SpiralView({ interventions, question, activePass, numPhilosophers }: { interventions: Intervention[]; question: string; activePass: number; numPhilosophers: number }) { const labels = ['The question', 'Problem map', 'Dialectical map', 'Spiral synthesis']; return <div className="space-y-2">{labels.map((label, index) => { const isVisible = index === 0 || interventions.length >= index * numPhilosophers; const text = index === 0 ? question : index === 1 ? 'First rotation chained: seat 1 opens, each later seat negates its immediate predecessor.' : index === 2 ? 'Second rotation continues across the boundary; each turn critiques PREV and hands a contradiction on.' : 'Reconstruction rotation: institutions, practices, collective power; final seat returns the question.'; return <div key={label} className={`relative pl-8 ${isVisible ? 'opacity-100' : 'opacity-35'} transition-opacity`}><div className={`absolute left-0 top-1 w-5 h-5 rounded-full border flex items-center justify-center text-[10px] ${index <= activePass + 1 ? 'bg-[#8b5254] text-[#f2ebd9] border-[#8b5254]' : 'border-[#4a392d]/30 text-[#4a392d]/50'}`}>{index}</div>{index < 3 && <div className="absolute left-[9px] top-6 h-8 border-l border-dashed border-[#b89968]" />}<p className="text-xs uppercase tracking-wider text-[#8b5254]">{label}</p><p className="text-sm italic text-[#465f75]/75 leading-snug mt-1">{text}</p></div>; })}</div>; }
 
@@ -574,8 +681,8 @@ function WelcomeModal({ onClose, onOpenSettings }: { onClose: (remember: boolean
         <div className="space-y-4 mt-5 text-[15px] leading-relaxed text-[#465f75]">
           <p><span className="drop-cap">N</span>o single seat at this table holds the truth of your question — and none is permitted to. Ten thinkers are convened, from Spinoza to Fisher, and each may speak only against its immediate predecessor: negating it on its own premises, preserving what holds, and handing a contradiction clockwise to the next. If anything true appears here, it appears <em>between</em> the seats, in the contradictions forced into the open across three passes — never handed down from any one authority.</p>
           <p>Pose your question above and press <strong>Begin cabinet</strong>. The reconstruction pass returns the question to you at the end, changed by everything it has passed through. What you do with it then is yours to decide face to face with your own conscience — no vanguard, party, or apparatus decides for you.</p>
-          <p>A practical word on scale. All ten are convened by default, and a full sitting is thirty turns. Five seats make the leaner assembly — roughly half the tokens with the dialectical arc intact. Choose them in Settings → Cabinet; the chronological order is never broken, only shortened.</p>
-          <p>On power and its limits: the cabinet opens on a shared key, a commons of sorts, and like every commons it can run dry. When it does, bring your own — Gemini, OpenRouter and Groq all cost nothing on their free tiers. Your keys never leave your browser.</p>
+          <p>A practical word, then, on seats and tokens — plainly, since the commons runs on limits. Ten is the full assembly and thirty turns; five is the lean one, half the tokens with the arc intact. Open Settings → Cabinet and set aside five: keep the thinkers whose quarrel bears most directly on your question, and let the chronological order stand, for the sequence itself is the argument. Begin with five; convene all ten when the matter warrants the expense.</p>
+          <p>On providers, equally plainly. Begin on the shared key: no key, no account, nothing to configure. When the commons runs dry, bring your own — Gemini, OpenRouter and Groq cost nothing on their free tiers, and paid OpenRouter is pennies a sitting. Your keys never leave your browser. Test the key in Settings before you begin; and if the cabinet ever halts, read the notice — it names the exact limit you met and the way back.</p>
         </div>
         <label className="flex items-center gap-3 text-sm text-[#465f75] mt-6"><input type="checkbox" checked={remember} onChange={(event) => setRemember(event.target.checked)} className="w-4 h-4 accent-[#8b5254]" /> Don’t show this again</label>
         <div className="flex flex-wrap gap-2 mt-4">
@@ -587,7 +694,14 @@ function WelcomeModal({ onClose, onOpenSettings }: { onClose: (remember: boolean
   );
 }
 
-function SourceDrawer({ onClose }: { onClose: () => void }) { return <div className="fixed inset-0 z-50 bg-[#4a392d]/30 backdrop-blur-sm" onClick={onClose}><aside className="absolute right-0 top-0 bottom-0 w-full max-w-xl parchment-bg p-6 md:p-8 overflow-y-auto custom-scroll" onClick={(event) => event.stopPropagation()}><div className="flex items-start justify-between mb-6"><div><p className="pass-indicator text-[#8b5254]">Corpus manifest</p><h2 className="text-3xl">The sources</h2><p className="italic text-[#465f75]/65 mt-1">Provenance before performance.</p></div><button className="btn-secondary !px-3" onClick={onClose}><X size={17} /></button></div><div className="space-y-3">{CORPUS_SOURCES_DATA.map((source) => <div key={`${source.author}-${source.title}`} className="border-b border-[#4a392d]/15 pb-3"><div className="flex justify-between gap-3"><p className="font-heading text-base text-[#4a392d]">{source.title}</p><span className={`text-[9px] whitespace-nowrap uppercase tracking-wider ${source.full_text_ingested ? 'text-[#4a6b3f]' : 'text-[#8b5254]'}`}>{source.full_text_ingested ? 'Full text' : 'Metadata'}</span></div><p className="text-sm text-[#465f75]/70">{source.author} · {source.publication_date}</p><p className="text-[10px] uppercase tracking-widest text-[#8b5254]/80 mt-1">{source.licence_status}</p></div>)}</div></aside></div>; }
+function SourceDrawer({ onClose }: { onClose: () => void }) {
+  const yearOf = (date: string | null): number => {
+    const match = typeof date === 'string' ? date.match(/\d{4}/) : null;
+    return match ? parseInt(match[0], 10) : -Infinity;
+  };
+  const sorted = [...CORPUS_SOURCES_DATA].sort((a, b) => yearOf(b.publication_date) - yearOf(a.publication_date));
+  return <div className="fixed inset-0 z-50 bg-[#4a392d]/30 backdrop-blur-sm" onClick={onClose}><aside className="absolute right-0 top-0 bottom-0 w-full max-w-xl parchment-bg p-6 md:p-8 overflow-y-auto custom-scroll" onClick={(event) => event.stopPropagation()} role="dialog" aria-modal="true" aria-label="Corpus manifest"><div className="flex items-start justify-between mb-2"><div><p className="pass-indicator text-[#8b5254]">Corpus manifest</p><h2 className="text-3xl">Further reading</h2><p className="italic text-[#465f75]/65 mt-1">The works behind the cabinet — referenced from profiles, not yet read in full. Full retrieval lands in a later phase.</p></div><button className="btn-secondary !px-3" onClick={onClose} aria-label="Close corpus manifest"><X size={17} /></button></div><p className="text-xs uppercase tracking-widest text-[#465f75]/60 mb-5">{sorted.length} works · newest first</p><div className="space-y-3">{sorted.map((source) => <div key={`${source.author}-${source.title}`} className="border-b border-[#4a392d]/15 pb-3"><div className="flex justify-between gap-3"><p className="font-heading text-base text-[#4a392d]">{source.source_url ? <a href={source.source_url} target="_blank" rel="noreferrer" className="underline underline-offset-2 decoration-[#8b5254]/40 hover:decoration-[#8b5254]">{source.title}</a> : source.title}</p><span className={`text-[9px] whitespace-nowrap uppercase tracking-wider ${source.full_text_ingested ? 'text-[#4a6b3f]' : 'text-[#8b5254]'}`}>{source.full_text_ingested ? 'Full text' : 'Metadata'}</span></div><p className="text-sm text-[#465f75]/70">{source.author} · {source.publication_date ?? 'undated'}</p><p className="text-[10px] uppercase tracking-widest text-[#8b5254]/80 mt-1">{source.licence_status}</p>{source.link_note && <p className="text-xs italic mt-1 text-[#8b5254]">⚠ {source.link_note}</p>}</div>)}</div></aside></div>;
+}
 
 function SettingsDrawer({ philosophers, activeSlugs, togglePhilosopher, settings, onSettingsChange, display, onDisplayChange, onClose }: { philosophers: Philosopher[]; activeSlugs: string[]; togglePhilosopher: (slug: string) => void; settings: CabinetSettings; onSettingsChange: (next: CabinetSettings) => void; display: AccessibilitySettings; onDisplayChange: (next: AccessibilitySettings) => void; onClose: () => void }) {
   const [keyInput, setKeyInput] = useState(settings.geminiApiKey);
@@ -817,7 +931,7 @@ function DisplayTab({ display, onChange }: { display: AccessibilitySettings; onC
       <div>
         <p className="font-heading text-sm uppercase tracking-[0.16em] text-[#4a392d] mb-1">Theme</p>
         <p className="text-xs italic text-[#465f75]/70 mb-3">Background and text always change together so every pair stays legible.</p>
-        <div className="grid grid-cols-3 gap-2" role="radiogroup" aria-label="Colour theme">
+        <div className="grid grid-cols-2 sm:grid-cols-3 gap-2" role="radiogroup" aria-label="Colour theme">
           {themes.map((t) => (
             <button key={t.id} role="radio" aria-checked={display.theme === t.id} onClick={() => onChange({ theme: t.id })} className={`border p-2 text-left transition-all ${display.theme === t.id ? 'border-[#8b5254] ring-2 ring-[#8b5254]/30' : 'border-[#4a392d]/25'}`}>
               <span className="block rounded-sm border border-black/10 px-2 py-3 font-heading text-lg leading-none" style={{ backgroundColor: t.bg, color: t.fg }}>Aa</span>
@@ -830,7 +944,7 @@ function DisplayTab({ display, onChange }: { display: AccessibilitySettings; onC
       <div>
         <p className="font-heading text-sm uppercase tracking-[0.16em] text-[#4a392d] mb-1">Typeface</p>
         <p className="text-xs italic text-[#465f75]/70 mb-3">Parchment default; change only if it reads better for you.</p>
-        <div className="grid grid-cols-3 gap-2" role="radiogroup" aria-label="Typeface">
+        <div className="grid grid-cols-2 sm:grid-cols-3 gap-2" role="radiogroup" aria-label="Typeface">
           {fonts.map((f) => (
             <button key={f.id} role="radio" aria-checked={display.font === f.id} onClick={() => onChange({ font: f.id })} className={`border p-2 text-left transition-all ${display.font === f.id ? 'border-[#8b5254] ring-2 ring-[#8b5254]/30' : 'border-[#4a392d]/25'}`}>
               <span className="block text-xl" style={f.id === 'sans' ? { fontFamily: 'Verdana, sans-serif' } : f.id === 'dyslexia' ? { fontFamily: 'Verdana, sans-serif', letterSpacing: '0.04em' } : undefined}>Aa</span>
@@ -895,7 +1009,7 @@ function DisplayToggle({ label, hint, checked, onChange }: { label: string; hint
 }
 
 
-function InterventionModal({ intervention, philosopher, onClose, ttsSupported, speaking, onToggleSpeech }: { intervention: Intervention; philosopher?: Philosopher; onClose: () => void; ttsSupported?: boolean; speaking?: boolean; onToggleSpeech?: () => void }) { return <div className="fixed inset-0 z-50 bg-[#4a392d]/35 backdrop-blur-sm flex items-center justify-center p-4" onClick={onClose}><div role="dialog" aria-modal="true" aria-label={`Intervention by ${philosopher?.full_name ?? 'unknown thinker'}`} className="dark-academia-card max-w-3xl max-h-[90vh] overflow-y-auto custom-scroll p-6 md:p-8" onClick={(event) => event.stopPropagation()}><div className="flex justify-between gap-4"><div><p className="pass-indicator text-[#8b5254]">Pass {intervention.pass_number} · {PASS_NAMES[intervention.pass_number - 1]}</p><h2 className="text-3xl">{philosopher?.full_name}</h2><p className="italic text-[#465f75]/65">{intervention.position_label}</p></div><div className="flex flex-col items-end gap-2"><button className="btn-secondary !px-3 h-fit" onClick={onClose} aria-label="Close intervention"><X size={17} /></button>{ttsSupported && <button className="btn-secondary !text-xs flex items-center gap-2" onClick={onToggleSpeech} aria-label={speaking ? 'Stop reading this intervention' : 'Listen to this intervention'}>{speaking ? <><Square size={13} /> Stop</> : <><Volume2 size={13} /> Listen</>}</button>}</div></div><p className="drop-cap text-lg leading-relaxed mt-6 whitespace-pre-line text-[#465f75]">{intervention.response_text}</p>{philosopher && <div className="mt-4"><ReadMore philosopherName={philosopher.name} /></div>}<div className="mt-7 border-t border-[#4a392d]/20 pt-5"><p className="font-heading text-xl text-[#4a392d] mb-3">Source status</p>{intervention.citations.map((citation) => <div key={citation.label} className="p-3 bg-[#eae1ca]/60 border border-[#4a392d]/15 mb-2"><span className={`citation-badge ${citation.verified ? '' : 'citation-unverified'}`}><BookOpen size={11} /> {citation.label}</span><p className="text-xs italic mt-2 text-[#465f75]/65">{citation.verified ? 'Retrieved or verified source reference.' : 'Profile-grounded interpretation; underlying passage requires corpus retrieval.'}</p></div>)}</div></div></div>; }
+function InterventionModal({ intervention, philosopher, onClose, ttsSupported, speaking, onToggleSpeech }: { intervention: Intervention; philosopher?: Philosopher; onClose: () => void; ttsSupported?: boolean; speaking?: boolean; onToggleSpeech?: () => void }) { return <div className="fixed inset-0 z-50 bg-[#4a392d]/35 backdrop-blur-sm flex items-center justify-center p-4" onClick={onClose}><div role="dialog" aria-modal="true" aria-label={`Intervention by ${philosopher?.full_name ?? 'unknown thinker'}`} className="dark-academia-card max-w-3xl max-h-[90vh] overflow-y-auto custom-scroll p-6 md:p-8" onClick={(event) => event.stopPropagation()}><div className="flex justify-between gap-4"><div><p className="pass-indicator text-[#8b5254]">Pass {intervention.pass_number} · {PASS_NAMES[intervention.pass_number - 1]}</p><h2 className="text-3xl">{philosopher?.full_name}</h2><p className="italic text-[#465f75]/65">{intervention.position_label}</p></div><div className="flex flex-col items-end gap-2"><button className="btn-secondary !px-3 h-fit" onClick={onClose} aria-label="Close intervention"><X size={17} /></button>{ttsSupported && <button className="btn-secondary !text-xs flex items-center gap-2" onClick={onToggleSpeech} aria-label={speaking ? 'Stop reading this intervention' : 'Listen to this intervention'}>{speaking ? <><Square size={13} /> Stop</> : <><Volume2 size={13} /> Listen</>}</button>}</div></div><p className="drop-cap text-[17px] leading-relaxed mt-6 whitespace-pre-line text-[#465f75]">{intervention.response_text}</p>{philosopher && <div className="mt-4"><ReadMore philosopherName={philosopher.name} /></div>}<div className="mt-7 border-t border-[#4a392d]/20 pt-5"><p className="font-heading text-xl text-[#4a392d] mb-3">Source status</p>{intervention.citations.map((citation) => <div key={citation.label} className="p-3 bg-[#eae1ca]/60 border border-[#4a392d]/15 mb-2"><span className={`citation-badge ${citation.verified ? '' : 'citation-unverified'}`}><BookOpen size={11} /> {citation.label}</span><p className="text-xs italic mt-2 text-[#465f75]/65">{citation.verified ? 'Retrieved or verified source reference.' : 'Profile-grounded interpretation; underlying passage requires corpus retrieval.'}</p></div>)}</div></div></div>; }
 
 function StyleEssenceDisplay({ style }: { style: StyleEssence }) { return <div className="grid md:grid-cols-2 gap-5"><div className="border-t border-[#4a392d]/15 pt-3"><p className="text-xs uppercase tracking-widest text-[#8b5254] mb-1">Style DNA</p><p className="text-[15px] leading-relaxed text-[#465f75]/85">{style.style_dna}</p></div><div className="border-t border-[#4a392d]/15 pt-3"><p className="text-xs uppercase tracking-widest text-[#8b5254] mb-1">Characteristic Movement</p><p className="text-[15px] leading-relaxed text-[#465f75]/85">{style.characteristic_movement}</p></div></div>; }
 function ProfileModal({ philosopher, onClose }: { philosopher: Philosopher; onClose: () => void }) {

@@ -147,7 +147,7 @@ export async function handler(event) {
   if (systemPrompt.length + userMessage.length > MAX_BODY_CHARS) {
     return json(413, { error: { message: 'Prompt too large.', code: 'bad_request' } });
   }
-  const tokens = Number.isInteger(maxTokens) && maxTokens > 0 ? Math.min(maxTokens, 2000) : 800;
+  const tokens = Number.isInteger(maxTokens) && maxTokens > 0 ? Math.min(maxTokens, 8000) : 4000;
 
   const perIpCap = parseInt(process.env.SHARED_PER_IP_PER_DAY || '60', 10);
   const globalCap = parseInt(process.env.SHARED_GLOBAL_PER_DAY || '900', 10);
