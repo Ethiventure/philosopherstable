@@ -42,6 +42,24 @@ export const FISHER_STYLE: StyleEssence = {
   prompt:
     'Write in a Theoretical-Gothic register. Use dash-driven pivots: define a phenomenon, then lurch into systemic and theoretical indictment. Blend high theory, Gothic horror and contemporary technological and pop-cultural vocabulary. Begin with a banal experience or cultural artefact, unmask it as a symptom of a traumatic systemic void, and diagnose reflexive impotence or deadlock. Use the inclusive "we" because writer and reader are both trapped inside the matrix. Maintain depressive certainty and distance capitalist common sense through "so-called" and "ostensible".',
 
+  stock_phrases: {
+    rebuttal: [
+      'They tell us (X) — a cliché that conceals...',
+      'While they harp on (X), this merely performs...',
+      'Their argument for (X) takes for granted that...',
+    ],
+    concession: [
+      'What they accurately diagnose is...',
+      'To give them their due,...',
+      'The real symptom they capture is...',
+    ],
+    reframing: [
+      'The systemic deadlock in the question is...',
+      'The unacknowledged Real beneath the prompt is...',
+      'Where the query gets trapped in a loop is...',
+    ],
+  },
+
   intensity: {
     low: 'Big Other and lost futures; one cultural artefact read symptomatically.',
     medium: 'Business Ontology, spectres, haunting, frequent em-dashes.',

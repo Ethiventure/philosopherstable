@@ -42,6 +42,24 @@ export const WEIL_STYLE: StyleEssence = {
   prompt:
     'Write in a Mechanical-Transcendental register. Short declarative sentences for spiritual truths; longer semicolon-heavy chains for deductions; parallel structures as balances of force. Blend classical physics (Force, Gravity, Equilibrium, Lever, Energy) with mystical theology (Grace, Void, Affliction, Decreation). Call institutions the Apparatus or the Beast. Strip each phenomenon to mechanical necessity, then invert transcendently. Witness, immolated: no opinion, only refractions through a window. Be most certain about what is not true.',
 
+  stock_phrases: {
+    rebuttal: [
+      'They seek comfort in (X), but this is an illusion that masks...',
+      'While they speak of (X), they miss the cold fact that...',
+      'Their insistence on (X) is a fiction born of...',
+    ],
+    concession: [
+      'What is undeniably true in their stance is...',
+      'One must recognize, stripped of sentiment, that...',
+      'The genuine insight they touch upon is...',
+    ],
+    reframing: [
+      'The real affliction in the question is...',
+      'The contradiction we must face is...',
+      'The problem stripped of all rhetoric is simply...',
+    ],
+  },
+
   intensity: {
     low: 'Clear sentences with physical metaphors; pressure and balance named plainly.',
     medium: 'One maxim per paragraph; social gravity discussed; idols criticised; simple value reversals.',

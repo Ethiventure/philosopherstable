@@ -62,14 +62,14 @@ rotation stays tight:
 
 | Section | Normal | Long form |
 |---|---|---|
-| Determinate negation | 30 | 75 |
-| Substantive incorporation | 15 | 40 |
-| Reformulation | 55 | 165 |
+| Determinate negation | 40 | 100 |
+| Reformulation | 60 | 180 |
 | **Total per turn (the cap)** | **~100** | **~280** |
 | Opening turn (seat 1, pass 1) | 60 | 160 |
 
 Per-section counts are guidance for shaping the answer; the total is what
-is enforced. All three parts must be present. A turn is a spoken
+is enforced. Both parts must be present; the concession hides inside them
+(no separate incorporation section since the fold). A turn is a spoken
 intervention, not an essay.
 
 `maxOutputTokens: 300` normal / `600` long form (JSON wrapper needs headroom).
@@ -139,6 +139,8 @@ models are skipped mid-run, last-good is remembered. Quota halt shows a recovery
 panel (resume / switch provider / usage link).
 `src/lib/shared.ts` + `netlify/functions/cabinet.js`: shared Groq turns through the
 server-side proxy (see Decisions). Client maps function errors to the same codes.
+OTPM wall: Groq's per-minute OUTPUT gate counts REQUESTED max_tokens, so shared +
+Groq-direct caps sit at 800/900 (anything over 1000 is an instant 429).
 429s are waited out, not halted on: each client parses Groq's "try again in Ns"
 (`retryAfterMs` in `llm.ts`) and retries the turn up to 3×. NOTE: Netlify free
 functions time out at 10s — slow Groq turns will die on deploy; client resume
@@ -150,6 +152,11 @@ pinned models (`DEEPINFRA_MODEL`, `TOGETHER_MODEL` — user-supplied IDs, verify
 404), single-model retry + repair. Full history in `docs/models-tried.md`.
 
 Token discipline (voices never trimmed): only the active speaker's persona is sent
+per turn. Stock phrases live in the per-turn message (relocated from the persona
+for salience — same ~150 tokens, zero net cost), never the full set of 90. Each
+variant may be used once per whole session: spent variants ride in the prompt and
+are tracked post-turn by fragment match. Four supplied variants were reworded to
+respect the banned-phrase list (Marx/Hegel/Weil/Bookchin).
 per turn; `efficient` economy caps PREV feedback; instruction boilerplate deduped;
 seat count is the big lever (5 seats ≈ 15 turns ≈ half the tokens) — the welcome
 modal and Cabinet tab say so.
@@ -159,10 +166,12 @@ modal and Cabinet tab say so.
 | Turn | When | Shape |
 |---|---|---|
 | Opening | Pass 1, seat 1 | Answer the question directly in own framework; no reference to other thinkers; follow characteristic movement. |
-| Immanent critique | All other turns, passes 1–2 | Cuts in on PREV's closing lines: (1) Determinate negation using PREV's own premises; (2) Substantive incorporation; (3) Reformulation from own framework, ending on the live edge. No handoff, no naming NEXT. |
-| Reconstruction | Pass 3, rotation REVERSED (each seat answers the answer just given from its left) | Same three parts; (3) becomes *what institutions / practices / forms of collective power follow now the contradictions are visible*. Must invoke ≥1 surveyed idea from another seat by name. Final seat returns the question, as it now stands, to the user. |
+| Immanent critique | All other turns, passes 1–2 | Cuts in on PREV's closing lines: (1) Determinate negation — steelman first, then break the genuine fault line — using PREV's own premises; (2) Reformulation from own framework, ending on the live edge, concession woven inside. No handoff, no naming NEXT, never opens with a proper name. |
+| Reconstruction | Pass 3, rotation REVERSED (each seat answers the answer just given from its left) | Same two parts; (2) becomes *what institutions / practices / forms of collective power follow now the contradictions are visible*. Must invoke ≥1 surveyed idea from another seat by name. Final seat returns the question, as it now stands, to the user — no new claims after it. |
 
-PREV crosses pass boundaries: pass 2 seat 1 critiques pass 1's last seat.
+PREV is chronological (whoever spoke just before), across pass boundaries. Pass 3
+order skips the seat that just closed pass 2 (it would answer itself) and closes
+with it instead — every seat speaks once per pass and gets critiqued.
 
 **2d Context per call (pure, except own priors; pass 3 gets a survey)**
 1. User's question, verbatim.
@@ -175,6 +184,10 @@ PREV crosses pass boundaries: pass 2 seat 1 critiques pass 1's last seat.
    (`othersPriorLines`) — the final rotation may invoke the most striking ideas.
 5. Grounding block, only when the experimental `grounding` toggle is on:
    top keyword passages from the speaker's own HTML source, cited by footnote.
+   Resolver prefers ingested works, falls back to any live HTML page (this is
+   what lets metadata-only thinkers like Weil ground at all). Failures carry
+   machine-readable reasons (`unsupported-source` / `fetch-failed` / `no-match`)
+   surfaced per-turn in the modal — never a generic nothing.
 4. System prompt = identity + profile + style essence (at chosen intensity) +
    universal mechanisms + anti-waffle rules + banned-phrase list + word budgets.
 5. ~~**Ledger** (one line per claim/concept, fed back each call) — **DROPPED
@@ -184,9 +197,10 @@ PREV crosses pass boundaries: pass 2 seat 1 critiques pass 1's last seat.
 
 **2e Structured output**
 ```ts
-{ negation, incorporation, reformulation,
+{ negation, reformulation,
   new_contribution, works_referenced: string[] }
 ```
+(`incorporation` optional legacy field — tolerated where present, never required.)
 Stored as `Intervention.sections`; `response_text` kept as a joined string.
 
 **2f Orchestration** — async loop over passes × seats replaces `setInterval`;
@@ -194,8 +208,9 @@ pause flag checked between turns; "X is thinking…" state. After the final seat
 `runCoda` fires once: reads ONLY the question + every seat's one-line
 determination, writes margin notes in a fixed Gen-Z PPE-student voice
 (`CODA_SYSTEM` + `buildCodaPrompt`), stored as separate `coda` state (never an
-Intervention — seats/passes/deck math untouched). Failure is silent; the retry
-button re-runs it.
+Intervention — seats/passes/deck math untouched). Own visible status
+(`codaState`: writing / failed + retry + console diagnostics); silent catches
+are banned everywhere, including here.
 
 **References, not citations** — `src/lib/footnotes.ts`: model-claimed work labels
 resolve display-side to stable manifest numbers (`Read similar: 3, 9`; numbers

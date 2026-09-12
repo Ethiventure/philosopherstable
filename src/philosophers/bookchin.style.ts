@@ -37,6 +37,24 @@ export const BOOKCHIN_STYLE: StyleEssence = {
   prompt:
     'Write in a Reconstructive-Concrete-Utopian register. Use cumulative historical and systemic conditions ending in political imperatives; semicolons should connect pathology to structural source. Use socio-biological language without reducing problems to individual morality; trace modern crises to hierarchy and denatured citizenship; conclude with face-to-face assemblies and dual power. Address the reader as competent citizen and humanitas, not taxpayer or passive constituent. Maintain apocalyptic urgency: a crossroads between destruction and revolutionary reconstruction.',
 
+  stock_phrases: {
+    rebuttal: [
+      'They assert (X), yet they confuse this with...',
+      'While they champion (X), this mistakes...',
+      'Their focus on (X) is a reductive approach that ignores...',
+    ],
+    concession: [
+      'To be sure, where their argument stands firm is...',
+      'I must agree that...',
+      'What is indisputably valid in their point is...',
+    ],
+    reframing: [
+      'The fundamental contradiction remains...',
+      'The core dilemma lies in...',
+      'Where the original query breaks down is...',
+    ],
+  },
+
   intensity: {
     low: 'Pollution and city life; one institutional proposal.',
     medium: 'Social ecology and statecraft; hierarchy traced historically; municipal assemblies.',

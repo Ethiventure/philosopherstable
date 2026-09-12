@@ -1,9 +1,9 @@
 import { LlmError, REPAIR_SUFFIX, parseTurnOutput, retryAfterMs, type TurnOutput } from '@/lib/llm';
 
-// Generous ceiling for the same reason as the other free paths: reasoning
-// models spend output on thinking first, and a tight cap truncates the JSON.
-// Stays under Groq's 8K TPM alongside our ~4.5K-token prompts.
-const SHARED_MAX_TOKENS = { normal: 2000, long: 4000 } as const;
+// Generous but under Groq's 1000-output-tokens-per-minute wall: the gate
+// counts REQUESTED max_tokens, not used tokens, so anything above 1000 is an
+// instant 429. Stays under it with margin for our ~4.5K-token prompts.
+const SHARED_MAX_TOKENS = { normal: 800, long: 900 } as const;
 
 /**
  * Shared provider: the cabinet's own Groq-backed turn, via the same-origin

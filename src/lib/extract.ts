@@ -13,21 +13,27 @@ import { CORPUS_SOURCES_DATA } from '@/data/corpus-sources';
 const SKIP_EXTENSIONS = ['.pdf', '.epub', '.mobi', '.zip', '.prc', '.tex'];
 const SKIP_HOSTS = ['archive.org'];
 
-/** First full-text HTML source for the philosopher (skips scans/binaries). */
+/** Best groundable HTML source for the philosopher. Prefers ingested works,
+ * then falls back to any live HTML page (metadata-only entries often point at
+ * full text, e.g. theanarchistlibrary pages). Skips scans/binaries. Without
+ * the fallback, thinkers like Weil — all of whose entries are metadata-only —
+ * could never be grounded at all. */
 export function groundableSource(philosopherName: string) {
   const works = CORPUS_SOURCES_DATA.filter(
     (s) =>
       s.author.toLowerCase().includes(philosopherName.toLowerCase()) &&
-      s.full_text_ingested &&
       typeof s.source_url === 'string',
   );
-  const html = works.find((s) => {
-    const lower = (s.source_url as string).toLowerCase().split('?')[0];
+  const isHtml = (url: string) => {
+    const lower = url.toLowerCase().split('?')[0];
     return (
       !SKIP_EXTENSIONS.some((ext) => lower.endsWith(ext)) &&
       !SKIP_HOSTS.some((h) => lower.includes(h))
     );
-  });
+  };
+  const html =
+    works.find((s) => s.full_text_ingested && isHtml(s.source_url as string)) ??
+    works.find((s) => isHtml(s.source_url as string));
   if (!html) return null;
   const index = CORPUS_SOURCES_DATA.indexOf(html);
   return { source: html, number: index + 1 };
@@ -37,19 +43,37 @@ export interface GroundedPassage {
   text: string;
 }
 
-/** Top passages for this turn, or [] on any failure (proceed ungrounded). */
-export async function extractPassages(url: string, query: string): Promise<GroundedPassage[]> {
+export type ExtractReason =
+  | 'unsupported-source'
+  | 'fetch-failed'
+  | 'no-match';
+
+/** Top passages for this turn, with a machine-readable failure reason. */
+export async function extractPassages(
+  url: string,
+  question: string,
+  context = '',
+): Promise<{ passages: GroundedPassage[]; reason: ExtractReason | null }> {
+  const fail = (reason: ExtractReason) => ({ passages: [], reason });
   try {
     const response = await fetch('/.netlify/functions/extract', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ url, query: query.slice(0, 500) }),
+      body: JSON.stringify({ url, question: question.slice(0, 500), query: context.slice(0, 500) }),
     });
-    if (!response.ok) return [];
-    const data = (await response.json()) as { passages?: GroundedPassage[] };
-    return Array.isArray(data.passages) ? data.passages : [];
+    if (!response.ok) return fail('fetch-failed');
+    const data = (await response.json()) as { passages?: GroundedPassage[]; reason?: string };
+    const passages = Array.isArray(data.passages) ? data.passages : [];
+    if (!passages.length) {
+      return fail(
+        data.reason === 'unsupported-source' || data.reason === 'fetch-failed'
+          ? data.reason
+          : 'no-match',
+      );
+    }
+    return { passages, reason: null };
   } catch {
-    return [];
+    return fail('fetch-failed');
   }
 }
 

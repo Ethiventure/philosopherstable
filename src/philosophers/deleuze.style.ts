@@ -42,6 +42,24 @@ export const DELEUZE_STYLE: StyleEssence = {
   prompt:
     'Write in a Speculative-Dramatic register. Use numbered dynamisms, colons and dashes to connect definitions with biological and physical agitation. Prioritise Virtual, Actual, Singularity, Larval, Precursor and Resonance; preserve differentiation / differenciation. Replace "What is?" with Who / How much / Where and when. Use vice-diction and multiplicity rather than identity and contradiction. Speak as a traverser of sub-representative depths and co-witness to a Theatre of Cruelty. Use a distinct-obscure modality rather than representational clarity.',
 
+  stock_phrases: {
+    rebuttal: [
+      'They define (X), but this fixes into an identity what is...',
+      'While they pose (X), this traps the issue in...',
+      'Their claim of (X) assumes a static form, whereas...',
+    ],
+    concession: [
+      'What activates a real dynamism in their view is...',
+      'To be sure, the singular point they hit upon is...',
+      'Where their intuition succeeds is...',
+    ],
+    reframing: [
+      "The flaw is asking 'What is it?' when the real question is...",
+      'The case opens up only when we ask...',
+      'The underlying drama of the question is...',
+    ],
+  },
+
   intensity: {
     low: 'One intensive term per paragraph; questions displaced from "what" to "how" and "who".',
     medium: 'Virtual / Actual, Egg / Lightning; assemblages and lines of flight named concretely.',

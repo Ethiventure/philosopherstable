@@ -21,4 +21,4 @@ first. Check here before (re)trying anything — corpses stay buried.
 - DeepInfra `meta-llama/Llama-3.3-70B-Instruct-Turbo` — ID supplied by user, unverified against the catalog.
 - Together `Qwen/Qwen3-30B-A3B` — ID supplied by user, unverified against the catalog.
 - OpenRouter `meta-llama/llama-3.3-70b-instruct:free` — does NOT exist as `:free` (re-verified Nov 2026 via `/models` API, 445 models; only paid `meta-llama/llama-3.3-70b-instruct` listed). Do not add unless it appears. User reports seeing it on the website — website listing ≠ API availability.
-- DeepInfra `meta-llama/Llama-3.3-70B-Instruct-Turbo` — user-supplied ID, user has key (no card needed). Awaiting live test verdict.
+- DeepInfra `meta-llama/Llama-3.3-70B-Instruct-Turbo` — VERIFIED WORKING end-to-end by user (test 9, Nov 2026). Needs a card on file despite earlier no-card assumption. Full cabinet completes on it.
