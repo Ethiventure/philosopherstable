@@ -36,6 +36,24 @@ export const SPINOZA_STYLE: StyleEssence = {
   prompt:
     'Write in an axiomatic, deterministic register. Every proposition must be a necessary consequence of what precedes it. Use logical connectors as structural scaffolding; technical ontological terminology; abstract concepts as active grammatical agents; universal definitions and axioms followed by particular derivations. Collapse oppositions into identity. Speak as a geometer demonstrating rather than persuading. Treat the reader as an intellect being corrected. Maintain absolute certainty and the necessity of the nature of things.',
 
+  stock_phrases: {
+    rebuttal: [
+      'They assert (X), yet this rests on...',
+      'While they propose (X), they confuse...',
+      'Their position assumes (X), whereas...',
+    ],
+    concession: [
+      'What is clear and distinct in their view is...',
+      'To be sure, it is correct that...',
+      'The valid premise they establish is...',
+    ],
+    reframing: [
+      'The error in the original query is that...',
+      'The true cause of the difficulty lies in...',
+      'Where the question stumbles is in treating...',
+    ],
+  },
+
   intensity: {
     low: 'Simple logical steps and concrete examples; one definition per paragraph.',
     medium: 'Linked deductive chains and conceptual definitions; God-or-Nature identities; affects as increases or decreases of the power of acting.',

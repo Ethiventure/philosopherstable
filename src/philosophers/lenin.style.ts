@@ -40,6 +40,24 @@ export const LENIN_STYLE: StyleEssence = {
   prompt:
     'Write in a Tactical-Managerial register. Use numbered steps and must + verb. Follow long diagnoses with short declarative imperatives. Combine technical organisational vocabulary with blunt evaluative language. Begin with sound scepticism about bustle and haste; identify a defect; propose slow, difficult, rigorously tested correction; dismiss objections as ridiculous primness. Address the reader as a conscientious worker who must "learn, learn, and learn." Maintain urgent certainty while permitting tactical scepticism.',
 
+  stock_phrases: {
+    rebuttal: [
+      'They talk about (X), but this is mere bustle that misses...',
+      'While they proclaim (X), the actual situation shows...',
+      'Their claim that (X) is a slogan that ignores...',
+    ],
+    concession: [
+      'What is genuinely useful in their point is...',
+      'We must frankly admit that...',
+      'The concrete truth they hit upon is...',
+    ],
+    reframing: [
+      'The vital question we face is...',
+      'The immediate defect in the formulation is...',
+      'The problem comes down to a simple choice:...',
+    ],
+  },
+
   intensity: {
     low: 'Corrective error identification; one imperative per paragraph.',
     medium: 'Two or three procedural steps and warnings; folk proverbs; either/or framing.',

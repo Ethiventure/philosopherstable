@@ -131,7 +131,7 @@ function toIntervention(
       output.negation,
       output.incorporation,
       output.reformulation,
-    ].join('\n\n'),
+    ].filter((s) => s && s.trim()).join('\n\n'),
     sections: {
       negation: output.negation,
       incorporation: output.incorporation,
@@ -157,12 +157,39 @@ function App() {
   const [isRunning, setIsRunning] = useState(false);
   const [interventions, setInterventions] = useState<Intervention[]>([]);
   const [coda, setCoda] = useState<{ text: string } | null>(null);
+  const [codaError, setCodaError] = useState<string | null>(null);
+  // Coda runs after the loop, so it gets its own visible status — a silent
+  // catch here once swallowed a whole margin-notes failure with no trace.
+  const [codaState, setCodaState] = useState<'idle' | 'writing' | 'failed'>('idle');
   // Per-turn grounding receipts: what each speaker was actually shown, so its
   // quotes stay checkable after the fact. Keyed by intervention id.
-  const [groundMap, setGroundMap] = useState<Record<string, { title: string; number: number; passages: string[] }>>({});
+  const [groundMap, setGroundMap] = useState<Record<string, { title: string; number: number; passages: string[]; reason: string | null }>>({});
   // Per-turn provenance for the export footer (provider switches mid-session
   // stay honest). Consecutive duplicates collapse at render time.
   const provRef = useRef<string[]>([]);
+  // Stock variants already spent this session (any seat). Each of the 90 may
+  // be used once across the whole table; the spent list rides in each prompt.
+  const spentRef = useRef<string[]>([]);
+  const markSpentVariants = (text: string) => {
+    const lower = text.toLowerCase();
+    for (const p of philosophers) {
+      const slots = p.style_essence.stock_phrases;
+      for (const slot of [slots.rebuttal, slots.concession, slots.reframing]) {
+        for (const variant of slot) {
+          const fragments = variant
+            .split('(X)')
+            .map((f) => f.trim())
+            .filter((f) => f.replace(/[^a-z]/gi, '').length > 12);
+          if (
+            fragments.some((f) => lower.includes(f.toLowerCase())) &&
+            !spentRef.current.includes(variant)
+          ) {
+            spentRef.current.push(variant);
+          }
+        }
+      }
+    }
+  };
 
   /** Human-readable "model via key" label, e.g. DeepInfra (Llama 3.3 70B, visitor key). */
   const provenanceLabel = (snap: CabinetSettings): string => {
@@ -185,7 +212,10 @@ function App() {
   };
   const [selectedIntervention, setSelectedIntervention] = useState<Intervention | null>(null);
   const [selectedPhilosopher, setSelectedPhilosopher] = useState<Philosopher | null>(null);
-  const [activeSlugs, setActiveSlugs] = useState<string[]>(DEFAULT_SEATING_ORDER);
+  // Default cabinet: Marx, Lenin, Bogdanov, Weil, Bookchin — a coherent
+  // quarrel (organisation, party, apparatus, scale) that tests well and works
+  // unedited. Full chronological order lives in DEFAULT_SEATING_ORDER.
+  const [activeSlugs, setActiveSlugs] = useState<string[]>(['marx', 'lenin', 'bogdanov', 'weil', 'bookchin']);
   const [showSources, setShowSources] = useState(false);
   const [sourceTarget, setSourceTarget] = useState<number | null>(null);
   const openSourcesAt = (n?: number) => {
@@ -420,8 +450,12 @@ function App() {
       const pass = Math.floor(n / seats.length);
       const index = n % seats.length;
       // Pass 3 runs the rotation backwards: each seat answers the answer just
-      // given from its left.
-      const order = pass === 2 ? [...seats].reverse() : seats;
+      // given from its left. The seat that just closed pass 2 does NOT open
+      // (it would answer itself and never get critiqued) — it closes pass 3
+      // instead, returning the question. Every seat still speaks exactly once.
+      const order = pass === 2
+        ? [...seats.slice(0, seats.length - 1).reverse(), seats[seats.length - 1]]
+        : seats;
       const speaker = order[index];
       if (!speaker) continue;
       const seatPos = seats.indexOf(speaker);
@@ -465,17 +499,20 @@ function App() {
       // speaker's own source text, cited by footnote number. Fails soft.
       // The receipt (what was actually shown) is stored per turn for verification.
       let groundingBlock = '';
-      let groundingReceipt: { title: string; number: number; passages: string[] } | null = null;
+      let groundingReceipt: { title: string; number: number; passages: string[]; reason: string | null } | null = null;
       if (snap.grounding) {
         const g = groundableSource(speaker.name);
         if (g?.source.source_url) {
           const prevSlice = (collected[collected.length - 1]?.response_text ?? '').slice(0, 300);
-          const passages = await extractPassages(g.source.source_url, `${question} ${prevSlice}`);
+          const { passages, reason } = await extractPassages(g.source.source_url, question, prevSlice);
           if (runRef.current !== runId) return;
           groundingBlock = formatGroundedBlock(g.source.title, g.number, passages);
-          if (passages.length) {
-            groundingReceipt = { title: g.source.title, number: g.number, passages: passages.map((p) => p.text) };
-          }
+          groundingReceipt = {
+            title: g.source.title,
+            number: g.number,
+            passages: passages.map((p) => p.text),
+            reason,
+          };
         }
       }
       const messageParts = [
@@ -485,6 +522,13 @@ function App() {
           ownPriorLines,
           othersPriorLines,
           turnInstruction,
+          stockBlock: [
+            'YOUR TRANSITIONAL TOOLKIT (your own phrasing — reach for these instead of generic boilerplate):',
+            `REBUTTAL: ${speaker.style_essence.stock_phrases.rebuttal.join(' / ')}`,
+            `CONCESSION: ${speaker.style_essence.stock_phrases.concession.join(' / ')}`,
+            `REFRAMING: ${speaker.style_essence.stock_phrases.reframing.join(' / ')}`,
+          ].join('\n'),
+          spentPhrases: spentRef.current,
         }),
       ];
       if (groundingBlock) messageParts.push('', groundingBlock);
@@ -509,6 +553,7 @@ function App() {
       if (runRef.current !== runId) return;
       const item = toIntervention(speaker, pass + 1, seatPos, output, previousSpeaker);
       collected.push(item);
+      markSpentVariants(item.response_text);
       if (groundingReceipt) {
         const receipt = groundingReceipt;
         setGroundMap((m) => ({ ...m, [item.id]: receipt }));
@@ -519,8 +564,9 @@ function App() {
     setThinkingName(null);
     setIsRunning(false);
     setActivePass(2);
-    // Pass 3 runs backwards, so the final speaker holds seat 0.
-    setActiveAgent(0);
+    // Pass 3 runs backwards but the just-spoken seat closes it, so the final
+    // speaker holds the last seat as usual.
+    setActiveAgent(seats.length - 1);
     // Full session survived: the margin note translates it for a newcomer.
     if (collected.length >= total) {
       await runCoda(runId, collected, snap);
@@ -531,8 +577,8 @@ function App() {
    * Margin-notes coda: one extra call after the final seat, reading ONLY the
    * question plus every seat's one-line determination. Not a seat, not an
    * intervention — stored separately so seats/passes/deck math never shifts.
-   * Failure is silent by design (the session stands without it); the retry
-   * button below re-runs it.
+   * Retryable failures (quota/server) get one self-retry after a cooling wait;
+   * otherwise the session stands without it and the retry button re-runs it.
    */
   const runCoda = async (runId: number, collected: Intervention[], snap: CabinetSettings) => {
     const lines = collected
@@ -543,15 +589,39 @@ function App() {
       }));
     if (!lines.length) return;
     setThinkingName('Margin notes');
-    try {
+    setCodaState('writing');
+    setCodaError(null);
+    setCodaError(null);
+    const attempt = async (): Promise<void> => {
       const output = await generateWithProvider(snap, CODA_SYSTEM, buildCodaPrompt(question, lines), false);
       if (runRef.current !== runId) return;
       setCoda({
-        text: [output.negation, output.incorporation, output.reformulation].join('\n\n'),
+        text: [output.negation, output.incorporation, output.reformulation].filter((s) => s && s.trim()).join('\n\n'),
       });
-    } catch {
+      setCodaState('idle');
+    };
+    try {
+      await attempt();
+    } catch (error) {
       if (runRef.current !== runId) return;
+      // One self-retry for transient failures (typically quota cooling right
+      // after a full session) before surfacing the failure visibly.
+      const retryable = error instanceof LlmError && error.retryable;
+      if (retryable) {
+        await new Promise((resolve) => setTimeout(resolve, 20000));
+        if (runRef.current !== runId) return;
+        try {
+          await attempt();
+          return;
+        } catch (retryError) {
+          if (runRef.current !== runId) return;
+          error = retryError;
+        }
+      }
+      if (typeof console !== 'undefined') console.error('[Margin notes] coda failed:', error);
       setCoda(null);
+      setCodaState('failed');
+      setCodaError(error instanceof Error ? error.message : 'Unknown error.');
     } finally {
       if (runRef.current === runId) setThinkingName(null);
     }
@@ -560,6 +630,8 @@ function App() {
   const runCodaNow = () => {
     if (!interventions.length || isRunning) return;
     setRunError(null);
+    setCodaState('idle');
+    setCodaError(null);
     void runCoda(runRef.current, [...interventions], settings);
   };
 
@@ -578,8 +650,11 @@ function App() {
     runRef.current = runId;
     setInterventions([]);
     setCoda(null);
+    setCodaState('idle');
+    setCodaError(null);
     setGroundMap({});
     provRef.current = [];
+    spentRef.current = [];
     setRunError(null);
     setActivePass(0);
     setActiveAgent(0);
@@ -640,8 +715,11 @@ function App() {
     setActiveAgent(-1);
     setInterventions([]);
     setCoda(null);
+    setCodaState('idle');
+    setCodaError(null);
     setGroundMap({});
     provRef.current = [];
+    spentRef.current = [];
     setSelectedIntervention(null);
   };
 
@@ -820,8 +898,21 @@ function App() {
               </article>
             ) : (
               <div className="dark-academia-card p-5 max-w-3xl">
-                <p className="text-sm italic text-[#465f75]/70">The sitting is complete but the margin note did not arrive.</p>
-                <button className="btn-secondary !text-xs mt-3" onClick={runCodaNow}>Write margin notes</button>
+                {codaState === 'writing' ? (
+                  <p className="text-sm italic text-[#465f75]/70" aria-live="polite">Writing margin notes…</p>
+                ) : (
+                  <>
+                    <p className="text-sm italic text-[#465f75]/70">
+                      {codaState === 'failed'
+                        ? 'The margin note failed to write — the sitting stands without it.'
+                        : 'The sitting is complete but the margin note did not arrive.'}
+                    </p>
+                    {codaState === 'failed' && codaError && (
+                      <p className="text-xs mt-2 text-[#8b5254]">Reason: {codaError.length > 220 ? `${codaError.slice(0, 220)}…` : codaError}</p>
+                    )}
+                    <button className="btn-secondary !text-xs mt-3" onClick={runCodaNow}>Write margin notes</button>
+                  </>
+                )}
               </div>
             )}
           </section>
@@ -832,7 +923,7 @@ function App() {
 
       {showSources && <SourceDrawer target={sourceTarget} onClose={() => { setSourceTarget(null); setShowSources(false); }} />}
       {showWelcome && <WelcomeModal onClose={dismissWelcome} onOpenSettings={() => { dismissWelcome(false); openSettings('cabinet'); }} ttsSupported={ttsSupported} listening={ttsStatus.state !== 'idle' && ttsStatus.currentId === 'welcome'} onListen={toggleWelcomeSpeech} />}      {showSettings && <SettingsDrawer key={settingsTab} philosophers={philosophers} activeSlugs={activeSlugs} togglePhilosopher={togglePhilosopher} settings={settings} onSettingsChange={updateSettings} display={display} onDisplayChange={updateDisplay} initialTab={settingsTab} onClose={() => setShowSettings(false)} />}
-      {selectedIntervention && <InterventionModal intervention={selectedIntervention} philosopher={philosophers.find((p) => p.id === selectedIntervention.philosopher_id)} onClose={() => { ttsRef.current?.stop(); setSelectedIntervention(null); }} ttsSupported={ttsSupported} speaking={ttsStatus.state !== 'idle' && ttsStatus.currentId === selectedIntervention.id} onToggleSpeech={() => toggleTurnSpeech(selectedIntervention)} onOpenSources={(n) => { ttsRef.current?.stop(); setSelectedIntervention(null); openSourcesAt(n); }} grounding={selectedIntervention ? groundMap[selectedIntervention.id] ?? null : null} />}
+      {selectedIntervention && <InterventionModal intervention={selectedIntervention} philosopher={philosophers.find((p) => p.id === selectedIntervention.philosopher_id)} onClose={() => { ttsRef.current?.stop(); setSelectedIntervention(null); }} ttsSupported={ttsSupported} speaking={ttsStatus.state !== 'idle' && ttsStatus.currentId === selectedIntervention.id} onToggleSpeech={() => toggleTurnSpeech(selectedIntervention)} onOpenSources={(n) => { ttsRef.current?.stop(); setSelectedIntervention(null); openSourcesAt(n); }} grounding={selectedIntervention ? groundMap[selectedIntervention.id] ?? null : null} groundingOn={settings.grounding} />}
       {selectedPhilosopher && <ProfileModal philosopher={selectedPhilosopher} onClose={() => setSelectedPhilosopher(null)} />}
     </div>
   );
@@ -933,7 +1024,7 @@ function WelcomeModal({ onClose, onOpenSettings, ttsSupported, listening, onList
         <label className="flex items-center gap-3 text-sm text-[#465f75] mt-6"><input type="checkbox" checked={remember} onChange={(event) => setRemember(event.target.checked)} className="w-4 h-4 accent-[#8b5254]" /> Don’t show this again</label>
         <div className="flex flex-wrap gap-2 mt-4">
           <button className="btn-primary" onClick={onOpenSettings}>Choose who gets to sit at the table</button>
-          <button className="btn-secondary" onClick={() => onClose(remember)}>Convene with all ten</button>
+          <button className="btn-secondary" onClick={() => onClose(remember)}>Convene the cabinet</button>
           {ttsSupported && <button className="btn-secondary !text-xs flex items-center gap-2" onClick={onListen} aria-label={listening ? 'Stop reading the welcome' : 'Listen to the welcome'}>{listening ? <><Square size={13} /> Stop</> : <><Volume2 size={13} /> Listen</>}</button>}
         </div>
       </div>
@@ -1290,12 +1381,12 @@ function DisplayToggle({ label, hint, checked, onChange }: { label: string; hint
 }
 
 
-function GroundingReceipt({ grounding, responseText }: { grounding: { title: string; number: number; passages: string[] }; responseText: string }) {
+function GroundingReceipt({ grounding, responseText }: { grounding: { title: string; number: number; passages: string[]; reason: string | null }; responseText: string }) {
   const checks = verifyQuotes(responseText, grounding.passages);
   return <div className="mt-5 border-t border-[#4a392d]/20 pt-5"><p className="font-heading text-xl text-[#4a392d] mb-1">What the speaker was shown</p><p className="text-xs italic text-[#465f75]/65 mb-3">Passages fetched from “{grounding.title}” [{grounding.number}] before this turn — quotes below are checked against them, client-side. Paraphrase can fail the check; failure means “check by hand”, not “false”.</p>{grounding.passages.map((text, i) => <p key={i} className="text-[13px] leading-relaxed p-3 mb-2 bg-[#eae1ca]/60 border border-[#4a392d]/15 text-[#465f75]">“{text.length > 400 ? `${text.slice(0, 400)}…` : text}”</p>)}<div className="mt-3 space-y-2">{checks.length === 0 ? <p className="text-xs italic text-[#465f75]/65">No verifiable quotes in this turn — nothing to check against.</p> : checks.map((check, i) => <div key={i} className="flex items-start gap-2 text-[13px]"><span aria-hidden="true">{check.verified ? '✓' : '✗'}</span><p className="text-[#465f75]"><span className={`font-heading text-xs uppercase tracking-wider ${check.verified ? 'text-[#4a6b3f]' : 'text-[#8b5254]'}`}>{check.verified ? 'Verified' : 'Unverified'}: </span>“{check.quote.length > 160 ? `${check.quote.slice(0, 160)}…` : check.quote}”</p></div>)}</div></div>;
 }
 
-function InterventionModal({ intervention, philosopher, onClose, ttsSupported, speaking, onToggleSpeech, onOpenSources, grounding }: { intervention: Intervention; philosopher?: Philosopher; onClose: () => void; ttsSupported?: boolean; speaking?: boolean; onToggleSpeech?: () => void; onOpenSources: (n: number) => void; grounding?: { title: string; number: number; passages: string[] } | null }) { return <div className="fixed inset-0 z-50 bg-[#4a392d]/35 backdrop-blur-sm flex items-center justify-center p-4" onClick={onClose}><div role="dialog" aria-modal="true" aria-label={`Intervention by ${philosopher?.full_name ?? 'unknown thinker'}`} className="dark-academia-card max-w-3xl max-h-[90vh] overflow-y-auto custom-scroll p-6 md:p-8" onClick={(event) => event.stopPropagation()}><div className="flex justify-between gap-4"><div><p className="pass-indicator text-[#8b5254]">Pass {intervention.pass_number} · {PASS_NAMES[intervention.pass_number - 1]}</p><h2 className="text-3xl">{philosopher?.full_name}</h2><p className="italic text-[#465f75]/65">{intervention.position_label}</p></div><div className="flex flex-col items-end gap-2"><button className="btn-secondary !px-3 h-fit" onClick={onClose} aria-label="Close intervention"><X size={17} /></button>{ttsSupported && <button className="btn-secondary !text-xs flex items-center gap-2" onClick={onToggleSpeech} aria-label={speaking ? 'Stop reading this intervention' : 'Listen to this intervention'}>{speaking ? <><Square size={13} /> Stop</> : <><Volume2 size={13} /> Listen</>}</button>}</div></div><p className="drop-cap text-[17px] leading-relaxed mt-6 whitespace-pre-line text-[#465f75]">{intervention.response_text}</p>{philosopher && <div className="mt-4"><ReadMore philosopherName={philosopher.name} /></div>}<div className="mt-7 border-t border-[#4a392d]/20 pt-5"><p className="font-heading text-xl text-[#4a392d] mb-3">References</p>{philosopher && <ReadSimilar philosopherName={philosopher.name} labels={intervention.citations.map((c) => c.label)} onOpenSources={onOpenSources} />}{grounding && <GroundingReceipt grounding={grounding} responseText={intervention.response_text} />}</div></div></div>; }
+function InterventionModal({ intervention, philosopher, onClose, ttsSupported, speaking, onToggleSpeech, onOpenSources, grounding, groundingOn }: { intervention: Intervention; philosopher?: Philosopher; onClose: () => void; ttsSupported?: boolean; speaking?: boolean; onToggleSpeech?: () => void; onOpenSources: (n: number) => void; grounding?: { title: string; number: number; passages: string[]; reason: string | null } | null; groundingOn: boolean }) { return <div className="fixed inset-0 z-50 bg-[#4a392d]/35 backdrop-blur-sm flex items-center justify-center p-4" onClick={onClose}><div role="dialog" aria-modal="true" aria-label={`Intervention by ${philosopher?.full_name ?? 'unknown thinker'}`} className="dark-academia-card max-w-3xl max-h-[90vh] overflow-y-auto custom-scroll p-6 md:p-8" onClick={(event) => event.stopPropagation()}><div className="flex justify-between gap-4"><div><p className="pass-indicator text-[#8b5254]">Pass {intervention.pass_number} · {PASS_NAMES[intervention.pass_number - 1]}</p><h2 className="text-3xl">{philosopher?.full_name}</h2><p className="italic text-[#465f75]/65">{intervention.position_label}</p></div><div className="flex flex-col items-end gap-2"><button className="btn-secondary !px-3 h-fit" onClick={onClose} aria-label="Close intervention"><X size={17} /></button>{ttsSupported && <button className="btn-secondary !text-xs flex items-center gap-2" onClick={onToggleSpeech} aria-label={speaking ? 'Stop reading this intervention' : 'Listen to this intervention'}>{speaking ? <><Square size={13} /> Stop</> : <><Volume2 size={13} /> Listen</>}</button>}</div></div><p className="drop-cap text-[17px] leading-relaxed mt-6 whitespace-pre-line text-[#465f75]">{intervention.response_text}</p>{philosopher && <div className="mt-4"><ReadMore philosopherName={philosopher.name} /></div>}<div className="mt-7 border-t border-[#4a392d]/20 pt-5"><p className="font-heading text-xl text-[#4a392d] mb-3">References</p>{philosopher && <ReadSimilar philosopherName={philosopher.name} labels={intervention.citations.map((c) => c.label)} onOpenSources={onOpenSources} />}{grounding && grounding.passages.length ? <GroundingReceipt grounding={grounding} responseText={intervention.response_text} /> : groundingOn ? <div className="mt-5 border-t border-[#4a392d]/20 pt-5"><p className="text-xs italic text-[#465f75]/65">{grounding && grounding.reason === 'unsupported-source' ? 'Grounding skipped this source (a scan or binary with nothing fetchable as text) — the speaker answered from profile alone.' : grounding && grounding.reason === 'fetch-failed' ? 'Grounding tried, but the source page could not be fetched — the speaker answered from profile alone.' : 'Grounding found no passages about this question on that page — the speaker answered from profile alone.'}</p></div> : null}</div></div></div>; }
 
 function StyleEssenceDisplay({ style }: { style: StyleEssence }) { return <div className="grid md:grid-cols-2 gap-5"><div className="border-t border-[#4a392d]/15 pt-3"><p className="text-xs uppercase tracking-widest text-[#8b5254] mb-1">Style DNA</p><p className="text-[15px] leading-relaxed text-[#465f75]/85">{style.style_dna}</p></div><div className="border-t border-[#4a392d]/15 pt-3"><p className="text-xs uppercase tracking-widest text-[#8b5254] mb-1">Characteristic Movement</p><p className="text-[15px] leading-relaxed text-[#465f75]/85">{style.characteristic_movement}</p></div></div>; }
 function ProfileModal({ philosopher, onClose }: { philosopher: Philosopher; onClose: () => void }) {

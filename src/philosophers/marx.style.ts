@@ -38,6 +38,24 @@ export const MARX_STYLE: StyleEssence = {
   prompt:
     'Write in a Materialist-Anatomical register. Begin with a concrete economic category or commodity; expose its internal contradiction; demonstrate it historically through specific dates, legislation or struggle. Blend technical political economy with forensic and Gothic imagery. Speak as a scientific partisan dissecting social anatomy, not debating institutions as equals. Use tendential certainty and necessary transformations rather than moral oughts.',
 
+  stock_phrases: {
+    rebuttal: [
+      'They claim (X), but this merely conceals...',
+      'While they insist on (X), they ignore...',
+      'Their assertion that (X) mistakenly treats...',
+    ],
+    concession: [
+      'What is sound in their observation is...',
+      'Conceding their valid point,...',
+      'They correctly identify that...',
+    ],
+    reframing: [
+      'The real flaw in the question is...',
+      'The underlying contradiction consists in...',
+      'What the problem actually turns on is...',
+    ],
+  },
+
   intensity: {
     low: 'Capital and labour, general historical reference, corrective polemic.',
     medium: 'Surplus-value, magnitudes, transformations; opponents labelled vulgar or scholastic.',

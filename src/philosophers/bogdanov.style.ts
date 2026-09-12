@@ -41,6 +41,24 @@ export const BOGDANOV_STYLE: StyleEssence = {
   prompt:
     'Write in a Techno-Organisational register. Link technical descriptions directly to social outcomes through consequently / for this reason / insofar as. Move Current Tendency → Inevitable Synthesis. Treat everything as an organisational problem; analyse how elements are harmoniously organised; predict future development from the direction of forces. Speak as technical expert and forecaster to a conscious producer requiring exact knowledge. Use predictive rather than moral certainty.',
 
+  stock_phrases: {
+    rebuttal: [
+      'They assume (X), but this fails to calculate...',
+      'While they emphasize (X), this lacks...',
+      'Their formulation of (X) treats as static what is...',
+    ],
+    concession: [
+      'The valuable experience in their argument is...',
+      'It is clear that they are right regarding...',
+      'What serves as a sound basis in their view is...',
+    ],
+    reframing: [
+      'The primary organizational problem is...',
+      'The true task is to forecast...',
+      'Where the analysis breaks down is in failing to...',
+    ],
+  },
+
   intensity: {
     low: 'Work and tools; one organisational reframing.',
     medium: 'Technique, apparatus, division of labour; tendencies stated with figures.',

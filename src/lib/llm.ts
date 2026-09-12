@@ -26,7 +26,7 @@ export class LlmError extends Error {
   }
 }
 
-const TURN_KEYS = ['negation', 'incorporation', 'reformulation', 'new_contribution'] as const;
+const TURN_KEYS = ['negation', 'reformulation', 'new_contribution'] as const;
 
 /** Last-resort salvage for models that emit JSON structure with UNQUOTED
  * string values (`"negation": some prose…`). Requotes the values of known
@@ -109,12 +109,21 @@ export function parseTurnOutput(rawText: string, label = 'LLM'): TurnOutput {
       throw new LlmError(`${label} output was missing “${key}”. Resume the cabinet to retry the turn. Got: ${snippet(rawText)}`, true, 'parse');
     }
   }
+  // Incorporation is optional (folded into the other prose since the
+  // incorporation-fold); everything else is mandatory.
+  const incorporation = typeof record.incorporation === 'string' ? record.incorporation.trim() : '';
   const works = Array.isArray(record.works_referenced)
     ? (record.works_referenced as unknown[]).filter((w): w is string => typeof w === 'string')
     : [];
+  // Safety net for dropped terminal punctuation (models trail off): the rule
+  // lives in the prompt; this guarantees it mechanically.
+  const terminate = (s: string): string => {
+    const t = s.trim();
+    return /[.?!…:;]$/.test(t) ? t : `${t}.`;
+  };
   return {
     negation: (record.negation as string).trim(),
-    incorporation: (record.incorporation as string).trim(),
+    incorporation,
     reformulation: (record.reformulation as string).trim(),
     new_contribution: (record.new_contribution as string).trim(),
     works_referenced: works,
@@ -135,4 +144,4 @@ export function retryAfterMs(detail: string, fallbackMs: number, capMs = 90000):
 
 /** Appended to the user message for a single repair attempt after malformed JSON. */
 export const REPAIR_SUFFIX =
-  ' Your previous reply was not valid JSON. Reply again with JSON only: the complete five-key object, no prose outside it.';
+  ' Your previous reply was not valid JSON. Reply again with JSON only: the complete four-key object, no prose outside it.';

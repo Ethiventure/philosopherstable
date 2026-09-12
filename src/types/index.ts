@@ -6,6 +6,15 @@ export type StyleIntensity = 'low' | 'medium' | 'high';
  * movement, reader positioning) rather than surface vocabulary, so the LLM can
  * think in the philosopher's machinery instead of decorating prose with their words.
  */
+/** Per-philosopher transitional toolkit: rebuttal/concession/reframing slots,
+ * three variants each. Sent ONLY with its own speaker's persona (~150 tokens
+ * a turn) — never the full set. Rotate variants across turns. */
+export interface StockPhrases {
+  rebuttal: string[];
+  concession: string[];
+  reframing: string[];
+}
+
 export interface StyleEssence {
   /** Six-part formula, e.g. "Axiomatic Diction + Euclidean Hypotaxis + …" */
   style_dna: string;
@@ -13,6 +22,7 @@ export interface StyleEssence {
   /** Critical Discourse Analysis: agency, binaries, modality, reader effects. */
   cda_reader_effects: string;
   generation_rules: string[];
+  stock_phrases: StockPhrases;
   /** Compact register instruction used verbatim in the system prompt. */
   prompt: string;
   intensity: Record<StyleIntensity, string>;
@@ -119,7 +129,9 @@ export interface Citation {
 
 export interface InterventionSections {
   negation: string;
-  incorporation: string;
+  /** Optional since the incorporation-fold: the concession may live inside
+   * the negation or reformulation prose instead of its own section. */
+  incorporation?: string;
   reformulation: string;
   new_contribution: string;
 }

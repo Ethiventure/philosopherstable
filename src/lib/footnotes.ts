@@ -56,8 +56,6 @@ export function splitLabels(philosopherName: string, labels: string[]): { number
   const entries = CORPUS_SOURCES_DATA.map((source, index) => ({ source, number: manifestNumber(index) }));
   const own = entries.filter(({ source }) =>
     source.author.toLowerCase().includes(philosopherName.toLowerCase()));
-  const pool = [...own, ...entries.filter(({ source }) =>
-    !source.author.toLowerCase().includes(philosopherName.toLowerCase()))];
 
   for (const label of labels) {
     const words = distinctive(label);
@@ -67,16 +65,37 @@ export function splitLabels(philosopherName: string, labels: string[]): { number
       unmatched.push(label);
       continue;
     }
-    const hit = pool.find(({ source }) => {
-      const title = normalise(source.title);
-      return words.every((w) => title.includes(w));
-    });
-    if (hit && !seen.has(hit.number)) {
-      seen.add(hit.number);
-      out.push(hit.number);
-    } else if (!hit) {
-      unmatched.push(label);
+    const matchesTitle = (title: string) => {
+      const titleWords = normalise(title).split(' ').filter((w) => w.length > 2 && !STOPWORDS.has(w));
+      // Either direction: the label may add detail ("Capital, Vol I, ch. 15")
+      // or the title may ("Capital, Volume I" vs label "Capital").
+      return titleWords.every((w) => words.includes(w)) || words.every((w) => titleWords.includes(w));
+    };
+    // The speaker's own works first — footnotes should overwhelmingly be
+    // things they actually wrote.
+    const ownHit = own.find(({ source }) => matchesTitle(source.title));
+    if (ownHit && !seen.has(ownHit.number)) {
+      seen.add(ownHit.number);
+      out.push(ownHit.number);
+      continue;
+    } else if (ownHit) {
+      continue;
     }
+    // Another author's work only exceptionally: three or more distinctive
+    // words must all match, so passing mentions can't claim a stranger's book.
+    if (words.length >= 3) {
+      const other = entries.find(
+        ({ source }) =>
+          !source.author.toLowerCase().includes(philosopherName.toLowerCase()) &&
+          matchesTitle(source.title),
+      );
+      if (other && !seen.has(other.number)) {
+        seen.add(other.number);
+        out.push(other.number);
+        continue;
+      }
+    }
+    unmatched.push(label);
   }
   return { numbers: out, unmatched };
 }

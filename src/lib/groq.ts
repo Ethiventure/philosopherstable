@@ -5,12 +5,11 @@ import type { GroqModel } from '@/lib/settings';
  * Groq direct provider (visitor's own free key — free tier, no card).
  * OpenAI-compatible `chat/completions`. Same models as the shared proxy.
  *
- * Free tier, no card (30 RPM / ~1K RPD / 8K TPM per the rate table): leave
- * output budget generous because reasoning models spend output tokens on
- * thinking before answering — a tight cap truncates the JSON mid-object,
- * which is the usual cause of "unparseable output" halts here.
+ * Free tier, no card (30 RPM / ~1K RPD / 8K TPM, 1000 output TPM per the rate
+ * table): the output-token gate counts REQUESTED max_tokens, so this stays
+ * under 1000 or every call 429s on arrival.
  */
-const GROQ_MAX_TOKENS = { normal: 4000, long: 8000 } as const;
+const GROQ_MAX_TOKENS = { normal: 800, long: 900 } as const;
 
 interface GroqTurnArgs {
   apiKey: string;

@@ -31,9 +31,9 @@ function normalise(text) {
   return text.toLowerCase().replace(/[^a-z0-9\s-]/g, ' ').replace(/\s+/g, ' ').trim();
 }
 
-function queryTerms(query) {
-  const stop = new Set(['the', 'and', 'for', 'with', 'from', 'that', 'this', 'what', 'how', 'should', 'does', 'are', 'was', 'were', 'been', 'have', 'has', 'will', 'would', 'could', 'their', 'there', 'which', 'when', 'whom', 'about']);
-  return [...new Set(normalise(query).split(' ').filter((t) => t.length > 2 && !stop.has(t)))];
+function queryTerms(text, extraStop) {
+  const stop = new Set(['the', 'and', 'for', 'with', 'from', 'that', 'this', 'what', 'how', 'should', 'does', 'are', 'was', 'were', 'been', 'have', 'has', 'will', 'would', 'could', 'their', 'there', 'which', 'when', 'whom', 'about', 'one', 'two', 'new', 'use', 'used', 'using', 'make', 'made', 'many', 'much', 'more', 'most', 'such', 'only', 'also', 'than', 'then', 'into', 'over', 'under', 'between', 'through', 'during', 'before', 'after', 'above', 'below', 'other', 'some', 'any', 'all', 'both', 'each', 'few', 'own', 'same', 'yet', 'however', 'therefore', 'thus', 'hence', 'upon', 'within', 'without', 'being', 'they', 'them', 'its', 'our', 'your', ...(extraStop || [])]);
+  return [...new Set(normalise(text).split(' ').filter((t) => t.length > 3 && !stop.has(t)))];
 }
 
 function htmlToParagraphs(html) {
@@ -47,7 +47,11 @@ function htmlToParagraphs(html) {
     .replace(/&#39;|&apos;/g, "'")
     .split('\n')
     .map((p) => p.replace(/\s+/g, ' ').trim())
-    .filter((p) => p.length > 80);
+    .filter((p) => p.length > 80)
+    // Edition boilerplate (translator credits, correction notes, contents
+    // listings) scores well on keywords but proves nothing — drop it so the
+    // receipts never look like evidence when they aren't.
+    .filter((p) => !/translat|corrected by|proofread|edition of \d+|first (english|german|french) edition|progress publishers|contents|table of contents|all rights reserved|^\s*(chapter|section|part|appendix|preface|foreword|index)\b.{0,60}$/i.test(p));
 }
 
 export async function handler(event) {
@@ -60,13 +64,13 @@ export async function handler(event) {
   } catch {
     return json(400, { error: { message: 'Invalid JSON body.', code: 'bad_request' } });
   }
-  const { url, query } = body;
+  const { url, query, question } = body;
   if (typeof url !== 'string' || typeof query !== 'string' || !url.startsWith('http')) {
     return json(400, { error: { message: 'url and query are required.', code: 'bad_request' } });
   }
   const lower = url.toLowerCase();
   if (SKIP_HOSTS.some((h) => lower.includes(h)) || SKIP_EXTENSIONS.some((ext) => lower.split('?')[0].endsWith(ext))) {
-    return json(200, { passages: [] });
+    return json(200, { passages: [], reason: 'unsupported-source' });
   }
 
   const controller = new AbortController();
@@ -77,27 +81,48 @@ export async function handler(event) {
       headers: { 'User-Agent': 'DialecticalCabinet/1.0 (source grounding; contact via repo)' },
       signal: controller.signal,
     });
-    if (!response.ok) return json(200, { passages: [] });
+    if (!response.ok) return json(200, { passages: [], reason: 'fetch-failed' });
     const contentType = response.headers.get('content-type') || '';
-    if (!contentType.includes('html') && !contentType.includes('text')) return json(200, { passages: [] });
+    if (!contentType.includes('html') && !contentType.includes('text')) return json(200, { passages: [], reason: 'unsupported-source' });
     html = await response.text();
   } catch {
-    return json(200, { passages: [] });
+    return json(200, { passages: [], reason: 'fetch-failed' });
   } finally {
     clearTimeout(timer);
   }
 
   const paragraphs = htmlToParagraphs(html);
-  const terms = queryTerms(query);
-  if (!terms.length || !paragraphs.length) return json(200, { passages: [] });
+  // The QUESTION carries the ideas; the previous turn is context only. Terms
+  // from the question score double, and rare-across-the-page terms outrank
+  // common ones (TF-IDF-lite) so atmospheric prose can't win on glue words.
+  const focusTerms = queryTerms(typeof question === 'string' ? question : query);
+  const contextTerms = queryTerms(query).filter((t) => !focusTerms.includes(t));
+  const allTerms = [...focusTerms, ...contextTerms];
+  if (!allTerms.length || !paragraphs.length) return json(200, { passages: [], reason: 'no-match' });
+  const docFreq = new Map();
+  const norms = paragraphs.map((text) => normalise(text));
+  for (const term of allTerms) {
+    let count = 0;
+    for (const norm of norms) if (norm.includes(term)) count += 1;
+    docFreq.set(term, count);
+  }
+  const idf = (term) => 1 + Math.log(paragraphs.length / (1 + (docFreq.get(term) || 0)));
 
   const scored = paragraphs
     .map((text, i) => {
-      const norm = normalise(text);
-      const score = terms.reduce((s, t) => s + norm.split(t).length - 1, 0);
+      const norm = norms[i];
+      const focusHits = focusTerms.filter((t) => norm.includes(t));
+      const contextHits = contextTerms.filter((t) => norm.includes(t));
+      // Require at least TWO distinct question-idea terms: the passage must be
+      // about the question, not merely adjacent to the previous turn. No
+      // fallback — an honest empty beats junk dressed as evidence.
+      if (focusHits.length < 2) return null;
+      const score =
+        focusHits.reduce((s, t) => s + (norm.split(t).length - 1) * idf(t) * 2, 0) +
+        contextHits.reduce((s, t) => s + (norm.split(t).length - 1) * idf(t), 0);
       return { text, i, score };
     })
-    .filter((p) => p.score > 0)
+    .filter(Boolean)
     .sort((a, b) => b.score - a.score)
     .slice(0, 2);
 
@@ -115,5 +140,5 @@ export async function handler(event) {
       passages.push({ text });
     }
   }
-  return json(200, { passages });
+  return json(200, { passages, reason: passages.length ? null : 'no-match' });
 }

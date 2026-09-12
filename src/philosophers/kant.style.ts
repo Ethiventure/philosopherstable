@@ -39,6 +39,24 @@ export const KANT_STYLE: StyleEssence = {
   prompt:
     'Write in a Legislative-Taxonomic register. Use long periodic sentences with nested clauses and parenthetical definitions, delaying the main conclusion. Use technical Latinate abstraction and treat faculties as actors. Begin by establishing conditions of possibility; divide the field into exhaustive distinctions; map it as a surveyor and judge; use apodictic necessity and universality; avoid tentative or emotive language.',
 
+  stock_phrases: {
+    rebuttal: [
+      'They allege (X), but this oversteps...',
+      'While they maintain (X), they presuppose...',
+      'In asserting (X), they mistake...',
+    ],
+    concession: [
+      'What remains valid within legitimate bounds is...',
+      'I readily grant that...',
+      'Where their deduction holds true is...',
+    ],
+    reframing: [
+      'The flaw in the original question is...',
+      'The real difficulty consists in...',
+      'The antinomy arises because...',
+    ],
+  },
+
   intensity: {
     low: 'One abstract term per sentence and compound syntax.',
     medium: 'Three to four abstract terms and two subordinate clauses per sentence; explicit maxim-universalisation tests.',
