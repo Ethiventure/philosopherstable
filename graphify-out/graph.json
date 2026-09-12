@@ -1186,7 +1186,7 @@
       "file_type": "code",
       "norm_label": "testdeepinfrakey()",
       "source_file": "src/lib/deepinfra.ts",
-      "source_location": "L143"
+      "source_location": "L157"
     },
     {
       "id": "src_lib_together_extractdetail",
@@ -1450,7 +1450,7 @@
       "file_type": "code",
       "norm_label": "cabinettable()",
       "source_file": "src/App.tsx",
-      "source_location": "L1002"
+      "source_location": "L1007"
     },
     {
       "id": "src_app_displaytab",
@@ -1462,7 +1462,7 @@
       "file_type": "code",
       "norm_label": "displaytab()",
       "source_file": "src/App.tsx",
-      "source_location": "L1258"
+      "source_location": "L1263"
     },
     {
       "id": "src_app_displaytoggle",
@@ -1474,7 +1474,7 @@
       "file_type": "code",
       "norm_label": "displaytoggle()",
       "source_file": "src/App.tsx",
-      "source_location": "L1374"
+      "source_location": "L1379"
     },
     {
       "id": "src_app_getreadmoresource",
@@ -1498,7 +1498,7 @@
       "file_type": "code",
       "norm_label": "groundingreceipt()",
       "source_file": "src/App.tsx",
-      "source_location": "L1384"
+      "source_location": "L1389"
     },
     {
       "id": "src_app_interventionmodal",
@@ -1510,7 +1510,7 @@
       "file_type": "code",
       "norm_label": "interventionmodal()",
       "source_file": "src/App.tsx",
-      "source_location": "L1389"
+      "source_location": "L1394"
     },
     {
       "id": "src_app_positioncomparison",
@@ -1522,7 +1522,7 @@
       "file_type": "code",
       "norm_label": "positioncomparison()",
       "source_file": "src/App.tsx",
-      "source_location": "L1008"
+      "source_location": "L1013"
     },
     {
       "id": "src_app_profilemodal",
@@ -1534,7 +1534,7 @@
       "file_type": "code",
       "norm_label": "profilemodal()",
       "source_file": "src/App.tsx",
-      "source_location": "L1392"
+      "source_location": "L1397"
     },
     {
       "id": "src_app_readingdeck",
@@ -1546,7 +1546,7 @@
       "file_type": "code",
       "norm_label": "readingdeck()",
       "source_file": "src/App.tsx",
-      "source_location": "L932"
+      "source_location": "L937"
     },
     {
       "id": "src_app_readmore",
@@ -1582,7 +1582,7 @@
       "file_type": "code",
       "norm_label": "settingsdrawer()",
       "source_file": "src/App.tsx",
-      "source_location": "L1052"
+      "source_location": "L1057"
     },
     {
       "id": "src_app_sourcedrawer",
@@ -1594,7 +1594,7 @@
       "file_type": "code",
       "norm_label": "sourcedrawer()",
       "source_file": "src/App.tsx",
-      "source_location": "L1035"
+      "source_location": "L1040"
     },
     {
       "id": "src_app_spiralview",
@@ -1606,7 +1606,7 @@
       "file_type": "code",
       "norm_label": "spiralview()",
       "source_file": "src/App.tsx",
-      "source_location": "L1006"
+      "source_location": "L1011"
     },
     {
       "id": "src_app_styleessencedisplay",
@@ -1618,7 +1618,7 @@
       "file_type": "code",
       "norm_label": "styleessencedisplay()",
       "source_file": "src/App.tsx",
-      "source_location": "L1391"
+      "source_location": "L1396"
     },
     {
       "id": "src_app_tointervention",
@@ -1642,7 +1642,7 @@
       "file_type": "code",
       "norm_label": "welcomemodal()",
       "source_file": "src/App.tsx",
-      "source_location": "L1010"
+      "source_location": "L1015"
     },
     {
       "id": "opencode_plugins_graphify_graphifyplugin",
@@ -1870,7 +1870,7 @@
       "file_type": "code",
       "norm_label": "parseturnoutput()",
       "source_file": "src/lib/llm.ts",
-      "source_location": "L69"
+      "source_location": "L73"
     },
     {
       "id": "src_lib_llm_parseturnoutput_snippet",
@@ -1882,7 +1882,7 @@
       "file_type": "code",
       "norm_label": "snippet()",
       "source_file": "src/lib/llm.ts",
-      "source_location": "L71"
+      "source_location": "L75"
     },
     {
       "id": "src_lib_llm_requotebarevalues",
@@ -1906,7 +1906,7 @@
       "file_type": "code",
       "norm_label": "retryafterms()",
       "source_file": "src/lib/llm.ts",
-      "source_location": "L138"
+      "source_location": "L142"
     },
     {
       "id": "src_lib_settings_clearapikey",
@@ -2537,6 +2537,17 @@
       "norm_label": "dialectic/prompts.ts",
       "source_file": "src/lib/dialectic/prompts.ts",
       "source_location": "L1"
+    },
+    {
+      "id": "src_lib_dialectic_prompts_coda_repair_suffix",
+      "label": "CODA_REPAIR_SUFFIX",
+      "_origin": "ast",
+      "community": 12,
+      "community_name": "dialectic/prompts.ts",
+      "file_type": "code",
+      "norm_label": "coda_repair_suffix",
+      "source_file": "src/lib/dialectic/prompts.ts",
+      "source_location": "L178"
     },
     {
       "id": "src_lib_dialectic_prompts_coda_system",
@@ -4295,6 +4306,51 @@
       "source_location": "L1"
     },
     {
+      "id": "scripts_dev_keepalive",
+      "label": "dev-keepalive.sh",
+      "_origin": "ast",
+      "community": 48,
+      "community_name": "dev-keepalive.sh",
+      "file_type": "code",
+      "metadata": {
+        "language": "bash",
+        "kind": "file"
+      },
+      "norm_label": "dev-keepalive.sh",
+      "source_file": "scripts/dev-keepalive.sh",
+      "source_location": "L1"
+    },
+    {
+      "id": "scripts_dev_keepalive_log",
+      "label": "log()",
+      "_origin": "ast",
+      "community": 48,
+      "community_name": "dev-keepalive.sh",
+      "file_type": "code",
+      "metadata": {
+        "language": "bash",
+        "kind": "bash_function"
+      },
+      "norm_label": "log()",
+      "source_file": "scripts/dev-keepalive.sh",
+      "source_location": "L13"
+    },
+    {
+      "id": "scripts_dev_keepalive_sh__entry",
+      "label": "dev-keepalive.sh script",
+      "_origin": "ast",
+      "community": 48,
+      "community_name": "dev-keepalive.sh",
+      "file_type": "code",
+      "metadata": {
+        "language": "bash",
+        "kind": "bash_entrypoint"
+      },
+      "norm_label": "dev-keepalive.sh script",
+      "source_file": "scripts/dev-keepalive.sh",
+      "source_location": "L1"
+    },
+    {
       "id": "src_lib_openrouter",
       "label": "openrouter.ts",
       "_origin": "ast",
@@ -4699,7 +4755,7 @@
       "file_type": "code",
       "norm_label": "repair_suffix",
       "source_file": "src/lib/llm.ts",
-      "source_location": "L146"
+      "source_location": "L150"
     },
     {
       "id": "src_lib_llm_turn_keys",
@@ -4928,6 +4984,18 @@
       "weight": 1.0
     },
     {
+      "source": "scripts_dev_keepalive_sh__entry",
+      "target": "scripts_dev_keepalive_log",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "scripts/dev-keepalive.sh",
+      "source_location": "L15",
+      "weight": 1.0
+    },
+    {
       "source": "src_app_app",
       "target": "src_app_tointervention",
       "relation": "calls",
@@ -4960,19 +5028,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "src/lib/deepinfra.ts",
-      "source_location": "L109",
-      "weight": 1.0
-    },
-    {
-      "source": "src_lib_deepinfra_generateturndeepinfra",
-      "target": "src_lib_deepinfra_deepinfraerror",
-      "relation": "calls",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "context": "call",
-      "source_file": "src/lib/deepinfra.ts",
-      "source_location": "L110",
+      "source_location": "L115",
       "weight": 1.0
     },
     {
@@ -4984,7 +5040,19 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "src/lib/deepinfra.ts",
-      "source_location": "L113",
+      "source_location": "L120",
+      "weight": 1.0
+    },
+    {
+      "source": "src_lib_deepinfra_generateturndeepinfra",
+      "target": "src_lib_deepinfra_deepinfraerror",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "src/lib/deepinfra.ts",
+      "source_location": "L124",
       "weight": 1.0
     },
     {
@@ -4996,7 +5064,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "src/lib/deepinfra.ts",
-      "source_location": "L135",
+      "source_location": "L149",
       "weight": 1.0
     },
     {
@@ -5008,7 +5076,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "src/lib/deepinfra.ts",
-      "source_location": "L155",
+      "source_location": "L169",
       "weight": 1.0
     },
     {
@@ -5020,7 +5088,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "src/lib/deepinfra.ts",
-      "source_location": "L155",
+      "source_location": "L169",
       "weight": 1.0
     },
     {
@@ -5164,7 +5232,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "src/lib/llm.ts",
-      "source_location": "L103",
+      "source_location": "L107",
       "weight": 1.0
     },
     {
@@ -5176,7 +5244,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "src/lib/llm.ts",
-      "source_location": "L91",
+      "source_location": "L95",
       "weight": 1.0
     },
     {
@@ -5704,7 +5772,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "src/lib/llm.ts",
-      "source_location": "L71",
+      "source_location": "L75",
       "weight": 1.0
     },
     {
@@ -7576,6 +7644,17 @@
       "weight": 1.0
     },
     {
+      "source": "scripts_dev_keepalive",
+      "target": "scripts_dev_keepalive_sh__entry",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "scripts/dev-keepalive.sh",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
       "source": "src_app",
       "target": "src_app_cabinettable",
       "relation": "contains",
@@ -7583,7 +7662,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/App.tsx",
-      "source_location": "L1002",
+      "source_location": "L1007",
       "weight": 1.0
     },
     {
@@ -7594,7 +7673,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/App.tsx",
-      "source_location": "L1006",
+      "source_location": "L1011",
       "weight": 1.0
     },
     {
@@ -7605,7 +7684,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/App.tsx",
-      "source_location": "L1008",
+      "source_location": "L1013",
       "weight": 1.0
     },
     {
@@ -7616,7 +7695,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/App.tsx",
-      "source_location": "L1010",
+      "source_location": "L1015",
       "weight": 1.0
     },
     {
@@ -7627,7 +7706,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/App.tsx",
-      "source_location": "L1035",
+      "source_location": "L1040",
       "weight": 1.0
     },
     {
@@ -7638,7 +7717,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/App.tsx",
-      "source_location": "L1052",
+      "source_location": "L1057",
       "weight": 1.0
     },
     {
@@ -7660,7 +7739,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/App.tsx",
-      "source_location": "L1258",
+      "source_location": "L1263",
       "weight": 1.0
     },
     {
@@ -7671,7 +7750,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/App.tsx",
-      "source_location": "L1374",
+      "source_location": "L1379",
       "weight": 1.0
     },
     {
@@ -7682,7 +7761,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/App.tsx",
-      "source_location": "L1384",
+      "source_location": "L1389",
       "weight": 1.0
     },
     {
@@ -7693,7 +7772,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/App.tsx",
-      "source_location": "L1389",
+      "source_location": "L1394",
       "weight": 1.0
     },
     {
@@ -7704,7 +7783,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/App.tsx",
-      "source_location": "L1391",
+      "source_location": "L1396",
       "weight": 1.0
     },
     {
@@ -7715,7 +7794,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/App.tsx",
-      "source_location": "L1392",
+      "source_location": "L1397",
       "weight": 1.0
     },
     {
@@ -7770,7 +7849,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/App.tsx",
-      "source_location": "L932",
+      "source_location": "L937",
       "weight": 1.0
     },
     {
@@ -7808,17 +7887,6 @@
     },
     {
       "source": "src_lib_deepinfra",
-      "target": "src_lib_deepinfra_testdeepinfrakey",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "src/lib/deepinfra.ts",
-      "source_location": "L143",
-      "weight": 1.0
-    },
-    {
-      "source": "src_lib_deepinfra",
       "target": "src_lib_deepinfra_deepinfraturnargs",
       "relation": "contains",
       "_origin": "ast",
@@ -7826,6 +7894,17 @@
       "confidence_score": 1.0,
       "source_file": "src/lib/deepinfra.ts",
       "source_location": "L15",
+      "weight": 1.0
+    },
+    {
+      "source": "src_lib_deepinfra",
+      "target": "src_lib_deepinfra_testdeepinfrakey",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/lib/deepinfra.ts",
+      "source_location": "L157",
       "weight": 1.0
     },
     {
@@ -7925,6 +8004,17 @@
       "confidence_score": 1.0,
       "source_file": "src/lib/dialectic/prompts.ts",
       "source_location": "L162",
+      "weight": 1.0
+    },
+    {
+      "source": "src_lib_dialectic_prompts",
+      "target": "src_lib_dialectic_prompts_coda_repair_suffix",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/lib/dialectic/prompts.ts",
+      "source_location": "L178",
       "weight": 1.0
     },
     {
@@ -8254,7 +8344,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/lib/llm.ts",
-      "source_location": "L138",
+      "source_location": "L142",
       "weight": 1.0
     },
     {
@@ -8265,7 +8355,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/lib/llm.ts",
-      "source_location": "L146",
+      "source_location": "L150",
       "weight": 1.0
     },
     {
@@ -8320,7 +8410,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/lib/llm.ts",
-      "source_location": "L69",
+      "source_location": "L73",
       "weight": 1.0
     },
     {
@@ -10194,6 +10284,17 @@
       "weight": 1.0
     },
     {
+      "source": "scripts_dev_keepalive",
+      "target": "scripts_dev_keepalive_log",
+      "relation": "defines",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "scripts/dev-keepalive.sh",
+      "source_location": "L13",
+      "weight": 1.0
+    },
+    {
       "source": "tailwind_config",
       "target": "tailwindcss",
       "relation": "dynamic_import",
@@ -10237,5 +10338,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "232b7c329b558e04810c9317f3f6de8593a894db"
+  "built_at_commit": "7e2affa7cc0f22e4a27d0cbe2f469384c2eaac3e"
 }

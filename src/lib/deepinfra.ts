@@ -78,6 +78,11 @@ function stripFences(text: string): string {
 const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
 export async function generateTurnDeepInfra({ apiKey, systemPrompt, userMessage, longForm }: DeepInfraTurnArgs): Promise<TurnOutput> {
+  // Constrained decoding first: response_format forces syntactically valid
+  // JSON, which eliminates the unquoted/truncated-value failures Llama shows
+  // in free-form mode. If the server rejects the parameter (400), fall back
+  // to plain requests and the usual salvage machinery.
+  const jsonMode = { current: true };
   const makeBody = (msg: string) => ({
     model: DEEPINFRA_MODEL,
     messages: [
@@ -85,6 +90,7 @@ export async function generateTurnDeepInfra({ apiKey, systemPrompt, userMessage,
       { role: 'user', content: msg },
     ],
     max_tokens: longForm ? DEEPINFRA_MAX_TOKENS.long : DEEPINFRA_MAX_TOKENS.normal,
+    ...(jsonMode.current ? { response_format: { type: 'json_object' } } : {}),
   });
 
   const post = async (msg: string): Promise<string> => {
@@ -107,6 +113,14 @@ export async function generateTurnDeepInfra({ apiKey, systemPrompt, userMessage,
       }
       if (!response.ok) {
         const detail = await extractDetail(response);
+        if (response.status === 400 && jsonMode.current) {
+          jsonMode.current = false;
+          lastError = new LlmError('DeepInfra declined constrained decoding; retrying plain.', true, 'server');
+          if (attempt < 2) {
+            await sleep(1000);
+            continue;
+          }
+        }
         const error = deepInfraError(response.status, detail);
         if ((response.status === 429 || response.status >= 500) && attempt < 2) {
           lastError = error;

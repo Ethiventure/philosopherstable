@@ -1,16 +1,16 @@
 # Graph Report - philosopherstable  (2026-09-12)
 
 ## Corpus Check
-- 63 files · ~56,432 words
+- 64 files · ~56,866 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 410 nodes · 485 edges · 48 communities (29 shown, 16 thin omitted)
+- 414 nodes · 489 edges · 49 communities (29 shown, 17 thin omitted)
 - Extraction: 100% EXTRACTED · 0% INFERRED · 0% AMBIGUOUS
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `232b7c32`
+- Built from commit: `7e2affa7`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -60,6 +60,7 @@
 - weil.ts
 - opencode.json
 - verify.ts
+- dev-keepalive.sh
 
 ## God Nodes (most connected - your core abstractions)
 1. `compilerOptions` - 18 edges
@@ -82,7 +83,7 @@
 ## Import Cycles
 - None detected.
 
-## Communities (48 total, 16 thin omitted)
+## Communities (49 total, 17 thin omitted)
 
 ### Community 0 - "package.json"
 Cohesion: 0.06
@@ -133,8 +134,8 @@ Cohesion: 0.30
 Nodes (11): clientIp(), DEFAULT_MODELS, handler(), isModelFault(), json(), perIp, resetIfNewDay(), safeDetail() (+3 more)
 
 ### Community 12 - "dialectic/prompts.ts"
-Cohesion: 0.17
-Nodes (7): CODA_SYSTEM, MAX_OUTPUT_TOKENS, STRUCTURED_OUTPUT_HINT, TurnInstructionArgs, TurnKind, UserMessageArgs, WORD_BUDGETS
+Cohesion: 0.15
+Nodes (8): CODA_REPAIR_SUFFIX, CODA_SYSTEM, MAX_OUTPUT_TOKENS, STRUCTURED_OUTPUT_HINT, TurnInstructionArgs, TurnKind, UserMessageArgs, WORD_BUDGETS
 
 ### Community 13 - "groq.ts"
 Cohesion: 0.39
@@ -201,9 +202,9 @@ Cohesion: 0.60
 Nodes (4): extractQuotes(), normalise(), QuoteCheck, verifyQuotes()
 
 ## Knowledge Gaps
-- **193 isolated node(s):** `$schema`, `plugin`, `DEFAULT_MODELS`, `usageDay`, `perIp` (+188 more)
-  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 234 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
-- **16 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
+- **194 isolated node(s):** `$schema`, `plugin`, `DEFAULT_MODELS`, `usageDay`, `perIp` (+189 more)
+  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 235 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
+- **17 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
@@ -215,7 +216,7 @@ _Questions this graph is uniquely positioned to answer:_
 - **Why does `lucide-react` connect `App.tsx` to `package.json`?**
   _High betweenness centrality (0.006) - this node is a cross-community bridge._
 - **What connects `$schema`, `plugin`, `DEFAULT_MODELS` to the rest of the system?**
-  _193 weakly-connected nodes found - possible documentation gaps or missing edges._
+  _194 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `package.json` be split into smaller, more focused modules?**
   _Cohesion score 0.05641025641025641 - nodes in this community are weakly interconnected._
 - **Should `types/index.ts` be split into smaller, more focused modules?**
