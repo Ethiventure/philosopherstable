@@ -1186,7 +1186,7 @@
       "file_type": "code",
       "norm_label": "testdeepinfrakey()",
       "source_file": "src/lib/deepinfra.ts",
-      "source_location": "L143"
+      "source_location": "L157"
     },
     {
       "id": "src_lib_together_extractdetail",
@@ -1870,7 +1870,7 @@
       "file_type": "code",
       "norm_label": "parseturnoutput()",
       "source_file": "src/lib/llm.ts",
-      "source_location": "L69"
+      "source_location": "L73"
     },
     {
       "id": "src_lib_llm_parseturnoutput_snippet",
@@ -1882,7 +1882,7 @@
       "file_type": "code",
       "norm_label": "snippet()",
       "source_file": "src/lib/llm.ts",
-      "source_location": "L71"
+      "source_location": "L75"
     },
     {
       "id": "src_lib_llm_requotebarevalues",
@@ -1906,7 +1906,7 @@
       "file_type": "code",
       "norm_label": "retryafterms()",
       "source_file": "src/lib/llm.ts",
-      "source_location": "L138"
+      "source_location": "L142"
     },
     {
       "id": "src_lib_settings_clearapikey",
@@ -4306,6 +4306,51 @@
       "source_location": "L1"
     },
     {
+      "id": "scripts_dev_keepalive",
+      "label": "dev-keepalive.sh",
+      "_origin": "ast",
+      "community": 48,
+      "community_name": "dev-keepalive.sh",
+      "file_type": "code",
+      "metadata": {
+        "language": "bash",
+        "kind": "file"
+      },
+      "norm_label": "dev-keepalive.sh",
+      "source_file": "scripts/dev-keepalive.sh",
+      "source_location": "L1"
+    },
+    {
+      "id": "scripts_dev_keepalive_log",
+      "label": "log()",
+      "_origin": "ast",
+      "community": 48,
+      "community_name": "dev-keepalive.sh",
+      "file_type": "code",
+      "metadata": {
+        "language": "bash",
+        "kind": "bash_function"
+      },
+      "norm_label": "log()",
+      "source_file": "scripts/dev-keepalive.sh",
+      "source_location": "L13"
+    },
+    {
+      "id": "scripts_dev_keepalive_sh__entry",
+      "label": "dev-keepalive.sh script",
+      "_origin": "ast",
+      "community": 48,
+      "community_name": "dev-keepalive.sh",
+      "file_type": "code",
+      "metadata": {
+        "language": "bash",
+        "kind": "bash_entrypoint"
+      },
+      "norm_label": "dev-keepalive.sh script",
+      "source_file": "scripts/dev-keepalive.sh",
+      "source_location": "L1"
+    },
+    {
       "id": "src_lib_openrouter",
       "label": "openrouter.ts",
       "_origin": "ast",
@@ -4710,7 +4755,7 @@
       "file_type": "code",
       "norm_label": "repair_suffix",
       "source_file": "src/lib/llm.ts",
-      "source_location": "L146"
+      "source_location": "L150"
     },
     {
       "id": "src_lib_llm_turn_keys",
@@ -4939,6 +4984,18 @@
       "weight": 1.0
     },
     {
+      "source": "scripts_dev_keepalive_sh__entry",
+      "target": "scripts_dev_keepalive_log",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "scripts/dev-keepalive.sh",
+      "source_location": "L15",
+      "weight": 1.0
+    },
+    {
       "source": "src_app_app",
       "target": "src_app_tointervention",
       "relation": "calls",
@@ -4971,19 +5028,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "src/lib/deepinfra.ts",
-      "source_location": "L109",
-      "weight": 1.0
-    },
-    {
-      "source": "src_lib_deepinfra_generateturndeepinfra",
-      "target": "src_lib_deepinfra_deepinfraerror",
-      "relation": "calls",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "context": "call",
-      "source_file": "src/lib/deepinfra.ts",
-      "source_location": "L110",
+      "source_location": "L115",
       "weight": 1.0
     },
     {
@@ -4995,7 +5040,19 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "src/lib/deepinfra.ts",
-      "source_location": "L113",
+      "source_location": "L120",
+      "weight": 1.0
+    },
+    {
+      "source": "src_lib_deepinfra_generateturndeepinfra",
+      "target": "src_lib_deepinfra_deepinfraerror",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "src/lib/deepinfra.ts",
+      "source_location": "L124",
       "weight": 1.0
     },
     {
@@ -5007,7 +5064,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "src/lib/deepinfra.ts",
-      "source_location": "L135",
+      "source_location": "L149",
       "weight": 1.0
     },
     {
@@ -5019,7 +5076,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "src/lib/deepinfra.ts",
-      "source_location": "L155",
+      "source_location": "L169",
       "weight": 1.0
     },
     {
@@ -5031,7 +5088,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "src/lib/deepinfra.ts",
-      "source_location": "L155",
+      "source_location": "L169",
       "weight": 1.0
     },
     {
@@ -5175,7 +5232,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "src/lib/llm.ts",
-      "source_location": "L103",
+      "source_location": "L107",
       "weight": 1.0
     },
     {
@@ -5187,7 +5244,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "src/lib/llm.ts",
-      "source_location": "L91",
+      "source_location": "L95",
       "weight": 1.0
     },
     {
@@ -5715,7 +5772,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "src/lib/llm.ts",
-      "source_location": "L71",
+      "source_location": "L75",
       "weight": 1.0
     },
     {
@@ -7587,6 +7644,17 @@
       "weight": 1.0
     },
     {
+      "source": "scripts_dev_keepalive",
+      "target": "scripts_dev_keepalive_sh__entry",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "scripts/dev-keepalive.sh",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
       "source": "src_app",
       "target": "src_app_cabinettable",
       "relation": "contains",
@@ -7819,17 +7887,6 @@
     },
     {
       "source": "src_lib_deepinfra",
-      "target": "src_lib_deepinfra_testdeepinfrakey",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "src/lib/deepinfra.ts",
-      "source_location": "L143",
-      "weight": 1.0
-    },
-    {
-      "source": "src_lib_deepinfra",
       "target": "src_lib_deepinfra_deepinfraturnargs",
       "relation": "contains",
       "_origin": "ast",
@@ -7837,6 +7894,17 @@
       "confidence_score": 1.0,
       "source_file": "src/lib/deepinfra.ts",
       "source_location": "L15",
+      "weight": 1.0
+    },
+    {
+      "source": "src_lib_deepinfra",
+      "target": "src_lib_deepinfra_testdeepinfrakey",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/lib/deepinfra.ts",
+      "source_location": "L157",
       "weight": 1.0
     },
     {
@@ -8276,7 +8344,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/lib/llm.ts",
-      "source_location": "L138",
+      "source_location": "L142",
       "weight": 1.0
     },
     {
@@ -8287,7 +8355,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/lib/llm.ts",
-      "source_location": "L146",
+      "source_location": "L150",
       "weight": 1.0
     },
     {
@@ -8342,7 +8410,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/lib/llm.ts",
-      "source_location": "L69",
+      "source_location": "L73",
       "weight": 1.0
     },
     {
@@ -10216,6 +10284,17 @@
       "weight": 1.0
     },
     {
+      "source": "scripts_dev_keepalive",
+      "target": "scripts_dev_keepalive_log",
+      "relation": "defines",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "scripts/dev-keepalive.sh",
+      "source_location": "L13",
+      "weight": 1.0
+    },
+    {
       "source": "tailwind_config",
       "target": "tailwindcss",
       "relation": "dynamic_import",
@@ -10259,5 +10338,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "d0f64ad7b481d970ef85dafd14a45e6f9add5642"
+  "built_at_commit": "7e2affa7cc0f22e4a27d0cbe2f469384c2eaac3e"
 }

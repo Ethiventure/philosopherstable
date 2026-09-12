@@ -42,13 +42,17 @@ function requoteBareValues(text: string): string | null {
       if (known.has(m[1])) keys.push({ key: m[1], keyStart: m.index, valueStart: m.index + m[0].length });
     }
     if (!keys.length) return null;
-    const objEnd = text.lastIndexOf('}');
+    // Truncated responses have no closing brace: close the last value and the
+    // object so partial content still parses (better a clipped turn than none).
+    let src = text;
+    if (src.lastIndexOf('}') < keys[keys.length - 1].valueStart) src += '"}';
+    const objEnd = src.lastIndexOf('}');
     if (objEnd === -1) return null;
     // Rebuild the object from scratch: any leading prose is dropped.
     let out = '{';
     keys.forEach((k, i) => {
       const end = i + 1 < keys.length ? keys[i + 1].keyStart : objEnd;
-      const raw = text.slice(k.valueStart, end).trim().replace(/,\s*$/, '');
+      const raw = src.slice(k.valueStart, end).trim().replace(/,\s*$/, '');
       if (/^[[{"]/.test(raw) || /^(true|false|null|-?\d)/.test(raw)) {
         out += `"${k.key}": ${raw}`;
       } else if (!raw) {

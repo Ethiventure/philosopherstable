@@ -1,16 +1,16 @@
 # Graph Report - philosopherstable  (2026-09-12)
 
 ## Corpus Check
-- 63 files · ~56,570 words
+- 64 files · ~56,866 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 411 nodes · 486 edges · 48 communities (29 shown, 16 thin omitted)
+- 414 nodes · 489 edges · 49 communities (29 shown, 17 thin omitted)
 - Extraction: 100% EXTRACTED · 0% INFERRED · 0% AMBIGUOUS
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `d0f64ad7`
+- Built from commit: `7e2affa7`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -60,6 +60,7 @@
 - weil.ts
 - opencode.json
 - verify.ts
+- dev-keepalive.sh
 
 ## God Nodes (most connected - your core abstractions)
 1. `compilerOptions` - 18 edges
@@ -82,7 +83,7 @@
 ## Import Cycles
 - None detected.
 
-## Communities (48 total, 16 thin omitted)
+## Communities (49 total, 17 thin omitted)
 
 ### Community 0 - "package.json"
 Cohesion: 0.06
@@ -203,7 +204,7 @@ Nodes (4): extractQuotes(), normalise(), QuoteCheck, verifyQuotes()
 ## Knowledge Gaps
 - **194 isolated node(s):** `$schema`, `plugin`, `DEFAULT_MODELS`, `usageDay`, `perIp` (+189 more)
   These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 235 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
-- **16 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
+- **17 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
