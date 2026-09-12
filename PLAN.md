@@ -9,7 +9,9 @@ Phases are ordered by dependency; each should leave the app building.
 
 ### API keys: shared default, BYOK fallback
 Three providers (`CabinetSettings.provider` in `src/lib/settings.ts`):
-`shared` (default, no key needed) / `gemini` / `openrouter`.
+`shared` (default, no key needed) / `openrouter` (free cycle or paid pinned
+model) / `groq`, `deepinfra`, `together` (visitor BYOK keys). No Gemini
+anywhere (retired for new keys); no OpenAI models, ever.
 
 - **Shared** = the cabinet's own Groq key, held ONLY in `netlify/functions/cabinet.js`
   via the `GROQ_API_KEY` env var set in the Netlify dashboard. The browser calls
@@ -22,19 +24,20 @@ Three providers (`CabinetSettings.provider` in `src/lib/settings.ts`):
   console.groq.com + Netlify env, no code change. Local dev serves functions via
   `netlify dev` (plain `npm run dev` has no functions → shared shows a friendly
   unreachable note, BYOK still works).
-- **Gemini direct / OpenRouter free cycle** = visitor's own key, `localStorage`
-  only, sent straight to that provider. Privacy: OpenRouter free models may log
-  prompts for training — the Settings panel says so.
+- **Visitor BYOK** (OpenRouter / Groq / DeepInfra / Together) = the visitor's own
+  key, `localStorage` only, sent straight to that provider. Privacy: OpenRouter
+  free models may log prompts for training — the Settings panel says so per
+  destination.
 
 ### API key: Bring-Your-Own-Key (BYOK) for personal providers
 Deploy target is public (Netlify / Bolt) with no login. Therefore:
 
-- **Never** put a Gemini key in `.env` for a Vite app — any `VITE_*` variable is inlined
+- **Never** put any provider key in `.env` for a Vite app — any `VITE_*` variable is inlined
   into the shipped JavaScript and is readable by every visitor. Committing it to GitHub
   makes it permanent.
-- Each user pastes their own Gemini key into **Settings → API key**. It is stored in
-  `localStorage` only and sent only to `generativelanguage.googleapis.com`.
-  Nothing is logged or collected. The panel says so in plain language.
+- Each user pastes their own key into **Settings → Key** (per-provider field). It is stored in
+  `localStorage` only and sent only to that provider's API.
+  Nothing is logged or collected. The panel says so in plain language per destination.
 - Optional later: a Supabase Edge Function holding *your* key behind a small daily quota,
   so first-time visitors can try one session without a key.
 
@@ -59,17 +62,18 @@ rotation stays tight:
 
 | Section | Normal | Long form |
 |---|---|---|
-| Determinate negation | 40 | 110 |
-| Substantive incorporation | 20 | 55 |
-| Reformulation | 90 | 235 |
-| **Total per turn (the cap)** | **~150** | **~400** |
-| Opening turn (seat 1, pass 1) | 90 | 240 |
+| Determinate negation | 30 | 75 |
+| Substantive incorporation | 15 | 40 |
+| Reformulation | 55 | 165 |
+| **Total per turn (the cap)** | **~100** | **~280** |
+| Opening turn (seat 1, pass 1) | 60 | 160 |
 
 Per-section counts are guidance for shaping the answer; the total is what
-is enforced. All four parts must be present.
+is enforced. All three parts must be present. A turn is a spoken
+intervention, not an essay.
 
 `maxOutputTokens: 300` normal / `600` long form (JSON wrapper needs headroom).
-A full 10 × 3 session ≈ 4.3k words normal — roughly a 18-minute read.
+A full 10 × 3 session ≈ 3k words normal — roughly a 12-minute read.
 
 ### Embeddings (Phase 5)
 `test_embeddings.py` uses local Ollama `nomic-embed-text` (768 dims); the schema is
@@ -111,19 +115,23 @@ The drag-drop → toggle change left `App.tsx` broken.
 ## Phase 2 — Gemini + dialectical engine (replaces `makeMockIntervention`)
 
 **2a Settings** — `src/lib/settings.ts` (localStorage): provider
-(`shared` default / `gemini` / `openrouter` free cycle or paid pinned model /
-`groq` free BYOK (same models as shared),
-keys per provider, `model` (`gemini-3.6-flash` quality / `gemini-3.5-flash-lite`
-max-free-tier), `groqModel` (qwen3.8-27b default, free tier — no OpenAI models anywhere),
-`economy` (`full` / `efficient` — efficient caps fed-back PREV text at ~1200
-chars; personas are never trimmed), `intensity`, `longForm`.
-Settings drawer: key input (password-style), Test key, Clear, privacy statement,
-link to Google AI Studio. No key → Begin disabled with explanation.
+(`shared` default / `openrouter` free cycle or paid pinned model / `groq`,
+`deepinfra`, `together` BYOK keys),
+keys per provider, `groqModel` (qwen3.8-27b default, free tier), `economy`
+(`full` / `efficient` — efficient caps fed-back PREV text at ~1200 chars;
+personas are never trimmed), `grounding` (default off — experimental source
+passages, undo by deleting `lib/extract.ts` + `functions/extract.js` + flag),
+`intensity`, `longForm`. No Gemini anywhere (retired for new keys; stored
+'gemini' migrates to shared). No OpenAI models, ever.
+Settings drawer: provider radio, key input (password-style) per provider, Test
+key, Clear, per-destination privacy note. No key → Begin disabled with explanation.
 
-**2b Clients** — `src/lib/gemini.ts`: `fetch` to `generateContent` with
-`responseMimeType: 'application/json'` + `responseSchema` + `thinkingLevel: 'low'`;
-one retry on 429/5xx; errors carry machine-readable codes (`quota`/`auth`/`model`/
-`network`/`server`/`parse`). No SDK.
+**2b Clients** — `src/lib/llm.ts` is the shared error/parse hub
+(`LlmError` codes, `parseTurnOutput` with provider label plus layered salvage —
+brace-slice, then bare-value requoting for models that emit unquoted strings,
+then halt; full raw text goes to console on failure, 140-char snippet in the
+panel, `REPAIR_SUFFIX`,
+`retryAfterMs`); its Gemini provider client is retired with the provider.
 `src/lib/openrouter.ts`: OpenAI-compatible `chat/completions` (no `response_format` —
 most free models can't do it; prompt-instructed JSON + salvage instead), cycling an
 ordered free-model list with `openrouter/free` as last-resort fallback; unusable
@@ -132,11 +140,14 @@ panel (resume / switch provider / usage link).
 `src/lib/shared.ts` + `netlify/functions/cabinet.js`: shared Groq turns through the
 server-side proxy (see Decisions). Client maps function errors to the same codes.
 429s are waited out, not halted on: each client parses Groq's "try again in Ns"
-(`retryAfterMs` in `gemini.ts`) and retries the turn up to 3×. NOTE: Netlify free
+(`retryAfterMs` in `llm.ts`) and retries the turn up to 3×. NOTE: Netlify free
 functions time out at 10s — slow Groq turns will die on deploy; client resume
 covers it, but watch this if shared sessions stall live.
 `src/lib/groq.ts`: visitor Groq direct, free tier (OpenAI-compatible, no response_format —
 prompt-instructed JSON plus salvage, same lesson as OpenRouter).
+`src/lib/deepinfra.ts` / `src/lib/together.ts`: same OpenAI-compatible shape,
+pinned models (`DEEPINFRA_MODEL`, `TOGETHER_MODEL` — user-supplied IDs, verify on
+404), single-model retry + repair. Full history in `docs/models-tried.md`.
 
 Token discipline (voices never trimmed): only the active speaker's persona is sent
 per turn; `efficient` economy caps PREV feedback; instruction boilerplate deduped;
@@ -149,17 +160,21 @@ modal and Cabinet tab say so.
 |---|---|---|
 | Opening | Pass 1, seat 1 | Answer the question directly in own framework; no reference to other thinkers; follow characteristic movement. |
 | Immanent critique | All other turns, passes 1–2 | Cuts in on PREV's closing lines: (1) Determinate negation using PREV's own premises; (2) Substantive incorporation; (3) Reformulation from own framework, ending on the live edge. No handoff, no naming NEXT. |
-| Reconstruction | Pass 3 | Same three parts; (3) becomes *what institutions / practices / forms of collective power follow now the contradictions are visible*. Final seat returns the question, as it now stands, to the user. |
+| Reconstruction | Pass 3, rotation REVERSED (each seat answers the answer just given from its left) | Same three parts; (3) becomes *what institutions / practices / forms of collective power follow now the contradictions are visible*. Must invoke ≥1 surveyed idea from another seat by name. Final seat returns the question, as it now stands, to the user. |
 
 PREV crosses pass boundaries: pass 2 seat 1 critiques pass 1's last seat.
 
-**2d Context per call (pure, except own priors)**
+**2d Context per call (pure, except own priors; pass 3 gets a survey)**
 1. User's question, verbatim.
 2. Full text of the previous intervention (PREV) — the only other voice
-   the speaker ever sees.
+   the speaker ever sees (passes 1–2).
 3. Speaker's own prior turns (one-line summaries): *"Do not restate your prior
    position. Name it in one clause and show how it has shifted."* Anti-
    self-repetition only; no other history is passed.
+4. Pass 3 only: every other seat's one-line determinations, labelled by name
+   (`othersPriorLines`) — the final rotation may invoke the most striking ideas.
+5. Grounding block, only when the experimental `grounding` toggle is on:
+   top keyword passages from the speaker's own HTML source, cited by footnote.
 4. System prompt = identity + profile + style essence (at chosen intensity) +
    universal mechanisms + anti-waffle rules + banned-phrase list + word budgets.
 5. ~~**Ledger** (one line per claim/concept, fed back each call) — **DROPPED
@@ -175,14 +190,25 @@ PREV crosses pass boundaries: pass 2 seat 1 critiques pass 1's last seat.
 Stored as `Intervention.sections`; `response_text` kept as a joined string.
 
 **2f Orchestration** — async loop over passes × seats replaces `setInterval`;
-pause flag checked between turns; "X is thinking…" state.
+pause flag checked between turns; "X is thinking…" state. After the final seat,
+`runCoda` fires once: reads ONLY the question + every seat's one-line
+determination, writes margin notes in a fixed Gen-Z PPE-student voice
+(`CODA_SYSTEM` + `buildCodaPrompt`), stored as separate `coda` state (never an
+Intervention — seats/passes/deck math untouched). Failure is silent; the retry
+button re-runs it.
+
+**References, not citations** — `src/lib/footnotes.ts`: model-claimed work labels
+resolve display-side to stable manifest numbers (`Read similar: 3, 9`; numbers
+are file order + 1, never drawer order). Unmatched labels render once as plain
+unverified text. Nothing enters prompts. `npm run check-links [--fix]` re-verifies
+URLs; broken keeps the reference with a sarcastic `link_note`, never deletes.
 
 ## Phase 3 — Export rewrite
 Each intervention once, as continuous prose (no formal section headings — the
 dialectical movement stays in the argument, not in labels). Never re-print the previous turn.
-Append the per-turn `new_contribution` list (display only — the fed-back
-Ledger is a dropped experiment, see 2d) and the final formulation of the
-question. `.md` and `.txt`.
+No inline citations, read-more lines, or footnote markers in the flow. Append:
+Margin Notes (if written), then a READING LIST of cited manifest entries
+(`[n] title — author — url`, numbers stable). `.md` and `.txt`.
 
 ## Phase 4 — Accessibility & display
 `src/lib/preferences.ts`: font scale, line height, font family (serif / sans /
@@ -200,6 +226,12 @@ tokens with section labels, embed with Gemini @768). **Only `PUBLIC_DOMAIN` sour
 get full text** — Fisher, Deleuze, Bookchin stay metadata-only with unverified
 badges. Query time: embed question + previous turn, `match_chunks(k=4)`, inject,
 cite by label. RLS: corpus tables read-only for anon.
+Retrieval contract (no vectors needed for the interim): for the likely most
+relevant linked work, never ingest/embed whole documents — extract/search text on
+demand (headings, contents, index terms, keyword/BM25), read only the top ~2
+passages plus a little surrounding context, answer strictly from them with
+page/section citations, never expand to adjacent pages on ambiguity. The current
+`netlify/functions/extract.js` + `grounding` toggle is the working prototype.
 
 ## Phase 6 — Richer philosopher information
 Per file: `biography`, `key_works`, `why_this_seat` (hand-off line). Profile modal

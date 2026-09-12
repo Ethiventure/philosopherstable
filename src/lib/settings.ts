@@ -1,21 +1,5 @@
 import type { StyleIntensity } from '@/types';
 
-export type GeminiModel = 'gemini-3.6-flash' | 'gemini-3.5-flash-lite';
-
-export const GEMINI_MODELS: { id: GeminiModel; label: string; hint: string }[] = [
-  { id: 'gemini-3.6-flash', label: 'gemini-3.6-flash', hint: 'Better quality, recommended default' },
-  { id: 'gemini-3.5-flash-lite', label: 'gemini-3.5-flash-lite', hint: 'Maxes the free tier, lighter prose' },
-];
-
-const LEGACY_MODEL_MAP: Record<string, GeminiModel> = {
-  'gemini-2.5-flash': 'gemini-3.6-flash',
-  'gemini-2.5-pro': 'gemini-3.6-flash',
-  'gemini-2.0-flash': 'gemini-3.6-flash',
-  'gemini-3.8-flash': 'gemini-3.6-flash',
-};
-
-export type LlmProvider = 'shared' | 'gemini' | 'openrouter' | 'groq';
-
 export type GroqModel = 'qwen/qwen3.8-27b' | 'qwen/qwen3.6-27b';
 
 export const GROQ_MODELS: { id: GroqModel; label: string; hint: string }[] = [
@@ -25,9 +9,9 @@ export const GROQ_MODELS: { id: GroqModel; label: string; hint: string }[] = [
 
 export type TurnEconomy = 'full' | 'efficient';
 
+export type LlmProvider = 'shared' | 'openrouter' | 'groq' | 'deepinfra' | 'together';
+
 export interface CabinetSettings {
-  geminiApiKey: string;
-  model: GeminiModel;
   intensity: StyleIntensity;
   longForm: boolean;
   provider: LlmProvider;
@@ -36,14 +20,18 @@ export interface CabinetSettings {
   openRouterModel: string;
   groqApiKey: string;
   groqModel: GroqModel;
+  deepInfraApiKey: string;
+  togetherApiKey: string;
   economy: TurnEconomy;
+  /** Experimental source grounding (Phase 2, item ii): fetch + keyword-extract
+   * HTML source pages server-side and inject top passages. Default off;
+   * delete lib/extract.ts + functions/extract.js + this flag to fully undo. */
+  grounding: boolean;
 }
 
 const STORAGE_KEY = 'dialectical-cabinet:settings:v1';
 
 export const DEFAULT_SETTINGS: CabinetSettings = {
-  geminiApiKey: '',
-  model: 'gemini-3.6-flash',
   intensity: 'medium',
   longForm: false,
   provider: 'shared',
@@ -52,7 +40,10 @@ export const DEFAULT_SETTINGS: CabinetSettings = {
   openRouterModel: 'deepseek/deepseek-v4.1-flash',
   groqApiKey: '',
   groqModel: 'qwen/qwen3.8-27b',
+  deepInfraApiKey: '',
+  togetherApiKey: '',
   economy: 'full',
+  grounding: false,
 };
 
 export function loadSettings(): CabinetSettings {
@@ -60,23 +51,25 @@ export function loadSettings(): CabinetSettings {
     const raw = localStorage.getItem(STORAGE_KEY);
     if (!raw) return DEFAULT_SETTINGS;
     const parsed = JSON.parse(raw) as Partial<CabinetSettings>;
-    const rawModel = typeof parsed.model === 'string' ? parsed.model : '';
     return {
-      geminiApiKey: typeof parsed.geminiApiKey === 'string' ? parsed.geminiApiKey : '',
-      // Migrate stored 2.x IDs (retired, 404 for new keys) to their 3.x successors.
-      model: (GEMINI_MODELS.some((m) => m.id === rawModel) ? rawModel : (LEGACY_MODEL_MAP[rawModel] ?? 'gemini-3.6-flash')) as GeminiModel,
       intensity: parsed.intensity === 'low' || parsed.intensity === 'high' ? parsed.intensity : 'medium',
       longForm: parsed.longForm === true,
-      provider: parsed.provider === 'gemini' || parsed.provider === 'openrouter' || parsed.provider === 'groq' ? parsed.provider : 'shared',
+      // Gemini removed (retired for new keys, 404): stored 'gemini' migrates to shared.
+      provider: parsed.provider === 'openrouter' || parsed.provider === 'groq' || parsed.provider === 'deepinfra' || parsed.provider === 'together'
+        ? parsed.provider
+        : 'shared',
       openRouterApiKey: typeof parsed.openRouterApiKey === 'string' ? parsed.openRouterApiKey : '',
       openRouterMode: parsed.openRouterMode === 'paid' ? 'paid' : 'free',
       groqApiKey: typeof parsed.groqApiKey === 'string' ? parsed.groqApiKey : '',
       groqModel: GROQ_MODELS.some((m) => m.id === parsed.groqModel) ? (parsed.groqModel as GroqModel) : 'qwen/qwen3.8-27b',
+      deepInfraApiKey: typeof parsed.deepInfraApiKey === 'string' ? parsed.deepInfraApiKey : '',
+      togetherApiKey: typeof parsed.togetherApiKey === 'string' ? parsed.togetherApiKey : '',
       // No OpenAI models, ever: stored openai/* IDs migrate to the default.
       openRouterModel: typeof parsed.openRouterModel === 'string' && parsed.openRouterModel.trim() && !parsed.openRouterModel.trim().startsWith('openai/')
         ? parsed.openRouterModel.trim().slice(0, 120)
         : 'deepseek/deepseek-v4.1-flash',
       economy: parsed.economy === 'efficient' ? 'efficient' : 'full',
+      grounding: parsed.grounding === true,
     };
   } catch {
     return DEFAULT_SETTINGS;
@@ -92,7 +85,7 @@ export function saveSettings(settings: CabinetSettings): void {
 }
 
 export function clearApiKey(): CabinetSettings {
-  const next = { ...loadSettings(), geminiApiKey: '' };
+  const next = { ...loadSettings(), openRouterApiKey: '', groqApiKey: '', deepInfraApiKey: '', togetherApiKey: '' };
   saveSettings(next);
   return next;
 }

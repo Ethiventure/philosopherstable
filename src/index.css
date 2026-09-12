@@ -672,3 +672,16 @@ body {
 .reduce-motion .manicule-next:hover {
   transform: none;
 }
+
+/* Footnote landing: the referenced manifest entry flashes once. */
+.ref-flash {
+  animation: ref-flash 2.2s ease-out;
+}
+@keyframes ref-flash {
+  0%, 40% { background-color: color-mix(in srgb, var(--color-gold) 28%, transparent); }
+  100% { background-color: transparent; }
+}
+.reduce-motion .ref-flash {
+  animation: none;
+  outline: 2px solid var(--color-gold);
+}

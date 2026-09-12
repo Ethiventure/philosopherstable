@@ -58,10 +58,8 @@ export const ANTI_WAFFLE_RULES = [
   'NO throat-clearing, no announcing what you are about to do, no closing summaries.',
   'EVERY TURN MUST DO AT LEAST ONE: challenge an argument, refine an idea, introduce a concept, test evidence, compare sources, or reframe the problem.',
   'ANTI-SUMMARY: do not summarise the previous speaker or the discussion sequentially. Analyse and debate. Name the specific source or work you are drawing on when you use one.',
-  'ANTI-REPETITION: you see ONLY the question, your immediate predecessor, and your own prior turns. Name PREV’s claim in a clause; never re-explain it. Your turn must add something new.',
 
   'SELF-REPETITION: do not restate your own earlier position. Name it in one clause and show how it has shifted under pressure.',
-  'ADDRESS BY NAME: when you negate, name the philosopher and the exact claim. When you pass the contradiction on, name the next philosopher and demand they address it.',
 
   'NO GENERIC VERDICT VERBS: never "errs", "fails to see", "is mistaken", "overlooks", "makes the mistake of" or their kin. Every author has their own critical machinery in their style essence — sublation, forensic specimen-analysis, rhizome against arborescence, cancelled futures, tectological organisation — use yours.',
   'VARY YOUR ENTRY: do not open every turn by naming PREV in the first clause. Enter through your concrete starting point (the commodity, the apparatus, the refrain, the institution at issue) and let the negation emerge from the analysis. No two of your turns should share an opening move.',

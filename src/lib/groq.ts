@@ -1,4 +1,4 @@
-import { GeminiError, REPAIR_SUFFIX, parseTurnOutput, retryAfterMs, type TurnOutput } from '@/lib/gemini';
+import { LlmError, REPAIR_SUFFIX, parseTurnOutput, retryAfterMs, type TurnOutput } from '@/lib/llm';
 import type { GroqModel } from '@/lib/settings';
 
 /**
@@ -20,9 +20,9 @@ interface GroqTurnArgs {
   longForm: boolean;
 }
 
-function groqError(status: number, detail: string, model: string): GeminiError {
+function groqError(status: number, detail: string, model: string): LlmError {
   if (status === 401) {
-    return new GeminiError(
+    return new LlmError(
       'Groq rejected the API key (401). Check it in Settings → Key (console.groq.com → API Keys) and try Test key again.' +
         (detail ? ` Detail: ${detail}` : ''),
       false,
@@ -30,7 +30,7 @@ function groqError(status: number, detail: string, model: string): GeminiError {
     );
   }
   if (/quota|rate.?limit|exhausted|too many requests|tokens per|limit exceeded|daily limit|spend/i.test(detail) || status === 429) {
-    return new GeminiError(
+    return new LlmError(
       `Groq rate limit on ${model}. Paid tiers are per-minute caps — wait a minute and Resume the cabinet.` +
         (detail ? ` Detail: ${detail}` : ''),
       true,
@@ -38,7 +38,7 @@ function groqError(status: number, detail: string, model: string): GeminiError {
     );
   }
   if (status === 404) {
-    return new GeminiError(
+    return new LlmError(
       `Groq has no such model (${model}) — the catalog churns. Pick a current one in Settings → Key.` +
         (detail ? ` Detail: ${detail}` : ''),
       false,
@@ -46,9 +46,9 @@ function groqError(status: number, detail: string, model: string): GeminiError {
     );
   }
   if (status >= 500) {
-    return new GeminiError(`Groq server error on ${model} (${status}). Resume the cabinet to retry the turn.`, true, 'server');
+    return new LlmError(`Groq server error on ${model} (${status}). Resume the cabinet to retry the turn.`, true, 'server');
   }
-  return new GeminiError(
+  return new LlmError(
     `Groq request failed on ${model} (${status}).${detail ? ` Detail: ${detail}` : ''}`,
     false,
     'unknown',
@@ -86,7 +86,7 @@ export async function generateTurnGroq({ apiKey, model, systemPrompt, userMessag
   });
 
   const post = async (msg: string): Promise<string> => {
-    let lastError: GeminiError | null = null;
+    let lastError: LlmError | null = null;
     for (let attempt = 0; attempt < 3; attempt += 1) {
       let response: Response;
       try {
@@ -98,10 +98,10 @@ export async function generateTurnGroq({ apiKey, model, systemPrompt, userMessag
         });
       } catch (error) {
         if (error instanceof DOMException && error.name === 'TimeoutError') {
-          lastError = new GeminiError(`Groq timed out on ${model}. Resume the cabinet to retry the turn.`, true, 'server');
+          lastError = new LlmError(`Groq timed out on ${model}. Resume the cabinet to retry the turn.`, true, 'server');
           continue;
         }
-        throw new GeminiError('Network error reaching Groq. Check the connection and Resume the cabinet.', true, 'network');
+        throw new LlmError('Network error reaching Groq. Check the connection and Resume the cabinet.', true, 'network');
       }
       if (!response.ok) {
         const detail = await extractDetail(response);
@@ -117,22 +117,22 @@ export async function generateTurnGroq({ apiKey, model, systemPrompt, userMessag
       try {
         data = (await response.json()) as typeof data;
       } catch {
-        throw new GeminiError(`Groq returned non-JSON on ${model}. Resume the cabinet to retry the turn.`, true, 'server');
+        throw new LlmError(`Groq returned non-JSON on ${model}. Resume the cabinet to retry the turn.`, true, 'server');
       }
       const text = data.choices?.[0]?.message?.content ?? '';
       if (!text.trim()) {
-        throw new GeminiError(`Groq returned an empty response on ${model}. Resume the cabinet to retry the turn.`, true, 'server');
+        throw new LlmError(`Groq returned an empty response on ${model}. Resume the cabinet to retry the turn.`, true, 'server');
       }
       return text;
     }
-    throw lastError ?? new GeminiError('Groq request failed. Resume the cabinet to retry the turn.', true, 'unknown');
+    throw lastError ?? new LlmError('Groq request failed. Resume the cabinet to retry the turn.', true, 'unknown');
   };
 
   const text = await post(userMessage);
   try {
     return parseTurnOutput(stripFences(text), 'Groq');
   } catch (error) {
-    if (!(error instanceof GeminiError) || error.code !== 'parse') throw error;
+    if (!(error instanceof LlmError) || error.code !== 'parse') throw error;
     return parseTurnOutput(stripFences(await post(userMessage + REPAIR_SUFFIX)), 'Groq');
   }
 }

@@ -1,4 +1,4 @@
-import { GeminiError, REPAIR_SUFFIX, parseTurnOutput, retryAfterMs, type TurnOutput } from '@/lib/gemini';
+import { LlmError, REPAIR_SUFFIX, parseTurnOutput, retryAfterMs, type TurnOutput } from '@/lib/llm';
 
 /**
  * OpenRouter provider (Phase 2b-ii). Same cabinet contract as the Gemini
@@ -93,9 +93,9 @@ function isAvailabilityDetail(detail: string): boolean {
   return /only available|agentic harness|\bharness\b|not available|disabled|decommissioned|retired|unsupported|no longer|taken down|removed/i.test(detail);
 }
 
-function openRouterError(status: number, detail: string, model: string): GeminiError {
+function openRouterError(status: number, detail: string, model: string, tag = 'Free model'): LlmError {
   if (status === 401) {
-    return new GeminiError(
+    return new LlmError(
       'OpenRouter rejected the API key (401). Check it in Settings → Key (openrouter.ai → Keys) and try Test key again.' +
         (detail ? ` Detail: ${detail}` : ''),
       false,
@@ -105,7 +105,7 @@ function openRouterError(status: number, detail: string, model: string): GeminiE
   // Quota wording wins over status: Google/OpenRouter report exhausted free
   // tiers as 400/402/403/429 alike, and those messages often mention "key".
   if (/quota|rate.?limit|exhausted|credits?|balance|too many requests|limit exceeded|daily limit|spend/i.test(detail)) {
-    return new GeminiError(
+    return new LlmError(
       `OpenRouter quota/credits issue on ${model}. Free models are capped per day — the cycle will try the next one.` +
         (detail ? ` Detail: ${detail}` : ''),
       true,
@@ -117,14 +117,14 @@ function openRouterError(status: number, detail: string, model: string): GeminiE
     // region-gated, retired) — a property of the model, not the key — so the
     // cycle should move on rather than blame the key.
     if (isAvailabilityDetail(detail) || !/auth|token|credential|permission|forbidden/i.test(detail)) {
-      return new GeminiError(
+      return new LlmError(
         `${tag} ${model} refused this key (403) — restricted or retired. Trying the next one.` +
           (detail ? ` Detail: ${detail}` : ''),
         true,
         'model',
       );
     }
-    return new GeminiError(
+    return new LlmError(
       'OpenRouter refused the request (403). Re-check the key in Settings → Key and try Test key again.' +
         (detail ? ` Detail: ${detail}` : ''),
       false,
@@ -135,16 +135,16 @@ function openRouterError(status: number, detail: string, model: string): GeminiE
     // Generic provider hiccup ("Provider returned error") — retryable, not a key verdict.
     // Happens on flaky free models; the next model usually works.
     if (/provider returned error|provider error/i.test(detail) || !detail.trim()) {
-      return new GeminiError(`${tag} ${model} had a provider error (400). Trying the next one.`, true, 'server');
+      return new LlmError(`${tag} ${model} had a provider error (400). Trying the next one.`, true, 'server');
     }
-    return new GeminiError(
+    return new LlmError(
       `OpenRouter request failed on ${model} (400).${detail ? ` Detail: ${detail}` : ''} Trying the next one.`,
       true,
       'server',
     );
   }
   if (status === 402) {
-    return new GeminiError(
+    return new LlmError(
       `OpenRouter needs credits for ${model} (402). Free models shouldn't bill — the cycle will try the next one.` +
         (detail ? ` Detail: ${detail}` : ''),
       true,
@@ -152,15 +152,15 @@ function openRouterError(status: number, detail: string, model: string): GeminiE
     );
   }
   if (status === 429) {
-    return new GeminiError(`OpenRouter rate limit on ${model} (429). Trying the next free model.`, true, 'quota');
+    return new LlmError(`OpenRouter rate limit on ${model} (429). Trying the next free model.`, true, 'quota');
   }
   if (status === 404) {
-    return new GeminiError(`${tag} ${model} is gone (404) — the list rotates. Trying the next one.`, true, 'model');
+    return new LlmError(`${tag} ${model} is gone (404) — the list rotates. Trying the next one.`, true, 'model');
   }
   if (status >= 500) {
-    return new GeminiError(`OpenRouter/model error on ${model} (${status}). Trying the next free model.`, true, 'server');
+    return new LlmError(`OpenRouter/model error on ${model} (${status}). Trying the next free model.`, true, 'server');
   }
-  return new GeminiError(
+  return new LlmError(
     `OpenRouter request failed on ${model} (${status}).${detail ? ` Detail: ${detail}` : ''}`,
     false,
     'unknown',
@@ -220,9 +220,9 @@ async function attemptModel(
       if (error instanceof DOMException && error.name === 'TimeoutError') {
         // Cold free models hang — fail over to the next one immediately
         // rather than stalling the cabinet for another minute.
-        throw new GeminiError(`${tag} ${model} timed out. Trying the next one.`, true, 'server');
+        throw new LlmError(`${tag} ${model} timed out. Trying the next one.`, true, 'server');
       }
-      throw new GeminiError(
+      throw new LlmError(
         'Network error reaching OpenRouter. Check the connection and Resume the cabinet.',
         true,
         'network',
@@ -236,7 +236,7 @@ async function attemptModel(
       continue;
     }
     if (!response.ok) {
-      throw openRouterError(response.status, await extractDetail(response), model);
+      throw openRouterError(response.status, await extractDetail(response), model, tag);
     }
     let data: {
       choices?: {
@@ -248,10 +248,10 @@ async function attemptModel(
     try {
       data = (await response.json()) as typeof data;
     } catch {
-      throw new GeminiError(`${tag} ${model} returned non-JSON. Trying the next one.`, true, 'server');
+      throw new LlmError(`${tag} ${model} returned non-JSON. Trying the next one.`, true, 'server');
     }
     if (data.error?.message) {
-      throw openRouterError(400, data.error.message, model);
+      throw openRouterError(400, data.error.message, model, tag);
     }
     const choice = data.choices?.[0];
     // OpenRouter may put reasoning in separate fields; content is still the answer.
@@ -261,7 +261,7 @@ async function attemptModel(
       // Capture a snippet for debugging — many free models return only reasoning when
       // they can't follow the JSON instruction.
       const snippet = JSON.stringify(choice ?? {}).slice(0, 300);
-      throw new GeminiError(
+      throw new LlmError(
         `${tag} ${model} returned an empty response (no content). Snippet: ${snippet} — trying the next one.`,
         true,
         'server',
@@ -271,11 +271,11 @@ async function attemptModel(
       return parseTurnOutput(stripFences(text), 'OpenRouter');
     } catch (error) {
       // Model can't do the required JSON — a property of the model, so cycle on.
-      if (error instanceof GeminiError) throw error;
-      throw new GeminiError(`${tag} ${model} broke the JSON shape. Trying the next one.`, true, 'parse');
+      if (error instanceof LlmError) throw error;
+      throw new LlmError(`${tag} ${model} broke the JSON shape. Trying the next one.`, true, 'parse');
     }
   }
-  throw new GeminiError(`${tag} ${model} timed out twice. Trying the next one.`, true, 'server');
+  throw new LlmError(`${tag} ${model} timed out twice. Trying the next one.`, true, 'server');
 }
 
 function statusIsRetryableModel(status: number): boolean {
@@ -283,7 +283,7 @@ function statusIsRetryableModel(status: number): boolean {
 }
 
 function isFailFast(error: unknown): boolean {
-  return error instanceof GeminiError && (error.code === 'auth' || (error.code === 'unknown' && !error.retryable));
+  return error instanceof LlmError && (error.code === 'auth' || (error.code === 'unknown' && !error.retryable));
 }
 
 export async function generateTurnOpenRouter({ apiKey, systemPrompt, userMessage, longForm, mode = 'free', modelId = '' }: OpenRouterTurnArgs): Promise<TurnOutput> {
@@ -312,7 +312,7 @@ export async function generateTurnOpenRouter({ apiKey, systemPrompt, userMessage
       return await attemptModel(paidId, apiKey, body, 'Paid model');
     } catch (error) {
       if (isFailFast(error)) throw error;
-      if (error instanceof GeminiError && error.code === 'parse') {
+      if (error instanceof LlmError && error.code === 'parse') {
         return attemptModel(paidId, apiKey, {
           ...body,
           messages: [
@@ -321,13 +321,13 @@ export async function generateTurnOpenRouter({ apiKey, systemPrompt, userMessage
           ],
         }, 'Paid model');
       }
-      if (error instanceof GeminiError && error.code === 'server') {
+      if (error instanceof LlmError && error.code === 'server') {
         return attemptModel(paidId, apiKey, body, 'Paid model');
       }
       // Quota on a pinned model means the key's cap or credits, not a dead
       // model — say so plainly instead of the cycle's "trying the next one".
-      if (error instanceof GeminiError && error.code === 'quota') {
-        throw new GeminiError(
+      if (error instanceof LlmError && error.code === 'quota') {
+        throw new LlmError(
           `OpenRouter cap hit on ${paidId} — new credit can take minutes to apply, and keys carry their own daily cap (check it at openrouter.ai/keys). Otherwise add credits at openrouter.ai/settings/credits, wait for the reset, or switch back to Free cycle. Detail: ${error.message}`,
           true,
           'quota',
@@ -337,7 +337,7 @@ export async function generateTurnOpenRouter({ apiKey, systemPrompt, userMessage
     }
   }
   const tried: string[] = [];
-  let lastError: GeminiError | null = null;
+  let lastError: LlmError | null = null;
   for (const model of orderedCycle()) {
     tried.push(model);
     try {
@@ -346,9 +346,9 @@ export async function generateTurnOpenRouter({ apiKey, systemPrompt, userMessage
       return output;
     } catch (error) {
       if (isFailFast(error)) throw error; // bad key etc. — cycling won't help
-      lastError = error instanceof GeminiError
+      lastError = error instanceof LlmError
         ? error
-        : new GeminiError('OpenRouter request failed. Resume the cabinet to retry the turn.', true, 'unknown');
+        : new LlmError('OpenRouter request failed. Resume the cabinet to retry the turn.', true, 'unknown');
     }
   }
   // Every model answered but none produced valid JSON: one repair attempt on
@@ -366,10 +366,10 @@ export async function generateTurnOpenRouter({ apiKey, systemPrompt, userMessage
       return repaired;
     } catch (error) {
       if (isFailFast(error)) throw error;
-      lastError = error instanceof GeminiError ? error : lastError;
+      lastError = error instanceof LlmError ? error : lastError;
     }
   }
-  throw new GeminiError(
+  throw new LlmError(
     `All ${tried.length} free models failed (${tried.join(', ')}). Free IDs rotate — check openrouter.ai/models?max_price=0, or switch back to Gemini direct in Settings → Key. Last error: ${lastError?.message ?? 'unknown'}`,
     true,
     lastError?.code === 'quota' ? 'quota' : 'server',
@@ -425,7 +425,7 @@ export async function testOpenRouterKey(apiKey: string, mode: 'free' | 'paid' = 
         signal: AbortSignal.timeout(60000),
       });
     } catch {
-      throw new GeminiError('Network error reaching OpenRouter. Check the connection and try again.', true, 'network');
+      throw new LlmError('Network error reaching OpenRouter. Check the connection and try again.', true, 'network');
     }
     if (response.status === 401) {
       throw openRouterError(401, await extractDetail(response), model);
@@ -439,13 +439,13 @@ export async function testOpenRouterKey(apiKey: string, mode: 'free' | 'paid' = 
     await extractDetail(response).catch(() => '');
   }
   if (saw403 === tried.length && tried.length > 0) {
-    throw new GeminiError(
+    throw new LlmError(
       'Every free model refused this key (403). The key works but nothing free is accessible to it — check openrouter.ai/activity, or use Gemini direct instead.',
       false,
       'auth',
     );
   }
-  throw new GeminiError(
+  throw new LlmError(
     `No free model answered (${tried.join(', ')}). The list rotates — check openrouter.ai/models?max_price=0.`,
     true,
     'server',
