@@ -17,7 +17,7 @@ export const SPINOZA_STYLE: StyleEssence = {
     'Chain sentences through "hence", "consequently" and "it follows".',
     'Nominalise ideas as active forces.',
     'Frame occurrences as necessarily following from existence.',
-    'Use third-person objectivity rather than opinion.',
+    'Argue from the system, never the self: the speaker\'s own argumentative acts ("I grant", "I deny") stay first-person, everything else stays inside the demonstration. Never describe the author in third person ("Spinoza holds") — you ARE the speaker.',
     'Structure paragraphs as Definition → Axiom → Proposition → Demonstration → Scholium, with Q.E.D.-like closure.',
     'Reduce human behaviour to demonstrations of natural laws.',
     'Privilege "clear", "distinct" and "adequate" over "vague" and "confused".',

@@ -31,14 +31,19 @@ import {
   type Philosopher,
   type StyleEssence,
 } from '@/types';
-import { buildTurnInstruction, buildUserMessage, getTurnKind, STRUCTURED_OUTPUT_HINT } from '@/lib/dialectic/prompts';
-import { generateTurn, testApiKey, GeminiError, type GeminiErrorCode, type TurnOutput } from '@/lib/gemini';
-import { loadSettings, saveSettings, type CabinetSettings, type GeminiModel, type GroqModel } from '@/lib/settings';
+import { buildCodaPrompt, buildTurnInstruction, buildUserMessage, CODA_SYSTEM, getTurnKind, STRUCTURED_OUTPUT_HINT } from '@/lib/dialectic/prompts';
+import { LlmError, type LlmErrorCode, type TurnOutput } from '@/lib/llm';
+import { loadSettings, saveSettings, type CabinetSettings, type GroqModel } from '@/lib/settings';
 import { applyDisplay, loadDisplay, saveDisplay } from '@/lib/preferences';
 import { generateTurnGroq, testGroqKey } from '@/lib/groq';
 import { generateTurnShared } from '@/lib/shared';
 import { generateTurnOpenRouter, testOpenRouterKey } from '@/lib/openrouter';
-import { createTtsController, ensureVoices, isTtsSupported, listVoices, type TtsItem, type TtsStatus } from '@/lib/tts';
+import { generateTurnDeepInfra, testDeepInfraKey, DEEPINFRA_MODEL } from '@/lib/deepinfra';
+import { generateTurnTogether, testTogetherKey, TOGETHER_MODEL } from '@/lib/together';
+import { entriesForNumbers, splitLabels } from '@/lib/footnotes';
+import { extractPassages, formatGroundedBlock, groundableSource } from '@/lib/extract';
+import { verifyQuotes } from '@/lib/verify';
+import { createTtsController, defaultVoice, ensureVoices, isTtsSupported, listVoices, type TtsItem, type TtsStatus } from '@/lib/tts';
 
 // "Read more" resolution: the philosopher's most relevant text from the corpus
 // manifest. Entries flagged with link_note (broken link) are skipped unless
@@ -70,6 +75,35 @@ function ReadMore({ philosopherName, onNavigate }: { philosopherName: string; on
     >
       <ExternalLink size={13} /> Read more: {source.title}
     </a>
+  );
+}
+
+/**
+ * Footnote line for a turn: model-claimed work labels resolved to stable
+ * manifest numbers ("Read similar: 3, 9"). Numbers match the [#n] badges in
+ * Further reading and the export Reading List. Unmatched labels render once
+ * as plain unverified text — never numbered, never dropped.
+ */
+function ReadSimilar({ philosopherName, labels, onOpenSources }: { philosopherName: string; labels: string[]; onOpenSources: (n: number) => void }) {
+  const { numbers, unmatched } = splitLabels(philosopherName, labels);
+  if (!numbers.length && !unmatched.length) return null;
+  return (
+    <p className="text-sm italic text-[#465f75]/75 mt-3">
+      {numbers.length > 0 && (
+        <>Read similar: {numbers.map((n, i) => (
+          <span key={n}>
+            <button
+              onClick={() => onOpenSources(n)}
+              className="underline underline-offset-2 decoration-[#8b5254]/40 hover:decoration-[#8b5254] text-[#8b5254]"
+              aria-label={`Open source ${n} in Further reading`}
+            >{n}</button>{i < numbers.length - 1 ? ', ' : ''}
+          </span>
+        ))}</>
+      )}
+      {unmatched.length > 0 && (
+        <span className="text-[#465f75]/60">{numbers.length > 0 ? ' · also claimed: ' : 'Claimed, not in manifest: '}{unmatched.join('; ')}</span>
+      )}
+    </p>
   );
 }
 // Shapes a live Gemini turn into an Intervention. Citations stay unverified
@@ -122,11 +156,48 @@ function App() {
   const [activeAgent, setActiveAgent] = useState(-1);
   const [isRunning, setIsRunning] = useState(false);
   const [interventions, setInterventions] = useState<Intervention[]>([]);
+  const [coda, setCoda] = useState<{ text: string } | null>(null);
+  // Per-turn grounding receipts: what each speaker was actually shown, so its
+  // quotes stay checkable after the fact. Keyed by intervention id.
+  const [groundMap, setGroundMap] = useState<Record<string, { title: string; number: number; passages: string[] }>>({});
+  // Per-turn provenance for the export footer (provider switches mid-session
+  // stay honest). Consecutive duplicates collapse at render time.
+  const provRef = useRef<string[]>([]);
+
+  /** Human-readable "model via key" label, e.g. DeepInfra (Llama 3.3 70B, visitor key). */
+  const provenanceLabel = (snap: CabinetSettings): string => {
+    switch (snap.provider) {
+      case 'shared':
+        return 'Cabinet shared key (server-side Groq)';
+      case 'openrouter':
+        return snap.openRouterMode === 'paid' && snap.openRouterModel.trim()
+          ? `OpenRouter paid ${snap.openRouterModel.trim()} (visitor key)`
+          : 'OpenRouter free cycle (visitor key)';
+      case 'groq':
+        return `Groq ${snap.groqModel} (visitor key)`;
+      case 'deepinfra':
+        return `DeepInfra ${DEEPINFRA_MODEL} (visitor key)`;
+      case 'together':
+        return `Together ${TOGETHER_MODEL} (visitor key)`;
+      default:
+        return 'Unknown provider';
+    }
+  };
   const [selectedIntervention, setSelectedIntervention] = useState<Intervention | null>(null);
   const [selectedPhilosopher, setSelectedPhilosopher] = useState<Philosopher | null>(null);
   const [activeSlugs, setActiveSlugs] = useState<string[]>(DEFAULT_SEATING_ORDER);
   const [showSources, setShowSources] = useState(false);
+  const [sourceTarget, setSourceTarget] = useState<number | null>(null);
+  const openSourcesAt = (n?: number) => {
+    setSourceTarget(n ?? null);
+    setShowSources(true);
+  };
   const [showSettings, setShowSettings] = useState(false);
+  const [settingsTab, setSettingsTab] = useState<'key' | 'cabinet' | 'display'>('key');
+  const openSettings = (tab: 'key' | 'cabinet' | 'display' = 'key') => {
+    setSettingsTab(tab);
+    setShowSettings(true);
+  };
   const [showWelcome, setShowWelcome] = useState(() => {
     try {
       return !localStorage.getItem('dialectical-cabinet:welcomed:v1');
@@ -142,11 +213,12 @@ function App() {
         // ignore
       }
     }
+    ttsRef.current?.stop();
     setShowWelcome(false);
   };
   const [settings, setSettings] = useState<CabinetSettings>(() => loadSettings());
   const [thinkingName, setThinkingName] = useState<string | null>(null);
-  const [runError, setRunError] = useState<{ message: string; code: GeminiErrorCode } | null>(null);
+  const [runError, setRunError] = useState<{ message: string; code: LlmErrorCode } | null>(null);
   const runRef = useRef(0);
   const [display, setDisplay] = useState<AccessibilitySettings>(() => loadDisplay());
   const [ttsStatus, setTtsStatus] = useState<TtsStatus>({ state: 'idle' });
@@ -201,6 +273,18 @@ function App() {
     ttsRef.current?.speak([describeIntervention(item)]);
   };
 
+  // Abridged spoken welcome (~40 seconds): the assembly, the seats, the keys.
+  const WELCOME_SPOKEN = 'How this cabinet works. We are ten thinkers at this table, from Spinoza to Fisher, and none of us may rule it. Each of us speaks only against its predecessor — negating, preserving, reformulating — until your question returns to you, changed, after three passes. To begin: open Settings, choose who gets a seat — five is the lean assembly, ten the full one — press Begin cabinet, and read at your own pace. The shared key carries the first sittings; when it runs dry, bring your own. We never see your keys and want no login — we are only here for the debate.';
+
+  const toggleWelcomeSpeech = () => {
+    if (!ttsSupported) return;
+    if (ttsStatus.state !== 'idle' && ttsStatus.currentId === 'welcome') {
+      ttsRef.current?.stop();
+      return;
+    }
+    ttsRef.current?.speak([{ id: 'welcome', heading: 'How this cabinet works', text: WELCOME_SPOKEN }]);
+  };
+
   const updateSettings = (next: CabinetSettings) => {
     setSettings(next);
     saveSettings(next);
@@ -221,12 +305,20 @@ function App() {
     .filter((p): p is Philosopher => p !== undefined && activeSlugs.includes(p.slug)), [philosophers, activeSlugs]);
   const currentSpeaker = orderedPhilosophers[activeAgent];
   const providerKey = (s: CabinetSettings) =>
-    s.provider === 'shared' ? '' : s.provider === 'openrouter' ? s.openRouterApiKey : s.provider === 'groq' ? s.groqApiKey : s.geminiApiKey;
+    s.provider === 'shared' ? ''
+    : s.provider === 'openrouter' ? s.openRouterApiKey
+    : s.provider === 'groq' ? s.groqApiKey
+    : s.provider === 'deepinfra' ? s.deepInfraApiKey
+    : s.provider === 'together' ? s.togetherApiKey
+    : '';
   const hasKey = settings.provider === 'shared' ? true : providerKey(settings).trim().length > 0;
   const activeKeyLabel = settings.provider === 'shared'
     ? 'Shared cabinet key'
     : settings.provider === 'openrouter' ? 'OpenRouter API key'
-    : settings.provider === 'groq' ? 'Groq API key' : 'Gemini API key';
+    : settings.provider === 'groq' ? 'Groq API key'
+    : settings.provider === 'deepinfra' ? 'DeepInfra API key'
+    : settings.provider === 'together' ? 'Together API key'
+    : 'API key';
   const activeKeyReady = (s: CabinetSettings) =>
     s.provider === 'shared' ? true : providerKey(s).trim().length > 0;
   const isComplete = orderedPhilosophers.length > 0 && interventions.length >= orderedPhilosophers.length * 3;
@@ -273,32 +365,93 @@ function App() {
   })();
 
   // Async loop over passes × seats (Phase 2f). Each turn sees only the
-  // question, PREV's full text, and the speaker's own prior one-liners.
+  // question, PREV's full text, and the speaker's own prior one-liners —
+  // plus, in pass 3 only, every other seat's one-line determinations.
   // The pause flag (runRef) is checked between turns and after each call.
-  const runLoop = async (runId: number, seats: Philosopher[], startCount: number, collected: Intervention[], model: GeminiModel) => {
-    const snap = { ...settings, model };
+  const generateWithProvider = (
+    snap: CabinetSettings,
+    systemPrompt: string,
+    userMessage: string,
+    longForm: boolean,
+  ): Promise<TurnOutput> => {
+    switch (snap.provider) {
+      case 'shared':
+        return generateTurnShared({ systemPrompt, userMessage, longForm });
+      case 'openrouter':
+        return generateTurnOpenRouter({
+          apiKey: snap.openRouterApiKey,
+          systemPrompt,
+          userMessage,
+          longForm,
+          mode: snap.openRouterMode,
+          modelId: snap.openRouterModel,
+        });
+      case 'groq':
+        return generateTurnGroq({
+          apiKey: snap.groqApiKey,
+          model: snap.groqModel,
+          systemPrompt,
+          userMessage,
+          longForm,
+        });
+      case 'deepinfra':
+        return generateTurnDeepInfra({
+          apiKey: snap.deepInfraApiKey,
+          systemPrompt,
+          userMessage,
+          longForm,
+        });
+      case 'together':
+        return generateTurnTogether({
+          apiKey: snap.togetherApiKey,
+          systemPrompt,
+          userMessage,
+          longForm,
+        });
+      default:
+        throw new LlmError('Unknown provider. Pick one in Settings → Key.', false, 'unknown');
+    }
+  };
+
+  const runLoop = async (runId: number, seats: Philosopher[], startCount: number, collected: Intervention[], snap: CabinetSettings) => {
     const total = seats.length * 3;
     for (let n = startCount; n < total; n += 1) {
       if (runRef.current !== runId) return;
       const pass = Math.floor(n / seats.length);
       const index = n % seats.length;
-      const speaker = seats[index];
+      // Pass 3 runs the rotation backwards: each seat answers the answer just
+      // given from its left.
+      const order = pass === 2 ? [...seats].reverse() : seats;
+      const speaker = order[index];
       if (!speaker) continue;
-      const isOpeningTurn = pass === 0 && index === 0;
-      // PREV crosses pass boundaries: pass 2 seat 1 critiques pass 1's last seat.
-      const previousSpeaker = isOpeningTurn
+      const seatPos = seats.indexOf(speaker);
+      const isOpeningTurn = n === 0;
+      // PREV is whoever spoke just before in time — across pass boundaries too.
+      const prevItem = collected[collected.length - 1] ?? null;
+      const previousSpeaker = isOpeningTurn || !prevItem
         ? null
-        : seats[(index - 1 + seats.length) % seats.length] ?? null;
+        : seats.find((s) => s.id === prevItem.philosopher_id) ?? null;
       const isFinalTurn = pass === 2 && index === seats.length - 1;
       const kind = getTurnKind(pass + 1, index + 1);
       const ownPriorLines = collected
         .filter((item) => item.philosopher_id === speaker.id && item.sections?.new_contribution)
         .map((item) => String(item.sections?.new_contribution));
+      // Pass-3 survey: other seats' determinations, labelled by name, so the
+      // final rotation can invoke the most striking ideas. Passes 1–2 stay pure.
+      const othersPriorLines = pass === 2
+        ? collected
+          .filter((item) => item.philosopher_id !== speaker.id && item.sections?.new_contribution)
+          .map((item) => ({
+            name: seats.find((s) => s.id === item.philosopher_id)?.name ?? 'A seat',
+            line: String(item.sections?.new_contribution),
+          }))
+        : [];
       const turnInstruction = buildTurnInstruction({
         kind,
         prevName: previousSpeaker?.name ?? null,
         isFinalSeat: isFinalTurn,
         longForm: snap.longForm,
+        reversed: pass === 2,
       });
       const systemPrompt = renderPersona(speaker, snap.intensity);
       // Efficient economy trims the fed-back predecessor text (the displayed
@@ -308,70 +461,115 @@ function App() {
       const prevText = rawPrev && snap.economy === 'efficient' && rawPrev.length > 1200
         ? `${rawPrev.slice(0, 1200)}\n[…earlier part trimmed for economy; the full text stands in the transcript]`
         : rawPrev;
-      const userMessage = [
+      // Experimental grounding (default off): top keyword passages from the
+      // speaker's own source text, cited by footnote number. Fails soft.
+      // The receipt (what was actually shown) is stored per turn for verification.
+      let groundingBlock = '';
+      let groundingReceipt: { title: string; number: number; passages: string[] } | null = null;
+      if (snap.grounding) {
+        const g = groundableSource(speaker.name);
+        if (g?.source.source_url) {
+          const prevSlice = (collected[collected.length - 1]?.response_text ?? '').slice(0, 300);
+          const passages = await extractPassages(g.source.source_url, `${question} ${prevSlice}`);
+          if (runRef.current !== runId) return;
+          groundingBlock = formatGroundedBlock(g.source.title, g.number, passages);
+          if (passages.length) {
+            groundingReceipt = { title: g.source.title, number: g.number, passages: passages.map((p) => p.text) };
+          }
+        }
+      }
+      const messageParts = [
         buildUserMessage({
           question,
           prevText,
           ownPriorLines,
+          othersPriorLines,
           turnInstruction,
         }),
-        '',
-        STRUCTURED_OUTPUT_HINT,
-      ].join('\n');
+      ];
+      if (groundingBlock) messageParts.push('', groundingBlock);
+      const userMessage = [...messageParts, '', STRUCTURED_OUTPUT_HINT].join('\n');
       setActivePass(pass);
-      setActiveAgent(index);
+      setActiveAgent(seatPos);
       setThinkingName(speaker.full_name);
       let output: TurnOutput;
       try {
-        output = snap.provider === 'shared'
-          ? await generateTurnShared({
-              systemPrompt,
-              userMessage,
-              longForm: snap.longForm,
-            })
-          : snap.provider === 'openrouter'
-          ? await generateTurnOpenRouter({
-              apiKey: snap.openRouterApiKey,
-              systemPrompt,
-              userMessage,
-              longForm: snap.longForm,
-              mode: snap.openRouterMode,
-              modelId: snap.openRouterModel,
-            })
-          : snap.provider === 'groq'
-          ? await generateTurnGroq({
-              apiKey: snap.groqApiKey,
-              model: snap.groqModel,
-              systemPrompt,
-              userMessage,
-              longForm: snap.longForm,
-            })
-          : await generateTurn({
-              apiKey: snap.geminiApiKey,
-              model,
-              systemPrompt,
-              userMessage,
-              longForm: snap.longForm,
-            });
+        output = await generateWithProvider(snap, systemPrompt, userMessage, snap.longForm);
       } catch (error) {
         if (runRef.current !== runId) return;
-        if (error instanceof GeminiError) {
+        if (error instanceof LlmError) {
           setRunError({ message: error.message, code: error.code });
         } else {
-          setRunError({ message: error instanceof Error ? error.message : 'Unknown error from Gemini.', code: 'unknown' });
+          setRunError({ message: error instanceof Error ? error.message : 'Unknown provider error.', code: 'unknown' });
         }
         setIsRunning(false);
         setThinkingName(null);
         return;
       }
       if (runRef.current !== runId) return;
-      collected.push(toIntervention(speaker, pass + 1, index, output, previousSpeaker));
+      const item = toIntervention(speaker, pass + 1, seatPos, output, previousSpeaker);
+      collected.push(item);
+      if (groundingReceipt) {
+        const receipt = groundingReceipt;
+        setGroundMap((m) => ({ ...m, [item.id]: receipt }));
+      }
+      provRef.current.push(provenanceLabel(snap));
       setInterventions([...collected]);
     }
     setThinkingName(null);
     setIsRunning(false);
     setActivePass(2);
-    setActiveAgent(seats.length - 1);
+    // Pass 3 runs backwards, so the final speaker holds seat 0.
+    setActiveAgent(0);
+    // Full session survived: the margin note translates it for a newcomer.
+    if (collected.length >= total) {
+      await runCoda(runId, collected, snap);
+    }
+  };
+
+  /**
+   * Margin-notes coda: one extra call after the final seat, reading ONLY the
+   * question plus every seat's one-line determination. Not a seat, not an
+   * intervention — stored separately so seats/passes/deck math never shifts.
+   * Failure is silent by design (the session stands without it); the retry
+   * button below re-runs it.
+   */
+  const runCoda = async (runId: number, collected: Intervention[], snap: CabinetSettings) => {
+    const lines = collected
+      .filter((item) => item.sections?.new_contribution)
+      .map((item) => ({
+        name: philosophers.find((p) => p.id === item.philosopher_id)?.full_name ?? 'A seat',
+        line: String(item.sections?.new_contribution),
+      }));
+    if (!lines.length) return;
+    setThinkingName('Margin notes');
+    try {
+      const output = await generateWithProvider(snap, CODA_SYSTEM, buildCodaPrompt(question, lines), false);
+      if (runRef.current !== runId) return;
+      setCoda({
+        text: [output.negation, output.incorporation, output.reformulation].join('\n\n'),
+      });
+    } catch {
+      if (runRef.current !== runId) return;
+      setCoda(null);
+    } finally {
+      if (runRef.current === runId) setThinkingName(null);
+    }
+  };
+
+  const runCodaNow = () => {
+    if (!interventions.length || isRunning) return;
+    setRunError(null);
+    void runCoda(runRef.current, [...interventions], settings);
+  };
+
+  const toggleCodaSpeech = () => {
+    if (!ttsSupported || !coda) return;
+    if (ttsStatus.state !== 'idle' && ttsStatus.currentId === 'coda') {
+      ttsRef.current?.stop();
+      return;
+    }
+    ttsRef.current?.speak([{ id: 'coda', heading: 'Margin notes', text: coda.text }]);
   };
 
   const startMeeting = () => {
@@ -379,48 +577,51 @@ function App() {
     const runId = runRef.current + 1;
     runRef.current = runId;
     setInterventions([]);
+    setCoda(null);
+    setGroundMap({});
+    provRef.current = [];
     setRunError(null);
     setActivePass(0);
     setActiveAgent(0);
     setIsRunning(true);
-    void runLoop(runId, [...orderedPhilosophers], 0, [], settings.model);
+    void runLoop(runId, [...orderedPhilosophers], 0, [], settings);
   };
 
-  const resumeMeeting = (modelOverride?: GeminiModel) => {
+  const resumeMeeting = () => {
     if (orderedPhilosophers.length < 2 || !activeKeyReady(settings)) return;
     if (interventions.length >= orderedPhilosophers.length * 3) return;
-    // NOTE: this is also used directly as an onClick handler, so the first
-    // argument may be a click event — only accept real model IDs.
-    const model = typeof modelOverride === 'string' ? modelOverride : settings.model;
     const runId = runRef.current + 1;
     runRef.current = runId;
     setRunError(null);
     setIsRunning(true);
-    void runLoop(runId, [...orderedPhilosophers], interventions.length, [...interventions], model);
+    void runLoop(runId, [...orderedPhilosophers], interventions.length, [...interventions], settings);
   };
 
-  const switchToLiteAndResume = () => {
-    if (orderedPhilosophers.length < 2 || !settings.geminiApiKey.trim()) return;
+  const switchToFreeCycleAndResume = () => {
+    if (orderedPhilosophers.length < 2 || !settings.openRouterApiKey.trim()) return;
     if (interventions.length >= orderedPhilosophers.length * 3) return;
-    const next = { ...settings, provider: 'gemini' as const, model: 'gemini-3.5-flash-lite' as GeminiModel };
+    const next = { ...settings, provider: 'openrouter' as const, openRouterMode: 'free' as const };
     updateSettings(next);
     const runId = runRef.current + 1;
     runRef.current = runId;
     setRunError(null);
     setIsRunning(true);
-    void runLoop(runId, [...orderedPhilosophers], interventions.length, [...interventions], next.model);
+    void runLoop(runId, [...orderedPhilosophers], interventions.length, [...interventions], next);
   };
 
-  const switchToGeminiAndResume = () => {
-    if (orderedPhilosophers.length < 2 || !settings.geminiApiKey.trim()) return;
+  const switchProviderAndResume = (provider: CabinetSettings['provider']) => {
+    const next = { ...settings, provider };
+    if (orderedPhilosophers.length < 2 || !activeKeyReady(next)) {
+      setShowSettings(true);
+      return;
+    }
     if (interventions.length >= orderedPhilosophers.length * 3) return;
-    const next = { ...settings, provider: 'gemini' as const };
     updateSettings(next);
     const runId = runRef.current + 1;
     runRef.current = runId;
     setRunError(null);
     setIsRunning(true);
-    void runLoop(runId, [...orderedPhilosophers], interventions.length, [...interventions], next.model);
+    void runLoop(runId, [...orderedPhilosophers], interventions.length, [...interventions], next);
   };
 
   const pauseMeeting = () => {
@@ -438,16 +639,38 @@ function App() {
     setActivePass(0);
     setActiveAgent(-1);
     setInterventions([]);
+    setCoda(null);
+    setGroundMap({});
+    provRef.current = [];
     setSelectedIntervention(null);
   };
 
   const exportTranscript = () => {
-    const text = [`THE DIALECTICAL CABINET\n\nQUESTION\n${question}\n`, ...interventions.map((item) => {
+    const citedNumbers: number[] = [];
+    const seenNumbers = new Set<number>();
+    const body = [`THE DIALECTICAL CABINET\n\nQUESTION\n${question}\n`, ...interventions.map((item) => {
       const philosopher = philosophers.find((p) => p.id === item.philosopher_id);
-      const readMore = philosopher ? getReadMoreSource(philosopher.name) : null;
-      return `PASS ${item.pass_number} — ${philosopher?.full_name ?? 'Unknown'}\n\n${item.response_text}\n\n${item.citations.map((citation) => citation.label).join(', ')}\n${readMore?.source_url ? `Read more: ${readMore.title} — ${readMore.source_url}\n` : ''}`;
+      const name = philosopher?.name ?? 'Unknown';
+      for (const n of splitLabels(name, item.citations.map((c) => c.label)).numbers) {
+        if (!seenNumbers.has(n)) {
+          seenNumbers.add(n);
+          citedNumbers.push(n);
+        }
+      }
+      return `PASS ${item.pass_number} — ${philosopher?.full_name ?? 'Unknown'}\n\n${item.response_text}\n`;
     })].join('\n');
-    const blob = new Blob([text], { type: 'text/plain' });
+    const readingList = citedNumbers.length
+      ? `\nREADING LIST\n${entriesForNumbers(citedNumbers).map(({ number, source }) => `[${number}] ${source.title} — ${source.author}${source.source_url ? ` — ${source.source_url}` : ''}`).join('\n')}\n`
+      : '';
+    const codaText = coda ? `\nMARGIN NOTES\n${coda.text}\n` : '';
+    const trail = [...new Set(provRef.current)];
+    const provenanceText = trail.length
+      ? `\nMODELS USED\n${trail.map((t) => `— ${t}`).join('\n')}\n`
+      : '';
+    // BOM + explicit charset: without them some viewers (notably Windows
+    // Notepad) decode UTF-8 smart quotes/dashes as Latin-1 mojibake (â€…).
+    const text = `\uFEFF${body}${codaText}${readingList}${provenanceText}`;
+    const blob = new Blob([text], { type: 'text/plain;charset=utf-8' });
     const url = URL.createObjectURL(blob);
     const anchor = document.createElement('a');
     anchor.href = url;
@@ -472,7 +695,7 @@ function App() {
       else if (selectedPhilosopher) setSelectedPhilosopher(null);
       else if (showSettings) setShowSettings(false);
       else if (showSources) setShowSources(false);
-      else if (showWelcome) setShowWelcome(false);
+      else if (showWelcome) dismissWelcome(false);
     };
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
@@ -524,8 +747,8 @@ function App() {
                 <button className="btn-secondary flex items-center gap-2" onClick={resetMeeting}><RotateCcw size={15} /> Restart</button>
                 <button className="btn-secondary flex items-center gap-2" onClick={exportTranscript} disabled={!interventions.length}><Download size={15} /> Export</button>
               </div>
-              {!hasKey && <p className="text-sm italic text-[#8b5254] mt-3">Add your {activeKeyLabel} in <button className="underline" onClick={() => setShowSettings(true)}>Settings</button> to begin — it stays in this browser only{settings.provider === 'openrouter' ? ', and goes straight to OpenRouter.' : settings.provider === 'groq' ? ', and goes straight to Groq.' : ', and goes straight to Google.'}</p>}
-              {runError && (runError.code === 'quota' ? <div role="alert" className="mt-3 p-5 bg-[#8b5254]/10 border-l-2 border-[#8b5254]"><p className="text-xs uppercase tracking-widest text-[#8b5254]">Paused — free-tier quota reached</p><p className="text-sm mt-2 text-[#465f75]">{runError.message}</p><p className="text-sm mt-2 text-[#465f75]">Nothing is lost: {interventions.length} of {orderedPhilosophers.length * 3} interventions are kept, and read-aloud plus export keep working. Quotas reset with time — per-minute caps within minutes, daily caps the next day.</p><div className="flex flex-wrap gap-2 mt-3"><button className="btn-secondary" onClick={() => resumeMeeting()} disabled={!hasKey}>Try resume</button>{settings.provider === 'shared' && <button className="btn-secondary" onClick={() => { setRunError(null); setShowSettings(true); }}>Use my own key instead</button>}{settings.provider === 'gemini' && settings.model !== 'gemini-3.5-flash-lite' && <button className="btn-secondary" onClick={switchToLiteAndResume} disabled={!hasKey}>Switch to Lite & resume</button>}{settings.provider === 'gemini' && <button className="btn-secondary" onClick={() => { updateSettings({ ...settings, provider: 'openrouter' }); setRunError(null); setShowSettings(true); }}>Try OpenRouter free models</button>}{settings.provider === 'openrouter' && settings.geminiApiKey.trim() && <button className="btn-secondary" onClick={switchToGeminiAndResume}>Switch to Gemini & resume</button>}{settings.provider === 'groq' && <button className="btn-secondary" onClick={() => { updateSettings({ ...settings, provider: 'shared' }); setRunError(null); }}>Fall back to shared</button>}<button className="btn-secondary" onClick={() => setShowSettings(true)}>Open settings</button>{settings.provider === 'gemini' ? <a className="btn-secondary" href="https://aistudio.google.com/apikey" target="_blank" rel="noreferrer">Check usage</a> : settings.provider === 'openrouter' ? <a className="btn-secondary" href="https://openrouter.ai/activity" target="_blank" rel="noreferrer">Check usage</a> : settings.provider === 'groq' ? <a className="btn-secondary" href="https://console.groq.com" target="_blank" rel="noreferrer">Check usage</a> : null}<button className="btn-secondary" onClick={() => setRunError(null)}>Dismiss</button></div></div> : <div className="mt-3 p-4 bg-[#8b5254]/8 border-l-2 border-[#8b5254]"><p className="text-xs uppercase tracking-widest text-[#8b5254]">Cabinet halted</p><p className="text-sm mt-1 text-[#465f75]">{runError.message}</p><div className="flex flex-wrap gap-2 mt-3"><button className="btn-secondary" onClick={resumeMeeting} disabled={!hasKey}>Resume cabinet</button><button className="btn-secondary" onClick={() => setShowSettings(true)}>Open settings</button><button className="btn-secondary" onClick={() => setRunError(null)}>Dismiss</button></div></div>)}
+              {!hasKey && <p className="text-sm italic text-[#8b5254] mt-3">Add your {activeKeyLabel} in <button className="underline" onClick={() => setShowSettings(true)}>Settings</button> to begin — it stays in this browser and goes straight to the provider alone; we never see it{settings.provider === 'openrouter' ? ', and goes straight to OpenRouter.' : settings.provider === 'groq' ? ', and goes straight to Groq.' : settings.provider === 'deepinfra' ? ', and goes straight to DeepInfra.' : settings.provider === 'together' ? ', and goes straight to Together.' : '.'}</p>}
+              {runError && (runError.code === 'quota' ? <div role="alert" className="mt-3 p-5 bg-[#8b5254]/10 border-l-2 border-[#8b5254]"><p className="text-xs uppercase tracking-widest text-[#8b5254]">Paused — free-tier quota reached</p><p className="text-sm mt-2 text-[#465f75]">{runError.message}</p><p className="text-sm mt-2 text-[#465f75]">Nothing is lost: {interventions.length} of {orderedPhilosophers.length * 3} interventions are kept, and read-aloud plus export keep working. Quotas reset with time — per-minute caps within minutes, daily caps the next day.</p><div className="flex flex-wrap gap-2 mt-3"><button className="btn-secondary" onClick={() => resumeMeeting()} disabled={!hasKey}>Try resume</button>{settings.provider === 'shared' && <button className="btn-secondary" onClick={() => { setRunError(null); setShowSettings(true); }}>Use my own key instead</button>}{settings.provider === 'openrouter' && settings.openRouterMode === 'paid' && <button className="btn-secondary" onClick={switchToFreeCycleAndResume}>Back to free cycle & resume</button>}{(settings.provider === 'groq' || settings.provider === 'deepinfra' || settings.provider === 'together') && <button className="btn-secondary" onClick={() => switchProviderAndResume('shared')}>Fall back to shared</button>}<button className="btn-secondary" onClick={() => setShowSettings(true)}>Open settings</button>{settings.provider === 'openrouter' ? <a className="btn-secondary" href="https://openrouter.ai/activity" target="_blank" rel="noreferrer">Check usage</a> : settings.provider === 'groq' ? <a className="btn-secondary" href="https://console.groq.com" target="_blank" rel="noreferrer">Check usage</a> : settings.provider === 'deepinfra' ? <a className="btn-secondary" href="https://deepinfra.com/dash" target="_blank" rel="noreferrer">Check usage</a> : settings.provider === 'together' ? <a className="btn-secondary" href="https://api.together.xyz/settings/api-keys" target="_blank" rel="noreferrer">Check usage</a> : null}<button className="btn-secondary" onClick={() => setRunError(null)}>Dismiss</button></div></div> : <div className="mt-3 p-4 bg-[#8b5254]/8 border-l-2 border-[#8b5254]"><p className="text-xs uppercase tracking-widest text-[#8b5254]">Philosopher Strike Demand Reasons</p><p className="text-sm mt-1 text-[#465f75]">{runError.message}</p><div className="flex flex-wrap gap-2 mt-3"><button className="btn-secondary" onClick={resumeMeeting} disabled={!hasKey}>Resume cabinet</button><button className="btn-secondary" onClick={() => setShowSettings(true)}>Open settings</button><button className="btn-secondary" onClick={() => setRunError(null)}>Dismiss</button></div></div>)}
             </div>
 
             <div className="dark-academia-card p-4 md:p-5">
@@ -577,24 +800,45 @@ function App() {
               ttsStatus={ttsStatus}
               onToggleSpeech={toggleTurnSpeech}
               onInspect={(item) => setSelectedIntervention(item)}
+              onOpenSources={openSourcesAt}
             />
           ) : (
             <div className="dark-academia-card p-10 text-center"><Feather size={28} className="mx-auto text-[#b89968] mb-3" /><p className="font-heading text-2xl text-[#4a392d]">The cabinet awaits its question.</p><p className="italic text-[#465f75]/65 mt-2">Begin the circuit to watch the problem transform one intervention at a time.</p></div>
           )}
         </section>
 
-        {interventions.length > orderedPhilosophers.length && <PositionComparison philosophers={orderedPhilosophers} interventions={interventions} />}
+        {coda || (isComplete && !isRunning) ? (
+          <section className="mt-10" aria-label="Margin notes">
+            <div className="ornament-divider mb-6"><span className="text-xl">❧</span></div>
+            <div className="mb-5"><p className="pass-indicator text-[#8b5254]">After the sitting</p><h2 className="text-3xl">Margin notes</h2></div>
+            {coda ? (
+              <article className="dark-academia-card p-5 md:p-8 max-w-3xl">
+                <p className="whitespace-pre-line text-[15px] leading-relaxed text-[#465f75]">{coda.text}</p>
+                <div className="flex flex-wrap gap-2 mt-5">
+                  {ttsSupported && <button onClick={toggleCodaSpeech} className="btn-secondary !text-xs flex items-center gap-2" aria-label={ttsStatus.state !== 'idle' && ttsStatus.currentId === 'coda' ? 'Stop reading margin notes' : 'Listen to margin notes'}>{ttsStatus.state !== 'idle' && ttsStatus.currentId === 'coda' ? <><Square size={13} /> Stop reading</> : <><Volume2 size={13} /> Listen</>}</button>}
+                </div>
+              </article>
+            ) : (
+              <div className="dark-academia-card p-5 max-w-3xl">
+                <p className="text-sm italic text-[#465f75]/70">The sitting is complete but the margin note did not arrive.</p>
+                <button className="btn-secondary !text-xs mt-3" onClick={runCodaNow}>Write margin notes</button>
+              </div>
+            )}
+          </section>
+        ) : null}
+
+        {interventions.length > orderedPhilosophers.length && <PositionComparison philosophers={orderedPhilosophers} interventions={interventions} onOpenSources={openSourcesAt} />}
       </main>
 
-      {showSources && <SourceDrawer onClose={() => setShowSources(false)} />}
-      {showWelcome && <WelcomeModal onClose={dismissWelcome} onOpenSettings={() => { setShowWelcome(false); setShowSettings(true); }} />}      {showSettings && <SettingsDrawer philosophers={philosophers} activeSlugs={activeSlugs} togglePhilosopher={togglePhilosopher} settings={settings} onSettingsChange={updateSettings} display={display} onDisplayChange={updateDisplay} onClose={() => setShowSettings(false)} />}
-      {selectedIntervention && <InterventionModal intervention={selectedIntervention} philosopher={philosophers.find((p) => p.id === selectedIntervention.philosopher_id)} onClose={() => { ttsRef.current?.stop(); setSelectedIntervention(null); }} ttsSupported={ttsSupported} speaking={ttsStatus.state !== 'idle' && ttsStatus.currentId === selectedIntervention.id} onToggleSpeech={() => toggleTurnSpeech(selectedIntervention)} />}
+      {showSources && <SourceDrawer target={sourceTarget} onClose={() => { setSourceTarget(null); setShowSources(false); }} />}
+      {showWelcome && <WelcomeModal onClose={dismissWelcome} onOpenSettings={() => { dismissWelcome(false); openSettings('cabinet'); }} ttsSupported={ttsSupported} listening={ttsStatus.state !== 'idle' && ttsStatus.currentId === 'welcome'} onListen={toggleWelcomeSpeech} />}      {showSettings && <SettingsDrawer key={settingsTab} philosophers={philosophers} activeSlugs={activeSlugs} togglePhilosopher={togglePhilosopher} settings={settings} onSettingsChange={updateSettings} display={display} onDisplayChange={updateDisplay} initialTab={settingsTab} onClose={() => setShowSettings(false)} />}
+      {selectedIntervention && <InterventionModal intervention={selectedIntervention} philosopher={philosophers.find((p) => p.id === selectedIntervention.philosopher_id)} onClose={() => { ttsRef.current?.stop(); setSelectedIntervention(null); }} ttsSupported={ttsSupported} speaking={ttsStatus.state !== 'idle' && ttsStatus.currentId === selectedIntervention.id} onToggleSpeech={() => toggleTurnSpeech(selectedIntervention)} onOpenSources={(n) => { ttsRef.current?.stop(); setSelectedIntervention(null); openSourcesAt(n); }} grounding={selectedIntervention ? groundMap[selectedIntervention.id] ?? null : null} />}
       {selectedPhilosopher && <ProfileModal philosopher={selectedPhilosopher} onClose={() => setSelectedPhilosopher(null)} />}
     </div>
   );
 }
 
-function ReadingDeck({ interventions, philosophers, readIdx, onNav, freshId, ttsSupported, ttsStatus, onToggleSpeech, onInspect }: {
+function ReadingDeck({ interventions, philosophers, readIdx, onNav, freshId, ttsSupported, ttsStatus, onToggleSpeech, onInspect, onOpenSources }: {
   interventions: Intervention[];
   philosophers: Philosopher[];
   readIdx: number;
@@ -604,6 +848,7 @@ function ReadingDeck({ interventions, philosophers, readIdx, onNav, freshId, tts
   ttsStatus: TtsStatus;
   onToggleSpeech: (item: Intervention) => void;
   onInspect: (item: Intervention) => void;
+  onOpenSources: (n: number) => void;
 }) {
   const item = interventions[readIdx];
   if (!item) return null;
@@ -627,7 +872,7 @@ function ReadingDeck({ interventions, philosophers, readIdx, onNav, freshId, tts
         </div>
         <p className="drop-cap text-[15px] leading-relaxed whitespace-pre-line text-[#465f75]">{item.response_text}</p>
         <div className="mt-4"><ReadMore philosopherName={philosopher.name} /></div>
-        <div className="flex flex-wrap gap-1 mt-4">{item.citations.map((citation) => <span key={citation.label} className={`citation-badge ${citation.verified ? '' : 'citation-unverified'}`}><BookOpen size={10} /> {citation.label}</span>)}</div>
+        <ReadSimilar philosopherName={philosopher.name} labels={item.citations.map((c) => c.label)} onOpenSources={onOpenSources} />
         <div className="flex flex-wrap gap-2 mt-5">
           {ttsSupported && <button onClick={() => onToggleSpeech(item)} className="btn-secondary !text-xs flex items-center gap-2" aria-label={speaking ? `Stop reading intervention by ${philosopher.full_name}` : `Listen to intervention by ${philosopher.full_name}`}>{speaking ? <><Square size={13} /> {paused ? 'Paused — stop' : 'Stop reading'}</> : <><Volume2 size={13} /> Listen</>}</button>}
           <button onClick={() => onInspect(item)} className="btn-secondary !text-xs">Inspect sources</button>
@@ -669,9 +914,9 @@ function CabinetTable({ philosophers, activeAgent, activePass, interventions, on
 
 function SpiralView({ interventions, question, activePass, numPhilosophers }: { interventions: Intervention[]; question: string; activePass: number; numPhilosophers: number }) { const labels = ['The question', 'Problem map', 'Dialectical map', 'Spiral synthesis']; return <div className="space-y-2">{labels.map((label, index) => { const isVisible = index === 0 || interventions.length >= index * numPhilosophers; const text = index === 0 ? question : index === 1 ? 'First rotation chained: seat 1 opens, each later seat negates its immediate predecessor.' : index === 2 ? 'Second rotation continues across the boundary; each turn critiques PREV and hands a contradiction on.' : 'Reconstruction rotation: institutions, practices, collective power; final seat returns the question.'; return <div key={label} className={`relative pl-8 ${isVisible ? 'opacity-100' : 'opacity-35'} transition-opacity`}><div className={`absolute left-0 top-1 w-5 h-5 rounded-full border flex items-center justify-center text-[10px] ${index <= activePass + 1 ? 'bg-[#8b5254] text-[#f2ebd9] border-[#8b5254]' : 'border-[#4a392d]/30 text-[#4a392d]/50'}`}>{index}</div>{index < 3 && <div className="absolute left-[9px] top-6 h-8 border-l border-dashed border-[#b89968]" />}<p className="text-xs uppercase tracking-wider text-[#8b5254]">{label}</p><p className="text-sm italic text-[#465f75]/75 leading-snug mt-1">{text}</p></div>; })}</div>; }
 
-function PositionComparison({ philosophers, interventions }: { philosophers: Philosopher[]; interventions: Intervention[] }) { return <section className="mt-12"><div className="ornament-divider mb-6"><span className="text-xl">✦</span></div><p className="pass-indicator text-[#8b5254]">Memory across passes</p><h2 className="text-3xl mb-5">Position changes</h2><div className="grid lg:grid-cols-3 gap-4">{philosophers.map((philosopher) => <div key={philosopher.id} className="dark-academia-card p-5"><h3 className="text-xl mb-3">{philosopher.name}</h3>{[1, 2, 3].map((pass) => { const item = interventions.find((entry) => entry.philosopher_id === philosopher.id && entry.pass_number === pass); return <div key={pass} className="border-t border-[#4a392d]/15 pt-3 mt-3"><p className="text-[10px] uppercase tracking-widest text-[#8b5254]">Pass {pass} · {PASS_NAMES[pass - 1]}</p><p className="text-sm mt-1 line-clamp-6 text-[#465f75]/80">{item?.response_text ?? 'Awaiting intervention.'}</p></div>; })}</div>)}</div></section>; }
+function PositionComparison({ philosophers, interventions, onOpenSources }: { philosophers: Philosopher[]; interventions: Intervention[]; onOpenSources: (n: number) => void }) { return <section className="mt-12"><div className="ornament-divider mb-6"><span className="text-xl">✦</span></div><p className="pass-indicator text-[#8b5254]">Memory across passes</p><h2 className="text-3xl mb-5">Position changes</h2><div className="grid lg:grid-cols-3 gap-4">{philosophers.map((philosopher) => <div key={philosopher.id} className="dark-academia-card p-5"><h3 className="text-xl mb-3">{philosopher.name}</h3>{[1, 2, 3].map((pass) => { const item = interventions.find((entry) => entry.philosopher_id === philosopher.id && entry.pass_number === pass); return <div key={pass} className="border-t border-[#4a392d]/15 pt-3 mt-3"><p className="text-[10px] uppercase tracking-widest text-[#8b5254]">Pass {pass} · {PASS_NAMES[pass - 1]}</p><p className="text-sm mt-1 line-clamp-6 text-[#465f75]/80">{item?.response_text ?? 'Awaiting intervention.'}</p>{item && <ReadSimilar philosopherName={philosopher.name} labels={item.citations.map((c) => c.label)} onOpenSources={onOpenSources} />}</div>; })}</div>)}</div></section>; }
 
-function WelcomeModal({ onClose, onOpenSettings }: { onClose: (remember: boolean) => void; onOpenSettings: () => void }) {
+function WelcomeModal({ onClose, onOpenSettings, ttsSupported, listening, onListen }: { onClose: (remember: boolean) => void; onOpenSettings: () => void; ttsSupported: boolean; listening: boolean; onListen: () => void }) {
   const [remember, setRemember] = useState(true);
   return (
     <div className="fixed inset-0 z-50 bg-[#4a392d]/35 backdrop-blur-sm flex items-center justify-center p-4" onClick={() => onClose(remember)}>
@@ -679,41 +924,54 @@ function WelcomeModal({ onClose, onOpenSettings }: { onClose: (remember: boolean
         <p className="pass-indicator text-[#8b5254]">The assembly is convened</p>
         <h2 className="text-3xl mt-1">How this cabinet works</h2>
         <div className="space-y-4 mt-5 text-[15px] leading-relaxed text-[#465f75]">
-          <p><span className="drop-cap">N</span>o single seat at this table holds the truth of your question — and none is permitted to. Ten thinkers are convened, from Spinoza to Fisher, and each may speak only against its immediate predecessor: negating it on its own premises, preserving what holds, and handing a contradiction clockwise to the next. If anything true appears here, it appears <em>between</em> the seats, in the contradictions forced into the open across three passes — never handed down from any one authority.</p>
-          <p>Pose your question above and press <strong>Begin cabinet</strong>. The reconstruction pass returns the question to you at the end, changed by everything it has passed through. What you do with it then is yours to decide face to face with your own conscience — no vanguard, party, or apparatus decides for you.</p>
-          <p>A practical word, then, on seats and tokens — plainly, since the commons runs on limits. Ten is the full assembly and thirty turns; five is the lean one, half the tokens with the arc intact. Open Settings → Cabinet and set aside five: keep the thinkers whose quarrel bears most directly on your question, and let the chronological order stand, for the sequence itself is the argument. Begin with five; convene all ten when the matter warrants the expense.</p>
-          <p>On providers, equally plainly. Begin on the shared key: no key, no account, nothing to configure. When the commons runs dry, bring your own — Gemini, OpenRouter and Groq cost nothing on their free tiers, and paid OpenRouter is pennies a sitting. Your keys never leave your browser. Test the key in Settings before you begin; and if the cabinet ever halts, read the notice — it names the exact limit you met and the way back.</p>
+          <p><span className="drop-cap">A</span>sk your question of the Philosophers' Table and watch our debate unfold. Choose which of us are convened, from Spinoza to Fisher, but it is best to choose 4-6 of us in settings to stop the discussion becoming unwieldy and expensive in token cost. Each of us gets to contribute 3 times, so all 10 of us creates a slow and overwhelming 30 turns.</p>
+          <p>To be sure we respond to each other, we negate an idea on its own premises, preserve what holds, and hand a contradiction clockwise to the next. If anything true appears here, it appears <em>between</em> our seats, in the contradictions we force into the open across three passes — never handed down from any one authority.</p>
+          <p>You can read our turns as they happen, below the table, or export them to read as one text file.</p>
+          <p>On providers, equally plainly. Begin on the shared key: no key, no account, nothing to configure. When the commons runs dry, bring your own — OpenRouter (free cycle or cheap paid), Groq, DeepInfra or Together. Your keys stay in your browser and go straight to that provider alone — of course they also exist on the provider's own servers, as with any API key, but we never see them, store them, or want your login. We are only here for the debate. Test the key in Settings before you begin; and if the cabinet ever halts, read the notice — it names the exact limit you met and the way back.</p>
+          <p>We are philosophers; sometimes we take a while to think and read. If we go on strike, the demand reasons appear under your question — our reluctance can usually be resolved by choosing Resume Cabinet.</p>
         </div>
         <label className="flex items-center gap-3 text-sm text-[#465f75] mt-6"><input type="checkbox" checked={remember} onChange={(event) => setRemember(event.target.checked)} className="w-4 h-4 accent-[#8b5254]" /> Don’t show this again</label>
         <div className="flex flex-wrap gap-2 mt-4">
-          <button className="btn-primary" onClick={() => onClose(remember)}>Convene the cabinet</button>
-          <button className="btn-secondary" onClick={onOpenSettings}>Open settings</button>
+          <button className="btn-primary" onClick={onOpenSettings}>Choose who gets to sit at the table</button>
+          <button className="btn-secondary" onClick={() => onClose(remember)}>Convene with all ten</button>
+          {ttsSupported && <button className="btn-secondary !text-xs flex items-center gap-2" onClick={onListen} aria-label={listening ? 'Stop reading the welcome' : 'Listen to the welcome'}>{listening ? <><Square size={13} /> Stop</> : <><Volume2 size={13} /> Listen</>}</button>}
         </div>
       </div>
     </div>
   );
 }
 
-function SourceDrawer({ onClose }: { onClose: () => void }) {
+function SourceDrawer({ target, onClose }: { target: number | null; onClose: () => void }) {
   const yearOf = (date: string | null): number => {
     const match = typeof date === 'string' ? date.match(/\d{4}/) : null;
     return match ? parseInt(match[0], 10) : -Infinity;
   };
   const sorted = [...CORPUS_SOURCES_DATA].sort((a, b) => yearOf(b.publication_date) - yearOf(a.publication_date));
-  return <div className="fixed inset-0 z-50 bg-[#4a392d]/30 backdrop-blur-sm" onClick={onClose}><aside className="absolute right-0 top-0 bottom-0 w-full max-w-xl parchment-bg p-6 md:p-8 overflow-y-auto custom-scroll" onClick={(event) => event.stopPropagation()} role="dialog" aria-modal="true" aria-label="Corpus manifest"><div className="flex items-start justify-between mb-2"><div><p className="pass-indicator text-[#8b5254]">Corpus manifest</p><h2 className="text-3xl">Further reading</h2><p className="italic text-[#465f75]/65 mt-1">The works behind the cabinet — referenced from profiles, not yet read in full. Full retrieval lands in a later phase.</p></div><button className="btn-secondary !px-3" onClick={onClose} aria-label="Close corpus manifest"><X size={17} /></button></div><p className="text-xs uppercase tracking-widest text-[#465f75]/60 mb-5">{sorted.length} works · newest first</p><div className="space-y-3">{sorted.map((source) => <div key={`${source.author}-${source.title}`} className="border-b border-[#4a392d]/15 pb-3"><div className="flex justify-between gap-3"><p className="font-heading text-base text-[#4a392d]">{source.source_url ? <a href={source.source_url} target="_blank" rel="noreferrer" className="underline underline-offset-2 decoration-[#8b5254]/40 hover:decoration-[#8b5254]">{source.title}</a> : source.title}</p><span className={`text-[9px] whitespace-nowrap uppercase tracking-wider ${source.full_text_ingested ? 'text-[#4a6b3f]' : 'text-[#8b5254]'}`}>{source.full_text_ingested ? 'Full text' : 'Metadata'}</span></div><p className="text-sm text-[#465f75]/70">{source.author} · {source.publication_date ?? 'undated'}</p><p className="text-[10px] uppercase tracking-widest text-[#8b5254]/80 mt-1">{source.licence_status}</p>{source.link_note && <p className="text-xs italic mt-1 text-[#8b5254]">⚠ {source.link_note}</p>}</div>)}</div></aside></div>;
+  useEffect(() => {
+    if (target == null) return;
+    // Let the drawer mount before scrolling to the anchored entry.
+    const timer = window.setTimeout(() => {
+      document.getElementById(`ref-${target}`)?.scrollIntoView({ block: 'center' });
+    }, 60);
+    return () => window.clearTimeout(timer);
+  }, [target]);
+  return <div className="fixed inset-0 z-50 bg-[#4a392d]/30 backdrop-blur-sm" onClick={onClose}><aside className="absolute right-0 top-0 bottom-0 w-full max-w-xl parchment-bg p-6 md:p-8 overflow-y-auto custom-scroll" onClick={(event) => event.stopPropagation()} role="dialog" aria-modal="true" aria-label="Corpus manifest"><div className="flex items-start justify-between mb-2"><div><p className="pass-indicator text-[#8b5254]">Corpus manifest</p><h2 className="text-3xl">Further reading</h2><p className="italic text-[#465f75]/65 mt-1">The works behind the cabinet — referenced from profiles, not yet read in full. Full retrieval lands in a later phase.</p></div><button className="btn-secondary !px-3" onClick={onClose} aria-label="Close corpus manifest"><X size={17} /></button></div><p className="text-xs uppercase tracking-widest text-[#465f75]/60 mb-5">{sorted.length} works · newest first · numbers are stable file order</p><div className="space-y-3">{sorted.map((source) => { const number = CORPUS_SOURCES_DATA.indexOf(source) + 1; return <div key={`${source.author}-${source.title}`} id={`ref-${number}`} className={`border-b border-[#4a392d]/15 pb-3 ${target === number ? 'ref-flash' : ''}`}><div className="flex justify-between gap-3"><p className="font-heading text-base text-[#4a392d]"><span className="text-xs text-[#8b5254] mr-2" aria-label={`Reference ${number}`}>[{number}]</span>{source.source_url ? <a href={source.source_url} target="_blank" rel="noreferrer" className="underline underline-offset-2 decoration-[#8b5254]/40 hover:decoration-[#8b5254]">{source.title}</a> : source.title}</p><span className={`text-[9px] whitespace-nowrap uppercase tracking-wider ${source.full_text_ingested ? 'text-[#4a6b3f]' : 'text-[#8b5254]'}`}>{source.full_text_ingested ? 'Full text' : 'Metadata'}</span></div><p className="text-sm text-[#465f75]/70">{source.author} · {source.publication_date ?? 'undated'}</p><p className="text-[10px] uppercase tracking-widest text-[#8b5254]/80 mt-1">{source.licence_status}</p>{source.link_note && <p className="text-xs italic mt-1 text-[#8b5254]">⚠ {source.link_note}</p>}</div>; })}</div></aside></div>;
 }
 
-function SettingsDrawer({ philosophers, activeSlugs, togglePhilosopher, settings, onSettingsChange, display, onDisplayChange, onClose }: { philosophers: Philosopher[]; activeSlugs: string[]; togglePhilosopher: (slug: string) => void; settings: CabinetSettings; onSettingsChange: (next: CabinetSettings) => void; display: AccessibilitySettings; onDisplayChange: (next: AccessibilitySettings) => void; onClose: () => void }) {
-  const [keyInput, setKeyInput] = useState(settings.geminiApiKey);
+function SettingsDrawer({ philosophers, activeSlugs, togglePhilosopher, settings, onSettingsChange, display, onDisplayChange, initialTab, onClose }: { philosophers: Philosopher[]; activeSlugs: string[]; togglePhilosopher: (slug: string) => void; settings: CabinetSettings; onSettingsChange: (next: CabinetSettings) => void; display: AccessibilitySettings; onDisplayChange: (next: AccessibilitySettings) => void; initialTab: 'key' | 'cabinet' | 'display'; onClose: () => void }) {
   const [orKeyInput, setOrKeyInput] = useState(settings.openRouterApiKey);
   const [groqKeyInput, setGroqKeyInput] = useState(settings.groqApiKey);
+  const [deepInfraKeyInput, setDeepInfraKeyInput] = useState(settings.deepInfraApiKey);
+  const [togetherKeyInput, setTogetherKeyInput] = useState(settings.togetherApiKey);
   const [testState, setTestState] = useState<'idle' | 'testing' | 'ok' | 'error'>('idle');
   const [testMessage, setTestMessage] = useState('');
-  const [tab, setTab] = useState<'key' | 'cabinet' | 'display'>('key');
+  const [tab, setTab] = useState<'key' | 'cabinet' | 'display'>(initialTab);
   const usingOpenRouter = settings.provider === 'openrouter';
   const usingGroq = settings.provider === 'groq';
-  const activeKeyInput = usingGroq ? groqKeyInput : usingOpenRouter ? orKeyInput : keyInput;
-  const activeStoredKey = usingGroq ? settings.groqApiKey : usingOpenRouter ? settings.openRouterApiKey : settings.geminiApiKey;
+  const usingDeepInfra = settings.provider === 'deepinfra';
+  const usingTogether = settings.provider === 'together';
+  const activeKeyInput = usingGroq ? groqKeyInput : usingOpenRouter ? orKeyInput : usingDeepInfra ? deepInfraKeyInput : usingTogether ? togetherKeyInput : '';
+  const activeStoredKey = usingGroq ? settings.groqApiKey : usingOpenRouter ? settings.openRouterApiKey : usingDeepInfra ? settings.deepInfraApiKey : usingTogether ? settings.togetherApiKey : '';
   const keySaved = activeKeyInput === activeStoredKey && activeStoredKey.length > 0;
   const runTest = async () => {
     const key = activeKeyInput.trim();
@@ -731,11 +989,16 @@ function SettingsDrawer({ philosophers, activeSlugs, togglePhilosopher, settings
         setTestState('ok');
         setTestMessage(`Key works (via ${modelUsed}). Saved for this browser.`);
         onSettingsChange({ ...settings, openRouterApiKey: key });
-      } else {
-        await testApiKey(key, settings.model);
+      } else if (usingDeepInfra) {
+        await testDeepInfraKey(key);
         setTestState('ok');
-        setTestMessage('Key works. Saved for this browser.');
-        onSettingsChange({ ...settings, geminiApiKey: key });
+        setTestMessage(`Key works on ${DEEPINFRA_MODEL}. Saved for this browser.`);
+        onSettingsChange({ ...settings, deepInfraApiKey: key });
+      } else if (usingTogether) {
+        await testTogetherKey(key);
+        setTestState('ok');
+        setTestMessage(`Key works on ${TOGETHER_MODEL}. Saved for this browser.`);
+        onSettingsChange({ ...settings, togetherApiKey: key });
       }
     } catch (error) {
       setTestState('error');
@@ -751,9 +1014,12 @@ function SettingsDrawer({ philosophers, activeSlugs, togglePhilosopher, settings
     } else if (usingOpenRouter) {
       setOrKeyInput('');
       onSettingsChange({ ...settings, openRouterApiKey: '' });
-    } else {
-      setKeyInput('');
-      onSettingsChange({ ...settings, geminiApiKey: '' });
+    } else if (usingDeepInfra) {
+      setDeepInfraKeyInput('');
+      onSettingsChange({ ...settings, deepInfraApiKey: '' });
+    } else if (usingTogether) {
+      setTogetherKeyInput('');
+      onSettingsChange({ ...settings, togetherApiKey: '' });
     }
   };
   const updateDisplay = (partial: Partial<AccessibilitySettings>) => {
@@ -770,7 +1036,7 @@ function SettingsDrawer({ philosophers, activeSlugs, togglePhilosopher, settings
           <div>
             <p className="pass-indicator text-[#8b5254]">Bring your own key</p>
             <h2 className="text-3xl">Settings</h2>
-            <p className="italic text-[#465f75]/65 mt-1">Your own keys stay in this browser only (Gemini → Google, OpenRouter → OpenRouter, whose free models may log prompts for training). The shared cabinet key never leaves the server. Nothing is logged or collected here.</p>
+            <p className="italic text-[#465f75]/65 mt-1">Your own keys stay in this browser and go only to the named provider (OpenRouter → OpenRouter, whose free models may log prompts for training; Groq → Groq; DeepInfra → DeepInfra; Together → Together). Naturally each provider also holds your key on their servers — that is how API keys work. What we never do: see them, store them, or ask for any login. The shared cabinet key never leaves the server. Nothing identifying is collected here.</p>
           </div>
           <button className="btn-secondary !px-3" onClick={onClose} aria-label="Close settings"><X size={17} /></button>
         </div>
@@ -786,12 +1052,13 @@ function SettingsDrawer({ philosophers, activeSlugs, togglePhilosopher, settings
             <span className="font-heading text-sm uppercase tracking-[0.16em] text-[#4a392d] block">Provider</span>
             <div className="flex flex-wrap gap-2" role="radiogroup" aria-label="AI provider">
               <button role="radio" aria-checked={settings.provider === 'shared'} onClick={() => { setTestState('idle'); setTestMessage(''); onSettingsChange({ ...settings, provider: 'shared' }); }} className={`btn-secondary ${settings.provider === 'shared' ? '!border-[#8b5254] !text-[#8b5254]' : ''}`}>Cabinet shared</button>
-              <button role="radio" aria-checked={settings.provider === 'gemini'} onClick={() => { setTestState('idle'); setTestMessage(''); onSettingsChange({ ...settings, provider: 'gemini' }); }} className={`btn-secondary ${settings.provider === 'gemini' ? '!border-[#8b5254] !text-[#8b5254]' : ''}`}>Gemini direct</button>
               <button role="radio" aria-checked={usingOpenRouter} onClick={() => { setTestState('idle'); setTestMessage(''); onSettingsChange({ ...settings, provider: 'openrouter' }); }} className={`btn-secondary ${usingOpenRouter ? '!border-[#8b5254] !text-[#8b5254]' : ''}`}>OpenRouter free cycle</button>
               <button role="radio" aria-checked={usingGroq} onClick={() => { setTestState('idle'); setTestMessage(''); onSettingsChange({ ...settings, provider: 'groq' }); }} className={`btn-secondary ${usingGroq ? '!border-[#8b5254] !text-[#8b5254]' : ''}`}>Groq free</button>
+              <button role="radio" aria-checked={usingDeepInfra} onClick={() => { setTestState('idle'); setTestMessage(''); onSettingsChange({ ...settings, provider: 'deepinfra' }); }} className={`btn-secondary ${usingDeepInfra ? '!border-[#8b5254] !text-[#8b5254]' : ''}`}>DeepInfra</button>
+              <button role="radio" aria-checked={usingTogether} onClick={() => { setTestState('idle'); setTestMessage(''); onSettingsChange({ ...settings, provider: 'together' }); }} className={`btn-secondary ${usingTogether ? '!border-[#8b5254] !text-[#8b5254]' : ''}`}>Together</button>
             </div>
             {settings.provider === 'shared' ? (
-              <p className="text-xs text-[#465f75]/70">No key needed — the cabinet runs on its own Groq-backed key, held server-side and shared across visitors (about two full sessions a day each). If the shared quota runs dry, add your own Gemini or OpenRouter key below by switching provider.</p>
+              <p className="text-xs text-[#465f75]/70">No key needed — the cabinet runs on its own Groq-backed key, held server-side and shared across visitors (about two full sessions a day each). If the shared quota runs dry, add your own OpenRouter, Groq, DeepInfra or Together key below by switching provider.</p>
             ) : usingGroq ? (
               <>
                 <label htmlFor="groq-key" className="font-heading text-sm uppercase tracking-[0.16em] text-[#4a392d]">Groq API key (free)</label>
@@ -807,8 +1074,6 @@ function SettingsDrawer({ philosophers, activeSlugs, togglePhilosopher, settings
                 <select id="groq-model" value={settings.groqModel} onChange={(event) => onSettingsChange({ ...settings, groqModel: event.target.value as GroqModel })} className="w-full bg-[#eae1ca]/60 border border-[#4a392d]/25 rounded-sm p-3 text-[15px] text-[#465f75] focus:outline-none focus:ring-2 focus:ring-[#8b5254]/30">
                   <option value="qwen/qwen3.8-27b">qwen3.8-27b (better quality, free tier)</option>
                   <option value="qwen/qwen3.6-27b">qwen3.6-27b (alternative voice, free tier)</option>
-                  <option value="qwen/qwen3.8-27b">qwen3.8-27b (alternative voice)</option>
-                  <option value="qwen/qwen3.6-27b">qwen3.6-27b (alternative voice)</option>
                 </select>
               </>
             ) : usingOpenRouter ? (
@@ -837,27 +1102,38 @@ function SettingsDrawer({ philosophers, activeSlugs, togglePhilosopher, settings
                   </>
                 )}
               </>
-            ) : (
+            ) : usingDeepInfra ? (
               <>
-                <label htmlFor="gemini-key" className="font-heading text-sm uppercase tracking-[0.16em] text-[#4a392d]">Gemini API key</label>
-                <input id="gemini-key" type="password" autoComplete="off" value={keyInput} onChange={(event) => { setKeyInput(event.target.value); setTestState('idle'); setTestMessage(''); }} placeholder="Paste key from Google AI Studio" className="w-full bg-[#eae1ca]/60 border border-[#4a392d]/25 rounded-sm p-3 text-[15px] text-[#465f75] placeholder:text-[#465f75]/45 focus:outline-none focus:ring-2 focus:ring-[#8b5254]/30" />
+                <label htmlFor="di-key" className="font-heading text-sm uppercase tracking-[0.16em] text-[#4a392d]">DeepInfra API key</label>
+                <input id="di-key" type="password" autoComplete="off" value={deepInfraKeyInput} onChange={(event) => { setDeepInfraKeyInput(event.target.value); setTestState('idle'); setTestMessage(''); }} placeholder="Paste key from deepinfra.com/dash/api_keys" className="w-full bg-[#eae1ca]/60 border border-[#4a392d]/25 rounded-sm p-3 text-[15px] text-[#465f75] placeholder:text-[#465f75]/45 focus:outline-none focus:ring-2 focus:ring-[#8b5254]/30" />
                 <div className="flex flex-wrap gap-2">
-                  <button className="btn-secondary" onClick={runTest} disabled={!keyInput.trim() || testState === 'testing'}>{testState === 'testing' ? 'Testing…' : 'Test key'}</button>
-                  <button className="btn-secondary" onClick={clearKey} disabled={!keyInput && !settings.geminiApiKey}>Clear</button>
+                  <button className="btn-secondary" onClick={runTest} disabled={!deepInfraKeyInput.trim() || testState === 'testing'}>{testState === 'testing' ? 'Testing…' : 'Test key'}</button>
+                  <button className="btn-secondary" onClick={clearKey} disabled={!deepInfraKeyInput && !settings.deepInfraApiKey}>Clear</button>
                   {keySaved && <span className="text-xs italic self-center text-[#4a6b3f]">Saved in this browser.</span>}
                 </div>
                 {testMessage && <p className={`text-sm italic ${testState === 'ok' ? 'text-[#4a6b3f]' : 'text-[#8b5254]'}`}>{testMessage}</p>}
-                <p className="text-xs text-[#465f75]/70">Get a free key at <a className="underline" href="https://aistudio.google.com/apikey" target="_blank" rel="noreferrer">Google AI Studio</a>. Without a key the cabinet cannot begin.</p>
-                <label htmlFor="gemini-model" className="font-heading text-sm uppercase tracking-[0.16em] text-[#4a392d] pt-2 block">Model</label>
-                <select id="gemini-model" value={settings.model} onChange={(event) => onSettingsChange({ ...settings, model: event.target.value as GeminiModel })} className="w-full bg-[#eae1ca]/60 border border-[#4a392d]/25 rounded-sm p-3 text-[15px] text-[#465f75] focus:outline-none focus:ring-2 focus:ring-[#8b5254]/30">
-                  <option value="gemini-3.6-flash">gemini-3.6-flash (better quality, recommended)</option>
-                  <option value="gemini-3.5-flash-lite">gemini-3.5-flash-lite (maxes the free tier)</option>
-                </select>
+                <p className="text-xs text-[#465f75]/70">Pinned model <span className="font-heading">meta-llama/Llama-3.3-70B-Instruct-Turbo</span>. Needs a card on file — get a key at <a className="underline" href="https://deepinfra.com/dash/api_keys" target="_blank" rel="noreferrer">deepinfra.com</a>.</p>
+              </>
+            ) : usingTogether ? (
+              <>
+                <label htmlFor="tog-key" className="font-heading text-sm uppercase tracking-[0.16em] text-[#4a392d]">Together API key</label>
+                <input id="tog-key" type="password" autoComplete="off" value={togetherKeyInput} onChange={(event) => { setTogetherKeyInput(event.target.value); setTestState('idle'); setTestMessage(''); }} placeholder="Paste key from api.together.ai" className="w-full bg-[#eae1ca]/60 border border-[#4a392d]/25 rounded-sm p-3 text-[15px] text-[#465f75] placeholder:text-[#465f75]/45 focus:outline-none focus:ring-2 focus:ring-[#8b5254]/30" />
+                <div className="flex flex-wrap gap-2">
+                  <button className="btn-secondary" onClick={runTest} disabled={!togetherKeyInput.trim() || testState === 'testing'}>{testState === 'testing' ? 'Testing…' : 'Test key'}</button>
+                  <button className="btn-secondary" onClick={clearKey} disabled={!togetherKeyInput && !settings.togetherApiKey}>Clear</button>
+                  {keySaved && <span className="text-xs italic self-center text-[#4a6b3f]">Saved in this browser.</span>}
+                </div>
+                {testMessage && <p className={`text-sm italic ${testState === 'ok' ? 'text-[#4a6b3f]' : 'text-[#8b5254]'}`}>{testMessage}</p>}
+                <p className="text-xs text-[#465f75]/70">Pinned model <span className="font-heading">Qwen/Qwen3-30B-A3B</span>. Get a key at <a className="underline" href="https://api.together.ai/settings/api-keys" target="_blank" rel="noreferrer">api.together.ai</a> (requires a card upfront).</p>
+              </>
+            ) : (
+              <>
+                <p className="text-xs text-[#465f75]/70">Pick a provider above — this cabinet no longer speaks to Gemini.</p>
               </>
             )}
             <span className="font-heading text-sm uppercase tracking-[0.16em] text-[#4a392d] pt-2 block">Style intensity (all seats)</span>
             <div className="flex gap-2">{(['low', 'medium', 'high'] as const).map((level) => <button key={level} onClick={() => onSettingsChange({ ...settings, intensity: level })} className={`btn-secondary capitalize ${settings.intensity === level ? '!border-[#8b5254] !text-[#8b5254]' : ''}`}>{level}</button>)}</div>
-            <label className="flex items-center gap-3 text-[15px] text-[#465f75] pt-1"><input type="checkbox" checked={settings.longForm} onChange={(event) => onSettingsChange({ ...settings, longForm: event.target.checked })} className="w-4 h-4 accent-[#8b5254]" /> Long form (~400 words/turn instead of ~150)</label>
+            <label className="flex items-center gap-3 text-[15px] text-[#465f75] pt-1"><input type="checkbox" checked={settings.longForm} onChange={(event) => onSettingsChange({ ...settings, longForm: event.target.checked })} className="w-4 h-4 accent-[#8b5254]" /> Long form (~280 words/turn instead of ~100)</label>
             <span className="font-heading text-sm uppercase tracking-[0.16em] text-[#4a392d] pt-2 block">Turn economy</span>
             <div className="flex gap-2" role="radiogroup" aria-label="Turn economy">
               <button role="radio" aria-checked={settings.economy === 'full'} onClick={() => onSettingsChange({ ...settings, economy: 'full' })} className={`btn-secondary ${settings.economy === 'full' ? '!border-[#8b5254] !text-[#8b5254]' : ''}`}>Full</button>
@@ -877,6 +1153,7 @@ function SettingsDrawer({ philosophers, activeSlugs, togglePhilosopher, settings
             })}</div>
             <p className="text-xs italic text-[#465f75]/60 mt-5">The baton passes only to active thinkers, always to the immediate next seat. The dialectical order remains fixed to preserve the historical-conceptual movement.</p>
             <p className="text-xs text-[#465f75]/70 mt-2">{activeSlugs.length} thinkers × 3 passes = {activeSlugs.length * 3} turns{activeSlugs.length > 5 ? ' — five seats (≈15 turns) is the recommended session; it halves token use with the arc intact.' : ' — a lean session.'}</p>
+            <label className="flex items-start gap-3 text-xs text-[#465f75]/70 mt-3"><input type="checkbox" checked={settings.grounding} onChange={(event) => onSettingsChange({ ...settings, grounding: event.target.checked })} className="w-4 h-4 mt-0.5 accent-[#8b5254]" /> Ground turns in source texts (experimental): fetches each speaker's key work and injects the most relevant passages. Slower, more tokens, better grounded. Off by default.</label>
           </div>
         )}
         {tab === 'display' && (
@@ -910,7 +1187,11 @@ function DisplayTab({ display, onChange }: { display: AccessibilitySettings; onC
     void ensureVoices().then(() => {
       const utter = new SpeechSynthesisUtterance('The cabinet is in session. Each voice passes its contradiction clockwise.');
       utter.rate = display.ttsRate;
-      utter.lang = 'en-GB';
+      const voice = defaultVoice();
+      if (voice) {
+        utter.voice = voice;
+        utter.lang = voice.lang;
+      }
       utter.onend = () => setPreviewState('idle');
       utter.onerror = () => setPreviewState('idle');
       window.speechSynthesis.speak(utter);
@@ -1009,7 +1290,12 @@ function DisplayToggle({ label, hint, checked, onChange }: { label: string; hint
 }
 
 
-function InterventionModal({ intervention, philosopher, onClose, ttsSupported, speaking, onToggleSpeech }: { intervention: Intervention; philosopher?: Philosopher; onClose: () => void; ttsSupported?: boolean; speaking?: boolean; onToggleSpeech?: () => void }) { return <div className="fixed inset-0 z-50 bg-[#4a392d]/35 backdrop-blur-sm flex items-center justify-center p-4" onClick={onClose}><div role="dialog" aria-modal="true" aria-label={`Intervention by ${philosopher?.full_name ?? 'unknown thinker'}`} className="dark-academia-card max-w-3xl max-h-[90vh] overflow-y-auto custom-scroll p-6 md:p-8" onClick={(event) => event.stopPropagation()}><div className="flex justify-between gap-4"><div><p className="pass-indicator text-[#8b5254]">Pass {intervention.pass_number} · {PASS_NAMES[intervention.pass_number - 1]}</p><h2 className="text-3xl">{philosopher?.full_name}</h2><p className="italic text-[#465f75]/65">{intervention.position_label}</p></div><div className="flex flex-col items-end gap-2"><button className="btn-secondary !px-3 h-fit" onClick={onClose} aria-label="Close intervention"><X size={17} /></button>{ttsSupported && <button className="btn-secondary !text-xs flex items-center gap-2" onClick={onToggleSpeech} aria-label={speaking ? 'Stop reading this intervention' : 'Listen to this intervention'}>{speaking ? <><Square size={13} /> Stop</> : <><Volume2 size={13} /> Listen</>}</button>}</div></div><p className="drop-cap text-[17px] leading-relaxed mt-6 whitespace-pre-line text-[#465f75]">{intervention.response_text}</p>{philosopher && <div className="mt-4"><ReadMore philosopherName={philosopher.name} /></div>}<div className="mt-7 border-t border-[#4a392d]/20 pt-5"><p className="font-heading text-xl text-[#4a392d] mb-3">Source status</p>{intervention.citations.map((citation) => <div key={citation.label} className="p-3 bg-[#eae1ca]/60 border border-[#4a392d]/15 mb-2"><span className={`citation-badge ${citation.verified ? '' : 'citation-unverified'}`}><BookOpen size={11} /> {citation.label}</span><p className="text-xs italic mt-2 text-[#465f75]/65">{citation.verified ? 'Retrieved or verified source reference.' : 'Profile-grounded interpretation; underlying passage requires corpus retrieval.'}</p></div>)}</div></div></div>; }
+function GroundingReceipt({ grounding, responseText }: { grounding: { title: string; number: number; passages: string[] }; responseText: string }) {
+  const checks = verifyQuotes(responseText, grounding.passages);
+  return <div className="mt-5 border-t border-[#4a392d]/20 pt-5"><p className="font-heading text-xl text-[#4a392d] mb-1">What the speaker was shown</p><p className="text-xs italic text-[#465f75]/65 mb-3">Passages fetched from “{grounding.title}” [{grounding.number}] before this turn — quotes below are checked against them, client-side. Paraphrase can fail the check; failure means “check by hand”, not “false”.</p>{grounding.passages.map((text, i) => <p key={i} className="text-[13px] leading-relaxed p-3 mb-2 bg-[#eae1ca]/60 border border-[#4a392d]/15 text-[#465f75]">“{text.length > 400 ? `${text.slice(0, 400)}…` : text}”</p>)}<div className="mt-3 space-y-2">{checks.length === 0 ? <p className="text-xs italic text-[#465f75]/65">No verifiable quotes in this turn — nothing to check against.</p> : checks.map((check, i) => <div key={i} className="flex items-start gap-2 text-[13px]"><span aria-hidden="true">{check.verified ? '✓' : '✗'}</span><p className="text-[#465f75]"><span className={`font-heading text-xs uppercase tracking-wider ${check.verified ? 'text-[#4a6b3f]' : 'text-[#8b5254]'}`}>{check.verified ? 'Verified' : 'Unverified'}: </span>“{check.quote.length > 160 ? `${check.quote.slice(0, 160)}…` : check.quote}”</p></div>)}</div></div>;
+}
+
+function InterventionModal({ intervention, philosopher, onClose, ttsSupported, speaking, onToggleSpeech, onOpenSources, grounding }: { intervention: Intervention; philosopher?: Philosopher; onClose: () => void; ttsSupported?: boolean; speaking?: boolean; onToggleSpeech?: () => void; onOpenSources: (n: number) => void; grounding?: { title: string; number: number; passages: string[] } | null }) { return <div className="fixed inset-0 z-50 bg-[#4a392d]/35 backdrop-blur-sm flex items-center justify-center p-4" onClick={onClose}><div role="dialog" aria-modal="true" aria-label={`Intervention by ${philosopher?.full_name ?? 'unknown thinker'}`} className="dark-academia-card max-w-3xl max-h-[90vh] overflow-y-auto custom-scroll p-6 md:p-8" onClick={(event) => event.stopPropagation()}><div className="flex justify-between gap-4"><div><p className="pass-indicator text-[#8b5254]">Pass {intervention.pass_number} · {PASS_NAMES[intervention.pass_number - 1]}</p><h2 className="text-3xl">{philosopher?.full_name}</h2><p className="italic text-[#465f75]/65">{intervention.position_label}</p></div><div className="flex flex-col items-end gap-2"><button className="btn-secondary !px-3 h-fit" onClick={onClose} aria-label="Close intervention"><X size={17} /></button>{ttsSupported && <button className="btn-secondary !text-xs flex items-center gap-2" onClick={onToggleSpeech} aria-label={speaking ? 'Stop reading this intervention' : 'Listen to this intervention'}>{speaking ? <><Square size={13} /> Stop</> : <><Volume2 size={13} /> Listen</>}</button>}</div></div><p className="drop-cap text-[17px] leading-relaxed mt-6 whitespace-pre-line text-[#465f75]">{intervention.response_text}</p>{philosopher && <div className="mt-4"><ReadMore philosopherName={philosopher.name} /></div>}<div className="mt-7 border-t border-[#4a392d]/20 pt-5"><p className="font-heading text-xl text-[#4a392d] mb-3">References</p>{philosopher && <ReadSimilar philosopherName={philosopher.name} labels={intervention.citations.map((c) => c.label)} onOpenSources={onOpenSources} />}{grounding && <GroundingReceipt grounding={grounding} responseText={intervention.response_text} />}</div></div></div>; }
 
 function StyleEssenceDisplay({ style }: { style: StyleEssence }) { return <div className="grid md:grid-cols-2 gap-5"><div className="border-t border-[#4a392d]/15 pt-3"><p className="text-xs uppercase tracking-widest text-[#8b5254] mb-1">Style DNA</p><p className="text-[15px] leading-relaxed text-[#465f75]/85">{style.style_dna}</p></div><div className="border-t border-[#4a392d]/15 pt-3"><p className="text-xs uppercase tracking-widest text-[#8b5254] mb-1">Characteristic Movement</p><p className="text-[15px] leading-relaxed text-[#465f75]/85">{style.characteristic_movement}</p></div></div>; }
 function ProfileModal({ philosopher, onClose }: { philosopher: Philosopher; onClose: () => void }) {

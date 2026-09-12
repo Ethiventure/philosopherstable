@@ -37,6 +37,20 @@ export function listVoices(): TtsVoiceInfo[] {
   }));
 }
 
+/** The browser-flagged default voice (the OS-level default), preferring
+ * English. Assigning this explicitly is what actually yields "the device
+ * default": leaving `utter.voice` unset lets Chrome fall back to a bundled
+ * voice instead of the system one. Still no picker, no baked-in voice. */
+export function defaultVoice(): SpeechSynthesisVoice | null {
+  if (!isTtsSupported()) return null;
+  const voices = window.speechSynthesis.getVoices();
+  if (!voices.length) return null;
+  return (
+    voices.find((v) => v.default && v.lang.toLowerCase().startsWith('en')) ??
+    voices.find((v) => v.default) ??
+    null
+  );
+}
 /** Voices load asynchronously (Chrome returns [] on first call) — wait briefly. */
 export function ensureVoices(): Promise<void> {
   if (!isTtsSupported()) return Promise.resolve();
@@ -106,8 +120,9 @@ export function createTtsController({ rate, onStatus }: TtsControllerOptions) {
     onStatus({ state: 'idle' });
   }
 
-  // Device-default voice: we set only lang + rate and never assign
-  // `utter.voice`, so every visitor hears their own OS/browser default.
+  // Device-default voice, assigned explicitly: leaving `utter.voice` unset
+  // lets Chrome fall back to a bundled voice instead of the OS default.
+  // Still no picker and nothing baked in — this resolves per visitor.
   function speakItemChunks(chunks: string[], itemIndex: number) {
     if (cancelled || itemIndex >= queue.length) { finish(); return; }
     const item = queue[itemIndex];
@@ -130,7 +145,11 @@ export function createTtsController({ rate, onStatus }: TtsControllerOptions) {
       }
       const utter = new SpeechSynthesisUtterance(chunks[partIndex]);
       utter.rate = rate;
-      utter.lang = 'en-GB';
+      const voice = defaultVoice();
+      if (voice) {
+        utter.voice = voice;
+        utter.lang = voice.lang;
+      }
       utter.onend = () => { partIndex += 1; speakPart(); };
       utter.onerror = () => { partIndex += 1; speakPart(); };
       synth().speak(utter);

@@ -127,7 +127,7 @@ export async function handler(event) {
   if (!apiKey) {
     return json(500, {
       error: {
-        message: 'Shared provider is not configured (no GROQ_API_KEY on the server). Add your own Gemini or OpenRouter key in Settings → Key.',
+        message: 'Shared provider is not configured (no GROQ_API_KEY on the server). Add your own OpenRouter, Groq, DeepInfra or Together key in Settings → Key.',
         code: 'unconfigured',
       },
     });
@@ -156,7 +156,7 @@ export async function handler(event) {
   if (ipCount >= perIpCap) {
     return json(429, {
       error: {
-        message: `Shared quota used up for your address today (${ipCount}/${perIpCap}). Caps reset at midnight UTC — or add your own Gemini/OpenRouter key in Settings → Key for unlimited personal use.`,
+        message: `Shared quota used up for your address today (${ipCount}/${perIpCap}). Caps reset at midnight UTC — or add your own OpenRouter, Groq, DeepInfra or Together key in Settings → Key for unlimited personal use.`,
         code: 'quota',
       },
     });
@@ -164,7 +164,7 @@ export async function handler(event) {
   if (globalCount >= globalCap) {
     return json(429, {
       error: {
-        message: 'Shared quota is exhausted for everyone today. It resets at midnight UTC — or add your own Gemini/OpenRouter key in Settings → Key.',
+        message: 'Shared quota is exhausted for everyone today. It resets at midnight UTC — or add your own OpenRouter, Groq, DeepInfra or Together key in Settings → Key.',
         code: 'quota',
       },
     });
@@ -194,7 +194,7 @@ export async function handler(event) {
     if (result.status === 401) {
       return json(500, {
         error: {
-          message: 'Shared provider key is invalid (owner must rotate GROQ_API_KEY). Meanwhile, add your own Gemini/OpenRouter key in Settings → Key.',
+          message: 'Shared provider key is invalid (owner must rotate GROQ_API_KEY). Meanwhile, add your own OpenRouter, Groq, DeepInfra or Together key in Settings → Key.',
           code: 'auth',
         },
       });
@@ -208,14 +208,14 @@ export async function handler(event) {
   if (quotaish) {
     return json(429, {
       error: {
-        message: `Shared quota is tight right now: ${failures.join('; ')}. Wait out the named window and Resume — or add your own Gemini/OpenRouter key in Settings → Key.`,
+        message: `Shared quota is tight right now: ${failures.join('; ')}. Wait out the named window and Resume — or add your own OpenRouter, Groq, DeepInfra or Together key in Settings → Key.`,
         code: 'quota',
       },
     });
   }
   return json(502, {
     error: {
-      message: `Shared provider failed on every model: ${failures.join('; ')}. Resume to retry, or add your own Gemini/OpenRouter key in Settings → Key.`,
+      message: `Shared provider failed on every model: ${failures.join('; ')}. Resume to retry, or add your own OpenRouter, Groq, DeepInfra or Together key in Settings → Key.`,
       code: 'server',
     },
   });
