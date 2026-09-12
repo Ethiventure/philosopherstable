@@ -31,7 +31,7 @@ import {
   type Philosopher,
   type StyleEssence,
 } from '@/types';
-import { buildCodaPrompt, buildTurnInstruction, buildUserMessage, CODA_SYSTEM, getTurnKind, STRUCTURED_OUTPUT_HINT } from '@/lib/dialectic/prompts';
+import { buildCodaPrompt, buildTurnInstruction, buildUserMessage, CODA_REPAIR_SUFFIX, CODA_SYSTEM, getTurnKind, STRUCTURED_OUTPUT_HINT } from '@/lib/dialectic/prompts';
 import { LlmError, type LlmErrorCode, type TurnOutput } from '@/lib/llm';
 import { loadSettings, saveSettings, type CabinetSettings, type GroqModel } from '@/lib/settings';
 import { applyDisplay, loadDisplay, saveDisplay } from '@/lib/preferences';
@@ -591,9 +591,9 @@ function App() {
     setThinkingName('Margin notes');
     setCodaState('writing');
     setCodaError(null);
-    setCodaError(null);
-    const attempt = async (): Promise<void> => {
-      const output = await generateWithProvider(snap, CODA_SYSTEM, buildCodaPrompt(question, lines), false);
+    const codaUser = buildCodaPrompt(question, lines);
+    const attempt = async (repair = false): Promise<void> => {
+      const output = await generateWithProvider(snap, CODA_SYSTEM, repair ? codaUser + CODA_REPAIR_SUFFIX : codaUser, false);
       if (runRef.current !== runId) return;
       setCoda({
         text: [output.negation, output.incorporation, output.reformulation].filter((s) => s && s.trim()).join('\n\n'),
@@ -604,14 +604,19 @@ function App() {
       await attempt();
     } catch (error) {
       if (runRef.current !== runId) return;
-      // One self-retry for transient failures (typically quota cooling right
-      // after a full session) before surfacing the failure visibly.
+      // Parse failures get a repair retry with the no-quotes rule restated
+      // (inner quotation marks are the usual cause); other retryable failures
+      // (typically quota cooling right after a full session) get one retry
+      // after a wait. Then the failure surfaces visibly.
+      const isParse = error instanceof LlmError && error.code === 'parse';
       const retryable = error instanceof LlmError && error.retryable;
-      if (retryable) {
-        await new Promise((resolve) => setTimeout(resolve, 20000));
-        if (runRef.current !== runId) return;
+      if (isParse || retryable) {
+        if (!isParse) {
+          await new Promise((resolve) => setTimeout(resolve, 20000));
+          if (runRef.current !== runId) return;
+        }
         try {
-          await attempt();
+          await attempt(isParse);
           return;
         } catch (retryError) {
           if (runRef.current !== runId) return;

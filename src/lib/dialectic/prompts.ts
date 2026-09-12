@@ -172,3 +172,8 @@ export function buildCodaPrompt(
     'Write the margin note in two moves, HARD ceiling 250 words total: (negation) what it all means, plainly, including where the sharpest clash is; (reformulation) what to do about it in the 2020s, as numbered concrete proposals — each with an actor who does it and a first step. Vague verbs fail the note: never "have conversations", "raise awareness", "prioritise" or "push for" anything without saying who does what first. Inside values, use no quotation marks of any kind — paraphrase names and terms instead of quoting them. Respond with JSON only, matching this shape exactly (all four keys always present): { negation, reformulation, new_contribution, works_referenced: string[] }. Set works_referenced to [].',
   ].join('\n');
 }
+
+/** Repair suffix specific to the coda: restates the no-quotes rule, since
+ * inner quotation marks are the usual cause of coda parse failures. */
+export const CODA_REPAIR_SUFFIX =
+  ' Your previous reply was not valid JSON, almost always because of quotation marks inside values. Reply again with JSON only: the complete four-key object, with NO quotation marks of any kind anywhere inside the values — paraphrase instead.';

@@ -1450,7 +1450,7 @@
       "file_type": "code",
       "norm_label": "cabinettable()",
       "source_file": "src/App.tsx",
-      "source_location": "L1002"
+      "source_location": "L1007"
     },
     {
       "id": "src_app_displaytab",
@@ -1462,7 +1462,7 @@
       "file_type": "code",
       "norm_label": "displaytab()",
       "source_file": "src/App.tsx",
-      "source_location": "L1258"
+      "source_location": "L1263"
     },
     {
       "id": "src_app_displaytoggle",
@@ -1474,7 +1474,7 @@
       "file_type": "code",
       "norm_label": "displaytoggle()",
       "source_file": "src/App.tsx",
-      "source_location": "L1374"
+      "source_location": "L1379"
     },
     {
       "id": "src_app_getreadmoresource",
@@ -1498,7 +1498,7 @@
       "file_type": "code",
       "norm_label": "groundingreceipt()",
       "source_file": "src/App.tsx",
-      "source_location": "L1384"
+      "source_location": "L1389"
     },
     {
       "id": "src_app_interventionmodal",
@@ -1510,7 +1510,7 @@
       "file_type": "code",
       "norm_label": "interventionmodal()",
       "source_file": "src/App.tsx",
-      "source_location": "L1389"
+      "source_location": "L1394"
     },
     {
       "id": "src_app_positioncomparison",
@@ -1522,7 +1522,7 @@
       "file_type": "code",
       "norm_label": "positioncomparison()",
       "source_file": "src/App.tsx",
-      "source_location": "L1008"
+      "source_location": "L1013"
     },
     {
       "id": "src_app_profilemodal",
@@ -1534,7 +1534,7 @@
       "file_type": "code",
       "norm_label": "profilemodal()",
       "source_file": "src/App.tsx",
-      "source_location": "L1392"
+      "source_location": "L1397"
     },
     {
       "id": "src_app_readingdeck",
@@ -1546,7 +1546,7 @@
       "file_type": "code",
       "norm_label": "readingdeck()",
       "source_file": "src/App.tsx",
-      "source_location": "L932"
+      "source_location": "L937"
     },
     {
       "id": "src_app_readmore",
@@ -1582,7 +1582,7 @@
       "file_type": "code",
       "norm_label": "settingsdrawer()",
       "source_file": "src/App.tsx",
-      "source_location": "L1052"
+      "source_location": "L1057"
     },
     {
       "id": "src_app_sourcedrawer",
@@ -1594,7 +1594,7 @@
       "file_type": "code",
       "norm_label": "sourcedrawer()",
       "source_file": "src/App.tsx",
-      "source_location": "L1035"
+      "source_location": "L1040"
     },
     {
       "id": "src_app_spiralview",
@@ -1606,7 +1606,7 @@
       "file_type": "code",
       "norm_label": "spiralview()",
       "source_file": "src/App.tsx",
-      "source_location": "L1006"
+      "source_location": "L1011"
     },
     {
       "id": "src_app_styleessencedisplay",
@@ -1618,7 +1618,7 @@
       "file_type": "code",
       "norm_label": "styleessencedisplay()",
       "source_file": "src/App.tsx",
-      "source_location": "L1391"
+      "source_location": "L1396"
     },
     {
       "id": "src_app_tointervention",
@@ -1642,7 +1642,7 @@
       "file_type": "code",
       "norm_label": "welcomemodal()",
       "source_file": "src/App.tsx",
-      "source_location": "L1010"
+      "source_location": "L1015"
     },
     {
       "id": "opencode_plugins_graphify_graphifyplugin",
@@ -2537,6 +2537,17 @@
       "norm_label": "dialectic/prompts.ts",
       "source_file": "src/lib/dialectic/prompts.ts",
       "source_location": "L1"
+    },
+    {
+      "id": "src_lib_dialectic_prompts_coda_repair_suffix",
+      "label": "CODA_REPAIR_SUFFIX",
+      "_origin": "ast",
+      "community": 12,
+      "community_name": "dialectic/prompts.ts",
+      "file_type": "code",
+      "norm_label": "coda_repair_suffix",
+      "source_file": "src/lib/dialectic/prompts.ts",
+      "source_location": "L178"
     },
     {
       "id": "src_lib_dialectic_prompts_coda_system",
@@ -7583,7 +7594,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/App.tsx",
-      "source_location": "L1002",
+      "source_location": "L1007",
       "weight": 1.0
     },
     {
@@ -7594,7 +7605,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/App.tsx",
-      "source_location": "L1006",
+      "source_location": "L1011",
       "weight": 1.0
     },
     {
@@ -7605,7 +7616,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/App.tsx",
-      "source_location": "L1008",
+      "source_location": "L1013",
       "weight": 1.0
     },
     {
@@ -7616,7 +7627,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/App.tsx",
-      "source_location": "L1010",
+      "source_location": "L1015",
       "weight": 1.0
     },
     {
@@ -7627,7 +7638,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/App.tsx",
-      "source_location": "L1035",
+      "source_location": "L1040",
       "weight": 1.0
     },
     {
@@ -7638,7 +7649,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/App.tsx",
-      "source_location": "L1052",
+      "source_location": "L1057",
       "weight": 1.0
     },
     {
@@ -7660,7 +7671,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/App.tsx",
-      "source_location": "L1258",
+      "source_location": "L1263",
       "weight": 1.0
     },
     {
@@ -7671,7 +7682,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/App.tsx",
-      "source_location": "L1374",
+      "source_location": "L1379",
       "weight": 1.0
     },
     {
@@ -7682,7 +7693,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/App.tsx",
-      "source_location": "L1384",
+      "source_location": "L1389",
       "weight": 1.0
     },
     {
@@ -7693,7 +7704,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/App.tsx",
-      "source_location": "L1389",
+      "source_location": "L1394",
       "weight": 1.0
     },
     {
@@ -7704,7 +7715,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/App.tsx",
-      "source_location": "L1391",
+      "source_location": "L1396",
       "weight": 1.0
     },
     {
@@ -7715,7 +7726,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/App.tsx",
-      "source_location": "L1392",
+      "source_location": "L1397",
       "weight": 1.0
     },
     {
@@ -7770,7 +7781,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/App.tsx",
-      "source_location": "L932",
+      "source_location": "L937",
       "weight": 1.0
     },
     {
@@ -7925,6 +7936,17 @@
       "confidence_score": 1.0,
       "source_file": "src/lib/dialectic/prompts.ts",
       "source_location": "L162",
+      "weight": 1.0
+    },
+    {
+      "source": "src_lib_dialectic_prompts",
+      "target": "src_lib_dialectic_prompts_coda_repair_suffix",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/lib/dialectic/prompts.ts",
+      "source_location": "L178",
       "weight": 1.0
     },
     {
@@ -10237,5 +10259,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "232b7c329b558e04810c9317f3f6de8593a894db"
+  "built_at_commit": "d0f64ad7b481d970ef85dafd14a45e6f9add5642"
 }
