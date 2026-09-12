@@ -209,8 +209,14 @@ pause flag checked between turns; "X is thinking…" state. After the final seat
 determination, writes margin notes in a fixed Gen-Z PPE-student voice
 (`CODA_SYSTEM` + `buildCodaPrompt`), stored as separate `coda` state (never an
 Intervention — seats/passes/deck math untouched). Own visible status
-(`codaState`: writing / failed + retry + console diagnostics); silent catches
-are banned everywhere, including here.
+(`codaState`: writing / failed + visible reason + retry + console diagnostics);
+silent catches are banned everywhere, including here. Parse failures get a
+coda-specific repair restating the no-quotes rule. DeepInfra requests
+`response_format: json_object` first (plain fallback on 400) to force valid
+syntax. TTS uses the explicit browser-default voice (leaving `utter.voice`
+unset made Chrome pick a bundled voice instead of the OS default).
+`scripts/dev-keepalive.sh` guards local `:8888` (restarts netlify dev when the
+Vite child dies and the proxy has nothing to forward to).
 
 **References, not citations** — `src/lib/footnotes.ts`: model-claimed work labels
 resolve display-side to stable manifest numbers (`Read similar: 3, 9`; numbers
