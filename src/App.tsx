@@ -610,6 +610,7 @@ function App() {
       // after a wait. Then the failure surfaces visibly.
       const isParse = error instanceof LlmError && error.code === 'parse';
       const retryable = error instanceof LlmError && error.retryable;
+      let codaFailure: unknown = error;
       if (isParse || retryable) {
         if (!isParse) {
           await new Promise((resolve) => setTimeout(resolve, 20000));
@@ -620,13 +621,13 @@ function App() {
           return;
         } catch (retryError) {
           if (runRef.current !== runId) return;
-          error = retryError;
+          codaFailure = retryError;
         }
       }
-      if (typeof console !== 'undefined') console.error('[Margin notes] coda failed:', error);
+      if (typeof console !== 'undefined') console.error('[Margin notes] coda failed:', codaFailure);
       setCoda(null);
       setCodaState('failed');
-      setCodaError(error instanceof Error ? error.message : 'Unknown error.');
+      setCodaError(codaFailure instanceof Error ? codaFailure.message : 'Unknown error.');
     } finally {
       if (runRef.current === runId) setThinkingName(null);
     }
