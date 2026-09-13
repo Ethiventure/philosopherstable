@@ -281,6 +281,24 @@ Searchable set per thinker is capped at 3 works (Sep 2026 decision): 1) the
 magnum opus, 2) the last writing, 3) the next most important or late work.
 The manifest keeps wider reading links, but search/RAG never touches beyond
 those three.
+RAG v1 (lexical, Sep 2026 test PASSES on Bookchin): `data/sources.json`
+manifest with explicit rights gate (importer refuses unapproved sources
+before fetching); `scripts/rag-ingest.mjs` (TAL `.html` full-text, generic
+HTML extraction with TOC/boilerplate/entity handling, heading-aware ~350w
+chunks, idempotent stable IDs) → local `data/rag.sqlite` (gitignored truth)
++ shipped `public/search-index.json`; shared scorer `src/lib/rag-search.ts`
+(BM25 + Porter stemming + phrase/heading/definition boosts, adjacent-dup
+diversity, none/weak/sufficient/strong evidence) used identically in browser
+and node; `rag:search` debug CLI, `rag:eval` suite (12/12, Recall 1.00, MRR
+0.86, abstention 3/3, ~25ms), `test:rag` self-tests. No vectors until eval
+proves lexical fails. Owner approved Bookchin TAL + bulk automation across
+the manifest AFTER the test go — failures skip, never force. Deferred, not
+forgotten: mechanical echo-check badges, word-budget enforcement (see below).
+Word budgets: per-turn HARD ceilings (~100 words normal / ~280 long-form,
+opening 60/160) live in prompts but models routinely overshoot (~150–200
+observed on DeepInfra). No enforcement exists; open question is whether to
+enforce (truncate? repair-retry? tighter budgets?) or accept overshoot as
+the cost of complete thoughts. Deferred pending owner call.
 
 ## Phase 6 — Richer philosopher information
 Per file: `biography`, `key_works`, `why_this_seat` (hand-off line). Profile modal

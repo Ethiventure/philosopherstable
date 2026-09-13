@@ -1,0 +1,18 @@
+{
+  "version": 1,
+  "rights_note": "Every entry needs explicit owner approval before anything is fetched or indexed. The importer refuses anything else. Owner (Jenny) approved the Bookchin TAL entry 2026-09-13; owner also approved bulk automation across the manifest AFTER the Bookchin test passes — failures are skipped, never forced.",
+  "sources": [
+    {
+      "id": "bookchin-social-ecology-communalism",
+      "author": "Murray Bookchin",
+      "title": "Social Ecology and Communalism",
+      "source_mode": "REMOTE_IMPORT",
+      "source_url": "https://theanarchistlibrary.org/library/murray-bookchin-social-ecology-and-communalism",
+      "rights_status": "approved",
+      "rights_decision_by": "project_owner",
+      "rights_decision_at": "2026-09-13",
+      "rights_note": "Owner-approved for local index and retrieval use. TAL-hosted text; author d.2006 so not public domain — carried under owner approval, not a licence claim.",
+      "enabled": true
+    }
+  ]
+}

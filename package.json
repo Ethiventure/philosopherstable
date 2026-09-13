@@ -10,7 +10,11 @@
     "preview": "vite preview",
     "typecheck": "tsc --noEmit -p tsconfig.app.json",
     "check-links": "node scripts/check-links.mjs",
-    "check-links:fix": "node scripts/check-links.mjs --fix"
+    "check-links:fix": "node scripts/check-links.mjs --fix",
+    "rag:ingest": "node scripts/rag-ingest.mjs",
+    "rag:search": "node scripts/rag-search.mjs",
+    "rag:eval": "node scripts/rag-eval.mjs",
+    "test:rag": "node --test scripts/rag-selftest.mjs"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.57.4",

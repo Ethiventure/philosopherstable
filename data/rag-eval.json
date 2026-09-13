@@ -1,0 +1,197 @@
+{
+  "version": 1,
+  "known_gap": "Ultra-common terms (social/ecology) tie across the defining essay, so the single best thesis passage (-0012, Eiglad foreword) ranks #8-10 rather than #1 for definition queries. Acceptable sets use verified on-topic members; the eval guards regressions, not ideal ranking.",
+  "note": "Draft cases: relevance judged by owner reading the passages (Sep 2026). human_validated:false until a second review pass; abstention cases were directly observed and marked true.",
+  "cases": [
+    {
+      "id": "bookchin-definition-001",
+      "category": "definition",
+      "query": "What is social ecology?",
+      "filters": {
+        "author": "Murray Bookchin",
+        "work_id": null
+      },
+      "acceptable_passage_ids": [
+        "bookchin-social-ecology-communalism-0009",
+        "bookchin-social-ecology-communalism-0018",
+        "bookchin-social-ecology-communalism-0028",
+        "bookchin-social-ecology-communalism-0030"
+      ],
+      "minimum_evidence_status": "sufficient",
+      "notes": "Core definition; 0014 states the social-roots thesis directly.",
+      "human_validated": false
+    },
+    {
+      "id": "bookchin-term-002",
+      "category": "exact terminology",
+      "query": "social ecology hierarchy domination",
+      "filters": {
+        "author": "Murray Bookchin",
+        "work_id": null
+      },
+      "acceptable_passage_ids": [
+        "bookchin-social-ecology-communalism-0023",
+        "bookchin-social-ecology-communalism-0025",
+        "bookchin-social-ecology-communalism-0030"
+      ],
+      "minimum_evidence_status": "sufficient",
+      "notes": "Distinctive vocabulary should rank core essays first.",
+      "human_validated": false
+    },
+    {
+      "id": "bookchin-paraphrase-003",
+      "category": "paraphrase",
+      "query": "Why does social hierarchy lead to ecological crisis?",
+      "filters": {
+        "author": "Murray Bookchin",
+        "work_id": null
+      },
+      "acceptable_passage_ids": [
+        "bookchin-social-ecology-communalism-0028",
+        "bookchin-social-ecology-communalism-0023",
+        "bookchin-social-ecology-communalism-0012"
+      ],
+      "minimum_evidence_status": "sufficient",
+      "notes": "No exact phrase overlap required; tests conceptual retrieval.",
+      "human_validated": false
+    },
+    {
+      "id": "bookchin-concept-004",
+      "category": "named concept",
+      "query": "What is communalism?",
+      "filters": {
+        "author": "Murray Bookchin",
+        "work_id": null
+      },
+      "acceptable_passage_ids": [
+        "bookchin-social-ecology-communalism-0063",
+        "bookchin-social-ecology-communalism-0068",
+        "bookchin-social-ecology-communalism-0072"
+      ],
+      "minimum_evidence_status": "sufficient",
+      "notes": "0073 gives the Paris Commune naming; 0075/0080 the program.",
+      "human_validated": false
+    },
+    {
+      "id": "bookchin-concept-005",
+      "category": "named concept",
+      "query": "What is libertarian municipalism and what are popular assemblies?",
+      "filters": {
+        "author": "Murray Bookchin",
+        "work_id": null
+      },
+      "acceptable_passage_ids": [
+        "bookchin-social-ecology-communalism-0064",
+        "bookchin-social-ecology-communalism-0068",
+        "bookchin-social-ecology-communalism-0072",
+        "bookchin-social-ecology-communalism-0032"
+      ],
+      "minimum_evidence_status": "sufficient",
+      "notes": "Praxis passages in The Communalist Project.",
+      "human_validated": false
+    },
+    {
+      "id": "bookchin-term-006",
+      "category": "exact terminology",
+      "query": "second nature",
+      "filters": {
+        "author": "Murray Bookchin",
+        "work_id": null
+      },
+      "acceptable_passage_ids": [
+        "bookchin-social-ecology-communalism-0018",
+        "bookchin-social-ecology-communalism-0026",
+        "bookchin-social-ecology-communalism-0030"
+      ],
+      "minimum_evidence_status": "sufficient",
+      "notes": "First/second nature distinction; 0018 is the direct definition.",
+      "human_validated": false
+    },
+    {
+      "id": "bookchin-quote-007",
+      "category": "quotation or phrase",
+      "query": "the future of life on this planet pivots",
+      "filters": {
+        "author": "Murray Bookchin",
+        "work_id": null
+      },
+      "acceptable_passage_ids": [
+        "bookchin-social-ecology-communalism-0030"
+      ],
+      "minimum_evidence_status": "sufficient",
+      "notes": "Verbatim phrase from 0034; tests phrase matching.",
+      "human_validated": false
+    },
+    {
+      "id": "bookchin-relation-008",
+      "category": "conceptual relationship",
+      "query": "Why must ecological action be social rather than merely cultural?",
+      "filters": {
+        "author": "Murray Bookchin",
+        "work_id": null
+      },
+      "acceptable_passage_ids": [
+        "bookchin-social-ecology-communalism-0028",
+        "bookchin-social-ecology-communalism-0012"
+      ],
+      "minimum_evidence_status": "sufficient",
+      "notes": "0031 argues the social-not-cultural thesis directly.",
+      "human_validated": false
+    },
+    {
+      "id": "bookchin-negative-009",
+      "category": "negative/critical question",
+      "query": "Why does Bookchin criticise the state?",
+      "filters": {
+        "author": "Murray Bookchin",
+        "work_id": null
+      },
+      "acceptable_passage_ids": [
+        "bookchin-social-ecology-communalism-0041",
+        "bookchin-social-ecology-communalism-0061"
+      ],
+      "minimum_evidence_status": "weak",
+      "notes": "Statist-structure critique lives in the Communalist Project passages.",
+      "human_validated": false
+    },
+    {
+      "id": "bookchin-noanswer-010",
+      "category": "no-answer query",
+      "query": "quantum entanglement",
+      "filters": {
+        "author": "Murray Bookchin",
+        "work_id": null
+      },
+      "acceptable_passage_ids": [],
+      "minimum_evidence_status": "none",
+      "notes": "Nothing in the corpus; must abstain with evidence none. Observed true Sep 2026. (Note: \"quantum mechanics\" is NOT a valid trap — it stem-conflates with \"mechanical\", a real corpus word. Trap queries must avoid shared stems.)",
+      "human_validated": true
+    },
+    {
+      "id": "bookchin-wrongphil-011",
+      "category": "wrong-philosopher trap",
+      "query": "surplus value",
+      "filters": {
+        "author": "Simone Weil",
+        "work_id": null
+      },
+      "acceptable_passage_ids": [],
+      "minimum_evidence_status": "none",
+      "notes": "Author filter matches nothing; must abstain. Observed true Sep 2026.",
+      "human_validated": true
+    },
+    {
+      "id": "bookchin-authorfilter-012",
+      "category": "author-filter test",
+      "query": "What is communalism?",
+      "filters": {
+        "author": "Karl Marx",
+        "work_id": null
+      },
+      "acceptable_passage_ids": [],
+      "minimum_evidence_status": "none",
+      "notes": "Marx has no indexed passages yet; filter must yield nothing, not Bookchin leakage.",
+      "human_validated": true
+    }
+  ]
+}
