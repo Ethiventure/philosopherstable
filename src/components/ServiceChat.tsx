@@ -152,6 +152,12 @@ export default function ServiceChat({ thinkers, interventions, settings, open, o
         {!settings.grounding && (
           <p className="text-xs italic text-[#465f75]/60 mt-1">Tip: switch on Grounding in Settings → Cabinet and I can search my own books for passages.</p>
         )}
+        {(() => {
+          const lines = interventions.filter((item) => item.sections?.new_contribution);
+          if (!lines.length) return <p className="text-xs italic text-[#465f75]/60 mt-1">No sitting yet — ask anyway; I answer from my own works.</p>;
+          const seats = new Set(lines.map((item) => item.philosopher_id)).size;
+          return <p className="text-xs italic text-[#465f75]/60 mt-1">Reading this sitting with you: {lines.length} lines from {seats} {seats === 1 ? 'seat' : 'seats'}.</p>;
+        })()}
       </div>
       <div className="flex-1 overflow-y-auto px-4 py-3 space-y-3 min-h-[140px]" aria-live="polite">
         {items.length === 0 && (

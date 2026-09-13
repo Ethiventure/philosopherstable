@@ -43,9 +43,12 @@ interface TurnInstructionArgs {
   longForm: boolean;
   /** Pass 3 runs the rotation backwards: each seat answers its left neighbour. */
   reversed?: boolean;
+  /** Pass 3 only: the margins note ran and its text rides below — the turn
+   * must answer it, not just PREV. */
+  marginsNote?: boolean;
 }
 
-export function buildTurnInstruction({ kind, prevName, isFinalSeat, longForm, reversed = false }: TurnInstructionArgs): string {
+export function buildTurnInstruction({ kind, prevName, isFinalSeat, longForm, reversed = false, marginsNote = false }: TurnInstructionArgs): string {
   const b = longForm ? WORD_BUDGETS.long : WORD_BUDGETS.normal;
 
   if (kind === 'opening') {
@@ -82,6 +85,9 @@ export function buildTurnInstruction({ kind, prevName, isFinalSeat, longForm, re
       : []),
     ...(kind === 'reconstruction' && !isFinalSeat
       ? ['Invoke at least one surveyed idea from another seat by name (see STRIKING IDEAS), transformed into your own terms — never quoted; a pass-3 turn that only answers PREV has failed.']
+      : []),
+    ...(kind === 'reconstruction' && marginsNote
+      ? ['You have also read the NOTES FROM THE MARGINS below: carry at least one of its demands forward into your reformulation, in your own terms — never quoted, never ignored. A pass-3 turn that leaves the margins note unanswered has failed.']
       : []),
     'Hegel/Marx method: negation must be determinate (preserve-and-elevate), never mere dismissal. Weave the concession inside the negation or reformulation prose (your CONCESSION stock) — there is no separate incorporation section.',
     'Open and reframe in your STOCK PHRASES, rotating variants across your turns — rebuttal for the cut-in, reframing for the problem. The variants marked SPENT below are used up this session: never reuse them.',

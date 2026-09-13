@@ -212,7 +212,10 @@ Eleven in single quotes, 180-word ceiling), stored as separate `coda` state
 (never an Intervention — seats/passes/deck math untouched). Its text is fed
 into every pass-3 turn as a NOTE block the reformulation must answer; a failed
 note never blocks pass 3 (visible failed + retry, session stands). Nothing
-fires after the final seat. Own visible status
+fires after the final seat. The reading deck (`deckEntries`) is chronological:
+passes 1–2, the note card where it spoke, then pass 3 — and the export
+interleaves the note the same way. Pass-3 turn instructions name the note
+explicitly (`marginsNote`), so the final round must carry a demand forward. Own visible status
 (`codaState`: writing / failed + visible reason + retry + console diagnostics);
 silent catches are banned everywhere, including here. Parse failures get a
 coda-specific repair restating the single-quotes rule. DeepInfra requests
