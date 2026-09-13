@@ -6,6 +6,8 @@ Ten dead philosophers around a table — Spinoza, Kant, Hegel, Marx, Lenin, Bogd
 
 No account, no setup: open the site and press **Convene the cabinet**. It runs on the shared cabinet key by default.
 
+Try it here: https://philosopherstable.netlify.app/ 
+
 - **Read along** in the deck (arrows move forward only — your place is never yanked), or press **Listen** on any card (free, uses your device's own voice). The latest turn also sits on the table itself.
 - Click any intervention for footnoted references (`Read similar: 3, 9` — numbers match Further reading); click any seat for the thinker's profile — Thought, Voice, Works, and why they sit where they sit. Hover a seat for the one-line version.
 - **Export** saves the whole session as clean prose with a Reading List of full links at the end — nothing inline.
