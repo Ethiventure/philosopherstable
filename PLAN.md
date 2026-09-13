@@ -186,11 +186,12 @@ with it instead — every seat speaks once per pass and gets critiqued.
 4. Pass 3 only: every other seat's one-line determinations, labelled by name
    (`othersPriorLines`) — the final rotation may invoke the most striking ideas.
 5. Grounding block, only when the experimental `grounding` toggle is on:
-   top keyword passages from the speaker's own HTML source, cited by footnote.
-   Resolver prefers ingested works, falls back to any live HTML page (this is
-   what lets metadata-only thinkers like Weil ground at all). Failures carry
-   machine-readable reasons (`unsupported-source` / `fetch-failed` / `no-match`)
-   surfaced per-turn in the modal — never a generic nothing.
+   searched passages from the speaker's own indexed works first
+   (`rag-ground.ts`: lazy per-thinker shard, family-name matched, 4 passages
+   on Groq/shared for TPM headroom else 6), live `extract.js` page fetching
+   as fallback, cited by footnote number. Failures carry machine-readable
+   reasons (`unsupported-source` / `fetch-failed` / `no-match`) surfaced
+   per-turn in the modal — never a generic nothing.
 4. System prompt = identity + profile + style essence (at chosen intensity) +
    universal mechanisms + anti-waffle rules + banned-phrase list + word budgets.
 5. ~~**Ledger** (one line per claim/concept, fed back each call) — **DROPPED
@@ -209,11 +210,16 @@ Stored as `Intervention.sections`; `response_text` kept as a joined string.
 **2f Orchestration** — async loop over passes × seats replaces `setInterval`;
 pause flag checked between turns; "X is thinking…" state. Between pass 2 and
 pass 3, `runCoda` fires once: reads ONLY the question + the first two passes'
-one-line determinations, writes the margin note in a rude decolonial Gen-Z
-PPE-student voice (`CODA_SYSTEM` + `buildCodaPrompt`, opens with Marx Thesis
-Eleven in single quotes, 180-word ceiling), stored as separate `coda` state
-(never an Intervention — seats/passes/deck math untouched). Its text is fed
-into every pass-3 turn as a NOTE block the reformulation must answer; a failed
+one-line determinations, writes the margin note in a plain-speaking
+working-class Global South voice, well-read in queer/crip/decolonial theory
+(`CODA_SYSTEM` + `buildCodaPrompt`, opens with Marx Thesis Eleven in single
+quotes, 180-word ceiling, role-actors never named individuals, they/them for
+Weil), stored as separate `coda` state
+(never an Intervention — seats/passes/deck math untouched). The note rides
+in the pass-3 survey (listed first, as `Notes from the margins`) rather than
+an appended block; every pass-3 turn must name it AND carry a demand
+(`marginsNote`; `marginsFirst` makes the opening seat acknowledge the writer
+first); a failed
 note never blocks pass 3 (visible failed + retry, session stands). Nothing
 fires after the final seat. The reading deck (`deckEntries`) is chronological:
 passes 1–2, the note card where it spoke, then pass 3 — and the export
@@ -235,11 +241,13 @@ Vite child dies and the proxy has nothing to forward to).
 **Philosophers' Service desk** — floating tutor window (`ServiceChat.tsx` +
 `src/lib/service-chat.ts`): all 10 thinkers, switchable mid-chat, top style
 intensity, scaffolded answers (answer → plain definitions → example → check
-question, 180 words). Sees recent chat + sitting one-liners + own-links-only
-grounding (follows the `grounding` toggle; other seats' links never enter).
+question, 180 words). Sees recent chat + sitting one-liners + own-works-only
+index grounding (follows the `grounding` toggle; other seats' links never
+enter; family-name shard matching incl. joint shards).
 Plain-text provider paths (`generateText*` per lib, same retries/quota codes,
 no JSON contract). 20 questions per load with a humorous halt; exchanges
-append to export under PHILOSOPHERS' SERVICE. Discoverability: floating bell +
+append to export under PHILOSOPHERS' SERVICE with source titles; answers
+carry clickable source chunks. Discoverability: floating bell +
 sidebar box + welcome-card paragraph (the bell alone was too subtle).
 
 **References, not citations** — `src/lib/footnotes.ts`: model-claimed work labels
@@ -251,8 +259,9 @@ URLs; broken keeps the reference with a sarcastic `link_note`, never deletes.
 ## Phase 3 — Export rewrite
 Each intervention once, as continuous prose (no formal section headings — the
 dialectical movement stays in the argument, not in labels). Never re-print the previous turn.
-No inline citations, read-more lines, or footnote markers in the flow. Append:
-Margin Notes (if written), then a READING LIST of cited manifest entries
+No inline citations, read-more lines, or footnote markers in the flow. Interleaved in
+speaking order: passes 1–2, NOTES FROM THE MARGINS, pass 3, then PHILOSOPHERS'
+SERVICE chats (if any), then a READING LIST of cited manifest entries
 (`[n] title — author — url`, numbers stable). `.md` and `.txt`.
 
 ## Phase 4 — Accessibility & display
@@ -261,16 +270,17 @@ dyslexia-friendly), high contrast, reduce motion (honour `prefers-reduced-motion
 parchment / dim / dark theme — applied as CSS custom properties + data attributes on `<html>`.
 Settings → *Display* tab (Key / Cabinet / Display). Audit: focus rings, `aria-live` on reading
 status + "currently speaking", `aria-expanded` on drawers, Esc on modals, `aria-label` on
-seats. Free TTS via browser SpeechSynthesis: per-turn Listen + full-session read, single
+seats. Free TTS via browser SpeechSynthesis: per-turn Listen, single
 auto-picked English voice, rate control, voice inventory listed read-only in Settings so the
 user can report which voice sounds best.
 
-## Phase 5 — RAG with vectorised books (later)
-Migration to `vector(768)`; Python ingestion in the existing `.venv` (chunk ~800
-tokens with section labels, embed with Gemini @768). **Only `PUBLIC_DOMAIN` sources
-get full text** — Fisher, Deleuze, Bookchin stay metadata-only with unverified
-badges. Query time: embed question + previous turn, `match_chunks(k=4)`, inject,
-cite by label. RLS: corpus tables read-only for anon.
+## Phase 5 — RAG (v1 lexical live; vectors deferred)
+Superseded plan preserved for context: migration to `vector(768)` with Gemini
+embeddings and Supabase was the original sketch — dropped in favour of the
+shipped design below (no paid APIs, no server, no vectors until eval proves
+lexical fails). **Only `PUBLIC_DOMAIN` sources get full text** no longer
+holds: the owner approves sources individually (Bookchin TAL, Fisher OCR,
+archive.org texts) via the rights gate instead of licence class.
 Retrieval contract (no vectors needed for the interim): for the likely most
 relevant linked work, never ingest/embed whole documents — extract/search text on
 demand (headings, contents, index terms, keyword/BM25), read only the top ~2
@@ -279,21 +289,38 @@ page/section citations, never expand to adjacent pages on ambiguity. The current
 `netlify/functions/extract.js` + `grounding` toggle is the working prototype.
 Searchable set per thinker is capped at 3 works (Sep 2026 decision): 1) the
 magnum opus, 2) the last writing, 3) the next most important or late work.
-The manifest keeps wider reading links, but search/RAG never touches beyond
-those three.
+The manifest keeps wider reading links. Status Sep 2026: search actually
+covers every successfully indexed work (curation priority is latest +
+magnum-opus first); the 3-cap stays as the scale lever if/when the index
+outgrows lazy per-thinker fetches — enforce then, not now.
 RAG v1 (lexical, Sep 2026 test PASSES on Bookchin): `data/sources.json`
 manifest with explicit rights gate (importer refuses unapproved sources
 before fetching); `scripts/rag-ingest.mjs` (TAL `.html` full-text, generic
 HTML extraction with TOC/boilerplate/entity handling, heading-aware ~350w
 chunks, idempotent stable IDs) → local `data/rag.sqlite` (gitignored truth)
-+ shipped `public/search-index.json`; shared scorer `src/lib/rag-search.ts`
++ shipped per-author shards under `public/rag/` (+ `manifest.json` with
+schema/chunker versions); shared scorer `src/lib/rag-search.ts`
 (BM25 + Porter stemming + phrase/heading/definition boosts, adjacent-dup
-diversity, none/weak/sufficient/strong evidence) used identically in browser
-and node; `rag:search` debug CLI, `rag:eval` suite (12/12, Recall 1.00, MRR
-0.86, abstention 3/3, ~25ms), `test:rag` self-tests. No vectors until eval
+diversity, none/weak/sufficient/strong evidence, multi-term co-occurrence
+required for strong) used identically in browser
+and node; `rag:search` debug CLI, `rag:eval` suite (12/12, Recall@10 1.00,
+MRR 0.60, traps as scoping checks, ~400ms), `test:rag` self-tests. No vectors until eval
 proves lexical fails. Owner approved Bookchin TAL + bulk automation across
-the manifest AFTER the test go — failures skip, never force. Deferred, not
-forgotten: mechanical echo-check badges, word-budget enforcement (see below).
+the manifest AFTER the test go — failures skip, never force. Bulk run Sep
+2026: 75 sources attempted, 37 works indexed, 6,778 passages (Capital I–III
+full OCR, State & Rev + Manifesto via chapter-following, Ghosts full OCR),
+per-author shards
+under public/rag/ (lazy-fetched per thinker, cached; static, so Netlify needs
+nothing new). Wired behind the existing grounding toggle: desk + turns search
+the thinker's own shard first (`rag-ground.ts`), live extract.js stays as
+fallback; desk answers carry clickable source chunks, export lists source
+titles. MIA index pages are re-attempted via chapter links (generic
+chapter-following fallback); PDFs stay reading-links only. Eval traps assert
+author scoping where the corpus legitimately contains the terms, abstention
+only where stems are truly absent. Passage IDs are positional: chunker
+changes shift ordinals, so eval records its validated chunker version and
+refuses stale contracts. Deferred, not forgotten: mechanical echo-check badges, word-budget
+enforcement (see below).
 Word budgets: per-turn HARD ceilings (~100 words normal / ~280 long-form,
 opening 60/160) live in prompts but models routinely overshoot (~150–200
 observed on DeepInfra). No enforcement exists; open question is whether to

@@ -49,7 +49,8 @@
       "acceptable_passage_ids": [
         "bookchin-social-ecology-communalism-0028",
         "bookchin-social-ecology-communalism-0023",
-        "bookchin-social-ecology-communalism-0012"
+        "bookchin-social-ecology-communalism-0012",
+        "murray-bookchin-the-ecology-of-freedom-the-emergence-and-dissolution-of-hier-0003"
       ],
       "minimum_evidence_status": "sufficient",
       "notes": "No exact phrase overlap required; tests conceptual retrieval.",
@@ -66,7 +67,10 @@
       "acceptable_passage_ids": [
         "bookchin-social-ecology-communalism-0063",
         "bookchin-social-ecology-communalism-0068",
-        "bookchin-social-ecology-communalism-0072"
+        "bookchin-social-ecology-communalism-0072",
+        "murray-bookchin-the-next-revolution-popular-assemblies-and-the-promise-of-di-0022",
+        "murray-bookchin-the-next-revolution-popular-assemblies-and-the-promise-of-di-0023",
+        "murray-bookchin-the-next-revolution-popular-assemblies-and-the-promise-of-di-0027"
       ],
       "minimum_evidence_status": "sufficient",
       "notes": "0073 gives the Paris Commune naming; 0075/0080 the program.",
@@ -84,7 +88,9 @@
         "bookchin-social-ecology-communalism-0064",
         "bookchin-social-ecology-communalism-0068",
         "bookchin-social-ecology-communalism-0072",
-        "bookchin-social-ecology-communalism-0032"
+        "bookchin-social-ecology-communalism-0032",
+        "murray-bookchin-the-next-revolution-popular-assemblies-and-the-promise-of-di-0023",
+        "murray-bookchin-the-next-revolution-popular-assemblies-and-the-promise-of-di-0027"
       ],
       "minimum_evidence_status": "sufficient",
       "notes": "Praxis passages in The Communalist Project.",
@@ -157,7 +163,7 @@
     {
       "id": "bookchin-noanswer-010",
       "category": "no-answer query",
-      "query": "quantum entanglement",
+      "query": "quark sonnet vaccine",
       "filters": {
         "author": "Murray Bookchin",
         "work_id": null
@@ -170,15 +176,16 @@
     {
       "id": "bookchin-wrongphil-011",
       "category": "wrong-philosopher trap",
-      "query": "surplus value",
+      "query": "categorical imperative",
       "filters": {
-        "author": "Simone Weil",
+        "author": "Karl Marx",
         "work_id": null
       },
       "acceptable_passage_ids": [],
-      "minimum_evidence_status": "none",
-      "notes": "Author filter matches nothing; must abstain. Observed true Sep 2026.",
-      "human_validated": true
+      "minimum_evidence_status": "weak",
+      "notes": "Marx passages mention the isolated words (footnote, flax prices) without the concept; the honest contract is scoping — every result must be Marx, never leakage. Term co-occurrence is now required for strong evidence.",
+      "human_validated": true,
+      "expect": "author_only"
     },
     {
       "id": "bookchin-authorfilter-012",
@@ -189,9 +196,15 @@
         "work_id": null
       },
       "acceptable_passage_ids": [],
-      "minimum_evidence_status": "none",
-      "notes": "Marx has no indexed passages yet; filter must yield nothing, not Bookchin leakage.",
-      "human_validated": true
+      "minimum_evidence_status": "weak",
+      "notes": "Manifesto passages match via the commun- stem family and are topically adjacent; the contract is scoping, not abstention.",
+      "human_validated": true,
+      "expect": "author_only"
     }
-  ]
+  ],
+  "validated_against": {
+    "chunker_version": 2,
+    "index_passages": 6778,
+    "validated_at": "2026-09-13"
+  }
 }

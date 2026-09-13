@@ -7,6 +7,7 @@
  */
 import { useEffect, useRef, useState } from 'react';
 import { ConciergeBell, Send, X } from 'lucide-react';
+import { searchThinkerPassages, type RagGrounding } from '@/lib/rag-ground';
 import { extractPassages, formatGroundedBlock, groundableSource } from '@/lib/extract';
 import {
   buildServiceSystemPrompt,
@@ -24,6 +25,7 @@ export interface ServiceLogEntry {
   thinker: string;
   question: string;
   answer: string;
+  sources: string[];
 }
 
 interface ServiceChatProps {
@@ -38,7 +40,7 @@ interface ServiceChatProps {
 
 type DisplayItem =
   | { kind: 'visitor'; text: string }
-  | { kind: 'thinker'; thinker: string; text: string }
+  | { kind: 'thinker'; thinker: string; text: string; sources: { title: string; text: string; source_url: string }[] }
   | { kind: 'note'; text: string };
 
 export default function ServiceChat({ thinkers, interventions, settings, open, onToggle, onExchange, onOpenSettings }: ServiceChatProps) {
@@ -86,7 +88,7 @@ export default function ServiceChat({ thinkers, interventions, settings, open, o
     setBusy(true);
     try {
       const history: ServiceHistoryItem[] = items
-        .filter((item): item is { kind: 'visitor'; text: string } | { kind: 'thinker'; thinker: string; text: string } => item.kind !== 'note')
+        .filter((item): item is Extract<DisplayItem, { kind: 'visitor' | 'thinker' }> => item.kind !== 'note')
         .map((item) => item.kind === 'visitor'
           ? { role: 'visitor' as const, thinker: '', text: item.text }
           : { role: 'thinker' as const, thinker: item.thinker, text: item.text });
@@ -96,15 +98,22 @@ export default function ServiceChat({ thinkers, interventions, settings, open, o
           name: thinkers.find((t) => t.id === item.philosopher_id)?.full_name ?? 'A seat',
           line: String(item.sections?.new_contribution),
         }));
-      // Own links only: the resolver keys off this thinker's name, so other
-      // seats' sources can never enter the prompt. Fails soft like turns.
+      // Own works only, index first: the resolver keys off this thinker's
+      // family name, so other seats' sources can never enter the prompt.
+      // Falls back to live page fetching; fails soft like turns.
       let groundingBlock = '';
+      let grounding: RagGrounding | null = null;
       if (settings.grounding) {
         try {
-          const g = groundableSource(thinker.name);
-          if (g?.source.source_url) {
-            const { passages } = await extractPassages(g.source.source_url, text, '');
-            groundingBlock = formatGroundedBlock(g.source.title, g.number, passages);
+          grounding = await searchThinkerPassages(thinker.full_name, text, 5);
+          if (grounding) {
+            groundingBlock = grounding.block;
+          } else {
+            const g = groundableSource(thinker.name);
+            if (g?.source.source_url) {
+              const { passages } = await extractPassages(g.source.source_url, text, '');
+              groundingBlock = formatGroundedBlock(g.source.title, g.number, passages);
+            }
           }
         } catch {
           // Search unavailable — the tutor answers from profile instead.
@@ -115,9 +124,10 @@ export default function ServiceChat({ thinkers, interventions, settings, open, o
         buildServiceSystemPrompt(thinker),
         buildServiceUserMessage({ question: text, history, tableLines, groundingBlock }),
       );
-      setItems((prev) => [...prev, { kind: 'thinker', thinker: thinker.full_name, text: answer }]);
+      const sources = grounding?.chunks ?? [];
+      setItems((prev) => [...prev, { kind: 'thinker', thinker: thinker.full_name, text: answer, sources }]);
       setAsked((n) => n + 1);
-      onExchange({ thinker: thinker.full_name, question: text, answer });
+      onExchange({ thinker: thinker.full_name, question: text, answer, sources: [...new Set(sources.map((s) => s.title))] });
     } catch (error) {
       const message = error instanceof LlmError ? error.message : 'The desk dropped your question. Try again.';
       if (typeof console !== 'undefined') console.error('[Service desk] ask failed:', error);
@@ -169,6 +179,21 @@ export default function ServiceChat({ thinkers, interventions, settings, open, o
           <div key={i} className="mr-4">
             <p className="text-[11px] uppercase tracking-[0.16em] text-[#8b5254] mb-1">{item.thinker}</p>
             <p className="p-2.5 rounded-sm bg-[#eae1ca]/70 text-sm leading-relaxed text-[#465f75] whitespace-pre-line">{item.text}</p>
+            {item.sources.length > 0 && (
+              <details className="mt-1.5 text-xs">
+                <summary className="cursor-pointer italic text-[#8b5254] underline underline-offset-2 decoration-[#8b5254]/40">
+                  Sources used: {[...new Set(item.sources.map((s) => s.title))].join('; ')}
+                </summary>
+                <div className="mt-1.5 space-y-2">
+                  {item.sources.map((s, j) => (
+                    <div key={j} className="border-l-2 border-[#b89968] pl-2">
+                      <p className="font-heading text-[13px] text-[#4a392d]">{s.title}</p>
+                      <p className="text-xs leading-relaxed text-[#465f75]/85 whitespace-pre-line mt-0.5">{s.text}</p>
+                    </div>
+                  ))}
+                </div>
+              </details>
+            )}
           </div>
         ) : (
           <p key={i} className="text-xs italic text-[#8b5254] text-center px-2">{item.text}</p>

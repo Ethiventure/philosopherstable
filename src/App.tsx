@@ -43,6 +43,7 @@ import { generateTurnDeepInfra, testDeepInfraKey, DEEPINFRA_MODEL } from '@/lib/
 import { generateTurnTogether, testTogetherKey, TOGETHER_MODEL } from '@/lib/together';
 import { entriesForNumbers, splitLabels } from '@/lib/footnotes';
 import { extractPassages, formatGroundedBlock, groundableSource } from '@/lib/extract';
+import { searchThinkerPassages } from '@/lib/rag-ground';
 import { verifyQuotes } from '@/lib/verify';
 import { createTtsController, defaultVoice, ensureVoices, isTtsSupported, listVoices, type TtsItem, type TtsStatus } from '@/lib/tts';
 import ServiceChat, { type ServiceLogEntry } from '@/components/ServiceChat';
@@ -549,24 +550,41 @@ function App() {
       const prevText = rawPrev && snap.economy === 'efficient' && rawPrev.length > 1200
         ? `${rawPrev.slice(0, 1200)}\n[…earlier part trimmed for economy; the full text stands in the transcript]`
         : rawPrev;
-      // Experimental grounding (default off): top keyword passages from the
-      // speaker's own source text, cited by footnote number. Fails soft.
+      // Experimental grounding (default off): searched passages from the
+      // speaker's own indexed works first (no fetch, no quota beyond the
+      // turn itself), live page fetching as fallback. Fails soft.
       // The receipt (what was actually shown) is stored per turn for verification.
       let groundingBlock = '';
       let groundingReceipt: { title: string; number: number; passages: string[]; reason: string | null } | null = null;
       if (snap.grounding) {
-        const g = groundableSource(speaker.name);
-        if (g?.source.source_url) {
-          const prevSlice = (collected[collected.length - 1]?.response_text ?? '').slice(0, 300);
-          const { passages, reason } = await extractPassages(g.source.source_url, question, prevSlice);
+        try {
+          const hit = await searchThinkerPassages(
+            speaker.full_name,
+            `${question} ${collected[collected.length - 1]?.response_text ?? ''}`.slice(0, 800),
+            snap.provider === 'shared' || snap.provider === 'groq' ? 4 : 6,
+          );
           if (runRef.current !== runId) return;
-          groundingBlock = formatGroundedBlock(g.source.title, g.number, passages);
-          groundingReceipt = {
-            title: g.source.title,
-            number: g.number,
-            passages: passages.map((p) => p.text),
-            reason,
-          };
+          if (hit) {
+            groundingBlock = hit.block;
+            groundingReceipt = hit.receipt;
+          }
+        } catch {
+          // Index unavailable — fall through to live fetching below.
+        }
+        if (!groundingBlock) {
+          const g = groundableSource(speaker.name);
+          if (g?.source.source_url) {
+            const prevSlice = (collected[collected.length - 1]?.response_text ?? '').slice(0, 300);
+            const { passages, reason } = await extractPassages(g.source.source_url, question, prevSlice);
+            if (runRef.current !== runId) return;
+            groundingBlock = formatGroundedBlock(g.source.title, g.number, passages);
+            groundingReceipt = {
+              title: g.source.title,
+              number: g.number,
+              passages: passages.map((p) => p.text),
+              reason,
+            };
+          }
         }
       }
       const messageParts = [
@@ -825,7 +843,7 @@ function App() {
     // A note written but pass 3 never ran (paused session) still exports.
     const trailingCoda = coda && !late.length ? codaText : '';
     const serviceText = serviceLog.length
-      ? `\nPHILOSOPHERS' SERVICE\n${serviceLog.map((entry) => `— ${entry.thinker} was asked:\n${entry.question}\n— ${entry.thinker} answered:\n${entry.answer}\n`).join('\n')}`
+      ? `\nPHILOSOPHERS' SERVICE\n${serviceLog.map((entry) => `— ${entry.thinker} was asked:\n${entry.question}\n— ${entry.thinker} answered:\n${entry.answer}\n${entry.sources.length ? `— Sources shown: ${entry.sources.join('; ')}\n` : ''}`).join('\n')}`
       : '';
     const readingList = citedNumbers.length
       ? `\nREADING LIST\n${entriesForNumbers(citedNumbers).map(({ number, source }) => `[${number}] ${source.title} — ${source.author}${source.source_url ? ` — ${source.source_url}` : ''}`).join('\n')}\n`
@@ -1177,7 +1195,7 @@ function SourceDrawer({ target, onClose }: { target: number | null; onClose: () 
     }, 60);
     return () => window.clearTimeout(timer);
   }, [target]);
-  return <div className="fixed inset-0 z-50 bg-[#4a392d]/30 backdrop-blur-sm" onClick={onClose}><aside className="absolute right-0 top-0 bottom-0 w-full max-w-xl parchment-bg p-6 md:p-8 overflow-y-auto custom-scroll" onClick={(event) => event.stopPropagation()} role="dialog" aria-modal="true" aria-label="Corpus manifest"><div className="flex items-start justify-between mb-2"><div><p className="pass-indicator text-[#8b5254]">Corpus manifest</p><h2 className="text-3xl">Further reading</h2><p className="italic text-[#465f75]/65 mt-1">The works behind the cabinet — referenced from profiles, not yet read in full. Full retrieval lands in a later phase.</p></div><button className="btn-secondary !px-3" onClick={onClose} aria-label="Close corpus manifest"><X size={17} /></button></div><p className="text-xs uppercase tracking-widest text-[#465f75]/60 mb-5">{sorted.length} works · newest first · numbers are stable file order</p><div className="space-y-3">{sorted.map((source) => { const number = CORPUS_SOURCES_DATA.indexOf(source) + 1; return <div key={`${source.author}-${source.title}`} id={`ref-${number}`} className={`border-b border-[#4a392d]/15 pb-3 ${target === number ? 'ref-flash' : ''}`}><div className="flex justify-between gap-3"><p className="font-heading text-base text-[#4a392d]"><span className="text-xs text-[#8b5254] mr-2" aria-label={`Reference ${number}`}>[{number}]</span>{source.source_url ? <a href={source.source_url} target="_blank" rel="noreferrer" className="underline underline-offset-2 decoration-[#8b5254]/40 hover:decoration-[#8b5254]">{source.title}</a> : source.title}</p><span className={`text-[9px] whitespace-nowrap uppercase tracking-wider ${source.full_text_ingested ? 'text-[#4a6b3f]' : 'text-[#8b5254]'}`}>{source.full_text_ingested ? 'Full text' : 'Metadata'}</span></div><p className="text-sm text-[#465f75]/70">{source.author} · {source.publication_date ?? 'undated'}</p><p className="text-[10px] uppercase tracking-widest text-[#8b5254]/80 mt-1">{source.licence_status}</p>{source.link_note && <p className="text-xs italic mt-1 text-[#8b5254]">⚠ {source.link_note}</p>}</div>; })}</div></aside></div>;
+  return <div className="fixed inset-0 z-50 bg-[#4a392d]/30 backdrop-blur-sm" onClick={onClose}><aside className="absolute right-0 top-0 bottom-0 w-full max-w-xl parchment-bg p-6 md:p-8 overflow-y-auto custom-scroll" onClick={(event) => event.stopPropagation()} role="dialog" aria-modal="true" aria-label="Corpus manifest"><div className="flex items-start justify-between mb-2"><div><p className="pass-indicator text-[#8b5254]">Corpus manifest</p><h2 className="text-3xl">Further reading</h2><p className="italic text-[#465f75]/65 mt-1">The works behind the cabinet — full-text badges mean indexed and searchable when Grounding is on.</p></div><button className="btn-secondary !px-3" onClick={onClose} aria-label="Close corpus manifest"><X size={17} /></button></div><p className="text-xs uppercase tracking-widest text-[#465f75]/60 mb-5">{sorted.length} works · newest first · numbers are stable file order</p><div className="space-y-3">{sorted.map((source) => { const number = CORPUS_SOURCES_DATA.indexOf(source) + 1; return <div key={`${source.author}-${source.title}`} id={`ref-${number}`} className={`border-b border-[#4a392d]/15 pb-3 ${target === number ? 'ref-flash' : ''}`}><div className="flex justify-between gap-3"><p className="font-heading text-base text-[#4a392d]"><span className="text-xs text-[#8b5254] mr-2" aria-label={`Reference ${number}`}>[{number}]</span>{source.source_url ? <a href={source.source_url} target="_blank" rel="noreferrer" className="underline underline-offset-2 decoration-[#8b5254]/40 hover:decoration-[#8b5254]">{source.title}</a> : source.title}</p><span className={`text-[9px] whitespace-nowrap uppercase tracking-wider ${source.full_text_ingested ? 'text-[#4a6b3f]' : 'text-[#8b5254]'}`}>{source.full_text_ingested ? 'Full text' : 'Metadata'}</span></div><p className="text-sm text-[#465f75]/70">{source.author} · {source.publication_date ?? 'undated'}</p><p className="text-[10px] uppercase tracking-widest text-[#8b5254]/80 mt-1">{source.licence_status}</p>{source.link_note && <p className="text-xs italic mt-1 text-[#8b5254]">⚠ {source.link_note}</p>}</div>; })}</div></aside></div>;
 }
 
 function SettingsDrawer({ philosophers, activeSlugs, togglePhilosopher, settings, onSettingsChange, display, onDisplayChange, initialTab, onClose }: { philosophers: Philosopher[]; activeSlugs: string[]; togglePhilosopher: (slug: string) => void; settings: CabinetSettings; onSettingsChange: (next: CabinetSettings) => void; display: AccessibilitySettings; onDisplayChange: (next: AccessibilitySettings) => void; initialTab: 'key' | 'cabinet' | 'display'; onClose: () => void }) {
