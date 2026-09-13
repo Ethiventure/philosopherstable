@@ -192,8 +192,12 @@ function App() {
     // stands…"), so full-string matching never fired and spent variants kept
     // returning every turn — the repetition loop. The signature catches the
     // opening shape; the old full-fragment check stays as a second net.
-    const signature = (variant: string) =>
-      variant.replace(/\(X\)/g, ' ').replace(/\s+/g, ' ').trim().toLowerCase().split(' ').slice(0, 6).join(' ');
+    // Floor of five words: shorter variants ("I must agree that…") collide
+    // with ordinary prose, so they match on the full fragment only.
+    const signature = (variant: string) => {
+      const words = variant.replace(/\(X\)/g, ' ').replace(/\s+/g, ' ').trim().toLowerCase().split(' ').slice(0, 6);
+      return words.length >= 5 ? words.join(' ') : null;
+    };
     for (const p of philosophers) {
       const slots = p.style_essence.stock_phrases;
       for (const slot of [slots.rebuttal, slots.concession, slots.reframing]) {
@@ -203,8 +207,9 @@ function App() {
             .split('(X)')
             .map((f) => f.trim())
             .filter((f) => f.replace(/[^a-z]/gi, '').length > 12);
+          const sig = signature(variant);
           if (
-            lower.includes(signature(variant)) ||
+            (sig !== null && lower.includes(sig)) ||
             fragments.some((f) => lower.includes(f.toLowerCase()))
           ) {
             spentRef.current.push(variant);
@@ -607,6 +612,10 @@ function App() {
           othersPriorLines,
           turnInstruction,
           stockBlock: (() => {
+            // The opener has no predecessor ("Do not refer to any other
+            // thinker"), so PREV-addressed openers must not ride in its
+            // prompt — they used to, contradicting the opening instruction.
+            if (isOpeningTurn) return '';
             // Only unspent variants ride in the prompt: showing the whole
             // toolkit every turn kept spent openers salient and they came
             // back verbatim ("To be sure" every other paragraph). When a
@@ -626,7 +635,7 @@ function App() {
               ...(reframing.length ? [`REFRAMING: ${reframing.join(' / ')}`] : []),
             ].join('\n');
           })(),
-          spentPhrases: spentRef.current,
+          spentPhrases: isOpeningTurn ? [] : spentRef.current,
         }),
       ];
       if (groundingBlock) messageParts.push('', groundingBlock);

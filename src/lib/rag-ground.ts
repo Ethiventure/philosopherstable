@@ -115,7 +115,7 @@ export async function searchThinkerPassages(
   const quoted = merged.map((s) => `> ${s.passage.text}`).join('\n');
   return {
     block: [
-      `INDEXED PASSAGES from "${work.title}" [${number}] — searched from this thinker's own indexed works for this question. Borrow visibly: weave at least two distinctive single words or short phrases (no more than six words each, in 'single' quotes — never bare "double" quotes) from these passages into your own sentences, and cite the use [${number}]. Reaching for their less famous vocabulary beats restating their greatest hits: prefer the passage's own terms over your stock summary of this thinker. What you don't borrow, closely paraphrase, always citing [${number}]:`,
+      `INDEXED PASSAGES from '${work.title}' [${number}] — searched from this thinker's own indexed works for this question. Borrow visibly: weave at least two distinctive single words or short phrases (no more than six words each, in single quotes — bare double quotes corrupt your reply) from these passages into your own sentences, and cite the use [${number}]. Reaching for their less famous vocabulary beats restating their greatest hits: prefer the passage's own terms over your stock summary of this thinker. What you don't borrow, closely paraphrase, always citing [${number}]:`,
       quoted,
     ].join('\n'),
     receipt: {
