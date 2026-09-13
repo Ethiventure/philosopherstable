@@ -54,8 +54,9 @@ from the data and can never drift from date order again.
 
 ### Style intensity: global
 One Low / Medium / High setting in Settings, applied to every philosopher's intensity
-ladder. Low additionally drops `special_modes` and appends a governing plain-style
-override in `renderPersona` (short sentences, defined terms, no specimen language);
+ladder. Low sends an abridged persona from `shared/low-style.ts` (DNA + movement +
+Low sentence + plain rules; full profile knowledge kept; generation rules, special
+modes, REGISTER, and universal mechanisms dropped; governing override last).
 Medium/High are untouched.
 
 ### Length: short and punchy
@@ -238,7 +239,8 @@ question, 180 words). Sees recent chat + sitting one-liners + own-links-only
 grounding (follows the `grounding` toggle; other seats' links never enter).
 Plain-text provider paths (`generateText*` per lib, same retries/quota codes,
 no JSON contract). 20 questions per load with a humorous halt; exchanges
-append to export under PHILOSOPHERS' SERVICE.
+append to export under PHILOSOPHERS' SERVICE. Discoverability: floating bell +
+sidebar box + welcome-card paragraph (the bell alone was too subtle).
 
 **References, not citations** — `src/lib/footnotes.ts`: model-claimed work labels
 resolve display-side to stable manifest numbers (`Read similar: 3, 9`; numbers

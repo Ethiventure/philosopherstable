@@ -11,7 +11,7 @@ No account, no setup: open the site and press **Begin cabinet**. It runs on the 
 - **Display tab** (Settings): parchment / dim / ink-dark themes, three typefaces, text size and spacing, high contrast, reduced motion.
 - **Export** saves the whole session as clean prose with a Reading List of full links at the end — nothing inline.
 - **Notes from the margins**: between pass 2 and pass 3, one rude reader breaks in — naming what the table missed and ordering the final round toward action. Pass 3 must answer it.
-- **Philosophers' Service** (speech-bubble button, bottom right): ask any of the ten thinkers one-to-one — plain definitions, an example, and a check question each time. Twenty questions per sitting; chats append to export.
+- **Philosophers' Service** (speech-bubble button bottom-right, a card beside the table, and a mention in the welcome card): ask any of the ten thinkers one-to-one — plain definitions, an example, and a check question each time. Twenty questions per sitting; chats append to export.
 
 ## Quotas (the honest version)
 
