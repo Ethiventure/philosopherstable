@@ -247,6 +247,8 @@ export interface AccessibilitySettings {
   theme: DisplayTheme;
   font: DisplayFont;
   ttsRate: number; // 0.8–1.3
+  /** Persisted voice pick (SpeechSynthesisVoice.voiceURI). Null = device default. */
+  ttsVoiceURI: string | null;
 }
 
 export const DEFAULT_ACCESSIBILITY: AccessibilitySettings = {
@@ -259,4 +261,5 @@ export const DEFAULT_ACCESSIBILITY: AccessibilitySettings = {
   theme: 'parchment',
   font: 'academia',
   ttsRate: 1,
+  ttsVoiceURI: null,
 };

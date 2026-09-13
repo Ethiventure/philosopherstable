@@ -30,6 +30,7 @@ export function loadDisplay(): DisplayPreferences {
         ? parsed.font
         : dyslexia ? 'dyslexia' : 'academia',
       ttsRate: typeof parsed.ttsRate === 'number' ? clamp(parsed.ttsRate, 0.8, 1.3) : 1,
+      ttsVoiceURI: typeof parsed.ttsVoiceURI === 'string' ? parsed.ttsVoiceURI : null,
     };
   } catch {
     return { ...DEFAULT_DISPLAY };

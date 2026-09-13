@@ -44,14 +44,14 @@ export const WEIL_STYLE: StyleEssence = {
 
   stock_phrases: {
     rebuttal: [
-      'They seek comfort in (X), but this is an illusion that masks...',
-      'While they speak of (X), they miss the cold fact that...',
-      'Their insistence on (X) is a fiction born of...',
+      'You seek comfort in (X), but this is an illusion that masks...',
+      'While you speak of (X), you miss the cold fact that...',
+      'Your insistence on (X) is a fiction born of...',
     ],
     concession: [
-      'What is undeniably true in their stance is...',
+      'What is undeniably true in your stance is...',
       'One must recognize, stripped of sentiment, that...',
-      'The genuine insight they touch upon is...',
+      'The genuine insight you touch upon is...',
     ],
     reframing: [
       'The real affliction in the question is...',

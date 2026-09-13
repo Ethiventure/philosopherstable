@@ -956,6 +956,91 @@
       "rights_decision_at": "2026-09-13",
       "rights_note": "Owner-supplied link Sep 2026; provenance of the claimed translation unverified (noted in corpus entry).",
       "enabled": true
+    },
+    {
+      "id": "gilles-deleuze-a-thousand-plateaus-fulltext",
+      "author": "Gilles Deleuze",
+      "title": "A Thousand Plateaus (full text)",
+      "source_mode": "REMOTE_IMPORT",
+      "source_url": "https://archive.org/stream/AThousandPlateaus_20180115/A-Thousand-Plateaus_djvu.txt",
+      "rights_status": "approved",
+      "rights_decision_by": "project_owner",
+      "rights_decision_at": "2026-09-13",
+      "rights_note": "Owner-supplied Sep 2026: archive.org OCR full text as ingest companion; readers keep the single corpus entry (no duplicate reference number).",
+      "enabled": true
+    },
+    {
+      "id": "gilles-deleuze-bergsonism-fulltext",
+      "author": "Gilles Deleuze",
+      "title": "Bergsonism (full text)",
+      "source_mode": "REMOTE_IMPORT",
+      "source_url": "https://archive.org/stream/Bergsonism/Bergsonism%2C%20by%20Deleuze_djvu.txt",
+      "rights_status": "approved",
+      "rights_decision_by": "project_owner",
+      "rights_decision_at": "2026-09-13",
+      "rights_note": "Owner-supplied Sep 2026: archive.org OCR full text as ingest companion; readers keep the single corpus entry (no duplicate reference number).",
+      "enabled": true
+    },
+    {
+      "id": "gilles-deleuze-logic-of-sense-fulltext",
+      "author": "Gilles Deleuze",
+      "title": "The Logic of Sense (full text, French edition)",
+      "source_mode": "REMOTE_IMPORT",
+      "source_url": "https://archive.org/stream/deleuze-logique-du-sens/Deleuze_Logique_du_sens_djvu.txt",
+      "rights_status": "approved",
+      "rights_decision_by": "project_owner",
+      "rights_decision_at": "2026-09-13",
+      "rights_note": "Owner-supplied Sep 2026: archive.org OCR full text (French Logique du sens) as ingest companion; readers keep the single corpus entry.",
+      "enabled": true
+    },
+    {
+      "id": "gilles-deleuze-nietzsche-and-philosophy-fulltext",
+      "author": "Gilles Deleuze",
+      "title": "Nietzsche and Philosophy (full text)",
+      "source_mode": "REMOTE_IMPORT",
+      "source_url": "https://archive.org/stream/nietzsche-and-philosophy-gilles-deleuze-janis-tomlinson/Nietzsche%20and%20Philosophy%20-%20Gilles%20Deleuze%2C%20Janis%20Tomlinson_djvu.txt",
+      "rights_status": "approved",
+      "rights_decision_by": "project_owner",
+      "rights_decision_at": "2026-09-13",
+      "rights_note": "Owner-supplied Sep 2026: archive.org OCR full text as ingest companion; readers keep the single corpus entry.",
+      "enabled": true
+    },
+    {
+      "id": "gilles-deleuze-postscript-ocr-fulltext",
+      "author": "Gilles Deleuze",
+      "title": "Postscript on the Societies of Control (full text)",
+      "source_mode": "REMOTE_IMPORT",
+      "source_url": "https://archive.org/stream/deleuze-gilles-postscript-on-the-societies-of-control/Deleuze_Gilles-Postscript-on-the-Societies-of-Control_djvu.txt",
+      "corpus_source_url": "https://theanarchistlibrary.org/library/gilles-deleuze-postscript-on-the-societies-of-control",
+      "rights_status": "approved",
+      "rights_decision_by": "project_owner",
+      "rights_decision_at": "2026-09-13",
+      "rights_note": "Owner-supplied Sep 2026: archive.org OCR as ingest companion to the existing TAL corpus entry; footnote resolves to the TAL number, no duplicate reference.",
+      "enabled": true
+    },
+    {
+      "id": "alexander-bogdanov-from-religious-to-scientific-monism",
+      "author": "Alexander Bogdanov",
+      "title": "From Religious to Scientific Monism (1920)",
+      "source_mode": "REMOTE_IMPORT",
+      "source_url": "https://archive.org/stream/alexanderbogdanov1920fromreligioustoscientificmonism/Alexander%20Bogdanov%20%281920%29%20From%20Religious%20to%20Scientific%20Monism_djvu.txt",
+      "rights_status": "approved",
+      "rights_decision_by": "project_owner",
+      "rights_decision_at": "2026-09-13",
+      "rights_note": "Owner-supplied Sep 2026: archive.org OCR full text as ingest companion; readers keep the single corpus entry.",
+      "enabled": true
+    },
+    {
+      "id": "alexander-bogdanov-tektology-1925-russian-fulltext",
+      "author": "Alexander Bogdanov",
+      "title": "Tektology (1925, Russian full text)",
+      "source_mode": "REMOTE_IMPORT",
+      "source_url": "https://archive.org/stream/alexaner-bogdanov1925-tektology/%D0%90%D0%BB%D0%B5%D0%BA%D1%81%D0%B0%D0%BD%D0%B4%D1%80%20%D0%91%D0%BE%D0%B3%D0%B4%D0%B0%D0%BD%D0%BE%D0%B2%20-%20%5B1925%5D%20-%20%D0%92%D1%81%D0%B5%D0%BE%D0%B1%D1%89%D0%B0%D1%8F%20%D0%BE%D1%80%D0%B3%D0%B0%D0%BD%D0%B8%D0%B7%D0%B0%D1%86%D0%B8%D0%BE%D0%BD%D0%BD%D0%B0%D1%8F%20%D0%BD%D0%B0%D1%83%D0%BA%D0%B0.%20%D0%A2%D0%B5%D0%BA%D1%82%D0%BE%D0%BB%D0%BE%D0%B3%D0%B8%D1%8F_djvu.txt",
+      "rights_status": "approved",
+      "rights_decision_by": "project_owner",
+      "rights_decision_at": "2026-09-13",
+      "rights_note": "Owner-supplied Sep 2026: archive.org OCR of the 1925 Russian Tektology as ingest companion; /stream/ path (HTML+pre, indexable) — /download/ serves raw text the extractor skips. Readers keep the single corpus entry.",
+      "enabled": true
     }
   ]
 }

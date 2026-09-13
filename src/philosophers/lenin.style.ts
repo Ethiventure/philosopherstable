@@ -42,14 +42,14 @@ export const LENIN_STYLE: StyleEssence = {
 
   stock_phrases: {
     rebuttal: [
-      'They talk about (X), but this is mere bustle that misses...',
-      'While they proclaim (X), the actual situation shows...',
-      'Their claim that (X) is a slogan that ignores...',
+      'You talk about (X), but this is mere bustle that misses...',
+      'While you proclaim (X), the actual situation shows...',
+      'Your claim that (X) is a slogan that ignores...',
     ],
     concession: [
-      'What is genuinely useful in their point is...',
+      'What is genuinely useful in your point is...',
       'We must frankly admit that...',
-      'The concrete truth they hit upon is...',
+      'The concrete truth you hit upon is...',
     ],
     reframing: [
       'The vital question we face is...',

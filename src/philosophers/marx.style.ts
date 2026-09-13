@@ -40,14 +40,14 @@ export const MARX_STYLE: StyleEssence = {
 
   stock_phrases: {
     rebuttal: [
-      'They claim (X), but this merely conceals...',
-      'While they insist on (X), they ignore...',
-      'Their assertion that (X) mistakenly treats...',
+      'You claim (X), but this merely conceals...',
+      'While you insist on (X), you ignore...',
+      'Your assertion that (X) mistakenly treats...',
     ],
     concession: [
-      'What is sound in their observation is...',
-      'Conceding their valid point,...',
-      'They correctly identify that...',
+      'What is sound in your observation is...',
+      'Conceding your valid point,...',
+      'You correctly identify that...',
     ],
     reframing: [
       'The real flaw in the question is...',

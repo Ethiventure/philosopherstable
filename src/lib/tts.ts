@@ -25,6 +25,7 @@ export interface TtsVoiceInfo {
   lang: string;
   localService: boolean;
   isDefault: boolean;
+  voiceURI: string;
 }
 
 export function listVoices(): TtsVoiceInfo[] {
@@ -34,22 +35,40 @@ export function listVoices(): TtsVoiceInfo[] {
     lang: v.lang,
     localService: v.localService,
     isDefault: v.default,
+    voiceURI: v.voiceURI,
   }));
 }
 
-/** The browser-flagged default voice (the OS-level default), preferring
- * English. Assigning this explicitly is what actually yields "the device
- * default": leaving `utter.voice` unset lets Chrome fall back to a bundled
- * voice instead of the system one. Still no picker, no baked-in voice. */
-export function defaultVoice(): SpeechSynthesisVoice | null {
+/** Resolve which voice to speak with. An explicit visitor pick (persisted
+ * voiceURI) always wins. Otherwise the browser-flagged default voice (the
+ * OS-level default), preferring English — assigning it explicitly is what
+ * yields "the device default" on desktop Chrome, where leaving
+ * `utter.voice` unset falls back to a bundled voice instead.
+ *
+ * iPad note: iOS Safari often flags no voice as default, or flags a compact
+ * one — so the chain falls through to an on-device English voice rather
+ * than nothing, and the Display tab offers an explicit pick that sticks. */
+export function resolveVoice(preferredURI?: string | null): SpeechSynthesisVoice | null {
   if (!isTtsSupported()) return null;
   const voices = window.speechSynthesis.getVoices();
   if (!voices.length) return null;
+  if (preferredURI) {
+    const picked = voices.find((v) => v.voiceURI === preferredURI);
+    if (picked) return picked;
+  }
   return (
     voices.find((v) => v.default && v.lang.toLowerCase().startsWith('en')) ??
     voices.find((v) => v.default) ??
+    voices.find((v) => v.localService && v.lang.toLowerCase().startsWith('en')) ??
+    voices.find((v) => v.lang.toLowerCase().startsWith('en')) ??
+    voices[0] ??
     null
   );
+}
+
+/** Back-compat alias (device default, no explicit pick). */
+export function defaultVoice(): SpeechSynthesisVoice | null {
+  return resolveVoice(null);
 }
 /** Voices load asynchronously (Chrome returns [] on first call) — wait briefly. */
 export function ensureVoices(): Promise<void> {
@@ -101,11 +120,12 @@ export function chunkText(text: string, maxLen = 200): string[] {
 
 export interface TtsControllerOptions {
   rate: number;
+  voiceURI: string | null;
   onStatus: (status: TtsStatus) => void;
 }
 
 /** Single owner for speechSynthesis. App creates one and passes speak/stop down. */
-export function createTtsController({ rate, onStatus }: TtsControllerOptions) {
+export function createTtsController({ rate, voiceURI, onStatus }: TtsControllerOptions) {
   let cancelled = false;
   let paused = false;
   let queue: TtsItem[] = [];
@@ -122,7 +142,9 @@ export function createTtsController({ rate, onStatus }: TtsControllerOptions) {
 
   // Device-default voice, assigned explicitly: leaving `utter.voice` unset
   // lets Chrome fall back to a bundled voice instead of the OS default.
-  // Still no picker and nothing baked in — this resolves per visitor.
+  // Still nothing baked in — this resolves per visitor, with their explicit
+  // Display-tab pick first. `utter.lang` is deliberately left alone: on
+  // Safari, assigning lang after voice can make the engine switch voices.
   function speakItemChunks(chunks: string[], itemIndex: number) {
     if (cancelled || itemIndex >= queue.length) { finish(); return; }
     const item = queue[itemIndex];
@@ -145,10 +167,9 @@ export function createTtsController({ rate, onStatus }: TtsControllerOptions) {
       }
       const utter = new SpeechSynthesisUtterance(chunks[partIndex]);
       utter.rate = rate;
-      const voice = defaultVoice();
+      const voice = resolveVoice(voiceURI);
       if (voice) {
         utter.voice = voice;
-        utter.lang = voice.lang;
       }
       utter.onend = () => { partIndex += 1; speakPart(); };
       utter.onerror = () => { partIndex += 1; speakPart(); };

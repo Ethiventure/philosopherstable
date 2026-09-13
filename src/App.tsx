@@ -45,7 +45,7 @@ import { entriesForNumbers, splitLabels } from '@/lib/footnotes';
 import { extractPassages, formatGroundedBlock, groundableSource } from '@/lib/extract';
 import { searchThinkerPassages } from '@/lib/rag-ground';
 import { verifyQuotes } from '@/lib/verify';
-import { createTtsController, defaultVoice, ensureVoices, isTtsSupported, listVoices, type TtsItem, type TtsStatus } from '@/lib/tts';
+import { createTtsController, ensureVoices, isTtsSupported, listVoices, resolveVoice, type TtsItem, type TtsStatus } from '@/lib/tts';
 import ServiceChat, { type ServiceLogEntry } from '@/components/ServiceChat';
 
 // "Read more" resolution: the philosopher's most relevant text from the corpus
@@ -187,17 +187,25 @@ function App() {
   const spentRef = useRef<string[]>([]);
   const markSpentVariants = (text: string) => {
     const lower = text.toLowerCase();
+    // Short signature: the variant's first six words with the (X) slot
+    // stripped. Models paraphrase the tail ("To be sure, where your argument
+    // stands…"), so full-string matching never fired and spent variants kept
+    // returning every turn — the repetition loop. The signature catches the
+    // opening shape; the old full-fragment check stays as a second net.
+    const signature = (variant: string) =>
+      variant.replace(/\(X\)/g, ' ').replace(/\s+/g, ' ').trim().toLowerCase().split(' ').slice(0, 6).join(' ');
     for (const p of philosophers) {
       const slots = p.style_essence.stock_phrases;
       for (const slot of [slots.rebuttal, slots.concession, slots.reframing]) {
         for (const variant of slot) {
+          if (spentRef.current.includes(variant)) continue;
           const fragments = variant
             .split('(X)')
             .map((f) => f.trim())
             .filter((f) => f.replace(/[^a-z]/gi, '').length > 12);
           if (
-            fragments.some((f) => lower.includes(f.toLowerCase())) &&
-            !spentRef.current.includes(variant)
+            lower.includes(signature(variant)) ||
+            fragments.some((f) => lower.includes(f.toLowerCase()))
           ) {
             spentRef.current.push(variant);
           }
@@ -284,12 +292,12 @@ function App() {
   // Single TTS owner: one queue for per-turn and full-session reads.
   useEffect(() => {
     if (!isTtsSupported()) return;
-    ttsRef.current = createTtsController({ rate: display.ttsRate, onStatus: setTtsStatus });
+    ttsRef.current = createTtsController({ rate: display.ttsRate, voiceURI: display.ttsVoiceURI, onStatus: setTtsStatus });
     return () => {
       ttsRef.current?.stop();
       ttsRef.current = null;
     };
-  }, [display.ttsRate]);
+  }, [display.ttsRate, display.ttsVoiceURI]);
 
   // Stop reading when the transcript is cleared or the page unloads.
   useEffect(() => {
@@ -558,9 +566,13 @@ function App() {
       let groundingReceipt: { title: string; number: number; passages: string[]; reason: string | null } | null = null;
       if (snap.grounding) {
         try {
+          // Query in the speaker's OWN words: the question plus their own
+          // developing line. PREV's full text used to ride here — another
+          // author's diction pulling other-framework vocabulary out of this
+          // thinker's shard, which read as near-random passages.
           const hit = await searchThinkerPassages(
             speaker.full_name,
-            `${question} ${collected[collected.length - 1]?.response_text ?? ''}`.slice(0, 800),
+            `${question} ${ownPriorLines.join(' ')}`.slice(0, 800),
             snap.provider === 'shared' || snap.provider === 'groq' ? 4 : 6,
           );
           if (runRef.current !== runId) return;
@@ -594,17 +606,26 @@ function App() {
           ownPriorLines,
           othersPriorLines,
           turnInstruction,
-          stockBlock: [
-            'YOUR TRANSITIONAL TOOLKIT (your own phrasing — reach for these instead of generic boilerplate):',
-            // Low never sees the rebuttal variants: every one of them is an
-            // attack shape, and the transcript shows turns open with them
-            // verbatim. Concession-first openings carry the calm entry.
-            ...(snap.intensity === 'low'
-              ? []
-              : [`REBUTTAL: ${speaker.style_essence.stock_phrases.rebuttal.join(' / ')}`]),
-            `CONCESSION: ${speaker.style_essence.stock_phrases.concession.join(' / ')}`,
-            `REFRAMING: ${speaker.style_essence.stock_phrases.reframing.join(' / ')}`,
-          ].join('\n'),
+          stockBlock: (() => {
+            // Only unspent variants ride in the prompt: showing the whole
+            // toolkit every turn kept spent openers salient and they came
+            // back verbatim ("To be sure" every other paragraph). When a
+            // slot is exhausted it drops out instead of repeating.
+            const unspent = (vs: string[]) => vs.filter((v) => !spentRef.current.includes(v));
+            const rebuttal = snap.intensity === 'low' ? [] : unspent(speaker.style_essence.stock_phrases.rebuttal);
+            const concession = unspent(speaker.style_essence.stock_phrases.concession);
+            const reframing = unspent(speaker.style_essence.stock_phrases.reframing);
+            if (!rebuttal.length && !concession.length && !reframing.length) return '';
+            return [
+              'YOUR TRANSITIONAL TOOLKIT (your own phrasing — at most ONE of these per turn, often none; never force them, and never open two turns of yours the same way):',
+              // Low never sees the rebuttal variants: every one of them is an
+              // attack shape, and the transcript shows turns open with them
+              // verbatim. Concession-first openings carry the calm entry.
+              ...(rebuttal.length ? [`REBUTTAL: ${rebuttal.join(' / ')}`] : []),
+              ...(concession.length ? [`CONCESSION: ${concession.join(' / ')}`] : []),
+              ...(reframing.length ? [`REFRAMING: ${reframing.join(' / ')}`] : []),
+            ].join('\n');
+          })(),
           spentPhrases: spentRef.current,
         }),
       ];
@@ -1405,7 +1426,7 @@ function SettingsDrawer({ philosophers, activeSlugs, togglePhilosopher, settings
 }
 
 function DisplayTab({ display, onChange }: { display: AccessibilitySettings; onChange: (partial: Partial<AccessibilitySettings>) => void }) {
-  const [voices, setVoices] = useState<{ name: string; lang: string; localService: boolean; isDefault: boolean }[]>([]);
+  const [voices, setVoices] = useState<{ name: string; lang: string; localService: boolean; isDefault: boolean; voiceURI: string }[]>([]);
   useEffect(() => {
     if (!isTtsSupported()) return;
     const load = () => setVoices(listVoices());
@@ -1427,10 +1448,9 @@ function DisplayTab({ display, onChange }: { display: AccessibilitySettings; onC
     void ensureVoices().then(() => {
       const utter = new SpeechSynthesisUtterance('The cabinet is in session. Each voice passes its contradiction clockwise.');
       utter.rate = display.ttsRate;
-      const voice = defaultVoice();
+      const voice = resolveVoice(display.ttsVoiceURI);
       if (voice) {
         utter.voice = voice;
-        utter.lang = voice.lang;
       }
       utter.onend = () => setPreviewState('idle');
       utter.onerror = () => setPreviewState('idle');
@@ -1495,7 +1515,16 @@ function DisplayTab({ display, onChange }: { display: AccessibilitySettings; onC
       </div>
       <div>
         <p className="font-heading text-sm uppercase tracking-[0.16em] text-[#4a392d] mb-1">Read aloud (free)</p>
-        <p className="text-xs italic text-[#465f75]/70 mb-3">Uses your browser's built-in speech — no key, no cost, nothing leaves this page. It always speaks in the listener's own device-default voice, so every visitor hears their own.</p>
+        <p className="text-xs italic text-[#465f75]/70 mb-3">Uses your browser's built-in speech — no key, no cost, nothing leaves this page. Device default suits most visitors; if it sounds wrong on your device (some iPads pick a poor default), choose a voice below and it sticks.</p>
+        <div className="flex items-center justify-between mb-1">
+          <label htmlFor="tts-voice" className="text-sm text-[#4a392d]">Voice</label>
+        </div>
+        <select id="tts-voice" value={display.ttsVoiceURI ?? ''} onChange={(e) => onChange({ ttsVoiceURI: e.target.value || null })} disabled={!isTtsSupported() || !voices.length} className="w-full border border-[#4a392d]/25 bg-[#f2ebd9] text-sm text-[#4a392d] p-2 mb-3">
+          <option value="">Device default</option>
+          {voices.map((v) => (
+            <option key={v.voiceURI} value={v.voiceURI}>{v.name} · {v.lang}{v.localService ? ' · on-device' : ''}{v.isDefault ? ' · default' : ''}</option>
+          ))}
+        </select>
         <div className="flex items-center justify-between mb-1">
           <label htmlFor="tts-rate" className="text-sm text-[#4a392d]">Speaking rate</label>
           <span className="text-xs text-[#465f75]/60">{display.ttsRate.toFixed(2)}×</span>
