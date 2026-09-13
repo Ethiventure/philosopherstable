@@ -238,7 +238,8 @@ question, 180 words). Sees recent chat + sitting one-liners + own-links-only
 grounding (follows the `grounding` toggle; other seats' links never enter).
 Plain-text provider paths (`generateText*` per lib, same retries/quota codes,
 no JSON contract). 20 questions per load with a humorous halt; exchanges
-append to export under PHILOSOPHERS' SERVICE.
+append to export under PHILOSOPHERS' SERVICE. Discoverability: floating bell +
+sidebar box + welcome-card paragraph (the bell alone was too subtle).
 
 **References, not citations** — `src/lib/footnotes.ts`: model-claimed work labels
 resolve display-side to stable manifest numbers (`Read similar: 3, 9`; numbers
