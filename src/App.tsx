@@ -10,6 +10,7 @@ import {
   Feather,
   Info,
   Library,
+  MessageCircle,
   RotateCcw,
   ScrollText,
   Settings2,
@@ -907,6 +908,11 @@ function App() {
               </div>
               <button className="btn-secondary w-full mt-4 flex justify-center items-center gap-2" onClick={() => setSelectedIntervention(interventions[interventions.length - 1] ?? null)} disabled={!interventions.length}><ScrollText size={15} /> Inspect latest intervention</button>
             </div>
+            <div className="dark-academia-card p-5">
+              <div className="flex items-center gap-3 mb-2"><MessageCircle size={18} className="text-[#8b5254]" /><h3 className="text-xl">Philosophers&rsquo; Service</h3></div>
+              <p className="text-sm italic text-[#465f75]/70">One thinker, at your pace — plain definitions, a concrete example, a check question. Any of the ten, switchable mid-chat.</p>
+              <button className="btn-secondary w-full mt-4 flex justify-center items-center gap-2" onClick={() => setShowService(true)}><MessageCircle size={15} /> Ask a thinker</button>
+            </div>
           </aside>
         </section>
 
@@ -1070,6 +1076,7 @@ function WelcomeModal({ onClose, onOpenSettings, ttsSupported, listening, onList
           <p><span className="drop-cap">A</span>sk your question of the Philosophers' Table and watch our debate unfold. Choose which of us are convened, from Spinoza to Fisher, but it is best to choose 4-6 of us in settings to stop the discussion becoming unwieldy and expensive in token cost. Each of us gets to contribute 3 times, so all 10 of us creates a slow and overwhelming 30 turns.</p>
           <p>To be sure we respond to each other, we negate an idea on its own premises, preserve what holds, and hand a contradiction clockwise to the next. If anything true appears here, it appears <em>between</em> our seats, in the contradictions we force into the open across three passes — never handed down from any one authority.</p>
           <p>You can read our turns as they happen, below the table, or export them to read as one text file.</p>
+          <p>If the debate leaves you behind, ring the Philosophers&rsquo; Service desk — the small round bell at the bottom-right of every page, and a card beside the table. Pick any of the ten thinkers and ask one-to-one: definitions in plain words, a concrete example, and a question back to check the idea landed. Twenty questions per sitting, and your chats join the export.</p>
           <p>On providers, equally plainly. Begin on the shared key: no key, no account, nothing to configure. When the commons runs dry, bring your own — OpenRouter (free cycle or cheap paid), Groq, DeepInfra or Together. Your keys stay in your browser and go straight to that provider alone — of course they also exist on the provider's own servers, as with any API key, but we never see them, store them, or want your login. We are only here for the debate. Test the key in Settings before you begin; and if the cabinet ever halts, read the notice — it names the exact limit you met and the way back.</p>
           <p>We are philosophers; sometimes we take a while to think and read. If we go on strike, the demand reasons appear under your question — our reluctance can usually be resolved by choosing Resume Cabinet.</p>
         </div>
