@@ -309,6 +309,11 @@ proves lexical fails. Owner approved Bookchin TAL + bulk automation across
 the manifest AFTER the test go — failures skip, never force. Bulk run Sep
 2026: 75 sources attempted, 37 works indexed, 6,778 passages (Capital I–III
 full OCR, State & Rev + Manifesto via chapter-following, Ghosts full OCR),
+plus Sep 2026 owner batch: Lenin WITBD (198) + Imperialism & the Split in
+Socialism (21), Hegel Phenomenology (855) + Lectures on Right 1819–20 (511),
+Fisher Realismo capitalista ES (121) + Lo raro y lo espeluznante ES (100) —
+all via archive.org `/stream/…_djvu.txt` (HTML+`<pre>`, indexable; `/download/`
+raw text extracts zero paragraphs), total 8,668 passages,
 per-author shards
 under public/rag/ (lazy-fetched per thinker, cached; static, so Netlify needs
 nothing new). Wired behind the existing grounding toggle: desk + turns search
