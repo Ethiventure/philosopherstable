@@ -123,4 +123,13 @@ export const FISHER: PhilosopherDefinition = {
     relevant_interlocutors: ['Deleuze (on control societies and immanence)', 'Marx (on ideology and capitalism)', 'Lenin (on organisation)', 'Bookchin (on institutions and ecology)', 'Bogdanov (on collective cognition and culture)'],
   },
   style_essence: FISHER_STYLE,
+  biography: 'Mark Fisher (1968–2017), Warwick CCRU fellow turned k-punk blogger and lecturer, who named capitalist realism — the sense that no alternative is imaginable — and traced its hauntings through culture and mental life.',
+  key_works: [
+    { title: 'Capitalist Realism', year: '2009', note: 'It is easier to imagine the end of the world than the end of capitalism.' },
+    { title: 'Ghosts of My Life', year: '2014', note: 'Hauntology: futures that failed to arrive.' },
+    { title: 'The Weird and the Eerie', year: '2016', note: 'Modes of the outside leaking through familiar things.' },
+    { title: 'Exiting the Vampire Castle', year: '2013', note: 'Against moralising call-out culture on the left.' },
+    { title: 'K-punk (posthumous collection)', year: '2018', note: 'The blog years: theory as popular intervention.' },
+  ],
+  why_this_seat: 'Closes the table as the contemporary ear: what the dead systems sound like from inside a present that cannot imagine beyond them — and what it costs.',
 };

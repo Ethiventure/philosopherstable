@@ -55,6 +55,12 @@ export interface Philosopher {
   profile: Record<string, unknown>;
   analytical_center: string[];
   style_essence: StyleEssence;
+  /** Two-sentence life for the profile modal (display only — never prompt input). */
+  biography: string;
+  /** Shelf for the Works tab (display only — never prompt input). */
+  key_works: { title: string; year: string; note: string }[];
+  /** Hand-off line: why this seat sits here (modal tab + seat hover). */
+  why_this_seat: string;
   created_at: string;
 }
 

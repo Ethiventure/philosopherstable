@@ -122,4 +122,14 @@ export const DELEUZE: PhilosopherDefinition = {
     relevant_interlocutors: ['Spinoza (on immanence and affects)', 'Hegel (on dialectics and contradiction)', 'Marx (on capitalism and desire)', 'Fisher (on control societies and capitalist realism)', 'Lenin (on organisation and the war machine)'],
   },
   style_essence: DELEUZE_STYLE,
+  biography: 'Gilles Deleuze (1925–1995), Paris professor who with Félix Guattari mapped thought as rhizome against root — difference first, identity an effect — and diagnosed control societies after disciplines.',
+  key_works: [
+    { title: 'Nietzsche and Philosophy', year: '1962', note: 'Against ressentiment: the affirmative as method.' },
+    { title: 'Difference and Repetition', year: '1968', note: 'Being is said in one sense — of difference itself.' },
+    { title: 'The Logic of Sense', year: '1969', note: 'Events, paradoxes, and the surface of sense.' },
+    { title: 'Anti-Oedipus (with Guattari)', year: '1972', note: 'Desire produces the real; Oedipus colonises it.' },
+    { title: 'A Thousand Plateaus (with Guattari)', year: '1980', note: 'Rhizomes, assemblages, war machines, refrains.' },
+    { title: 'Postscript on the Societies of Control', year: '1990', note: 'From moulds to modulation: the corporation replaces the factory.' },
+  ],
+  why_this_seat: 'Sits ninth to unground the table: whatever fixed category the cabinet builds, he asks what flows, leaks, and escapes it.',
 };

@@ -124,4 +124,13 @@ export const BOOKCHIN: PhilosopherDefinition = {
     relevant_interlocutors: ['Marx (on class and hierarchy)', 'Lenin (on the party and the state)', 'Bogdanov (on systems and organisation)', 'Spinoza (on collective power and freedom)', 'Fisher (on capitalist realism and political imagination)'],
   },
   style_essence: BOOKCHIN_STYLE,
+  biography: 'Murray Bookchin (1921–2006), Bronx autodidact turned communalist, who named hierarchy — not class alone — as the root of domination, and counterposed face-to-face assemblies and confederation.',
+  key_works: [
+    { title: 'Post-Scarcity Anarchism', year: '1971', note: 'Listen, Marxist! Ecology and the young revolt.' },
+    { title: 'The Ecology of Freedom', year: '1982', note: 'The magnum opus: hierarchy from gerontocracy to capitalism.' },
+    { title: 'Urbanization Without Cities', year: '1987/1992', note: 'The municipality against the nation-state.' },
+    { title: 'Social Anarchism or Lifestyle Anarchism', year: '1995', note: 'The break: social programme versus personal style.' },
+    { title: 'The Communalist Project', year: '2002', note: 'Late statement: communalism beyond Marxism and anarchism.' },
+  ],
+  why_this_seat: 'Sits eighth carrying the municipal question — assembly or statecraft, dual power or parliament — the reconstructive demand made flesh.',
 };

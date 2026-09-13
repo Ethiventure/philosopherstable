@@ -114,4 +114,12 @@ export const SPINOZA: PhilosopherDefinition = {
     relevant_interlocutors: ['Hegel (on dialectic and immanence)', 'Marx (on materialism and collective power)', 'Deleuze (on immanence and affects)', 'Kant (on freedom and autonomy)', 'Lenin (on organisation and collective power)'],
   },
   style_essence: SPINOZA_STYLE,
+  biography: 'Baruch Spinoza (1632–1677), Amsterdam lens-grinder excommunicated from the Portuguese-Jewish community in 1656, who derived a complete philosophy from a single substance and paid for his independence with near-total isolation.',
+  key_works: [
+    { title: 'Ethics, Demonstrated in Geometrical Order', year: '1677', note: 'God-or-Nature, the affects, and freedom — proved like geometry.' },
+    { title: 'Tractatus Theologico-Politicus', year: '1670', note: 'Scripture read as history; the first modern defence of free thought.' },
+    { title: 'Treatise on the Improvement of the Understanding', year: 'unfinished, 1677', note: 'Method: how confused ideas become adequate ones.' },
+    { title: 'Correspondence', year: '1661–1676', note: 'The system tested against Oldenburg, Blyenbergh, and Tschirnhaus.' },
+  ],
+  why_this_seat: 'Sits first by birth and by logic: the immanent ground — one substance, no beyond — that every later seat must either build on or break with.',
 };

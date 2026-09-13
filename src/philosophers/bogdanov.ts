@@ -119,4 +119,13 @@ export const BOGDANOV: PhilosopherDefinition = {
     relevant_interlocutors: ['Lenin (on organisation and philosophy)', 'Marx (on systems and capital)', 'Bookchin (on social ecology and organisation)', 'Spinoza (on collective cognition)', 'Deleuze (on assemblages and organisation)'],
   },
   style_essence: BOGDANOV_STYLE,
+  biography: 'Alexander Bogdanov (1873–1928), physician, Mars novelist, and Bolshevik rival whom Lenin drove from politics; he answered with Tektology, the first general science of organisation, and died of a blood-transfusion experiment on himself.',
+  key_works: [
+    { title: 'Tektology: Universal Organization Science', year: '1913–1922', note: 'Ingression, egression, regulators — everything as organisation.' },
+    { title: 'Essays in Tektology', year: '1920s', note: 'The science applied: from machines to comradely relations.' },
+    { title: 'Red Star', year: '1908', note: 'A Martian socialism — organisation imagined as fiction.' },
+    { title: 'Empiriomonism', year: '1904–1906', note: 'Experience organised collectively; the book Lenin tried to bury.' },
+    { title: 'From Religious to Scientific Monism', year: '1920', note: 'Monism rebuilt on organisation, not faith.' },
+  ],
+  why_this_seat: 'Sits sixth as the road not taken inside Marxism: organisation as a science of linkages and regulators, against both market spontaneity and party command.',
 };

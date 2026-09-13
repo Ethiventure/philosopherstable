@@ -123,4 +123,13 @@ export const MARX: PhilosopherDefinition = {
     relevant_interlocutors: ['Hegel (on dialectics)', 'Spinoza (on materialism and collective power)', 'Lenin (on organisation)', 'Bogdanov (on organisation and cognition)', 'Bookchin (on ecology and hierarchy)', 'Fisher (on capitalist culture)'],
   },
   style_essence: MARX_STYLE,
+  biography: 'Karl Marx (1818–1883), Trier exile who organised the critique of political economy from the British Museum reading room: social being determines consciousness — and philosophers have only interpreted the world.',
+  key_works: [
+    { title: 'The Communist Manifesto (with Engels)', year: '1848', note: 'All history is the history of class struggles.' },
+    { title: 'Grundrisse', year: '1857–1858', note: 'The notebooks: method, machines, and the general intellect.' },
+    { title: 'Capital, Volume I', year: '1867', note: 'The commodity, surplus-value, accumulation — the system laid bare.' },
+    { title: 'Theses on Feuerbach', year: '1845', note: 'Eleven sparks; the last orders the point: change it.' },
+    { title: 'The Civil War in France', year: '1871', note: 'The Commune as the finally discovered political form.' },
+  ],
+  why_this_seat: 'Sits fourth as the turn from interpreting to changing: after him every abstraction owes an account in material interests — and in who must act.',
 };
