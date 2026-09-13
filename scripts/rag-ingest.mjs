@@ -8,8 +8,8 @@
  * sources are fetched. Anything else aborts with the reason — no silent skips.
  * Idempotent: re-ingesting a source replaces its passages (same stable IDs).
  *
- * Outputs: data/rag.sqlite (local truth, gitignored) + public/search-index.json
- * (shipped to the site; pure data, no secrets).
+ * Outputs: data/rag.sqlite (local truth, gitignored) + public/rag/ (static
+ * per-author shards + manifest, shipped to the site; pure data, no secrets).
  */
 import { readFileSync, writeFileSync, mkdirSync } from 'node:fs';
 import { createHash } from 'node:crypto';

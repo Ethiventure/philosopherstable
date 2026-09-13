@@ -14,10 +14,9 @@ const SKIP_EXTENSIONS = ['.pdf', '.epub', '.mobi', '.zip', '.prc', '.tex'];
 const SKIP_HOSTS = ['archive.org'];
 
 /** Best groundable HTML source for the philosopher. Prefers ingested works,
- * then falls back to any live HTML page (metadata-only entries often point at
- * full text, e.g. theanarchistlibrary pages). Skips scans/binaries. Without
- * the fallback, thinkers like Weil — all of whose entries are metadata-only —
- * could never be grounded at all. */
+ * then falls back to any live HTML page. Skips scans/binaries. The fallback
+ * matters for entries without indexed text; the indexed path
+ * (`rag-ground.ts`) is tried first by callers. */
 export function groundableSource(philosopherName: string) {
   const works = CORPUS_SOURCES_DATA.filter(
     (s) =>

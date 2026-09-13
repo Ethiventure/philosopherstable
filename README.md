@@ -11,7 +11,7 @@ No account, no setup: open the site and press **Begin cabinet**. It runs on the 
 - **Display tab** (Settings): parchment / dim / ink-dark themes, three typefaces, text size and spacing, high contrast, reduced motion.
 - **Export** saves the whole session as clean prose with a Reading List of full links at the end — nothing inline.
 - **Notes from the margins**: between pass 2 and pass 3, one rude reader breaks in — naming what the table missed and ordering the final round toward action. Pass 3 must answer it.
-- **Philosophers' Service** (speech-bubble button bottom-right, a card beside the table, and a mention in the welcome card): ask any of the ten thinkers one-to-one — plain definitions, an example, and a check question each time. Twenty questions per sitting; chats append to export.
+- **Philosophers' Service** (service bell, raised bottom-right, a card beside the table, and a mention in the welcome card): ask any of the ten thinkers one-to-one — plain definitions, an example, and a check question each time. Twenty questions per sitting; chats append to export.
 
 ## Quotas (the honest version)
 
@@ -26,7 +26,7 @@ Your own key = your own quota = no sharing, no waiting.
 
 - Every turn follows the same dialectical discipline — cutting in on the predecessor, determinate negation, incorporation of what holds, reformulation ending on the live edge — but written in each philosopher's own machinery, never from a template. Pass 3 may invoke any seat's striking idea; the opening and closing moves belong to the question itself.
 - Footnote numbers under each turn point into Further reading (stable manifest order); the models' claims are matched display-side and labelled honest — nothing is fed back into prompts.
-- Source badges distinguish verified corpus passages from profile-grounded interpretation (full retrieval arrives in a later phase).
+- Source badges distinguish indexed full-text passages from profile-grounded interpretation. Switch on Grounding (Settings → Cabinet) and each speaker searches its own indexed works first — receipts stay inspectable per turn, and desk answers show their source chunks.
 - Accessibility is opt-in, never a restyle: the dark-academia default stays put; adjustments layer on top.
 
 ## Run it yourself (developers)
