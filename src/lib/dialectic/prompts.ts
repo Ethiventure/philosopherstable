@@ -98,7 +98,7 @@ export function buildTurnInstruction({ kind, prevName, isFinalSeat, longForm, re
       ? ['Invoke at least one surveyed idea from another seat by name (see STRIKING IDEAS), transformed into your own terms — never quoted; a pass-3 turn that only answers PREV has failed.']
       : []),
     ...(kind === 'reconstruction' && marginsNote
-      ? ['You have also read the NOTES FROM THE MARGINS in the survey below (listed first): carry at least one of its demands forward into your reformulation, in your own terms — never quoted, never ignored. A pass-3 turn that leaves the margins note unanswered has failed.']
+      ? ['You have also read the NOTES FROM THE MARGINS in the survey below (listed first): name it explicitly and carry at least one of its demands forward into your reformulation, in your own terms — never quoted, never unnamed, never ignored. A pass-3 turn that leaves the margins note unnamed or unanswered has failed.']
       : []),
     ...(kind === 'reconstruction' && marginsFirst
       ? ['You speak first after the note: open your negation by naming the NOTES FROM THE MARGINS writer and one demand it made — say plainly whether your framework takes it up or breaks it, in your own terms, never quoted. A first reconstruction that does not name the margins note has failed.']
