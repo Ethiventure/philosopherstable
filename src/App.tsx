@@ -10,7 +10,7 @@ import {
   Feather,
   Info,
   Library,
-  MessageCircle,
+  ConciergeBell,
   RotateCcw,
   ScrollText,
   Settings2,
@@ -946,9 +946,9 @@ function App() {
               <button className="btn-secondary w-full mt-4 flex justify-center items-center gap-2" onClick={() => setSelectedIntervention(interventions[interventions.length - 1] ?? null)} disabled={!interventions.length}><ScrollText size={15} /> Inspect latest intervention</button>
             </div>
             <div className="dark-academia-card p-5">
-              <div className="flex items-center gap-3 mb-2"><MessageCircle size={18} className="text-[#8b5254]" /><h3 className="text-xl">Philosophers&rsquo; Service</h3></div>
+              <div className="flex items-center gap-3 mb-2"><ConciergeBell size={18} className="text-[#8b5254]" /><h3 className="text-xl">Philosophers&rsquo; Service</h3></div>
               <p className="text-sm italic text-[#465f75]/70">One thinker, at your pace — plain definitions, a concrete example, a check question. Any of the ten, switchable mid-chat.</p>
-              <button className="btn-secondary w-full mt-4 flex justify-center items-center gap-2" onClick={() => setShowService(true)}><MessageCircle size={15} /> Ask a thinker</button>
+              <button className="btn-secondary w-full mt-4 flex justify-center items-center gap-2" onClick={() => setShowService(true)}><ConciergeBell size={15} /> Ask a thinker</button>
             </div>
           </aside>
         </section>
