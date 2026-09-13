@@ -200,7 +200,7 @@ export function createTtsController({ rate, onStatus }: TtsControllerOptions) {
       if (isTtsSupported()) synth().cancel();
       finish();
     },
-    setRate(_next: number) {
+    setRate() {
       // Rate applies to the next speak() call (controller is recreated on change).
     },
   };

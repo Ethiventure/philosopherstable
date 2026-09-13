@@ -158,9 +158,13 @@ function App() {
   const [interventions, setInterventions] = useState<Intervention[]>([]);
   const [coda, setCoda] = useState<{ text: string } | null>(null);
   const [codaError, setCodaError] = useState<string | null>(null);
-  // Coda runs after the loop, so it gets its own visible status — a silent
-  // catch here once swallowed a whole margin-notes failure with no trace.
+  // The margin note runs between pass 2 and pass 3, so it gets its own
+  // visible status — a silent catch here once swallowed a whole margin-notes
+  // failure with no trace.
   const [codaState, setCodaState] = useState<'idle' | 'writing' | 'failed'>('idle');
+  // Ref mirror of the note text so pass-3 turns can carry it in the same run
+  // (state updates do not apply synchronously inside the async loop).
+  const codaRef = useRef<string | null>(null);
   // Per-turn grounding receipts: what each speaker was actually shown, so its
   // quotes stay checkable after the fact. Keyed by intervention id.
   const [groundMap, setGroundMap] = useState<Record<string, { title: string; number: number; passages: string[]; reason: string | null }>>({});
@@ -372,7 +376,7 @@ function App() {
       const newest = interventions[interventions.length - 1];
       if (newest) setFreshId(newest.id);
     }
-  }, [interventions.length]);
+  }, [interventions]);
   useEffect(() => {
     if (!freshId) return;
     const timer = window.setTimeout(() => setFreshId(null), 2600);
@@ -449,6 +453,14 @@ function App() {
       if (runRef.current !== runId) return;
       const pass = Math.floor(n / seats.length);
       const index = n % seats.length;
+      // The margin note barges in once, right before the final round,
+      // reading only the first two passes. A failed note never blocks
+      // pass 3 — the sitting stands without it and the retry button
+      // re-runs it.
+      if (pass === 2 && index === 0 && !codaRef.current) {
+        await runCoda(runId, collected, snap);
+        if (runRef.current !== runId) return;
+      }
       // Pass 3 runs the rotation backwards: each seat answers the answer just
       // given from its left. The seat that just closed pass 2 does NOT open
       // (it would answer itself and never get critiqued) — it closes pass 3
@@ -532,6 +544,11 @@ function App() {
         }),
       ];
       if (groundingBlock) messageParts.push('', groundingBlock);
+      // Pass 3 carries the margin note's demand: every reconstruction must
+      // answer it as well as PREV, so the final round lands on action.
+      if (pass === 2 && codaRef.current) {
+        messageParts.push('', `NOTE FROM THE MARGINS (answer its demand for concrete action in your reformulation, in your own terms — never quote it verbatim):\n${codaRef.current}`);
+      }
       const userMessage = [...messageParts, '', STRUCTURED_OUTPUT_HINT].join('\n');
       setActivePass(pass);
       setActiveAgent(seatPos);
@@ -565,68 +582,71 @@ function App() {
     setIsRunning(false);
     setActivePass(2);
     // Pass 3 runs backwards but the just-spoken seat closes it, so the final
-    // speaker holds the last seat as usual.
+    // speaker holds the last seat as usual. The margin note already ran
+    // before pass 3 — nothing fires after the final seat.
     setActiveAgent(seats.length - 1);
-    // Full session survived: the margin note translates it for a newcomer.
-    if (collected.length >= total) {
-      await runCoda(runId, collected, snap);
-    }
   };
 
   /**
-   * Margin-notes coda: one extra call after the final seat, reading ONLY the
-   * question plus every seat's one-line determination. Not a seat, not an
+   * Margin note: one extra call between pass 2 and pass 3, reading ONLY the
+   * first two passes' one-line determinations. Not a seat, not an
    * intervention — stored separately so seats/passes/deck math never shifts.
-   * Retryable failures (quota/server) get one self-retry after a cooling wait;
-   * otherwise the session stands without it and the retry button re-runs it.
+   * Returns the text so pass 3 can carry its demand; a failure never blocks
+   * pass 3 and the retry button re-runs it. Same visible-status contract as
+   * before: writing / failed + reason + retry + console diagnostics, never a
+   * silent catch.
    */
-  const runCoda = async (runId: number, collected: Intervention[], snap: CabinetSettings) => {
+  const runCoda = async (runId: number, collected: Intervention[], snap: CabinetSettings): Promise<string | null> => {
     const lines = collected
-      .filter((item) => item.sections?.new_contribution)
+      .filter((item) => item.pass_number <= 2 && item.sections?.new_contribution)
       .map((item) => ({
         name: philosophers.find((p) => p.id === item.philosopher_id)?.full_name ?? 'A seat',
         line: String(item.sections?.new_contribution),
       }));
-    if (!lines.length) return;
-    setThinkingName('Margin notes');
+    if (!lines.length) return null;
+    setThinkingName('Notes from the margins');
     setCodaState('writing');
     setCodaError(null);
     const codaUser = buildCodaPrompt(question, lines);
-    const attempt = async (repair = false): Promise<void> => {
+    const attempt = async (repair = false): Promise<string> => {
       const output = await generateWithProvider(snap, CODA_SYSTEM, repair ? codaUser + CODA_REPAIR_SUFFIX : codaUser, false);
-      if (runRef.current !== runId) return;
-      setCoda({
-        text: [output.negation, output.incorporation, output.reformulation].filter((s) => s && s.trim()).join('\n\n'),
-      });
+      if (runRef.current !== runId) throw new LlmError('Superseded.', false, 'unknown');
+      const text = [output.negation, output.incorporation, output.reformulation].filter((s) => s && s.trim()).join('\n\n');
+      setCoda({ text });
+      codaRef.current = text;
       setCodaState('idle');
+      return text;
     };
     try {
-      await attempt();
+      return await attempt();
     } catch (error) {
-      if (runRef.current !== runId) return;
-      // Parse failures get a repair retry with the no-quotes rule restated
-      // (inner quotation marks are the usual cause); other retryable failures
-      // (typically quota cooling right after a full session) get one retry
-      // after a wait. Then the failure surfaces visibly.
+      if (runRef.current !== runId) return null;
+      if (error instanceof LlmError && error.code === 'unknown' && error.message === 'Superseded.') return null;
+      // Parse failures get a repair retry with the quotes rule restated
+      // (bare double quotes are the usual cause); other retryable failures
+      // (typically quota cooling) get one retry after a wait. Then the
+      // failure surfaces visibly.
       const isParse = error instanceof LlmError && error.code === 'parse';
       const retryable = error instanceof LlmError && error.retryable;
+      let codaFailure: unknown = error;
       if (isParse || retryable) {
         if (!isParse) {
           await new Promise((resolve) => setTimeout(resolve, 20000));
-          if (runRef.current !== runId) return;
+          if (runRef.current !== runId) return null;
         }
         try {
-          await attempt(isParse);
-          return;
+          return await attempt(isParse);
         } catch (retryError) {
-          if (runRef.current !== runId) return;
-          error = retryError;
+          if (runRef.current !== runId) return null;
+          codaFailure = retryError;
         }
       }
-      if (typeof console !== 'undefined') console.error('[Margin notes] coda failed:', error);
+      if (typeof console !== 'undefined') console.error('[Margins] note failed:', codaFailure);
       setCoda(null);
+      codaRef.current = null;
       setCodaState('failed');
-      setCodaError(error instanceof Error ? error.message : 'Unknown error.');
+      setCodaError(codaFailure instanceof Error ? codaFailure.message : 'Unknown error.');
+      return null;
     } finally {
       if (runRef.current === runId) setThinkingName(null);
     }
@@ -646,7 +666,7 @@ function App() {
       ttsRef.current?.stop();
       return;
     }
-    ttsRef.current?.speak([{ id: 'coda', heading: 'Margin notes', text: coda.text }]);
+    ttsRef.current?.speak([{ id: 'coda', heading: 'Notes from the margins', text: coda.text }]);
   };
 
   const startMeeting = () => {
@@ -657,6 +677,7 @@ function App() {
     setCoda(null);
     setCodaState('idle');
     setCodaError(null);
+    codaRef.current = null;
     setGroundMap({});
     provRef.current = [];
     spentRef.current = [];
@@ -722,6 +743,7 @@ function App() {
     setCoda(null);
     setCodaState('idle');
     setCodaError(null);
+    codaRef.current = null;
     setGroundMap({});
     provRef.current = [];
     spentRef.current = [];
@@ -731,7 +753,7 @@ function App() {
   const exportTranscript = () => {
     const citedNumbers: number[] = [];
     const seenNumbers = new Set<number>();
-    const body = [`THE DIALECTICAL CABINET\n\nQUESTION\n${question}\n`, ...interventions.map((item) => {
+    const turnText = (item: Intervention) => {
       const philosopher = philosophers.find((p) => p.id === item.philosopher_id);
       const name = philosopher?.name ?? 'Unknown';
       for (const n of splitLabels(name, item.citations.map((c) => c.label)).numbers) {
@@ -741,18 +763,24 @@ function App() {
         }
       }
       return `PASS ${item.pass_number} — ${philosopher?.full_name ?? 'Unknown'}\n\n${item.response_text}\n`;
-    })].join('\n');
+    };
+    // The note sits where it spoke: between the pass-2 close and pass-3 open.
+    const early = interventions.filter((item) => item.pass_number <= 2).map(turnText);
+    const late = interventions.filter((item) => item.pass_number >= 3).map(turnText);
+    const codaText = coda ? `\nNOTES FROM THE MARGINS (before pass 3)\n${coda.text}\n` : '';
+    const body = [`THE DIALECTICAL CABINET\n\nQUESTION\n${question}\n`, ...early, ...(coda && late.length ? [codaText] : []), ...late].join('\n');
+    // A note written but pass 3 never ran (paused session) still exports.
+    const trailingCoda = coda && !late.length ? codaText : '';
     const readingList = citedNumbers.length
       ? `\nREADING LIST\n${entriesForNumbers(citedNumbers).map(({ number, source }) => `[${number}] ${source.title} — ${source.author}${source.source_url ? ` — ${source.source_url}` : ''}`).join('\n')}\n`
       : '';
-    const codaText = coda ? `\nMARGIN NOTES\n${coda.text}\n` : '';
     const trail = [...new Set(provRef.current)];
     const provenanceText = trail.length
       ? `\nMODELS USED\n${trail.map((t) => `— ${t}`).join('\n')}\n`
       : '';
     // BOM + explicit charset: without them some viewers (notably Windows
     // Notepad) decode UTF-8 smart quotes/dashes as Latin-1 mojibake (â€…).
-    const text = `\uFEFF${body}${codaText}${readingList}${provenanceText}`;
+    const text = `\uFEFF${body}${trailingCoda}${readingList}${provenanceText}`;
     const blob = new Blob([text], { type: 'text/plain;charset=utf-8' });
     const url = URL.createObjectURL(blob);
     const anchor = document.createElement('a');
@@ -890,10 +918,10 @@ function App() {
           )}
         </section>
 
-        {coda || (isComplete && !isRunning) ? (
-          <section className="mt-10" aria-label="Margin notes">
-            <div className="ornament-divider mb-6"><span className="text-xl">❧</span></div>
-            <div className="mb-5"><p className="pass-indicator text-[#8b5254]">After the sitting</p><h2 className="text-3xl">Margin notes</h2></div>
+        {(coda || codaState !== 'idle') && (
+          <section className="mt-10" aria-label="Notes from the margins">
+            <div className="ornament-divider mb-6"><span className="text-xl">☞</span></div>
+            <div className="mb-5"><p className="pass-indicator text-[#8b5254]">Before the final round</p><h2 className="text-3xl">Notes from the margins</h2></div>
             {coda ? (
               <article className="dark-academia-card p-5 md:p-8 max-w-3xl">
                 <p className="whitespace-pre-line text-[15px] leading-relaxed text-[#465f75]">{coda.text}</p>
@@ -904,24 +932,20 @@ function App() {
             ) : (
               <div className="dark-academia-card p-5 max-w-3xl">
                 {codaState === 'writing' ? (
-                  <p className="text-sm italic text-[#465f75]/70" aria-live="polite">Writing margin notes…</p>
+                  <p className="text-sm italic text-[#465f75]/70" aria-live="polite">Notes from the margins are interrupting…</p>
                 ) : (
                   <>
-                    <p className="text-sm italic text-[#465f75]/70">
-                      {codaState === 'failed'
-                        ? 'The margin note failed to write — the sitting stands without it.'
-                        : 'The sitting is complete but the margin note did not arrive.'}
-                    </p>
+                    <p className="text-sm italic text-[#465f75]/70">The note failed to arrive — the final round carries on without it.</p>
                     {codaState === 'failed' && codaError && (
                       <p className="text-xs mt-2 text-[#8b5254]">Reason: {codaError.length > 220 ? `${codaError.slice(0, 220)}…` : codaError}</p>
                     )}
-                    <button className="btn-secondary !text-xs mt-3" onClick={runCodaNow}>Write margin notes</button>
+                    <button className="btn-secondary !text-xs mt-3" onClick={runCodaNow}>Bring the note</button>
                   </>
                 )}
               </div>
             )}
           </section>
-        ) : null}
+        )}
 
         {interventions.length > orderedPhilosophers.length && <PositionComparison philosophers={orderedPhilosophers} interventions={interventions} onOpenSources={openSourcesAt} />}
       </main>

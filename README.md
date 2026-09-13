@@ -10,7 +10,7 @@ No account, no setup: open the site and press **Begin cabinet**. It runs on the 
 - Click any intervention for footnoted references (`Read similar: 3, 9` — numbers match Further reading); click any seat for the thinker's intellectual profile.
 - **Display tab** (Settings): parchment / dim / ink-dark themes, three typefaces, text size and spacing, high contrast, reduced motion.
 - **Export** saves the whole session as clean prose with a Reading List of full links at the end — nothing inline.
-- **Margin notes**: after the final seat, a reader's translation of the session appears below the deck.
+- **Notes from the margins**: between pass 2 and pass 3, one rude reader breaks in — naming what the table missed and ordering the final round toward action. Pass 3 must answer it.
 
 ## Quotas (the honest version)
 
