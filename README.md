@@ -1,10 +1,10 @@
 # The Dialectical Cabinet
 
-Ten dead philosophers around a table — Spinoza, Kant, Hegel, Marx, Lenin, Bogdanov, **Weil**, Bookchin, Deleuze, Fisher — made to answer *your* question across three clockwise passes. Each thinker grabs their predecessor by the collar, in their own voice, until the problem comes out changed. It is the liveliest seminar none of them ever agreed to attend — part tavern brawl, part tribunal of reason — and the cover charge is whatever the machines demand: nothing on the shared key but your patience, or about two cents a session if you bring your own.
+Ten dead philosophers around a table — Spinoza, Kant, Hegel, Marx, Lenin, Bogdanov, **Weil**, Bookchin, Deleuze, Fisher — made to answer *your* question across three clockwise passes. Each thinker grabs their predecessor by the collar, in their own voice, until the problem comes out changed. It is the liveliest seminar none of them ever agreed to attend — part fencing match, part tribunal of reason — and the cover charge is whatever the machines demand: nothing on the shared key but your patience, or about two cents a session if you bring your own.
 
 ## Try it
 
-No account, no setup: open the site and press **Begin cabinet**. It runs on the shared cabinet key by default.
+No account, no setup: open the site and press **Convene the cabinet**. It runs on the shared cabinet key by default.
 
 - **Read along** in the deck (arrows move forward only — your place is never yanked), or press **Listen** on any card (free, uses your device's own voice). The latest turn also sits on the table itself.
 - Click any intervention for footnoted references (`Read similar: 3, 9` — numbers match Further reading); click any seat for the thinker's profile — Thought, Voice, Works, and why they sit where they sit. Hover a seat for the one-line version.
@@ -47,10 +47,15 @@ Your own key = your own quota = no sharing, no waiting.
 ## Run it yourself (developers)
 
 ```bash
+git clone https://github.com/Ethiventure/philosopherstable.git
+cd philosopherstable
 npm install
 cp .env.example .env   # only needed for the shared provider locally
 # put your Groq key in .env (gitignored — never commit it)
-npx netlify dev        # serves the app AND the shared-key function
+npx netlify dev        # app on http://localhost:8888 + the shared-key function
+# (first run fetches the Netlify CLI — slow once, then cached)
 ```
+
+Plain `npm run dev` also works but serves the app only — the shared provider shows an unreachable note there while visitor keys keep working. If `:8888` is already taken, stop the old server first (one instance owns the port).
 
 Deploying: connect the repo to Netlify (builds via `netlify.toml`), then set `GROQ_API_KEY` in Site settings → Environment variables. The key must never appear in the repo or the frontend bundle — it lives server-side in `netlify/functions/cabinet.js`'s environment only. See `PLAN.md` for the full agent-facing build plan.
