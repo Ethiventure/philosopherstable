@@ -54,8 +54,9 @@ from the data and can never drift from date order again.
 
 ### Style intensity: global
 One Low / Medium / High setting in Settings, applied to every philosopher's intensity
-ladder. Low additionally drops `special_modes` and appends a governing plain-style
-override in `renderPersona` (short sentences, defined terms, no specimen language);
+ladder. Low sends an abridged persona from `shared/low-style.ts` (DNA + movement +
+Low sentence + plain rules; full profile knowledge kept; generation rules, special
+modes, REGISTER, and universal mechanisms dropped; governing override last).
 Medium/High are untouched.
 
 ### Length: short and punchy

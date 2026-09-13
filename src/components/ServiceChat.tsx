@@ -64,7 +64,7 @@ export default function ServiceChat({ thinkers, interventions, settings, open, o
         onClick={onToggle}
         aria-label="Open Philosophers' Service desk"
         title="Philosophers' Service — ask a thinker"
-        className="fixed bottom-5 right-5 z-40 w-14 h-14 rounded-full bg-[#4a392d] text-[#eae1ca] flex items-center justify-center shadow-lg hover:bg-[#8b5254] focus:outline-none focus:ring-2 focus:ring-[#8b5254]/50"
+        className="fixed bottom-24 right-5 z-40 w-14 h-14 rounded-full bg-[#4a392d] text-[#eae1ca] flex items-center justify-center shadow-lg hover:bg-[#8b5254] focus:outline-none focus:ring-2 focus:ring-[#8b5254]/50"
       >
         <ConciergeBell size={24} />
       </button>
@@ -130,7 +130,7 @@ export default function ServiceChat({ thinkers, interventions, settings, open, o
   return (
     <section
       aria-label="Philosophers' Service desk"
-      className="fixed bottom-5 right-5 z-40 w-[min(92vw,380px)] max-h-[70vh] flex flex-col dark-academia-card !p-0 overflow-hidden shadow-xl"
+      className="fixed bottom-24 right-5 z-40 w-[min(92vw,380px)] max-h-[70vh] flex flex-col dark-academia-card !p-0 overflow-hidden shadow-xl"
     >
       <div className="flex items-center justify-between gap-2 px-4 py-3 border-b border-[#4a392d]/20">
         <div>
