@@ -205,21 +205,17 @@ Stored as `Intervention.sections`; `response_text` kept as a joined string.
 
 **2f Orchestration** — async loop over passes × seats replaces `setInterval`;
 pause flag checked between turns; "X is thinking…" state. Between pass 2 and
-pass 3, `runInterject` fires once: reads ONLY the question + the first two
-passes' one-line determinations, writes a rude decolonial interruption in the
-same Gen-Z PPE-student voice (`INTERJECT_SYSTEM` + `buildInterjectPrompt`,
-opens with Marx Thesis Eleven, 180-word ceiling), stored as separate
-`interject` state (never an Intervention). Its text is fed into every pass-3
-turn as an INTERRUPTION block the reformulation must answer; a failed
-interject never blocks pass 3 (visible failed + retry, session stands).
-After the final seat,
-`runCoda` fires once: reads ONLY the question + every seat's one-line
-determination, writes margin notes in a fixed Gen-Z PPE-student voice
-(`CODA_SYSTEM` + `buildCodaPrompt`), stored as separate `coda` state (never an
-Intervention — seats/passes/deck math untouched). Own visible status
+pass 3, `runCoda` fires once: reads ONLY the question + the first two passes'
+one-line determinations, writes the margin note in a rude decolonial Gen-Z
+PPE-student voice (`CODA_SYSTEM` + `buildCodaPrompt`, opens with Marx Thesis
+Eleven in single quotes, 180-word ceiling), stored as separate `coda` state
+(never an Intervention — seats/passes/deck math untouched). Its text is fed
+into every pass-3 turn as a NOTE block the reformulation must answer; a failed
+note never blocks pass 3 (visible failed + retry, session stands). Nothing
+fires after the final seat. Own visible status
 (`codaState`: writing / failed + visible reason + retry + console diagnostics);
 silent catches are banned everywhere, including here. Parse failures get a
-coda-specific repair restating the no-quotes rule. DeepInfra requests
+coda-specific repair restating the single-quotes rule. DeepInfra requests
 `response_format: json_object` first (plain fallback on 400) to force valid
 syntax. TTS uses the explicit browser-default voice (leaving `utter.voice`
 unset made Chrome pick a bundled voice instead of the OS default).

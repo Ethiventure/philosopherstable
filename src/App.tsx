@@ -31,7 +31,7 @@ import {
   type Philosopher,
   type StyleEssence,
 } from '@/types';
-import { buildCodaPrompt, buildInterjectPrompt, buildTurnInstruction, buildUserMessage, CODA_REPAIR_SUFFIX, CODA_SYSTEM, getTurnKind, INTERJECT_REPAIR_SUFFIX, INTERJECT_SYSTEM, STRUCTURED_OUTPUT_HINT } from '@/lib/dialectic/prompts';
+import { buildCodaPrompt, buildTurnInstruction, buildUserMessage, CODA_REPAIR_SUFFIX, CODA_SYSTEM, getTurnKind, STRUCTURED_OUTPUT_HINT } from '@/lib/dialectic/prompts';
 import { LlmError, type LlmErrorCode, type TurnOutput } from '@/lib/llm';
 import { loadSettings, saveSettings, type CabinetSettings, type GroqModel } from '@/lib/settings';
 import { applyDisplay, loadDisplay, saveDisplay } from '@/lib/preferences';
@@ -158,16 +158,13 @@ function App() {
   const [interventions, setInterventions] = useState<Intervention[]>([]);
   const [coda, setCoda] = useState<{ text: string } | null>(null);
   const [codaError, setCodaError] = useState<string | null>(null);
-  // Coda runs after the loop, so it gets its own visible status — a silent
-  // catch here once swallowed a whole margin-notes failure with no trace.
+  // The margin note runs between pass 2 and pass 3, so it gets its own
+  // visible status — a silent catch here once swallowed a whole margin-notes
+  // failure with no trace.
   const [codaState, setCodaState] = useState<'idle' | 'writing' | 'failed'>('idle');
-  // Interject runs between pass 2 and pass 3: same margins voice, reading
-  // only the first two passes, ordering the final round toward action.
-  // Stored separately like the coda so deck math never shifts.
-  const [interject, setInterject] = useState<{ text: string } | null>(null);
-  const [interjectError, setInterjectError] = useState<string | null>(null);
-  const [interjectState, setInterjectState] = useState<'idle' | 'writing' | 'failed'>('idle');
-  const interjectRef = useRef<string | null>(null);
+  // Ref mirror of the note text so pass-3 turns can carry it in the same run
+  // (state updates do not apply synchronously inside the async loop).
+  const codaRef = useRef<string | null>(null);
   // Per-turn grounding receipts: what each speaker was actually shown, so its
   // quotes stay checkable after the fact. Keyed by intervention id.
   const [groundMap, setGroundMap] = useState<Record<string, { title: string; number: number; passages: string[]; reason: string | null }>>({});
@@ -452,22 +449,17 @@ function App() {
 
   const runLoop = async (runId: number, seats: Philosopher[], startCount: number, collected: Intervention[], snap: CabinetSettings) => {
     const total = seats.length * 3;
-    // On resume past the pass-2/3 boundary, keep the visible interject text
-    // feeding pass 3 without re-running the call.
-    if (startCount >= seats.length * 2 && interjectRef.current) {
-      // already held — pass-3 turns below will carry it
-    }
     for (let n = startCount; n < total; n += 1) {
       if (runRef.current !== runId) return;
       const pass = Math.floor(n / seats.length);
       const index = n % seats.length;
-      // The margins barge in once, right before the final round, reading
-      // only the first two passes. A failed interject never blocks pass 3 —
-      // the sitting stands without it and the retry button re-runs it.
-      if (pass === 2 && index === 0 && !interjectRef.current) {
-        const note = await runInterject(runId, collected, snap);
+      // The margin note barges in once, right before the final round,
+      // reading only the first two passes. A failed note never blocks
+      // pass 3 — the sitting stands without it and the retry button
+      // re-runs it.
+      if (pass === 2 && index === 0 && !codaRef.current) {
+        await runCoda(runId, collected, snap);
         if (runRef.current !== runId) return;
-        void note;
       }
       // Pass 3 runs the rotation backwards: each seat answers the answer just
       // given from its left. The seat that just closed pass 2 does NOT open
@@ -552,10 +544,10 @@ function App() {
         }),
       ];
       if (groundingBlock) messageParts.push('', groundingBlock);
-      // Pass 3 carries the interruption's demand: every reconstruction must
+      // Pass 3 carries the margin note's demand: every reconstruction must
       // answer it as well as PREV, so the final round lands on action.
-      if (pass === 2 && interjectRef.current) {
-        messageParts.push('', `INTERRUPTION FROM THE MARGINS (answer its demand for concrete action in your reformulation, in your own terms — never quote it verbatim):\n${interjectRef.current}`);
+      if (pass === 2 && codaRef.current) {
+        messageParts.push('', `NOTE FROM THE MARGINS (answer its demand for concrete action in your reformulation, in your own terms — never quote it verbatim):\n${codaRef.current}`);
       }
       const userMessage = [...messageParts, '', STRUCTURED_OUTPUT_HINT].join('\n');
       setActivePass(pass);
@@ -590,23 +582,21 @@ function App() {
     setIsRunning(false);
     setActivePass(2);
     // Pass 3 runs backwards but the just-spoken seat closes it, so the final
-    // speaker holds the last seat as usual.
+    // speaker holds the last seat as usual. The margin note already ran
+    // before pass 3 — nothing fires after the final seat.
     setActiveAgent(seats.length - 1);
-    // Full session survived: the margin note translates it for a newcomer.
-    if (collected.length >= total) {
-      await runCoda(runId, collected, snap);
-    }
   };
 
   /**
-   * Interruption from the margins: one extra call between pass 2 and pass 3,
-   * reading ONLY the first two passes' one-line determinations. Not a seat,
-   * not an intervention — stored separately so seats/passes/deck math never
-   * shifts. Returns the text for pass-3 grounding, or null on failure.
-   * Same visible-status contract as the coda: writing / failed + reason +
-   * retry + console diagnostics, never a silent catch.
+   * Margin note: one extra call between pass 2 and pass 3, reading ONLY the
+   * first two passes' one-line determinations. Not a seat, not an
+   * intervention — stored separately so seats/passes/deck math never shifts.
+   * Returns the text so pass 3 can carry its demand; a failure never blocks
+   * pass 3 and the retry button re-runs it. Same visible-status contract as
+   * before: writing / failed + reason + retry + console diagnostics, never a
+   * silent catch.
    */
-  const runInterject = async (runId: number, collected: Intervention[], snap: CabinetSettings): Promise<string | null> => {
+  const runCoda = async (runId: number, collected: Intervention[], snap: CabinetSettings): Promise<string | null> => {
     const lines = collected
       .filter((item) => item.pass_number <= 2 && item.sections?.new_contribution)
       .map((item) => ({
@@ -615,16 +605,16 @@ function App() {
       }));
     if (!lines.length) return null;
     setThinkingName('Notes from the margins');
-    setInterjectState('writing');
-    setInterjectError(null);
-    const interjectUser = buildInterjectPrompt(question, lines);
+    setCodaState('writing');
+    setCodaError(null);
+    const codaUser = buildCodaPrompt(question, lines);
     const attempt = async (repair = false): Promise<string> => {
-      const output = await generateWithProvider(snap, INTERJECT_SYSTEM, repair ? interjectUser + INTERJECT_REPAIR_SUFFIX : interjectUser, false);
+      const output = await generateWithProvider(snap, CODA_SYSTEM, repair ? codaUser + CODA_REPAIR_SUFFIX : codaUser, false);
       if (runRef.current !== runId) throw new LlmError('Superseded.', false, 'unknown');
       const text = [output.negation, output.incorporation, output.reformulation].filter((s) => s && s.trim()).join('\n\n');
-      setInterject({ text });
-      interjectRef.current = text;
-      setInterjectState('idle');
+      setCoda({ text });
+      codaRef.current = text;
+      setCodaState('idle');
       return text;
     };
     try {
@@ -632,9 +622,13 @@ function App() {
     } catch (error) {
       if (runRef.current !== runId) return null;
       if (error instanceof LlmError && error.code === 'unknown' && error.message === 'Superseded.') return null;
+      // Parse failures get a repair retry with the quotes rule restated
+      // (bare double quotes are the usual cause); other retryable failures
+      // (typically quota cooling) get one retry after a wait. Then the
+      // failure surfaces visibly.
       const isParse = error instanceof LlmError && error.code === 'parse';
       const retryable = error instanceof LlmError && error.retryable;
-      let failure: unknown = error;
+      let codaFailure: unknown = error;
       if (isParse || retryable) {
         if (!isParse) {
           await new Promise((resolve) => setTimeout(resolve, 20000));
@@ -644,82 +638,15 @@ function App() {
           return await attempt(isParse);
         } catch (retryError) {
           if (runRef.current !== runId) return null;
-          failure = retryError;
-        }
-      }
-      if (typeof console !== 'undefined') console.error('[Margins] interject failed:', failure);
-      setInterject(null);
-      interjectRef.current = null;
-      setInterjectState('failed');
-      setInterjectError(failure instanceof Error ? failure.message : 'Unknown error.');
-      return null;
-    } finally {
-      if (runRef.current === runId) setThinkingName(null);
-    }
-  };
-
-  const runInterjectNow = () => {
-    if (!interventions.length || isRunning) return;
-    setInterjectState('idle');
-    setInterjectError(null);
-    void runInterject(runRef.current, [...interventions], settings);
-  };
-
-  /**
-   * Margin-notes coda: one extra call after the final seat, reading ONLY the
-   * question plus every seat's one-line determination. Not a seat, not an
-   * intervention — stored separately so seats/passes/deck math never shifts.
-   * Retryable failures (quota/server) get one self-retry after a cooling wait;
-   * otherwise the session stands without it and the retry button re-runs it.
-   */
-  const runCoda = async (runId: number, collected: Intervention[], snap: CabinetSettings) => {
-    const lines = collected
-      .filter((item) => item.sections?.new_contribution)
-      .map((item) => ({
-        name: philosophers.find((p) => p.id === item.philosopher_id)?.full_name ?? 'A seat',
-        line: String(item.sections?.new_contribution),
-      }));
-    if (!lines.length) return;
-    setThinkingName('Margin notes');
-    setCodaState('writing');
-    setCodaError(null);
-    const codaUser = buildCodaPrompt(question, lines);
-    const attempt = async (repair = false): Promise<void> => {
-      const output = await generateWithProvider(snap, CODA_SYSTEM, repair ? codaUser + CODA_REPAIR_SUFFIX : codaUser, false);
-      if (runRef.current !== runId) return;
-      setCoda({
-        text: [output.negation, output.incorporation, output.reformulation].filter((s) => s && s.trim()).join('\n\n'),
-      });
-      setCodaState('idle');
-    };
-    try {
-      await attempt();
-    } catch (error) {
-      if (runRef.current !== runId) return;
-      // Parse failures get a repair retry with the no-quotes rule restated
-      // (inner quotation marks are the usual cause); other retryable failures
-      // (typically quota cooling right after a full session) get one retry
-      // after a wait. Then the failure surfaces visibly.
-      const isParse = error instanceof LlmError && error.code === 'parse';
-      const retryable = error instanceof LlmError && error.retryable;
-      let codaFailure: unknown = error;
-      if (isParse || retryable) {
-        if (!isParse) {
-          await new Promise((resolve) => setTimeout(resolve, 20000));
-          if (runRef.current !== runId) return;
-        }
-        try {
-          await attempt(isParse);
-          return;
-        } catch (retryError) {
-          if (runRef.current !== runId) return;
           codaFailure = retryError;
         }
       }
-      if (typeof console !== 'undefined') console.error('[Margin notes] coda failed:', codaFailure);
+      if (typeof console !== 'undefined') console.error('[Margins] note failed:', codaFailure);
       setCoda(null);
+      codaRef.current = null;
       setCodaState('failed');
       setCodaError(codaFailure instanceof Error ? codaFailure.message : 'Unknown error.');
+      return null;
     } finally {
       if (runRef.current === runId) setThinkingName(null);
     }
@@ -739,16 +666,7 @@ function App() {
       ttsRef.current?.stop();
       return;
     }
-    ttsRef.current?.speak([{ id: 'coda', heading: 'Margin notes', text: coda.text }]);
-  };
-
-  const toggleInterjectSpeech = () => {
-    if (!ttsSupported || !interject) return;
-    if (ttsStatus.state !== 'idle' && ttsStatus.currentId === 'interject') {
-      ttsRef.current?.stop();
-      return;
-    }
-    ttsRef.current?.speak([{ id: 'interject', heading: 'Notes from the margins', text: interject.text }]);
+    ttsRef.current?.speak([{ id: 'coda', heading: 'Notes from the margins', text: coda.text }]);
   };
 
   const startMeeting = () => {
@@ -759,10 +677,7 @@ function App() {
     setCoda(null);
     setCodaState('idle');
     setCodaError(null);
-    setInterject(null);
-    setInterjectState('idle');
-    setInterjectError(null);
-    interjectRef.current = null;
+    codaRef.current = null;
     setGroundMap({});
     provRef.current = [];
     spentRef.current = [];
@@ -828,10 +743,7 @@ function App() {
     setCoda(null);
     setCodaState('idle');
     setCodaError(null);
-    setInterject(null);
-    setInterjectState('idle');
-    setInterjectError(null);
-    interjectRef.current = null;
+    codaRef.current = null;
     setGroundMap({});
     provRef.current = [];
     spentRef.current = [];
@@ -841,7 +753,7 @@ function App() {
   const exportTranscript = () => {
     const citedNumbers: number[] = [];
     const seenNumbers = new Set<number>();
-    const body = [`THE DIALECTICAL CABINET\n\nQUESTION\n${question}\n`, ...interventions.map((item) => {
+    const turnText = (item: Intervention) => {
       const philosopher = philosophers.find((p) => p.id === item.philosopher_id);
       const name = philosopher?.name ?? 'Unknown';
       for (const n of splitLabels(name, item.citations.map((c) => c.label)).numbers) {
@@ -851,19 +763,24 @@ function App() {
         }
       }
       return `PASS ${item.pass_number} — ${philosopher?.full_name ?? 'Unknown'}\n\n${item.response_text}\n`;
-    })].join('\n');
+    };
+    // The note sits where it spoke: between the pass-2 close and pass-3 open.
+    const early = interventions.filter((item) => item.pass_number <= 2).map(turnText);
+    const late = interventions.filter((item) => item.pass_number >= 3).map(turnText);
+    const codaText = coda ? `\nNOTES FROM THE MARGINS (before pass 3)\n${coda.text}\n` : '';
+    const body = [`THE DIALECTICAL CABINET\n\nQUESTION\n${question}\n`, ...early, ...(coda && late.length ? [codaText] : []), ...late].join('\n');
+    // A note written but pass 3 never ran (paused session) still exports.
+    const trailingCoda = coda && !late.length ? codaText : '';
     const readingList = citedNumbers.length
       ? `\nREADING LIST\n${entriesForNumbers(citedNumbers).map(({ number, source }) => `[${number}] ${source.title} — ${source.author}${source.source_url ? ` — ${source.source_url}` : ''}`).join('\n')}\n`
       : '';
-    const codaText = coda ? `\nMARGIN NOTES\n${coda.text}\n` : '';
-    const interjectText = interject ? `\nINTERRUPTION — NOTES FROM THE MARGINS (before pass 3)\n${interject.text}\n` : '';
     const trail = [...new Set(provRef.current)];
     const provenanceText = trail.length
       ? `\nMODELS USED\n${trail.map((t) => `— ${t}`).join('\n')}\n`
       : '';
     // BOM + explicit charset: without them some viewers (notably Windows
     // Notepad) decode UTF-8 smart quotes/dashes as Latin-1 mojibake (â€…).
-    const text = `\uFEFF${body}${interjectText}${codaText}${readingList}${provenanceText}`;
+    const text = `\uFEFF${body}${trailingCoda}${readingList}${provenanceText}`;
     const blob = new Blob([text], { type: 'text/plain;charset=utf-8' });
     const url = URL.createObjectURL(blob);
     const anchor = document.createElement('a');
@@ -1001,39 +918,10 @@ function App() {
           )}
         </section>
 
-        {(interject || interjectState !== 'idle') && (
-          <section className="mt-10" aria-label="Interruption from the margins">
+        {(coda || codaState !== 'idle') && (
+          <section className="mt-10" aria-label="Notes from the margins">
             <div className="ornament-divider mb-6"><span className="text-xl">☞</span></div>
             <div className="mb-5"><p className="pass-indicator text-[#8b5254]">Before the final round</p><h2 className="text-3xl">Notes from the margins</h2></div>
-            {interject ? (
-              <article className="dark-academia-card p-5 md:p-8 max-w-3xl">
-                <p className="whitespace-pre-line text-[15px] leading-relaxed text-[#465f75]">{interject.text}</p>
-                <div className="flex flex-wrap gap-2 mt-5">
-                  {ttsSupported && <button onClick={toggleInterjectSpeech} className="btn-secondary !text-xs flex items-center gap-2" aria-label={ttsStatus.state !== 'idle' && ttsStatus.currentId === 'interject' ? 'Stop reading interruption' : 'Listen to interruption'}>{ttsStatus.state !== 'idle' && ttsStatus.currentId === 'interject' ? <><Square size={13} /> Stop reading</> : <><Volume2 size={13} /> Listen</>}</button>}
-                </div>
-              </article>
-            ) : (
-              <div className="dark-academia-card p-5 max-w-3xl">
-                {interjectState === 'writing' ? (
-                  <p className="text-sm italic text-[#465f75]/70" aria-live="polite">Notes from the margins are interrupting…</p>
-                ) : (
-                  <>
-                    <p className="text-sm italic text-[#465f75]/70">The interruption failed to arrive — the final round carries on without it.</p>
-                    {interjectState === 'failed' && interjectError && (
-                      <p className="text-xs mt-2 text-[#8b5254]">Reason: {interjectError.length > 220 ? `${interjectError.slice(0, 220)}…` : interjectError}</p>
-                    )}
-                    <button className="btn-secondary !text-xs mt-3" onClick={runInterjectNow}>Bring the interruption</button>
-                  </>
-                )}
-              </div>
-            )}
-          </section>
-        )}
-
-        {coda || (isComplete && !isRunning) ? (
-          <section className="mt-10" aria-label="Margin notes">
-            <div className="ornament-divider mb-6"><span className="text-xl">❧</span></div>
-            <div className="mb-5"><p className="pass-indicator text-[#8b5254]">After the sitting</p><h2 className="text-3xl">Margin notes</h2></div>
             {coda ? (
               <article className="dark-academia-card p-5 md:p-8 max-w-3xl">
                 <p className="whitespace-pre-line text-[15px] leading-relaxed text-[#465f75]">{coda.text}</p>
@@ -1044,24 +932,20 @@ function App() {
             ) : (
               <div className="dark-academia-card p-5 max-w-3xl">
                 {codaState === 'writing' ? (
-                  <p className="text-sm italic text-[#465f75]/70" aria-live="polite">Writing margin notes…</p>
+                  <p className="text-sm italic text-[#465f75]/70" aria-live="polite">Notes from the margins are interrupting…</p>
                 ) : (
                   <>
-                    <p className="text-sm italic text-[#465f75]/70">
-                      {codaState === 'failed'
-                        ? 'The margin note failed to write — the sitting stands without it.'
-                        : 'The sitting is complete but the margin note did not arrive.'}
-                    </p>
+                    <p className="text-sm italic text-[#465f75]/70">The note failed to arrive — the final round carries on without it.</p>
                     {codaState === 'failed' && codaError && (
                       <p className="text-xs mt-2 text-[#8b5254]">Reason: {codaError.length > 220 ? `${codaError.slice(0, 220)}…` : codaError}</p>
                     )}
-                    <button className="btn-secondary !text-xs mt-3" onClick={runCodaNow}>Write margin notes</button>
+                    <button className="btn-secondary !text-xs mt-3" onClick={runCodaNow}>Bring the note</button>
                   </>
                 )}
               </div>
             )}
           </section>
-        ) : null}
+        )}
 
         {interventions.length > orderedPhilosophers.length && <PositionComparison philosophers={orderedPhilosophers} interventions={interventions} onOpenSources={openSourcesAt} />}
       </main>
