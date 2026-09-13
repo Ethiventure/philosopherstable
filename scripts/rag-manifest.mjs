@@ -21,6 +21,9 @@ const slug = (s) => s.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g
 
 const manifest = JSON.parse(readFileSync(MANIFEST, 'utf8'));
 const byId = new Map(manifest.sources.map((s) => [s.id, s]));
+// Mechanical slug collisions / legacy aliases: these corpus entries are
+// already covered under another source id — never index twice.
+const SKIP_IDS = new Set(['murray-bookchin-social-ecology-and-communalism']);
 let added = 0;
 
 for (const raw of blocks) {
@@ -33,7 +36,15 @@ for (const raw of blocks) {
   const url = (block.match(/source_url:\s*'([^']+)'/) || [])[1];
   if (!author || !title || !url) continue;
   const id = `${slug(author)}-${slug(title)}`.slice(0, 80);
-  if (byId.has(id)) continue;
+  if (SKIP_IDS.has(id)) continue;
+  if (byId.has(id)) {
+    // Keep tracking the corpus: URLs and titles drift (link fixes), ids don't.
+    const existing = byId.get(id);
+    existing.source_url = url;
+    existing.author = author;
+    existing.title = title;
+    continue;
+  }
   byId.set(id, {
     id,
     author,

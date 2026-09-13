@@ -82,7 +82,7 @@ export function extractReadable(html) {
   const named = { nbsp: ' ', amp: '&', lt: '<', gt: '>', quot: '"', apos: "'", mdash: '—', ndash: '–', ldquo: '“', rdquo: '”', lsquo: '‘', rsquo: '’', hellip: '…', copy: '©', reg: '®', laquo: '«', raquo: '»', middot: '·', bull: '•', sect: '§' };
   const textOf = (s) => s
     .replace(/<br\s*\/?>/gi, '\n')
-    .replace(/<\/(p|div|li|h[1-6]|blockquote|tr)>/gi, '\n\n')
+    .replace(/<\/(p|div|li|h[1-6]|blockquote|pre|tr)>/gi, '\n\n')
     // Sup/subscripts are inline (14<th>th</th>): drop the tags, keep the text.
     .replace(/<\/?(sup|sub)[^>]*>/gi, '')
     .replace(/<[^>]+>/g, ' ')
@@ -95,34 +95,59 @@ export function extractReadable(html) {
     .trim();
 
   let body = stripTags(html);
-  const main = body.match(/<(main|article)[^>]*>([\s\S]*?)<\/\1>/i);
-  if (main) body = main[2];
-  for (const tag of ['nav', 'header', 'footer', 'aside', 'form']) {
-    body = body.replace(new RegExp(`<${tag}[^>]*>[\\s\\S]*?<\\/${tag}>`, 'gi'), ' ');
-  }
-  const blocks = [];
-  const re = /<(h[1-3]|p|li|blockquote)[^>]*>([\s\S]*?)<\/\1>/gi;
-  let m;
-  const path = [];
-  let tocLevel = 0; // >0 while inside a Table-of-Contents section: skip it
-  let contentLinks = 0;
-  while ((m = re.exec(body)) !== null) {
-    const tag = m[1].toLowerCase();
-    const text = normalizeText(textOf(m[2]));
-    if (!text || text.length < 20) continue;
-    if (tag.startsWith('h')) {
-      const level = parseInt(tag[1], 10);
-      path.length = Math.min(path.length, level - 1);
-      path[level - 1] = text.slice(0, 120);
-      tocLevel = /^(table of )?contents$/i.test(text) ? level : (level <= tocLevel ? 0 : tocLevel);
-      continue;
+  // Plain-text dumps (archive.org OCR .txt) carry the whole work in <pre>:
+  // expand it into paragraphs on blank lines so it chunks on real boundaries
+  // instead of one giant block (or being scoped out with the furniture).
+  body = body.replace(/<pre[^>]*>([\s\S]*?)<\/pre>/gi, (_, inner) =>
+    String(inner).split(/\n\s*\n/).map((p) => `<p>${p}</p>`).join('\n'));
+  const doBlocks = (scope) => {
+    const scoped = scope;
+    const blocks = [];
+    const re = /<(h[1-3]|pre|p|li|blockquote)(?=[\s>])[^>]*>([\s\S]*?)<\/\1>/gi;
+    let m;
+    const path = [];
+    let tocLevel = 0;
+    let links = 0;
+    while ((m = re.exec(scoped)) !== null) {
+      const tag = m[1].toLowerCase();
+      const text = normalizeText(textOf(m[2]));
+      if (!text || text.length < 20) continue;
+      if (tag.startsWith('h')) {
+        const level = parseInt(tag[1], 10);
+        path.length = Math.min(path.length, level - 1);
+        path[level - 1] = text.slice(0, 120);
+        tocLevel = /^(table of )?contents$/i.test(text) ? level : (level <= tocLevel ? 0 : tocLevel);
+        continue;
+      }
+      if (tocLevel > 0) continue;
+      if (BOILERPLATE_RE.test(text.slice(0, 80)) && wordCount(text) < 25) continue;
+      links += (m[2].match(/<a[ >]/gi) || []).length;
+      blocks.push({ text, heading: path[path.length - 1] ?? null, path: path.filter(Boolean).join(' / ') || null });
     }
-    if (tocLevel > 0) continue; // TOC entries are navigation, not evidence
-    if (BOILERPLATE_RE.test(text.slice(0, 80)) && wordCount(text) < 25) continue;
-    contentLinks += (m[2].match(/<a[ >]/gi) || []).length;
-    blocks.push({ text, heading: path[path.length - 1] ?? null, path: path.filter(Boolean).join(' / ') || null });
+    return { blocks, links };
+  };
+
+  let scope = body;
+  const main = body.match(/<(main|article)[^>]*>([\s\S]*?)<\/\1>/i);
+  if (main) scope = main[2];
+  for (const tag of ['nav', 'header', 'footer', 'aside', 'form']) {
+    scope = scope.replace(new RegExp(`<${tag}[^>]*>[\\s\\S]*?<\\/${tag}>`, 'gi'), ' ');
   }
-  return { paragraphs: blocks, linkRatio: contentLinks / Math.max(1, blocks.length) };
+  let { blocks, links } = doBlocks(scope);
+  if (blocks.length < 5) {
+    // Main/article scoping can exclude the real text (e.g. archive.org serves
+    // full text outside <main>). Fall back to the whole body when thin.
+    let full = body;
+    for (const tag of ['nav', 'header', 'footer', 'aside', 'form']) {
+      full = full.replace(new RegExp(`<${tag}[^>]*>[\\s\\S]*?<\\/${tag}>`, 'gi'), ' ');
+    }
+    const retry = doBlocks(full);
+    if (retry.blocks.length > blocks.length) {
+      blocks = retry.blocks;
+      links = retry.links;
+    }
+  }
+  return { paragraphs: blocks, linkRatio: links / Math.max(1, blocks.length) };
 }
 
 function sha1(s) {
