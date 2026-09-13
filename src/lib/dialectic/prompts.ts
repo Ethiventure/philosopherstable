@@ -43,9 +43,18 @@ interface TurnInstructionArgs {
   longForm: boolean;
   /** Pass 3 runs the rotation backwards: each seat answers its left neighbour. */
   reversed?: boolean;
+  /** Pass 3 only: the margins note ran and rides in the survey below — the
+   * turn must answer it, not just PREV. */
+  marginsNote?: boolean;
+  /** Pass 3 only: this seat speaks first after the note — it must name the
+   * margins writer explicitly before anything else. */
+  marginsFirst?: boolean;
+  /** The sitting runs at Low intensity: the persona's plain-style override
+   * governs the sentence — short, defined, gentle. */
+  lowRegister?: boolean;
 }
 
-export function buildTurnInstruction({ kind, prevName, isFinalSeat, longForm, reversed = false }: TurnInstructionArgs): string {
+export function buildTurnInstruction({ kind, prevName, isFinalSeat, longForm, reversed = false, marginsNote = false, marginsFirst = false, lowRegister = false }: TurnInstructionArgs): string {
   const b = longForm ? WORD_BUDGETS.long : WORD_BUDGETS.normal;
 
   if (kind === 'opening') {
@@ -83,8 +92,17 @@ export function buildTurnInstruction({ kind, prevName, isFinalSeat, longForm, re
     ...(kind === 'reconstruction' && !isFinalSeat
       ? ['Invoke at least one surveyed idea from another seat by name (see STRIKING IDEAS), transformed into your own terms — never quoted; a pass-3 turn that only answers PREV has failed.']
       : []),
+    ...(kind === 'reconstruction' && marginsNote
+      ? ['You have also read the NOTES FROM THE MARGINS in the survey below (listed first): carry at least one of its demands forward into your reformulation, in your own terms — never quoted, never ignored. A pass-3 turn that leaves the margins note unanswered has failed.']
+      : []),
+    ...(kind === 'reconstruction' && marginsFirst
+      ? ['You speak first after the note: open your negation by naming the NOTES FROM THE MARGINS writer and one demand it made — say plainly whether your framework takes it up or breaks it, in your own terms, never quoted. A first reconstruction that does not name the margins note has failed.']
+      : []),
     'Hegel/Marx method: negation must be determinate (preserve-and-elevate), never mere dismissal. Weave the concession inside the negation or reformulation prose (your CONCESSION stock) — there is no separate incorporation section.',
     'Open and reframe in your STOCK PHRASES, rotating variants across your turns — rebuttal for the cut-in, reframing for the problem. The variants marked SPENT below are used up this session: never reuse them.',
+    ...(lowRegister
+      ? ['LOW REGISTER: the plain-style override at the end of your persona governs this sentence — short, defined, gentle. Reach for your calmest stock variants; leave the fierce ones unspent.']
+      : []),
     'VOICE: write continuous prose in your own diction, syntax and rhythm (your STYLE ESSENCE governs the sentence) — no headings or labels inside your prose. Gloss school-terms on first use inside your own diction (≤1 clause); never assume the reader did the reading. Never lift a distinctive phrase from PREV, the survey, or your own prior turns — if another seat said it, restate it in your own terms or leave it out. Agreement and disagreement alike must be phrased afresh: never reuse the predecessor wording to agree with it, never reuse your own earlier wording to repeat yourself. Every sentence must introduce a new idea or angle — a sentence that only restates its predecessor fails the turn. Grammar is standard written English for every seat without exception: complete sentences, capitalised starts, and every value must end with terminal punctuation (. ? !). Never trail off mid-thought. The dialectical movement (cutting in, negation of PREV, incorporation of what holds, reformulation) must be audible in the argument itself, never announced. Never open with a generic verdict on PREV ("errs", "fails to see", "is mistaken", "overlooks") — begin from the concrete object and criticise with your own toolkit\'s verbs.',
   ].join(' ');
 }
@@ -131,7 +149,7 @@ export function buildUserMessage({ question, prevText, ownPriorLines, turnInstru
   if (othersPriorLines.length > 0) {
     parts.push(
       '',
-      'STRIKING IDEAS FROM OTHER SEATS (pass 3 only — you may invoke these by name alongside PREV. Transform what you invoke into your framework\'s own terms; never quote survey lines verbatim):',
+      'STRIKING IDEAS FROM OTHER SEATS (pass 3 only — the NOTES FROM THE MARGINS intervene first, then seats; you may invoke any of these by name alongside PREV. Transform what you invoke into your framework\'s own terms; never quote survey lines verbatim):',
       ...othersPriorLines.map(({ name, line }) => `- ${name}: ${line}`),
     );
   }

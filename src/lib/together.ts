@@ -82,17 +82,7 @@ function stripFences(text: string): string {
 
 const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
-export async function generateTurnTogether({ apiKey, systemPrompt, userMessage, longForm }: TogetherTurnArgs): Promise<TurnOutput> {
-  const makeBody = (msg: string) => ({
-    model: TOGETHER_MODEL,
-    messages: [
-      { role: 'system', content: systemPrompt },
-      { role: 'user', content: msg },
-    ],
-    max_tokens: longForm ? TOGETHER_MAX_TOKENS.long : TOGETHER_MAX_TOKENS.normal,
-  });
-
-  const post = async (msg: string): Promise<string> => {
+const postTogether = async (apiKey: string, systemPrompt: string, maxTokens: number, msg: string): Promise<string> => {
     let lastError: LlmError | null = null;
     for (let attempt = 0; attempt < 3; attempt += 1) {
       let response: Response;
@@ -100,7 +90,14 @@ export async function generateTurnTogether({ apiKey, systemPrompt, userMessage, 
         response = await fetch('https://api.together.xyz/v1/chat/completions', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${apiKey}` },
-          body: JSON.stringify(makeBody(msg)),
+          body: JSON.stringify({
+            model: TOGETHER_MODEL,
+            messages: [
+              { role: 'system', content: systemPrompt },
+              { role: 'user', content: msg },
+            ],
+            max_tokens: maxTokens,
+          }),
           signal: AbortSignal.timeout(60000),
         });
       } catch (error) {
@@ -135,13 +132,21 @@ export async function generateTurnTogether({ apiKey, systemPrompt, userMessage, 
     throw lastError ?? new LlmError('Together request failed. Resume the cabinet to retry the turn.', true, 'unknown');
   };
 
-  const text = await post(userMessage);
+export async function generateTurnTogether({ apiKey, systemPrompt, userMessage, longForm }: TogetherTurnArgs): Promise<TurnOutput> {
+  const maxTokens = longForm ? TOGETHER_MAX_TOKENS.long : TOGETHER_MAX_TOKENS.normal;
+  const text = await postTogether(apiKey, systemPrompt, maxTokens, userMessage);
   try {
     return parseTurnOutput(stripFences(text), 'Together');
   } catch (error) {
     if (!(error instanceof LlmError) || error.code !== 'parse') throw error;
-    return parseTurnOutput(stripFences(await post(userMessage + REPAIR_SUFFIX)), 'Together');
+    return parseTurnOutput(stripFences(await postTogether(apiKey, systemPrompt, maxTokens, userMessage + REPAIR_SUFFIX)), 'Together');
   }
+}
+
+/** Plain-text path for the Philosophers' Service desk: same model, retries
+ * and quota mapping, no JSON turn contract — the reply is the answer. */
+export async function generateTextTogether({ apiKey, systemPrompt, userMessage }: { apiKey: string; systemPrompt: string; userMessage: string }): Promise<string> {
+  return postTogether(apiKey, systemPrompt, TOGETHER_MAX_TOKENS.normal, userMessage);
 }
 
 /** Cheap key check: one tiny call. */

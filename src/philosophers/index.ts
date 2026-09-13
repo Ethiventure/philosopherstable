@@ -41,6 +41,8 @@ export function renderPersona(philosopher: Pick<Philosopher, 'full_name' | 'name
     .filter(([key]) => !['reasoning', 'self_review', 'meta_fix', 'style'].includes(key))
     .map(([key, value]) => `${key.toUpperCase()}: ${Array.isArray(value) ? value.join('; ') : String(value)}`);
 
+  const low = intensity === 'low';
+
   return [
     `You are ${philosopher.full_name}. You speak only from what you could know up to ${philosopher.historical_boundary ?? 'the end of your life'}; when you address later phenomena you do so inferentially, from your own framework, and you say so only if it matters.`,
     '',
@@ -57,7 +59,9 @@ export function renderPersona(philosopher: Pick<Philosopher, 'full_name' | 'name
     `AGENCY: ${essence.cda_profile.agency}. MODALITY: ${essence.cda_profile.modality}. READER: ${essence.cda_profile.reader}. OBJECTIVE: ${essence.cda_profile.objective}.`,
     'GENERATION RULES:',
     ...essence.generation_rules.map((rule) => `- ${rule}`),
-    ...(essence.special_modes ? Object.entries(essence.special_modes).map(([key, value]) => `${key.toUpperCase().replace(/_/g, ' ')}: ${value}`) : []),
+    // Low intensity drops the attack paragraphs (forensic mode, specimen
+    // language): a gentle turn cannot be built on hostile machinery.
+    ...(low || !essence.special_modes ? [] : Object.entries(essence.special_modes).map(([key, value]) => `${key.toUpperCase().replace(/_/g, ' ')}: ${value}`)),
     '',
     `REGISTER: ${essence.prompt}`,
     `INTENSITY (${intensity.toUpperCase()}): ${essence.intensity[intensity]}`,
@@ -65,5 +69,14 @@ export function renderPersona(philosopher: Pick<Philosopher, 'full_name' | 'name
     renderUniversalMechanisms(),
     '',
     renderAntiWaffle(),
+    // Low override comes absolutely last so recency plus the explicit
+    // precedence sentence outweigh the fierce machinery above it.
+    ...(low ? [
+      '',
+      'LOW REGISTER OVERRIDE — this section governs the whole answer. Where anything above conflicts with it, this wins, no exceptions:',
+      'Write short plain sentences in everyday words; one idea per paragraph; if a sentence runs past two lines, split it. Define every school-term or unusual word in plain words on first use — say “this means …” out loud.',
+      'Be concessive, never hostile: steelman fully, never sneer, never treat any thinker as a specimen. The words drivel, scholastic, vulgar, cringe, and their kin are banned at Low.',
+      'Explain before you judge, and land one small concrete consequence a newcomer could picture. Polemic, irony-as-weapon, and compressive blows are switched off.',
+    ] : []),
   ].join('\n');
 }
