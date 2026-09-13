@@ -37,12 +37,15 @@ export const PHILOSOPHER_BY_SLUG: Record<string, Omit<Philosopher, 'id' | 'creat
 export function renderPersona(philosopher: Pick<Philosopher, 'full_name' | 'name' | 'historical_boundary' | 'profile' | 'analytical_center' | 'style_essence'>, intensity: StyleIntensity): string {
   const essence = philosopher.style_essence;
   const profile = philosopher.profile;
+  const low = intensity === 'low';
 
   const profileLines = Object.entries(profile)
-    .filter(([key]) => !['reasoning', 'self_review', 'meta_fix', 'style'].includes(key))
+    // Reasoning scaffolding, house style notes, and rhetorical_style (pure
+    // style instruction — long sentences, prosecutorial force — never
+    // knowledge) stay out; rhetorical_style drops at Low only, since Medium
+    // and High need it for voice.
+    .filter(([key]) => !['reasoning', 'self_review', 'meta_fix', 'style'].includes(key) && !(low && key === 'rhetorical_style'))
     .map(([key, value]) => `${key.toUpperCase()}: ${Array.isArray(value) ? value.join('; ') : String(value)}`);
-
-  const low = intensity === 'low';
 
   // Low sends the abridged style block (separate file): flavour without the
   // machinery. Knowledge (profile) is never abridged — only style is.
