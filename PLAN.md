@@ -257,6 +257,10 @@ demand (headings, contents, index terms, keyword/BM25), read only the top ~2
 passages plus a little surrounding context, answer strictly from them with
 page/section citations, never expand to adjacent pages on ambiguity. The current
 `netlify/functions/extract.js` + `grounding` toggle is the working prototype.
+Searchable set per thinker is capped at 3 works (Sep 2026 decision): 1) the
+magnum opus, 2) the last writing, 3) the next most important or late work.
+The manifest keeps wider reading links, but search/RAG never touches beyond
+those three.
 
 ## Phase 6 — Richer philosopher information
 Per file: `biography`, `key_works`, `why_this_seat` (hand-off line). Profile modal
