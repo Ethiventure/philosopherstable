@@ -47,10 +47,15 @@ Your own key = your own quota = no sharing, no waiting.
 ## Run it yourself (developers)
 
 ```bash
+git clone https://github.com/Ethiventure/philosopherstable.git
+cd philosopherstable
 npm install
 cp .env.example .env   # only needed for the shared provider locally
 # put your Groq key in .env (gitignored — never commit it)
-npx netlify dev        # serves the app AND the shared-key function
+npx netlify dev        # app on http://localhost:8888 + the shared-key function
+# (first run fetches the Netlify CLI — slow once, then cached)
 ```
+
+Plain `npm run dev` also works but serves the app only — the shared provider shows an unreachable note there while visitor keys keep working. If `:8888` is already taken, stop the old server first (one instance owns the port).
 
 Deploying: connect the repo to Netlify (builds via `netlify.toml`), then set `GROQ_API_KEY` in Site settings → Environment variables. The key must never appear in the repo or the frontend bundle — it lives server-side in `netlify/functions/cabinet.js`'s environment only. See `PLAN.md` for the full agent-facing build plan.
