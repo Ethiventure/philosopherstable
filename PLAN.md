@@ -307,11 +307,10 @@ The manifest keeps wider reading links. Status Sep 2026: search actually
 covers every successfully indexed work (curation priority is latest +
 magnum-opus first); the 3-cap stays as the scale lever if/when the index
  outgrows lazy per-thinker fetches — enforce then, not now.
-Retrieval is lexical over English stems, so the Russian 1925 Tektology only
-surfaces on Russian query terms (the model reads Russian fine when shown it).
-Sep 2026 decision: ACCEPT — no indexable English Tektology HTML exists (only
-PDFs, scribd, docslib), and English coverage comes from the MIA Bogdanov
-essays; translating a bridge layer costs more than it buys.
+Retrieval is lexical over English stems. The Russian 1925 Tektology was removed
+Sep 2026 (English queries could never match it) and replaced with an English
+Tektology OCR (obscure 2025 re-upload, edition unconfirmed, flagged honestly) —
+organisation queries now hit Tektology first, verified live.
 RAG v1 (lexical, Sep 2026 test PASSES on Bookchin): `data/sources.json`
 manifest with explicit rights gate (importer refuses unapproved sources
 before fetching); `scripts/rag-ingest.mjs` (TAL `.html` full-text, generic
@@ -333,9 +332,10 @@ Socialism (21), Hegel Phenomenology (855) + Lectures on Right 1819–20 (511),
 Fisher Realismo capitalista ES (121) + Lo raro y lo espeluznante ES (100),
 Deleuze OCR batch (Thousand Plateaus 933, Bergsonism 149, Logique du sens FR
 430, Nietzsche & Philosophy 331, Postscript OCR 7 as ingest companion to the
-TAL entry), Bogdanov Religious→Scientific Monism (23) + 1925 Russian Tektology
-(375) — all via archive.org `/stream/…_djvu.txt` (HTML+`<pre>`, indexable; `/download/`
-raw text extracts zero paragraphs), total 10,916 passages,
+TAL entry), Bogdanov Religious→Scientific Monism (23) + English Tektology OCR
+(481; replaced the Russian OCR, which English queries could never match) —
+all via archive.org `/stream/…_djvu.txt` (HTML+`<pre>`, indexable; `/download/`
+raw text extracts zero paragraphs), total 11,022 passages,
 per-author shards
 under public/rag/ (lazy-fetched per thinker, cached; static, so Netlify needs
 nothing new). Wired behind the existing grounding toggle: desk + turns search

@@ -1031,15 +1031,15 @@
       "enabled": true
     },
     {
-      "id": "alexander-bogdanov-tektology-1925-russian-fulltext",
+      "id": "alexander-bogdanov-tektology-english-fulltext",
       "author": "Alexander Bogdanov",
-      "title": "Tektology (1925, Russian full text)",
+      "title": "Tektology (English full text)",
       "source_mode": "REMOTE_IMPORT",
-      "source_url": "https://archive.org/stream/alexaner-bogdanov1925-tektology/%D0%90%D0%BB%D0%B5%D0%BA%D1%81%D0%B0%D0%BD%D0%B4%D1%80%20%D0%91%D0%BE%D0%B3%D0%B4%D0%B0%D0%BD%D0%BE%D0%B2%20-%20%5B1925%5D%20-%20%D0%92%D1%81%D0%B5%D0%BE%D0%B1%D1%89%D0%B0%D1%8F%20%D0%BE%D1%80%D0%B3%D0%B0%D0%BD%D0%B8%D0%B7%D0%B0%D1%86%D0%B8%D0%BE%D0%BD%D0%BD%D0%B0%D1%8F%20%D0%BD%D0%B0%D1%83%D0%BA%D0%B0.%20%D0%A2%D0%B5%D0%BA%D1%82%D0%BE%D0%BB%D0%BE%D0%B3%D0%B8%D1%8F_djvu.txt",
+      "source_url": "https://archive.org/stream/tektology-alexander-bogdanov-berserker-books/Tektology%20%28Alexander%20Bogdanov_Berserker%20Books%29___________djvu.txt",
       "rights_status": "approved",
       "rights_decision_by": "project_owner",
       "rights_decision_at": "2026-09-13",
-      "rights_note": "Owner-supplied Sep 2026: archive.org OCR of the 1925 Russian Tektology as ingest companion; /stream/ path (HTML+pre, indexable) — /download/ serves raw text the extractor skips. Readers keep the single corpus entry.",
+      "rights_note": "Owner-approved Sep 2026 (agent-found, owner confirmed): archive.org English OCR as the indexed text; obscure 2025 re-upload so translation edition unconfirmed — readers keep the proper English edition link. Replaces the Russian OCR, which English queries could never match. Use /stream/ path (HTML+pre, indexable).",
       "enabled": true
     }
   ]
