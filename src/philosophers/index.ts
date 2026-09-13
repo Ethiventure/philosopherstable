@@ -65,18 +65,18 @@ export function renderPersona(philosopher: Pick<Philosopher, 'full_name' | 'name
     '',
     `REGISTER: ${essence.prompt}`,
     `INTENSITY (${intensity.toUpperCase()}): ${essence.intensity[intensity]}`,
-    // Low override comes last so it governs: recency plus an explicit
-    // precedence sentence outweigh the fierce DNA above it.
-    ...(low ? [
-      '',
-      'LOW REGISTER OVERRIDE — where this conflicts with the STYLE ESSENCE above, this override governs, no exceptions:',
-      'Write short plain sentences in everyday words; one idea per paragraph. Define every school-term or unusual word in plain words on first use — say “this means …” out loud.',
-      'Be concessive, never hostile: steelman fully, never sneer, never treat any thinker as a specimen. The words drivel, scholastic, vulgar, cringe, and their kin are banned at Low.',
-      'Explain before you judge, and land one small concrete consequence a newcomer could picture. Polemic, irony-as-weapon, and compressive blows are switched off.',
-    ] : []),
     '',
     renderUniversalMechanisms(),
     '',
     renderAntiWaffle(),
+    // Low override comes absolutely last so recency plus the explicit
+    // precedence sentence outweigh the fierce machinery above it.
+    ...(low ? [
+      '',
+      'LOW REGISTER OVERRIDE — this section governs the whole answer. Where anything above conflicts with it, this wins, no exceptions:',
+      'Write short plain sentences in everyday words; one idea per paragraph; if a sentence runs past two lines, split it. Define every school-term or unusual word in plain words on first use — say “this means …” out loud.',
+      'Be concessive, never hostile: steelman fully, never sneer, never treat any thinker as a specimen. The words drivel, scholastic, vulgar, cringe, and their kin are banned at Low.',
+      'Explain before you judge, and land one small concrete consequence a newcomer could picture. Polemic, irony-as-weapon, and compressive blows are switched off.',
+    ] : []),
   ].join('\n');
 }

@@ -49,9 +49,12 @@ interface TurnInstructionArgs {
   /** Pass 3 only: this seat speaks first after the note — it must name the
    * margins writer explicitly before anything else. */
   marginsFirst?: boolean;
+  /** The sitting runs at Low intensity: the persona's plain-style override
+   * governs the sentence — short, defined, gentle. */
+  lowRegister?: boolean;
 }
 
-export function buildTurnInstruction({ kind, prevName, isFinalSeat, longForm, reversed = false, marginsNote = false, marginsFirst = false }: TurnInstructionArgs): string {
+export function buildTurnInstruction({ kind, prevName, isFinalSeat, longForm, reversed = false, marginsNote = false, marginsFirst = false, lowRegister = false }: TurnInstructionArgs): string {
   const b = longForm ? WORD_BUDGETS.long : WORD_BUDGETS.normal;
 
   if (kind === 'opening') {
@@ -97,6 +100,9 @@ export function buildTurnInstruction({ kind, prevName, isFinalSeat, longForm, re
       : []),
     'Hegel/Marx method: negation must be determinate (preserve-and-elevate), never mere dismissal. Weave the concession inside the negation or reformulation prose (your CONCESSION stock) — there is no separate incorporation section.',
     'Open and reframe in your STOCK PHRASES, rotating variants across your turns — rebuttal for the cut-in, reframing for the problem. The variants marked SPENT below are used up this session: never reuse them.',
+    ...(lowRegister
+      ? ['LOW REGISTER: the plain-style override at the end of your persona governs this sentence — short, defined, gentle. Reach for your calmest stock variants; leave the fierce ones unspent.']
+      : []),
     'VOICE: write continuous prose in your own diction, syntax and rhythm (your STYLE ESSENCE governs the sentence) — no headings or labels inside your prose. Gloss school-terms on first use inside your own diction (≤1 clause); never assume the reader did the reading. Never lift a distinctive phrase from PREV, the survey, or your own prior turns — if another seat said it, restate it in your own terms or leave it out. Agreement and disagreement alike must be phrased afresh: never reuse the predecessor wording to agree with it, never reuse your own earlier wording to repeat yourself. Every sentence must introduce a new idea or angle — a sentence that only restates its predecessor fails the turn. Grammar is standard written English for every seat without exception: complete sentences, capitalised starts, and every value must end with terminal punctuation (. ? !). Never trail off mid-thought. The dialectical movement (cutting in, negation of PREV, incorporation of what holds, reformulation) must be audible in the argument itself, never announced. Never open with a generic verdict on PREV ("errs", "fails to see", "is mistaken", "overlooks") — begin from the concrete object and criticise with your own toolkit\'s verbs.',
   ].join(' ');
 }

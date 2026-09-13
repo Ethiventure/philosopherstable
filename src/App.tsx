@@ -539,6 +539,7 @@ function App() {
         reversed: pass === 2,
         marginsNote: pass === 2 && !!codaRef.current,
         marginsFirst: pass === 2 && index === 0 && !!codaRef.current,
+        lowRegister: snap.intensity === 'low',
       });
       const systemPrompt = renderPersona(speaker, snap.intensity);
       // Efficient economy trims the fed-back predecessor text (the displayed
@@ -589,6 +590,7 @@ function App() {
       setActivePass(pass);
       setActiveAgent(seatPos);
       setThinkingName(speaker.full_name);
+      if (typeof console !== 'undefined') console.info(`[Turn] pass ${pass + 1} ${speaker.full_name} intensity=${snap.intensity}${pass === 2 && codaRef.current ? ' margins=attached' : ''}.`);
       let output: TurnOutput;
       try {
         output = await generateWithProvider(snap, systemPrompt, userMessage, snap.longForm);
