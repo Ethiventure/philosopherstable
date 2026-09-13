@@ -126,10 +126,10 @@ export function parseTurnOutput(rawText: string, label = 'LLM'): TurnOutput {
     return /[.?!…:;]$/.test(t) ? t : `${t}.`;
   };
   return {
-    negation: (record.negation as string).trim(),
-    incorporation,
-    reformulation: (record.reformulation as string).trim(),
-    new_contribution: (record.new_contribution as string).trim(),
+    negation: terminate(record.negation as string),
+    incorporation: incorporation ? terminate(incorporation) : '',
+    reformulation: terminate(record.reformulation as string),
+    new_contribution: terminate(record.new_contribution as string),
     works_referenced: works,
   };
 }

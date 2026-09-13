@@ -376,7 +376,7 @@ function App() {
       const newest = interventions[interventions.length - 1];
       if (newest) setFreshId(newest.id);
     }
-  }, [interventions.length]);
+  }, [interventions]);
   useEffect(() => {
     if (!freshId) return;
     const timer = window.setTimeout(() => setFreshId(null), 2600);
