@@ -80,10 +80,14 @@ export function extractReadable(html) {
   const textOf = (s) => s
     .replace(/<br\s*\/?>/gi, '\n')
     .replace(/<\/(p|div|li|h[1-6]|blockquote|tr)>/gi, '\n\n')
+    // Sup/subscripts are inline (14<th>th</th>): drop the tags, keep the text.
+    .replace(/<\/?(sup|sub)[^>]*>/gi, '')
     .replace(/<[^>]+>/g, ' ')
     .replace(/&#(\d+);/g, (_, n) => { const c = parseInt(n, 10); return c > 31 ? String.fromCharCode(c) : ' '; })
     .replace(/&#x([0-9a-fA-F]+);/g, (_, h) => { const c = parseInt(h, 16); return c > 31 ? String.fromCharCode(c) : ' '; })
     .replace(/&([a-z]+);/gi, (_, n) => named[n.toLowerCase()] ?? ' ')
+    // Source line-breaks inside a paragraph are formatting, not structure.
+    .replace(/([^\n])\n([^\n])/g, '$1 $2')
     .replace(/[ \t\u00a0]+/g, ' ')
     .trim();
 
