@@ -623,8 +623,8 @@
       "rights_status": "approved",
       "rights_decision_by": "project_owner",
       "rights_decision_at": "2026-09-13",
-      "rights_note": "Owner bulk approval Sep 2026: automate the working full-text links; failures skip, never force.",
-      "enabled": true
+      "rights_note": "Disabled Sep 2026: URL is the monoskop author index, not the work — indexing it filed index-page text under a book title. Re-enable only with a real full-text URL.",
+      "enabled": false
     },
     {
       "id": "alexander-bogdanov-the-struggle-for-viability-collective-organizational-experie",
@@ -635,8 +635,8 @@
       "rights_status": "approved",
       "rights_decision_by": "project_owner",
       "rights_decision_at": "2026-09-13",
-      "rights_note": "Owner bulk approval Sep 2026: automate the working full-text links; failures skip, never force.",
-      "enabled": true
+      "rights_note": "Disabled Sep 2026: URL is the monoskop author index, not the work — indexing it filed index-page text under a book title. Re-enable only with a real full-text URL.",
+      "enabled": false
     },
     {
       "id": "alexander-bogdanov-the-falling-giant",
@@ -647,8 +647,8 @@
       "rights_status": "approved",
       "rights_decision_by": "project_owner",
       "rights_decision_at": "2026-09-13",
-      "rights_note": "Owner bulk approval Sep 2026: automate the working full-text links; failures skip, never force.",
-      "enabled": true
+      "rights_note": "Disabled Sep 2026: URL is the monoskop author index, not the work — indexing it filed index-page text under a book title. Re-enable only with a real full-text URL.",
+      "enabled": false
     },
     {
       "id": "alexander-bogdanov-socially-organised-society-socialist-society",

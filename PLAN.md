@@ -279,8 +279,10 @@ page/section citations, never expand to adjacent pages on ambiguity. The current
 `netlify/functions/extract.js` + `grounding` toggle is the working prototype.
 Searchable set per thinker is capped at 3 works (Sep 2026 decision): 1) the
 magnum opus, 2) the last writing, 3) the next most important or late work.
-The manifest keeps wider reading links, but search/RAG never touches beyond
-those three.
+The manifest keeps wider reading links. Status Sep 2026: search actually
+covers every successfully indexed work (curation priority is latest +
+magnum-opus first); the 3-cap stays as the scale lever if/when the index
+outgrows lazy per-thinker fetches — enforce then, not now.
 RAG v1 (lexical, Sep 2026 test PASSES on Bookchin): `data/sources.json`
 manifest with explicit rights gate (importer refuses unapproved sources
 before fetching); `scripts/rag-ingest.mjs` (TAL `.html` full-text, generic
