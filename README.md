@@ -11,6 +11,7 @@ No account, no setup: open the site and press **Begin cabinet**. It runs on the 
 - **Display tab** (Settings): parchment / dim / ink-dark themes, three typefaces, text size and spacing, high contrast, reduced motion.
 - **Export** saves the whole session as clean prose with a Reading List of full links at the end — nothing inline.
 - **Margin notes**: after the final seat, a reader's translation of the session appears below the deck.
+- **Interruption**: before the final round, notes from the margins barge in — naming what the first two passes missed and ordering pass 3 toward action.
 
 ## Quotas (the honest version)
 

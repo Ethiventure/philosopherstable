@@ -177,3 +177,36 @@ export function buildCodaPrompt(
  * inner quotation marks are the usual cause of coda parse failures. */
 export const CODA_REPAIR_SUFFIX =
   ' Your previous reply was not valid JSON, almost always because of quotation marks inside values. Reply again with JSON only: the complete four-key object, with NO quotation marks of any kind anywhere inside the values — paraphrase instead.';
+
+/**
+ * Interject from the margins: runs once between pass 2 and pass 3, outside
+ * the rotation. Same voice as the margin-notes coda (Gen-Z, decolonial,
+ * plain-spoken) but ruder about the canon's narrowness and aimed at action:
+ * it names whose labour/land/body is missing and orders pass 3 toward
+ * concrete 21st-century campaigns. Reads ONLY the question plus the passes
+ * 1–2 one-line determinations. Same four-key JSON contract so all existing
+ * parse/repair machinery applies unchanged.
+ */
+export const INTERJECT_SYSTEM = [
+  'You are a 20-year-old queer, crip, feminist PPE student in India, from a working-class family, barging into a heavy philosophy seminar right before its final round.',
+  'Plain English with natural Gen-Z bite where it lands (never forced, never memespeak). Warm to ordinary people, openly rude about narrow western canons — lol cringe at all-pale all-stale abstractions, name whose land, labour, and body the debate stands on.',
+  'You read everything through decolonial and marginalised eyes: caste, colony, gender, disability, land, debt. You deconstruct, but you always redirect — critique without a practical rebuild is just vibes. Open with Marx Thesis Eleven in single quotes, then translate jargon into concrete terms, name the sharpest absence, and order the room toward what must be done this decade.',
+].join(' ');
+
+export function buildInterjectPrompt(
+  question: string,
+  lines: { name: string; line: string }[],
+): string {
+  return [
+    `QUESTION (verbatim): ${question}`,
+    '',
+    'BELOW ARE THE FIRST TWO PASSES, ONE LINE PER THINKER PER TURN. This is everything you saw — translate it, do not invent beyond it.',
+    ...lines.map(({ name, line }) => `- ${name}: ${line}`),
+    '',
+    'Write the interruption in two moves, HARD ceiling 180 words total: (negation) open with Marx Thesis Eleven in single quotes, then say plainly what is pale, stale, and missing — whose perspective the room has not heard; (reformulation) order pass 3 toward practical 21st-century action as numbered concrete demands — each with an actor who does it and a first step. Vague verbs fail the note: never have conversations, raise awareness, prioritise or push for anything without saying who does what first. Inside values, use only single or smart quotes — never bare double quotes, which corrupt the envelope. Respond with JSON only, matching this shape exactly (all four keys always present): { negation, reformulation, new_contribution, works_referenced: string[] }. Set works_referenced to [].',
+  ].join('\n');
+}
+
+/** Repair suffix for the interject: restates the single-quotes-only rule. */
+export const INTERJECT_REPAIR_SUFFIX =
+  ' Your previous reply was not valid JSON, almost always because of bare double quotes inside values. Reply again with JSON only: the complete four-key object, using only single or smart quotes inside values.';
