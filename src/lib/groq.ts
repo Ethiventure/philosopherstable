@@ -74,17 +74,14 @@ function stripFences(text: string): string {
 
 const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
-export async function generateTurnGroq({ apiKey, model, systemPrompt, userMessage, longForm }: GroqTurnArgs): Promise<TurnOutput> {
-  const makeBody = (msg: string) => ({
-    model,
-    messages: [
-      { role: 'system', content: systemPrompt },
-      { role: 'user', content: msg },
-    ],
-    max_tokens: longForm ? GROQ_MAX_TOKENS.long : GROQ_MAX_TOKENS.normal,
-  });
+interface GroqTextArgs {
+  apiKey: string;
+  model: GroqModel;
+  systemPrompt: string;
+  userMessage: string;
+}
 
-  const post = async (msg: string): Promise<string> => {
+const postGroq = async (apiKey: string, model: GroqModel, maxTokens: number, systemPrompt: string, msg: string): Promise<string> => {
     let lastError: LlmError | null = null;
     for (let attempt = 0; attempt < 3; attempt += 1) {
       let response: Response;
@@ -92,7 +89,14 @@ export async function generateTurnGroq({ apiKey, model, systemPrompt, userMessag
         response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${apiKey}` },
-          body: JSON.stringify(makeBody(msg)),
+          body: JSON.stringify({
+            model,
+            messages: [
+              { role: 'system', content: systemPrompt },
+              { role: 'user', content: msg },
+            ],
+            max_tokens: maxTokens,
+          }),
           signal: AbortSignal.timeout(60000),
         });
       } catch (error) {
@@ -127,13 +131,21 @@ export async function generateTurnGroq({ apiKey, model, systemPrompt, userMessag
     throw lastError ?? new LlmError('Groq request failed. Resume the cabinet to retry the turn.', true, 'unknown');
   };
 
-  const text = await post(userMessage);
+export async function generateTurnGroq({ apiKey, model, systemPrompt, userMessage, longForm }: GroqTurnArgs): Promise<TurnOutput> {
+  const maxTokens = longForm ? GROQ_MAX_TOKENS.long : GROQ_MAX_TOKENS.normal;
+  const text = await postGroq(apiKey, model, maxTokens, systemPrompt, userMessage);
   try {
     return parseTurnOutput(stripFences(text), 'Groq');
   } catch (error) {
     if (!(error instanceof LlmError) || error.code !== 'parse') throw error;
-    return parseTurnOutput(stripFences(await post(userMessage + REPAIR_SUFFIX)), 'Groq');
+    return parseTurnOutput(stripFences(await postGroq(apiKey, model, maxTokens, systemPrompt, userMessage + REPAIR_SUFFIX)), 'Groq');
   }
+}
+
+/** Plain-text path for the Philosophers' Service desk: same models, retries
+ * and quota mapping, no JSON turn contract — the reply is the answer. */
+export async function generateTextGroq({ apiKey, model, systemPrompt, userMessage }: GroqTextArgs): Promise<string> {
+  return postGroq(apiKey, model, GROQ_MAX_TOKENS.normal, systemPrompt, userMessage);
 }
 
 /** Cheap key check: one tiny call on the given model. */

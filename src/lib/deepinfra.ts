@@ -77,23 +77,28 @@ function stripFences(text: string): string {
 
 const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
-export async function generateTurnDeepInfra({ apiKey, systemPrompt, userMessage, longForm }: DeepInfraTurnArgs): Promise<TurnOutput> {
-  // Constrained decoding first: response_format forces syntactically valid
-  // JSON, which eliminates the unquoted/truncated-value failures Llama shows
-  // in free-form mode. If the server rejects the parameter (400), fall back
-  // to plain requests and the usual salvage machinery.
-  const jsonMode = { current: true };
-  const makeBody = (msg: string) => ({
-    model: DEEPINFRA_MODEL,
-    messages: [
-      { role: 'system', content: systemPrompt },
-      { role: 'user', content: msg },
-    ],
-    max_tokens: longForm ? DEEPINFRA_MAX_TOKENS.long : DEEPINFRA_MAX_TOKENS.normal,
-    ...(jsonMode.current ? { response_format: { type: 'json_object' } } : {}),
-  });
+interface DeepInfraPostArgs {
+  apiKey: string;
+  systemPrompt: string;
+  maxTokens: number;
+  useJsonMode: boolean;
+}
 
-  const post = async (msg: string): Promise<string> => {
+const postDeepInfra = async ({ apiKey, systemPrompt, maxTokens, useJsonMode }: DeepInfraPostArgs, msg: string): Promise<string> => {
+    // Constrained decoding first (turns only): response_format forces
+    // syntactically valid JSON. If the server rejects the parameter (400),
+    // fall back to plain requests. Plain-text callers pass useJsonMode false.
+    const jsonMode = { current: useJsonMode };
+    const makeBody = (m: string) => ({
+      model: DEEPINFRA_MODEL,
+      messages: [
+        { role: 'system', content: systemPrompt },
+        { role: 'user', content: m },
+      ],
+      max_tokens: maxTokens,
+      ...(jsonMode.current ? { response_format: { type: 'json_object' } } : {}),
+    });
+
     let lastError: LlmError | null = null;
     for (let attempt = 0; attempt < 3; attempt += 1) {
       let response: Response;
@@ -144,6 +149,9 @@ export async function generateTurnDeepInfra({ apiKey, systemPrompt, userMessage,
     throw lastError ?? new LlmError('DeepInfra request failed. Resume the cabinet to retry the turn.', true, 'unknown');
   };
 
+export async function generateTurnDeepInfra({ apiKey, systemPrompt, userMessage, longForm }: DeepInfraTurnArgs): Promise<TurnOutput> {
+  const maxTokens = longForm ? DEEPINFRA_MAX_TOKENS.long : DEEPINFRA_MAX_TOKENS.normal;
+  const post = (msg: string) => postDeepInfra({ apiKey, systemPrompt, maxTokens, useJsonMode: true }, msg);
   const text = await post(userMessage);
   try {
     return parseTurnOutput(stripFences(text), 'DeepInfra');
@@ -151,6 +159,12 @@ export async function generateTurnDeepInfra({ apiKey, systemPrompt, userMessage,
     if (!(error instanceof LlmError) || error.code !== 'parse') throw error;
     return parseTurnOutput(stripFences(await post(userMessage + REPAIR_SUFFIX)), 'DeepInfra');
   }
+}
+
+/** Plain-text path for the Philosophers' Service desk: same model, retries
+ * and quota mapping, no JSON contract — the reply is the answer. */
+export async function generateTextDeepInfra({ apiKey, systemPrompt, userMessage }: { apiKey: string; systemPrompt: string; userMessage: string }): Promise<string> {
+  return postDeepInfra({ apiKey, systemPrompt, maxTokens: DEEPINFRA_MAX_TOKENS.normal, useJsonMode: false }, userMessage);
 }
 
 /** Cheap key check: one tiny call. */

@@ -23,6 +23,7 @@ import { LlmError, REPAIR_SUFFIX, parseTurnOutput, retryAfterMs, type TurnOutput
 export const FREE_MODEL_CYCLE = [
   'google/gemma-4-31b-it:free',
   'nvidia/nemotron-3.5-lightning:free',
+  'openrouter/free',
   'google/gemma-4-26b-a4b-it:free',
   'nvidia/nemotron-3-super-120b-a12b:free',
   'nex-agi/nex-n2.5-pro:free',
@@ -191,12 +192,12 @@ function stripFences(text: string): string {
   return (fenced ? fenced[1] : text).trim();
 }
 
-async function attemptModel(
+async function fetchModelText(
   model: string,
   apiKey: string,
   body: Record<string, unknown>,
   tag = 'Free model',
-): Promise<TurnOutput> {
+): Promise<string> {
   for (let attempt = 0; attempt < 2; attempt += 1) {
     let response: Response;
     try {
@@ -267,15 +268,25 @@ async function attemptModel(
         'server',
       );
     }
-    try {
-      return parseTurnOutput(stripFences(text), 'OpenRouter');
-    } catch (error) {
-      // Model can't do the required JSON — a property of the model, so cycle on.
-      if (error instanceof LlmError) throw error;
-      throw new LlmError(`${tag} ${model} broke the JSON shape. Trying the next one.`, true, 'parse');
-    }
+    return text;
   }
   throw new LlmError(`${tag} ${model} timed out twice. Trying the next one.`, true, 'server');
+}
+
+async function attemptModel(
+  model: string,
+  apiKey: string,
+  body: Record<string, unknown>,
+  tag = 'Free model',
+): Promise<TurnOutput> {
+  const text = await fetchModelText(model, apiKey, body, tag);
+  try {
+    return parseTurnOutput(stripFences(text), 'OpenRouter');
+  } catch (error) {
+    // Model can't do the required JSON — a property of the model, so cycle on.
+    if (error instanceof LlmError) throw error;
+    throw new LlmError(`${tag} ${model} broke the JSON shape. Trying the next one.`, true, 'parse');
+  }
 }
 
 function statusIsRetryableModel(status: number): boolean {
@@ -367,6 +378,57 @@ export async function generateTurnOpenRouter({ apiKey, systemPrompt, userMessage
     } catch (error) {
       if (isFailFast(error)) throw error;
       lastError = error instanceof LlmError ? error : lastError;
+    }
+  }
+  throw new LlmError(
+    `All ${tried.length} free models failed (${tried.join(', ')}). Free IDs rotate — check openrouter.ai/models?max_price=0, or switch back to Gemini direct in Settings → Key. Last error: ${lastError?.message ?? 'unknown'}`,
+    true,
+    lastError?.code === 'quota' ? 'quota' : 'server',
+  );
+}
+
+/** Plain-text path for the Philosophers' Service desk: same free-model cycle
+ * (or pinned paid model), same fail-fast mapping, no JSON turn contract —
+ * the reply is the answer, so no repair pass is needed. */
+export async function generateTextOpenRouter({ apiKey, systemPrompt, userMessage, mode = 'free', modelId = '' }: OpenRouterTurnArgs): Promise<string> {
+  const body = {
+    messages: [
+      { role: 'system', content: systemPrompt },
+      { role: 'user', content: userMessage },
+    ],
+    max_tokens: OR_MAX_TOKENS.normal,
+    // Same low reasoning effort as turns: free reasoning models otherwise burn
+    // the budget thinking instead of answering.
+    reasoning: { effort: 'low' },
+  };
+  const paidId = mode === 'paid' ? modelId.trim() : '';
+  if (paidId) {
+    try {
+      return await fetchModelText(paidId, apiKey, body, 'Paid model');
+    } catch (error) {
+      if (error instanceof LlmError && error.code === 'quota') {
+        throw new LlmError(
+          `OpenRouter cap hit on ${paidId} — new credit can take minutes to apply, and keys carry their own daily cap (check it at openrouter.ai/keys). Otherwise add credits at openrouter.ai/settings/credits, wait for the reset, or switch back to Free cycle. Detail: ${error.message}`,
+          true,
+          'quota',
+        );
+      }
+      throw error;
+    }
+  }
+  const tried: string[] = [];
+  let lastError: LlmError | null = null;
+  for (const model of orderedCycle()) {
+    tried.push(model);
+    try {
+      const text = await fetchModelText(model, apiKey, body);
+      saveLastGood(model);
+      return text;
+    } catch (error) {
+      if (isFailFast(error)) throw error; // bad key etc. — cycling won't help
+      lastError = error instanceof LlmError
+        ? error
+        : new LlmError('OpenRouter request failed. Resume the cabinet to retry the turn.', true, 'unknown');
     }
   }
   throw new LlmError(

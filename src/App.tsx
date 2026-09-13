@@ -44,6 +44,7 @@ import { entriesForNumbers, splitLabels } from '@/lib/footnotes';
 import { extractPassages, formatGroundedBlock, groundableSource } from '@/lib/extract';
 import { verifyQuotes } from '@/lib/verify';
 import { createTtsController, defaultVoice, ensureVoices, isTtsSupported, listVoices, type TtsItem, type TtsStatus } from '@/lib/tts';
+import ServiceChat, { type ServiceLogEntry } from '@/components/ServiceChat';
 
 // "Read more" resolution: the philosopher's most relevant text from the corpus
 // manifest. Entries flagged with link_note (broken link) are skipped unless
@@ -228,6 +229,9 @@ function App() {
   };
   const [showSettings, setShowSettings] = useState(false);
   const [settingsTab, setSettingsTab] = useState<'key' | 'cabinet' | 'display'>('key');
+  // Philosophers' Service desk: floating tutor window + its export log.
+  const [showService, setShowService] = useState(false);
+  const [serviceLog, setServiceLog] = useState<ServiceLogEntry[]>([]);
   const openSettings = (tab: 'key' | 'cabinet' | 'display' = 'key') => {
     setSettingsTab(tab);
     setShowSettings(true);
@@ -337,6 +341,11 @@ function App() {
   const orderedPhilosophers = useMemo(() => DEFAULT_SEATING_ORDER
     .map((slug) => philosophers.find((p) => p.slug === slug))
     .filter((p): p is Philosopher => p !== undefined && activeSlugs.includes(p.slug)), [philosophers, activeSlugs]);
+  // Service desk offers all ten thinkers in chronological seating order,
+  // whether or not they hold a seat in this sitting.
+  const allOrderedPhilosophers = useMemo(() => DEFAULT_SEATING_ORDER
+    .map((slug) => philosophers.find((p) => p.slug === slug))
+    .filter((p): p is Philosopher => p !== undefined), [philosophers]);
   const currentSpeaker = orderedPhilosophers[activeAgent];
   const providerKey = (s: CabinetSettings) =>
     s.provider === 'shared' ? ''
@@ -744,6 +753,7 @@ function App() {
     setCodaState('idle');
     setCodaError(null);
     codaRef.current = null;
+    setServiceLog([]);
     setGroundMap({});
     provRef.current = [];
     spentRef.current = [];
@@ -771,6 +781,9 @@ function App() {
     const body = [`THE DIALECTICAL CABINET\n\nQUESTION\n${question}\n`, ...early, ...(coda && late.length ? [codaText] : []), ...late].join('\n');
     // A note written but pass 3 never ran (paused session) still exports.
     const trailingCoda = coda && !late.length ? codaText : '';
+    const serviceText = serviceLog.length
+      ? `\nPHILOSOPHERS' SERVICE\n${serviceLog.map((entry) => `— ${entry.thinker} was asked:\n${entry.question}\n— ${entry.thinker} answered:\n${entry.answer}\n`).join('\n')}`
+      : '';
     const readingList = citedNumbers.length
       ? `\nREADING LIST\n${entriesForNumbers(citedNumbers).map(({ number, source }) => `[${number}] ${source.title} — ${source.author}${source.source_url ? ` — ${source.source_url}` : ''}`).join('\n')}\n`
       : '';
@@ -780,7 +793,7 @@ function App() {
       : '';
     // BOM + explicit charset: without them some viewers (notably Windows
     // Notepad) decode UTF-8 smart quotes/dashes as Latin-1 mojibake (â€…).
-    const text = `\uFEFF${body}${trailingCoda}${readingList}${provenanceText}`;
+    const text = `\uFEFF${body}${trailingCoda}${serviceText}${readingList}${provenanceText}`;
     const blob = new Blob([text], { type: 'text/plain;charset=utf-8' });
     const url = URL.createObjectURL(blob);
     const anchor = document.createElement('a');
@@ -804,13 +817,14 @@ function App() {
       if (event.key !== 'Escape') return;
       if (selectedIntervention) setSelectedIntervention(null);
       else if (selectedPhilosopher) setSelectedPhilosopher(null);
+      else if (showService) setShowService(false);
       else if (showSettings) setShowSettings(false);
       else if (showSources) setShowSources(false);
       else if (showWelcome) dismissWelcome(false);
     };
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
-  }, [selectedIntervention, selectedPhilosopher, showSettings, showSources, showWelcome]);
+  }, [selectedIntervention, selectedPhilosopher, showService, showSettings, showSources, showWelcome]);
 
   return (
     <div className="min-h-screen parchment-bg-dark">
@@ -951,6 +965,15 @@ function App() {
       </main>
 
       {showSources && <SourceDrawer target={sourceTarget} onClose={() => { setSourceTarget(null); setShowSources(false); }} />}
+      <ServiceChat
+        thinkers={allOrderedPhilosophers}
+        interventions={interventions}
+        settings={settings}
+        open={showService}
+        onToggle={() => setShowService((v) => !v)}
+        onExchange={(entry) => setServiceLog((log) => [...log, entry])}
+        onOpenSettings={() => openSettings('key')}
+      />
       {showWelcome && <WelcomeModal onClose={dismissWelcome} onOpenSettings={() => { dismissWelcome(false); openSettings('cabinet'); }} ttsSupported={ttsSupported} listening={ttsStatus.state !== 'idle' && ttsStatus.currentId === 'welcome'} onListen={toggleWelcomeSpeech} />}      {showSettings && <SettingsDrawer key={settingsTab} philosophers={philosophers} activeSlugs={activeSlugs} togglePhilosopher={togglePhilosopher} settings={settings} onSettingsChange={updateSettings} display={display} onDisplayChange={updateDisplay} initialTab={settingsTab} onClose={() => setShowSettings(false)} />}
       {selectedIntervention && <InterventionModal intervention={selectedIntervention} philosopher={philosophers.find((p) => p.id === selectedIntervention.philosopher_id)} onClose={() => { ttsRef.current?.stop(); setSelectedIntervention(null); }} ttsSupported={ttsSupported} speaking={ttsStatus.state !== 'idle' && ttsStatus.currentId === selectedIntervention.id} onToggleSpeech={() => toggleTurnSpeech(selectedIntervention)} onOpenSources={(n) => { ttsRef.current?.stop(); setSelectedIntervention(null); openSourcesAt(n); }} grounding={selectedIntervention ? groundMap[selectedIntervention.id] ?? null : null} groundingOn={settings.grounding} />}
       {selectedPhilosopher && <ProfileModal philosopher={selectedPhilosopher} onClose={() => setSelectedPhilosopher(null)} />}

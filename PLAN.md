@@ -222,6 +222,15 @@ unset made Chrome pick a bundled voice instead of the OS default).
 `scripts/dev-keepalive.sh` guards local `:8888` (restarts netlify dev when the
 Vite child dies and the proxy has nothing to forward to).
 
+**Philosophers' Service desk** — floating tutor window (`ServiceChat.tsx` +
+`src/lib/service-chat.ts`): all 10 thinkers, switchable mid-chat, top style
+intensity, scaffolded answers (answer → plain definitions → example → check
+question, 180 words). Sees recent chat + sitting one-liners + own-links-only
+grounding (follows the `grounding` toggle; other seats' links never enter).
+Plain-text provider paths (`generateText*` per lib, same retries/quota codes,
+no JSON contract). 20 questions per load with a humorous halt; exchanges
+append to export under PHILOSOPHERS' SERVICE.
+
 **References, not citations** — `src/lib/footnotes.ts`: model-claimed work labels
 resolve display-side to stable manifest numbers (`Read similar: 3, 9`; numbers
 are file order + 1, never drawer order). Unmatched labels render once as plain

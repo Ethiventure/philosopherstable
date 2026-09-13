@@ -29,8 +29,7 @@ function stripFences(text: string): string {
   return (fenced ? fenced[1] : text).trim();
 }
 
-export async function generateTurnShared({ systemPrompt, userMessage, longForm }: SharedTurnArgs): Promise<TurnOutput> {
-  const post = async (msg: string): Promise<string> => {
+const postShared = async (systemPrompt: string, maxTokens: number, msg: string): Promise<string> => {
     let lastError: LlmError | null = null;
     // Our ~4.5K-token prompts butt against Groq's per-minute caps, so a turn
     // may need to wait out a 429 ("try again in Ns") rather than halt.
@@ -43,7 +42,7 @@ export async function generateTurnShared({ systemPrompt, userMessage, longForm }
         body: JSON.stringify({
           systemPrompt,
           userMessage: msg,
-          maxTokens: longForm ? SHARED_MAX_TOKENS.long : SHARED_MAX_TOKENS.normal,
+          maxTokens,
         }),
         });
       } catch {
@@ -89,11 +88,19 @@ export async function generateTurnShared({ systemPrompt, userMessage, longForm }
     throw lastError ?? new LlmError('Shared provider failed. Resume the cabinet to retry the turn.', true, 'server');
   };
 
-  const text = await post(userMessage);
+export async function generateTurnShared({ systemPrompt, userMessage, longForm }: SharedTurnArgs): Promise<TurnOutput> {
+  const maxTokens = longForm ? SHARED_MAX_TOKENS.long : SHARED_MAX_TOKENS.normal;
+  const text = await postShared(systemPrompt, maxTokens, userMessage);
   try {
     return parseTurnOutput(stripFences(text), 'Shared provider');
   } catch (error) {
     if (!(error instanceof LlmError) || error.code !== 'parse') throw error;
-    return parseTurnOutput(stripFences(await post(userMessage + REPAIR_SUFFIX)), 'Shared provider');
+    return parseTurnOutput(stripFences(await postShared(systemPrompt, maxTokens, userMessage + REPAIR_SUFFIX)), 'Shared provider');
   }
+}
+
+/** Plain-text path for the Philosophers' Service desk: same proxy, retries
+ * and quota mapping, no JSON turn contract — the reply is the answer. */
+export async function generateTextShared({ systemPrompt, userMessage }: { systemPrompt: string; userMessage: string }): Promise<string> {
+  return postShared(systemPrompt, SHARED_MAX_TOKENS.normal, userMessage);
 }
