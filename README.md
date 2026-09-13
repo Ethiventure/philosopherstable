@@ -1,6 +1,6 @@
 # The Dialectical Cabinet
 
-Ten dead philosophers around a table — Spinoza, Kant, Hegel, Marx, Lenin, Bogdanov, **Weil**, Bookchin, Deleuze, Fisher — made to answer *your* question across three clockwise passes. Each thinker grabs their predecessor by the collar, in their own voice, until the problem comes out changed. It is the liveliest seminar none of them ever agreed to attend — part fencing match, part tribunal of reason — and the cover charge is whatever the machines demand: nothing on the shared key but your patience, or about two cents a session if you bring your own.
+Ten dead philosophers around a table — Spinoza, Kant, Hegel, Marx, Lenin, Bogdanov, Weil, Bookchin, Deleuze, Fisher — made to answer *your* question across three clockwise passes. Each thinker grabs their predecessor by the collar, in their own voice, until the problem comes out changed. It is the liveliest seminar none of them ever agreed to attend and the cover charge is whatever the machines demand: nothing on the shared key but your patience, or about two cents a session if you bring your own.
 
 ## Try it
 
