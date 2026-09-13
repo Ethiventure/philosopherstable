@@ -43,12 +43,15 @@ interface TurnInstructionArgs {
   longForm: boolean;
   /** Pass 3 runs the rotation backwards: each seat answers its left neighbour. */
   reversed?: boolean;
-  /** Pass 3 only: the margins note ran and its text rides below — the turn
-   * must answer it, not just PREV. */
+  /** Pass 3 only: the margins note ran and rides in the survey below — the
+   * turn must answer it, not just PREV. */
   marginsNote?: boolean;
+  /** Pass 3 only: this seat speaks first after the note — it must name the
+   * margins writer explicitly before anything else. */
+  marginsFirst?: boolean;
 }
 
-export function buildTurnInstruction({ kind, prevName, isFinalSeat, longForm, reversed = false, marginsNote = false }: TurnInstructionArgs): string {
+export function buildTurnInstruction({ kind, prevName, isFinalSeat, longForm, reversed = false, marginsNote = false, marginsFirst = false }: TurnInstructionArgs): string {
   const b = longForm ? WORD_BUDGETS.long : WORD_BUDGETS.normal;
 
   if (kind === 'opening') {
@@ -87,7 +90,10 @@ export function buildTurnInstruction({ kind, prevName, isFinalSeat, longForm, re
       ? ['Invoke at least one surveyed idea from another seat by name (see STRIKING IDEAS), transformed into your own terms — never quoted; a pass-3 turn that only answers PREV has failed.']
       : []),
     ...(kind === 'reconstruction' && marginsNote
-      ? ['You have also read the NOTES FROM THE MARGINS below: carry at least one of its demands forward into your reformulation, in your own terms — never quoted, never ignored. A pass-3 turn that leaves the margins note unanswered has failed.']
+      ? ['You have also read the NOTES FROM THE MARGINS in the survey below (listed first): carry at least one of its demands forward into your reformulation, in your own terms — never quoted, never ignored. A pass-3 turn that leaves the margins note unanswered has failed.']
+      : []),
+    ...(kind === 'reconstruction' && marginsFirst
+      ? ['You speak first after the note: open your negation by naming the NOTES FROM THE MARGINS writer and one demand it made — say plainly whether your framework takes it up or breaks it, in your own terms, never quoted. A first reconstruction that does not name the margins note has failed.']
       : []),
     'Hegel/Marx method: negation must be determinate (preserve-and-elevate), never mere dismissal. Weave the concession inside the negation or reformulation prose (your CONCESSION stock) — there is no separate incorporation section.',
     'Open and reframe in your STOCK PHRASES, rotating variants across your turns — rebuttal for the cut-in, reframing for the problem. The variants marked SPENT below are used up this session: never reuse them.',
@@ -137,7 +143,7 @@ export function buildUserMessage({ question, prevText, ownPriorLines, turnInstru
   if (othersPriorLines.length > 0) {
     parts.push(
       '',
-      'STRIKING IDEAS FROM OTHER SEATS (pass 3 only — you may invoke these by name alongside PREV. Transform what you invoke into your framework\'s own terms; never quote survey lines verbatim):',
+      'STRIKING IDEAS FROM OTHER SEATS (pass 3 only — the NOTES FROM THE MARGINS intervene first, then seats; you may invoke any of these by name alongside PREV. Transform what you invoke into your framework\'s own terms; never quote survey lines verbatim):',
       ...othersPriorLines.map(({ name, line }) => `- ${name}: ${line}`),
     );
   }

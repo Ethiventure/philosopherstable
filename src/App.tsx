@@ -175,6 +175,9 @@ function App() {
   // Per-turn grounding receipts: what each speaker was actually shown, so its
   // quotes stay checkable after the fact. Keyed by intervention id.
   const [groundMap, setGroundMap] = useState<Record<string, { title: string; number: number; passages: string[]; reason: string | null }>>({});
+  // Per-turn margins receipts: which pass-3 prompts carried the note in their
+  // survey. Attached ≠ answered — the badge says "saw", never "obeyed".
+  const [noteMap, setNoteMap] = useState<Record<string, true>>({});
   // Per-turn provenance for the export footer (provider switches mid-session
   // stay honest). Consecutive duplicates collapse at render time.
   const provRef = useRef<string[]>([]);
@@ -510,15 +513,23 @@ function App() {
       const ownPriorLines = collected
         .filter((item) => item.philosopher_id === speaker.id && item.sections?.new_contribution)
         .map((item) => String(item.sections?.new_contribution));
-      // Pass-3 survey: other seats' determinations, labelled by name, so the
-      // final rotation can invoke the most striking ideas. Passes 1–2 stay pure.
+      // Pass-3 survey: the margins note intervenes first, then other seats'
+      // determinations, labelled by name, so the final rotation can invoke
+      // the most striking ideas — including the note's demands. Passes 1–2
+      // stay pure.
+      const noteEntry = pass === 2 && codaRef.current
+        ? [{ name: 'Notes from the margins', line: codaRef.current }]
+        : [];
       const othersPriorLines = pass === 2
-        ? collected
-          .filter((item) => item.philosopher_id !== speaker.id && item.sections?.new_contribution)
-          .map((item) => ({
-            name: seats.find((s) => s.id === item.philosopher_id)?.name ?? 'A seat',
-            line: String(item.sections?.new_contribution),
-          }))
+        ? [
+          ...noteEntry,
+          ...collected
+            .filter((item) => item.philosopher_id !== speaker.id && item.sections?.new_contribution)
+            .map((item) => ({
+              name: seats.find((s) => s.id === item.philosopher_id)?.name ?? 'A seat',
+              line: String(item.sections?.new_contribution),
+            })),
+        ]
         : [];
       const turnInstruction = buildTurnInstruction({
         kind,
@@ -527,6 +538,7 @@ function App() {
         longForm: snap.longForm,
         reversed: pass === 2,
         marginsNote: pass === 2 && !!codaRef.current,
+        marginsFirst: pass === 2 && index === 0 && !!codaRef.current,
       });
       const systemPrompt = renderPersona(speaker, snap.intensity);
       // Efficient economy trims the fed-back predecessor text (the displayed
@@ -573,11 +585,6 @@ function App() {
         }),
       ];
       if (groundingBlock) messageParts.push('', groundingBlock);
-      // Pass 3 carries the margins note's demand: every reconstruction must
-      // answer it as well as PREV, so the final round lands on action.
-      if (pass === 2 && codaRef.current) {
-        messageParts.push('', `NOTES FROM THE MARGINS (answer at least one of its demands in your reformulation, in your own terms — never quote it verbatim):\n${codaRef.current}`);
-      }
       const userMessage = [...messageParts, '', STRUCTURED_OUTPUT_HINT].join('\n');
       setActivePass(pass);
       setActiveAgent(seatPos);
@@ -603,6 +610,13 @@ function App() {
       if (groundingReceipt) {
         const receipt = groundingReceipt;
         setGroundMap((m) => ({ ...m, [item.id]: receipt }));
+      }
+      // Receipt: this turn's prompt carried the margins note in its survey,
+      // so "did they see it" is never a guess — check the badge + console.
+      if (pass === 2 && noteEntry.length > 0) {
+        const id = item.id;
+        setNoteMap((m) => ({ ...m, [id]: true }));
+        if (typeof console !== 'undefined') console.info(`[Margins] note in survey for ${speaker.full_name} (${codaRef.current?.length ?? 0} chars).`);
       }
       provRef.current.push(provenanceLabel(snap));
       setInterventions([...collected]);
@@ -708,6 +722,7 @@ function App() {
     setCodaError(null);
     codaRef.current = null;
     setGroundMap({});
+    setNoteMap({});
     provRef.current = [];
     spentRef.current = [];
     setRunError(null);
@@ -775,6 +790,7 @@ function App() {
     codaRef.current = null;
     setServiceLog([]);
     setGroundMap({});
+    setNoteMap({});
     provRef.current = [];
     spentRef.current = [];
     setSelectedIntervention(null);
@@ -956,6 +972,7 @@ function App() {
               noteState={codaState}
               noteError={codaError}
               onRetryNote={runCodaNow}
+              noteSeenFor={noteMap}
             />
           ) : (
             <div className="dark-academia-card p-10 text-center"><Feather size={28} className="mx-auto text-[#b89968] mb-3" /><p className="font-heading text-2xl text-[#4a392d]">The cabinet awaits its question.</p><p className="italic text-[#465f75]/65 mt-2">Begin the circuit to watch the problem transform one intervention at a time.</p></div>
@@ -982,7 +999,7 @@ function App() {
   );
 }
 
-function ReadingDeck({ entries, philosophers, readIdx, onNav, freshId, ttsSupported, ttsStatus, onToggleSpeech, onToggleNoteSpeech, onInspect, onOpenSources, noteText, noteState, noteError, onRetryNote }: {
+function ReadingDeck({ entries, philosophers, readIdx, onNav, freshId, ttsSupported, ttsStatus, onToggleSpeech, onToggleNoteSpeech, onInspect, onOpenSources, noteText, noteState, noteError, onRetryNote, noteSeenFor }: {
   entries: DeckEntry[];
   philosophers: Philosopher[];
   readIdx: number;
@@ -998,6 +1015,7 @@ function ReadingDeck({ entries, philosophers, readIdx, onNav, freshId, ttsSuppor
   noteState: 'idle' | 'writing' | 'failed';
   noteError: string | null;
   onRetryNote: () => void;
+  noteSeenFor: Record<string, true>;
 }) {
   const entry = entries[readIdx];
   if (!entry) return null;
@@ -1052,6 +1070,7 @@ function ReadingDeck({ entries, philosophers, readIdx, onNav, freshId, ttsSuppor
             <div>
               <h3 className="font-heading text-2xl text-[#4a392d] leading-tight">{philosopher.full_name}</h3>
               <p className="text-[10px] uppercase tracking-wider text-[#8b5254]">Pass {item.pass_number} · Seat {item.seat_position + 1} · Card {readIdx + 1} of {entries.length}</p>
+              {noteSeenFor[item.id] && <p className="text-[10px] uppercase tracking-wider text-[#8b5254]/80 mt-0.5">☞ saw the margins note</p>}
             </div>
           </div>
           <p className="drop-cap text-[15px] leading-relaxed whitespace-pre-line text-[#465f75]">{item.response_text}</p>

@@ -54,7 +54,9 @@ from the data and can never drift from date order again.
 
 ### Style intensity: global
 One Low / Medium / High setting in Settings, applied to every philosopher's intensity
-ladder.
+ladder. Low additionally drops `special_modes` and appends a governing plain-style
+override in `renderPersona` (short sentences, defined terms, no specimen language);
+Medium/High are untouched.
 
 ### Length: short and punchy
 Word budgets per section (normal / long-form). Each turn does less, so the
@@ -214,8 +216,12 @@ into every pass-3 turn as a NOTE block the reformulation must answer; a failed
 note never blocks pass 3 (visible failed + retry, session stands). Nothing
 fires after the final seat. The reading deck (`deckEntries`) is chronological:
 passes 1–2, the note card where it spoke, then pass 3 — and the export
-interleaves the note the same way. Pass-3 turn instructions name the note
-explicitly (`marginsNote`), so the final round must carry a demand forward. Own visible status
+interleaves the note the same way. The note rides in the pass-3 survey
+(listed first, as `Notes from the margins`) rather than an appended block;
+turn instructions name it explicitly (`marginsNote`, plus `marginsFirst` for
+the opening seat, which must name the writer). Per-turn `noteMap` receipts +
+console log record which prompts carried it; deck badges read "saw the
+margins note" (attached ≠ answered). Own visible status
 (`codaState`: writing / failed + visible reason + retry + console diagnostics);
 silent catches are banned everywhere, including here. Parse failures get a
 coda-specific repair restating the single-quotes rule. DeepInfra requests
