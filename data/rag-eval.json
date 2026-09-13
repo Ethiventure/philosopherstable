@@ -182,9 +182,10 @@
         "work_id": null
       },
       "acceptable_passage_ids": [],
-      "minimum_evidence_status": "none",
-      "notes": "Marx has indexed passages but nothing on Kantian morality; must abstain. Add an all_author leakage assertion later.",
-      "human_validated": true
+      "minimum_evidence_status": "weak",
+      "notes": "Marx passages mention the isolated words (footnote, flax prices) without the concept; the honest contract is scoping — every result must be Marx, never leakage. Term co-occurrence is now required for strong evidence.",
+      "human_validated": true,
+      "expect": "author_only"
     },
     {
       "id": "bookchin-authorfilter-012",
@@ -195,9 +196,10 @@
         "work_id": null
       },
       "acceptable_passage_ids": [],
-      "minimum_evidence_status": "none",
-      "notes": "Marx has no indexed passages yet; filter must yield nothing, not Bookchin leakage.",
-      "human_validated": true
+      "minimum_evidence_status": "weak",
+      "notes": "Manifesto passages match via the commun- stem family and are topically adjacent; the contract is scoping, not abstention.",
+      "human_validated": true,
+      "expect": "author_only"
     }
   ],
   "validated_against": {

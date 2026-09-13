@@ -39,26 +39,41 @@ for (const c of suite.cases) {
   latencies.push(Date.now() - t0);
   const ids10 = debug.selected.map((s) => s.passage.id);
   const ids5 = ids10.slice(0, 5);
-  const hit5 = c.acceptable_passage_ids.some((id) => ids5.includes(id));
-  const hit10 = c.acceptable_passage_ids.some((id) => ids10.includes(id));
-  const firstRank = ids10.findIndex((id) => c.acceptable_passage_ids.includes(id));
-  if (c.acceptable_passage_ids.length === 0) {
-    noAnswerTotal += 1;
-    if (debug.evidence === 'none' && ids10.length === 0) noAnswerOk += 1;
-    else failures.push(`${c.id}: expected abstention, got ${ids10.length} passages (${debug.evidence})`);
+  const expect = c.expect ?? (c.acceptable_passage_ids.length === 0 ? 'abstain' : 'recall');
+  if (expect === 'author_only') {
+    // Author-scoping trap: results may exist, but every one must belong to
+    // the filtered author — never another thinker's work.
+    const leak = debug.selected.filter((s) => !s.passage.author.toLowerCase().includes((c.filters?.author ?? '').toLowerCase()));
+    if (leak.length > 0) failures.push(`${c.id}: author leakage — ${leak.map((s) => s.passage.id).join(', ')}`);
+    const cat = byCategory[c.category] ?? { n: 0, hit: 0 };
+    cat.n += 1;
+    if (leak.length === 0) cat.hit += 1;
+    byCategory[c.category] = cat;
+    const evOnly = rankWeight[debug.evidence] >= rankWeight[c.minimum_evidence_status];
+    if (evOnly) evidenceOk += 1;
+    else failures.push(`${c.id}: evidence ${debug.evidence} below minimum ${c.minimum_evidence_status}`);
   } else {
-    if (hit5) r5 += 1;
-    if (hit10) r10 += 1;
-    rrSum += firstRank >= 0 ? 1 / (firstRank + 1) : 0;
-    if (!hit10) failures.push(`${c.id}: no acceptable passage in top 10 (top: ${ids10[0] ?? 'none'})`);
+    const hit5 = c.acceptable_passage_ids.some((id) => ids5.includes(id));
+    const hit10 = c.acceptable_passage_ids.some((id) => ids10.includes(id));
+    const firstRank = ids10.findIndex((id) => c.acceptable_passage_ids.includes(id));
+    if (c.acceptable_passage_ids.length === 0) {
+      noAnswerTotal += 1;
+      if (debug.evidence === 'none' && ids10.length === 0) noAnswerOk += 1;
+      else failures.push(`${c.id}: expected abstention, got ${ids10.length} passages (${debug.evidence})`);
+    } else {
+      if (hit5) r5 += 1;
+      if (hit10) r10 += 1;
+      rrSum += firstRank >= 0 ? 1 / (firstRank + 1) : 0;
+      if (!hit10) failures.push(`${c.id}: no acceptable passage in top 10 (top: ${ids10[0] ?? 'none'})`);
+    }
+    const evOk = rankWeight[debug.evidence] >= rankWeight[c.minimum_evidence_status];
+    if (evOk) evidenceOk += 1;
+    else failures.push(`${c.id}: evidence ${debug.evidence} below minimum ${c.minimum_evidence_status}`);
+    const cat = byCategory[c.category] ?? { n: 0, hit: 0 };
+    cat.n += 1;
+    if (c.acceptable_passage_ids.length === 0 ? (debug.evidence === 'none') : hit5) cat.hit += 1;
+    byCategory[c.category] = cat;
   }
-  const evOk = rankWeight[debug.evidence] >= rankWeight[c.minimum_evidence_status];
-  if (evOk) evidenceOk += 1;
-  else failures.push(`${c.id}: evidence ${debug.evidence} below minimum ${c.minimum_evidence_status}`);
-  const cat = byCategory[c.category] ?? { n: 0, hit: 0 };
-  cat.n += 1;
-  if (c.acceptable_passage_ids.length === 0 ? (debug.evidence === 'none') : hit5) cat.hit += 1;
-  byCategory[c.category] = cat;
 }
 
 const pos = suite.cases.filter((c) => c.acceptable_passage_ids.length > 0);

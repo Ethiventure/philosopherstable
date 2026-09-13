@@ -199,12 +199,14 @@
       "author": "Karl Marx and Friedrich Engels",
       "title": "The Communist Manifesto",
       "source_mode": "REMOTE_IMPORT",
-      "source_url": "https://www.marxists.org/archive/marx/works/download/pdf/Manifesto.pdf",
+      "source_url": "https://www.marxists.org/archive/marx/works/1848/communist-manifesto/",
       "rights_status": "approved",
       "rights_decision_by": "project_owner",
       "rights_decision_at": "2026-09-13",
-      "rights_note": "Owner bulk approval Sep 2026: automate the working full-text links; failures skip, never force.",
-      "enabled": true
+      "rights_note": "Owner-approved; RAG reads the MIA chapter HTML via chapter-following while readers keep the corpus PDF link.",
+      "enabled": true,
+      "url_pinned": true,
+      "corpus_source_url": "https://www.marxists.org/archive/marx/works/download/pdf/Manifesto.pdf"
     },
     {
       "id": "karl-marx-grundrisse-foundations-of-the-critique-of-political-economy",
@@ -439,12 +441,14 @@
       "author": "Vladimir Lenin",
       "title": "The State and Revolution",
       "source_mode": "REMOTE_IMPORT",
-      "source_url": "https://www.marxists.org/ebooks/lenin/state-and-revolution.pdf",
+      "source_url": "https://www.marxists.org/archive/lenin/works/1917/staterev/index.htm",
       "rights_status": "approved",
       "rights_decision_by": "project_owner",
       "rights_decision_at": "2026-09-13",
-      "rights_note": "Owner bulk approval Sep 2026: automate the working full-text links; failures skip, never force.",
-      "enabled": true
+      "rights_note": "Owner-approved; RAG reads the MIA chapter HTML via chapter-following while readers keep the corpus PDF link.",
+      "enabled": true,
+      "url_pinned": true,
+      "corpus_source_url": "https://www.marxists.org/ebooks/lenin/state-and-revolution.pdf"
     },
     {
       "id": "vladimir-lenin-imperialism-the-highest-stage-of-capitalism",
@@ -864,6 +868,45 @@
       "rights_decision_by": "project_owner",
       "rights_decision_at": "2026-09-13",
       "rights_note": "Owner-supplied link Sep 2026: process it; PDF is a reading link (not indexable), recorded honestly.",
+      "enabled": true
+    },
+    {
+      "id": "karl-marx-capital-volume-i-fulltext",
+      "author": "Karl Marx",
+      "title": "Capital, Volume I (full text)",
+      "source_mode": "REMOTE_IMPORT",
+      "source_url": "https://archive.org/stream/KarlMarxCapitalVolumeI-III/Karl%20Marx%20-%20Capital%20(Volume%20I)_djvu.txt",
+      "corpus_source_url": "https://www.marxists.org/archive/marx/works/download/pdf/Capital-Volume-I.pdf",
+      "rights_status": "approved",
+      "rights_decision_by": "project_owner",
+      "rights_decision_at": "2026-09-13",
+      "rights_note": "Owner-supplied Sep 2026: archive.org OCR full text; the corpus reading link (PDF) is kept for readers via corpus_source_url.",
+      "enabled": true
+    },
+    {
+      "id": "karl-marx-capital-volume-ii-fulltext",
+      "author": "Karl Marx",
+      "title": "Capital, Volume II (full text)",
+      "source_mode": "REMOTE_IMPORT",
+      "source_url": "https://archive.org/stream/KarlMarxCapitalVolumeI-III/Karl%20Marx%20-%20Capital%20(Volume%20II)_djvu.txt",
+      "corpus_source_url": "https://www.marxists.org/archive/marx/works/1885-c2/index.htm",
+      "rights_status": "approved",
+      "rights_decision_by": "project_owner",
+      "rights_decision_at": "2026-09-13",
+      "rights_note": "Owner-supplied Sep 2026: archive.org OCR full text; the corpus reading link (PDF) is kept for readers via corpus_source_url.",
+      "enabled": true
+    },
+    {
+      "id": "karl-marx-capital-volume-iii-fulltext",
+      "author": "Karl Marx",
+      "title": "Capital, Volume III (full text)",
+      "source_mode": "REMOTE_IMPORT",
+      "source_url": "https://archive.org/stream/KarlMarxCapitalVolumeI-III/Karl%20Marx%20-%20Capital%20(Volume%20III)_djvu.txt",
+      "corpus_source_url": "https://www.marxists.org/archive/marx/works/download/pdf/Capital-Volume-III.pdf",
+      "rights_status": "approved",
+      "rights_decision_by": "project_owner",
+      "rights_decision_at": "2026-09-13",
+      "rights_note": "Owner-supplied Sep 2026: archive.org OCR full text; the corpus reading link (PDF) is kept for readers via corpus_source_url.",
       "enabled": true
     }
   ]

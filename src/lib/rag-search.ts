@@ -163,7 +163,11 @@ export function searchIndex(prepared: PreparedIndex, query: string, opts: Search
     reasons.push('no usable passages after filtering');
   } else {
     const decisive = selected[0].passage.word_count < 150 && selected[0].exactPhraseBoost > 0;
-    if ((selected.length >= 3 && max >= 4) || decisive) {
+    // Multi-term queries need their terms TOGETHER somewhere: scattered
+    // single-term hits across passages (a footnote here, flax prices there)
+    // are never strong evidence, however high each scores alone.
+    const together = terms.length < 2 || selected.some((s) => s.matchedTerms.length >= 2);
+    if (((selected.length >= 3 && max >= 4) || decisive) && together) {
       evidence = 'strong';
       reasons.push(decisive ? 'one short decisive passage answers directly' : `${selected.length} direct passages support the answer`);
     } else if (selected.length >= 2 && max >= 2.5) {

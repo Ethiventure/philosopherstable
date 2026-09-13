@@ -300,7 +300,10 @@ under public/rag/ (lazy-fetched per thinker, cached; static, so Netlify needs
 nothing new). Wired behind the existing grounding toggle: desk + turns search
 the thinker's own shard first (`rag-ground.ts`), live extract.js stays as
 fallback; desk answers carry clickable source chunks, export lists source
-titles. Deferred, not forgotten: mechanical echo-check badges, word-budget
+titles. MIA index pages are re-attempted via chapter links (generic
+chapter-following fallback); PDFs stay reading-links only. Eval traps assert
+author scoping where the corpus legitimately contains the terms, abstention
+only where stems are truly absent. Deferred, not forgotten: mechanical echo-check badges, word-budget
 enforcement (see below).
 Word budgets: per-turn HARD ceilings (~100 words normal / ~280 long-form,
 opening 60/160) live in prompts but models routinely overshoot (~150–200

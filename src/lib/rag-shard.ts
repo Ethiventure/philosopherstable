@@ -9,6 +9,9 @@ export interface ShardWork {
   title: string;
   passages: number;
   source_url: string;
+  /** Corpus reading link, when the indexed fetch URL differs (e.g. OCR text
+   * indexed while readers keep the PDF). Used for footnote numbering. */
+  corpus_source_url?: string | null;
 }
 
 export interface ShardPassage {

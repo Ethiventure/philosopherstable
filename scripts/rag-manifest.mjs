@@ -39,8 +39,10 @@ for (const raw of blocks) {
   if (SKIP_IDS.has(id)) continue;
   if (byId.has(id)) {
     // Keep tracking the corpus: URLs and titles drift (link fixes), ids don't.
+    // Pinned entries keep their own fetch URL (e.g. an index page read via
+    // chapter-following while readers keep the corpus link).
     const existing = byId.get(id);
-    existing.source_url = url;
+    if (!existing.url_pinned) existing.source_url = url;
     existing.author = author;
     existing.title = title;
     continue;

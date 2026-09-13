@@ -154,6 +154,57 @@ function sha1(s) {
   return createHash('sha1').update(s).digest('hex').slice(0, 12);
 }
 
+/**
+ * MIA chapter fallback: index/contents pages (Capital, State & Revolution…)
+ * link their chapters as ch01.htm etc. When the landing page itself refuses,
+ * follow up to 40 same-host chapter links and merge their paragraphs, each
+ * labelled with its chapter link text. Generic to any MIA-style index.
+ */
+async function tryMarxChapters(html, baseUrl) {
+  const seen = new Set();
+  const chapters = [];
+  const re = /<a[^>]+href="([^"]+)"[^>]*>([\s\S]*?)<\/a\s*>/gi;
+  let m;
+  while ((m = re.exec(html)) !== null && chapters.length < 40) {
+    const href = m[1];
+    if (!/(ch\d+|chap\d+|chapter)[^"]*\.html?$/i.test(href)) continue;
+    let absolute;
+    try {
+      absolute = new URL(href, baseUrl).toString();
+    } catch {
+      continue;
+    }
+    if (new URL(absolute).hostname !== new URL(baseUrl).hostname) continue;
+    if (seen.has(absolute)) continue;
+    seen.add(absolute);
+    const label = normalizeText(stripInlineTags(m[2])).slice(0, 80);
+    chapters.push({ url: absolute, label: label || absolute });
+  }
+  if (chapters.length < 2) return null; // not a chapter index — don't guess
+  const merged = [];
+  for (const ch of chapters) {
+    try {
+      const page = await fetchText(ch.url);
+      const { paragraphs } = extractReadable(page);
+      for (const p of paragraphs) {
+        merged.push({
+          text: p.text,
+          heading: p.heading ?? ch.label,
+          path: p.path ? `${ch.label} / ${p.path}` : ch.label,
+        });
+      }
+    } catch {
+      // One dead chapter never sinks the book.
+    }
+    await new Promise((resolve) => setTimeout(resolve, 300));
+  }
+  return merged.length >= 5 ? merged : null;
+}
+
+function stripInlineTags(s) {
+  return s.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
+}
+
 function openDb() {
   mkdirSync(new URL('../data/', import.meta.url), { recursive: true });
   const db = new DatabaseSync(DB_PATH);
@@ -161,7 +212,8 @@ function openDb() {
     CREATE TABLE IF NOT EXISTS works (
       id TEXT PRIMARY KEY, author TEXT NOT NULL, title TEXT NOT NULL,
       source_url TEXT NOT NULL, rights_status TEXT NOT NULL,
-      content_hash TEXT, passage_count INTEGER DEFAULT 0, imported_at TEXT
+      content_hash TEXT, passage_count INTEGER DEFAULT 0, imported_at TEXT,
+      corpus_source_url TEXT
     );
     CREATE TABLE IF NOT EXISTS passages (
       id TEXT PRIMARY KEY, work_id TEXT NOT NULL REFERENCES works(id),
@@ -173,6 +225,11 @@ function openDb() {
     );
     CREATE TABLE IF NOT EXISTS system_metadata (key TEXT PRIMARY KEY, value TEXT, updated_at TEXT);
   `);
+  try {
+    db.exec('ALTER TABLE works ADD COLUMN corpus_source_url TEXT');
+  } catch {
+    // Column already exists on re-runs — CREATE TABLE IF NOT EXISTS skips.
+  }
   return db;
 }
 
@@ -192,14 +249,24 @@ async function ingestOne(db, entry) {
   } catch (error) {
     return { id: entry.id, status: 'fetch-failed', detail: `${fetchUrl}: ${String(error.message ?? error)}` };
   }
-  const { paragraphs, linkRatio } = extractReadable(html);
-  if (paragraphs.length < 5) {
-    return { id: entry.id, status: 'no-match', detail: `only ${paragraphs.length} paragraphs extracted — refusing to index thin text (use LOCAL_FULL_TEXT or CURATED_EXCERPTS)` };
-  }
+  const { paragraphs: firstPass, linkRatio } = extractReadable(html);
+  let paragraphs = firstPass;
+  let viaChapters = false;
   // Index/contents pages wear their links on the surface: many content links
   // per paragraph means navigation, not evidence (measured: real essays sit
   // under ~1.3, MIA contents pages above 2.0).
-  if (linkRatio > 2.0) {
+  const looksLikeIndex = firstPass.length < 5 || linkRatio > 2.0;
+  if (looksLikeIndex && new URL(fetchUrl).hostname === 'www.marxists.org') {
+    const followed = await tryMarxChapters(html, fetchUrl);
+    if (followed) {
+      paragraphs = followed;
+      viaChapters = true;
+    }
+  }
+  if (paragraphs.length < 5) {
+    return { id: entry.id, status: 'no-match', detail: `only ${paragraphs.length} paragraphs extracted — refusing to index thin text (use LOCAL_FULL_TEXT or CURATED_EXCERPTS)` };
+  }
+  if (!viaChapters && linkRatio > 2.0) {
     return { id: entry.id, status: 'no-match', detail: `link-dense page (${linkRatio.toFixed(1)} content links per paragraph) — looks like an index/contents page, not the text (use LOCAL_FULL_TEXT or CURATED_EXCERPTS)` };
   }
   const chunks = chunkParagraphs(paragraphs);
@@ -222,8 +289,8 @@ async function ingestOne(db, entry) {
   }
   const now = new Date().toISOString();
   const hash = sha1(html);
-  db.prepare('INSERT INTO works (id, author, title, source_url, rights_status, content_hash, passage_count, imported_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?) ON CONFLICT(id) DO UPDATE SET author=excluded.author, title=excluded.title, source_url=excluded.source_url, rights_status=excluded.rights_status, content_hash=excluded.content_hash, passage_count=excluded.passage_count, imported_at=excluded.imported_at')
-    .run(entry.id, entry.author, entry.title, entry.source_url, entry.rights_status, hash, fresh.length, now);
+  db.prepare('INSERT INTO works (id, author, title, source_url, rights_status, content_hash, passage_count, imported_at, corpus_source_url) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?) ON CONFLICT(id) DO UPDATE SET author=excluded.author, title=excluded.title, source_url=excluded.source_url, rights_status=excluded.rights_status, content_hash=excluded.content_hash, passage_count=excluded.passage_count, imported_at=excluded.imported_at, corpus_source_url=excluded.corpus_source_url')
+    .run(entry.id, entry.author, entry.title, entry.source_url, entry.rights_status, hash, fresh.length, now, entry.corpus_source_url ?? null);
   db.prepare('DELETE FROM passages WHERE work_id = ?').run(entry.id);
   const insert = db.prepare('INSERT INTO passages (id, work_id, author, work_title, section_title, section_path, paragraph_start, paragraph_end, ordinal, word_count, text, search_text, source_url, content_hash) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)');
   fresh.forEach((c, i) => {
@@ -258,7 +325,7 @@ function exportJson(db) {
     const file = `author-${authorSlug(w.author)}.json`;
     if (!shards.has(file)) shards.set(file, { file, author: w.author, works: [], passages: [] });
     const shard = shards.get(file);
-    shard.works.push({ id: w.id, title: w.title, passages: passages.length, source_url: w.source_url });
+    shard.works.push({ id: w.id, title: w.title, passages: passages.length, source_url: w.source_url, corpus_source_url: w.corpus_source_url ?? null });
     shard.passages.push(...passages);
   }
   const files = [];
