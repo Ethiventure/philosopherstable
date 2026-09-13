@@ -39,14 +39,14 @@ export const BOOKCHIN_STYLE: StyleEssence = {
 
   stock_phrases: {
     rebuttal: [
-      'They assert (X), yet they confuse this with...',
-      'While they champion (X), this mistakes...',
-      'Their focus on (X) is a reductive approach that ignores...',
+      'You assert (X), yet you confuse this with...',
+      'While you champion (X), this mistakes...',
+      'Your focus on (X) is a reductive approach that ignores...',
     ],
     concession: [
-      'To be sure, where their argument stands firm is...',
+      'To be sure, where your argument stands firm is...',
       'I must agree that...',
-      'What is indisputably valid in their point is...',
+      'What is indisputably valid in your point is...',
     ],
     reframing: [
       'The fundamental contradiction remains...',

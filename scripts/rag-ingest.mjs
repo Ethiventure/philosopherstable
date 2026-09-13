@@ -13,6 +13,7 @@
  */
 import { readFileSync, writeFileSync, mkdirSync } from 'node:fs';
 import { createHash } from 'node:crypto';
+import { pathToFileURL } from 'node:url';
 import { DatabaseSync } from 'node:sqlite';
 import { normalizeText, chunkParagraphs, wordCount } from './rag-text.mjs';
 
@@ -167,7 +168,10 @@ async function tryMarxChapters(html, baseUrl) {
   let m;
   while ((m = re.exec(html)) !== null && chapters.length < 40) {
     const href = m[1];
-    if (!/(ch\d+|chap\d+|chapter)[^"]*\.html?$/i.test(href)) continue;
+    const base = href.split('/').pop()?.split(/[?#]/)[0] ?? '';
+    // Numbered chapters (ch01.htm), Roman chapters (Lenin's i.htm…v.htm),
+    // prefaces/appendices/conclusions — but never bare index pages.
+    if (!/^(ch\d+|chap\d+|.*chapter.*|preface|appendix|conc?l.*|[ivxl]+)\.html?$/i.test(base)) continue;
     let absolute;
     try {
       absolute = new URL(href, baseUrl).toString();
@@ -252,15 +256,18 @@ async function ingestOne(db, entry) {
   const { paragraphs: firstPass, linkRatio } = extractReadable(html);
   let paragraphs = firstPass;
   let viaChapters = false;
-  // Index/contents pages wear their links on the surface: many content links
-  // per paragraph means navigation, not evidence (measured: real essays sit
-  // under ~1.3, MIA contents pages above 2.0).
-  const looksLikeIndex = firstPass.length < 5 || linkRatio > 2.0;
-  if (looksLikeIndex && new URL(fetchUrl).hostname === 'www.marxists.org') {
+  // MIA chapter-following: whenever the landing page links numbered chapters,
+  // fetch them all and keep whichever body of text is richer — landing blurbs
+  // lose to full chapters every time, with no paragraph-count threshold to
+  // game. (WITBD's landing extracts a deceptive exactly-5 paragraphs.)
+  if (new URL(fetchUrl).hostname === 'www.marxists.org') {
     const followed = await tryMarxChapters(html, fetchUrl);
     if (followed) {
-      paragraphs = followed;
-      viaChapters = true;
+      const words = (ps) => ps.reduce((a, p) => a + wordCount(p.text), 0);
+      if (words(followed) > words(firstPass)) {
+        paragraphs = followed;
+        viaChapters = true;
+      }
     }
   }
   if (paragraphs.length < 5) {
@@ -344,6 +351,17 @@ function exportJson(db) {
 }
 
 const manifest = JSON.parse(readFileSync(MANIFEST, 'utf8'));
+
+// Importable for debugging/tests without running the CLI (node --test etc.).
+// (rightsRefusal + extractReadable are exported inline above.)
+export { tryMarxChapters, openDb, ingestOne, exportJson };
+
+const isMain = process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href;
+if (isMain) {
+  await main();
+}
+
+async function main() {
 const args = process.argv.slice(2);
 const onlyId = args.includes('--id') ? args[args.indexOf('--id') + 1] : null;
 const all = args.includes('--all');
@@ -389,3 +407,4 @@ const total = exportJson(db);
 console.log(`\nindex: ${total} passages total → public/rag/ (per-author shards + manifest.json)`);
 db.close();
 if (results.some((r) => r.status !== 'ok')) process.exitCode = 1;
+}

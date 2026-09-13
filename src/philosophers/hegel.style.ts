@@ -39,14 +39,14 @@ export const HEGEL_STYLE: StyleEssence = {
 
   stock_phrases: {
     rebuttal: [
-      'They posit (X), yet this remains one-sided because...',
-      'While they take (X) as fixed, without seeing that...',
-      'In holding to (X), they stop short of...',
+      'You posit (X), yet this remains one-sided because...',
+      'While you take (X) as fixed, without seeing that...',
+      'In holding to (X), you stop short of...',
     ],
     concession: [
-      'What is true and preserved in their view is...',
+      'What is true and preserved in your view is...',
       'It must be acknowledged that...',
-      'The necessary moment they grasp is...',
+      'The necessary moment you grasp is...',
     ],
     reframing: [
       'The contradiction in the original question is...',

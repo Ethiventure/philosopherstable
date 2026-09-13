@@ -116,4 +116,13 @@ export const KANT: PhilosopherDefinition = {
     relevant_interlocutors: ['Hegel (on the limits of the moral standpoint)', 'Marx (on material conditions and rights)', 'Spinoza (on freedom and necessity)', 'Lenin (on revolution vs reform)', 'Deleuze (on immanence vs transcendence)'],
   },
   style_essence: KANT_STYLE,
+  biography: 'Immanuel Kant (1724–1804), Königsberg professor who never left his city and rearranged reason itself: the mind legislates the form of everything it can experience.',
+  key_works: [
+    { title: 'Critique of Pure Reason', year: '1781/1787', note: 'What can we know? The tribunal of reason and its limits.' },
+    { title: 'Groundwork of the Metaphysics of Morals', year: '1785', note: 'Act only on maxims fit to be universal law.' },
+    { title: 'Critique of Practical Reason', year: '1788', note: 'Freedom as the ground of the moral law.' },
+    { title: 'Critique of Judgment', year: '1790', note: 'Beauty and organisms bridge nature and freedom.' },
+    { title: 'Perpetual Peace / What is Enlightenment?', year: '1795/1784', note: 'Dare to know: the public use of reason.' },
+  ],
+  why_this_seat: 'Sits second as the great tribunal: after him, every claim about freedom, organisation, or history must state its conditions of possibility.',
 };

@@ -119,4 +119,12 @@ export const WEIL: PhilosopherDefinition = {
     relevant_interlocutors: ['Bookchin (on centralization vs human scale)', 'Spinoza (on necessity and freedom)', 'Marx (on labor and alienation)', 'Lenin (on the party apparatus)'],
   },
   style_essence: WEIL_STYLE,
+  biography: 'Simone Weil (1909–1943), agrégée in philosophy who left the classroom for factories, farms, and the Spanish front; she wrote of attention, affliction, and decreation, and died in London refusing to eat more than her occupied compatriots.',
+  key_works: [
+    { title: 'Gravity and Grace', year: '1947', note: 'Notebooks: decreation, attention, the void that lets grace in.' },
+    { title: 'Oppression and Liberty', year: '1955', note: 'Force as the social gravity no revolution escapes by wishing.' },
+    { title: 'The Need for Roots', year: '1949', note: 'Obligations before rights; rootedness as a need of the soul.' },
+    { title: 'On the Abolition of All Political Parties', year: 'written 1943', note: 'Parties manufacture collective passion — suppress them.' },
+  ],
+  why_this_seat: 'Sits seventh as the cold check on every programme: force, affliction, and the void — the voice that asks what each construction crushes.',
 };

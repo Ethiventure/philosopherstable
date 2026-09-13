@@ -45,7 +45,7 @@ import { entriesForNumbers, splitLabels } from '@/lib/footnotes';
 import { extractPassages, formatGroundedBlock, groundableSource } from '@/lib/extract';
 import { searchThinkerPassages } from '@/lib/rag-ground';
 import { verifyQuotes } from '@/lib/verify';
-import { createTtsController, defaultVoice, ensureVoices, isTtsSupported, listVoices, type TtsItem, type TtsStatus } from '@/lib/tts';
+import { createTtsController, ensureVoices, isTtsSupported, listVoices, resolveVoice, type TtsItem, type TtsStatus } from '@/lib/tts';
 import ServiceChat, { type ServiceLogEntry } from '@/components/ServiceChat';
 
 // "Read more" resolution: the philosopher's most relevant text from the corpus
@@ -187,17 +187,30 @@ function App() {
   const spentRef = useRef<string[]>([]);
   const markSpentVariants = (text: string) => {
     const lower = text.toLowerCase();
+    // Short signature: the variant's first six words with the (X) slot
+    // stripped. Models paraphrase the tail ("To be sure, where your argument
+    // stands…"), so full-string matching never fired and spent variants kept
+    // returning every turn — the repetition loop. The signature catches the
+    // opening shape; the old full-fragment check stays as a second net.
+    // Floor of five words: shorter variants ("I must agree that…") collide
+    // with ordinary prose, so they match on the full fragment only.
+    const signature = (variant: string) => {
+      const words = variant.replace(/\(X\)/g, ' ').replace(/\s+/g, ' ').trim().toLowerCase().split(' ').slice(0, 6);
+      return words.length >= 5 ? words.join(' ') : null;
+    };
     for (const p of philosophers) {
       const slots = p.style_essence.stock_phrases;
       for (const slot of [slots.rebuttal, slots.concession, slots.reframing]) {
         for (const variant of slot) {
+          if (spentRef.current.includes(variant)) continue;
           const fragments = variant
             .split('(X)')
             .map((f) => f.trim())
             .filter((f) => f.replace(/[^a-z]/gi, '').length > 12);
+          const sig = signature(variant);
           if (
-            fragments.some((f) => lower.includes(f.toLowerCase())) &&
-            !spentRef.current.includes(variant)
+            (sig !== null && lower.includes(sig)) ||
+            fragments.some((f) => lower.includes(f.toLowerCase()))
           ) {
             spentRef.current.push(variant);
           }
@@ -284,12 +297,12 @@ function App() {
   // Single TTS owner: one queue for per-turn and full-session reads.
   useEffect(() => {
     if (!isTtsSupported()) return;
-    ttsRef.current = createTtsController({ rate: display.ttsRate, onStatus: setTtsStatus });
+    ttsRef.current = createTtsController({ rate: display.ttsRate, voiceURI: display.ttsVoiceURI, onStatus: setTtsStatus });
     return () => {
       ttsRef.current?.stop();
       ttsRef.current = null;
     };
-  }, [display.ttsRate]);
+  }, [display.ttsRate, display.ttsVoiceURI]);
 
   // Stop reading when the transcript is cleared or the page unloads.
   useEffect(() => {
@@ -558,9 +571,13 @@ function App() {
       let groundingReceipt: { title: string; number: number; passages: string[]; reason: string | null } | null = null;
       if (snap.grounding) {
         try {
+          // Query in the speaker's OWN words: the question plus their own
+          // developing line. PREV's full text used to ride here — another
+          // author's diction pulling other-framework vocabulary out of this
+          // thinker's shard, which read as near-random passages.
           const hit = await searchThinkerPassages(
             speaker.full_name,
-            `${question} ${collected[collected.length - 1]?.response_text ?? ''}`.slice(0, 800),
+            `${question} ${ownPriorLines.join(' ')}`.slice(0, 800),
             snap.provider === 'shared' || snap.provider === 'groq' ? 4 : 6,
           );
           if (runRef.current !== runId) return;
@@ -594,18 +611,31 @@ function App() {
           ownPriorLines,
           othersPriorLines,
           turnInstruction,
-          stockBlock: [
-            'YOUR TRANSITIONAL TOOLKIT (your own phrasing — reach for these instead of generic boilerplate):',
-            // Low never sees the rebuttal variants: every one of them is an
-            // attack shape, and the transcript shows turns open with them
-            // verbatim. Concession-first openings carry the calm entry.
-            ...(snap.intensity === 'low'
-              ? []
-              : [`REBUTTAL: ${speaker.style_essence.stock_phrases.rebuttal.join(' / ')}`]),
-            `CONCESSION: ${speaker.style_essence.stock_phrases.concession.join(' / ')}`,
-            `REFRAMING: ${speaker.style_essence.stock_phrases.reframing.join(' / ')}`,
-          ].join('\n'),
-          spentPhrases: spentRef.current,
+          stockBlock: (() => {
+            // The opener has no predecessor ("Do not refer to any other
+            // thinker"), so PREV-addressed openers must not ride in its
+            // prompt — they used to, contradicting the opening instruction.
+            if (isOpeningTurn) return '';
+            // Only unspent variants ride in the prompt: showing the whole
+            // toolkit every turn kept spent openers salient and they came
+            // back verbatim ("To be sure" every other paragraph). When a
+            // slot is exhausted it drops out instead of repeating.
+            const unspent = (vs: string[]) => vs.filter((v) => !spentRef.current.includes(v));
+            const rebuttal = snap.intensity === 'low' ? [] : unspent(speaker.style_essence.stock_phrases.rebuttal);
+            const concession = unspent(speaker.style_essence.stock_phrases.concession);
+            const reframing = unspent(speaker.style_essence.stock_phrases.reframing);
+            if (!rebuttal.length && !concession.length && !reframing.length) return '';
+            return [
+              'YOUR TRANSITIONAL TOOLKIT (your own phrasing — at most ONE of these per turn, often none; never force them, and never open two turns of yours the same way):',
+              // Low never sees the rebuttal variants: every one of them is an
+              // attack shape, and the transcript shows turns open with them
+              // verbatim. Concession-first openings carry the calm entry.
+              ...(rebuttal.length ? [`REBUTTAL: ${rebuttal.join(' / ')}`] : []),
+              ...(concession.length ? [`CONCESSION: ${concession.join(' / ')}`] : []),
+              ...(reframing.length ? [`REFRAMING: ${reframing.join(' / ')}`] : []),
+            ].join('\n');
+          })(),
+          spentPhrases: isOpeningTurn ? [] : spentRef.current,
         }),
       ];
       if (groundingBlock) messageParts.push('', groundingBlock);
@@ -1148,7 +1178,7 @@ function ReadingDeck({ entries, philosophers, readIdx, onNav, freshId, ttsSuppor
 }
 
 function CabinetTable({ philosophers, activeAgent, activePass, interventions, onSelect, latest, onJumpToLatest }: { philosophers: Philosopher[]; activeAgent: number; activePass: number; interventions: Intervention[]; onSelect: (philosopher: Philosopher) => void; latest: { intervention: Intervention; philosopher: Philosopher } | null; onJumpToLatest: () => void }) {
-  return <div className="relative w-full max-w-[920px] mx-auto aspect-square min-h-[400px] md:min-h-[560px] flex items-center justify-center"><div className="absolute w-[48%] h-[34%] rounded-[50%] border-[10px] border-[#4a392d]/80 bg-[#6d4c37]/10 shadow-[inset_0_0_40px_rgba(74,57,45,0.2),0_8px_24px_rgba(74,57,45,0.2)]"><div className="absolute inset-3 rounded-[50%] border border-[#b89968]/50 flex flex-col items-center justify-center text-center"><span className="text-[9px] uppercase tracking-[0.2em] text-[#8b5254]">The cabinet</span><span className="font-heading text-lg md:text-2xl text-[#4a392d]">A dialectical spiral</span><span className="text-[10px] italic text-[#465f75]/60 mt-1 px-6 leading-snug">clockwise<br />sequential<br />unresolved</span></div></div>{latest && <div className="absolute z-20 w-[66%] max-w-[430px] left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"><div className="dark-academia-card p-5 text-center"><p className="text-[9px] uppercase tracking-[0.2em] text-[#8b5254]">Now at the table</p><p className="font-heading text-xl text-[#4a392d] mt-1 leading-tight">{latest.philosopher.full_name}</p><p className="text-[10px] uppercase tracking-wider text-[#465f75]/65 mt-1">Pass {latest.intervention.pass_number} · Seat {latest.intervention.seat_position + 1}</p><p className="text-[15px] leading-relaxed mt-3 max-h-[190px] md:max-h-[240px] overflow-y-auto custom-scroll text-left text-[#465f75]">{latest.intervention.response_text}</p><button className="btn-secondary !text-xs mt-3" onClick={onJumpToLatest}>Read in the deck</button></div></div>}<div className="absolute inset-[8%] rotation-arrow pointer-events-none"><div className="absolute top-0 left-1/2 -translate-x-1/2 text-[#8b5254]"><ArrowRight size={22} /></div></div>{philosophers.map((philosopher, index) => { const angle = (index / philosophers.length) * Math.PI * 2 - Math.PI / 2; const x = 50 + Math.cos(angle) * 37; const y = 50 + Math.sin(angle) * 37; const isActive = activeAgent === index; const hasSpoken = interventions.some((item) => item.pass_number === activePass + 1 && item.seat_position === index); return <button key={philosopher.slug} onClick={() => onSelect(philosopher)} aria-label={`Seat ${index + 1}: ${philosopher.full_name}`} className={`cabinet-seat absolute -translate-x-1/2 -translate-y-1/2 flex flex-col items-center gap-1 ${isActive ? 'cabinet-seat-active' : ''} ${hasSpoken ? 'cabinet-seat-spoken' : ''}`} style={{ left: `${x}%`, top: `${y}%` }}><span className={`w-11 h-11 sm:w-16 sm:h-16 md:w-20 md:h-20 rounded-full border-2 flex items-center justify-center bg-[#f2ebd9] ${isActive ? 'speaker-glow border-[#cc5f68]' : 'border-[#4a392d]/35'}`} style={{ borderColor: isActive ? undefined : philosopher.accent_color }}><span className="font-heading text-base sm:text-xl md:text-3xl" style={{ color: philosopher.accent_color }}>{philosopher.name.charAt(0)}</span></span><span className="hidden sm:block font-heading text-sm md:text-base text-[#4a392d] whitespace-nowrap">{philosopher.name}</span><span className="hidden sm:block text-[9px] uppercase tracking-wider text-[#465f75]/55">Seat {index + 1}</span></button>; })}</div>;
+  return <div className="relative w-full max-w-[920px] mx-auto aspect-square min-h-[400px] md:min-h-[560px] flex items-center justify-center"><div className="absolute w-[48%] h-[34%] rounded-[50%] border-[10px] border-[#4a392d]/80 bg-[#6d4c37]/10 shadow-[inset_0_0_40px_rgba(74,57,45,0.2),0_8px_24px_rgba(74,57,45,0.2)]"><div className="absolute inset-3 rounded-[50%] border border-[#b89968]/50 flex flex-col items-center justify-center text-center"><span className="text-[9px] uppercase tracking-[0.2em] text-[#8b5254]">The cabinet</span><span className="font-heading text-lg md:text-2xl text-[#4a392d]">A dialectical spiral</span><span className="text-[10px] italic text-[#465f75]/60 mt-1 px-6 leading-snug">clockwise<br />sequential<br />unresolved</span></div></div>{latest && <div className="absolute z-20 w-[66%] max-w-[430px] left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"><div className="dark-academia-card p-5 text-center"><p className="text-[9px] uppercase tracking-[0.2em] text-[#8b5254]">Now at the table</p><p className="font-heading text-xl text-[#4a392d] mt-1 leading-tight">{latest.philosopher.full_name}</p><p className="text-[10px] uppercase tracking-wider text-[#465f75]/65 mt-1">Pass {latest.intervention.pass_number} · Seat {latest.intervention.seat_position + 1}</p><p className="text-[15px] leading-relaxed mt-3 max-h-[190px] md:max-h-[240px] overflow-y-auto custom-scroll text-left text-[#465f75]">{latest.intervention.response_text}</p><button className="btn-secondary !text-xs mt-3" onClick={onJumpToLatest}>Read in the deck</button></div></div>}<div className="absolute inset-[8%] rotation-arrow pointer-events-none"><div className="absolute top-0 left-1/2 -translate-x-1/2 text-[#8b5254]"><ArrowRight size={22} /></div></div>{philosophers.map((philosopher, index) => { const angle = (index / philosophers.length) * Math.PI * 2 - Math.PI / 2; const x = 50 + Math.cos(angle) * 37; const y = 50 + Math.sin(angle) * 37; const isActive = activeAgent === index; const hasSpoken = interventions.some((item) => item.pass_number === activePass + 1 && item.seat_position === index); return <button key={philosopher.slug} onClick={() => onSelect(philosopher)} title={philosopher.why_this_seat} aria-label={`Seat ${index + 1}: ${philosopher.full_name}`} className={`cabinet-seat absolute -translate-x-1/2 -translate-y-1/2 flex flex-col items-center gap-1 ${isActive ? 'cabinet-seat-active' : ''} ${hasSpoken ? 'cabinet-seat-spoken' : ''}`} style={{ left: `${x}%`, top: `${y}%` }}><span className={`w-11 h-11 sm:w-16 sm:h-16 md:w-20 md:h-20 rounded-full border-2 flex items-center justify-center bg-[#f2ebd9] ${isActive ? 'speaker-glow border-[#cc5f68]' : 'border-[#4a392d]/35'}`} style={{ borderColor: isActive ? undefined : philosopher.accent_color }}><span className="font-heading text-base sm:text-xl md:text-3xl" style={{ color: philosopher.accent_color }}>{philosopher.name.charAt(0)}</span></span><span className="hidden sm:block font-heading text-sm md:text-base text-[#4a392d] whitespace-nowrap">{philosopher.name}</span><span className="hidden sm:block text-[9px] uppercase tracking-wider text-[#465f75]/55">Seat {index + 1}</span></button>; })}</div>;
 }
 
 function SpiralView({ interventions, question, activePass, numPhilosophers }: { interventions: Intervention[]; question: string; activePass: number; numPhilosophers: number }) { const labels = ['The question', 'Problem map', 'Dialectical map', 'Spiral synthesis']; return <div className="space-y-2">{labels.map((label, index) => { const isVisible = index === 0 || interventions.length >= index * numPhilosophers; const text = index === 0 ? question : index === 1 ? 'First rotation chained: seat 1 opens, each later seat negates its immediate predecessor.' : index === 2 ? 'Second rotation continues across the boundary; each turn critiques PREV and hands a contradiction on.' : 'Reconstruction rotation: institutions, practices, collective power; final seat returns the question.'; return <div key={label} className={`relative pl-8 ${isVisible ? 'opacity-100' : 'opacity-35'} transition-opacity`}><div className={`absolute left-0 top-1 w-5 h-5 rounded-full border flex items-center justify-center text-[10px] ${index <= activePass + 1 ? 'bg-[#8b5254] text-[#f2ebd9] border-[#8b5254]' : 'border-[#4a392d]/30 text-[#4a392d]/50'}`}>{index}</div>{index < 3 && <div className="absolute left-[9px] top-6 h-8 border-l border-dashed border-[#b89968]" />}<p className="text-xs uppercase tracking-wider text-[#8b5254]">{label}</p><p className="text-sm italic text-[#465f75]/75 leading-snug mt-1">{text}</p></div>; })}</div>; }
@@ -1405,7 +1435,7 @@ function SettingsDrawer({ philosophers, activeSlugs, togglePhilosopher, settings
 }
 
 function DisplayTab({ display, onChange }: { display: AccessibilitySettings; onChange: (partial: Partial<AccessibilitySettings>) => void }) {
-  const [voices, setVoices] = useState<{ name: string; lang: string; localService: boolean; isDefault: boolean }[]>([]);
+  const [voices, setVoices] = useState<{ name: string; lang: string; localService: boolean; isDefault: boolean; voiceURI: string }[]>([]);
   useEffect(() => {
     if (!isTtsSupported()) return;
     const load = () => setVoices(listVoices());
@@ -1427,10 +1457,9 @@ function DisplayTab({ display, onChange }: { display: AccessibilitySettings; onC
     void ensureVoices().then(() => {
       const utter = new SpeechSynthesisUtterance('The cabinet is in session. Each voice passes its contradiction clockwise.');
       utter.rate = display.ttsRate;
-      const voice = defaultVoice();
+      const voice = resolveVoice(display.ttsVoiceURI);
       if (voice) {
         utter.voice = voice;
-        utter.lang = voice.lang;
       }
       utter.onend = () => setPreviewState('idle');
       utter.onerror = () => setPreviewState('idle');
@@ -1495,7 +1524,16 @@ function DisplayTab({ display, onChange }: { display: AccessibilitySettings; onC
       </div>
       <div>
         <p className="font-heading text-sm uppercase tracking-[0.16em] text-[#4a392d] mb-1">Read aloud (free)</p>
-        <p className="text-xs italic text-[#465f75]/70 mb-3">Uses your browser's built-in speech — no key, no cost, nothing leaves this page. It always speaks in the listener's own device-default voice, so every visitor hears their own.</p>
+        <p className="text-xs italic text-[#465f75]/70 mb-3">Uses your browser's built-in speech — no key, no cost, nothing leaves this page. Device default suits most visitors; if it sounds wrong on your device (some iPads pick a poor default), choose a voice below and it sticks.</p>
+        <div className="flex items-center justify-between mb-1">
+          <label htmlFor="tts-voice" className="text-sm text-[#4a392d]">Voice</label>
+        </div>
+        <select id="tts-voice" value={display.ttsVoiceURI ?? ''} onChange={(e) => onChange({ ttsVoiceURI: e.target.value || null })} disabled={!isTtsSupported() || !voices.length} className="w-full border border-[#4a392d]/25 bg-[#f2ebd9] text-sm text-[#4a392d] p-2 mb-3">
+          <option value="">Device default</option>
+          {voices.map((v) => (
+            <option key={v.voiceURI} value={v.voiceURI}>{v.name} · {v.lang}{v.localService ? ' · on-device' : ''}{v.isDefault ? ' · default' : ''}</option>
+          ))}
+        </select>
         <div className="flex items-center justify-between mb-1">
           <label htmlFor="tts-rate" className="text-sm text-[#4a392d]">Speaking rate</label>
           <span className="text-xs text-[#465f75]/60">{display.ttsRate.toFixed(2)}×</span>
@@ -1539,6 +1577,7 @@ function InterventionModal({ intervention, philosopher, onClose, ttsSupported, s
 
 function StyleEssenceDisplay({ style }: { style: StyleEssence }) { return <div className="grid md:grid-cols-2 gap-5"><div className="border-t border-[#4a392d]/15 pt-3"><p className="text-xs uppercase tracking-widest text-[#8b5254] mb-1">Style DNA</p><p className="text-[15px] leading-relaxed text-[#465f75]/85">{style.style_dna}</p></div><div className="border-t border-[#4a392d]/15 pt-3"><p className="text-xs uppercase tracking-widest text-[#8b5254] mb-1">Characteristic Movement</p><p className="text-[15px] leading-relaxed text-[#465f75]/85">{style.characteristic_movement}</p></div></div>; }
 function ProfileModal({ philosopher, onClose }: { philosopher: Philosopher; onClose: () => void }) {
+  const [tab, setTab] = useState<'thought' | 'voice' | 'works' | 'cabinet'>('thought');
   const profile = philosopher.profile;
   const style = philosopher.style_essence;
   const baseKeys = ['identity', 'ontology', 'epistemology', 'conception_of_human_subject', 'conception_of_society', 'conception_of_power', 'conception_of_freedom', 'theory_of_social_change', 'conception_of_technology', 'rhetorical_style', 'what_he_sees_well', 'what_he_overlooks'];
@@ -1560,7 +1599,13 @@ function ProfileModal({ philosopher, onClose }: { philosopher: Philosopher; onCl
     if (consumed.has(key) || hiddenKeys.has(key)) continue;
     rows.push({ label: key.replace(/_/g, ' '), value: profile[key] });
   }
-  return <div className="fixed inset-0 z-50 bg-[#4a392d]/35 backdrop-blur-sm flex items-center justify-center p-4" onClick={onClose}><div className="dark-academia-card max-w-4xl max-h-[90vh] overflow-y-auto custom-scroll p-6 md:p-8" onClick={(event) => event.stopPropagation()}><div className="flex justify-between gap-4 mb-6"><div><p className="pass-indicator text-[#8b5254]">Seat {philosopher.seat_order + 1} · intellectual profile</p><h2 className="text-4xl">{philosopher.full_name}</h2><p className="italic text-[#465f75]/70">{philosopher.birth_year} — {philosopher.death_year}</p></div><button className="btn-secondary !px-3 h-fit" onClick={onClose}><X size={17} /></button></div><div className="flex flex-wrap gap-2 mb-6">{philosopher.analytical_center.map((item) => <span key={item} className="citation-badge">{item}</span>)}</div><div className="grid md:grid-cols-2 gap-5"><StyleEssenceDisplay style={style} /></div><div className="grid md:grid-cols-2 gap-5 mt-5">{rows.map((row) => <div key={row.label} className="border-t border-[#4a392d]/15 pt-3"><p className="text-xs uppercase tracking-widest text-[#8b5254] mb-1">{row.label}</p><p className="text-[15px] leading-relaxed text-[#465f75]/85">{Array.isArray(row.value) ? row.value.join(' · ') : String(row.value ?? '')}</p></div>)}</div></div></div>;
+  const tabs = [
+    { id: 'thought', label: 'Thought' },
+    { id: 'voice', label: 'Voice' },
+    { id: 'works', label: 'Works' },
+    { id: 'cabinet', label: 'In this cabinet' },
+  ] as const;
+  return <div className="fixed inset-0 z-50 bg-[#4a392d]/35 backdrop-blur-sm flex items-center justify-center p-4" onClick={onClose}><div role="dialog" aria-modal="true" aria-label={`Profile of ${philosopher.full_name}`} className="dark-academia-card max-w-4xl max-h-[90vh] overflow-y-auto custom-scroll p-6 md:p-8" onClick={(event) => event.stopPropagation()}><div className="flex justify-between gap-4 mb-4"><div><p className="pass-indicator text-[#8b5254]">Seat {philosopher.seat_order + 1} · intellectual profile</p><h2 className="text-4xl">{philosopher.full_name}</h2><p className="italic text-[#465f75]/70">{philosopher.birth_year} — {philosopher.death_year}</p></div><button className="btn-secondary !px-3 h-fit" onClick={onClose} aria-label="Close profile"><X size={17} /></button></div><p className="text-[15px] leading-relaxed text-[#465f75] mb-4">{philosopher.biography}</p><div className="flex flex-wrap gap-2 mb-5">{philosopher.analytical_center.map((item) => <span key={item} className="citation-badge">{item}</span>)}</div><div className="flex gap-2 mb-5" role="tablist" aria-label="Profile sections">{tabs.map((t) => <button key={t.id} role="tab" aria-selected={tab === t.id} onClick={() => setTab(t.id)} className={`btn-secondary !text-xs ${tab === t.id ? '!border-[#8b5254] !text-[#8b5254]' : ''}`}>{t.label}</button>)}</div>{tab === 'thought' && <div className="grid md:grid-cols-2 gap-5">{rows.map((row) => <div key={row.label} className="border-t border-[#4a392d]/15 pt-3"><p className="text-xs uppercase tracking-widest text-[#8b5254] mb-1">{row.label}</p><p className="text-[15px] leading-relaxed text-[#465f75]/85">{Array.isArray(row.value) ? row.value.join(' · ') : String(row.value ?? '')}</p></div>)}</div>}{tab === 'voice' && <div className="grid md:grid-cols-2 gap-5"><StyleEssenceDisplay style={style} /></div>}{tab === 'works' && <ul className="space-y-3">{philosopher.key_works.map((work) => <li key={work.title} className="border-t border-[#4a392d]/15 pt-3"><p className="font-heading text-lg text-[#4a392d]">{work.title} <span className="text-sm italic text-[#465f75]/65">· {work.year}</span></p><p className="text-[15px] leading-relaxed text-[#465f75]/85">{work.note}</p></li>)}</ul>}{tab === 'cabinet' && <div className="border-t border-[#4a392d]/15 pt-3"><p className="text-xs uppercase tracking-widest text-[#8b5254] mb-1">Why this seat</p><p className="text-[15px] leading-relaxed text-[#465f75]/85">{philosopher.why_this_seat}</p><p className="text-sm italic text-[#465f75]/65 mt-3">Seat {philosopher.seat_order + 1} of {DEFAULT_SEATING_ORDER.length} · answers its predecessor, hands a contradiction on.</p></div>}</div></div>;
 }
 
 export default App;

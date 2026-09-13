@@ -100,20 +100,20 @@ The drag-drop → toggle change left `App.tsx` broken.
       in Phase 6.
 - [x] Make Supabase optional (`src/lib/supabase.ts` returns `null` when unset).
 
-## Phase 1 — Per-philosopher files with style essences
+## Phase 1 — Per-philosopher files with style essences  ✅ (shipped; boxes ticked Sep 2026)
 
-- [ ] Add `style_essence` to the `Philosopher` type:
+- [x] Add `style_essence` to the `Philosopher` type:
       `style_dna`, `core_mechanisms`, `cda_reader_effects`, `generation_rules[]`,
       `prompt`, `intensity {low, medium, high}`, `characteristic_movement`.
-- [ ] Create `src/philosophers/spinoza.ts … fisher.ts`; move each profile verbatim
+- [x] Create `src/philosophers/spinoza.ts … fisher.ts`; move each profile verbatim
       (no fields deleted); add the essence from the Forensic Generative Model doc.
-- [ ] `src/philosophers/shared/universal-mechanisms.ts` (cross-author CDA table,
+- [x] `src/philosophers/shared/universal-mechanisms.ts` (cross-author CDA table,
       AVOID CARICATURE, GENERATIVE ARGUMENT MODEL, FINAL STYLE CONTROL) and
       `shared/anti-waffle.ts` (NOT NEUTRAL, no filler, no vague language,
       anti-summary, every turn must add).
-- [ ] `src/philosophers/index.ts` exports `PHILOSOPHER_DATA` sorted by birth year and
+- [x] `src/philosophers/index.ts` exports `PHILOSOPHER_DATA` sorted by birth year and
       `DEFAULT_SEATING_ORDER` derived from it. Delete `src/data/philosophers.ts`.
-- [ ] ProfileModal shows Style DNA + characteristic movement.
+- [x] ProfileModal shows Style DNA + characteristic movement.
 
 ## Phase 2 — Gemini + dialectical engine (replaces `makeMockIntervention`)
 
@@ -157,9 +157,13 @@ pinned models (`DEEPINFRA_MODEL`, `TOGETHER_MODEL` — user-supplied IDs, verify
 Token discipline (voices never trimmed): only the active speaker's persona is sent
 per turn. Stock phrases live in the per-turn message (relocated from the persona
 for salience — same ~150 tokens, zero net cost), never the full set of 90. Each
-variant may be used once per whole session: spent variants ride in the prompt and
-are tracked post-turn by fragment match. Four supplied variants were reworded to
-respect the banned-phrase list (Marx/Hegel/Weil/Bookchin).
+variant may be used once per whole session: only UNSPENT variants ride in the
+prompt (at most one per turn, often none), and spent tracking matches on the
+variant's six-word opening signature plus the old full-fragment net — full-string
+matching alone never fired on paraphrase, which was the "To be sure" loop.
+Stock variants address PREV as YOU (second person, conversational); four
+supplied variants were reworded to respect the banned-phrase list
+(Marx/Hegel/Weil/Bookchin).
 per turn; `efficient` economy caps PREV feedback; instruction boilerplate deduped;
 seat count is the big lever (5 seats ≈ 15 turns ≈ half the tokens) — the welcome
 modal and Cabinet tab say so.
@@ -188,8 +192,12 @@ with it instead — every seat speaks once per pass and gets critiqued.
 5. Grounding block, only when the experimental `grounding` toggle is on:
    searched passages from the speaker's own indexed works first
    (`rag-ground.ts`: lazy per-thinker shard, family-name matched, 4 passages
-   on Groq/shared for TPM headroom else 6), live `extract.js` page fetching
-   as fallback, cited by footnote number. Failures carry machine-readable
+   on Groq/shared for TPM headroom else 6, queried in the speaker's own words —
+   question plus own prior lines, never PREV's text, which pulled random
+   cross-framework vocabulary), live `extract.js` page fetching
+   as fallback, cited by footnote number. Turns must borrow visibly: at least
+   two short verbatim loans (≤6 words, 'single' quotes — bare double quotes
+   would corrupt the JSON envelope, which is why quoting never happened). Failures carry machine-readable
    reasons (`unsupported-source` / `fetch-failed` / `no-match`) surfaced
    per-turn in the modal — never a generic nothing.
 4. System prompt = identity + profile + style essence (at chosen intensity) +
@@ -226,7 +234,11 @@ passes 1–2, the note card where it spoke, then pass 3 — and the export
 interleaves the note the same way. The note rides in the pass-3 survey
 (listed first, as `Notes from the margins`) rather than an appended block;
 turn instructions name it explicitly (`marginsNote`, plus `marginsFirst` for
-the opening seat, which must name the writer). Per-turn `noteMap` receipts +
+the opening seat, which must name the writer). The coda prompt fixes attitude
+(impatience with abstraction, hunger for the concrete) and form (Thesis Eleven
+open, concrete demands) but orders variety — one stinging absence per sitting,
+different people and first steps each time — so notes don't repeat across
+sessions. Per-turn `noteMap` receipts +
 console log record which prompts carried it; deck badges read "saw the
 margins note" (attached ≠ answered). Own visible status
 (`codaState`: writing / failed + visible reason + retry + console diagnostics);
@@ -270,9 +282,11 @@ dyslexia-friendly), high contrast, reduce motion (honour `prefers-reduced-motion
 parchment / dim / dark theme — applied as CSS custom properties + data attributes on `<html>`.
 Settings → *Display* tab (Key / Cabinet / Display). Audit: focus rings, `aria-live` on reading
 status + "currently speaking", `aria-expanded` on drawers, Esc on modals, `aria-label` on
-seats. Free TTS via browser SpeechSynthesis: per-turn Listen, single
-auto-picked English voice, rate control, voice inventory listed read-only in Settings so the
-user can report which voice sounds best.
+seats. Free TTS via browser SpeechSynthesis: per-turn Listen, explicit voice resolution
+(visitor pick persisted as `ttsVoiceURI`, else browser-default English, else on-device
+English — never `utter.lang` overrides, which make Safari switch voices), rate
+control, voice picker + preview in Settings (the old default-only resolution picked
+poor voices on some iPads).
 
 ## Phase 5 — RAG (v1 lexical live; vectors deferred)
 Superseded plan preserved for context: migration to `vector(768)` with Gemini
@@ -292,7 +306,11 @@ magnum opus, 2) the last writing, 3) the next most important or late work.
 The manifest keeps wider reading links. Status Sep 2026: search actually
 covers every successfully indexed work (curation priority is latest +
 magnum-opus first); the 3-cap stays as the scale lever if/when the index
-outgrows lazy per-thinker fetches — enforce then, not now.
+ outgrows lazy per-thinker fetches — enforce then, not now.
+Retrieval is lexical over English stems. The Russian 1925 Tektology was removed
+Sep 2026 (English queries could never match it) and replaced with an English
+Tektology OCR (obscure 2025 re-upload, edition unconfirmed, flagged honestly) —
+organisation queries now hit Tektology first, verified live.
 RAG v1 (lexical, Sep 2026 test PASSES on Bookchin): `data/sources.json`
 manifest with explicit rights gate (importer refuses unapproved sources
 before fetching); `scripts/rag-ingest.mjs` (TAL `.html` full-text, generic
@@ -309,6 +327,15 @@ proves lexical fails. Owner approved Bookchin TAL + bulk automation across
 the manifest AFTER the test go — failures skip, never force. Bulk run Sep
 2026: 75 sources attempted, 37 works indexed, 6,778 passages (Capital I–III
 full OCR, State & Rev + Manifesto via chapter-following, Ghosts full OCR),
+plus Sep 2026 owner batch: Lenin WITBD (198) + Imperialism & the Split in
+Socialism (21), Hegel Phenomenology (855) + Lectures on Right 1819–20 (511),
+Fisher Realismo capitalista ES (121) + Lo raro y lo espeluznante ES (100),
+Deleuze OCR batch (Thousand Plateaus 933, Bergsonism 149, Logique du sens FR
+430, Nietzsche & Philosophy 331, Postscript OCR 7 as ingest companion to the
+TAL entry), Bogdanov Religious→Scientific Monism (23) + English Tektology OCR
+(481; replaced the Russian OCR, which English queries could never match) —
+all via archive.org `/stream/…_djvu.txt` (HTML+`<pre>`, indexable; `/download/`
+raw text extracts zero paragraphs), total 11,022 passages,
 per-author shards
 under public/rag/ (lazy-fetched per thinker, cached; static, so Netlify needs
 nothing new). Wired behind the existing grounding toggle: desk + turns search
@@ -323,10 +350,12 @@ refuses stale contracts. Deferred, not forgotten: mechanical echo-check badges, 
 enforcement (see below).
 Word budgets: per-turn HARD ceilings (~100 words normal / ~280 long-form,
 opening 60/160) live in prompts but models routinely overshoot (~150–200
-observed on DeepInfra). No enforcement exists; open question is whether to
-enforce (truncate? repair-retry? tighter budgets?) or accept overshoot as
-the cost of complete thoughts. Deferred pending owner call.
+observed on DeepInfra). Owner call Sep 2026: ACCEPT overshoot as the cost of
+complete thoughts — no truncation, no repair-retry. Revisit only if turns
+routinely exceed ~250 words normal / ~400 long-form.
 
-## Phase 6 — Richer philosopher information
-Per file: `biography`, `key_works`, `why_this_seat` (hand-off line). Profile modal
-tabs: Thought / Voice / Works / In this cabinet. Seat hover shows the hand-off line.
+## Phase 6 — Richer philosopher information  ✅ (shipped Sep 2026)
+Per file: `biography` (display only, never prompt input), `key_works[]`
+(title/year/note), `why_this_seat` (hand-off line). Profile modal
+tabs: Thought / Voice / Works / In this cabinet (biography + analytical
+centre stay above the tabs). Seat hover shows the hand-off line via `title`.

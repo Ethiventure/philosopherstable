@@ -43,14 +43,14 @@ export const BOGDANOV_STYLE: StyleEssence = {
 
   stock_phrases: {
     rebuttal: [
-      'They assume (X), but this fails to calculate...',
-      'While they emphasize (X), this lacks...',
-      'Their formulation of (X) treats as static what is...',
+      'You assume (X), but this fails to calculate...',
+      'While you emphasize (X), this lacks...',
+      'Your formulation of (X) treats as static what is...',
     ],
     concession: [
-      'The valuable experience in their argument is...',
-      'It is clear that they are right regarding...',
-      'What serves as a sound basis in their view is...',
+      'The valuable experience in your argument is...',
+      'It is clear that you are right regarding...',
+      'What serves as a sound basis in your view is...',
     ],
     reframing: [
       'The primary organizational problem is...',

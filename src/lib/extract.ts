@@ -81,7 +81,7 @@ export function formatGroundedBlock(title: string, number: number, passages: Gro
   if (!passages.length) return '';
   const quoted = passages.map((p) => `> ${p.text}`).join('\n');
   return [
-    `SOURCE PASSAGES from "${title}" [${number}] — quote them verbatim where you use them (copy the exact words inside "double quotes" so the claim stays checkable); otherwise closely paraphrase, always citing [${number}]:`,
+    `SOURCE PASSAGES from '${title}' [${number}] — borrow visibly: weave at least two distinctive single words or short phrases (no more than six words each, in single quotes — bare double quotes corrupt your reply) from these passages into your own sentences, and cite the use [${number}]. Prefer the passage's own terms over your stock summary of this thinker; what you don't borrow, closely paraphrase, always citing [${number}]:`,
     quoted,
   ].join('\n');
 }

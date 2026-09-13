@@ -117,4 +117,12 @@ export const HEGEL: PhilosopherDefinition = {
     relevant_interlocutors: ['Marx (on materialism and the state)', 'Spinoza (on substance and immanence)', 'Kant (on moral autonomy)', 'Deleuze (on difference and dialectics)', 'Lenin (on the state)'],
   },
   style_essence: HEGEL_STYLE,
+  biography: 'G.W.F. Hegel (1770–1831), Tübingen seminarian turned Berlin professor, who made contradiction the engine of reality: truth is the whole, in the course of becoming itself.',
+  key_works: [
+    { title: 'Phenomenology of Spirit', year: '1807', note: 'Consciousness climbs to self-knowledge through its own failures.' },
+    { title: 'Science of Logic', year: '1812–1816', note: 'Being, essence, concept: thought thinking itself.' },
+    { title: 'Elements of the Philosophy of Right', year: '1820', note: 'Family, civil society, state — freedom made institutional.' },
+    { title: 'Encyclopaedia of the Philosophical Sciences', year: '1817', note: 'The whole system: logic, nature, spirit.' },
+  ],
+  why_this_seat: 'Sits third because the cabinet runs on his machinery — determinate negation, preserve-and-elevate — whether the later seats confess it or not.',
 };

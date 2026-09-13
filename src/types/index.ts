@@ -55,6 +55,12 @@ export interface Philosopher {
   profile: Record<string, unknown>;
   analytical_center: string[];
   style_essence: StyleEssence;
+  /** Two-sentence life for the profile modal (display only — never prompt input). */
+  biography: string;
+  /** Shelf for the Works tab (display only — never prompt input). */
+  key_works: { title: string; year: string; note: string }[];
+  /** Hand-off line: why this seat sits here (modal tab + seat hover). */
+  why_this_seat: string;
   created_at: string;
 }
 
@@ -247,6 +253,8 @@ export interface AccessibilitySettings {
   theme: DisplayTheme;
   font: DisplayFont;
   ttsRate: number; // 0.8–1.3
+  /** Persisted voice pick (SpeechSynthesisVoice.voiceURI). Null = device default. */
+  ttsVoiceURI: string | null;
 }
 
 export const DEFAULT_ACCESSIBILITY: AccessibilitySettings = {
@@ -259,4 +267,5 @@ export const DEFAULT_ACCESSIBILITY: AccessibilitySettings = {
   theme: 'parchment',
   font: 'academia',
   ttsRate: 1,
+  ttsVoiceURI: null,
 };

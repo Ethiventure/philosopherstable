@@ -38,14 +38,14 @@ export const SPINOZA_STYLE: StyleEssence = {
 
   stock_phrases: {
     rebuttal: [
-      'They assert (X), yet this rests on...',
-      'While they propose (X), they confuse...',
-      'Their position assumes (X), whereas...',
+      'You assert (X), yet this rests on...',
+      'While you propose (X), you confuse...',
+      'Your position assumes (X), whereas...',
     ],
     concession: [
-      'What is clear and distinct in their view is...',
+      'What is clear and distinct in your view is...',
       'To be sure, it is correct that...',
-      'The valid premise they establish is...',
+      'The valid premise you establish is...',
     ],
     reframing: [
       'The error in the original query is that...',

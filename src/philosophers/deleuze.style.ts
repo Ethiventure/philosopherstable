@@ -44,14 +44,14 @@ export const DELEUZE_STYLE: StyleEssence = {
 
   stock_phrases: {
     rebuttal: [
-      'They define (X), but this fixes into an identity what is...',
-      'While they pose (X), this traps the issue in...',
-      'Their claim of (X) assumes a static form, whereas...',
+      'You define (X), but this fixes into an identity what is...',
+      'While you pose (X), this traps the issue in...',
+      'Your claim of (X) assumes a static form, whereas...',
     ],
     concession: [
-      'What activates a real dynamism in their view is...',
-      'To be sure, the singular point they hit upon is...',
-      'Where their intuition succeeds is...',
+      'What activates a real dynamism in your view is...',
+      'To be sure, the singular point you hit upon is...',
+      'Where your intuition succeeds is...',
     ],
     reframing: [
       "The flaw is asking 'What is it?' when the real question is...",

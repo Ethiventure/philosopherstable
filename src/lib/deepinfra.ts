@@ -3,10 +3,10 @@ import { LlmError, REPAIR_SUFFIX, parseTurnOutput, retryAfterMs, type TurnOutput
 /**
  * DeepInfra direct provider (visitor's own key).
  * OpenAI-compatible `chat/completions` at api.deepinfra.com/v1/openai.
- * Pinned model: meta-llama/Llama-3.3-70B-Instruct-Turbo (user-supplied ID —
- * verify at https://deepinfra.com/models if calls 404).
- * No response_format (unverified on this host): prompt-instructed JSON plus
- * salvage, same lesson as OpenRouter free.
+ * Pinned model: meta-llama/Llama-3.3-70B-Instruct-Turbo (verified in the
+ * DeepInfra catalog Sep 2026 — public, JSON mode supported — and working
+ * end-to-end on a visitor key). Turns try `response_format: json_object`
+ * first, plain fallback on 400.
  */
 
 export const DEEPINFRA_MODEL = 'meta-llama/Llama-3.3-70B-Instruct-Turbo';

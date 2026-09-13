@@ -1,16 +1,16 @@
-# Graph Report - philosopherstable  (2026-09-12)
+# Graph Report - philosopherstable  (2026-09-13)
 
 ## Corpus Check
-- 64 files · ~56,866 words
+- 94 files · ~3,705,095 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 414 nodes · 489 edges · 49 communities (29 shown, 17 thin omitted)
-- Extraction: 100% EXTRACTED · 0% INFERRED · 0% AMBIGUOUS
+- 569 nodes · 752 edges · 57 communities (37 shown, 17 thin omitted)
+- Extraction: 100% EXTRACTED · 0% INFERRED · 0% AMBIGUOUS · INFERRED: 3 edges (avg confidence: 0.85)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `7e2affa7`
+- Built from commit: `8634203b`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -61,33 +61,47 @@
 - opencode.json
 - verify.ts
 - dev-keepalive.sh
+- rag-search.ts
+- service-chat.ts
+- porter.ts
+- scripts
+- rag-ingest.mjs
+- rag-inspect.mjs
+- rag-manifest.mjs
+- manifest.json
 
 ## God Nodes (most connected - your core abstractions)
 1. `compilerOptions` - 18 edges
 2. `compilerOptions` - 14 edges
-3. `The Dialectical Cabinet — Implementation Plan` - 9 edges
-4. `scripts` - 8 edges
-5. `Decisions` - 8 edges
-6. `attemptModel()` - 7 edges
-7. `speakItemChunks()` - 6 edges
-8. `tryModel()` - 5 edges
-9. `handler()` - 5 edges
-10. `handler()` - 5 edges
+3. `scripts` - 13 edges
+4. `ingestOne()` - 10 edges
+5. `searchIndex()` - 10 edges
+6. `stem()` - 9 edges
+7. `wordCount()` - 9 edges
+8. `The Dialectical Cabinet — Implementation Plan` - 9 edges
+9. `prepareIndex()` - 8 edges
+10. `Decisions` - 8 edges
 
 ## Surprising Connections (you probably didn't know these)
-- `renderPersona()` --calls--> `renderAntiWaffle()`  [EXTRACTED]
-  src/philosophers/index.ts → src/philosophers/shared/anti-waffle.ts
-- `renderPersona()` --calls--> `renderUniversalMechanisms()`  [EXTRACTED]
-  src/philosophers/index.ts → src/philosophers/shared/universal-mechanisms.ts
+- `extractReadable()` --calls--> `wordCount()`  [EXTRACTED]
+  scripts/rag-ingest.mjs → src/lib/rag-text.ts
+- `ingestOne()` --calls--> `wordCount()`  [EXTRACTED]
+  scripts/rag-ingest.mjs → src/lib/rag-text.ts
+- `loadIndex()` --calls--> `joinShard()`  [EXTRACTED]
+  scripts/rag-search.mjs → src/lib/rag-shard.ts
+- `splitLongParagraph()` --calls--> `wordCount()`  [EXTRACTED]
+  scripts/rag-chunk.mjs → src/lib/rag-text.ts
+- `chunkParagraphs()` --calls--> `wordCount()`  [EXTRACTED]
+  scripts/rag-chunk.mjs → src/lib/rag-text.ts
 
 ## Import Cycles
 - None detected.
 
-## Communities (49 total, 17 thin omitted)
+## Communities (57 total, 17 thin omitted)
 
 ### Community 0 - "package.json"
-Cohesion: 0.06
-Nodes (36): dependencies, lucide-react, react, react-dom, @supabase/supabase-js, name, private, scripts (+28 more)
+Cohesion: 0.07
+Nodes (28): dependencies, lucide-react, react, react-dom, @supabase/supabase-js, name, private, type (+20 more)
 
 ### Community 1 - "check-links.mjs"
 Cohesion: 0.20
@@ -98,8 +112,8 @@ Cohesion: 0.08
 Nodes (25): AccessibilitySettings, CHRONOLOGICAL_ORDER, Citation, CorpusChunk, CorpusPassage, CorpusSource, DEFAULT_ACCESSIBILITY, DEFAULT_SEATING_ORDER (+17 more)
 
 ### Community 3 - "App.tsx"
-Cohesion: 0.11
-Nodes (6): lucide-react, react, App(), getReadMoreSource(), ReadMore(), toIntervention()
+Cohesion: 0.08
+Nodes (10): lucide-react, react, App(), DeckEntry, getReadMoreSource(), ReadMore(), toIntervention(), DisplayItem (+2 more)
 
 ### Community 4 - "compilerOptions"
 Cohesion: 0.10
@@ -107,7 +121,7 @@ Nodes (19): compilerOptions, allowImportingTsExtensions, baseUrl, isolatedModule
 
 ### Community 5 - "openrouter.ts"
 Cohesion: 0.21
-Nodes (17): attemptModel(), extractDetail(), FREE_MODEL_CYCLE, FREE_ROUTER_FALLBACK, generateTurnOpenRouter(), isAvailabilityDetail(), isFailFast(), loadLastGood() (+9 more)
+Nodes (19): attemptModel(), extractDetail(), fetchModelText(), FREE_MODEL_CYCLE, FREE_ROUTER_FALLBACK, generateTextOpenRouter(), generateTurnOpenRouter(), isAvailabilityDetail() (+11 more)
 
 ### Community 6 - "compilerOptions"
 Cohesion: 0.12
@@ -126,8 +140,8 @@ Cohesion: 0.24
 Nodes (9): CabinetSettings, clearApiKey(), DEFAULT_SETTINGS, GROQ_MODELS, GroqModel, LlmProvider, loadSettings(), saveSettings() (+1 more)
 
 ### Community 10 - "tts.ts"
-Cohesion: 0.23
-Nodes (13): chunkText(), createTtsController(), finish(), speakItemChunks(), defaultVoice(), ensureVoices(), isTtsSupported(), listVoices() (+5 more)
+Cohesion: 0.22
+Nodes (14): chunkText(), createTtsController(), finish(), speakItemChunks(), defaultVoice(), ensureVoices(), isTtsSupported(), listVoices() (+6 more)
 
 ### Community 11 - "cabinet.js"
 Cohesion: 0.30
@@ -138,16 +152,16 @@ Cohesion: 0.15
 Nodes (8): CODA_REPAIR_SUFFIX, CODA_SYSTEM, MAX_OUTPUT_TOKENS, STRUCTURED_OUTPUT_HINT, TurnInstructionArgs, TurnKind, UserMessageArgs, WORD_BUDGETS
 
 ### Community 13 - "groq.ts"
-Cohesion: 0.39
-Nodes (8): extractDetail(), generateTurnGroq(), GROQ_MAX_TOKENS, groqError(), GroqTurnArgs, sleep(), stripFences(), testGroqKey()
+Cohesion: 0.29
+Nodes (11): extractDetail(), generateTextGroq(), generateTurnGroq(), GROQ_MAX_TOKENS, groqError(), GroqTextArgs, GroqTurnArgs, postGroq() (+3 more)
 
 ### Community 14 - "preferences.ts"
 Cohesion: 0.32
 Nodes (5): clamp(), DEFAULT_DISPLAY, DisplayPreferences, loadDisplay(), prefersReducedMotion()
 
 ### Community 15 - "philosophers/index.ts"
-Cohesion: 0.32
-Nodes (7): DEFAULT_SEATING_ORDER, DEFINITIONS, PHILOSOPHER_BY_SLUG, PHILOSOPHER_DATA, renderPersona(), renderAntiWaffle(), renderUniversalMechanisms()
+Cohesion: 0.26
+Nodes (10): DEFAULT_SEATING_ORDER, DEFINITIONS, PHILOSOPHER_BY_SLUG, PHILOSOPHER_DATA, renderPersona(), renderAntiWaffle(), LOW_OVERRIDE, LOW_PLAIN_RULES (+2 more)
 
 ### Community 16 - "lib/prompts.ts"
 Cohesion: 0.52
@@ -166,16 +180,16 @@ Cohesion: 0.33
 Nodes (5): For the curious, Quotas (the honest version), Run it yourself (developers), The Dialectical Cabinet, Try it
 
 ### Community 20 - "shared.ts"
-Cohesion: 0.50
-Nodes (4): generateTurnShared(), SHARED_MAX_TOKENS, SharedTurnArgs, stripFences()
+Cohesion: 0.43
+Nodes (6): generateTextShared(), generateTurnShared(), postShared(), SHARED_MAX_TOKENS, SharedTurnArgs, stripFences()
 
 ### Community 22 - "deepinfra.ts"
-Cohesion: 0.33
-Nodes (9): DEEPINFRA_MAX_TOKENS, DEEPINFRA_MODEL, deepInfraError(), DeepInfraTurnArgs, extractDetail(), generateTurnDeepInfra(), sleep(), stripFences() (+1 more)
+Cohesion: 0.26
+Nodes (12): DEEPINFRA_MAX_TOKENS, DEEPINFRA_MODEL, deepInfraError(), DeepInfraPostArgs, DeepInfraTurnArgs, extractDetail(), generateTextDeepInfra(), generateTurnDeepInfra() (+4 more)
 
 ### Community 23 - "together.ts"
-Cohesion: 0.33
-Nodes (9): extractDetail(), generateTurnTogether(), sleep(), stripFences(), testTogetherKey(), TOGETHER_MAX_TOKENS, TOGETHER_MODEL, togetherError() (+1 more)
+Cohesion: 0.29
+Nodes (11): extractDetail(), generateTextTogether(), generateTurnTogether(), postTogether(), sleep(), stripFences(), testTogetherKey(), TOGETHER_MAX_TOKENS (+3 more)
 
 ### Community 24 - "extract.js"
 Cohesion: 0.43
@@ -201,25 +215,57 @@ Nodes (3): Models tried, Pending verification (user fetching keys), Verdicts
 Cohesion: 0.60
 Nodes (4): extractQuotes(), normalise(), QuoteCheck, verifyQuotes()
 
+### Community 49 - "rag-search.ts"
+Cohesion: 0.06
+Nodes (47): CHUNK_SOFT_MAX, CHUNK_SOFT_MIN, CHUNK_TARGET_WORDS, chunkParagraphs(), splitLongParagraph(), byCategory, failures, index (+39 more)
+
+### Community 50 - "service-chat.ts"
+Cohesion: 0.25
+Nodes (4): SERVICE_LIMIT_MESSAGE, SERVICE_MAX_QUESTIONS, ServiceHistoryItem, ServiceUserMessageArgs
+
+### Community 51 - "porter.ts"
+Cohesion: 0.30
+Nodes (14): endsCvc(), endsDouble(), hasVowel(), isConsonant(), measure(), stem(), step1(), step1b() (+6 more)
+
+### Community 52 - "scripts"
+Cohesion: 0.15
+Nodes (13): scripts, build, check-links, check-links:fix, dev, lint, preview, rag:eval (+5 more)
+
+### Community 53 - "rag-ingest.mjs"
+Cohesion: 0.19
+Nodes (19): authorSlug(), DB_PATH, exportJson(), extractReadable(), fail(), fetchText(), ingestOne(), main() (+11 more)
+
+### Community 54 - "rag-inspect.mjs"
+Cohesion: 0.22
+Nodes (7): args, db, full, id, pid, sections, work
+
+### Community 55 - "rag-manifest.mjs"
+Cohesion: 0.22
+Nodes (7): APPROVE_ALL, blocks, byId, CORPUS, MANIFEST, SKIP_IDS, src
+
+### Community 56 - "manifest.json"
+Cohesion: 0.29
+Nodes (6): authors, chunker_version, exported_at, schema_version, total_passages, version
+
 ## Knowledge Gaps
-- **194 isolated node(s):** `$schema`, `plugin`, `DEFAULT_MODELS`, `usageDay`, `perIp` (+189 more)
-  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 235 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
+- **262 isolated node(s):** `$schema`, `plugin`, `DEFAULT_MODELS`, `usageDay`, `perIp` (+257 more)
+  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 312 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
 - **17 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
 - **Why does `devDependencies` connect `devDependencies` to `package.json`?**
-  _High betweenness centrality (0.011) - this node is a cross-community bridge._
-- **Why does `react` connect `App.tsx` to `package.json`?**
   _High betweenness centrality (0.007) - this node is a cross-community bridge._
-- **Why does `lucide-react` connect `App.tsx` to `package.json`?**
+- **Why does `scripts` connect `scripts` to `package.json`?**
   _High betweenness centrality (0.006) - this node is a cross-community bridge._
+- **Why does `react` connect `App.tsx` to `package.json`?**
+  _High betweenness centrality (0.005) - this node is a cross-community bridge._
 - **What connects `$schema`, `plugin`, `DEFAULT_MODELS` to the rest of the system?**
-  _194 weakly-connected nodes found - possible documentation gaps or missing edges._
+  _262 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `package.json` be split into smaller, more focused modules?**
-  _Cohesion score 0.05641025641025641 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.07258064516129033 - nodes in this community are weakly interconnected._
 - **Should `types/index.ts` be split into smaller, more focused modules?**
   _Cohesion score 0.07692307692307693 - nodes in this community are weakly interconnected._
 - **Should `App.tsx` be split into smaller, more focused modules?**
-  _Cohesion score 0.10822510822510822 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.08465608465608465 - nodes in this community are weakly interconnected._

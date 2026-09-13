@@ -119,4 +119,13 @@ export const LENIN: PhilosopherDefinition = {
     relevant_interlocutors: ['Marx (on the state and revolution)', 'Bogdanov (on organisation and philosophy)', 'Bookchin (on the state and decentralisation)', 'Hegel (on dialectics)', 'Spinoza (on collective power)', 'Fisher (on capitalist realism)'],
   },
   style_essence: LENIN_STYLE,
+  biography: 'Vladimir Lenin (1870–1924), professional revolutionary who rebuilt Marxism as a theory of organisation: consciousness comes from without, carried by the party as apparatus.',
+  key_works: [
+    { title: 'What Is to Be Done?', year: '1902', note: 'Against spontaneity: the newspaper as collective organiser.' },
+    { title: 'Imperialism: The Highest Stage of Capitalism', year: '1916', note: 'Monopoly, finance capital, and the split in socialism.' },
+    { title: 'The State and Revolution', year: '1917', note: 'Smash the bourgeois state; soviets as the commune-state.' },
+    { title: 'The April Theses', year: '1917', note: 'No support for the Provisional Government; all power to the soviets.' },
+    { title: 'Left-Wing Communism: An Infantile Disorder', year: '1920', note: 'Patience, compromise, and work inside the unions.' },
+  ],
+  why_this_seat: 'Sits fifth with the organiser question — spontaneity or apparatus, and who decides — the line every later seat on organisation must cross.',
 };

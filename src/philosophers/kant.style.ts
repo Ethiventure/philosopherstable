@@ -41,14 +41,14 @@ export const KANT_STYLE: StyleEssence = {
 
   stock_phrases: {
     rebuttal: [
-      'They allege (X), but this oversteps...',
-      'While they maintain (X), they presuppose...',
-      'In asserting (X), they mistake...',
+      'You allege (X), but this oversteps...',
+      'While you maintain (X), you presuppose...',
+      'In asserting (X), you mistake...',
     ],
     concession: [
       'What remains valid within legitimate bounds is...',
       'I readily grant that...',
-      'Where their deduction holds true is...',
+      'Where your deduction holds true is...',
     ],
     reframing: [
       'The flaw in the original question is...',

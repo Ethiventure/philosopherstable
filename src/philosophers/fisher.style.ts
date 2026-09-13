@@ -44,14 +44,14 @@ export const FISHER_STYLE: StyleEssence = {
 
   stock_phrases: {
     rebuttal: [
-      'They tell us (X) — a cliché that conceals...',
-      'While they harp on (X), this merely performs...',
-      'Their argument for (X) takes for granted that...',
+      'You tell us (X) — a cliché that conceals...',
+      'While you harp on (X), this merely performs...',
+      'Your argument for (X) takes for granted that...',
     ],
     concession: [
-      'What they accurately diagnose is...',
-      'To give them their due,...',
-      'The real symptom they capture is...',
+      'What you accurately diagnose is...',
+      'To give you your due,...',
+      'The real symptom you capture is...',
     ],
     reframing: [
       'The systemic deadlock in the question is...',
