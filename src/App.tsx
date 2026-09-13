@@ -43,6 +43,7 @@ import { generateTurnDeepInfra, testDeepInfraKey, DEEPINFRA_MODEL } from '@/lib/
 import { generateTurnTogether, testTogetherKey, TOGETHER_MODEL } from '@/lib/together';
 import { entriesForNumbers, splitLabels } from '@/lib/footnotes';
 import { extractPassages, formatGroundedBlock, groundableSource } from '@/lib/extract';
+import { searchThinkerPassages } from '@/lib/rag-ground';
 import { verifyQuotes } from '@/lib/verify';
 import { createTtsController, defaultVoice, ensureVoices, isTtsSupported, listVoices, type TtsItem, type TtsStatus } from '@/lib/tts';
 import ServiceChat, { type ServiceLogEntry } from '@/components/ServiceChat';
@@ -549,24 +550,41 @@ function App() {
       const prevText = rawPrev && snap.economy === 'efficient' && rawPrev.length > 1200
         ? `${rawPrev.slice(0, 1200)}\n[…earlier part trimmed for economy; the full text stands in the transcript]`
         : rawPrev;
-      // Experimental grounding (default off): top keyword passages from the
-      // speaker's own source text, cited by footnote number. Fails soft.
+      // Experimental grounding (default off): searched passages from the
+      // speaker's own indexed works first (no fetch, no quota beyond the
+      // turn itself), live page fetching as fallback. Fails soft.
       // The receipt (what was actually shown) is stored per turn for verification.
       let groundingBlock = '';
       let groundingReceipt: { title: string; number: number; passages: string[]; reason: string | null } | null = null;
       if (snap.grounding) {
-        const g = groundableSource(speaker.name);
-        if (g?.source.source_url) {
-          const prevSlice = (collected[collected.length - 1]?.response_text ?? '').slice(0, 300);
-          const { passages, reason } = await extractPassages(g.source.source_url, question, prevSlice);
+        try {
+          const hit = await searchThinkerPassages(
+            speaker.full_name,
+            `${question} ${collected[collected.length - 1]?.response_text ?? ''}`.slice(0, 800),
+            snap.provider === 'shared' || snap.provider === 'groq' ? 4 : 6,
+          );
           if (runRef.current !== runId) return;
-          groundingBlock = formatGroundedBlock(g.source.title, g.number, passages);
-          groundingReceipt = {
-            title: g.source.title,
-            number: g.number,
-            passages: passages.map((p) => p.text),
-            reason,
-          };
+          if (hit) {
+            groundingBlock = hit.block;
+            groundingReceipt = hit.receipt;
+          }
+        } catch {
+          // Index unavailable — fall through to live fetching below.
+        }
+        if (!groundingBlock) {
+          const g = groundableSource(speaker.name);
+          if (g?.source.source_url) {
+            const prevSlice = (collected[collected.length - 1]?.response_text ?? '').slice(0, 300);
+            const { passages, reason } = await extractPassages(g.source.source_url, question, prevSlice);
+            if (runRef.current !== runId) return;
+            groundingBlock = formatGroundedBlock(g.source.title, g.number, passages);
+            groundingReceipt = {
+              title: g.source.title,
+              number: g.number,
+              passages: passages.map((p) => p.text),
+              reason,
+            };
+          }
         }
       }
       const messageParts = [
@@ -825,7 +843,7 @@ function App() {
     // A note written but pass 3 never ran (paused session) still exports.
     const trailingCoda = coda && !late.length ? codaText : '';
     const serviceText = serviceLog.length
-      ? `\nPHILOSOPHERS' SERVICE\n${serviceLog.map((entry) => `— ${entry.thinker} was asked:\n${entry.question}\n— ${entry.thinker} answered:\n${entry.answer}\n`).join('\n')}`
+      ? `\nPHILOSOPHERS' SERVICE\n${serviceLog.map((entry) => `— ${entry.thinker} was asked:\n${entry.question}\n— ${entry.thinker} answered:\n${entry.answer}\n${entry.sources.length ? `— Sources shown: ${entry.sources.join('; ')}\n` : ''}`).join('\n')}`
       : '';
     const readingList = citedNumbers.length
       ? `\nREADING LIST\n${entriesForNumbers(citedNumbers).map(({ number, source }) => `[${number}] ${source.title} — ${source.author}${source.source_url ? ` — ${source.source_url}` : ''}`).join('\n')}\n`

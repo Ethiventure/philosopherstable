@@ -292,8 +292,14 @@ diversity, none/weak/sufficient/strong evidence) used identically in browser
 and node; `rag:search` debug CLI, `rag:eval` suite (12/12, Recall 1.00, MRR
 0.86, abstention 3/3, ~25ms), `test:rag` self-tests. No vectors until eval
 proves lexical fails. Owner approved Bookchin TAL + bulk automation across
-the manifest AFTER the test go — failures skip, never force. Deferred, not
-forgotten: mechanical echo-check badges, word-budget enforcement (see below).
+the manifest AFTER the test go — failures skip, never force. Bulk run Sep
+2026: 71 sources attempted, 29 indexed, 3,223 passages, per-author shards
+under public/rag/ (lazy-fetched per thinker, cached; static, so Netlify needs
+nothing new). Wired behind the existing grounding toggle: desk + turns search
+the thinker's own shard first (`rag-ground.ts`), live extract.js stays as
+fallback; desk answers carry clickable source chunks, export lists source
+titles. Deferred, not forgotten: mechanical echo-check badges, word-budget
+enforcement (see below).
 Word budgets: per-turn HARD ceilings (~100 words normal / ~280 long-form,
 opening 60/160) live in prompts but models routinely overshoot (~150–200
 observed on DeepInfra). No enforcement exists; open question is whether to

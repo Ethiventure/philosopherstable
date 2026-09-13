@@ -10,9 +10,22 @@
 import { readFileSync } from 'node:fs';
 import { prepareIndex, searchIndex } from '../src/lib/rag-search.ts';
 
-const index = JSON.parse(readFileSync(new URL('../public/search-index.json', import.meta.url), 'utf8'));
+const shardFiles = JSON.parse(readFileSync(new URL('../public/rag/manifest.json', import.meta.url), 'utf8'));
+const { joinShard: joinEvalShard } = await import('../src/lib/rag-shard.ts');
+const passages = [];
+for (const entry of shardFiles.authors) {
+  passages.push(...joinEvalShard(JSON.parse(readFileSync(new URL(`../public/rag/${entry.file}`, import.meta.url), 'utf8'))));
+}
+const index = { schema_version: shardFiles.schema_version, chunker_version: shardFiles.chunker_version, passage_count: passages.length, exported_at: shardFiles.exported_at };
 const suite = JSON.parse(readFileSync(new URL('../data/rag-eval.json', import.meta.url), 'utf8'));
-const prepared = prepareIndex(index.passages);
+// Passage IDs are positional: a chunker change can shift ordinals and silently
+// invalidate every acceptable ID. Refuse to run green on a stale contract.
+const validated = suite.validated_against ?? {};
+if (validated.chunker_version !== undefined && validated.chunker_version !== index.chunker_version) {
+  console.error(`REFUSING: eval validated against chunker v${validated.chunker_version} but index is v${index.chunker_version} — re-validate acceptable IDs first (see known_gap note).`);
+  process.exit(1);
+}
+const prepared = prepareIndex(passages);
 
 const rankWeight = { none: 0, weak: 1, sufficient: 2, strong: 3 };
 let r5 = 0, r10 = 0, rrSum = 0, evidenceOk = 0, noAnswerOk = 0, noAnswerTotal = 0;

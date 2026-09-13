@@ -8,6 +8,7 @@
  */
 import { readFileSync } from 'node:fs';
 import { prepareIndex, searchIndex } from '../src/lib/rag-search.ts';
+import { joinShard } from '../src/lib/rag-shard.ts';
 
 const args = process.argv.slice(2);
 const get = (flag, fallback = '') => {
@@ -19,14 +20,27 @@ if (!query) {
   console.error('Usage: node scripts/rag-search.mjs --query "<query>" [--author "<author>"] [--limit 6]');
   process.exit(1);
 }
-const index = JSON.parse(readFileSync(new URL('../public/search-index.json', import.meta.url), 'utf8'));
-const prepared = prepareIndex(index.passages);
+const authorArg = get('--author') || null;
+
+function loadIndex() {
+  const manifest = JSON.parse(readFileSync(new URL('../public/rag/manifest.json', import.meta.url), 'utf8'));
+  const passages = [];
+  for (const entry of manifest.authors) {
+    if (authorArg && !entry.author.toLowerCase().includes(authorArg.toLowerCase())) continue;
+    const shard = JSON.parse(readFileSync(new URL(`../public/rag/${entry.file}`, import.meta.url), 'utf8'));
+    passages.push(...joinShard(shard));
+  }
+  return { manifest, passages };
+}
+
+const { manifest, passages } = loadIndex();
+const prepared = prepareIndex(passages);
 const debug = searchIndex(prepared, query, {
-  author: get('--author') || null,
+  author: authorArg,
   limit: parseInt(get('--limit', '6'), 10),
 });
 
-console.log(`index: schema v${index.schema_version}, ${index.passage_count} passages, exported ${index.exported_at}`);
+console.log(`index: schema v${manifest.schema_version}, chunker v${manifest.chunker_version}, ${manifest.total_passages} passages, exported ${manifest.exported_at}`);
 console.log(`query: ${debug.query}`);
 console.log(`terms: ${debug.terms.join(', ') || '(none — all stopwords)'}`);
 console.log(`author filter: ${debug.authorFilter ?? '(none)'}\n`);
