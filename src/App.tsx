@@ -578,7 +578,12 @@ function App() {
           turnInstruction,
           stockBlock: [
             'YOUR TRANSITIONAL TOOLKIT (your own phrasing — reach for these instead of generic boilerplate):',
-            `REBUTTAL: ${speaker.style_essence.stock_phrases.rebuttal.join(' / ')}`,
+            // Low never sees the rebuttal variants: every one of them is an
+            // attack shape, and the transcript shows turns open with them
+            // verbatim. Concession-first openings carry the calm entry.
+            ...(snap.intensity === 'low'
+              ? []
+              : [`REBUTTAL: ${speaker.style_essence.stock_phrases.rebuttal.join(' / ')}`]),
             `CONCESSION: ${speaker.style_essence.stock_phrases.concession.join(' / ')}`,
             `REFRAMING: ${speaker.style_essence.stock_phrases.reframing.join(' / ')}`,
           ].join('\n'),

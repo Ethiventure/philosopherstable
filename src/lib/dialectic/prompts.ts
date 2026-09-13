@@ -80,10 +80,15 @@ export function buildTurnInstruction({ kind, prevName, isFinalSeat, longForm, re
 
   return [
     `${kind === 'reconstruction' ? 'RECONSTRUCTION' : 'IMMANENT CRITIQUE'} TURN (HARD ceiling: ${b.total} words total across both sections — shorter is welcome; section lengths are guidance, the total is the cap). A turn is a spoken intervention, not an essay: say it once, then stop. Respond ONLY to your immediate predecessor ${prev}.`,
-    reversed
-      ? `REVERSED ROTATION: ${prev} sits to your left and has just spoken. Comment directly on that answer — it is the only new voice you address.`
-      : `CUT IN, don't hand over: open mid-argument by seizing the weakest point in ${prev}'s closing lines. No preamble, no greeting, no naming ceremony — interrupt. Never open with "[Name]'s claim that…", "X argues that…" or any naming-first formula; enter through the concrete object.`,
-    `1. DETERMINATE NEGATION (roughly ${b.negation} words): first state the STRONGEST version of ${prev}'s claim — steelman it, no strawmen — then expose its internal tension using their own premises. Name ${prev} and the exact claim — once, inside the argument, never as your opening. If you find yourself agreeing with their conclusion, you have misread them; find the genuine fault line.`,
+    ...(reversed
+      ? [`REVERSED ROTATION: ${prev} sits to your left and has just spoken. Comment directly on that answer — it is the only new voice you address.`]
+      : []),
+    ...(lowRegister
+      ? ['ENTER CALMLY through the concrete object: open with your concession — state what holds in PREV’s position first, in plain words, then add what it misses. No interruption theatre, no naming ceremony, never open with a rebuttal shape.']
+      : (!reversed
+        ? [`CUT IN, don't hand over: open mid-argument by seizing the weakest point in ${prev}'s closing lines. No preamble, no greeting, no naming ceremony — interrupt. Never open with "[Name]'s claim that…", "X argues that…" or any naming-first formula; enter through the concrete object.`]
+        : [])),
+    `1. DETERMINATE NEGATION (roughly ${b.negation} words): first state the STRONGEST version of ${prev}'s claim — steelman it, no strawmen — but as TRANSLATION, not quotation: restate it entirely in your framework's own vocabulary, so no clause longer than five words matches ${prev} verbatim. Single shared terms (class struggle, decreation) may repeat; multi-word clauses may not. Name ${prev} once, inside the argument, never as your opening. BAD: "A class struggle is the primary focus" answered by "I disagree, a class struggle is not the primary focus." GOOD: the same claim answered by "My focus is different: it is on the abolition of all hierarchy." If you find yourself agreeing with their conclusion, you have misread them; find the genuine fault line.`,
     reformulationLine,
     closingLine,
     ...(isFinalSeat
@@ -93,7 +98,7 @@ export function buildTurnInstruction({ kind, prevName, isFinalSeat, longForm, re
       ? ['Invoke at least one surveyed idea from another seat by name (see STRIKING IDEAS), transformed into your own terms — never quoted; a pass-3 turn that only answers PREV has failed.']
       : []),
     ...(kind === 'reconstruction' && marginsNote
-      ? ['You have also read the NOTES FROM THE MARGINS in the survey below (listed first): carry at least one of its demands forward into your reformulation, in your own terms — never quoted, never ignored. A pass-3 turn that leaves the margins note unanswered has failed.']
+      ? ['You have also read the NOTES FROM THE MARGINS in the survey below (listed first): name it explicitly and carry at least one of its demands forward into your reformulation, in your own terms — never quoted, never unnamed, never ignored. A pass-3 turn that leaves the margins note unnamed or unanswered has failed.']
       : []),
     ...(kind === 'reconstruction' && marginsFirst
       ? ['You speak first after the note: open your negation by naming the NOTES FROM THE MARGINS writer and one demand it made — say plainly whether your framework takes it up or breaks it, in your own terms, never quoted. A first reconstruction that does not name the margins note has failed.']
@@ -101,9 +106,9 @@ export function buildTurnInstruction({ kind, prevName, isFinalSeat, longForm, re
     'Hegel/Marx method: negation must be determinate (preserve-and-elevate), never mere dismissal. Weave the concession inside the negation or reformulation prose (your CONCESSION stock) — there is no separate incorporation section.',
     'Open and reframe in your STOCK PHRASES, rotating variants across your turns — rebuttal for the cut-in, reframing for the problem. The variants marked SPENT below are used up this session: never reuse them.',
     ...(lowRegister
-      ? ['LOW REGISTER: the plain-style override at the end of your persona governs this sentence — short, defined, gentle. Reach for your calmest stock variants; leave the fierce ones unspent.']
+      ? ['LOW ORDERS, governing this turn: open with a CONCESSION variant, never a rebuttal one. Define every hard word the moment you use it — if a 12-year-old would stumble on it, say what it means. Short sentences; one idea per paragraph. The plain-style override at the end of your persona outranks everything above.']
       : []),
-    'VOICE: write continuous prose in your own diction, syntax and rhythm (your STYLE ESSENCE governs the sentence) — no headings or labels inside your prose. Gloss school-terms on first use inside your own diction (≤1 clause); never assume the reader did the reading. Never lift a distinctive phrase from PREV, the survey, or your own prior turns — if another seat said it, restate it in your own terms or leave it out. Agreement and disagreement alike must be phrased afresh: never reuse the predecessor wording to agree with it, never reuse your own earlier wording to repeat yourself. Every sentence must introduce a new idea or angle — a sentence that only restates its predecessor fails the turn. Grammar is standard written English for every seat without exception: complete sentences, capitalised starts, and every value must end with terminal punctuation (. ? !). Never trail off mid-thought. The dialectical movement (cutting in, negation of PREV, incorporation of what holds, reformulation) must be audible in the argument itself, never announced. Never open with a generic verdict on PREV ("errs", "fails to see", "is mistaken", "overlooks") — begin from the concrete object and criticise with your own toolkit\'s verbs.',
+    'VOICE: write continuous prose in your own diction, syntax and rhythm (your STYLE ESSENCE governs the sentence) — no headings or labels inside your prose. Gloss school-terms on first use inside your own diction (≤1 clause); never assume the reader did the reading. Never lift a multi-word clause from PREV, the survey, the margins note, or your own prior turns — the five-word rule: no clause longer than five words may match any of them verbatim; if another seat said it, restate it in your own terms or leave it out. Agreement and disagreement alike must be phrased afresh: never reuse the predecessor wording to agree with it, never reuse your own earlier wording to repeat yourself. Every sentence must introduce a new idea or angle — a sentence that only restates its predecessor fails the turn. Grammar is standard written English for every seat without exception: complete sentences, capitalised starts, and every value must end with terminal punctuation (. ? !). Never trail off mid-thought. The dialectical movement (cutting in, negation of PREV, incorporation of what holds, reformulation) must be audible in the argument itself, never announced. Never open with a generic verdict on PREV ("errs", "fails to see", "is mistaken", "overlooks") — begin from the concrete object and criticise with your own toolkit\'s verbs.',
   ].join(' ');
 }
 
@@ -149,7 +154,7 @@ export function buildUserMessage({ question, prevText, ownPriorLines, turnInstru
   if (othersPriorLines.length > 0) {
     parts.push(
       '',
-      'STRIKING IDEAS FROM OTHER SEATS (pass 3 only — the NOTES FROM THE MARGINS intervene first, then seats; you may invoke any of these by name alongside PREV. Transform what you invoke into your framework\'s own terms; never quote survey lines verbatim):',
+      'STRIKING IDEAS FROM OTHER SEATS (pass 3 only — the NOTES FROM THE MARGINS intervene first, then seats; you may invoke any of these by name alongside PREV. Transform what you invoke into your framework\'s own terms; the five-word rule holds here too — never quote survey lines verbatim):',
       ...othersPriorLines.map(({ name, line }) => `- ${name}: ${line}`),
     );
   }
