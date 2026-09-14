@@ -6,6 +6,7 @@
   "4": "compilerOptions",
   "5": "openrouter.ts",
   "6": "compilerOptions",
+  "7": "scripts",
   "8": "llm.ts",
   "9": "settings.ts",
   "10": "tts.ts",
@@ -47,7 +48,7 @@
   "46": "opencode.json",
   "47": "verify.ts",
   "48": "dev-keepalive.sh",
-  "49": "rag-search.ts",
+  "49": "rag-search.mjs",
   "50": "service-chat.ts",
   "51": "porter.ts",
   "52": "Language levels (Low / Medium / High)",
@@ -57,6 +58,9 @@
   "56": "manifest.json",
   "57": "influences.ts",
   "58": "New philosopher brief (reusable)",
-  "59": "devDependencies",
+  "59": "rag-eval.mjs",
+  "60": "rag-search.ts",
+  "61": "rag-text.mjs",
+  "62": "rag-ground.ts",
   "64": "universal-mechanisms.ts"
 }

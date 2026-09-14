@@ -1,16 +1,16 @@
 # Graph Report - philosopherstable  (2026-09-14)
 
 ## Corpus Check
-- 101 files · ~3,984,408 words
+- 101 files · ~3,985,532 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 597 nodes · 783 edges · 60 communities (39 shown, 18 thin omitted)
+- 598 nodes · 785 edges · 64 communities (43 shown, 18 thin omitted)
 - Extraction: 100% EXTRACTED · 0% INFERRED · 0% AMBIGUOUS · INFERRED: 3 edges (avg confidence: 0.85)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `eb5b690c`
+- Built from commit: `82b8ec25`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -22,6 +22,7 @@
 - compilerOptions
 - openrouter.ts
 - compilerOptions
+- scripts
 - llm.ts
 - settings.ts
 - tts.ts
@@ -60,7 +61,7 @@
 - opencode.json
 - verify.ts
 - dev-keepalive.sh
-- rag-search.ts
+- rag-search.mjs
 - service-chat.ts
 - porter.ts
 - Language levels (Low / Medium / High)
@@ -70,7 +71,10 @@
 - manifest.json
 - influences.ts
 - New philosopher brief (reusable)
-- devDependencies
+- rag-eval.mjs
+- rag-search.ts
+- rag-text.mjs
+- rag-ground.ts
 - universal-mechanisms.ts
 
 ## God Nodes (most connected - your core abstractions)
@@ -100,11 +104,11 @@
 ## Import Cycles
 - None detected.
 
-## Communities (60 total, 18 thin omitted)
+## Communities (64 total, 18 thin omitted)
 
 ### Community 0 - "package.json"
 Cohesion: 0.05
-Nodes (41): dependencies, lucide-react, react, react-dom, @supabase/supabase-js, name, private, scripts (+33 more)
+Nodes (43): dependencies, lucide-react, react, react-dom, @supabase/supabase-js, devDependencies, autoprefixer, eslint (+35 more)
 
 ### Community 1 - "check-links.mjs"
 Cohesion: 0.20
@@ -129,6 +133,10 @@ Nodes (19): attemptModel(), extractDetail(), fetchModelText(), FREE_MODEL_CYCLE,
 ### Community 6 - "compilerOptions"
 Cohesion: 0.12
 Nodes (15): compilerOptions, allowImportingTsExtensions, isolatedModules, lib, module, moduleDetection, moduleResolution, noEmit (+7 more)
+
+### Community 7 - "scripts"
+Cohesion: 0.15
+Nodes (13): scripts, build, check-links, check-links:fix, dev, lint, preview, rag:eval (+5 more)
 
 ### Community 8 - "llm.ts"
 Cohesion: 0.22
@@ -160,7 +168,7 @@ Nodes (5): clamp(), DEFAULT_DISPLAY, DisplayPreferences, loadDisplay(), prefersR
 
 ### Community 15 - "philosophers/index.ts"
 Cohesion: 0.16
-Nodes (16): DEFAULT_SEATING_ORDER, DEFINITIONS, PHILOSOPHER_BY_SLUG, PHILOSOPHER_DATA, renderPersona(), renderAntiWaffle(), LANGUAGE_COMMON, LANGUAGE_LEVELS (+8 more)
+Nodes (17): DEFAULT_SEATING_ORDER, DEFINITIONS, PHILOSOPHER_BY_SLUG, PHILOSOPHER_DATA, renderPersona(), renderAntiWaffle(), LANGUAGE_COMMON, LANGUAGE_LEVELS (+9 more)
 
 ### Community 16 - "lib/prompts.ts"
 Cohesion: 0.52
@@ -210,9 +218,9 @@ Nodes (3): Models tried, Pending verification (user fetching keys), Verdicts
 Cohesion: 0.60
 Nodes (4): extractQuotes(), normalise(), QuoteCheck, verifyQuotes()
 
-### Community 49 - "rag-search.ts"
-Cohesion: 0.06
-Nodes (47): CHUNK_SOFT_MAX, CHUNK_SOFT_MIN, CHUNK_TARGET_WORDS, chunkParagraphs(), splitLongParagraph(), byCategory, failures, index (+39 more)
+### Community 49 - "rag-search.mjs"
+Cohesion: 0.16
+Nodes (11): args, debug, loadIndex(), { manifest, passages }, prepared, query, IndexPassage, AuthorShard (+3 more)
 
 ### Community 50 - "service-chat.ts"
 Cohesion: 0.25
@@ -250,9 +258,21 @@ Nodes (3): CABINET_DEBTS, CabinetDebt, CabinetHeir
 Cohesion: 0.50
 Nodes (3): New philosopher brief (reusable), Phase 1 — research prompt (paste to research LLM), Phase 2 — build checklist (builder)
 
-### Community 59 - "devDependencies"
-Cohesion: 0.13
-Nodes (15): devDependencies, autoprefixer, eslint, @eslint/js, eslint-plugin-react-hooks, eslint-plugin-react-refresh, globals, postcss (+7 more)
+### Community 59 - "rag-eval.mjs"
+Cohesion: 0.15
+Nodes (11): byCategory, failures, index, lat, latencies, passages, pos, prepared (+3 more)
+
+### Community 60 - "rag-search.ts"
+Cohesion: 0.27
+Nodes (9): bm25Term(), ScoredPassage, SearchDebug, searchIndex(), SearchOptions, STOP, queryTerms(), STOPWORDS (+1 more)
+
+### Community 61 - "rag-text.mjs"
+Cohesion: 0.42
+Nodes (7): CHUNK_SOFT_MAX, CHUNK_SOFT_MIN, CHUNK_TARGET_WORDS, chunkParagraphs(), splitLongParagraph(), STOP, wordCount()
+
+### Community 62 - "rag-ground.ts"
+Cohesion: 0.29
+Nodes (9): cache, CachedAuthor, loadThinker(), manifestNumberForUrl(), RagGrounding, searchThinkerPassages(), ShardHit, PreparedIndex (+1 more)
 
 ### Community 64 - "universal-mechanisms.ts"
 Cohesion: 0.33
@@ -266,14 +286,14 @@ Nodes (5): AVOID_CARICATURE, FORENSIC_PREAMBLE, GENERATIVE_ARGUMENT_MODEL, STYLE
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `devDependencies` connect `devDependencies` to `package.json`?**
-  _High betweenness centrality (0.006) - this node is a cross-community bridge._
+- **Why does `scripts` connect `scripts` to `package.json`?**
+  _High betweenness centrality (0.005) - this node is a cross-community bridge._
 - **Why does `react` connect `App.tsx` to `package.json`?**
   _High betweenness centrality (0.005) - this node is a cross-community bridge._
 - **What connects `$schema`, `plugin`, `DEFAULT_MODELS` to the rest of the system?**
   _276 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `package.json` be split into smaller, more focused modules?**
-  _Cohesion score 0.049494949494949494 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.04717853839037928 - nodes in this community are weakly interconnected._
 - **Should `types/index.ts` be split into smaller, more focused modules?**
   _Cohesion score 0.07692307692307693 - nodes in this community are weakly interconnected._
 - **Should `App.tsx` be split into smaller, more focused modules?**

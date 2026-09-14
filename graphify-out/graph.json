@@ -576,108 +576,17 @@
       "source_location": "L11"
     },
     {
-      "id": "src_lib_rag_ground_cachedauthor",
-      "label": "CachedAuthor",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 49,
-      "community_name": "rag-search.ts",
-      "file_type": "code",
-      "norm_label": "cachedauthor",
-      "source_file": "src/lib/rag-ground.ts",
-      "source_location": "L20"
-    },
-    {
-      "id": "src_lib_rag_ground_raggrounding",
-      "label": "RagGrounding",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 49,
-      "community_name": "rag-search.ts",
-      "file_type": "code",
-      "norm_label": "raggrounding",
-      "source_file": "src/lib/rag-ground.ts",
-      "source_location": "L77"
-    },
-    {
-      "id": "src_lib_rag_ground_shardhit",
-      "label": "ShardHit",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 49,
-      "community_name": "rag-search.ts",
-      "file_type": "code",
-      "norm_label": "shardhit",
-      "source_file": "src/lib/rag-ground.ts",
-      "source_location": "L14"
-    },
-    {
       "id": "src_lib_rag_search_indexpassage",
       "label": "IndexPassage",
       "_callable": true,
       "_callable_class": true,
       "_origin": "ast",
       "community": 49,
-      "community_name": "rag-search.ts",
+      "community_name": "rag-search.mjs",
       "file_type": "code",
       "norm_label": "indexpassage",
       "source_file": "src/lib/rag-search.ts",
       "source_location": "L11"
-    },
-    {
-      "id": "src_lib_rag_search_preparedindex",
-      "label": "PreparedIndex",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 49,
-      "community_name": "rag-search.ts",
-      "file_type": "code",
-      "norm_label": "preparedindex",
-      "source_file": "src/lib/rag-search.ts",
-      "source_location": "L52"
-    },
-    {
-      "id": "src_lib_rag_search_scoredpassage",
-      "label": "ScoredPassage",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 49,
-      "community_name": "rag-search.ts",
-      "file_type": "code",
-      "norm_label": "scoredpassage",
-      "source_file": "src/lib/rag-search.ts",
-      "source_location": "L24"
-    },
-    {
-      "id": "src_lib_rag_search_searchdebug",
-      "label": "SearchDebug",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 49,
-      "community_name": "rag-search.ts",
-      "file_type": "code",
-      "norm_label": "searchdebug",
-      "source_file": "src/lib/rag-search.ts",
-      "source_location": "L34"
-    },
-    {
-      "id": "src_lib_rag_search_searchoptions",
-      "label": "SearchOptions",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 49,
-      "community_name": "rag-search.ts",
-      "file_type": "code",
-      "norm_label": "searchoptions",
-      "source_file": "src/lib/rag-search.ts",
-      "source_location": "L79"
     },
     {
       "id": "src_lib_rag_shard_authorshard",
@@ -686,7 +595,7 @@
       "_callable_class": true,
       "_origin": "ast",
       "community": 49,
-      "community_name": "rag-search.ts",
+      "community_name": "rag-search.mjs",
       "file_type": "code",
       "norm_label": "authorshard",
       "source_file": "src/lib/rag-shard.ts",
@@ -699,7 +608,7 @@
       "_callable_class": true,
       "_origin": "ast",
       "community": 49,
-      "community_name": "rag-search.ts",
+      "community_name": "rag-search.mjs",
       "file_type": "code",
       "norm_label": "shardpassage",
       "source_file": "src/lib/rag-shard.ts",
@@ -712,7 +621,7 @@
       "_callable_class": true,
       "_origin": "ast",
       "community": 49,
-      "community_name": "rag-search.ts",
+      "community_name": "rag-search.mjs",
       "file_type": "code",
       "norm_label": "shardwork",
       "source_file": "src/lib/rag-shard.ts",
@@ -782,6 +691,97 @@
       "norm_label": "cabinetheir",
       "source_file": "src/philosophers/influences.ts",
       "source_location": "L69"
+    },
+    {
+      "id": "src_lib_rag_search_scoredpassage",
+      "label": "ScoredPassage",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 60,
+      "community_name": "rag-search.ts",
+      "file_type": "code",
+      "norm_label": "scoredpassage",
+      "source_file": "src/lib/rag-search.ts",
+      "source_location": "L24"
+    },
+    {
+      "id": "src_lib_rag_search_searchdebug",
+      "label": "SearchDebug",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 60,
+      "community_name": "rag-search.ts",
+      "file_type": "code",
+      "norm_label": "searchdebug",
+      "source_file": "src/lib/rag-search.ts",
+      "source_location": "L34"
+    },
+    {
+      "id": "src_lib_rag_search_searchoptions",
+      "label": "SearchOptions",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 60,
+      "community_name": "rag-search.ts",
+      "file_type": "code",
+      "norm_label": "searchoptions",
+      "source_file": "src/lib/rag-search.ts",
+      "source_location": "L79"
+    },
+    {
+      "id": "src_lib_rag_ground_cachedauthor",
+      "label": "CachedAuthor",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 62,
+      "community_name": "rag-ground.ts",
+      "file_type": "code",
+      "norm_label": "cachedauthor",
+      "source_file": "src/lib/rag-ground.ts",
+      "source_location": "L20"
+    },
+    {
+      "id": "src_lib_rag_ground_raggrounding",
+      "label": "RagGrounding",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 62,
+      "community_name": "rag-ground.ts",
+      "file_type": "code",
+      "norm_label": "raggrounding",
+      "source_file": "src/lib/rag-ground.ts",
+      "source_location": "L77"
+    },
+    {
+      "id": "src_lib_rag_ground_shardhit",
+      "label": "ShardHit",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 62,
+      "community_name": "rag-ground.ts",
+      "file_type": "code",
+      "norm_label": "shardhit",
+      "source_file": "src/lib/rag-ground.ts",
+      "source_location": "L14"
+    },
+    {
+      "id": "src_lib_rag_search_preparedindex",
+      "label": "PreparedIndex",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 62,
+      "community_name": "rag-ground.ts",
+      "file_type": "code",
+      "norm_label": "preparedindex",
+      "source_file": "src/lib/rag-search.ts",
+      "source_location": "L52"
     },
     {
       "id": "src_lib_llm_llmerror",
@@ -1352,7 +1352,7 @@
       "file_type": "code",
       "norm_label": "renderlanguagelevel()",
       "source_file": "src/philosophers/shared/low-style.ts",
-      "source_location": "L59"
+      "source_location": "L79"
     },
     {
       "id": "src_philosophers_shared_low_style_renderlowstyleessence",
@@ -1868,7 +1868,7 @@
       "file_type": "code",
       "norm_label": "cabinettable()",
       "source_file": "src/App.tsx",
-      "source_location": "L1187"
+      "source_location": "L1192"
     },
     {
       "id": "src_app_displaytab",
@@ -1880,7 +1880,7 @@
       "file_type": "code",
       "norm_label": "displaytab()",
       "source_file": "src/App.tsx",
-      "source_location": "L1448"
+      "source_location": "L1454"
     },
     {
       "id": "src_app_displaytoggle",
@@ -1892,7 +1892,7 @@
       "file_type": "code",
       "norm_label": "displaytoggle()",
       "source_file": "src/App.tsx",
-      "source_location": "L1572"
+      "source_location": "L1578"
     },
     {
       "id": "src_app_getreadmoresource",
@@ -1916,7 +1916,7 @@
       "file_type": "code",
       "norm_label": "groundingreceipt()",
       "source_file": "src/App.tsx",
-      "source_location": "L1582"
+      "source_location": "L1588"
     },
     {
       "id": "src_app_interventionmodal",
@@ -1928,7 +1928,7 @@
       "file_type": "code",
       "norm_label": "interventionmodal()",
       "source_file": "src/App.tsx",
-      "source_location": "L1587"
+      "source_location": "L1593"
     },
     {
       "id": "src_app_positioncomparison",
@@ -1940,7 +1940,7 @@
       "file_type": "code",
       "norm_label": "positioncomparison()",
       "source_file": "src/App.tsx",
-      "source_location": "L1193"
+      "source_location": "L1198"
     },
     {
       "id": "src_app_profilemodal",
@@ -1952,7 +1952,7 @@
       "file_type": "code",
       "norm_label": "profilemodal()",
       "source_file": "src/App.tsx",
-      "source_location": "L1590"
+      "source_location": "L1596"
     },
     {
       "id": "src_app_readingdeck",
@@ -1964,7 +1964,7 @@
       "file_type": "code",
       "norm_label": "readingdeck()",
       "source_file": "src/App.tsx",
-      "source_location": "L1064"
+      "source_location": "L1069"
     },
     {
       "id": "src_app_readmore",
@@ -2000,7 +2000,7 @@
       "file_type": "code",
       "norm_label": "settingsdrawer()",
       "source_file": "src/App.tsx",
-      "source_location": "L1236"
+      "source_location": "L1241"
     },
     {
       "id": "src_app_sourcedrawer",
@@ -2012,7 +2012,7 @@
       "file_type": "code",
       "norm_label": "sourcedrawer()",
       "source_file": "src/App.tsx",
-      "source_location": "L1219"
+      "source_location": "L1224"
     },
     {
       "id": "src_app_spiralview",
@@ -2024,7 +2024,7 @@
       "file_type": "code",
       "norm_label": "spiralview()",
       "source_file": "src/App.tsx",
-      "source_location": "L1191"
+      "source_location": "L1196"
     },
     {
       "id": "src_app_styleessencedisplay",
@@ -2036,7 +2036,7 @@
       "file_type": "code",
       "norm_label": "styleessencedisplay()",
       "source_file": "src/App.tsx",
-      "source_location": "L1589"
+      "source_location": "L1595"
     },
     {
       "id": "src_app_tointervention",
@@ -2060,7 +2060,7 @@
       "file_type": "code",
       "norm_label": "welcomemodal()",
       "source_file": "src/App.tsx",
-      "source_location": "L1195"
+      "source_location": "L1200"
     },
     {
       "id": "src_components_servicechat_servicechat",
@@ -2123,48 +2123,12 @@
       "source_location": "L45"
     },
     {
-      "id": "scripts_rag_chunk_chunkparagraphs",
-      "label": "chunkParagraphs()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 49,
-      "community_name": "rag-search.ts",
-      "file_type": "code",
-      "norm_label": "chunkparagraphs()",
-      "source_file": "scripts/rag-chunk.mjs",
-      "source_location": "L32"
-    },
-    {
-      "id": "scripts_rag_chunk_splitlongparagraph",
-      "label": "splitLongParagraph()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 49,
-      "community_name": "rag-search.ts",
-      "file_type": "code",
-      "norm_label": "splitlongparagraph()",
-      "source_file": "scripts/rag-chunk.mjs",
-      "source_location": "L14"
-    },
-    {
-      "id": "scripts_rag_eval_pct",
-      "label": "pct()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 49,
-      "community_name": "rag-search.ts",
-      "file_type": "code",
-      "norm_label": "pct()",
-      "source_file": "scripts/rag-eval.mjs",
-      "source_location": "L81"
-    },
-    {
       "id": "scripts_rag_search_get",
       "label": "get()",
       "_callable": true,
       "_origin": "ast",
       "community": 49,
-      "community_name": "rag-search.ts",
+      "community_name": "rag-search.mjs",
       "file_type": "code",
       "norm_label": "get()",
       "source_file": "scripts/rag-search.mjs",
@@ -2176,95 +2140,11 @@
       "_callable": true,
       "_origin": "ast",
       "community": 49,
-      "community_name": "rag-search.ts",
+      "community_name": "rag-search.mjs",
       "file_type": "code",
       "norm_label": "loadindex()",
       "source_file": "scripts/rag-search.mjs",
       "source_location": "L25"
-    },
-    {
-      "id": "src_lib_rag_ground_loadthinker",
-      "label": "loadThinker()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 49,
-      "community_name": "rag-search.ts",
-      "file_type": "code",
-      "norm_label": "loadthinker()",
-      "source_file": "src/lib/rag-ground.ts",
-      "source_location": "L31"
-    },
-    {
-      "id": "src_lib_rag_ground_manifestnumberforurl",
-      "label": "manifestNumberForUrl()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 49,
-      "community_name": "rag-search.ts",
-      "file_type": "code",
-      "norm_label": "manifestnumberforurl()",
-      "source_file": "src/lib/rag-ground.ts",
-      "source_location": "L26"
-    },
-    {
-      "id": "src_lib_rag_ground_searchthinkerpassages",
-      "label": "searchThinkerPassages()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 49,
-      "community_name": "rag-search.ts",
-      "file_type": "code",
-      "norm_label": "searchthinkerpassages()",
-      "source_file": "src/lib/rag-ground.ts",
-      "source_location": "L90"
-    },
-    {
-      "id": "src_lib_rag_search_bm25term",
-      "label": "bm25Term()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 49,
-      "community_name": "rag-search.ts",
-      "file_type": "code",
-      "norm_label": "bm25term()",
-      "source_file": "src/lib/rag-search.ts",
-      "source_location": "L74"
-    },
-    {
-      "id": "src_lib_rag_search_prepareindex",
-      "label": "prepareIndex()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 49,
-      "community_name": "rag-search.ts",
-      "file_type": "code",
-      "norm_label": "prepareindex()",
-      "source_file": "src/lib/rag-search.ts",
-      "source_location": "L59"
-    },
-    {
-      "id": "src_lib_rag_search_round",
-      "label": "round()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 49,
-      "community_name": "rag-search.ts",
-      "file_type": "code",
-      "norm_label": "round()",
-      "source_file": "src/lib/rag-search.ts",
-      "source_location": "L198"
-    },
-    {
-      "id": "src_lib_rag_search_searchindex",
-      "label": "searchIndex()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 49,
-      "community_name": "rag-search.ts",
-      "file_type": "code",
-      "norm_label": "searchindex()",
-      "source_file": "src/lib/rag-search.ts",
-      "source_location": "L85"
     },
     {
       "id": "src_lib_rag_shard_joinshard",
@@ -2272,47 +2152,11 @@
       "_callable": true,
       "_origin": "ast",
       "community": 49,
-      "community_name": "rag-search.ts",
+      "community_name": "rag-search.mjs",
       "file_type": "code",
       "norm_label": "joinshard()",
       "source_file": "src/lib/rag-shard.ts",
       "source_location": "L33"
-    },
-    {
-      "id": "src_lib_rag_text_queryterms",
-      "label": "queryTerms()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 49,
-      "community_name": "rag-search.ts",
-      "file_type": "code",
-      "norm_label": "queryterms()",
-      "source_file": "src/lib/rag-text.ts",
-      "source_location": "L42"
-    },
-    {
-      "id": "src_lib_rag_text_tokenize",
-      "label": "tokenize()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 49,
-      "community_name": "rag-search.ts",
-      "file_type": "code",
-      "norm_label": "tokenize()",
-      "source_file": "src/lib/rag-text.ts",
-      "source_location": "L29"
-    },
-    {
-      "id": "src_lib_rag_text_wordcount",
-      "label": "wordCount()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 49,
-      "community_name": "rag-search.ts",
-      "file_type": "code",
-      "norm_label": "wordcount()",
-      "source_file": "src/lib/rag-text.ts",
-      "source_location": "L53"
     },
     {
       "id": "src_lib_openrouter_attemptmodel",
@@ -2879,6 +2723,162 @@
       "source_location": "L77"
     },
     {
+      "id": "scripts_rag_eval_pct",
+      "label": "pct()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 59,
+      "community_name": "rag-eval.mjs",
+      "file_type": "code",
+      "norm_label": "pct()",
+      "source_file": "scripts/rag-eval.mjs",
+      "source_location": "L81"
+    },
+    {
+      "id": "src_lib_rag_search_bm25term",
+      "label": "bm25Term()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 60,
+      "community_name": "rag-search.ts",
+      "file_type": "code",
+      "norm_label": "bm25term()",
+      "source_file": "src/lib/rag-search.ts",
+      "source_location": "L74"
+    },
+    {
+      "id": "src_lib_rag_search_round",
+      "label": "round()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 60,
+      "community_name": "rag-search.ts",
+      "file_type": "code",
+      "norm_label": "round()",
+      "source_file": "src/lib/rag-search.ts",
+      "source_location": "L198"
+    },
+    {
+      "id": "src_lib_rag_search_searchindex",
+      "label": "searchIndex()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 60,
+      "community_name": "rag-search.ts",
+      "file_type": "code",
+      "norm_label": "searchindex()",
+      "source_file": "src/lib/rag-search.ts",
+      "source_location": "L85"
+    },
+    {
+      "id": "src_lib_rag_text_queryterms",
+      "label": "queryTerms()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 60,
+      "community_name": "rag-search.ts",
+      "file_type": "code",
+      "norm_label": "queryterms()",
+      "source_file": "src/lib/rag-text.ts",
+      "source_location": "L42"
+    },
+    {
+      "id": "src_lib_rag_text_tokenize",
+      "label": "tokenize()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 60,
+      "community_name": "rag-search.ts",
+      "file_type": "code",
+      "norm_label": "tokenize()",
+      "source_file": "src/lib/rag-text.ts",
+      "source_location": "L29"
+    },
+    {
+      "id": "scripts_rag_chunk_chunkparagraphs",
+      "label": "chunkParagraphs()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 61,
+      "community_name": "rag-text.mjs",
+      "file_type": "code",
+      "norm_label": "chunkparagraphs()",
+      "source_file": "scripts/rag-chunk.mjs",
+      "source_location": "L32"
+    },
+    {
+      "id": "scripts_rag_chunk_splitlongparagraph",
+      "label": "splitLongParagraph()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 61,
+      "community_name": "rag-text.mjs",
+      "file_type": "code",
+      "norm_label": "splitlongparagraph()",
+      "source_file": "scripts/rag-chunk.mjs",
+      "source_location": "L14"
+    },
+    {
+      "id": "src_lib_rag_text_wordcount",
+      "label": "wordCount()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 61,
+      "community_name": "rag-text.mjs",
+      "file_type": "code",
+      "norm_label": "wordcount()",
+      "source_file": "src/lib/rag-text.ts",
+      "source_location": "L53"
+    },
+    {
+      "id": "src_lib_rag_ground_loadthinker",
+      "label": "loadThinker()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 62,
+      "community_name": "rag-ground.ts",
+      "file_type": "code",
+      "norm_label": "loadthinker()",
+      "source_file": "src/lib/rag-ground.ts",
+      "source_location": "L31"
+    },
+    {
+      "id": "src_lib_rag_ground_manifestnumberforurl",
+      "label": "manifestNumberForUrl()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 62,
+      "community_name": "rag-ground.ts",
+      "file_type": "code",
+      "norm_label": "manifestnumberforurl()",
+      "source_file": "src/lib/rag-ground.ts",
+      "source_location": "L26"
+    },
+    {
+      "id": "src_lib_rag_ground_searchthinkerpassages",
+      "label": "searchThinkerPassages()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 62,
+      "community_name": "rag-ground.ts",
+      "file_type": "code",
+      "norm_label": "searchthinkerpassages()",
+      "source_file": "src/lib/rag-ground.ts",
+      "source_location": "L90"
+    },
+    {
+      "id": "src_lib_rag_search_prepareindex",
+      "label": "prepareIndex()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 62,
+      "community_name": "rag-ground.ts",
+      "file_type": "code",
+      "norm_label": "prepareindex()",
+      "source_file": "src/lib/rag-search.ts",
+      "source_location": "L59"
+    },
+    {
       "id": "src_lib_llm_llmerror_constructor",
       "label": ".constructor()",
       "_callable": true,
@@ -3052,6 +3052,171 @@
       "source_location": "L21"
     },
     {
+      "id": "package_devdependencies",
+      "label": "devDependencies",
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "package.json",
+      "file_type": "code",
+      "norm_label": "devdependencies",
+      "source_file": "package.json",
+      "source_location": "L26"
+    },
+    {
+      "id": "package_devdependencies_autoprefixer",
+      "label": "autoprefixer",
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "package.json",
+      "file_type": "code",
+      "norm_label": "autoprefixer",
+      "source_file": "package.json",
+      "source_location": "L31"
+    },
+    {
+      "id": "package_devdependencies_eslint",
+      "label": "eslint",
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "package.json",
+      "file_type": "code",
+      "norm_label": "eslint",
+      "source_file": "package.json",
+      "source_location": "L32"
+    },
+    {
+      "id": "package_devdependencies_eslint_js",
+      "label": "@eslint/js",
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "package.json",
+      "file_type": "code",
+      "norm_label": "@eslint/js",
+      "source_file": "package.json",
+      "source_location": "L27"
+    },
+    {
+      "id": "package_devdependencies_eslint_plugin_react_hooks",
+      "label": "eslint-plugin-react-hooks",
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "package.json",
+      "file_type": "code",
+      "norm_label": "eslint-plugin-react-hooks",
+      "source_file": "package.json",
+      "source_location": "L33"
+    },
+    {
+      "id": "package_devdependencies_eslint_plugin_react_refresh",
+      "label": "eslint-plugin-react-refresh",
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "package.json",
+      "file_type": "code",
+      "norm_label": "eslint-plugin-react-refresh",
+      "source_file": "package.json",
+      "source_location": "L34"
+    },
+    {
+      "id": "package_devdependencies_globals",
+      "label": "globals",
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "package.json",
+      "file_type": "code",
+      "norm_label": "globals",
+      "source_file": "package.json",
+      "source_location": "L35"
+    },
+    {
+      "id": "package_devdependencies_postcss",
+      "label": "postcss",
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "package.json",
+      "file_type": "code",
+      "norm_label": "postcss",
+      "source_file": "package.json",
+      "source_location": "L36"
+    },
+    {
+      "id": "package_devdependencies_tailwindcss",
+      "label": "tailwindcss",
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "package.json",
+      "file_type": "code",
+      "norm_label": "tailwindcss",
+      "source_file": "package.json",
+      "source_location": "L37"
+    },
+    {
+      "id": "package_devdependencies_types_react",
+      "label": "@types/react",
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "package.json",
+      "file_type": "code",
+      "norm_label": "@types/react",
+      "source_file": "package.json",
+      "source_location": "L28"
+    },
+    {
+      "id": "package_devdependencies_types_react_dom",
+      "label": "@types/react-dom",
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "package.json",
+      "file_type": "code",
+      "norm_label": "@types/react-dom",
+      "source_file": "package.json",
+      "source_location": "L29"
+    },
+    {
+      "id": "package_devdependencies_typescript",
+      "label": "typescript",
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "package.json",
+      "file_type": "code",
+      "norm_label": "typescript",
+      "source_file": "package.json",
+      "source_location": "L38"
+    },
+    {
+      "id": "package_devdependencies_typescript_eslint",
+      "label": "typescript-eslint",
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "package.json",
+      "file_type": "code",
+      "norm_label": "typescript-eslint",
+      "source_file": "package.json",
+      "source_location": "L39"
+    },
+    {
+      "id": "package_devdependencies_vite",
+      "label": "vite",
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "package.json",
+      "file_type": "code",
+      "norm_label": "vite",
+      "source_file": "package.json",
+      "source_location": "L40"
+    },
+    {
+      "id": "package_devdependencies_vitejs_plugin_react",
+      "label": "@vitejs/plugin-react",
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "package.json",
+      "file_type": "code",
+      "norm_label": "@vitejs/plugin-react",
+      "source_file": "package.json",
+      "source_location": "L30"
+    },
+    {
       "id": "package_name",
       "label": "name",
       "_origin": "ast",
@@ -3072,149 +3237,6 @@
       "norm_label": "private",
       "source_file": "package.json",
       "source_location": "L3"
-    },
-    {
-      "id": "package_scripts",
-      "label": "scripts",
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "package.json",
-      "file_type": "code",
-      "norm_label": "scripts",
-      "source_file": "package.json",
-      "source_location": "L6"
-    },
-    {
-      "id": "package_scripts_build",
-      "label": "build",
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "package.json",
-      "file_type": "code",
-      "norm_label": "build",
-      "source_file": "package.json",
-      "source_location": "L8"
-    },
-    {
-      "id": "package_scripts_check_links",
-      "label": "check-links",
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "package.json",
-      "file_type": "code",
-      "norm_label": "check-links",
-      "source_file": "package.json",
-      "source_location": "L12"
-    },
-    {
-      "id": "package_scripts_check_links_fix",
-      "label": "check-links:fix",
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "package.json",
-      "file_type": "code",
-      "norm_label": "check-links:fix",
-      "source_file": "package.json",
-      "source_location": "L13"
-    },
-    {
-      "id": "package_scripts_dev",
-      "label": "dev",
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "package.json",
-      "file_type": "code",
-      "norm_label": "dev",
-      "source_file": "package.json",
-      "source_location": "L7"
-    },
-    {
-      "id": "package_scripts_lint",
-      "label": "lint",
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "package.json",
-      "file_type": "code",
-      "norm_label": "lint",
-      "source_file": "package.json",
-      "source_location": "L9"
-    },
-    {
-      "id": "package_scripts_preview",
-      "label": "preview",
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "package.json",
-      "file_type": "code",
-      "norm_label": "preview",
-      "source_file": "package.json",
-      "source_location": "L10"
-    },
-    {
-      "id": "package_scripts_rag_eval",
-      "label": "rag:eval",
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "package.json",
-      "file_type": "code",
-      "norm_label": "rag:eval",
-      "source_file": "package.json",
-      "source_location": "L17"
-    },
-    {
-      "id": "package_scripts_rag_ingest",
-      "label": "rag:ingest",
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "package.json",
-      "file_type": "code",
-      "norm_label": "rag:ingest",
-      "source_file": "package.json",
-      "source_location": "L14"
-    },
-    {
-      "id": "package_scripts_rag_inspect",
-      "label": "rag:inspect",
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "package.json",
-      "file_type": "code",
-      "norm_label": "rag:inspect",
-      "source_file": "package.json",
-      "source_location": "L15"
-    },
-    {
-      "id": "package_scripts_rag_search",
-      "label": "rag:search",
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "package.json",
-      "file_type": "code",
-      "norm_label": "rag:search",
-      "source_file": "package.json",
-      "source_location": "L16"
-    },
-    {
-      "id": "package_scripts_test_rag",
-      "label": "test:rag",
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "package.json",
-      "file_type": "code",
-      "norm_label": "test:rag",
-      "source_file": "package.json",
-      "source_location": "L18"
-    },
-    {
-      "id": "package_scripts_typecheck",
-      "label": "typecheck",
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "package.json",
-      "file_type": "code",
-      "norm_label": "typecheck",
-      "source_file": "package.json",
-      "source_location": "L11"
     },
     {
       "id": "package_type",
@@ -3808,7 +3830,7 @@
       "file_type": "code",
       "norm_label": "language_common",
       "source_file": "src/philosophers/shared/low-style.ts",
-      "source_location": "L56"
+      "source_location": "L76"
     },
     {
       "id": "src_philosophers_shared_low_style_language_levels",
@@ -3819,7 +3841,18 @@
       "file_type": "code",
       "norm_label": "language_levels",
       "source_file": "src/philosophers/shared/low-style.ts",
-      "source_location": "L49"
+      "source_location": "L69"
+    },
+    {
+      "id": "src_philosophers_shared_low_style_low_concept_rules",
+      "label": "LOW_CONCEPT_RULES",
+      "_origin": "ast",
+      "community": 15,
+      "community_name": "philosophers/index.ts",
+      "file_type": "code",
+      "norm_label": "low_concept_rules",
+      "source_file": "src/philosophers/shared/low-style.ts",
+      "source_location": "L46"
     },
     {
       "id": "src_philosophers_shared_low_style_low_override",
@@ -3830,7 +3863,7 @@
       "file_type": "code",
       "norm_label": "low_override",
       "source_file": "src/philosophers/shared/low-style.ts",
-      "source_location": "L37"
+      "source_location": "L57"
     },
     {
       "id": "src_philosophers_shared_low_style_low_plain_rules",
@@ -3841,7 +3874,7 @@
       "file_type": "code",
       "norm_label": "low_plain_rules",
       "source_file": "src/philosophers/shared/low-style.ts",
-      "source_location": "L29"
+      "source_location": "L34"
     },
     {
       "id": "src_philosophers_trios",
@@ -3945,7 +3978,7 @@
       "node_kind": "heading",
       "norm_label": "embeddings (phase 5)",
       "source_file": "PLAN.md",
-      "source_location": "L90"
+      "source_location": "L98"
     },
     {
       "id": "plan_length_short_and_punchy",
@@ -3957,7 +3990,7 @@
       "node_kind": "heading",
       "norm_label": "length: short and punchy",
       "source_file": "PLAN.md",
-      "source_location": "L71"
+      "source_location": "L79"
     },
     {
       "id": "plan_phase_0_make_the_current_tree_build_this_session",
@@ -3969,7 +4002,7 @@
       "node_kind": "heading",
       "norm_label": "phase 0 \u2014 make the current tree build  \u2705 (this session)",
       "source_file": "PLAN.md",
-      "source_location": "L99"
+      "source_location": "L107"
     },
     {
       "id": "plan_phase_1_per_philosopher_files_with_style_essences_shipped_boxes_ticked_sep_2026",
@@ -3981,7 +4014,7 @@
       "node_kind": "heading",
       "norm_label": "phase 1 \u2014 per-philosopher files with style essences  \u2705 (shipped; boxes ticked sep 2026)",
       "source_file": "PLAN.md",
-      "source_location": "L112"
+      "source_location": "L120"
     },
     {
       "id": "plan_phase_2_gemini_dialectical_engine_replaces_makemockintervention",
@@ -3993,7 +4026,7 @@
       "node_kind": "heading",
       "norm_label": "phase 2 \u2014 gemini + dialectical engine (replaces `makemockintervention`)",
       "source_file": "PLAN.md",
-      "source_location": "L127"
+      "source_location": "L135"
     },
     {
       "id": "plan_phase_3_export_rewrite",
@@ -4005,7 +4038,7 @@
       "node_kind": "heading",
       "norm_label": "phase 3 \u2014 export rewrite",
       "source_file": "PLAN.md",
-      "source_location": "L300"
+      "source_location": "L309"
     },
     {
       "id": "plan_phase_4_accessibility_display",
@@ -4017,7 +4050,7 @@
       "node_kind": "heading",
       "norm_label": "phase 4 \u2014 accessibility & display",
       "source_file": "PLAN.md",
-      "source_location": "L308"
+      "source_location": "L317"
     },
     {
       "id": "plan_phase_5_rag_v1_lexical_live_vectors_deferred",
@@ -4029,7 +4062,7 @@
       "node_kind": "heading",
       "norm_label": "phase 5 \u2014 rag (v1 lexical live; vectors deferred)",
       "source_file": "PLAN.md",
-      "source_location": "L320"
+      "source_location": "L329"
     },
     {
       "id": "plan_phase_6_richer_philosopher_information_shipped_sep_2026",
@@ -4041,7 +4074,7 @@
       "node_kind": "heading",
       "norm_label": "phase 6 \u2014 richer philosopher information  \u2705 (shipped sep 2026)",
       "source_file": "PLAN.md",
-      "source_location": "L386"
+      "source_location": "L395"
     },
     {
       "id": "plan_philosopher_data_one_file_each",
@@ -4157,7 +4190,7 @@
       "node_kind": "heading",
       "norm_label": "for the curious",
       "source_file": "README.md",
-      "source_location": "L40"
+      "source_location": "L42"
     },
     {
       "id": "readme_quotas_the_honest_version",
@@ -4169,7 +4202,7 @@
       "node_kind": "heading",
       "norm_label": "quotas (the honest version)",
       "source_file": "README.md",
-      "source_location": "L31"
+      "source_location": "L33"
     },
     {
       "id": "readme_run_it_yourself_developers",
@@ -4181,7 +4214,7 @@
       "node_kind": "heading",
       "norm_label": "run it yourself (developers)",
       "source_file": "README.md",
-      "source_location": "L47"
+      "source_location": "L49"
     },
     {
       "id": "readme_settings_explained_all_three_tabs",
@@ -4193,7 +4226,7 @@
       "node_kind": "heading",
       "norm_label": "settings, explained (all three tabs)",
       "source_file": "README.md",
-      "source_location": "L15"
+      "source_location": "L17"
     },
     {
       "id": "readme_the_dialectical_cabinet",
@@ -5536,187 +5569,11 @@
       "source_location": "L1"
     },
     {
-      "id": "scripts_rag_chunk",
-      "label": "rag-chunk.mjs",
-      "_origin": "ast",
-      "community": 49,
-      "community_name": "rag-search.ts",
-      "file_type": "code",
-      "norm_label": "rag-chunk.mjs",
-      "source_file": "scripts/rag-chunk.mjs",
-      "source_location": "L1"
-    },
-    {
-      "id": "scripts_rag_chunk_chunk_soft_max",
-      "label": "CHUNK_SOFT_MAX",
-      "_origin": "ast",
-      "community": 49,
-      "community_name": "rag-search.ts",
-      "file_type": "code",
-      "norm_label": "chunk_soft_max",
-      "source_file": "scripts/rag-chunk.mjs",
-      "source_location": "L12"
-    },
-    {
-      "id": "scripts_rag_chunk_chunk_soft_min",
-      "label": "CHUNK_SOFT_MIN",
-      "_origin": "ast",
-      "community": 49,
-      "community_name": "rag-search.ts",
-      "file_type": "code",
-      "norm_label": "chunk_soft_min",
-      "source_file": "scripts/rag-chunk.mjs",
-      "source_location": "L11"
-    },
-    {
-      "id": "scripts_rag_chunk_chunk_target_words",
-      "label": "CHUNK_TARGET_WORDS",
-      "_origin": "ast",
-      "community": 49,
-      "community_name": "rag-search.ts",
-      "file_type": "code",
-      "norm_label": "chunk_target_words",
-      "source_file": "scripts/rag-chunk.mjs",
-      "source_location": "L10"
-    },
-    {
-      "id": "scripts_rag_eval",
-      "label": "rag-eval.mjs",
-      "_origin": "ast",
-      "community": 49,
-      "community_name": "rag-search.ts",
-      "file_type": "code",
-      "norm_label": "rag-eval.mjs",
-      "source_file": "scripts/rag-eval.mjs",
-      "source_location": "L1"
-    },
-    {
-      "id": "scripts_rag_eval_bycategory",
-      "label": "byCategory",
-      "_origin": "ast",
-      "community": 49,
-      "community_name": "rag-search.ts",
-      "file_type": "code",
-      "norm_label": "bycategory",
-      "source_file": "scripts/rag-eval.mjs",
-      "source_location": "L34"
-    },
-    {
-      "id": "scripts_rag_eval_failures",
-      "label": "failures",
-      "_origin": "ast",
-      "community": 49,
-      "community_name": "rag-search.ts",
-      "file_type": "code",
-      "norm_label": "failures",
-      "source_file": "scripts/rag-eval.mjs",
-      "source_location": "L33"
-    },
-    {
-      "id": "scripts_rag_eval_index",
-      "label": "index",
-      "_origin": "ast",
-      "community": 49,
-      "community_name": "rag-search.ts",
-      "file_type": "code",
-      "norm_label": "index",
-      "source_file": "scripts/rag-eval.mjs",
-      "source_location": "L19"
-    },
-    {
-      "id": "scripts_rag_eval_lat",
-      "label": "lat",
-      "_origin": "ast",
-      "community": 49,
-      "community_name": "rag-search.ts",
-      "file_type": "code",
-      "norm_label": "lat",
-      "source_file": "scripts/rag-eval.mjs",
-      "source_location": "L80"
-    },
-    {
-      "id": "scripts_rag_eval_latencies",
-      "label": "latencies",
-      "_origin": "ast",
-      "community": 49,
-      "community_name": "rag-search.ts",
-      "file_type": "code",
-      "norm_label": "latencies",
-      "source_file": "scripts/rag-eval.mjs",
-      "source_location": "L32"
-    },
-    {
-      "id": "scripts_rag_eval_passages",
-      "label": "passages",
-      "_origin": "ast",
-      "community": 49,
-      "community_name": "rag-search.ts",
-      "file_type": "code",
-      "norm_label": "passages",
-      "source_file": "scripts/rag-eval.mjs",
-      "source_location": "L15"
-    },
-    {
-      "id": "scripts_rag_eval_pos",
-      "label": "pos",
-      "_origin": "ast",
-      "community": 49,
-      "community_name": "rag-search.ts",
-      "file_type": "code",
-      "norm_label": "pos",
-      "source_file": "scripts/rag-eval.mjs",
-      "source_location": "L79"
-    },
-    {
-      "id": "scripts_rag_eval_prepared",
-      "label": "prepared",
-      "_origin": "ast",
-      "community": 49,
-      "community_name": "rag-search.ts",
-      "file_type": "code",
-      "norm_label": "prepared",
-      "source_file": "scripts/rag-eval.mjs",
-      "source_location": "L28"
-    },
-    {
-      "id": "scripts_rag_eval_rankweight",
-      "label": "rankWeight",
-      "_origin": "ast",
-      "community": 49,
-      "community_name": "rag-search.ts",
-      "file_type": "code",
-      "norm_label": "rankweight",
-      "source_file": "scripts/rag-eval.mjs",
-      "source_location": "L30"
-    },
-    {
-      "id": "scripts_rag_eval_shardfiles",
-      "label": "shardFiles",
-      "_origin": "ast",
-      "community": 49,
-      "community_name": "rag-search.ts",
-      "file_type": "code",
-      "norm_label": "shardfiles",
-      "source_file": "scripts/rag-eval.mjs",
-      "source_location": "L13"
-    },
-    {
-      "id": "scripts_rag_eval_suite",
-      "label": "suite",
-      "_origin": "ast",
-      "community": 49,
-      "community_name": "rag-search.ts",
-      "file_type": "code",
-      "norm_label": "suite",
-      "source_file": "scripts/rag-eval.mjs",
-      "source_location": "L20"
-    },
-    {
       "id": "scripts_rag_search",
       "label": "rag-search.mjs",
       "_origin": "ast",
       "community": 49,
-      "community_name": "rag-search.ts",
+      "community_name": "rag-search.mjs",
       "file_type": "code",
       "norm_label": "rag-search.mjs",
       "source_file": "scripts/rag-search.mjs",
@@ -5727,7 +5584,7 @@
       "label": "args",
       "_origin": "ast",
       "community": 49,
-      "community_name": "rag-search.ts",
+      "community_name": "rag-search.mjs",
       "file_type": "code",
       "norm_label": "args",
       "source_file": "scripts/rag-search.mjs",
@@ -5738,7 +5595,7 @@
       "label": "debug",
       "_origin": "ast",
       "community": 49,
-      "community_name": "rag-search.ts",
+      "community_name": "rag-search.mjs",
       "file_type": "code",
       "norm_label": "debug",
       "source_file": "scripts/rag-search.mjs",
@@ -5749,7 +5606,7 @@
       "label": "{ manifest, passages }",
       "_origin": "ast",
       "community": 49,
-      "community_name": "rag-search.ts",
+      "community_name": "rag-search.mjs",
       "file_type": "code",
       "norm_label": "{ manifest, passages }",
       "source_file": "scripts/rag-search.mjs",
@@ -5760,7 +5617,7 @@
       "label": "prepared",
       "_origin": "ast",
       "community": 49,
-      "community_name": "rag-search.ts",
+      "community_name": "rag-search.mjs",
       "file_type": "code",
       "norm_label": "prepared",
       "source_file": "scripts/rag-search.mjs",
@@ -5771,121 +5628,22 @@
       "label": "query",
       "_origin": "ast",
       "community": 49,
-      "community_name": "rag-search.ts",
+      "community_name": "rag-search.mjs",
       "file_type": "code",
       "norm_label": "query",
       "source_file": "scripts/rag-search.mjs",
       "source_location": "L18"
     },
     {
-      "id": "scripts_rag_selftest",
-      "label": "rag-selftest.mjs",
-      "_origin": "ast",
-      "community": 49,
-      "community_name": "rag-search.ts",
-      "file_type": "code",
-      "norm_label": "rag-selftest.mjs",
-      "source_file": "scripts/rag-selftest.mjs",
-      "source_location": "L1"
-    },
-    {
-      "id": "scripts_rag_text",
-      "label": "rag-text.mjs",
-      "_origin": "ast",
-      "community": 49,
-      "community_name": "rag-search.ts",
-      "file_type": "code",
-      "norm_label": "rag-text.mjs",
-      "source_file": "scripts/rag-text.mjs",
-      "source_location": "L1"
-    },
-    {
-      "id": "src_lib_rag_ground",
-      "label": "rag-ground.ts",
-      "_origin": "ast",
-      "community": 49,
-      "community_name": "rag-search.ts",
-      "file_type": "code",
-      "norm_label": "rag-ground.ts",
-      "source_file": "src/lib/rag-ground.ts",
-      "source_location": "L1"
-    },
-    {
-      "id": "src_lib_rag_ground_cache",
-      "label": "cache",
-      "_origin": "ast",
-      "community": 49,
-      "community_name": "rag-search.ts",
-      "file_type": "code",
-      "norm_label": "cache",
-      "source_file": "src/lib/rag-ground.ts",
-      "source_location": "L24"
-    },
-    {
-      "id": "src_lib_rag_search",
-      "label": "rag-search.ts",
-      "_origin": "ast",
-      "community": 49,
-      "community_name": "rag-search.ts",
-      "file_type": "code",
-      "norm_label": "rag-search.ts",
-      "source_file": "src/lib/rag-search.ts",
-      "source_location": "L1"
-    },
-    {
-      "id": "src_lib_rag_search_stop",
-      "label": "STOP",
-      "_origin": "ast",
-      "community": 49,
-      "community_name": "rag-search.ts",
-      "file_type": "code",
-      "norm_label": "stop",
-      "source_file": "src/lib/rag-search.ts",
-      "source_location": "L50"
-    },
-    {
       "id": "src_lib_rag_shard",
       "label": "rag-shard.ts",
       "_origin": "ast",
       "community": 49,
-      "community_name": "rag-search.ts",
+      "community_name": "rag-search.mjs",
       "file_type": "code",
       "norm_label": "rag-shard.ts",
       "source_file": "src/lib/rag-shard.ts",
       "source_location": "L1"
-    },
-    {
-      "id": "src_lib_rag_text",
-      "label": "rag-text.ts",
-      "_origin": "ast",
-      "community": 49,
-      "community_name": "rag-search.ts",
-      "file_type": "code",
-      "norm_label": "rag-text.ts",
-      "source_file": "src/lib/rag-text.ts",
-      "source_location": "L1"
-    },
-    {
-      "id": "src_lib_rag_text_stop",
-      "label": "STOP",
-      "_origin": "ast",
-      "community": 49,
-      "community_name": "rag-search.ts",
-      "file_type": "code",
-      "norm_label": "stop",
-      "source_file": "src/lib/rag-text.ts",
-      "source_location": "L19"
-    },
-    {
-      "id": "src_lib_rag_text_stopwords",
-      "label": "STOPWORDS",
-      "_origin": "ast",
-      "community": 49,
-      "community_name": "rag-search.ts",
-      "file_type": "code",
-      "norm_label": "stopwords",
-      "source_file": "src/lib/rag-text.ts",
-      "source_location": "L6"
     },
     {
       "id": "src_lib_openrouter",
@@ -6030,7 +5788,7 @@
       "node_kind": "heading",
       "norm_label": "how to make trios (worked procedure)",
       "source_file": "docs/language-levels.md",
-      "source_location": "L89"
+      "source_location": "L115"
     },
     {
       "id": "docs_language_levels_how_to_set_difficulty_levels",
@@ -6066,7 +5824,7 @@
       "node_kind": "heading",
       "norm_label": "reference: verified prompt order (bookchin, low, critique turn)",
       "source_file": "docs/language-levels.md",
-      "source_location": "L163"
+      "source_location": "L210"
     },
     {
       "id": "docs_language_levels_trio_creation_instructions_that_did_not_work",
@@ -6078,7 +5836,7 @@
       "node_kind": "heading",
       "norm_label": "trio-creation instructions that did not work",
       "source_file": "docs/language-levels.md",
-      "source_location": "L110"
+      "source_location": "L157"
     },
     {
       "id": "scripts_rag_ingest",
@@ -6459,169 +6217,136 @@
       "source_location": "L50"
     },
     {
-      "id": "package_devdependencies",
-      "label": "devDependencies",
+      "id": "scripts_rag_eval",
+      "label": "rag-eval.mjs",
       "_origin": "ast",
       "community": 59,
-      "community_name": "devDependencies",
+      "community_name": "rag-eval.mjs",
       "file_type": "code",
-      "norm_label": "devdependencies",
-      "source_file": "package.json",
-      "source_location": "L26"
+      "norm_label": "rag-eval.mjs",
+      "source_file": "scripts/rag-eval.mjs",
+      "source_location": "L1"
     },
     {
-      "id": "package_devdependencies_autoprefixer",
-      "label": "autoprefixer",
+      "id": "scripts_rag_eval_bycategory",
+      "label": "byCategory",
       "_origin": "ast",
       "community": 59,
-      "community_name": "devDependencies",
+      "community_name": "rag-eval.mjs",
       "file_type": "code",
-      "norm_label": "autoprefixer",
-      "source_file": "package.json",
-      "source_location": "L31"
-    },
-    {
-      "id": "package_devdependencies_eslint",
-      "label": "eslint",
-      "_origin": "ast",
-      "community": 59,
-      "community_name": "devDependencies",
-      "file_type": "code",
-      "norm_label": "eslint",
-      "source_file": "package.json",
-      "source_location": "L32"
-    },
-    {
-      "id": "package_devdependencies_eslint_js",
-      "label": "@eslint/js",
-      "_origin": "ast",
-      "community": 59,
-      "community_name": "devDependencies",
-      "file_type": "code",
-      "norm_label": "@eslint/js",
-      "source_file": "package.json",
-      "source_location": "L27"
-    },
-    {
-      "id": "package_devdependencies_eslint_plugin_react_hooks",
-      "label": "eslint-plugin-react-hooks",
-      "_origin": "ast",
-      "community": 59,
-      "community_name": "devDependencies",
-      "file_type": "code",
-      "norm_label": "eslint-plugin-react-hooks",
-      "source_file": "package.json",
-      "source_location": "L33"
-    },
-    {
-      "id": "package_devdependencies_eslint_plugin_react_refresh",
-      "label": "eslint-plugin-react-refresh",
-      "_origin": "ast",
-      "community": 59,
-      "community_name": "devDependencies",
-      "file_type": "code",
-      "norm_label": "eslint-plugin-react-refresh",
-      "source_file": "package.json",
+      "norm_label": "bycategory",
+      "source_file": "scripts/rag-eval.mjs",
       "source_location": "L34"
     },
     {
-      "id": "package_devdependencies_globals",
-      "label": "globals",
+      "id": "scripts_rag_eval_failures",
+      "label": "failures",
       "_origin": "ast",
       "community": 59,
-      "community_name": "devDependencies",
+      "community_name": "rag-eval.mjs",
       "file_type": "code",
-      "norm_label": "globals",
-      "source_file": "package.json",
-      "source_location": "L35"
+      "norm_label": "failures",
+      "source_file": "scripts/rag-eval.mjs",
+      "source_location": "L33"
     },
     {
-      "id": "package_devdependencies_postcss",
-      "label": "postcss",
+      "id": "scripts_rag_eval_index",
+      "label": "index",
       "_origin": "ast",
       "community": 59,
-      "community_name": "devDependencies",
+      "community_name": "rag-eval.mjs",
       "file_type": "code",
-      "norm_label": "postcss",
-      "source_file": "package.json",
-      "source_location": "L36"
+      "norm_label": "index",
+      "source_file": "scripts/rag-eval.mjs",
+      "source_location": "L19"
     },
     {
-      "id": "package_devdependencies_tailwindcss",
-      "label": "tailwindcss",
+      "id": "scripts_rag_eval_lat",
+      "label": "lat",
       "_origin": "ast",
       "community": 59,
-      "community_name": "devDependencies",
+      "community_name": "rag-eval.mjs",
       "file_type": "code",
-      "norm_label": "tailwindcss",
-      "source_file": "package.json",
-      "source_location": "L37"
+      "norm_label": "lat",
+      "source_file": "scripts/rag-eval.mjs",
+      "source_location": "L80"
     },
     {
-      "id": "package_devdependencies_types_react",
-      "label": "@types/react",
+      "id": "scripts_rag_eval_latencies",
+      "label": "latencies",
       "_origin": "ast",
       "community": 59,
-      "community_name": "devDependencies",
+      "community_name": "rag-eval.mjs",
       "file_type": "code",
-      "norm_label": "@types/react",
-      "source_file": "package.json",
+      "norm_label": "latencies",
+      "source_file": "scripts/rag-eval.mjs",
+      "source_location": "L32"
+    },
+    {
+      "id": "scripts_rag_eval_passages",
+      "label": "passages",
+      "_origin": "ast",
+      "community": 59,
+      "community_name": "rag-eval.mjs",
+      "file_type": "code",
+      "norm_label": "passages",
+      "source_file": "scripts/rag-eval.mjs",
+      "source_location": "L15"
+    },
+    {
+      "id": "scripts_rag_eval_pos",
+      "label": "pos",
+      "_origin": "ast",
+      "community": 59,
+      "community_name": "rag-eval.mjs",
+      "file_type": "code",
+      "norm_label": "pos",
+      "source_file": "scripts/rag-eval.mjs",
+      "source_location": "L79"
+    },
+    {
+      "id": "scripts_rag_eval_prepared",
+      "label": "prepared",
+      "_origin": "ast",
+      "community": 59,
+      "community_name": "rag-eval.mjs",
+      "file_type": "code",
+      "norm_label": "prepared",
+      "source_file": "scripts/rag-eval.mjs",
       "source_location": "L28"
     },
     {
-      "id": "package_devdependencies_types_react_dom",
-      "label": "@types/react-dom",
+      "id": "scripts_rag_eval_rankweight",
+      "label": "rankWeight",
       "_origin": "ast",
       "community": 59,
-      "community_name": "devDependencies",
+      "community_name": "rag-eval.mjs",
       "file_type": "code",
-      "norm_label": "@types/react-dom",
-      "source_file": "package.json",
-      "source_location": "L29"
-    },
-    {
-      "id": "package_devdependencies_typescript",
-      "label": "typescript",
-      "_origin": "ast",
-      "community": 59,
-      "community_name": "devDependencies",
-      "file_type": "code",
-      "norm_label": "typescript",
-      "source_file": "package.json",
-      "source_location": "L38"
-    },
-    {
-      "id": "package_devdependencies_typescript_eslint",
-      "label": "typescript-eslint",
-      "_origin": "ast",
-      "community": 59,
-      "community_name": "devDependencies",
-      "file_type": "code",
-      "norm_label": "typescript-eslint",
-      "source_file": "package.json",
-      "source_location": "L39"
-    },
-    {
-      "id": "package_devdependencies_vite",
-      "label": "vite",
-      "_origin": "ast",
-      "community": 59,
-      "community_name": "devDependencies",
-      "file_type": "code",
-      "norm_label": "vite",
-      "source_file": "package.json",
-      "source_location": "L40"
-    },
-    {
-      "id": "package_devdependencies_vitejs_plugin_react",
-      "label": "@vitejs/plugin-react",
-      "_origin": "ast",
-      "community": 59,
-      "community_name": "devDependencies",
-      "file_type": "code",
-      "norm_label": "@vitejs/plugin-react",
-      "source_file": "package.json",
+      "norm_label": "rankweight",
+      "source_file": "scripts/rag-eval.mjs",
       "source_location": "L30"
+    },
+    {
+      "id": "scripts_rag_eval_shardfiles",
+      "label": "shardFiles",
+      "_origin": "ast",
+      "community": 59,
+      "community_name": "rag-eval.mjs",
+      "file_type": "code",
+      "norm_label": "shardfiles",
+      "source_file": "scripts/rag-eval.mjs",
+      "source_location": "L13"
+    },
+    {
+      "id": "scripts_rag_eval_suite",
+      "label": "suite",
+      "_origin": "ast",
+      "community": 59,
+      "community_name": "rag-eval.mjs",
+      "file_type": "code",
+      "norm_label": "suite",
+      "source_file": "scripts/rag-eval.mjs",
+      "source_location": "L20"
     },
     {
       "id": "tsconfig_node",
@@ -6800,6 +6525,149 @@
       "source_location": "L21"
     },
     {
+      "id": "scripts_rag_selftest",
+      "label": "rag-selftest.mjs",
+      "_origin": "ast",
+      "community": 60,
+      "community_name": "rag-search.ts",
+      "file_type": "code",
+      "norm_label": "rag-selftest.mjs",
+      "source_file": "scripts/rag-selftest.mjs",
+      "source_location": "L1"
+    },
+    {
+      "id": "src_lib_rag_search",
+      "label": "rag-search.ts",
+      "_origin": "ast",
+      "community": 60,
+      "community_name": "rag-search.ts",
+      "file_type": "code",
+      "norm_label": "rag-search.ts",
+      "source_file": "src/lib/rag-search.ts",
+      "source_location": "L1"
+    },
+    {
+      "id": "src_lib_rag_search_stop",
+      "label": "STOP",
+      "_origin": "ast",
+      "community": 60,
+      "community_name": "rag-search.ts",
+      "file_type": "code",
+      "norm_label": "stop",
+      "source_file": "src/lib/rag-search.ts",
+      "source_location": "L50"
+    },
+    {
+      "id": "src_lib_rag_text_stopwords",
+      "label": "STOPWORDS",
+      "_origin": "ast",
+      "community": 60,
+      "community_name": "rag-search.ts",
+      "file_type": "code",
+      "norm_label": "stopwords",
+      "source_file": "src/lib/rag-text.ts",
+      "source_location": "L6"
+    },
+    {
+      "id": "scripts_rag_chunk",
+      "label": "rag-chunk.mjs",
+      "_origin": "ast",
+      "community": 61,
+      "community_name": "rag-text.mjs",
+      "file_type": "code",
+      "norm_label": "rag-chunk.mjs",
+      "source_file": "scripts/rag-chunk.mjs",
+      "source_location": "L1"
+    },
+    {
+      "id": "scripts_rag_chunk_chunk_soft_max",
+      "label": "CHUNK_SOFT_MAX",
+      "_origin": "ast",
+      "community": 61,
+      "community_name": "rag-text.mjs",
+      "file_type": "code",
+      "norm_label": "chunk_soft_max",
+      "source_file": "scripts/rag-chunk.mjs",
+      "source_location": "L12"
+    },
+    {
+      "id": "scripts_rag_chunk_chunk_soft_min",
+      "label": "CHUNK_SOFT_MIN",
+      "_origin": "ast",
+      "community": 61,
+      "community_name": "rag-text.mjs",
+      "file_type": "code",
+      "norm_label": "chunk_soft_min",
+      "source_file": "scripts/rag-chunk.mjs",
+      "source_location": "L11"
+    },
+    {
+      "id": "scripts_rag_chunk_chunk_target_words",
+      "label": "CHUNK_TARGET_WORDS",
+      "_origin": "ast",
+      "community": 61,
+      "community_name": "rag-text.mjs",
+      "file_type": "code",
+      "norm_label": "chunk_target_words",
+      "source_file": "scripts/rag-chunk.mjs",
+      "source_location": "L10"
+    },
+    {
+      "id": "scripts_rag_text",
+      "label": "rag-text.mjs",
+      "_origin": "ast",
+      "community": 61,
+      "community_name": "rag-text.mjs",
+      "file_type": "code",
+      "norm_label": "rag-text.mjs",
+      "source_file": "scripts/rag-text.mjs",
+      "source_location": "L1"
+    },
+    {
+      "id": "src_lib_rag_text",
+      "label": "rag-text.ts",
+      "_origin": "ast",
+      "community": 61,
+      "community_name": "rag-text.mjs",
+      "file_type": "code",
+      "norm_label": "rag-text.ts",
+      "source_file": "src/lib/rag-text.ts",
+      "source_location": "L1"
+    },
+    {
+      "id": "src_lib_rag_text_stop",
+      "label": "STOP",
+      "_origin": "ast",
+      "community": 61,
+      "community_name": "rag-text.mjs",
+      "file_type": "code",
+      "norm_label": "stop",
+      "source_file": "src/lib/rag-text.ts",
+      "source_location": "L19"
+    },
+    {
+      "id": "src_lib_rag_ground",
+      "label": "rag-ground.ts",
+      "_origin": "ast",
+      "community": 62,
+      "community_name": "rag-ground.ts",
+      "file_type": "code",
+      "norm_label": "rag-ground.ts",
+      "source_file": "src/lib/rag-ground.ts",
+      "source_location": "L1"
+    },
+    {
+      "id": "src_lib_rag_ground_cache",
+      "label": "cache",
+      "_origin": "ast",
+      "community": 62,
+      "community_name": "rag-ground.ts",
+      "file_type": "code",
+      "norm_label": "cache",
+      "source_file": "src/lib/rag-ground.ts",
+      "source_location": "L24"
+    },
+    {
       "id": "src_philosophers_shared_universal_mechanisms",
       "label": "universal-mechanisms.ts",
       "_origin": "ast",
@@ -6864,6 +6732,149 @@
       "norm_label": "universal_supporting_mechanisms",
       "source_file": "src/philosophers/shared/universal-mechanisms.ts",
       "source_location": "L8"
+    },
+    {
+      "id": "package_scripts",
+      "label": "scripts",
+      "_origin": "ast",
+      "community": 7,
+      "community_name": "scripts",
+      "file_type": "code",
+      "norm_label": "scripts",
+      "source_file": "package.json",
+      "source_location": "L6"
+    },
+    {
+      "id": "package_scripts_build",
+      "label": "build",
+      "_origin": "ast",
+      "community": 7,
+      "community_name": "scripts",
+      "file_type": "code",
+      "norm_label": "build",
+      "source_file": "package.json",
+      "source_location": "L8"
+    },
+    {
+      "id": "package_scripts_check_links",
+      "label": "check-links",
+      "_origin": "ast",
+      "community": 7,
+      "community_name": "scripts",
+      "file_type": "code",
+      "norm_label": "check-links",
+      "source_file": "package.json",
+      "source_location": "L12"
+    },
+    {
+      "id": "package_scripts_check_links_fix",
+      "label": "check-links:fix",
+      "_origin": "ast",
+      "community": 7,
+      "community_name": "scripts",
+      "file_type": "code",
+      "norm_label": "check-links:fix",
+      "source_file": "package.json",
+      "source_location": "L13"
+    },
+    {
+      "id": "package_scripts_dev",
+      "label": "dev",
+      "_origin": "ast",
+      "community": 7,
+      "community_name": "scripts",
+      "file_type": "code",
+      "norm_label": "dev",
+      "source_file": "package.json",
+      "source_location": "L7"
+    },
+    {
+      "id": "package_scripts_lint",
+      "label": "lint",
+      "_origin": "ast",
+      "community": 7,
+      "community_name": "scripts",
+      "file_type": "code",
+      "norm_label": "lint",
+      "source_file": "package.json",
+      "source_location": "L9"
+    },
+    {
+      "id": "package_scripts_preview",
+      "label": "preview",
+      "_origin": "ast",
+      "community": 7,
+      "community_name": "scripts",
+      "file_type": "code",
+      "norm_label": "preview",
+      "source_file": "package.json",
+      "source_location": "L10"
+    },
+    {
+      "id": "package_scripts_rag_eval",
+      "label": "rag:eval",
+      "_origin": "ast",
+      "community": 7,
+      "community_name": "scripts",
+      "file_type": "code",
+      "norm_label": "rag:eval",
+      "source_file": "package.json",
+      "source_location": "L17"
+    },
+    {
+      "id": "package_scripts_rag_ingest",
+      "label": "rag:ingest",
+      "_origin": "ast",
+      "community": 7,
+      "community_name": "scripts",
+      "file_type": "code",
+      "norm_label": "rag:ingest",
+      "source_file": "package.json",
+      "source_location": "L14"
+    },
+    {
+      "id": "package_scripts_rag_inspect",
+      "label": "rag:inspect",
+      "_origin": "ast",
+      "community": 7,
+      "community_name": "scripts",
+      "file_type": "code",
+      "norm_label": "rag:inspect",
+      "source_file": "package.json",
+      "source_location": "L15"
+    },
+    {
+      "id": "package_scripts_rag_search",
+      "label": "rag:search",
+      "_origin": "ast",
+      "community": 7,
+      "community_name": "scripts",
+      "file_type": "code",
+      "norm_label": "rag:search",
+      "source_file": "package.json",
+      "source_location": "L16"
+    },
+    {
+      "id": "package_scripts_test_rag",
+      "label": "test:rag",
+      "_origin": "ast",
+      "community": 7,
+      "community_name": "scripts",
+      "file_type": "code",
+      "norm_label": "test:rag",
+      "source_file": "package.json",
+      "source_location": "L18"
+    },
+    {
+      "id": "package_scripts_typecheck",
+      "label": "typecheck",
+      "_origin": "ast",
+      "community": 7,
+      "community_name": "scripts",
+      "file_type": "code",
+      "norm_label": "typecheck",
+      "source_file": "package.json",
+      "source_location": "L11"
     },
     {
       "id": "src_lib_llm",
@@ -7422,7 +7433,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "src/App.tsx",
-      "source_location": "L669",
+      "source_location": "L671",
       "weight": 1.0
     },
     {
@@ -8663,6 +8674,18 @@
     },
     {
       "source": "src_philosophers_index_renderpersona",
+      "target": "src_philosophers_shared_anti_waffle_renderantiwaffle",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "src/philosophers/index.ts",
+      "source_location": "L100",
+      "weight": 1.0
+    },
+    {
+      "source": "src_philosophers_index_renderpersona",
       "target": "src_philosophers_shared_low_style_renderlanguagelevel",
       "relation": "calls",
       "_origin": "ast",
@@ -8670,7 +8693,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "src/philosophers/index.ts",
-      "source_location": "L101",
+      "source_location": "L106",
       "weight": 1.0
     },
     {
@@ -8682,7 +8705,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "src/philosophers/index.ts",
-      "source_location": "L56",
+      "source_location": "L61",
       "weight": 1.0
     },
     {
@@ -8694,19 +8717,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "src/philosophers/index.ts",
-      "source_location": "L93",
-      "weight": 1.0
-    },
-    {
-      "source": "src_philosophers_index_renderpersona",
-      "target": "src_philosophers_shared_anti_waffle_renderantiwaffle",
-      "relation": "calls",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "context": "call",
-      "source_file": "src/philosophers/index.ts",
-      "source_location": "L95",
+      "source_location": "L98",
       "weight": 1.0
     },
     {
@@ -9415,6 +9426,18 @@
       "context": "import",
       "source_file": "src/philosophers/index.ts",
       "source_location": "L14",
+      "weight": 1.0
+    },
+    {
+      "source": "src_philosophers_index",
+      "target": "src_philosophers_shared_low_style_low_concept_rules",
+      "relation": "imports",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "src/philosophers/index.ts",
+      "source_location": "L15",
       "weight": 1.0
     },
     {
@@ -10390,13 +10413,24 @@
     },
     {
       "source": "docs_language_levels_language_levels_low_medium_high",
+      "target": "docs_language_levels_how_to_make_trios_worked_procedure",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/language-levels.md",
+      "source_location": "L115",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_language_levels_language_levels_low_medium_high",
       "target": "docs_language_levels_trio_creation_instructions_that_did_not_work",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/language-levels.md",
-      "source_location": "L110",
+      "source_location": "L157",
       "weight": 1.0
     },
     {
@@ -10407,7 +10441,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/language-levels.md",
-      "source_location": "L163",
+      "source_location": "L210",
       "weight": 1.0
     },
     {
@@ -10419,17 +10453,6 @@
       "confidence_score": 1.0,
       "source_file": "docs/language-levels.md",
       "source_location": "L8",
-      "weight": 1.0
-    },
-    {
-      "source": "docs_language_levels_language_levels_low_medium_high",
-      "target": "docs_language_levels_how_to_make_trios_worked_procedure",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "docs/language-levels.md",
-      "source_location": "L89",
       "weight": 1.0
     },
     {
@@ -11210,7 +11233,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "PLAN.md",
-      "source_location": "L71",
+      "source_location": "L79",
       "weight": 1.0
     },
     {
@@ -11221,7 +11244,18 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "PLAN.md",
-      "source_location": "L90",
+      "source_location": "L98",
+      "weight": 1.0
+    },
+    {
+      "source": "plan_the_dialectical_cabinet_implementation_plan",
+      "target": "plan_phase_0_make_the_current_tree_build_this_session",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "PLAN.md",
+      "source_location": "L107",
       "weight": 1.0
     },
     {
@@ -11232,7 +11266,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "PLAN.md",
-      "source_location": "L112",
+      "source_location": "L120",
       "weight": 1.0
     },
     {
@@ -11243,7 +11277,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "PLAN.md",
-      "source_location": "L127",
+      "source_location": "L135",
       "weight": 1.0
     },
     {
@@ -11254,7 +11288,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "PLAN.md",
-      "source_location": "L300",
+      "source_location": "L309",
       "weight": 1.0
     },
     {
@@ -11265,7 +11299,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "PLAN.md",
-      "source_location": "L308",
+      "source_location": "L317",
       "weight": 1.0
     },
     {
@@ -11276,7 +11310,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "PLAN.md",
-      "source_location": "L320",
+      "source_location": "L329",
       "weight": 1.0
     },
     {
@@ -11287,7 +11321,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "PLAN.md",
-      "source_location": "L386",
+      "source_location": "L395",
       "weight": 1.0
     },
     {
@@ -11299,17 +11333,6 @@
       "confidence_score": 1.0,
       "source_file": "PLAN.md",
       "source_location": "L8",
-      "weight": 1.0
-    },
-    {
-      "source": "plan_the_dialectical_cabinet_implementation_plan",
-      "target": "plan_phase_0_make_the_current_tree_build_this_session",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "PLAN.md",
-      "source_location": "L99",
       "weight": 1.0
     },
     {
@@ -11397,7 +11420,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "README.md",
-      "source_location": "L15",
+      "source_location": "L17",
       "weight": 1.0
     },
     {
@@ -11408,7 +11431,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "README.md",
-      "source_location": "L31",
+      "source_location": "L33",
       "weight": 1.0
     },
     {
@@ -11419,7 +11442,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "README.md",
-      "source_location": "L40",
+      "source_location": "L42",
       "weight": 1.0
     },
     {
@@ -11430,7 +11453,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "README.md",
-      "source_location": "L47",
+      "source_location": "L49",
       "weight": 1.0
     },
     {
@@ -12211,7 +12234,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/App.tsx",
-      "source_location": "L1064",
+      "source_location": "L1069",
       "weight": 1.0
     },
     {
@@ -12233,7 +12256,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/App.tsx",
-      "source_location": "L1187",
+      "source_location": "L1192",
       "weight": 1.0
     },
     {
@@ -12244,7 +12267,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/App.tsx",
-      "source_location": "L1191",
+      "source_location": "L1196",
       "weight": 1.0
     },
     {
@@ -12255,7 +12278,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/App.tsx",
-      "source_location": "L1193",
+      "source_location": "L1198",
       "weight": 1.0
     },
     {
@@ -12266,7 +12289,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/App.tsx",
-      "source_location": "L1195",
+      "source_location": "L1200",
       "weight": 1.0
     },
     {
@@ -12277,7 +12300,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/App.tsx",
-      "source_location": "L1219",
+      "source_location": "L1224",
       "weight": 1.0
     },
     {
@@ -12288,7 +12311,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/App.tsx",
-      "source_location": "L1236",
+      "source_location": "L1241",
       "weight": 1.0
     },
     {
@@ -12299,7 +12322,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/App.tsx",
-      "source_location": "L1448",
+      "source_location": "L1454",
       "weight": 1.0
     },
     {
@@ -12321,7 +12344,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/App.tsx",
-      "source_location": "L1572",
+      "source_location": "L1578",
       "weight": 1.0
     },
     {
@@ -12332,7 +12355,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/App.tsx",
-      "source_location": "L1582",
+      "source_location": "L1588",
       "weight": 1.0
     },
     {
@@ -12343,7 +12366,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/App.tsx",
-      "source_location": "L1587",
+      "source_location": "L1593",
       "weight": 1.0
     },
     {
@@ -12354,7 +12377,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/App.tsx",
-      "source_location": "L1589",
+      "source_location": "L1595",
       "weight": 1.0
     },
     {
@@ -12365,7 +12388,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/App.tsx",
-      "source_location": "L1590",
+      "source_location": "L1596",
       "weight": 1.0
     },
     {
@@ -14873,7 +14896,18 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/philosophers/shared/low-style.ts",
-      "source_location": "L29",
+      "source_location": "L34",
+      "weight": 1.0
+    },
+    {
+      "source": "src_philosophers_shared_low_style",
+      "target": "src_philosophers_shared_low_style_low_concept_rules",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/philosophers/shared/low-style.ts",
+      "source_location": "L46",
       "weight": 1.0
     },
     {
@@ -14884,7 +14918,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/philosophers/shared/low-style.ts",
-      "source_location": "L37",
+      "source_location": "L57",
       "weight": 1.0
     },
     {
@@ -14895,7 +14929,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/philosophers/shared/low-style.ts",
-      "source_location": "L49",
+      "source_location": "L69",
       "weight": 1.0
     },
     {
@@ -14906,7 +14940,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/philosophers/shared/low-style.ts",
-      "source_location": "L56",
+      "source_location": "L76",
       "weight": 1.0
     },
     {
@@ -14917,7 +14951,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/philosophers/shared/low-style.ts",
-      "source_location": "L59",
+      "source_location": "L79",
       "weight": 1.0
     },
     {
@@ -15834,5 +15868,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "eb5b690c58eb2b97b95277ee2a8e2e9fa52f2f38"
+  "built_at_commit": "82b8ec2506e73a071750fa210bd2638c3edb217a"
 }

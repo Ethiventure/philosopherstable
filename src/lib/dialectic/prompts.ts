@@ -67,7 +67,7 @@ export function buildTurnInstruction({ kind, prevName, isFinalSeat, longForm, re
 
   if (kind === 'opening') {
     return [
-      `OPENING TURN (HARD ceiling: ${b.opening} words — shorter is welcome). Answer the question directly in your own framework. Paraphrase the question through your framework; never repeat it verbatim.`,
+      `OPENING TURN (HARD ceiling: ${b.opening} words — shorter is welcome). As you near the ceiling, finish the current idea and sentence, then stop — never trail off mid-thought, never open a new point past it. Answer the question directly in your own framework. Paraphrase the question through your framework; never repeat it verbatim.`,
       'Do not refer to any other thinker; there is no predecessor yet.',
       'Follow your characteristic movement.',
       'Write at length in your own diction and rhythm — continuous prose, no headings — the word budget is for development, not padding.',
@@ -87,7 +87,7 @@ export function buildTurnInstruction({ kind, prevName, isFinalSeat, longForm, re
     : 'End on the live edge: the unresolved tension, stated as your framework\'s own problem. Do not address or name any next speaker — the next voice cuts in on its own.';
 
   return [
-    `${kind === 'reconstruction' ? 'RECONSTRUCTION' : 'IMMANENT CRITIQUE'} TURN (HARD ceiling: ${b.total} words total across both sections — shorter is welcome; section lengths are guidance, the total is the cap). A turn is a spoken intervention, not an essay: say it once, then stop. Respond ONLY to your immediate predecessor ${prev}.`,
+    `${kind === 'reconstruction' ? 'RECONSTRUCTION' : 'IMMANENT CRITIQUE'} TURN (HARD ceiling: ${b.total} words total across both sections — shorter is welcome; section lengths are guidance, the total is the cap; as you near it, finish the current idea and sentence, then stop — never trail off mid-thought, never open a new point past it). A turn is a spoken intervention, not an essay: say it once, then stop. Respond ONLY to your immediate predecessor ${prev}.`,
     ...(reversed
       ? [`REVERSED ROTATION: ${prev} sits to your left and has just spoken. Comment directly on that answer — it is the only new voice you address.`]
       : []),
@@ -115,7 +115,7 @@ export function buildTurnInstruction({ kind, prevName, isFinalSeat, longForm, re
     'Hegel/Marx method: negation must be determinate (preserve-and-elevate), never mere dismissal. Weave the concession inside the negation or reformulation prose (your CONCESSION stock) — there is no separate incorporation section.',
     'Your STOCK PHRASES below address PREV as YOU, directly — use at most one per turn, often none; never open two of your turns the same way. The variants marked SPENT below are used up this session: never reuse them.',
     ...(low
-      ? ['LOW ORDERS, governing this turn: open with a CONCESSION variant, never a rebuttal one. Use plain everyday words throughout — translate or describe every hard term instead of using it; if you keep one essential term, say what it does in plain words right away. Short sentences; one idea per paragraph. The language level at the end of your persona outranks everything above.']
+      ? ['LOW ORDERS, governing this turn: open with a concession in your own words — state what holds in the previous position first, plainly; never lift a stock phrase, never open with a rebuttal shape. Use plain everyday words throughout — translate or describe every hard term instead of using it; if you keep one essential term, say what it does in plain words right away. Short sentences; one idea per paragraph. The language level at the end of your persona outranks everything above.']
       : []),
     'VOICE: write continuous prose in your own diction, syntax and rhythm (your STYLE ESSENCE governs the sentence, within your LANGUAGE LEVEL) — no headings or labels inside your prose. '
     + (low
@@ -195,13 +195,13 @@ export function buildUserMessage({ question, prevText, ownPriorLines, turnInstru
 }
 
 /**
- * One-line Low reminder, placed just before the JSON hint (which stays final
- * so parse compliance never suffers). Closest instruction to generation:
- * reinforces the persona's LANGUAGE LEVEL after the predecessor text, survey,
- * and grounding have all had their say. Low only, for now.
+ * Low closing self-check, placed just before the JSON hint (which stays
+ * final so parse compliance never suffers). Closest instruction to
+ * generation: catches what the persona blocks miss — especially technical
+ * ideas riding in plain words. Low only, for now.
  */
 export const LOW_CLOSING_REMINDER =
-  'PLAIN WORDS REMINDER: answer in simple everyday English — translate or describe every hard term instead of using it. Your LANGUAGE LEVEL above governs.';
+  'FINAL CHECK before answering, Low only: reread your draft and circle every word AND every idea a school-leaver would not know — rewrite both in plain words and concrete scenes. Every abstraction must have its everyday 21st-century example attached; an unexamined abstraction fails the turn. Say everything once: the second half must advance the thought, never restate the first. Your LANGUAGE LEVEL above governs.';
 
 export const STRUCTURED_OUTPUT_HINT = [  'Respond with JSON only, matching this shape exactly (all four keys always present):',
   '{ negation, reformulation, new_contribution, works_referenced: string[] }',

@@ -64,8 +64,11 @@ lives in the style file, not here).
 - [ ] `rag-manifest.mjs` → stamp rights approved/dated on owner say-so
   (never `--approve-all` with other items pending) → ingest per `--id`
   → `check-links` → `test:rag` → `rag:eval` (must stay green).
-- [ ] Wire the verified High quote as `high_exemplar` (Medium/Low trio
-  lines stay eval gold until tightened against the fail rules).
+- [ ] Wire the trio: verified High quote as `high_exemplar`
+  (quotable anchor, High only); Medium/Low lines into `trios.ts` once
+  they pass the fail rules — each level renders its comparison (Medium
+  sees HIGH→MEDIUM, Low sees the full trio with "never copy a single
+  word" on the High line).
 - [ ] Copy sweep for the headcount ("ten" → "eleven", turn counts,
   spoken welcome, desk lines, README, PLAN).
 - [ ] Typecheck + lint + build + graph update. Record eval in

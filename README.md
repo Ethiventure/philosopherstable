@@ -24,7 +24,7 @@ Try it here: https://philosopherstable.netlify.app/
 
 **Cabinet** — who sits and how deep it goes:
 - Toggle any of the eleven in or out (minimum two — a debate needs an opponent). Five seats (≈15 turns) is the recommended sitting: the full arc at half the tokens.
-- **Ground turns in source texts** (experimental, off by default): each speaker searches its *own* indexed books first and must borrow their actual vocabulary — at least two short verbatim loans per turn (at Low, paraphrased in plain words instead of quoted), receipts inspectable under every intervention. Slower, more tokens, fewer stereotypes.
+- **Ground turns in source texts** (experimental, on by default): each speaker searches its *own* indexed books first and must borrow their actual vocabulary — at least two short verbatim loans per turn (at Low, paraphrased in plain words instead of quoted), receipts inspectable under every intervention. Slower, more tokens, fewer stereotypes.
 
 **Display** — the reading room, your way:
 - Parchment / dim / ink-dark themes (background and text always change as tested pairs), three typefaces including dyslexia-friendly, text size, line spacing, high contrast, reduced motion. The house style stays; adjustments layer on top.

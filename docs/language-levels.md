@@ -28,15 +28,41 @@ drifts while the others stay undefined:
   the language, not the ideas.
 
 **2. Starve Low of difficulty generators.** The language block alone
-loses to ~3,000 tokens of academic profile above it. At Low: drop the
-style machinery (generation rules, REGISTER, CDA detail, special modes,
-universal mechanisms), add "read the profile and style lines for ideas
-only — never borrow their specialist words", and rewrite every
+loses to ~3,000 tokens of academic profile above it — Deleuze's profile
+alone orders "think in terms of assemblages" forty times over. At Low:
+drop the style machinery (generation rules, REGISTER, CDA detail, special
+modes, universal mechanisms), add "read the profile and style lines for
+ideas only — never borrow their specialist words", drop the profile
+word-hoards at Low too (`core_principle` issues imperatives like "think
+in terms of assemblages"; the moves/concepts/distinctions/criticisms/
+methods/authorities lists read as vocabulary to mirror — conceptions,
+influences, and whats stay), and rewrite every
 `intensity.low` sentence in plain words (no `compound syntax`,
 `polemic`, or `sublation` orders). Knowledge stays full — only diction
 is governed.
 
-**3. Give Medium trigger + procedure + example + teeth** (in that
+**3. Govern concepts, not just words, at Low** (`LOW_CONCEPT_RULES`).
+Plain words still carry technical concepts ("social structures shape…"
+needs a politics degree to parse), and the old "simplify language, not
+ideas" line actively protected them. At Low: people-doing-things (no
+bearer-less structures — named kinds of people doing named things),
+example-first per section (one everyday 21st-century scene, then the one
+plain sentence it proves), one abstraction per turn with its example
+attached (an unexamined abstraction fails the turn), Low steelman
+restates PREV as a concrete situation never in PREV's categories,
+generic translation moves (structure → who pushes whom; contradiction
+→ an argument changing both sides), naked-abstract-noun ban
+(structures, institutions, systems, relations, forces, the universal,
+the dialectical — each must hold its bearer in the same sentence),
+and a banned-at-Low seed list
+(assemblage, deterritorialisation, haecceity, rhizome, ethical life,
+self-consciousness, mediation, actualisation, recognition, universal
+will, civil society, the noumenal, … — describe,
+never name). Position: translate, don't reduce — distinctions survive
+as differences you can point at. The Low closing reminder becomes a
+self-check (circle every unknown word AND idea, rewrite both).
+
+**4. Give Medium trigger + procedure + example + teeth** (in that
 order of importance):
 - Trigger (concrete reader test): "any jargon or IELTS7+-level wording".
 - Procedure: go sentence by sentence, term by term — no hard word
@@ -51,7 +77,7 @@ order of importance):
   a gloss that needs a hard word gives that word its own same-sentence
   gloss.
 
-**4. Match the turn instructions to the level**
+**5. Match the turn instructions to the level**
 (`src/lib/dialectic/prompts.ts`). Persona rules get overridden by
 louder turn machinery, so each level needs its own voice, heat, loan,
 and quoting rules: Low gets calm-teacher heat, paraphrased (never
@@ -64,7 +90,7 @@ question-paraphrase rule only started working as its own QUESTION RULE
 ("a turn that echoes the question back has failed"), never as part of
 the five-word rule. The JSON shape hint always stays final.
 
-**5. Match grounding to the level** (`src/lib/extract.ts`,
+**6. Match grounding to the level** (`src/lib/extract.ts`,
 `src/lib/rag-ground.ts`). Grounding blocks are nearer to generation
 than the persona and win any contradiction: Low orders paraphrase-only
 and bans verbatim loans; Medium/High order verbatim borrowing. A level
@@ -73,12 +99,12 @@ turn. The service desk keeps verbatim quotes at every level by explicit
 owner decision (quotes are checkable against shown sources), with a
 trailing DESK OVERRIDE exempting it from the no-summary rule.
 
-**6. Never quote the question.** Every voice at every level paraphrases
+**7. Never quote the question.** Every voice at every level paraphrases
 and riffs on the user question through its framework — opening turn,
 critique turns, desk, margins note. Single shared nouns may repeat;
 multi-word clauses may not.
 
-**7. Cost it.** Measured (chars/4, Bookchin critique turn): Low ~5,150,
+**8. Cost it.** Measured (chars/4, Bookchin critique turn): Low ~5,150,
 Medium ~6,500, High ~6,470 tokens/call. Worked examples add ~150
 Medium / ~120 Low; paired comparison lines add ~40 / ~150. Only the
 active speaker's context loads, so per-seat examples cost ~4%/session,
@@ -98,14 +124,35 @@ burn fast on 70B), so sequential calls are fine but retry bursts bite.
    owner-side rather than bouncing them back.
 4. Wire High quotes as quotable voice anchors; wire per-seat
    Medium/Low as worked examples. Render comparisons, not isolated
-   lines: Medium sees HIGH→MEDIUM, Low sees MEDIUM→LOW. High stays
-   anchor-only (simplified versions would drag it down); Low never
-   sees the High quote (verbatim hard text in context is the leak
-   vector). Keep one shared fallback example in code for seats
-   without trios.
+   lines: Medium sees HIGH→MEDIUM, Low sees the full HIGH→MEDIUM→LOW
+   trio — one anchored source of truth beats two-hop telephone drift,
+   and the High line arrives wrapped in "never copy a single word"
+   inside four layers of never-borrow orders. High stays anchor-only
+   (simplified versions would drag it down). Keep one shared fallback
+   example in code for seats without trios.
 5. Evaluate live sittings per level (rubric: hard terms untranslated —
    0 Low / glossed Medium / free High; sentence length; meaning kept;
-   leakage; loan behavior; heat).
+   leakage; loan behavior; heat; plus the Low concept probe: run
+   Deleuze-at-Low on assemblages — concrete actors named? banned terms
+   absent? every abstraction carrying its 21st-century example?).
+
+   Evidence (new default seats — Hegel, Marx, Bloch, Bookchin, Deleuze —
+   all-Low sitting, grounding on, footer-stamped): concept rules landing
+   (examples attached in nearly every turn, shorter sentences; Bloch and
+   Bookchin genuinely Low, Marx close). Two ceilings found: (a) ban lists
+   are disobeyed by Hegel/Deleuze ("actualisation", "assemblages" used
+   despite bans) — bans order, they don't prevent; the remaining lever
+   is abridging the conceptions themselves at Low. (b) Word budgets don't
+   bind (Bookchin P3 ~250 words vs 100 cap) and pass-3 survey rules
+   produce "as X noted" litanies — caps and invocation rules are wishes,
+   not walls. Live-vs-draft comparison (same question): deployed Low
+   speaks pure seminar ("relations of production", "power structures");
+   draft Low carries concrete scenes, named actors, answered margins
+   questions. Remaining draft gaps: toolkit phrases lifted verbatim
+   three-to-a-turn despite "at most ONE" — so Low no longer receives any
+   toolkit or spent list (calm entry ordered in own words instead); school
+   labels ("libertarian municipalism", "social ecology") added to the
+   describe-never-name seeds.
 
 ## Trio-creation instructions that did NOT work
 
