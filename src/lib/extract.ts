@@ -1,4 +1,5 @@
 import { CORPUS_SOURCES_DATA } from '@/data/corpus-sources';
+import type { StyleIntensity } from '@/types';
 
 /**
  * Client for the extract function (Phase 2, item ii). Resolves the speaker's
@@ -76,10 +77,18 @@ export async function extractPassages(
   }
 }
 
-/** Prompt block, or '' when nothing grounded. Citations use the footnote number. */
-export function formatGroundedBlock(title: string, number: number, passages: GroundedPassage[]): string {
+/** Prompt block, or '' when nothing grounded. Citations use the footnote number.
+ * At Low the block orders paraphrase-only (never verbatim loans) so grounded
+ * turns stay in plain words; default keeps the verbatim-borrow rule. */
+export function formatGroundedBlock(title: string, number: number, passages: GroundedPassage[], intensity?: StyleIntensity): string {
   if (!passages.length) return '';
   const quoted = passages.map((p) => `> ${p.text}`).join('\n');
+  if (intensity === 'low') {
+    return [
+      `SOURCE PASSAGES from '${title}' [${number}] — read these for ideas, then PARAPHRASE: describe what they say in your own plain everyday words and cite the use [${number}]. Never lift rare, distinctive, archaic, or specialist words verbatim — not even in single quotes (bare double quotes corrupt your reply). Plain description beats the passage's own terms; closely paraphrase everything, always citing [${number}]:`,
+      quoted,
+    ].join('\n');
+  }
   return [
     `SOURCE PASSAGES from '${title}' [${number}] — borrow visibly: weave at least two distinctive single words or short phrases (no more than six words each, in single quotes — bare double quotes corrupt your reply) from these passages into your own sentences, and cite the use [${number}]. Prefer the passage's own terms over your stock summary of this thinker; what you don't borrow, closely paraphrase, always citing [${number}]:`,
     quoted,

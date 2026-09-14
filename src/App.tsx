@@ -32,7 +32,7 @@ import {
   type Philosopher,
   type StyleEssence,
 } from '@/types';
-import { buildCodaPrompt, buildTurnInstruction, buildUserMessage, CODA_REPAIR_SUFFIX, CODA_SYSTEM, getTurnKind, STRUCTURED_OUTPUT_HINT } from '@/lib/dialectic/prompts';
+import { buildCodaPrompt, buildTurnInstruction, buildUserMessage, CODA_REPAIR_SUFFIX, CODA_SYSTEM, getTurnKind, LOW_CLOSING_REMINDER, STRUCTURED_OUTPUT_HINT } from '@/lib/dialectic/prompts';
 import { LlmError, type LlmErrorCode, type TurnOutput } from '@/lib/llm';
 import { loadSettings, saveSettings, type CabinetSettings, type GroqModel } from '@/lib/settings';
 import { applyDisplay, loadDisplay, saveDisplay } from '@/lib/preferences';
@@ -553,7 +553,7 @@ function App() {
         reversed: pass === 2,
         marginsNote: pass === 2 && !!codaRef.current,
         marginsFirst: pass === 2 && index === 0 && !!codaRef.current,
-        lowRegister: snap.intensity === 'low',
+        intensity: snap.intensity,
       });
       const systemPrompt = renderPersona(speaker, snap.intensity);
       // Efficient economy trims the fed-back predecessor text (the displayed
@@ -579,6 +579,7 @@ function App() {
             speaker.full_name,
             `${question} ${ownPriorLines.join(' ')}`.slice(0, 800),
             snap.provider === 'shared' || snap.provider === 'groq' ? 4 : 6,
+            snap.intensity,
           );
           if (runRef.current !== runId) return;
           if (hit) {
@@ -594,7 +595,7 @@ function App() {
             const prevSlice = (collected[collected.length - 1]?.response_text ?? '').slice(0, 300);
             const { passages, reason } = await extractPassages(g.source.source_url, question, prevSlice);
             if (runRef.current !== runId) return;
-            groundingBlock = formatGroundedBlock(g.source.title, g.number, passages);
+            groundingBlock = formatGroundedBlock(g.source.title, g.number, passages, snap.intensity);
             groundingReceipt = {
               title: g.source.title,
               number: g.number,
@@ -636,9 +637,13 @@ function App() {
             ].join('\n');
           })(),
           spentPhrases: isOpeningTurn ? [] : spentRef.current,
+          intensity: snap.intensity,
         }),
       ];
       if (groundingBlock) messageParts.push('', groundingBlock);
+      // Low only: one-line plain-words reminder just before the JSON hint
+      // (closest instruction to generation; the hint itself stays final).
+      if (snap.intensity === 'low') messageParts.push('', LOW_CLOSING_REMINDER);
       const userMessage = [...messageParts, '', STRUCTURED_OUTPUT_HINT].join('\n');
       setActivePass(pass);
       setActiveAgent(seatPos);
@@ -1193,12 +1198,10 @@ function WelcomeModal({ onClose, onOpenSettings, ttsSupported, listening, onList
         <p className="pass-indicator text-[#8b5254]">The assembly is convened</p>
         <h2 className="text-3xl mt-1">How this cabinet works</h2>
         <div className="space-y-4 mt-5 text-[15px] leading-relaxed text-[#465f75]">
-          <p><span className="drop-cap">A</span>sk your question of the Philosophers' Table and watch our debate unfold. Choose which of us are convened, from Spinoza to Fisher, but it is best to choose 4-6 of us in settings to stop the discussion becoming unwieldy and expensive in token cost. Each of us gets to contribute 3 times, so all 10 of us creates a slow and overwhelming 30 turns.</p>
-          <p>To be sure we respond to each other, we negate an idea on its own premises, preserve what holds, and hand a contradiction clockwise to the next. If anything true appears here, it appears <em>between</em> our seats, in the contradictions we force into the open across three passes — never handed down from any one authority.</p>
-          <p>You can read our turns as they happen, below the table, or export them to read as one text file.</p>
-          <p>If the debate leaves you behind, ring the Philosophers&rsquo; Service desk — the small round bell at the bottom-right of every page, and a card beside the table. Pick any of the ten thinkers and ask one-to-one: definitions in plain words, a concrete example, and a question back to check the idea landed. Twenty questions per sitting, and your chats join the export.</p>
-          <p>On providers, equally plainly. Begin on the shared key: no key, no account, nothing to configure. When the commons runs dry, bring your own — OpenRouter (free cycle or cheap paid), Groq, DeepInfra or Together. Your keys stay in your browser and go straight to that provider alone — of course they also exist on the provider's own servers, as with any API key, but we never see them, store them, or want your login. We are only here for the debate. Test the key in Settings before you begin; and if the cabinet ever halts, read the notice — it names the exact limit you met and the way back.</p>
-          <p>We are philosophers; sometimes we take a while to think and read. If we go on strike, the demand reasons appear under your question — our reluctance can usually be resolved by choosing Resume Cabinet.</p>
+          <p><span className="drop-cap">A</span>sk your question of the Philosophers' Table and watch dead thinkers debate it. Convene 4–6 of us (all 10 means a slow 30 turns); each speaks 3 times across three passes. Read along below the table, or export it all as one text file.</p>
+          <p>Each of us answers only our predecessor — negating on its own premises, preserving what holds, handing a contradiction clockwise. Whatever truth appears shows up <em>between</em> our seats, never handed down.</p>
+          <p>Lost? Ring the Service desk bell (bottom-right): one thinker, plain definitions, an example, a check-back question — 20 per sitting, with its own voice picker. First set the table's voice in Settings → Cabinet: <strong>Low</strong> speaks plainly, <strong>Medium</strong> explains its terms, <strong>High</strong> runs at full difficulty. Ideas unchanged throughout.</p>
+          <p>Start on the shared key: no account, nothing to configure. When the commons runs dry, bring your own — OpenRouter, Groq, DeepInfra or Together; keys stay in your browser. Test the key in Settings; if we ever halt, read the notice — Resume usually fixes it.</p>
         </div>
         <label className="flex items-center gap-3 text-sm text-[#465f75] mt-6"><input type="checkbox" checked={remember} onChange={(event) => setRemember(event.target.checked)} className="w-4 h-4 accent-[#8b5254]" /> Don’t show this again</label>
         <div className="flex flex-wrap gap-2 mt-4">
@@ -1321,11 +1324,11 @@ function SettingsDrawer({ philosophers, activeSlugs, togglePhilosopher, settings
           <div className="space-y-3 border-b border-[#4a392d]/15 pb-6 mb-6">
             <span className="font-heading text-sm uppercase tracking-[0.16em] text-[#4a392d] block">Provider</span>
             <div className="flex flex-wrap gap-2" role="radiogroup" aria-label="AI provider">
-              <button role="radio" aria-checked={settings.provider === 'shared'} onClick={() => { setTestState('idle'); setTestMessage(''); onSettingsChange({ ...settings, provider: 'shared' }); }} className={`btn-secondary ${settings.provider === 'shared' ? '!border-[#8b5254] !text-[#8b5254]' : ''}`}>Cabinet shared</button>
-              <button role="radio" aria-checked={usingOpenRouter} onClick={() => { setTestState('idle'); setTestMessage(''); onSettingsChange({ ...settings, provider: 'openrouter' }); }} className={`btn-secondary ${usingOpenRouter ? '!border-[#8b5254] !text-[#8b5254]' : ''}`}>OpenRouter free cycle</button>
-              <button role="radio" aria-checked={usingGroq} onClick={() => { setTestState('idle'); setTestMessage(''); onSettingsChange({ ...settings, provider: 'groq' }); }} className={`btn-secondary ${usingGroq ? '!border-[#8b5254] !text-[#8b5254]' : ''}`}>Groq free</button>
-              <button role="radio" aria-checked={usingDeepInfra} onClick={() => { setTestState('idle'); setTestMessage(''); onSettingsChange({ ...settings, provider: 'deepinfra' }); }} className={`btn-secondary ${usingDeepInfra ? '!border-[#8b5254] !text-[#8b5254]' : ''}`}>DeepInfra</button>
-              <button role="radio" aria-checked={usingTogether} onClick={() => { setTestState('idle'); setTestMessage(''); onSettingsChange({ ...settings, provider: 'together' }); }} className={`btn-secondary ${usingTogether ? '!border-[#8b5254] !text-[#8b5254]' : ''}`}>Together</button>
+              <button role="radio" aria-checked={settings.provider === 'shared'} title="No key needed — shared Groq-backed key, a few sittings a day each." onClick={() => { setTestState('idle'); setTestMessage(''); onSettingsChange({ ...settings, provider: 'shared' }); }} className={`btn-secondary ${settings.provider === 'shared' ? '!border-[#8b5254] !text-[#8b5254]' : ''}`}>Cabinet shared</button>
+              <button role="radio" aria-checked={usingOpenRouter} title="Your OpenRouter key — free model cycle, or a pinned paid model." onClick={() => { setTestState('idle'); setTestMessage(''); onSettingsChange({ ...settings, provider: 'openrouter' }); }} className={`btn-secondary ${usingOpenRouter ? '!border-[#8b5254] !text-[#8b5254]' : ''}`}>OpenRouter free cycle</button>
+              <button role="radio" aria-checked={usingGroq} title="Your Groq key — free tier, no card." onClick={() => { setTestState('idle'); setTestMessage(''); onSettingsChange({ ...settings, provider: 'groq' }); }} className={`btn-secondary ${usingGroq ? '!border-[#8b5254] !text-[#8b5254]' : ''}`}>Groq free</button>
+              <button role="radio" aria-checked={usingDeepInfra} title="Your DeepInfra key — pinned Llama 70B Turbo, card on file." onClick={() => { setTestState('idle'); setTestMessage(''); onSettingsChange({ ...settings, provider: 'deepinfra' }); }} className={`btn-secondary ${usingDeepInfra ? '!border-[#8b5254] !text-[#8b5254]' : ''}`}>DeepInfra</button>
+              <button role="radio" aria-checked={usingTogether} title="Your Together key — pinned Qwen 30B, card required." onClick={() => { setTestState('idle'); setTestMessage(''); onSettingsChange({ ...settings, provider: 'together' }); }} className={`btn-secondary ${usingTogether ? '!border-[#8b5254] !text-[#8b5254]' : ''}`}>Together</button>
             </div>
             {settings.provider === 'shared' ? (
               <p className="text-xs text-[#465f75]/70">No key needed — the cabinet runs on its own Groq-backed key, held server-side and shared across visitors (about two full sessions a day each). If the shared quota runs dry, add your own OpenRouter, Groq, DeepInfra or Together key below by switching provider.</p>
@@ -1401,29 +1404,35 @@ function SettingsDrawer({ philosophers, activeSlugs, togglePhilosopher, settings
                 <p className="text-xs text-[#465f75]/70">Pick a provider above — this cabinet no longer speaks to Gemini.</p>
               </>
             )}
-            <span className="font-heading text-sm uppercase tracking-[0.16em] text-[#4a392d] pt-2 block">Style intensity (all seats)</span>
-            <div className="flex gap-2">{(['low', 'medium', 'high'] as const).map((level) => <button key={level} onClick={() => onSettingsChange({ ...settings, intensity: level })} className={`btn-secondary capitalize ${settings.intensity === level ? '!border-[#8b5254] !text-[#8b5254]' : ''}`}>{level}</button>)}</div>
-            <label className="flex items-center gap-3 text-[15px] text-[#465f75] pt-1"><input type="checkbox" checked={settings.longForm} onChange={(event) => onSettingsChange({ ...settings, longForm: event.target.checked })} className="w-4 h-4 accent-[#8b5254]" /> Long form (~280 words/turn instead of ~100)</label>
-            <span className="font-heading text-sm uppercase tracking-[0.16em] text-[#4a392d] pt-2 block">Turn economy</span>
-            <div className="flex gap-2" role="radiogroup" aria-label="Turn economy">
-              <button role="radio" aria-checked={settings.economy === 'full'} onClick={() => onSettingsChange({ ...settings, economy: 'full' })} className={`btn-secondary ${settings.economy === 'full' ? '!border-[#8b5254] !text-[#8b5254]' : ''}`}>Full</button>
-              <button role="radio" aria-checked={settings.economy === 'efficient'} onClick={() => onSettingsChange({ ...settings, economy: 'efficient' })} className={`btn-secondary ${settings.economy === 'efficient' ? '!border-[#8b5254] !text-[#8b5254]' : ''}`}>Efficient</button>
-            </div>
-            <p className="text-xs text-[#465f75]/70">Efficient trims the predecessor text fed back each turn (shown and exported in full regardless). Voices are untouched — personas are never trimmed. Roughly a third fewer input tokens.</p>
           </div>
         )}
         {tab === 'cabinet' && (
           <div>
             <div className="flex items-start justify-between mb-4"><div><p className="pass-indicator text-[#8b5254]">Experimental variable</p><h2 className="text-2xl">Cabinet selection</h2></div></div>
+            <div className="space-y-3 border-b border-[#4a392d]/15 pb-6 mb-6">
+              <span className="font-heading text-sm uppercase tracking-[0.16em] text-[#4a392d] block" title="How hard the language hits. Ideas stay the same at every level — only the words change.">How it speaks (all seats)</span>
+              <div className="flex gap-2" role="radiogroup" aria-label="Style intensity">
+                <button role="radio" aria-checked={settings.intensity === 'low'} title="Plain everyday words, calm entries — the easiest read. Ideas unchanged." onClick={() => onSettingsChange({ ...settings, intensity: 'low' })} className={`btn-secondary capitalize ${settings.intensity === 'low' ? '!border-[#8b5254] !text-[#8b5254]' : ''}`}>Low</button>
+                <button role="radio" aria-checked={settings.intensity === 'medium'} title="The standard seminar — important terms kept and explained." onClick={() => onSettingsChange({ ...settings, intensity: 'medium' })} className={`btn-secondary capitalize ${settings.intensity === 'medium' ? '!border-[#8b5254] !text-[#8b5254]' : ''}`}>Medium</button>
+                <button role="radio" aria-checked={settings.intensity === 'high'} title="Full voice — authentic vocabulary, hostile where the author warrants it." onClick={() => onSettingsChange({ ...settings, intensity: 'high' })} className={`btn-secondary capitalize ${settings.intensity === 'high' ? '!border-[#8b5254] !text-[#8b5254]' : ''}`}>High</button>
+              </div>
+              <label className="flex items-center gap-3 text-[15px] text-[#465f75] pt-1" title="Longer turns: about 280 words each instead of 100. A 12-minute read becomes a 30-minute one."><input type="checkbox" checked={settings.longForm} onChange={(event) => onSettingsChange({ ...settings, longForm: event.target.checked })} className="w-4 h-4 accent-[#8b5254]" /> Long form (~280 words/turn instead of ~100)</label>
+              <span className="font-heading text-sm uppercase tracking-[0.16em] text-[#4a392d] pt-2 block" title="How much of the previous turn is re-sent each call. The shown transcript and export always stay whole.">Turn economy</span>
+              <div className="flex gap-2" role="radiogroup" aria-label="Turn economy">
+                <button role="radio" aria-checked={settings.economy === 'full'} title="Re-send the full predecessor text each turn. Highest token use." onClick={() => onSettingsChange({ ...settings, economy: 'full' })} className={`btn-secondary ${settings.economy === 'full' ? '!border-[#8b5254] !text-[#8b5254]' : ''}`}>Full</button>
+                <button role="radio" aria-checked={settings.economy === 'efficient'} title="Trim predecessor text re-sent each turn. About a third fewer input tokens." onClick={() => onSettingsChange({ ...settings, economy: 'efficient' })} className={`btn-secondary ${settings.economy === 'efficient' ? '!border-[#8b5254] !text-[#8b5254]' : ''}`}>Efficient</button>
+              </div>
+              <p className="text-xs text-[#465f75]/70">Efficient trims the predecessor text fed back each turn (shown and exported in full regardless). Voices are untouched — personas are never trimmed. Roughly a third fewer input tokens.</p>
+              <label className="flex items-start gap-3 text-xs text-[#465f75]/70 pt-1" title="Fetch each speaker's key work and inject the most relevant passages. Slower, more tokens, better grounded. Off by default."><input type="checkbox" checked={settings.grounding} onChange={(event) => onSettingsChange({ ...settings, grounding: event.target.checked })} className="w-4 h-4 mt-0.5 accent-[#8b5254]" /> Ground turns in source texts (experimental): fetches each speaker's key work and injects the most relevant passages. Slower, more tokens, better grounded. Off by default.</label>
+            </div>
             <div className="space-y-2">{DEFAULT_SEATING_ORDER.map((slug) => {
               const philosopher = philosophers.find((item) => item.slug === slug);
               const isActive = activeSlugs.includes(slug);
               if (!philosopher) return null;
-              return <button key={slug} onClick={() => togglePhilosopher(slug)} aria-pressed={isActive} className={`w-full flex items-center gap-3 p-3 border transition-all ${isActive ? 'bg-[#f2ebd9]/65 border-[#4a392d]/40' : 'bg-transparent border-[#4a392d]/10 opacity-50 hover:opacity-80'}`}><div className={`w-5 h-5 rounded-sm border flex items-center justify-center ${isActive ? 'bg-[#8b5254] border-[#8b5254]' : 'border-[#4a392d]/30'}`}>{isActive && <X size={12} className="text-white" />}</div><span className="w-8 h-8 rounded-full border flex items-center justify-center font-heading" style={{ borderColor: philosopher.accent_color, color: philosopher.accent_color }}>{philosopher.name.charAt(0)}</span><span className="font-heading text-lg text-[#4a392d]">{philosopher.full_name}</span></button>;
+              return <button key={slug} onClick={() => togglePhilosopher(slug)} aria-pressed={isActive} title={philosopher.biography} className={`w-full flex items-center gap-3 p-3 border transition-all ${isActive ? 'bg-[#f2ebd9]/65 border-[#4a392d]/40' : 'bg-transparent border-[#4a392d]/10 opacity-50 hover:opacity-80'}`}><div className={`w-5 h-5 rounded-sm border flex items-center justify-center ${isActive ? 'bg-[#8b5254] border-[#8b5254]' : 'border-[#4a392d]/30'}`}>{isActive && <X size={12} className="text-white" />}</div><span className="w-8 h-8 rounded-full border flex items-center justify-center font-heading" style={{ borderColor: philosopher.accent_color, color: philosopher.accent_color }}>{philosopher.name.charAt(0)}</span><span className="font-heading text-lg text-[#4a392d]">{philosopher.full_name}</span></button>;
             })}</div>
             <p className="text-xs italic text-[#465f75]/60 mt-5">The baton passes only to active thinkers, always to the immediate next seat. The dialectical order remains fixed to preserve the historical-conceptual movement.</p>
             <p className="text-xs text-[#465f75]/70 mt-2">{activeSlugs.length} thinkers × 3 passes = {activeSlugs.length * 3} turns{activeSlugs.length > 5 ? ' — five seats (≈15 turns) is the recommended session; it halves token use with the arc intact.' : ' — a lean session.'}</p>
-            <label className="flex items-start gap-3 text-xs text-[#465f75]/70 mt-3"><input type="checkbox" checked={settings.grounding} onChange={(event) => onSettingsChange({ ...settings, grounding: event.target.checked })} className="w-4 h-4 mt-0.5 accent-[#8b5254]" /> Ground turns in source texts (experimental): fetches each speaker's key work and injects the most relevant passages. Slower, more tokens, better grounded. Off by default.</label>
           </div>
         )}
         {tab === 'display' && (

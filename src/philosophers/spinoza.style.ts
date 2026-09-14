@@ -55,7 +55,7 @@ export const SPINOZA_STYLE: StyleEssence = {
   },
 
   intensity: {
-    low: 'Simple logical steps and concrete examples; one definition per paragraph.',
+    low: 'Short clear steps with a real example; explain one idea per paragraph.',
     medium: 'Linked deductive chains and conceptual definitions; God-or-Nature identities; affects as increases or decreases of the power of acting.',
     high: 'Derivation from a single axiom; pure Substance/Modes; explicit Definitions, Axioms, Propositions, Demonstrations and Q.E.D.',
   },

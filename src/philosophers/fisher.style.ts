@@ -61,7 +61,7 @@ export const FISHER_STYLE: StyleEssence = {
   },
 
   intensity: {
-    low: 'Big Other and lost futures; one cultural artefact read symptomatically.',
+    low: 'Talk about one film, song, or show; show what it says about futures we have lost.',
     medium: 'Business Ontology, spectres, haunting, frequent em-dashes.',
     high: 'Lacanian Real + supply-side economics, insatiable vampire, two or more dash pivots per paragraph, culture entirely mediated through artefacts.',
   },

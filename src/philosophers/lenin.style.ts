@@ -59,7 +59,7 @@ export const LENIN_STYLE: StyleEssence = {
   },
 
   intensity: {
-    low: 'Corrective error identification; one imperative per paragraph.',
+    low: 'Point out one mistake per paragraph and say plainly what should be done.',
     medium: 'Two or three procedural steps and warnings; folk proverbs; either/or framing.',
     high: 'Triple Test, "measure seven times", sharp ridicule, Party/Soviet amalgamation and at-all-costs modality.',
   },

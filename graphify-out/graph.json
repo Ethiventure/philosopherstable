@@ -79,7 +79,7 @@
       "file_type": "code",
       "norm_label": "turninstructionargs",
       "source_file": "src/lib/dialectic/prompts.ts",
-      "source_location": "L39"
+      "source_location": "L41"
     },
     {
       "id": "src_lib_dialectic_prompts_turnkind",
@@ -92,7 +92,7 @@
       "file_type": "code",
       "norm_label": "turnkind",
       "source_file": "src/lib/dialectic/prompts.ts",
-      "source_location": "L23"
+      "source_location": "L25"
     },
     {
       "id": "src_lib_dialectic_prompts_usermessageargs",
@@ -105,7 +105,7 @@
       "file_type": "code",
       "norm_label": "usermessageargs",
       "source_file": "src/lib/dialectic/prompts.ts",
-      "source_location": "L115"
+      "source_location": "L142"
     },
     {
       "id": "src_lib_groq_groqtextargs",
@@ -482,7 +482,7 @@
       "file_type": "code",
       "norm_label": "extractreason",
       "source_file": "src/lib/extract.ts",
-      "source_location": "L45"
+      "source_location": "L46"
     },
     {
       "id": "src_lib_extract_groundedpassage",
@@ -495,7 +495,7 @@
       "file_type": "code",
       "norm_label": "groundedpassage",
       "source_file": "src/lib/extract.ts",
-      "source_location": "L41"
+      "source_location": "L42"
     },
     {
       "id": "src_app_deckentry",
@@ -573,7 +573,7 @@
       "file_type": "code",
       "norm_label": "cachedauthor",
       "source_file": "src/lib/rag-ground.ts",
-      "source_location": "L19"
+      "source_location": "L20"
     },
     {
       "id": "src_lib_rag_ground_raggrounding",
@@ -586,7 +586,7 @@
       "file_type": "code",
       "norm_label": "raggrounding",
       "source_file": "src/lib/rag-ground.ts",
-      "source_location": "L76"
+      "source_location": "L77"
     },
     {
       "id": "src_lib_rag_ground_shardhit",
@@ -599,7 +599,7 @@
       "file_type": "code",
       "norm_label": "shardhit",
       "source_file": "src/lib/rag-ground.ts",
-      "source_location": "L13"
+      "source_location": "L14"
     },
     {
       "id": "src_lib_rag_search_indexpassage",
@@ -729,7 +729,7 @@
       "file_type": "code",
       "norm_label": "servicehistoryitem",
       "source_file": "src/lib/service-chat.ts",
-      "source_location": "L51"
+      "source_location": "L60"
     },
     {
       "id": "src_lib_service_chat_serviceusermessageargs",
@@ -742,7 +742,7 @@
       "file_type": "code",
       "norm_label": "serviceusermessageargs",
       "source_file": "src/lib/service-chat.ts",
-      "source_location": "L57"
+      "source_location": "L66"
     },
     {
       "id": "src_lib_llm_llmerror",
@@ -1085,7 +1085,7 @@
       "file_type": "code",
       "norm_label": "buildcodaprompt()",
       "source_file": "src/lib/dialectic/prompts.ts",
-      "source_location": "L186"
+      "source_location": "L224"
     },
     {
       "id": "src_lib_dialectic_prompts_buildturninstruction",
@@ -1097,7 +1097,7 @@
       "file_type": "code",
       "norm_label": "buildturninstruction()",
       "source_file": "src/lib/dialectic/prompts.ts",
-      "source_location": "L57"
+      "source_location": "L63"
     },
     {
       "id": "src_lib_dialectic_prompts_buildusermessage",
@@ -1109,7 +1109,7 @@
       "file_type": "code",
       "norm_label": "buildusermessage()",
       "source_file": "src/lib/dialectic/prompts.ts",
-      "source_location": "L128"
+      "source_location": "L157"
     },
     {
       "id": "src_lib_dialectic_prompts_getturnkind",
@@ -1121,7 +1121,7 @@
       "file_type": "code",
       "norm_label": "getturnkind()",
       "source_file": "src/lib/dialectic/prompts.ts",
-      "source_location": "L33"
+      "source_location": "L35"
     },
     {
       "id": "src_lib_groq_extractdetail",
@@ -1302,6 +1302,18 @@
       "norm_label": "renderantiwaffle()",
       "source_file": "src/philosophers/shared/anti-waffle.ts",
       "source_location": "L70"
+    },
+    {
+      "id": "src_philosophers_shared_low_style_renderlanguagelevel",
+      "label": "renderLanguageLevel()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 15,
+      "community_name": "philosophers/index.ts",
+      "file_type": "code",
+      "norm_label": "renderlanguagelevel()",
+      "source_file": "src/philosophers/shared/low-style.ts",
+      "source_location": "L55"
     },
     {
       "id": "src_philosophers_shared_low_style_renderlowstyleessence",
@@ -1769,7 +1781,7 @@
       "file_type": "code",
       "norm_label": "extractpassages()",
       "source_file": "src/lib/extract.ts",
-      "source_location": "L51"
+      "source_location": "L52"
     },
     {
       "id": "src_lib_extract_formatgroundedblock",
@@ -1781,7 +1793,7 @@
       "file_type": "code",
       "norm_label": "formatgroundedblock()",
       "source_file": "src/lib/extract.ts",
-      "source_location": "L80"
+      "source_location": "L83"
     },
     {
       "id": "src_lib_extract_groundablesource",
@@ -1793,7 +1805,7 @@
       "file_type": "code",
       "norm_label": "groundablesource()",
       "source_file": "src/lib/extract.ts",
-      "source_location": "L20"
+      "source_location": "L21"
     },
     {
       "id": "src_app_app",
@@ -1817,7 +1829,7 @@
       "file_type": "code",
       "norm_label": "cabinettable()",
       "source_file": "src/App.tsx",
-      "source_location": "L1180"
+      "source_location": "L1185"
     },
     {
       "id": "src_app_displaytab",
@@ -1829,7 +1841,7 @@
       "file_type": "code",
       "norm_label": "displaytab()",
       "source_file": "src/App.tsx",
-      "source_location": "L1437"
+      "source_location": "L1446"
     },
     {
       "id": "src_app_displaytoggle",
@@ -1841,7 +1853,7 @@
       "file_type": "code",
       "norm_label": "displaytoggle()",
       "source_file": "src/App.tsx",
-      "source_location": "L1561"
+      "source_location": "L1570"
     },
     {
       "id": "src_app_getreadmoresource",
@@ -1865,7 +1877,7 @@
       "file_type": "code",
       "norm_label": "groundingreceipt()",
       "source_file": "src/App.tsx",
-      "source_location": "L1571"
+      "source_location": "L1580"
     },
     {
       "id": "src_app_interventionmodal",
@@ -1877,7 +1889,7 @@
       "file_type": "code",
       "norm_label": "interventionmodal()",
       "source_file": "src/App.tsx",
-      "source_location": "L1576"
+      "source_location": "L1585"
     },
     {
       "id": "src_app_positioncomparison",
@@ -1889,7 +1901,7 @@
       "file_type": "code",
       "norm_label": "positioncomparison()",
       "source_file": "src/App.tsx",
-      "source_location": "L1186"
+      "source_location": "L1191"
     },
     {
       "id": "src_app_profilemodal",
@@ -1901,7 +1913,7 @@
       "file_type": "code",
       "norm_label": "profilemodal()",
       "source_file": "src/App.tsx",
-      "source_location": "L1579"
+      "source_location": "L1588"
     },
     {
       "id": "src_app_readingdeck",
@@ -1913,7 +1925,7 @@
       "file_type": "code",
       "norm_label": "readingdeck()",
       "source_file": "src/App.tsx",
-      "source_location": "L1057"
+      "source_location": "L1062"
     },
     {
       "id": "src_app_readmore",
@@ -1949,7 +1961,7 @@
       "file_type": "code",
       "norm_label": "settingsdrawer()",
       "source_file": "src/App.tsx",
-      "source_location": "L1231"
+      "source_location": "L1234"
     },
     {
       "id": "src_app_sourcedrawer",
@@ -1961,7 +1973,7 @@
       "file_type": "code",
       "norm_label": "sourcedrawer()",
       "source_file": "src/App.tsx",
-      "source_location": "L1214"
+      "source_location": "L1217"
     },
     {
       "id": "src_app_spiralview",
@@ -1973,7 +1985,7 @@
       "file_type": "code",
       "norm_label": "spiralview()",
       "source_file": "src/App.tsx",
-      "source_location": "L1184"
+      "source_location": "L1189"
     },
     {
       "id": "src_app_styleessencedisplay",
@@ -1985,7 +1997,7 @@
       "file_type": "code",
       "norm_label": "styleessencedisplay()",
       "source_file": "src/App.tsx",
-      "source_location": "L1578"
+      "source_location": "L1587"
     },
     {
       "id": "src_app_tointervention",
@@ -2009,7 +2021,7 @@
       "file_type": "code",
       "norm_label": "welcomemodal()",
       "source_file": "src/App.tsx",
-      "source_location": "L1188"
+      "source_location": "L1193"
     },
     {
       "id": "src_components_servicechat_servicechat",
@@ -2117,7 +2129,7 @@
       "file_type": "code",
       "norm_label": "loadthinker()",
       "source_file": "src/lib/rag-ground.ts",
-      "source_location": "L30"
+      "source_location": "L31"
     },
     {
       "id": "src_lib_rag_ground_manifestnumberforurl",
@@ -2129,7 +2141,7 @@
       "file_type": "code",
       "norm_label": "manifestnumberforurl()",
       "source_file": "src/lib/rag-ground.ts",
-      "source_location": "L25"
+      "source_location": "L26"
     },
     {
       "id": "src_lib_rag_ground_searchthinkerpassages",
@@ -2141,7 +2153,7 @@
       "file_type": "code",
       "norm_label": "searchthinkerpassages()",
       "source_file": "src/lib/rag-ground.ts",
-      "source_location": "L89"
+      "source_location": "L90"
     },
     {
       "id": "src_lib_rag_search_bm25term",
@@ -2177,7 +2189,7 @@
       "file_type": "code",
       "norm_label": "round()",
       "source_file": "src/lib/rag-search.ts",
-      "source_location": "L188"
+      "source_location": "L198"
     },
     {
       "id": "src_lib_rag_search_searchindex",
@@ -2417,7 +2429,7 @@
       "file_type": "code",
       "norm_label": "buildservicesystemprompt()",
       "source_file": "src/lib/service-chat.ts",
-      "source_location": "L39"
+      "source_location": "L41"
     },
     {
       "id": "src_lib_service_chat_buildserviceusermessage",
@@ -2429,7 +2441,7 @@
       "file_type": "code",
       "norm_label": "buildserviceusermessage()",
       "source_file": "src/lib/service-chat.ts",
-      "source_location": "L64"
+      "source_location": "L73"
     },
     {
       "id": "src_lib_service_chat_generateservicetext",
@@ -2441,7 +2453,7 @@
       "file_type": "code",
       "norm_label": "generateservicetext()",
       "source_file": "src/lib/service-chat.ts",
-      "source_location": "L87"
+      "source_location": "L96"
     },
     {
       "id": "src_lib_porter_endscvc",
@@ -3011,6 +3023,149 @@
       "source_location": "L3"
     },
     {
+      "id": "package_scripts",
+      "label": "scripts",
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "package.json",
+      "file_type": "code",
+      "norm_label": "scripts",
+      "source_file": "package.json",
+      "source_location": "L6"
+    },
+    {
+      "id": "package_scripts_build",
+      "label": "build",
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "package.json",
+      "file_type": "code",
+      "norm_label": "build",
+      "source_file": "package.json",
+      "source_location": "L8"
+    },
+    {
+      "id": "package_scripts_check_links",
+      "label": "check-links",
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "package.json",
+      "file_type": "code",
+      "norm_label": "check-links",
+      "source_file": "package.json",
+      "source_location": "L12"
+    },
+    {
+      "id": "package_scripts_check_links_fix",
+      "label": "check-links:fix",
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "package.json",
+      "file_type": "code",
+      "norm_label": "check-links:fix",
+      "source_file": "package.json",
+      "source_location": "L13"
+    },
+    {
+      "id": "package_scripts_dev",
+      "label": "dev",
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "package.json",
+      "file_type": "code",
+      "norm_label": "dev",
+      "source_file": "package.json",
+      "source_location": "L7"
+    },
+    {
+      "id": "package_scripts_lint",
+      "label": "lint",
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "package.json",
+      "file_type": "code",
+      "norm_label": "lint",
+      "source_file": "package.json",
+      "source_location": "L9"
+    },
+    {
+      "id": "package_scripts_preview",
+      "label": "preview",
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "package.json",
+      "file_type": "code",
+      "norm_label": "preview",
+      "source_file": "package.json",
+      "source_location": "L10"
+    },
+    {
+      "id": "package_scripts_rag_eval",
+      "label": "rag:eval",
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "package.json",
+      "file_type": "code",
+      "norm_label": "rag:eval",
+      "source_file": "package.json",
+      "source_location": "L17"
+    },
+    {
+      "id": "package_scripts_rag_ingest",
+      "label": "rag:ingest",
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "package.json",
+      "file_type": "code",
+      "norm_label": "rag:ingest",
+      "source_file": "package.json",
+      "source_location": "L14"
+    },
+    {
+      "id": "package_scripts_rag_inspect",
+      "label": "rag:inspect",
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "package.json",
+      "file_type": "code",
+      "norm_label": "rag:inspect",
+      "source_file": "package.json",
+      "source_location": "L15"
+    },
+    {
+      "id": "package_scripts_rag_search",
+      "label": "rag:search",
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "package.json",
+      "file_type": "code",
+      "norm_label": "rag:search",
+      "source_file": "package.json",
+      "source_location": "L16"
+    },
+    {
+      "id": "package_scripts_test_rag",
+      "label": "test:rag",
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "package.json",
+      "file_type": "code",
+      "norm_label": "test:rag",
+      "source_file": "package.json",
+      "source_location": "L18"
+    },
+    {
+      "id": "package_scripts_typecheck",
+      "label": "typecheck",
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "package.json",
+      "file_type": "code",
+      "norm_label": "typecheck",
+      "source_file": "package.json",
+      "source_location": "L11"
+    },
+    {
       "id": "package_type",
       "label": "type",
       "_origin": "ast",
@@ -3426,7 +3581,7 @@
       "file_type": "code",
       "norm_label": "coda_repair_suffix",
       "source_file": "src/lib/dialectic/prompts.ts",
-      "source_location": "L204"
+      "source_location": "L242"
     },
     {
       "id": "src_lib_dialectic_prompts_coda_system",
@@ -3437,7 +3592,18 @@
       "file_type": "code",
       "norm_label": "coda_system",
       "source_file": "src/lib/dialectic/prompts.ts",
-      "source_location": "L180"
+      "source_location": "L218"
+    },
+    {
+      "id": "src_lib_dialectic_prompts_low_closing_reminder",
+      "label": "LOW_CLOSING_REMINDER",
+      "_origin": "ast",
+      "community": 12,
+      "community_name": "dialectic/prompts.ts",
+      "file_type": "code",
+      "norm_label": "low_closing_reminder",
+      "source_file": "src/lib/dialectic/prompts.ts",
+      "source_location": "L201"
     },
     {
       "id": "src_lib_dialectic_prompts_max_output_tokens",
@@ -3448,7 +3614,7 @@
       "file_type": "code",
       "norm_label": "max_output_tokens",
       "source_file": "src/lib/dialectic/prompts.ts",
-      "source_location": "L30"
+      "source_location": "L32"
     },
     {
       "id": "src_lib_dialectic_prompts_structured_output_hint",
@@ -3459,7 +3625,7 @@
       "file_type": "code",
       "norm_label": "structured_output_hint",
       "source_file": "src/lib/dialectic/prompts.ts",
-      "source_location": "L165"
+      "source_location": "L204"
     },
     {
       "id": "src_lib_dialectic_prompts_word_budgets",
@@ -3470,7 +3636,7 @@
       "file_type": "code",
       "norm_label": "word_budgets",
       "source_file": "src/lib/dialectic/prompts.ts",
-      "source_location": "L25"
+      "source_location": "L27"
     },
     {
       "id": "src_lib_groq",
@@ -3583,6 +3749,28 @@
       "source_location": "L1"
     },
     {
+      "id": "src_philosophers_shared_low_style_language_common",
+      "label": "LANGUAGE_COMMON",
+      "_origin": "ast",
+      "community": 15,
+      "community_name": "philosophers/index.ts",
+      "file_type": "code",
+      "norm_label": "language_common",
+      "source_file": "src/philosophers/shared/low-style.ts",
+      "source_location": "L52"
+    },
+    {
+      "id": "src_philosophers_shared_low_style_language_levels",
+      "label": "LANGUAGE_LEVELS",
+      "_origin": "ast",
+      "community": 15,
+      "community_name": "philosophers/index.ts",
+      "file_type": "code",
+      "norm_label": "language_levels",
+      "source_file": "src/philosophers/shared/low-style.ts",
+      "source_location": "L45"
+    },
+    {
       "id": "src_philosophers_shared_low_style_low_override",
       "label": "LOW_OVERRIDE",
       "_origin": "ast",
@@ -3673,7 +3861,7 @@
       "node_kind": "heading",
       "norm_label": "embeddings (phase 5)",
       "source_file": "PLAN.md",
-      "source_location": "L81"
+      "source_location": "L90"
     },
     {
       "id": "plan_length_short_and_punchy",
@@ -3685,7 +3873,7 @@
       "node_kind": "heading",
       "norm_label": "length: short and punchy",
       "source_file": "PLAN.md",
-      "source_location": "L62"
+      "source_location": "L71"
     },
     {
       "id": "plan_phase_0_make_the_current_tree_build_this_session",
@@ -3697,7 +3885,7 @@
       "node_kind": "heading",
       "norm_label": "phase 0 \u2014 make the current tree build  \u2705 (this session)",
       "source_file": "PLAN.md",
-      "source_location": "L90"
+      "source_location": "L99"
     },
     {
       "id": "plan_phase_1_per_philosopher_files_with_style_essences_shipped_boxes_ticked_sep_2026",
@@ -3709,7 +3897,7 @@
       "node_kind": "heading",
       "norm_label": "phase 1 \u2014 per-philosopher files with style essences  \u2705 (shipped; boxes ticked sep 2026)",
       "source_file": "PLAN.md",
-      "source_location": "L103"
+      "source_location": "L112"
     },
     {
       "id": "plan_phase_2_gemini_dialectical_engine_replaces_makemockintervention",
@@ -3721,7 +3909,7 @@
       "node_kind": "heading",
       "norm_label": "phase 2 \u2014 gemini + dialectical engine (replaces `makemockintervention`)",
       "source_file": "PLAN.md",
-      "source_location": "L118"
+      "source_location": "L127"
     },
     {
       "id": "plan_phase_3_export_rewrite",
@@ -3733,7 +3921,7 @@
       "node_kind": "heading",
       "norm_label": "phase 3 \u2014 export rewrite",
       "source_file": "PLAN.md",
-      "source_location": "L271"
+      "source_location": "L300"
     },
     {
       "id": "plan_phase_4_accessibility_display",
@@ -3745,7 +3933,7 @@
       "node_kind": "heading",
       "norm_label": "phase 4 \u2014 accessibility & display",
       "source_file": "PLAN.md",
-      "source_location": "L279"
+      "source_location": "L308"
     },
     {
       "id": "plan_phase_5_rag_v1_lexical_live_vectors_deferred",
@@ -3757,7 +3945,7 @@
       "node_kind": "heading",
       "norm_label": "phase 5 \u2014 rag (v1 lexical live; vectors deferred)",
       "source_file": "PLAN.md",
-      "source_location": "L291"
+      "source_location": "L320"
     },
     {
       "id": "plan_phase_6_richer_philosopher_information_shipped_sep_2026",
@@ -3769,7 +3957,7 @@
       "node_kind": "heading",
       "norm_label": "phase 6 \u2014 richer philosopher information  \u2705 (shipped sep 2026)",
       "source_file": "PLAN.md",
-      "source_location": "L357"
+      "source_location": "L386"
     },
     {
       "id": "plan_philosopher_data_one_file_each",
@@ -3784,14 +3972,14 @@
       "source_location": "L50"
     },
     {
-      "id": "plan_style_intensity_global",
-      "label": "Style intensity: global",
+      "id": "plan_style_intensity_global_language_level",
+      "label": "Style intensity: global language level",
       "_origin": "ast",
       "community": 17,
       "community_name": "The Dialectical Cabinet \u2014 Implementation Plan",
       "file_type": "document",
       "node_kind": "heading",
-      "norm_label": "style intensity: global",
+      "norm_label": "style intensity: global language level",
       "source_file": "PLAN.md",
       "source_location": "L55"
     },
@@ -4222,7 +4410,7 @@
       "file_type": "code",
       "norm_label": "skip_extensions",
       "source_file": "src/lib/extract.ts",
-      "source_location": "L13"
+      "source_location": "L14"
     },
     {
       "id": "src_lib_extract_skip_hosts",
@@ -4233,7 +4421,7 @@
       "file_type": "code",
       "norm_label": "skip_hosts",
       "source_file": "src/lib/extract.ts",
-      "source_location": "L14"
+      "source_location": "L15"
     },
     {
       "id": "src_philosophers_shared_anti_waffle",
@@ -5514,7 +5702,7 @@
       "file_type": "code",
       "norm_label": "cache",
       "source_file": "src/lib/rag-ground.ts",
-      "source_location": "L23"
+      "source_location": "L24"
     },
     {
       "id": "src_lib_rag_search",
@@ -5704,147 +5892,112 @@
       "source_location": "L86"
     },
     {
-      "id": "package_scripts",
-      "label": "scripts",
+      "id": "docs_language_levels",
+      "label": "language-levels.md",
       "_origin": "ast",
       "community": 52,
-      "community_name": "scripts",
-      "file_type": "code",
-      "norm_label": "scripts",
-      "source_file": "package.json",
-      "source_location": "L6"
+      "community_name": "Language levels (Low / Medium / High)",
+      "file_type": "document",
+      "node_kind": "page",
+      "norm_label": "language-levels.md",
+      "source_file": "docs/language-levels.md",
+      "source_location": "L1"
     },
     {
-      "id": "package_scripts_build",
-      "label": "build",
+      "id": "docs_language_levels_cost_vs_rate_limits_sep_2026",
+      "label": "Cost vs rate limits (Sep 2026)",
       "_origin": "ast",
       "community": 52,
-      "community_name": "scripts",
-      "file_type": "code",
-      "norm_label": "build",
-      "source_file": "package.json",
+      "community_name": "Language levels (Low / Medium / High)",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "cost vs rate limits (sep 2026)",
+      "source_file": "docs/language-levels.md",
+      "source_location": "L122"
+    },
+    {
+      "id": "docs_language_levels_evaluation",
+      "label": "Evaluation",
+      "_origin": "ast",
+      "community": 52,
+      "community_name": "Language levels (Low / Medium / High)",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "evaluation",
+      "source_file": "docs/language-levels.md",
+      "source_location": "L140"
+    },
+    {
+      "id": "docs_language_levels_language_levels_low_medium_high",
+      "label": "Language levels (Low / Medium / High)",
+      "_origin": "ast",
+      "community": 52,
+      "community_name": "Language levels (Low / Medium / High)",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "language levels (low / medium / high)",
+      "source_file": "docs/language-levels.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "docs_language_levels_quote_example_proposal_not_built_yet",
+      "label": "Quote-example proposal (not built yet)",
+      "_origin": "ast",
+      "community": 52,
+      "community_name": "Language levels (Low / Medium / High)",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "quote-example proposal (not built yet)",
+      "source_file": "docs/language-levels.md",
+      "source_location": "L88"
+    },
+    {
+      "id": "docs_language_levels_run_1_sep_2026_low_debate_high_desk_deepinfra_llama_3_3_70b_turbo",
+      "label": "Run 1 (Sep 2026) \u2014 Low debate + High desk, DeepInfra Llama-3.3-70B-Turbo",
+      "_origin": "ast",
+      "community": 52,
+      "community_name": "Language levels (Low / Medium / High)",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "run 1 (sep 2026) \u2014 low debate + high desk, deepinfra llama-3.3-70b-turbo",
+      "source_file": "docs/language-levels.md",
+      "source_location": "L154"
+    },
+    {
+      "id": "docs_language_levels_the_strategy",
+      "label": "The strategy",
+      "_origin": "ast",
+      "community": 52,
+      "community_name": "Language levels (Low / Medium / High)",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "the strategy",
+      "source_file": "docs/language-levels.md",
       "source_location": "L8"
     },
     {
-      "id": "package_scripts_check_links",
-      "label": "check-links",
+      "id": "docs_language_levels_transfer_notes_other_apps",
+      "label": "Transfer notes (other apps)",
       "_origin": "ast",
       "community": 52,
-      "community_name": "scripts",
-      "file_type": "code",
-      "norm_label": "check-links",
-      "source_file": "package.json",
-      "source_location": "L12"
+      "community_name": "Language levels (Low / Medium / High)",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "transfer notes (other apps)",
+      "source_file": "docs/language-levels.md",
+      "source_location": "L214"
     },
     {
-      "id": "package_scripts_check_links_fix",
-      "label": "check-links:fix",
+      "id": "docs_language_levels_verified_prompt_order_bookchin_low_critique_turn",
+      "label": "Verified prompt order (Bookchin, Low, critique turn)",
       "_origin": "ast",
       "community": 52,
-      "community_name": "scripts",
-      "file_type": "code",
-      "norm_label": "check-links:fix",
-      "source_file": "package.json",
-      "source_location": "L13"
-    },
-    {
-      "id": "package_scripts_dev",
-      "label": "dev",
-      "_origin": "ast",
-      "community": 52,
-      "community_name": "scripts",
-      "file_type": "code",
-      "norm_label": "dev",
-      "source_file": "package.json",
-      "source_location": "L7"
-    },
-    {
-      "id": "package_scripts_lint",
-      "label": "lint",
-      "_origin": "ast",
-      "community": 52,
-      "community_name": "scripts",
-      "file_type": "code",
-      "norm_label": "lint",
-      "source_file": "package.json",
-      "source_location": "L9"
-    },
-    {
-      "id": "package_scripts_preview",
-      "label": "preview",
-      "_origin": "ast",
-      "community": 52,
-      "community_name": "scripts",
-      "file_type": "code",
-      "norm_label": "preview",
-      "source_file": "package.json",
-      "source_location": "L10"
-    },
-    {
-      "id": "package_scripts_rag_eval",
-      "label": "rag:eval",
-      "_origin": "ast",
-      "community": 52,
-      "community_name": "scripts",
-      "file_type": "code",
-      "norm_label": "rag:eval",
-      "source_file": "package.json",
-      "source_location": "L17"
-    },
-    {
-      "id": "package_scripts_rag_ingest",
-      "label": "rag:ingest",
-      "_origin": "ast",
-      "community": 52,
-      "community_name": "scripts",
-      "file_type": "code",
-      "norm_label": "rag:ingest",
-      "source_file": "package.json",
-      "source_location": "L14"
-    },
-    {
-      "id": "package_scripts_rag_inspect",
-      "label": "rag:inspect",
-      "_origin": "ast",
-      "community": 52,
-      "community_name": "scripts",
-      "file_type": "code",
-      "norm_label": "rag:inspect",
-      "source_file": "package.json",
-      "source_location": "L15"
-    },
-    {
-      "id": "package_scripts_rag_search",
-      "label": "rag:search",
-      "_origin": "ast",
-      "community": 52,
-      "community_name": "scripts",
-      "file_type": "code",
-      "norm_label": "rag:search",
-      "source_file": "package.json",
-      "source_location": "L16"
-    },
-    {
-      "id": "package_scripts_test_rag",
-      "label": "test:rag",
-      "_origin": "ast",
-      "community": 52,
-      "community_name": "scripts",
-      "file_type": "code",
-      "norm_label": "test:rag",
-      "source_file": "package.json",
-      "source_location": "L18"
-    },
-    {
-      "id": "package_scripts_typecheck",
-      "label": "typecheck",
-      "_origin": "ast",
-      "community": 52,
-      "community_name": "scripts",
-      "file_type": "code",
-      "norm_label": "typecheck",
-      "source_file": "package.json",
-      "source_location": "L11"
+      "community_name": "Language levels (Low / Medium / High)",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "verified prompt order (bookchin, low, critique turn)",
+      "source_file": "docs/language-levels.md",
+      "source_location": "L42"
     },
     {
       "id": "scripts_rag_chunk",
@@ -7107,7 +7260,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "src/App.tsx",
-      "source_location": "L662",
+      "source_location": "L667",
       "weight": 1.0
     },
     {
@@ -7947,7 +8100,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "src/lib/rag-ground.ts",
-      "source_location": "L61",
+      "source_location": "L62",
       "weight": 1.0
     },
     {
@@ -7959,7 +8112,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "src/lib/rag-ground.ts",
-      "source_location": "L62",
+      "source_location": "L63",
       "weight": 1.0
     },
     {
@@ -7971,7 +8124,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "src/lib/rag-ground.ts",
-      "source_location": "L105",
+      "source_location": "L107",
       "weight": 1.0
     },
     {
@@ -7983,7 +8136,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "src/lib/rag-ground.ts",
-      "source_location": "L113",
+      "source_location": "L115",
       "weight": 1.0
     },
     {
@@ -7995,7 +8148,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "src/lib/rag-ground.ts",
-      "source_location": "L94",
+      "source_location": "L96",
       "weight": 1.0
     },
     {
@@ -8383,6 +8536,18 @@
       "weight": 1.0
     },
     {
+      "source": "src_philosophers_index_renderpersona",
+      "target": "src_philosophers_shared_low_style_renderlanguagelevel",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "src/philosophers/index.ts",
+      "source_location": "L88",
+      "weight": 1.0
+    },
+    {
       "source": "src_lib_llm_parseturnoutput",
       "target": "src_lib_llm_parseturnoutput_snippet",
       "relation": "contains",
@@ -8427,7 +8592,7 @@
       "confidence_score": 1.0,
       "context": "field",
       "source_file": "src/lib/rag-ground.ts",
-      "source_location": "L14",
+      "source_location": "L15",
       "weight": 1.0
     },
     {
@@ -8847,7 +9012,7 @@
       "confidence_score": 1.0,
       "context": "import",
       "source_file": "src/lib/rag-ground.ts",
-      "source_location": "L10",
+      "source_location": "L11",
       "weight": 1.0
     },
     {
@@ -8859,7 +9024,7 @@
       "confidence_score": 1.0,
       "context": "import",
       "source_file": "src/lib/rag-ground.ts",
-      "source_location": "L10",
+      "source_location": "L11",
       "weight": 1.0
     },
     {
@@ -8871,7 +9036,7 @@
       "confidence_score": 1.0,
       "context": "import",
       "source_file": "src/lib/rag-ground.ts",
-      "source_location": "L10",
+      "source_location": "L11",
       "weight": 1.0
     },
     {
@@ -8883,7 +9048,7 @@
       "confidence_score": 1.0,
       "context": "import",
       "source_file": "src/lib/rag-ground.ts",
-      "source_location": "L11",
+      "source_location": "L12",
       "weight": 1.0
     },
     {
@@ -8895,7 +9060,7 @@
       "confidence_score": 1.0,
       "context": "import",
       "source_file": "src/lib/rag-ground.ts",
-      "source_location": "L11",
+      "source_location": "L12",
       "weight": 1.0
     },
     {
@@ -9081,6 +9246,18 @@
     {
       "source": "src_philosophers_index",
       "target": "src_philosophers_shared_low_style_low_plain_rules",
+      "relation": "imports",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "src/philosophers/index.ts",
+      "source_location": "L14",
+      "weight": 1.0
+    },
+    {
+      "source": "src_philosophers_index",
+      "target": "src_philosophers_shared_low_style_renderlanguagelevel",
       "relation": "imports",
       "_origin": "ast",
       "confidence": "EXTRACTED",
@@ -9471,7 +9648,7 @@
       "confidence_score": 1.0,
       "context": "import",
       "source_file": "src/lib/rag-ground.ts",
-      "source_location": "L10",
+      "source_location": "L11",
       "weight": 1.0
     },
     {
@@ -9483,7 +9660,7 @@
       "confidence_score": 1.0,
       "context": "import",
       "source_file": "src/lib/rag-ground.ts",
-      "source_location": "L11",
+      "source_location": "L12",
       "weight": 1.0
     },
     {
@@ -9952,6 +10129,94 @@
       "confidence_score": 1.0,
       "source_file": "AGENTS.md",
       "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_language_levels",
+      "target": "docs_language_levels_language_levels_low_medium_high",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/language-levels.md",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_language_levels_evaluation",
+      "target": "docs_language_levels_run_1_sep_2026_low_debate_high_desk_deepinfra_llama_3_3_70b_turbo",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/language-levels.md",
+      "source_location": "L154",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_language_levels_language_levels_low_medium_high",
+      "target": "docs_language_levels_cost_vs_rate_limits_sep_2026",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/language-levels.md",
+      "source_location": "L122",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_language_levels_language_levels_low_medium_high",
+      "target": "docs_language_levels_evaluation",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/language-levels.md",
+      "source_location": "L140",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_language_levels_language_levels_low_medium_high",
+      "target": "docs_language_levels_transfer_notes_other_apps",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/language-levels.md",
+      "source_location": "L214",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_language_levels_language_levels_low_medium_high",
+      "target": "docs_language_levels_verified_prompt_order_bookchin_low_critique_turn",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/language-levels.md",
+      "source_location": "L42",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_language_levels_language_levels_low_medium_high",
+      "target": "docs_language_levels_the_strategy",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/language-levels.md",
+      "source_location": "L8",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_language_levels_language_levels_low_medium_high",
+      "target": "docs_language_levels_quote_example_proposal_not_built_yet",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/language-levels.md",
+      "source_location": "L88",
       "weight": 1.0
     },
     {
@@ -10682,7 +10947,7 @@
     },
     {
       "source": "plan_decisions",
-      "target": "plan_style_intensity_global",
+      "target": "plan_style_intensity_global_language_level",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
@@ -10699,7 +10964,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "PLAN.md",
-      "source_location": "L62",
+      "source_location": "L71",
       "weight": 1.0
     },
     {
@@ -10710,7 +10975,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "PLAN.md",
-      "source_location": "L81",
+      "source_location": "L90",
       "weight": 1.0
     },
     {
@@ -10721,7 +10986,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "PLAN.md",
-      "source_location": "L103",
+      "source_location": "L112",
       "weight": 1.0
     },
     {
@@ -10732,7 +10997,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "PLAN.md",
-      "source_location": "L118",
+      "source_location": "L127",
       "weight": 1.0
     },
     {
@@ -10743,7 +11008,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "PLAN.md",
-      "source_location": "L271",
+      "source_location": "L300",
       "weight": 1.0
     },
     {
@@ -10754,7 +11019,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "PLAN.md",
-      "source_location": "L279",
+      "source_location": "L308",
       "weight": 1.0
     },
     {
@@ -10765,7 +11030,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "PLAN.md",
-      "source_location": "L291",
+      "source_location": "L320",
       "weight": 1.0
     },
     {
@@ -10776,7 +11041,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "PLAN.md",
-      "source_location": "L357",
+      "source_location": "L386",
       "weight": 1.0
     },
     {
@@ -10798,7 +11063,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "PLAN.md",
-      "source_location": "L90",
+      "source_location": "L99",
       "weight": 1.0
     },
     {
@@ -11700,7 +11965,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/App.tsx",
-      "source_location": "L1057",
+      "source_location": "L1062",
       "weight": 1.0
     },
     {
@@ -11722,7 +11987,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/App.tsx",
-      "source_location": "L1180",
+      "source_location": "L1185",
       "weight": 1.0
     },
     {
@@ -11733,7 +11998,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/App.tsx",
-      "source_location": "L1184",
+      "source_location": "L1189",
       "weight": 1.0
     },
     {
@@ -11744,7 +12009,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/App.tsx",
-      "source_location": "L1186",
+      "source_location": "L1191",
       "weight": 1.0
     },
     {
@@ -11755,7 +12020,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/App.tsx",
-      "source_location": "L1188",
+      "source_location": "L1193",
       "weight": 1.0
     },
     {
@@ -11766,7 +12031,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/App.tsx",
-      "source_location": "L1214",
+      "source_location": "L1217",
       "weight": 1.0
     },
     {
@@ -11777,7 +12042,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/App.tsx",
-      "source_location": "L1231",
+      "source_location": "L1234",
       "weight": 1.0
     },
     {
@@ -11788,7 +12053,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/App.tsx",
-      "source_location": "L1437",
+      "source_location": "L1446",
       "weight": 1.0
     },
     {
@@ -11810,7 +12075,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/App.tsx",
-      "source_location": "L1561",
+      "source_location": "L1570",
       "weight": 1.0
     },
     {
@@ -11821,7 +12086,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/App.tsx",
-      "source_location": "L1571",
+      "source_location": "L1580",
       "weight": 1.0
     },
     {
@@ -11832,7 +12097,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/App.tsx",
-      "source_location": "L1576",
+      "source_location": "L1585",
       "weight": 1.0
     },
     {
@@ -11843,7 +12108,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/App.tsx",
-      "source_location": "L1578",
+      "source_location": "L1587",
       "weight": 1.0
     },
     {
@@ -11854,7 +12119,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/App.tsx",
-      "source_location": "L1579",
+      "source_location": "L1588",
       "weight": 1.0
     },
     {
@@ -12096,7 +12361,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/lib/dialectic/prompts.ts",
-      "source_location": "L115",
+      "source_location": "L142",
       "weight": 1.0
     },
     {
@@ -12107,7 +12372,18 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/lib/dialectic/prompts.ts",
-      "source_location": "L128",
+      "source_location": "L157",
+      "weight": 1.0
+    },
+    {
+      "source": "src_lib_dialectic_prompts",
+      "target": "src_lib_dialectic_prompts_low_closing_reminder",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/lib/dialectic/prompts.ts",
+      "source_location": "L201",
       "weight": 1.0
     },
     {
@@ -12118,7 +12394,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/lib/dialectic/prompts.ts",
-      "source_location": "L165",
+      "source_location": "L204",
       "weight": 1.0
     },
     {
@@ -12129,7 +12405,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/lib/dialectic/prompts.ts",
-      "source_location": "L180",
+      "source_location": "L218",
       "weight": 1.0
     },
     {
@@ -12140,7 +12416,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/lib/dialectic/prompts.ts",
-      "source_location": "L186",
+      "source_location": "L224",
       "weight": 1.0
     },
     {
@@ -12151,7 +12427,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/lib/dialectic/prompts.ts",
-      "source_location": "L204",
+      "source_location": "L242",
       "weight": 1.0
     },
     {
@@ -12162,7 +12438,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/lib/dialectic/prompts.ts",
-      "source_location": "L23",
+      "source_location": "L25",
       "weight": 1.0
     },
     {
@@ -12173,7 +12449,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/lib/dialectic/prompts.ts",
-      "source_location": "L25",
+      "source_location": "L27",
       "weight": 1.0
     },
     {
@@ -12184,7 +12460,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/lib/dialectic/prompts.ts",
-      "source_location": "L30",
+      "source_location": "L32",
       "weight": 1.0
     },
     {
@@ -12195,7 +12471,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/lib/dialectic/prompts.ts",
-      "source_location": "L33",
+      "source_location": "L35",
       "weight": 1.0
     },
     {
@@ -12206,7 +12482,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/lib/dialectic/prompts.ts",
-      "source_location": "L39",
+      "source_location": "L41",
       "weight": 1.0
     },
     {
@@ -12217,7 +12493,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/lib/dialectic/prompts.ts",
-      "source_location": "L57",
+      "source_location": "L63",
       "weight": 1.0
     },
     {
@@ -12228,7 +12504,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/lib/extract.ts",
-      "source_location": "L13",
+      "source_location": "L14",
       "weight": 1.0
     },
     {
@@ -12239,7 +12515,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/lib/extract.ts",
-      "source_location": "L14",
+      "source_location": "L15",
       "weight": 1.0
     },
     {
@@ -12250,7 +12526,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/lib/extract.ts",
-      "source_location": "L20",
+      "source_location": "L21",
       "weight": 1.0
     },
     {
@@ -12261,7 +12537,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/lib/extract.ts",
-      "source_location": "L41",
+      "source_location": "L42",
       "weight": 1.0
     },
     {
@@ -12272,7 +12548,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/lib/extract.ts",
-      "source_location": "L45",
+      "source_location": "L46",
       "weight": 1.0
     },
     {
@@ -12283,7 +12559,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/lib/extract.ts",
-      "source_location": "L51",
+      "source_location": "L52",
       "weight": 1.0
     },
     {
@@ -12294,7 +12570,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/lib/extract.ts",
-      "source_location": "L80",
+      "source_location": "L83",
       "weight": 1.0
     },
     {
@@ -13097,7 +13373,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/lib/rag-ground.ts",
-      "source_location": "L13",
+      "source_location": "L14",
       "weight": 1.0
     },
     {
@@ -13108,7 +13384,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/lib/rag-ground.ts",
-      "source_location": "L19",
+      "source_location": "L20",
       "weight": 1.0
     },
     {
@@ -13119,7 +13395,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/lib/rag-ground.ts",
-      "source_location": "L23",
+      "source_location": "L24",
       "weight": 1.0
     },
     {
@@ -13130,7 +13406,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/lib/rag-ground.ts",
-      "source_location": "L25",
+      "source_location": "L26",
       "weight": 1.0
     },
     {
@@ -13141,7 +13417,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/lib/rag-ground.ts",
-      "source_location": "L30",
+      "source_location": "L31",
       "weight": 1.0
     },
     {
@@ -13152,7 +13428,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/lib/rag-ground.ts",
-      "source_location": "L76",
+      "source_location": "L77",
       "weight": 1.0
     },
     {
@@ -13163,7 +13439,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/lib/rag-ground.ts",
-      "source_location": "L89",
+      "source_location": "L90",
       "weight": 1.0
     },
     {
@@ -13185,7 +13461,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/lib/rag-search.ts",
-      "source_location": "L188",
+      "source_location": "L198",
       "weight": 1.0
     },
     {
@@ -13416,7 +13692,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/lib/service-chat.ts",
-      "source_location": "L39",
+      "source_location": "L41",
       "weight": 1.0
     },
     {
@@ -13427,7 +13703,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/lib/service-chat.ts",
-      "source_location": "L51",
+      "source_location": "L60",
       "weight": 1.0
     },
     {
@@ -13438,7 +13714,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/lib/service-chat.ts",
-      "source_location": "L57",
+      "source_location": "L66",
       "weight": 1.0
     },
     {
@@ -13449,7 +13725,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/lib/service-chat.ts",
-      "source_location": "L64",
+      "source_location": "L73",
       "weight": 1.0
     },
     {
@@ -13460,7 +13736,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/lib/service-chat.ts",
-      "source_location": "L87",
+      "source_location": "L96",
       "weight": 1.0
     },
     {
@@ -14297,6 +14573,39 @@
       "confidence_score": 1.0,
       "source_file": "src/philosophers/shared/low-style.ts",
       "source_location": "L33",
+      "weight": 1.0
+    },
+    {
+      "source": "src_philosophers_shared_low_style",
+      "target": "src_philosophers_shared_low_style_language_levels",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/philosophers/shared/low-style.ts",
+      "source_location": "L45",
+      "weight": 1.0
+    },
+    {
+      "source": "src_philosophers_shared_low_style",
+      "target": "src_philosophers_shared_low_style_language_common",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/philosophers/shared/low-style.ts",
+      "source_location": "L52",
+      "weight": 1.0
+    },
+    {
+      "source": "src_philosophers_shared_low_style",
+      "target": "src_philosophers_shared_low_style_renderlanguagelevel",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/philosophers/shared/low-style.ts",
+      "source_location": "L55",
       "weight": 1.0
     },
     {
@@ -15180,5 +15489,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "3ed5e123b1f6719a5b27542e11ca12ed244aeaed"
+  "built_at_commit": "b0f43e09d0ba991a618499759d861c6f8f681893"
 }

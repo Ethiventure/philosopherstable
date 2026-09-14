@@ -60,7 +60,7 @@ export const BOGDANOV_STYLE: StyleEssence = {
   },
 
   intensity: {
-    low: 'Work and tools; one organisational reframing.',
+    low: 'Talk about work and tools; show one better way to organise.',
     medium: 'Technique, apparatus, division of labour; tendencies stated with figures.',
     high: 'Automatic regulators, statistical bureaux, everything as organisation, abolition of the mental/physical dualism, tektological universals.',
   },

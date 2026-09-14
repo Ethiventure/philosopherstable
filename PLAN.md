@@ -52,12 +52,21 @@ be public; RLS enforces read-only). No user data is ever written.
 hand-off line. `index.ts` sorts by `birth_year`, so the seating order is *derived*
 from the data and can never drift from date order again.
 
-### Style intensity: global
-One Low / Medium / High setting in Settings, applied to every philosopher's intensity
-ladder. Low sends an abridged persona from `shared/low-style.ts` (DNA + movement +
+### Style intensity: global language level
+One Low / Medium / High setting in Settings, applied to every philosopher.
+Low sends an abridged persona from `shared/low-style.ts` (DNA + movement +
 Low sentence + plain rules; full profile knowledge kept; generation rules, special
-modes, REGISTER, and universal mechanisms dropped; governing override last).
-Medium/High are untouched.
+modes, REGISTER, and universal mechanisms dropped; governing override, then the
+language level, last). A `LANGUAGE LEVEL` block rides last in the persona at
+EVERY intensity: Low uses roughly IELTS-5 English and translates or describes
+hard terms (describing what a term does where no plain equal exists) instead
+of using them; Medium keeps important terms with a natural inline gloss and no
+dictionary-style breaks; High uses the authentic vocabulary at normal
+difficulty. Meaning is never simplified — only the words. The turn-level `VOICE`,
+`HEAT`, loans, survey, and novelty rules soften at Low: calm teacher entry,
+paraphrased (never verbatim) source loans, translated survey wording. All 10
+`intensity.low` style sentences are written in plain words. Full strategy,
+verified prompt order, token math, and eval protocol: `docs/language-levels.md`.
 
 ### Length: short and punchy
 Word budgets per section (normal / long-form). Each turn does less, so the
@@ -181,7 +190,9 @@ order skips the seat that just closed pass 2 (it would answer itself) and closes
 with it instead — every seat speaks once per pass and gets critiqued.
 
 **2d Context per call (pure, except own priors; pass 3 gets a survey)**
-1. User's question, verbatim.
+1. User's question, verbatim as context — every voice paraphrases and riffs
+   on it through its framework, never quoting it (five-word rule names the
+   question; opening turn and desk and coda carry the same order).
 2. Full text of the previous intervention (PREV) — the only other voice
    the speaker ever sees (passes 1–2).
 3. Speaker's own prior turns (one-line summaries): *"Do not restate your prior
@@ -195,13 +206,23 @@ with it instead — every seat speaks once per pass and gets critiqued.
    on Groq/shared for TPM headroom else 6, queried in the speaker's own words —
    question plus own prior lines, never PREV's text, which pulled random
    cross-framework vocabulary), live `extract.js` page fetching
-   as fallback, cited by footnote number. Turns must borrow visibly: at least
-   two short verbatim loans (≤6 words, 'single' quotes — bare double quotes
-   would corrupt the JSON envelope, which is why quoting never happened). Failures carry machine-readable
+    as fallback, cited by footnote number. Turns must borrow visibly: at least
+    two short verbatim loans (≤6 words, 'single' quotes — bare double quotes
+    would corrupt the JSON envelope, which is why quoting never happened) —
+    except at Low, where both grounding blocks order paraphrase-only and ban
+    verbatim loans (`searchThinkerPassages` / `formatGroundedBlock` take the
+    sitting intensity; the desk keeps verbatim quotes at every level by
+    decision). Failures carry machine-readable
    reasons (`unsupported-source` / `fetch-failed` / `no-match`) surfaced
    per-turn in the modal — never a generic nothing.
-4. System prompt = identity + profile + style essence (at chosen intensity) +
-   universal mechanisms + anti-waffle rules + banned-phrase list + word budgets.
+4. System prompt = identity + analytical centre + full profile (ideas source,
+   never word source at Low) + style essence (abridged at Low: DNA + movement
+   + Low sentence, machinery/REGISTER/universal-mechanisms dropped) + plain
+   rules + role integrity + anti-waffle rules + banned-phrase list +
+   dialectical frame + Low override (Low only) + LANGUAGE LEVEL block
+   (every intensity — governs diction, rendered last) + word budgets.
+   Low user messages add a one-line plain-words reminder just before the
+   JSON hint, which always stays final.
 5. ~~**Ledger** (one line per claim/concept, fed back each call) — **DROPPED
    experiment**: feeding the whole conversation back in broke the blunt-rotation
    discipline. `new_contribution` is still stored per turn for export/display
@@ -224,7 +245,8 @@ queer/crip/feminism/decolonial theory
 (`CODA_SYSTEM` + `buildCodaPrompt`, paraphrased Thesis Eleven opener never
 the same twice, 200-word ceiling, role-actors never named individuals,
 they/them for Weil, presence-aware via a PRESENT header — only sitting
-members addressed, absent thinkers never insulted), stored as separate `coda` state
+members addressed, absent thinkers never insulted, seat wording never quoted —
+hard ideas rendered in the note's own plain voice), stored as separate `coda` state
 (never an Intervention — seats/passes/deck math untouched). The note rides
 in the pass-3 survey (listed first, as `Notes from the margins`) rather than
 an appended block; every pass-3 turn must name it AND answer one of its
@@ -254,9 +276,13 @@ unset made Chrome pick a bundled voice instead of the OS default).
 Vite child dies and the proxy has nothing to forward to).
 
 **Philosophers' Service desk** — floating tutor window (`ServiceChat.tsx` +
-`src/lib/service-chat.ts`): all 10 thinkers, switchable mid-chat, top style
-intensity, scaffolded answers (answer → plain definitions → example → check
-question, 180 words). Sees recent chat + sitting one-liners + own-works-only
+`src/lib/service-chat.ts`): all 10 thinkers, switchable mid-chat, own Level
+picker in the desk (Low — plain words / Medium — terms explained /
+High — full voice; starts at the cabinet setting), scaffolded answers (answer
+→ definitions → example → check question, 180 words; definition style follows
+the desk level, quoted source loans stay verbatim at every level, sequential
+summaries allowed on request via DESK OVERRIDE).
+Sees recent chat + sitting one-liners + own-works-only
 index grounding (follows the `grounding` toggle; other seats' links never
 enter; family-name shard matching incl. joint shards).
 Plain-text provider paths (`generateText*` per lib, same retries/quota codes,

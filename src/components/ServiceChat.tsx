@@ -19,7 +19,7 @@ import {
 } from '@/lib/service-chat';
 import { LlmError } from '@/lib/llm';
 import type { CabinetSettings } from '@/lib/settings';
-import type { Intervention, Philosopher } from '@/types';
+import type { Intervention, Philosopher, StyleIntensity } from '@/types';
 
 export interface ServiceLogEntry {
   thinker: string;
@@ -45,6 +45,7 @@ type DisplayItem =
 
 export default function ServiceChat({ thinkers, interventions, settings, open, onToggle, onExchange, onOpenSettings }: ServiceChatProps) {
   const [slug, setSlug] = useState(thinkers[0]?.slug ?? '');
+  const [level, setLevel] = useState<StyleIntensity>(settings.intensity);
   const [items, setItems] = useState<DisplayItem[]>([]);
   const [input, setInput] = useState('');
   const [busy, setBusy] = useState(false);
@@ -121,7 +122,7 @@ export default function ServiceChat({ thinkers, interventions, settings, open, o
       }
       const answer = await generateServiceText(
         settings,
-        buildServiceSystemPrompt(thinker),
+        buildServiceSystemPrompt(thinker, level),
         buildServiceUserMessage({ question: text, history, tableLines, groundingBlock }),
       );
       const sources = grounding?.chunks ?? [];
@@ -158,6 +159,18 @@ export default function ServiceChat({ thinkers, interventions, settings, open, o
           className="w-full mt-1 bg-[#eae1ca]/60 border border-[#4a392d]/25 rounded-sm p-2 text-sm text-[#465f75] focus:outline-none focus:ring-2 focus:ring-[#8b5254]/30"
         >
           {thinkers.map((t) => <option key={t.slug} value={t.slug}>{t.full_name}</option>)}
+        </select>
+        <label htmlFor="service-level" className="text-xs uppercase tracking-[0.16em] text-[#4a392d] mt-2 block">Level</label>
+        <select
+          id="service-level"
+          value={level}
+          title="How hard the tutor's language hits. Quotes stay verbatim at every level."
+          onChange={(event) => setLevel(event.target.value as StyleIntensity)}
+          className="w-full mt-1 bg-[#eae1ca]/60 border border-[#4a392d]/25 rounded-sm p-2 text-sm text-[#465f75] focus:outline-none focus:ring-2 focus:ring-[#8b5254]/30"
+        >
+          <option value="low">Low — plain words</option>
+          <option value="medium">Medium — terms explained</option>
+          <option value="high">High — full voice</option>
         </select>
         {!settings.grounding && (
           <p className="text-xs italic text-[#465f75]/60 mt-1">Tip: switch on Grounding in Settings → Cabinet and I can search my own books for passages.</p>

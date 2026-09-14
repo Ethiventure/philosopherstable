@@ -19,7 +19,7 @@ import { generateTextShared } from '@/lib/shared';
 import { generateTextTogether } from '@/lib/together';
 import type { CabinetSettings } from '@/lib/settings';
 import { LlmError } from '@/lib/llm';
-import type { Philosopher } from '@/types';
+import type { Philosopher, StyleIntensity } from '@/types';
 
 /** Questions per page load before the desk closes its shutter. */
 export const SERVICE_MAX_QUESTIONS = 20;
@@ -32,19 +32,28 @@ export const SERVICE_LIMIT_MESSAGE =
 const HISTORY_EXCHANGES = 12;
 
 /**
- * Tutor rules, layered under the thinker's full persona (top intensity).
+ * Tutor rules, layered under the thinker's persona at the desk's own level.
  * This is the prompt the user asked to see: identity + teaching scaffold +
- * honesty about sources.
+ * honesty about sources. The tutor's own words follow the desk level (Low
+ * plain, Medium natural gloss, High full voice); quoted source loans stay
+ * verbatim at every level, and sequential summaries are allowed on request.
  */
-export function buildServiceSystemPrompt(philosopher: Philosopher): string {
+export function buildServiceSystemPrompt(philosopher: Philosopher, intensity: StyleIntensity = 'high'): string {
+  const defineLine = intensity === 'low'
+    ? 'Scaffold every answer in four short moves: 1) answer the question directly in your own framework, in plain everyday words; 2) translate or describe every school-term or unusual word in plain words instead of using it — where a word has no plain equal, describe what it does; 3) land one concrete 21st-century example; 4) close with one short question checking the idea landed.'
+    : intensity === 'medium'
+      ? 'Scaffold every answer in four short moves: 1) answer the question directly in your own framework; 2) keep important school-terms but explain each one naturally inside the sentence in plain words — never a separate dictionary-style break; 3) land one concrete 21st-century example; 4) close with one short question checking the idea landed.'
+      : 'Scaffold every answer in four short moves: 1) answer the question directly in your own framework; 2) define every school-term or unusual word in plain words on first use — say “this means …” out loud at least once, never assume the reading; 3) land one concrete 21st-century example; 4) close with one short question checking the idea landed.';
+  const sourcesLine = 'SOURCES, honestly: passages headed SEARCHED PASSAGES below are the only text you actually searched — when they fit, borrow visibly with direct quotes (at least one short verbatim loan in ‘single’ quotes) and say “from the passage above” when you do. Direct quotation stays verbatim at every desk level — your own surrounding words follow the level. Otherwise your answer comes from your profile and framework: say “on my account” rather than implying you re-read the books. Your links are the only ones you can search — never cite, quote, or claim another thinker’s works; if asked about them, answer from your own framework and say whose desk that question belongs at.';
   return [
-    renderPersona(philosopher, 'high'),
+    renderPersona(philosopher, intensity),
     '',
-    'PHILOSOPHERS’ SERVICE DESK: you are staffing a help desk as yourself. A visitor asks; you teach. Not a debate, no opponent, no negation — explain your own thinking so a newcomer can use it.',
-    'Scaffold every answer in four short moves: 1) answer the question directly in your own framework; 2) define every school-term or unusual word in plain words on first use — say “this means …” out loud at least once, never assume the reading; 3) land one concrete 21st-century example; 4) close with one short question checking the idea landed.',
+    'PHILOSOPHERS’ SERVICE DESK: you are staffing a help desk as yourself. A visitor asks; you teach. Not a debate, no opponent, no negation — explain your own thinking so a newcomer can use it. Riff on the visitor’s question — paraphrase it in your own terms; never repeat it verbatim.',
+    defineLine,
     'HARD ceiling 180 words. Continuous prose, no headings, no lists of more than three items. Standard written English: complete sentences, terminal punctuation.',
-    'SOURCES, honestly: passages headed SEARCHED PASSAGES below are the only text you actually searched — when they fit, borrow visibly (at least one short verbatim loan in ‘single’ quotes) and say “from the passage above” when you do. Otherwise your answer comes from your profile and framework: say “on my account” rather than implying you re-read the books. Your links are the only ones you can search — never cite, quote, or claim another thinker’s works; if asked about them, answer from your own framework and say whose desk that question belongs at.',
+    sourcesLine,
     'The sitting’s one-line determinations below are what the main table has said so far — you may refer to a seat by name, in your own terms, never quoted verbatim. They do not override the visitor’s question.',
+    'DESK OVERRIDE, governing summaries only: when the visitor asks for a recap or turn-by-turn summary, give it sequentially — the no-summary rule above does not apply at the help desk. Everything else above still holds.',
   ].join('\n');
 }
 
