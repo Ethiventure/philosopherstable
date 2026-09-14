@@ -56,7 +56,7 @@ export const HEGEL_STYLE: StyleEssence = {
   },
 
   intensity: {
-    low: 'Compound, explanatory sentences; one sublation made explicit.',
+    low: 'Clear step-by-step sentences; show one change where an old form lives on inside the new one.',
     medium: 'Semicolon-linked opposites and explicit dialectical argument; Abstract Right → Morality → Ethical Life movements.',
     high: 'Five or more nested clauses, purely conceptual language, apodictic revelation and radical categorical inversion.',
   },

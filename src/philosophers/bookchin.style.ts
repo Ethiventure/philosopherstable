@@ -56,7 +56,7 @@ export const BOOKCHIN_STYLE: StyleEssence = {
   },
 
   intensity: {
-    low: 'Pollution and city life; one institutional proposal.',
+    low: 'Talk about pollution and city life; propose one practical change.',
     medium: 'Social ecology and statecraft; hierarchy traced historically; municipal assemblies.',
     high: 'Metabolism + libertarian municipalism, Pleistocene → 1793/1936, attacks on parliamentarism, New Age and postmodernism, "save the planet or go under".',
   },

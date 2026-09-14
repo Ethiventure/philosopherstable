@@ -11,8 +11,8 @@ Try it here: https://philosopherstable.netlify.app/
 - **Read along** in the deck (arrows move forward only — your place is never yanked), or press **Listen** on any card (free, uses your device's own voice). The latest turn also sits on the table itself.
 - Click any intervention for footnoted references (`Read similar: 3, 9` — numbers match Further reading); click any seat for the thinker's profile — Thought, Voice, Works, and why they sit where they sit. Hover a seat for the one-line version.
 - **Export** saves the whole session as clean prose with a Reading List of full links at the end — nothing inline.
-- **Notes from the margins**: between pass 2 and pass 3, one rude reader breaks in — naming what the table missed and ordering the final round toward action. Pass 3 must answer it.
-- **Philosophers' Service** (service bell, raised bottom-right, a card beside the table, and a mention in the welcome card): ask any of the ten thinkers one-to-one — plain definitions, an example, and a check question each time. Twenty questions per sitting; chats append to export.
+- **Notes from the margins**: between pass 2 and pass 3, one rude reader breaks in — naming what the table missed and asking hard, concrete questions. Pass 3 must answer one.
+- **Philosophers' Service** (service bell, raised bottom-right, a card beside the table, and a mention in the welcome card): ask any of the ten thinkers one-to-one — plain definitions, an example, and a check question each time, with a Level picker (plain words / terms explained / full voice). Twenty questions per sitting; chats append to export.
 
 ## Settings, explained (all three tabs)
 
@@ -20,11 +20,11 @@ Try it here: https://philosopherstable.netlify.app/
 - **Shared** (default): the cabinet's own key, no action needed. One quota split across every visitor (see below).
 - **OpenRouter**: your key. *Free cycle* hops across free models each turn so limits stretch; *Paid model* pins one ID (default `deepseek/deepseek-v4.1-flash`, ~$0.15/$0.60 per 1M — about two cents a session). Test-key button included; keys live in your browser only, never touch our servers (OpenRouter's free models may log prompts for training — the panel says so).
 - **Groq / DeepInfra / Together**: your key, pinned models (`qwen3.8-27b`, `Llama-3.3-70B-Instruct-Turbo`, `Qwen3-30B-A3B`). Groq's free tier needs no card; DeepInfra and Together want one on file.
-- Below the keys: **Style intensity** (Low = plain words, calm entries; Medium = the standard seminar; High = full machinery, hostile where the author warrants it), **Long form** (~280 words a turn instead of ~100 — a 12-minute read becomes a 30-minute one), and **Turn economy** (Efficient trims the predecessor text re-sent each turn — the transcript stays whole; voices are never trimmed).
+- Below the keys, everything sits in the **Cabinet** tab so one screen shows the whole sitting: **who sits** (toggle thinkers, hover any name for the two-line life), **how it speaks** (Low = plain words, calm entries; Medium = the standard seminar; High = full machinery, hostile where the author warrants it), **Long form** (~280 words a turn instead of ~100 — a 12-minute read becomes a 30-minute one), and **Turn economy** (Efficient trims the predecessor text re-sent each turn — the transcript stays whole; voices are never trimmed). Hover anything for the one-line version.
 
 **Cabinet** — who sits and how deep it goes:
 - Toggle any of the ten in or out (minimum two — a debate needs an opponent). Five seats (≈15 turns) is the recommended sitting: the full arc at half the tokens.
-- **Ground turns in source texts** (experimental, off by default): each speaker searches its *own* indexed books first and must borrow their actual vocabulary — at least two short verbatim loans per turn, receipts inspectable under every intervention. Slower, more tokens, fewer stereotypes.
+- **Ground turns in source texts** (experimental, off by default): each speaker searches its *own* indexed books first and must borrow their actual vocabulary — at least two short verbatim loans per turn (at Low, paraphrased in plain words instead of quoted), receipts inspectable under every intervention. Slower, more tokens, fewer stereotypes.
 
 **Display** — the reading room, your way:
 - Parchment / dim / ink-dark themes (background and text always change as tested pairs), three typefaces including dyslexia-friendly, text size, line spacing, high contrast, reduced motion. The house style stays; adjustments layer on top.
@@ -41,7 +41,7 @@ Your own key = your own quota = no sharing, no waiting.
 
 ## For the curious
 
-- Every turn follows the same dialectical discipline — cutting in on the predecessor, determinate negation, incorporation of what holds, reformulation ending on the live edge — but written in each philosopher's own machinery, never from a template. Turns address each other as *you*, with heat and a flash of wit; stock openers are rationed to one per session, so nobody says "to be sure" twice. Pass 3 may invoke any seat's striking idea; the opening and closing moves belong to the question itself.
+- Every turn follows the same dialectical discipline — cutting in on the predecessor, determinate negation, incorporation of what holds, reformulation ending on the live edge — but written in each philosopher's own machinery, never from a template. Nobody repeats your question back verbatim — every seat paraphrases and riffs on it. Turns address each other as *you*, with heat and a flash of wit; stock openers are rationed to one per session, so nobody says "to be sure" twice. Pass 3 may invoke any seat's striking idea and must answer the margins note; the opening and closing moves belong to the question itself.
 - Footnote numbers under each turn point into Further reading (stable manifest order); the models' claims are matched display-side and labelled honest — nothing is fed back into prompts.
 - Source badges distinguish indexed full-text passages from profile-grounded interpretation. Switch on Grounding (Settings → Cabinet) and each speaker searches its own indexed works first — receipts stay inspectable per turn, and desk answers show their source chunks. The index is lexical (word stems, no AI embeddings) across 11,000+ passages; Russian texts only answer Russian queries, and the manifest says so where it matters.
 - Accessibility is opt-in, never a restyle: the dark-academia default stays put; adjustments layer on top.

@@ -11,7 +11,7 @@ import { DELEUZE } from './deleuze';
 import { FISHER } from './fisher';
 import { renderUniversalMechanisms } from './shared/universal-mechanisms';
 import { renderAntiWaffle } from './shared/anti-waffle';
-import { LOW_OVERRIDE, LOW_PLAIN_RULES, renderLowStyleEssence } from './shared/low-style';
+import { LOW_OVERRIDE, LOW_PLAIN_RULES, renderLanguageLevel, renderLowStyleEssence } from './shared/low-style';
 
 const DEFINITIONS: PhilosopherDefinition[] = [SPINOZA, KANT, HEGEL, MARX, LENIN, BOGDANOV, WEIL, BOOKCHIN, DELEUZE, FISHER];
 
@@ -80,8 +80,11 @@ export function renderPersona(philosopher: Pick<Philosopher, 'full_name' | 'name
     ...(low ? [] : ['', renderUniversalMechanisms()]),
     '',
     renderAntiWaffle(),
-    // Low override comes absolutely last so recency plus the explicit
-    // precedence sentence outweigh everything above it.
+    // Low override comes before the language level so the language block —
+    // plain words at Low, natural gloss at Medium, full voice at High —
+    // has the final word on diction at every intensity.
     ...(low ? ['', ...LOW_OVERRIDE] : []),
+    '',
+    ...renderLanguageLevel(intensity),
   ].join('\n');
 }

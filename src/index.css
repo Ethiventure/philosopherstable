@@ -158,6 +158,14 @@
     color: var(--color-parchment-light);
   }
 
+  /* Selected settings options: filled wash + bold on every theme, so the
+    pick reads without guessing — border tint alone fails on ink-dark. */
+  .btn-secondary[aria-checked="true"],
+  .btn-secondary[aria-selected="true"] {
+    background-color: color-mix(in srgb, var(--color-accent1) 22%, transparent);
+    font-weight: 700;
+  }
+
   .btn-accent {
     font-family: var(--font-heading);
     background-color: var(--color-accent1);

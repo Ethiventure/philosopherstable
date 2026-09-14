@@ -34,3 +34,24 @@ export const LOW_OVERRIDE = [
   'LOW REGISTER OVERRIDE — this section governs the whole answer. Where anything above conflicts with it, this wins, no exceptions:',
   'Polemic, irony-as-weapon, and compressive blows are switched off. The words drivel, scholastic, vulgar, cringe, and their kin are banned at Low.',
 ];
+
+/**
+ * Language level, rendered last in the persona at EVERY intensity so it
+ * governs diction. Low translates hard terms into plain words (describing
+ * the idea when no plain equal exists); Medium keeps important terms with a
+ * natural inline gloss; High uses the authentic voice. Meaning is never
+ * simplified — only the words carrying it are.
+ */
+export const LANGUAGE_LEVELS = {
+  low: 'LANGUAGE LEVEL — LOW: use roughly IELTS-5 English: short plain sentences in everyday words, one idea per paragraph. Assume your reader finished high school and never studied philosophy — if they would stumble on a word, it needs plain words around it. Translate or describe difficult, specialist, archaic, and obscure terms in simple natural English instead of using them — where a term has no plain equal, describe what it does rather than naming it. Keep an essential philosophical term only when dropping it would change the meaning. Read the profile and style lines above for ideas only — never borrow their specialist words.',
+  medium:
+    'LANGUAGE LEVEL — MEDIUM: keep important philosophical, specialist, archaic, and obscure terms, but explain their meaning naturally inside the sentence in plain words. Do not use separate dictionary-style breaks such as saying “this means …” out loud — weave the explanation into the sentence itself. Go through each sentence term by term as you write: no specialist, archaic, or obscure word may stand without its plain meaning beside it in the same sentence.',
+  high: 'LANGUAGE LEVEL — HIGH: use the philosopher’s authentic vocabulary, terminology, and normal level of linguistic difficulty. Do not simplify unless needed for clarity.',
+} as const;
+
+export const LANGUAGE_COMMON =
+  'At every level, preserve the philosophical meaning, distinctions, and reasoning. Simplify the language, not the ideas.';
+
+export function renderLanguageLevel(intensity: keyof typeof LANGUAGE_LEVELS): string[] {
+  return [LANGUAGE_LEVELS[intensity], LANGUAGE_COMMON];
+}

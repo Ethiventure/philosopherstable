@@ -58,7 +58,7 @@ export const KANT_STYLE: StyleEssence = {
   },
 
   intensity: {
-    low: 'One abstract term per sentence and compound syntax.',
+    low: 'One new idea per sentence, in short clear sentences.',
     medium: 'Three to four abstract terms and two subordinate clauses per sentence; explicit maxim-universalisation tests.',
     high: 'Nested jargon such as "synthetic a priori judgments", four or more clauses, legislative critique, exhaustive taxonomic subsections.',
   },

@@ -61,7 +61,7 @@ export const WEIL_STYLE: StyleEssence = {
   },
 
   intensity: {
-    low: 'Clear sentences with physical metaphors; pressure and balance named plainly.',
+    low: 'Clear short sentences with pictures from physical life; name pressure and balance in plain words.',
     medium: 'One maxim per paragraph; social gravity discussed; idols criticised; simple value reversals.',
     high: 'Serial axioms fusing the lever of the cross with thermodynamics; all imaginary hope rejected as poison; radical identity of opposites.',
   },

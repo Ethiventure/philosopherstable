@@ -7,6 +7,7 @@
  * live extract.js path. Toggle-gated by settings.grounding like before.
  */
 import { CORPUS_SOURCES_DATA } from '@/data/corpus-sources';
+import type { StyleIntensity } from '@/types';
 import { prepareIndex, searchIndex, type PreparedIndex } from './rag-search';
 import { joinShard, type AuthorShard } from './rag-shard';
 
@@ -90,6 +91,7 @@ export async function searchThinkerPassages(
   authorName: string,
   query: string,
   limit = 5,
+  intensity?: StyleIntensity,
 ): Promise<RagGrounding | null> {
   const loaded = await loadThinker(authorName);
   if (!loaded) return null;
@@ -113,9 +115,12 @@ export async function searchThinkerPassages(
   const number = manifestNumberForUrl(work.corpus_source_url ?? work.source_url) ?? manifestNumberForUrl(first.passage.source_url);
   if (number === null) return null;
   const quoted = merged.map((s) => `> ${s.passage.text}`).join('\n');
+  const header = intensity === 'low'
+    ? `INDEXED PASSAGES from '${work.title}' [${number}] — searched from this thinker's own indexed works for this question. Read these for ideas, then PARAPHRASE: describe what they say in your own plain everyday words and cite the use [${number}]. Never lift rare, distinctive, archaic, or specialist words verbatim — not even in single quotes (bare double quotes corrupt your reply). Plain description beats the passage's own terms; closely paraphrase everything, always citing [${number}]:`
+    : `INDEXED PASSAGES from '${work.title}' [${number}] — searched from this thinker's own indexed works for this question. Borrow visibly: weave at least two distinctive single words or short phrases (no more than six words each, in single quotes — bare double quotes corrupt your reply) from these passages into your own sentences, and cite the use [${number}]. Reaching for their less famous vocabulary beats restating their greatest hits: prefer the passage's own terms over your stock summary of this thinker. What you don't borrow, closely paraphrase, always citing [${number}]:`;
   return {
     block: [
-      `INDEXED PASSAGES from '${work.title}' [${number}] — searched from this thinker's own indexed works for this question. Borrow visibly: weave at least two distinctive single words or short phrases (no more than six words each, in single quotes — bare double quotes corrupt your reply) from these passages into your own sentences, and cite the use [${number}]. Reaching for their less famous vocabulary beats restating their greatest hits: prefer the passage's own terms over your stock summary of this thinker. What you don't borrow, closely paraphrase, always citing [${number}]:`,
+      header,
       quoted,
     ].join('\n'),
     receipt: {

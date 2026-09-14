@@ -61,7 +61,7 @@ export const DELEUZE_STYLE: StyleEssence = {
   },
 
   intensity: {
-    low: 'One intensive term per paragraph; questions displaced from "what" to "how" and "who".',
+    low: 'One new idea per paragraph; ask how things work and who they affect.',
     medium: 'Virtual / Actual, Egg / Lightning; assemblages and lines of flight named concretely.',
     high: 'Singularities, t/c, dy/dx, larval subjects, Theatre of Cruelty, terrible movements and numbered coordinates.',
   },

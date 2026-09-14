@@ -136,7 +136,17 @@ export function searchIndex(prepared: PreparedIndex, query: string, opts: Search
     });
   });
 
-  scored.sort((a, b) => b.finalScore - a.finalScore);
+  // Multi-term queries need their terms TOGETHER in a passage: scattered
+  // single-term hits (one word here, another there) score fine alone but
+  // ground badly, so they rank below passages matching 2+ query terms.
+  scored.sort((a, b) => {
+    if (qstems.length >= 2) {
+      const multiA = a.matchedTerms.length >= 2 ? 1 : 0;
+      const multiB = b.matchedTerms.length >= 2 ? 1 : 0;
+      if (multiA !== multiB) return multiB - multiA;
+    }
+    return b.finalScore - a.finalScore;
+  });
   const pool = scored.slice(0, opts.candidates ?? 30);
 
   // Diversity: skip passages adjacent to an already-selected one (same work),

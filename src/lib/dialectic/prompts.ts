@@ -20,6 +20,8 @@
  * turn for export/display, never as model input (except the pass-3 survey).
  */
 
+import type { StyleIntensity } from '@/types';
+
 export type TurnKind = 'opening' | 'critique' | 'reconstruction';
 
 export const WORD_BUDGETS = {
@@ -50,16 +52,22 @@ interface TurnInstructionArgs {
    * margins writer explicitly before anything else. */
   marginsFirst?: boolean;
   /** The sitting runs at Low intensity: the persona's plain-style override
-   * governs the sentence — short, defined, gentle. */
+   * governs the sentence — short, defined, gentle. Prefer `intensity`.
+   * @deprecated Pass `intensity` instead; kept for compatibility. */
   lowRegister?: boolean;
+  /** Sitting intensity: drives per-level diction (Low translates hard terms,
+   * Medium keeps terms with a natural gloss, High uses the full voice). */
+  intensity?: StyleIntensity;
 }
 
-export function buildTurnInstruction({ kind, prevName, isFinalSeat, longForm, reversed = false, marginsNote = false, marginsFirst = false, lowRegister = false }: TurnInstructionArgs): string {
+export function buildTurnInstruction({ kind, prevName, isFinalSeat, longForm, reversed = false, marginsNote = false, marginsFirst = false, lowRegister = false, intensity }: TurnInstructionArgs): string {
   const b = longForm ? WORD_BUDGETS.long : WORD_BUDGETS.normal;
+  const level: StyleIntensity = intensity ?? (lowRegister ? 'low' : 'medium');
+  const low = level === 'low';
 
   if (kind === 'opening') {
     return [
-      `OPENING TURN (HARD ceiling: ${b.opening} words — shorter is welcome). Answer the question directly in your own framework.`,
+      `OPENING TURN (HARD ceiling: ${b.opening} words — shorter is welcome). Answer the question directly in your own framework. Paraphrase the question through your framework; never repeat it verbatim.`,
       'Do not refer to any other thinker; there is no predecessor yet.',
       'Follow your characteristic movement.',
       'Write at length in your own diction and rhythm — continuous prose, no headings — the word budget is for development, not padding.',
@@ -83,13 +91,14 @@ export function buildTurnInstruction({ kind, prevName, isFinalSeat, longForm, re
     ...(reversed
       ? [`REVERSED ROTATION: ${prev} sits to your left and has just spoken. Comment directly on that answer — it is the only new voice you address.`]
       : []),
-    ...(lowRegister
+    ...(low
       ? ['ENTER CALMLY through the concrete object: open with your concession — state what holds in PREV’s position first, in plain words, then add what it misses. No interruption theatre, no naming ceremony, never open with a rebuttal shape.']
       : (!reversed
         ? [`CUT IN, don't hand over: open mid-argument by seizing the weakest point in ${prev}'s closing lines. No preamble, no greeting, no naming ceremony — interrupt. Never open with "[Name]'s claim that…", "X argues that…" or any naming-first formula; enter through the concrete object.`]
         : [])),
-    `1. DETERMINATE NEGATION (roughly ${b.negation} words): first state the STRONGEST version of ${prev}'s claim — steelman it, no strawmen — but as TRANSLATION, not quotation: restate it entirely in your framework's own vocabulary, so no clause longer than five words matches ${prev} verbatim. Single shared terms (class struggle, decreation) may repeat; multi-word clauses may not. Name ${prev} once, inside the argument, never as your opening — everywhere else address them directly as YOU, a live opponent across the table, not a specimen under glass. BAD: "A class struggle is the primary focus" answered by "I disagree, a class struggle is not the primary focus." GOOD: the same claim answered by "My focus is different: it is on the abolition of all hierarchy." If you find yourself agreeing with them, you have misread them; find the genuine fault line.`,
+    `1. DETERMINATE NEGATION (roughly ${b.negation} words): first state the STRONGEST version of ${prev}'s claim — steelman it, no strawmen — but as TRANSLATION, not quotation: restate it entirely in your framework's own vocabulary, so no clause longer than five words matches ${prev} verbatim.${low ? ' At Low there are no shared specialist terms: restate everything, including any school-terms, in plain everyday words.' : ' Single shared terms (class struggle, decreation) may repeat; multi-word clauses may not.'} Name ${prev} once, inside the argument, never as your opening — everywhere else address them directly as YOU, a live opponent across the table, not a specimen under glass. BAD: "A class struggle is the primary focus" answered by "I disagree, a class struggle is not the primary focus." GOOD: the same claim answered by "My focus is different: it is on the abolition of all hierarchy." If you find yourself agreeing with them, you have misread them; find the genuine fault line.`,
     reformulationLine,
+    'QUESTION RULE (every turn, every level): paraphrase and riff on the question through your framework — never repeat any multi-word clause from it word for word. Single shared nouns may repeat; clauses may not. A turn that echoes the question back has failed.',
     closingLine,
     ...(isFinalSeat
       ? ['FINAL SEAT: close by returning the question, changed, to the user — no new claims after it.']
@@ -98,17 +107,35 @@ export function buildTurnInstruction({ kind, prevName, isFinalSeat, longForm, re
       ? ['Invoke at least one surveyed idea from another seat by name (see STRIKING IDEAS), transformed into your own terms — never quoted; a pass-3 turn that only answers PREV has failed.']
       : []),
     ...(kind === 'reconstruction' && marginsNote
-      ? ['You have also read the NOTES FROM THE MARGINS in the survey below (listed first): name it explicitly and carry at least one of its demands forward into your reformulation, in your own terms — never quoted, never unnamed, never ignored. A pass-3 turn that leaves the margins note unnamed or unanswered has failed.']
+      ? ['You have also read the NOTES FROM THE MARGINS in the survey below (listed first): name it explicitly and answer one of its questions directly in your reformulation, in your own terms — never quoted, never unnamed, never ignored. A pass-3 turn that leaves the margins note unnamed or unanswered has failed.']
       : []),
     ...(kind === 'reconstruction' && marginsFirst
-      ? ['You speak first after the note: open your negation by naming the NOTES FROM THE MARGINS writer and one demand it made — say plainly whether your framework takes it up or breaks it, in your own terms, never quoted. A first reconstruction that does not name the margins note has failed.']
+      ? ['You speak first after the note: open your negation by naming the NOTES FROM THE MARGINS writer and one question it asked — answer it directly, say plainly whether your framework takes it up or breaks it, in your own terms, never quoted. A first reconstruction that does not name and answer the margins note has failed.']
       : []),
     'Hegel/Marx method: negation must be determinate (preserve-and-elevate), never mere dismissal. Weave the concession inside the negation or reformulation prose (your CONCESSION stock) — there is no separate incorporation section.',
     'Your STOCK PHRASES below address PREV as YOU, directly — use at most one per turn, often none; never open two of your turns the same way. The variants marked SPENT below are used up this session: never reuse them.',
-    ...(lowRegister
-      ? ['LOW ORDERS, governing this turn: open with a CONCESSION variant, never a rebuttal one. Define every hard word the moment you use it — if a 12-year-old would stumble on it, say what it means. Short sentences; one idea per paragraph. The plain-style override at the end of your persona outranks everything above.']
+    ...(low
+      ? ['LOW ORDERS, governing this turn: open with a CONCESSION variant, never a rebuttal one. Use plain everyday words throughout — translate or describe every hard term instead of using it; if you keep one essential term, say what it does in plain words right away. Short sentences; one idea per paragraph. The language level at the end of your persona outranks everything above.']
       : []),
-    'VOICE: write continuous prose in your own diction, syntax and rhythm (your STYLE ESSENCE governs the sentence) — no headings or labels inside your prose. HEAT: you enjoy this fight — answer with passion and a flash of wit, lighthearted combat, never cruelty; come at PREV directly, person to person, and let the reader hear that the argument matters to you. Gloss school-terms on first use inside your own diction (≤1 clause); never assume the reader did the reading. When SOURCE or INDEXED passages ride in this prompt, borrow visibly: weave at least two distinctive single words or short phrases (no more than six words each, in single quotes — bare double quotes corrupt your reply) from them into your own sentences, so their less famous vocabulary colours your diction; when no passages are shown, carry that colour from your persona instead. Everything else — PREV, the survey, the margins note, your own prior turns — stays under the five-word rule: never lift a multi-word clause from any of them; if another seat said it, restate it in your own terms or leave it out. Agreement and disagreement alike must be phrased afresh: never reuse the predecessor wording to agree with it, never reuse your own earlier wording to repeat yourself. Every sentence must introduce a new idea or angle — a sentence that only restates its predecessor fails the turn. Grammar is standard written English for every seat without exception: complete sentences, capitalised starts, and every value must end with terminal punctuation (. ? !). Never trail off mid-thought. The dialectical movement (cutting in, negation of PREV, incorporation of what holds, reformulation) must be audible in the argument itself, never announced. Never open with a generic verdict on PREV (errs, fails to see, is mistaken, overlooks) — begin from the concrete object and criticise with your own toolkit\'s verbs.',
+    'VOICE: write continuous prose in your own diction, syntax and rhythm (your STYLE ESSENCE governs the sentence, within your LANGUAGE LEVEL) — no headings or labels inside your prose. '
+    + (low
+      ? 'HEAT: stay calm and kind — explain with patience, never cruelty and never combat; come to PREV as a teacher to a newcomer, and let the reader feel the argument matters because it touches real life. '
+      : 'HEAT: you enjoy this fight — answer with passion and a flash of wit, lighthearted combat, never cruelty; come at PREV directly, person to person, and let the reader hear that the argument matters to you. ')
+    + (low
+      ? 'PLAIN WORDS: translate or describe every school-term in simple everyday English — never use a specialist, archaic, or obscure term where plain words work; where a term has no plain equal, describe what it does. Never assume the reader did the reading. '
+      : level === 'medium'
+        ? 'Keep important school-terms but explain each one naturally inside the sentence in plain words — no separate dictionary-style breaks; never assume the reader did the reading. '
+        : 'Gloss school-terms on first use inside your own diction (≤1 clause); never assume the reader did the reading. ')
+    + (low
+      ? 'When SOURCE or INDEXED passages ride in this prompt, paraphrase what they say in plain words — never lift rare or distinctive words verbatim, not even in single quotes (bare double quotes corrupt your reply). When no passages are shown, carry plain colour from your persona instead. '
+      : 'When SOURCE or INDEXED passages ride in this prompt, borrow visibly: weave at least two distinctive single words or short phrases (no more than six words each, in single quotes — bare double quotes corrupt your reply) from them into your own sentences, so their less famous vocabulary colours your diction; when no passages are shown, carry that colour from your persona instead. ')
+    + 'Everything — the question above, PREV, the survey, the margins note, your own prior turns — stays under the five-word rule: never lift a multi-word clause from any of them; paraphrase and riff on the question through your framework instead of repeating it verbatim; if another seat said it, restate it in your own terms or leave it out.'
+    + (low ? ' At Low, restated means translated into plain words — never reuse a specialist term from the survey or the margins note.' : '')
+    + ' Agreement and disagreement alike must be phrased afresh: never reuse the predecessor wording to agree with it, never reuse your own earlier wording to repeat yourself.'
+    + (low
+      ? ' Do not repeat yourself: each sentence should move the thought forward in plain words.'
+      : ' Every sentence must introduce a new idea or angle — a sentence that only restates its predecessor fails the turn.')
+    + ' Grammar is standard written English for every seat without exception: complete sentences, capitalised starts, and every value must end with terminal punctuation (. ? !). Never trail off mid-thought. The dialectical movement (cutting in, negation of PREV, incorporation of what holds, reformulation) must be audible in the argument itself, never announced. Never open with a generic verdict on PREV (errs, fails to see, is mistaken, overlooks) — begin from the concrete object and criticise with your own toolkit\'s verbs.',
   ].join(' ');
 }
 
@@ -123,9 +150,11 @@ interface UserMessageArgs {
    * model actually reads them. Variants listed under SPENT are used up. */
   stockBlock?: string;
   spentPhrases?: string[];
+  /** Sitting intensity: at Low the survey must be translated, never quoted. */
+  intensity?: StyleIntensity;
 }
 
-export function buildUserMessage({ question, prevText, ownPriorLines, turnInstruction, othersPriorLines = [], stockBlock = '', spentPhrases = [] }: UserMessageArgs): string {
+export function buildUserMessage({ question, prevText, ownPriorLines, turnInstruction, othersPriorLines = [], stockBlock = '', spentPhrases = [], intensity }: UserMessageArgs): string {
   const parts = [
     `QUESTION (verbatim): ${question}`,
     '',
@@ -154,7 +183,8 @@ export function buildUserMessage({ question, prevText, ownPriorLines, turnInstru
   if (othersPriorLines.length > 0) {
     parts.push(
       '',
-      'STRIKING IDEAS FROM OTHER SEATS (pass 3 only — the NOTES FROM THE MARGINS intervene first, then seats; you may invoke any of these by name alongside PREV. Transform what you invoke into your framework\'s own terms; the five-word rule holds here too — never quote survey lines verbatim):',
+      'STRIKING IDEAS FROM OTHER SEATS (pass 3 only — the NOTES FROM THE MARGINS intervene first, then seats; you may invoke any of these by name alongside PREV. Transform what you invoke into your framework\'s own terms; the five-word rule holds here too — never quote survey lines verbatim)'
+      + (intensity === 'low' ? ' At Low, transform means translate into plain everyday words — never reuse a specialist, archaic, or obscure term from the survey or the margins note; describe it instead.:' : ':'),
       ...othersPriorLines.map(({ name, line }) => `- ${name}: ${line}`),
     );
   }
@@ -162,8 +192,16 @@ export function buildUserMessage({ question, prevText, ownPriorLines, turnInstru
   return parts.join('\n');
 }
 
-export const STRUCTURED_OUTPUT_HINT = [
-  'Respond with JSON only, matching this shape exactly (all four keys always present):',
+/**
+ * One-line Low reminder, placed just before the JSON hint (which stays final
+ * so parse compliance never suffers). Closest instruction to generation:
+ * reinforces the persona's LANGUAGE LEVEL after the predecessor text, survey,
+ * and grounding have all had their say. Low only, for now.
+ */
+export const LOW_CLOSING_REMINDER =
+  'PLAIN WORDS REMINDER: answer in simple everyday English — translate or describe every hard term instead of using it. Your LANGUAGE LEVEL above governs.';
+
+export const STRUCTURED_OUTPUT_HINT = [  'Respond with JSON only, matching this shape exactly (all four keys always present):',
   '{ negation, reformulation, new_contribution, works_referenced: string[] }',
   'The JSON envelope is mandatory — but every text value holds continuous label-free prose: no headings, no Negation-dash labels, no numbered parts inside the values. Inside values, use only single or smart quotes — never bare double quotes, which corrupt the envelope.',
   'The two text sections together must stay under the total word budget above; brevity within it is good. Per-section counts are guidance.',
@@ -178,22 +216,25 @@ export const STRUCTURED_OUTPUT_HINT = [
  * unchanged.
  */
 export const CODA_SYSTEM = [
-  'You do low-wage manual work — cleaning shifts, warehouse nights, care rotas — and you are writing from the Global South, barging into a seminar of dead philosophers right before its final round. You speak plainly, working-class to the bone — but you have read the books: queer theory, crip theory, decolonial thought, and you use them like tools, never decorations.',
-  'Comically rude in the way of an angry young poster: funny because you are right, never cruel for sport. This room is pale, stale, and dead — mostly men, so mind your manners with Weil, who is not a man: they/them for Weil, always. Name whose land, labour, and body the debate stands on.',
-  'Your attitude is fixed — impatience with abstraction, hunger for the concrete — but the note is never the same twice: let THIS sitting decide what you are angry about, who you single out, and what you demand. A note that could belong to any other sitting has failed.',
+  'You do low-wage manual work and are writing from the Global South, barging into a debate of western dead philosophers right before its final round. Your aim is to get them to apply their abstract ideas and historical knowledge to practical tips for 21st-century leftists. Ask about particular strategies to apply the ideas in the debate so far. Name whose land, labour, or body the debate stands on, bespoke to this sitting. You speak plain working-class dialect, but as an auto-didact you have read queer theory, crip theory, feminism, and decolonial thought, and you use them like tools for action, never clever words that obscure meaning.',
+  'Your tone is comically rude in the style of an aggravated Gen Z Redditor: funny because you are right, never cruel for sport. This room is pale, stale, and dead, mostly men — but use they/them for Weil, always. The lack of diversity and intersectionality angers you. Vary your insults by who is actually present in the sitting lines below and whatever cringe things they said in this sitting — never insult a thinker who is not present.',
+  'You are impatient with abstraction and tired ideas, you hunger for concrete advice: let this sitting decide what you are angry about, who you single out, and what you demand. Call them out for words that are hard to understand — translate the debate into Gen Z, working-class, international English. Do this as 3 relevant questions that are hard to evade, in an ‘Are you telling us…?’ / ‘How do we get from…?’ style.',
 ].join(' ');
 
 export function buildCodaPrompt(
   question: string,
   lines: { name: string; line: string }[],
 ): string {
+  const present = [...new Set(lines.map(({ name }) => name))];
   return [
     `QUESTION (verbatim): ${question}`,
     '',
-    'BELOW ARE THE FIRST TWO PASSES, ONE LINE PER THINKER PER TURN. This is everything you saw — translate it, do not invent beyond it.',
+    `PRESENT IN THIS SITTING: ${present.join(', ')}. Address only these thinkers — never insult or name anyone else.`,
+    '',
+    'BELOW ARE THE FIRST TWO PASSES, ONE LINE PER THINKER PER TURN. This is everything you saw — translate it, do not invent beyond it. Never quote seat wording or specialist terms verbatim: render every hard idea in your own plain working-class English, describing what it does rather than naming it. Paraphrase the question above in your own voice too — never repeat it verbatim.',
     ...lines.map(({ name, line }) => `- ${name}: ${line}`),
     '',
-    'Write the margin note in two moves, HARD ceiling 180 words total: (negation) open with Marx Thesis Eleven in single quotes, then say plainly what is pale, stale, and missing — pick the ONE absence that stings most in THESE lines and build everything around it, in your own words each sitting; (reformulation) order pass 3 toward practical 21st-century action as numbered concrete demands — each naming the KIND of people who act (nurses, tenants, dockworkers) and their first step, never an invented named individual or organisation — and vary them: different kinds of people and different first steps from whatever you demanded last time. Name no real person, group, or place unless it appeared in the sitting lines above. Vague verbs fail the note: never have conversations, raise awareness, prioritise or push for anything without saying who does what first. Inside values, use only single or smart quotes — never bare double quotes, which corrupt the envelope. Respond with JSON only, matching this shape exactly (all four keys always present): { negation, reformulation, new_contribution, works_referenced: string[] }. Set works_referenced to [].',
+    'Write the notes from the margins in two moves, HARD ceiling 200 words total: (negation) open with a paraphrase, in your own words, of Marx saying the philosophers have only interpreted the world, in various ways, and the point is to change it — never quote it the same way twice — then say something rude about one point in these lines, then pick the ONE absence that stings most in this sitting; (reformulation) order pass 3 toward practical 21st-century action as numbered concrete demand-questions for this user question, each with a first step, plus your own Gen Z suggestion for action. Name no real person, group, or place unless it appeared in the sitting lines above. Vague verbs fail the note: never have conversations, raise awareness, prioritise or push for anything without saying who does what first. Inside values, use only single or smart quotes — never bare double quotes, which corrupt the envelope. Respond with JSON only, matching this shape exactly (all four keys always present): { negation, reformulation, new_contribution, works_referenced: string[] }. Put the critique in negation, the demand-questions in reformulation, and your own action suggestion as the one-line new_contribution. Set works_referenced to [].',
   ].join('\n');
 }
 
