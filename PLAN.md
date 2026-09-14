@@ -85,7 +85,7 @@ is enforced. Both parts must be present; the concession hides inside them
 intervention, not an essay.
 
 `maxOutputTokens: 300` normal / `600` long form (JSON wrapper needs headroom).
-A full 10 × 3 session ≈ 3k words normal — roughly a 12-minute read.
+A full 11 × 3 session ≈ 3.3k words normal — roughly a 13-minute read.
 
 ### Embeddings (Phase 5)
 `test_embeddings.py` uses local Ollama `nomic-embed-text` (768 dims); the schema is
@@ -276,7 +276,7 @@ unset made Chrome pick a bundled voice instead of the OS default).
 Vite child dies and the proxy has nothing to forward to).
 
 **Philosophers' Service desk** — floating tutor window (`ServiceChat.tsx` +
-`src/lib/service-chat.ts`): all 10 thinkers, switchable mid-chat, own Level
+`src/lib/service-chat.ts`): all 11 thinkers, switchable mid-chat, own Level
 picker in the desk (Low — plain words / Medium — terms explained /
 High — full voice; starts at the cabinet setting), scaffolded answers (answer
 → definitions → example → check question, 180 words; definition style follows

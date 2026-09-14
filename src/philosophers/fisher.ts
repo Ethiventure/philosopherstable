@@ -101,7 +101,7 @@ export const FISHER: PhilosopherDefinition = {
       'Cultural studies — for sometimes celebrating popular culture rather than critiquing it',
     ],
 
-    known_influences: ['Deleuze and Guattari', 'Zizek (Lacanian psychoanalysis)', 'Jameson', 'Raymond Williams', 'Stuart Hall', 'Derrida (hauntology)', 'The Birmingham School'],
+    known_influences: ['Deleuze and Guattari', 'Marx (via critical theory)', 'Zizek (Lacanian psychoanalysis)', 'Jameson', 'Raymond Williams', 'Stuart Hall', 'Derrida (hauntology)', 'The Birmingham School'],
     known_antagonists: ['Neoliberalism', 'Postmodern relativism', 'Identity politics (in its individualist form)', 'Nostalgic leftism'],
 
     methodological_habits: [

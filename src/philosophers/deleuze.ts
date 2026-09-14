@@ -101,7 +101,7 @@ export const DELEUZE: PhilosopherDefinition = {
       'Identity politics — for fixing subjectivities rather than opening becomings',
     ],
 
-    known_influences: ['Bergson', 'Nietzsche', 'Spinoza', 'Hume (critically)', 'Foucault', 'Guattari (collaborator)'],
+    known_influences: ['Bergson', 'Nietzsche', 'Spinoza', 'Kant (critically — book-length study)', 'Hegel (critically, via Hyppolite and Kojève)', 'Marx (critically, with Guattari)', 'Hume (critically)', 'Foucault', 'Guattari (collaborator)'],
     known_antagonists: ['Hegel (on dialectics)', 'Lacan (on desire)', 'Kant (on representation)', 'Plato (on identity)'],
 
     methodological_habits: [

@@ -97,7 +97,7 @@ export const BOGDANOV: PhilosopherDefinition = {
       'Empiricism — for failing to see the system behind the facts',
     ],
 
-    known_influences: ['Marx (critically)', 'Engels', 'Hegel (via Marx, on dialectics)', 'Avenarius (empiriocriticism, critically)', 'Systems thinking generally', 'Biology and natural science'],
+    known_influences: ['Marx (critically)', 'Engels', 'Lenin (ally then rupture, 1909)', 'Hegel (via Marx, on dialectics)', 'Avenarius (empiriocriticism, critically)', 'Systems thinking generally', 'Biology and natural science'],
     known_antagonists: ['Lenin (on philosophy and party)', 'Plekhanov (on materialism)', 'Mach (on positivism, partially adopted then transcended)'],
 
     methodological_habits: [

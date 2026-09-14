@@ -6,7 +6,7 @@
   "4": "compilerOptions",
   "5": "openrouter.ts",
   "6": "compilerOptions",
-  "7": "devDependencies",
+  "7": "scripts",
   "8": "llm.ts",
   "9": "settings.ts",
   "10": "tts.ts",
@@ -17,7 +17,7 @@
   "15": "philosophers/index.ts",
   "16": "lib/prompts.ts",
   "17": "The Dialectical Cabinet — Implementation Plan",
-  "18": "universal-mechanisms.ts",
+  "18": "bloch.ts",
   "19": "The Dialectical Cabinet",
   "20": "shared.ts",
   "21": "AGENTS.md",
@@ -55,5 +55,6 @@
   "53": "rag-ingest.mjs",
   "54": "rag-inspect.mjs",
   "55": "rag-manifest.mjs",
-  "56": "manifest.json"
+  "56": "manifest.json",
+  "57": "influences.ts"
 }

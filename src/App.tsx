@@ -22,7 +22,8 @@ import {
 } from 'lucide-react';
 import { supabase } from '@/lib/supabase';
 import { CORPUS_SOURCES_DATA } from '@/data/corpus-sources';
-import { DEFAULT_SEATING_ORDER, PHILOSOPHER_DATA, renderPersona } from '@/philosophers';
+import { DEFAULT_SEATING_ORDER, PHILOSOPHER_BY_SLUG, PHILOSOPHER_DATA, renderPersona } from '@/philosophers';
+import { CABINET_DEBTS, cabinetHeirs } from '@/philosophers/influences';
 import {
   DEFAULT_ACCESSIBILITY,
   PASS_DESCRIPTIONS,
@@ -240,10 +241,11 @@ function App() {
   };
   const [selectedIntervention, setSelectedIntervention] = useState<Intervention | null>(null);
   const [selectedPhilosopher, setSelectedPhilosopher] = useState<Philosopher | null>(null);
-  // Default cabinet: Marx, Lenin, Bogdanov, Weil, Bookchin — a coherent
-  // quarrel (organisation, party, apparatus, scale) that tests well and works
-  // unedited. Full chronological order lives in DEFAULT_SEATING_ORDER.
-  const [activeSlugs, setActiveSlugs] = useState<string[]>(['marx', 'lenin', 'bogdanov', 'weil', 'bookchin']);
+  // Default cabinet: Hegel, Marx, Weil, Bookchin, Deleuze — freedom,
+  // consciousness, and organisation against hierarchy and control, ending
+  // in new forms of life. Full chronological order lives in
+  // DEFAULT_SEATING_ORDER.
+  const [activeSlugs, setActiveSlugs] = useState<string[]>(['hegel', 'marx', 'weil', 'bookchin', 'deleuze']);
   const [showSources, setShowSources] = useState(false);
   const [sourceTarget, setSourceTarget] = useState<number | null>(null);
   const openSourcesAt = (n?: number) => {
@@ -335,7 +337,7 @@ function App() {
   };
 
   // Abridged spoken welcome (~40 seconds): the assembly, the seats, the keys.
-  const WELCOME_SPOKEN = 'How this cabinet works. We are ten thinkers at this table, from Spinoza to Fisher, and none of us may rule it. Each of us speaks only against its predecessor — negating, preserving, reformulating — until your question returns to you, changed, after three passes. To begin: open Settings, choose who gets a seat — five is the lean assembly, ten the full one — press Begin cabinet, and read at your own pace. The shared key carries the first sittings; when it runs dry, bring your own. We never see your keys and want no login — we are only here for the debate.';
+  const WELCOME_SPOKEN = 'How this cabinet works. We are eleven thinkers at this table, from Spinoza to Fisher, and none of us may rule it. Each of us speaks only against its predecessor — negating, preserving, reformulating — until your question returns to you, changed, after three passes. To begin: open Settings, choose who gets a seat — five is the lean assembly, eleven the full one — press Begin cabinet, and read at your own pace. The shared key carries the first sittings; when it runs dry, bring your own. We never see your keys and want no login — we are only here for the debate.';
 
   const toggleWelcomeSpeech = () => {
     if (!ttsSupported) return;
@@ -364,7 +366,7 @@ function App() {
   const orderedPhilosophers = useMemo(() => DEFAULT_SEATING_ORDER
     .map((slug) => philosophers.find((p) => p.slug === slug))
     .filter((p): p is Philosopher => p !== undefined && activeSlugs.includes(p.slug)), [philosophers, activeSlugs]);
-  // Service desk offers all ten thinkers in chronological seating order,
+  // Service desk offers all eleven thinkers in chronological seating order,
   // whether or not they hold a seat in this sitting.
   const allOrderedPhilosophers = useMemo(() => DEFAULT_SEATING_ORDER
     .map((slug) => philosophers.find((p) => p.slug === slug))
@@ -1005,7 +1007,7 @@ function App() {
             </div>
             <div className="dark-academia-card p-5">
               <div className="flex items-center gap-3 mb-2"><ConciergeBell size={18} className="text-[#8b5254]" /><h3 className="text-xl">Philosophers&rsquo; Service</h3></div>
-              <p className="text-sm italic text-[#465f75]/70">One thinker, at your pace — plain definitions, a concrete example, a check question. Any of the ten, switchable mid-chat.</p>
+              <p className="text-sm italic text-[#465f75]/70">One thinker, at your pace — plain definitions, a concrete example, a check question. Any of the eleven, switchable mid-chat.</p>
               <button className="btn-secondary w-full mt-4 flex justify-center items-center gap-2" onClick={() => setShowService(true)}><ConciergeBell size={15} /> Ask a thinker</button>
             </div>
           </aside>
@@ -1198,7 +1200,7 @@ function WelcomeModal({ onClose, onOpenSettings, ttsSupported, listening, onList
         <p className="pass-indicator text-[#8b5254]">The assembly is convened</p>
         <h2 className="text-3xl mt-1">How this cabinet works</h2>
         <div className="space-y-4 mt-5 text-[15px] leading-relaxed text-[#465f75]">
-          <p><span className="drop-cap">A</span>sk your question of the Philosophers' Table and watch dead thinkers debate it. Convene 4–6 of us (all 10 means a slow 30 turns); each speaks 3 times across three passes. Read along below the table, or export it all as one text file.</p>
+          <p><span className="drop-cap">A</span>sk your question of the Philosophers' Table and watch dead thinkers debate it. Convene 4–6 of us (all 11 means a slow 33 turns); each speaks 3 times across three passes. Read along below the table, or export it all as one text file.</p>
           <p>Each of us answers only our predecessor — negating on its own premises, preserving what holds, handing a contradiction clockwise. Whatever truth appears shows up <em>between</em> our seats, never handed down.</p>
           <p>Lost? Ring the Service desk bell (bottom-right): one thinker, plain definitions, an example, a check-back question — 20 per sitting, with its own voice picker. First set the table's voice in Settings → Cabinet: <strong>Low</strong> speaks plainly, <strong>Medium</strong> explains its terms, <strong>High</strong> runs at full difficulty. Ideas unchanged throughout.</p>
           <p>Start on the shared key: no account, nothing to configure. When the commons runs dry, bring your own — OpenRouter, Groq, DeepInfra or Together; keys stay in your browser. Test the key in Settings; if we ever halt, read the notice — Resume usually fixes it.</p>
@@ -1309,7 +1311,6 @@ function SettingsDrawer({ philosophers, activeSlugs, togglePhilosopher, settings
           <div>
             <p className="pass-indicator text-[#8b5254]">Bring your own key</p>
             <h2 className="text-3xl">Settings</h2>
-            <p className="italic text-[#465f75]/65 mt-1">Your own keys stay in this browser and go only to the named provider (OpenRouter → OpenRouter, whose free models may log prompts for training; Groq → Groq; DeepInfra → DeepInfra; Together → Together). Naturally each provider also holds your key on their servers — that is how API keys work. What we never do: see them, store them, or ask for any login. The shared cabinet key never leaves the server. Nothing identifying is collected here.</p>
           </div>
           <button className="btn-secondary !px-3" onClick={onClose} aria-label="Close settings"><X size={17} /></button>
         </div>
@@ -1322,6 +1323,7 @@ function SettingsDrawer({ philosophers, activeSlugs, togglePhilosopher, settings
         </div>
         {tab === 'key' && (
           <div className="space-y-3 border-b border-[#4a392d]/15 pb-6 mb-6">
+            <p className="italic text-sm text-[#465f75]/70">Your own keys stay in this browser and go only to the named provider (OpenRouter → OpenRouter, whose free models may log prompts for training; Groq → Groq; DeepInfra → DeepInfra; Together → Together). Naturally each provider also holds your key on their servers — that is how API keys work. What we never do: see them, store them, or ask for any login. The shared cabinet key never leaves the server. Nothing identifying is collected here.</p>
             <span className="font-heading text-sm uppercase tracking-[0.16em] text-[#4a392d] block">Provider</span>
             <div className="flex flex-wrap gap-2" role="radiogroup" aria-label="AI provider">
               <button role="radio" aria-checked={settings.provider === 'shared'} title="No key needed — shared Groq-backed key, a few sittings a day each." onClick={() => { setTestState('idle'); setTestMessage(''); onSettingsChange({ ...settings, provider: 'shared' }); }} className={`btn-secondary ${settings.provider === 'shared' ? '!border-[#8b5254] !text-[#8b5254]' : ''}`}>Cabinet shared</button>
@@ -1590,19 +1592,26 @@ function ProfileModal({ philosopher, onClose }: { philosopher: Philosopher; onCl
   const profile = philosopher.profile;
   const style = philosopher.style_essence;
   const baseKeys = ['identity', 'ontology', 'epistemology', 'conception_of_human_subject', 'conception_of_society', 'conception_of_power', 'conception_of_freedom', 'theory_of_social_change', 'conception_of_technology', 'rhetorical_style', 'what_he_sees_well', 'what_he_overlooks'];
-  const hiddenKeys = new Set(['reasoning', 'self_review', 'meta_fix', 'style', 'historical_boundary']);
-  const altKey = (key: string) => key.startsWith('what_he_') ? key.replace('what_he_', 'what_she_') : key.startsWith('what_she_') ? key.replace('what_she_', 'what_he_') : null;
+  const hiddenKeys = new Set(['reasoning', 'self_review', 'meta_fix', 'style', 'historical_boundary', 'core_principle', 'methodological_habits', 'primary_authority', 'modern_adaptation']);
+  // Variant keys across philosophers (his/her/their). First content found wins;
+  // the label follows the variant that holds it.
+  const altKeys = (key: string): string[] => {
+    if (!key.startsWith('what_he_')) return [];
+    const stem = key.slice('what_he_'.length);
+    const alts = [`what_she_${stem}`, `what_they_${stem}`];
+    if (stem.startsWith('sees_')) alts.push(`what_they_see_${stem.slice('sees_'.length)}`);
+    return alts;
+  };
   const rows: { label: string; value: unknown }[] = [];
   const consumed = new Set<string>();
   for (const key of baseKeys) {
-    const alt = altKey(key);
-    const value = profile[key] !== undefined ? profile[key] : alt ? profile[alt] : undefined;
-    if (value === undefined) continue;
-    // Label follows the variant that actually holds the content (her content, her words).
-    const labelKey = profile[key] !== undefined ? key : (alt ?? key);
-    rows.push({ label: labelKey.replace(/_/g, ' '), value });
+    const alts = altKeys(key);
+    const found = [key, ...alts].find((k) => profile[k] !== undefined);
+    if (found === undefined) continue;
+    // Label follows the variant that actually holds the content (their content, their words).
+    rows.push({ label: found.replace(/_/g, ' '), value: profile[found] });
     consumed.add(key);
-    if (alt) consumed.add(alt);
+    for (const alt of alts) consumed.add(alt);
   }
   for (const key of Object.keys(profile)) {
     if (consumed.has(key) || hiddenKeys.has(key)) continue;
@@ -1614,7 +1623,37 @@ function ProfileModal({ philosopher, onClose }: { philosopher: Philosopher; onCl
     { id: 'works', label: 'Works' },
     { id: 'cabinet', label: 'In this cabinet' },
   ] as const;
-  return <div className="fixed inset-0 z-50 bg-[#4a392d]/35 backdrop-blur-sm flex items-center justify-center p-4" onClick={onClose}><div role="dialog" aria-modal="true" aria-label={`Profile of ${philosopher.full_name}`} className="dark-academia-card max-w-4xl max-h-[90vh] overflow-y-auto custom-scroll p-6 md:p-8" onClick={(event) => event.stopPropagation()}><div className="flex justify-between gap-4 mb-4"><div><p className="pass-indicator text-[#8b5254]">Seat {philosopher.seat_order + 1} · intellectual profile</p><h2 className="text-4xl">{philosopher.full_name}</h2><p className="italic text-[#465f75]/70">{philosopher.birth_year} — {philosopher.death_year}</p></div><button className="btn-secondary !px-3 h-fit" onClick={onClose} aria-label="Close profile"><X size={17} /></button></div><p className="text-[15px] leading-relaxed text-[#465f75] mb-4">{philosopher.biography}</p><div className="flex flex-wrap gap-2 mb-5">{philosopher.analytical_center.map((item) => <span key={item} className="citation-badge">{item}</span>)}</div><div className="flex gap-2 mb-5" role="tablist" aria-label="Profile sections">{tabs.map((t) => <button key={t.id} role="tab" aria-selected={tab === t.id} onClick={() => setTab(t.id)} className={`btn-secondary !text-xs ${tab === t.id ? '!border-[#8b5254] !text-[#8b5254]' : ''}`}>{t.label}</button>)}</div>{tab === 'thought' && <div className="grid md:grid-cols-2 gap-5">{rows.map((row) => <div key={row.label} className="border-t border-[#4a392d]/15 pt-3"><p className="text-xs uppercase tracking-widest text-[#8b5254] mb-1">{row.label}</p><p className="text-[15px] leading-relaxed text-[#465f75]/85">{Array.isArray(row.value) ? row.value.join(' · ') : String(row.value ?? '')}</p></div>)}</div>}{tab === 'voice' && <div className="grid md:grid-cols-2 gap-5"><StyleEssenceDisplay style={style} /></div>}{tab === 'works' && <ul className="space-y-3">{philosopher.key_works.map((work) => <li key={work.title} className="border-t border-[#4a392d]/15 pt-3"><p className="font-heading text-lg text-[#4a392d]">{work.title} <span className="text-sm italic text-[#465f75]/65">· {work.year}</span></p><p className="text-[15px] leading-relaxed text-[#465f75]/85">{work.note}</p></li>)}</ul>}{tab === 'cabinet' && <div className="border-t border-[#4a392d]/15 pt-3"><p className="text-xs uppercase tracking-widest text-[#8b5254] mb-1">Why this seat</p><p className="text-[15px] leading-relaxed text-[#465f75]/85">{philosopher.why_this_seat}</p><p className="text-sm italic text-[#465f75]/65 mt-3">Seat {philosopher.seat_order + 1} of {DEFAULT_SEATING_ORDER.length} · answers its predecessor, hands a contradiction on.</p></div>}</div></div>;
+  return <div className="fixed inset-0 z-50 bg-[#4a392d]/35 backdrop-blur-sm flex items-center justify-center p-4" onClick={onClose}><div role="dialog" aria-modal="true" aria-label={`Profile of ${philosopher.full_name}`} className="dark-academia-card max-w-4xl max-h-[90vh] overflow-y-auto custom-scroll p-6 md:p-8" onClick={(event) => event.stopPropagation()}><div className="flex justify-between gap-4 mb-4"><div><p className="pass-indicator text-[#8b5254]">Seat {philosopher.seat_order + 1} · intellectual profile</p><h2 className="text-4xl">{philosopher.full_name}</h2><p className="italic text-[#465f75]/70">{philosopher.birth_year} — {philosopher.death_year}</p></div><button className="btn-secondary !px-3 h-fit" onClick={onClose} aria-label="Close profile"><X size={17} /></button></div><p className="text-[15px] leading-relaxed text-[#465f75] mb-4">{philosopher.biography}</p><div className="flex flex-wrap gap-2 mb-5">{philosopher.analytical_center.map((item) => <span key={item} className="citation-badge">{item}</span>)}</div><div className="flex gap-2 mb-5" role="tablist" aria-label="Profile sections">{tabs.map((t) => <button key={t.id} role="tab" aria-selected={tab === t.id} onClick={() => setTab(t.id)} className={`btn-secondary !text-xs ${tab === t.id ? '!border-[#8b5254] !text-[#8b5254]' : ''}`}>{t.label}</button>)}</div>{tab === 'thought' && <div className="grid md:grid-cols-2 gap-5">{rows.map((row) => <div key={row.label} className="border-t border-[#4a392d]/15 pt-3"><p className="text-xs uppercase tracking-widest text-[#8b5254] mb-1">{row.label}</p><p className="text-[15px] leading-relaxed text-[#465f75]/85">{Array.isArray(row.value) ? row.value.join(' · ') : String(row.value ?? '')}</p></div>)}</div>}{tab === 'voice' && <div className="grid md:grid-cols-2 gap-5"><StyleEssenceDisplay style={style} /></div>}{tab === 'works' && <ul className="space-y-3">{philosopher.key_works.map((work) => <li key={work.title} className="border-t border-[#4a392d]/15 pt-3"><p className="font-heading text-lg text-[#4a392d]">{work.title} <span className="text-sm italic text-[#465f75]/65">· {work.year}</span></p><p className="text-[15px] leading-relaxed text-[#465f75]/85">{work.note}</p></li>)}</ul>}{tab === 'cabinet' && <div className="border-t border-[#4a392d]/15 pt-3"><p className="text-xs uppercase tracking-widest text-[#8b5254] mb-1">Why this seat</p><p className="text-[15px] leading-relaxed text-[#465f75]/85">{philosopher.why_this_seat}</p><p className="text-sm italic text-[#465f75]/65 mt-3">Seat {philosopher.seat_order + 1} of {DEFAULT_SEATING_ORDER.length} · answers its predecessor, hands a contradiction on.</p>{(() => {
+            const debts = CABINET_DEBTS[philosopher.slug] ?? [];
+            const heirs = cabinetHeirs(philosopher.slug);
+            if (!debts.length && !heirs.length) return null;
+            const nameOf = (slug: string) => PHILOSOPHER_BY_SLUG[slug]?.full_name ?? slug;
+            const kindHint = (kind: 'direct' | 'indirect') => kind === 'direct' ? 'read closely and answered (criticism and ruptures count)' : 'arrived through intermediaries and wider traditions';
+            return (
+              <div className="mt-4 space-y-3">
+                {debts.length > 0 && (
+                  <div>
+                    <p className="text-xs uppercase tracking-widest text-[#8b5254] mb-1">Owes at this table</p>
+                    <ul className="space-y-1.5">
+                      {debts.map((d) => (
+                        <li key={d.to} className="text-[15px] leading-relaxed text-[#465f75]/85"><span className="font-heading text-[#4a392d]" title={kindHint(d.kind)}>{nameOf(d.to)}</span> <span className="text-xs italic text-[#465f75]/60">({d.kind})</span> — {d.note}</li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+                {heirs.length > 0 && (
+                  <div>
+                    <p className="text-xs uppercase tracking-widest text-[#8b5254] mb-1">Owed by at this table</p>
+                    <ul className="space-y-1.5">
+                      {heirs.map((h) => (
+                        <li key={h.from} className="text-[15px] leading-relaxed text-[#465f75]/85"><span className="font-heading text-[#4a392d]" title={kindHint(h.kind)}>{nameOf(h.from)}</span> <span className="text-xs italic text-[#465f75]/60">({h.kind})</span> — {h.note}</li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+              </div>
+            );
+          })()}</div>}</div></div>;
 }
 
 export default App;
