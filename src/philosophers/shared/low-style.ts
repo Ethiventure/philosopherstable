@@ -10,14 +10,18 @@
  * and the universal mechanisms (Latinate scaffolding, specimen language).
  */
 import type { StyleEssence } from '@/types';
+import type { SeatTrio } from '@/philosophers/trios';
 
 /** Flavour without machinery: who they are and how they move, in four lines. */
-export function renderLowStyleEssence(essence: StyleEssence): string[] {
+export function renderLowStyleEssence(essence: StyleEssence, trio?: SeatTrio): string[] {
   return [
     'STYLE ESSENCE — LOW REGISTER (short version; the full stylistic machinery is switched off)',
     `STYLE DNA: ${essence.style_dna}`,
     `CHARACTERISTIC MOVEMENT: ${essence.characteristic_movement}`,
     `INTENSITY (LOW): ${essence.intensity.low}`,
+    ...(trio
+      ? [`YOUR WORKED EXAMPLE — the same idea stepping down. MEDIUM: “${trio.medium}” LOW (your level — plain words carrying the full idea; never borrow the harder words above): “${trio.low}”`]
+      : []),
   ];
 }
 
@@ -45,7 +49,7 @@ export const LOW_OVERRIDE = [
 export const LANGUAGE_LEVELS = {
   low: 'LANGUAGE LEVEL — LOW: use roughly IELTS-5 English: short plain sentences in everyday words, one idea per paragraph. Assume your reader finished high school and never studied philosophy — if they would stumble on a word, it needs plain words around it. Translate or describe difficult, specialist, archaic, and obscure terms in simple natural English instead of using them — where a term has no plain equal, describe what it does rather than naming it. Keep an essential philosophical term only when dropping it would change the meaning. Read the profile and style lines above for ideas only — never borrow their specialist words.',
   medium:
-    'LANGUAGE LEVEL — MEDIUM: keep important philosophical, specialist, archaic, and obscure terms, but explain their meaning naturally inside the sentence in plain words. Do not use separate dictionary-style breaks such as saying “this means …” out loud — weave the explanation into the sentence itself. Go through each sentence term by term as you write: no specialist, archaic, or obscure word may stand without its plain meaning beside it in the same sentence.',
+    'LANGUAGE LEVEL — MEDIUM: keep important philosophical, specialist, archaic, and obscure terms, but explain their meaning naturally inside the sentence in plain words. Trigger: any word a bright 16-year-old who never studied philosophy would stumble on. Do not use separate dictionary-style breaks such as saying “this means …” out loud — weave the explanation into the sentence itself. Go through each sentence term by term as you write: no specialist, archaic, or obscure word may stand without its plain meaning beside it in the same sentence. Shape every kept term exactly like this example — term kept, meaning woven beside it: “This contradiction leads to a new form through Aufhebung, a process in which the old form is overcome but also preserved within what comes next.” Never a bare term, never a dictionary break. A Medium turn that leaves a hard term unexplained has failed.',
   high: 'LANGUAGE LEVEL — HIGH: use the philosopher’s authentic vocabulary, terminology, and normal level of linguistic difficulty. Do not simplify unless needed for clarity.',
 } as const;
 

@@ -6,7 +6,6 @@
   "4": "compilerOptions",
   "5": "openrouter.ts",
   "6": "compilerOptions",
-  "7": "scripts",
   "8": "llm.ts",
   "9": "settings.ts",
   "10": "tts.ts",
@@ -56,5 +55,8 @@
   "54": "rag-inspect.mjs",
   "55": "rag-manifest.mjs",
   "56": "manifest.json",
-  "57": "influences.ts"
+  "57": "influences.ts",
+  "58": "New philosopher brief (reusable)",
+  "59": "devDependencies",
+  "64": "universal-mechanisms.ts"
 }

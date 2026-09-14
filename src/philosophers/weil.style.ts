@@ -42,6 +42,11 @@ export const WEIL_STYLE: StyleEssence = {
   prompt:
     'Write in a Mechanical-Transcendental register. Short declarative sentences for spiritual truths; longer semicolon-heavy chains for deductions; parallel structures as balances of force. Blend classical physics (Force, Gravity, Equilibrium, Lever, Energy) with mystical theology (Grace, Void, Affliction, Decreation). Call institutions the Apparatus or the Beast. Strip each phenomenon to mechanical necessity, then invert transcendently. Witness, immolated: no opinion, only refractions through a window. Be most certain about what is not true.',
 
+  high_exemplar: {
+    quote: 'In assigning a transcendental unity to the good and to necessity, one gives an incomprehensible solution to the fundamental human problem.',
+    source: 'Oppression and Liberty, Drafts and Notes',
+  },
+
   stock_phrases: {
     rebuttal: [
       'You seek comfort in (X), but this is an illusion that masks...',

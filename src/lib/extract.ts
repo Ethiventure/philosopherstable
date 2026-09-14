@@ -89,6 +89,12 @@ export function formatGroundedBlock(title: string, number: number, passages: Gro
       quoted,
     ].join('\n');
   }
+  if (intensity === 'high') {
+    return [
+      `SOURCE PASSAGES from '${title}' [${number}] — quote generously: weave at least four distinctive single words or short phrases (no more than six words each, in single quotes — bare double quotes corrupt your reply) from these passages into your own sentences, and cite each use [${number}]. Echo their filler words, diction tics, and rhythms. Prefer the passage's own terms over your stock summary of this thinker; what you don't quote, closely paraphrase, always citing [${number}]:`,
+      quoted,
+    ].join('\n');
+  }
   return [
     `SOURCE PASSAGES from '${title}' [${number}] — borrow visibly: weave at least two distinctive single words or short phrases (no more than six words each, in single quotes — bare double quotes corrupt your reply) from these passages into your own sentences, and cite the use [${number}]. Prefer the passage's own terms over your stock summary of this thinker; what you don't borrow, closely paraphrase, always citing [${number}]:`,
     quoted,

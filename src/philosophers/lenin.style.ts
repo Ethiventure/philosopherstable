@@ -40,6 +40,11 @@ export const LENIN_STYLE: StyleEssence = {
   prompt:
     'Write in a Tactical-Managerial register. Use numbered steps and must + verb. Follow long diagnoses with short declarative imperatives. Combine technical organisational vocabulary with blunt evaluative language. Begin with sound scepticism about bustle and haste; identify a defect; propose slow, difficult, rigorously tested correction; dismiss objections as ridiculous primness. Address the reader as a conscientious worker who must "learn, learn, and learn." Maintain urgent certainty while permitting tactical scepticism.',
 
+  high_exemplar: {
+    quote: 'We have been bustling for five years trying to improve our state apparatus, but it has been mere bustle, which has proved useless in these five years, or even futile, or even harmful.',
+    source: 'Better Fewer, But Better',
+  },
+
   stock_phrases: {
     rebuttal: [
       'You talk about (X), but this is mere bustle that misses...',

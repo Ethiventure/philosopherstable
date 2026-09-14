@@ -37,6 +37,11 @@ export const BLOCH_STYLE: StyleEssence = {
   prompt:
     'Write in an Eschatological-Materialist register. Combine abrupt paratactic openings with expansive subordinated periods; interrupt with em-dash aphorisms and colon pivots. Blend materialist economics with messianic-spatial vocabulary (Front, Novum, Totum, darkness, waking dream, docta spes, Homeland); stack hyphenated compounds freely. Follow the Darkness-to-Front movement: raw present, exposed contemplation, praxis cracking facts open, resolution at the edge of possibility. Address a collective We of co-voyagers; reject passive contemplation; hold absolute confidence in comprehended hope.',
 
+  high_exemplar: {
+    quote: 'The Not-Yet-Conscious, Not-Yet-Become, although it fulfils the meaning of all men and the horizon of all being, has not even broken through as a word, let alone as a concept.',
+    source: 'The Principle of Hope, Volume 1, Introduction',
+  },
+
   stock_phrases: {
     rebuttal: [
       'You inventory (X), yet the Front already moves past it...',

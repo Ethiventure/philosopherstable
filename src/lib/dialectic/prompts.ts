@@ -124,11 +124,13 @@ export function buildTurnInstruction({ kind, prevName, isFinalSeat, longForm, re
     + (low
       ? 'PLAIN WORDS: translate or describe every school-term in simple everyday English — never use a specialist, archaic, or obscure term where plain words work; where a term has no plain equal, describe what it does. Never assume the reader did the reading. '
       : level === 'medium'
-        ? 'Keep important school-terms but explain each one naturally inside the sentence in plain words — no separate dictionary-style breaks; never assume the reader did the reading. '
-        : 'Gloss school-terms on first use inside your own diction (≤1 clause); never assume the reader did the reading. ')
+        ? 'Keep important school-terms but explain each one naturally inside the sentence in plain words — no separate dictionary-style breaks; never assume the reader did the reading. A Medium turn that leaves a hard term unexplained has failed. '
+        : 'Use your authentic vocabulary at full difficulty — never simplify, never gloss, never define out loud. ')
     + (low
       ? 'When SOURCE or INDEXED passages ride in this prompt, paraphrase what they say in plain words — never lift rare or distinctive words verbatim, not even in single quotes (bare double quotes corrupt your reply). When no passages are shown, carry plain colour from your persona instead. '
-      : 'When SOURCE or INDEXED passages ride in this prompt, borrow visibly: weave at least two distinctive single words or short phrases (no more than six words each, in single quotes — bare double quotes corrupt your reply) from them into your own sentences, so their less famous vocabulary colours your diction; when no passages are shown, carry that colour from your persona instead. ')
+      : level === 'high'
+        ? 'When SOURCE or INDEXED passages ride in this prompt, quote generously: weave at least four distinctive single words or short phrases (no more than six words each, in single quotes — bare double quotes corrupt your reply) from them into your own sentences, and echo their filler words, diction tics, and rhythms. When no passages are shown, carry that colour from your persona and voice anchor instead. '
+        : 'When SOURCE or INDEXED passages ride in this prompt, borrow visibly: weave at least two distinctive single words or short phrases (no more than six words each, in single quotes — bare double quotes corrupt your reply) from them into your own sentences, so their less famous vocabulary colours your diction; when no passages are shown, carry that colour from your persona instead. ')
     + 'Everything — the question above, PREV, the survey, the margins note, your own prior turns — stays under the five-word rule: never lift a multi-word clause from any of them; paraphrase and riff on the question through your framework instead of repeating it verbatim; if another seat said it, restate it in your own terms or leave it out.'
     + (low ? ' At Low, restated means translated into plain words — never reuse a specialist term from the survey or the margins note.' : '')
     + ' Agreement and disagreement alike must be phrased afresh: never reuse the predecessor wording to agree with it, never reuse your own earlier wording to repeat yourself.'

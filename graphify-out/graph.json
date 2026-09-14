@@ -105,7 +105,7 @@
       "file_type": "code",
       "norm_label": "usermessageargs",
       "source_file": "src/lib/dialectic/prompts.ts",
-      "source_location": "L142"
+      "source_location": "L144"
     },
     {
       "id": "src_lib_groq_groqtextargs",
@@ -147,6 +147,19 @@
       "source_location": "L4"
     },
     {
+      "id": "src_philosophers_trios_seattrio",
+      "label": "SeatTrio",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 15,
+      "community_name": "philosophers/index.ts",
+      "file_type": "code",
+      "norm_label": "seattrio",
+      "source_file": "src/philosophers/trios.ts",
+      "source_location": "L10"
+    },
+    {
       "id": "src_lib_prompts_promptcontext",
       "label": "PromptContext",
       "_callable": true,
@@ -170,7 +183,7 @@
       "file_type": "code",
       "norm_label": "accessibilitysettings",
       "source_file": "src/types/index.ts",
-      "source_location": "L246"
+      "source_location": "L249"
     },
     {
       "id": "src_types_index_citation",
@@ -183,7 +196,7 @@
       "file_type": "code",
       "norm_label": "citation",
       "source_file": "src/types/index.ts",
-      "source_location": "L128"
+      "source_location": "L131"
     },
     {
       "id": "src_types_index_corpuschunk",
@@ -196,7 +209,7 @@
       "file_type": "code",
       "norm_label": "corpuschunk",
       "source_file": "src/types/index.ts",
-      "source_location": "L92"
+      "source_location": "L95"
     },
     {
       "id": "src_types_index_corpuspassage",
@@ -209,7 +222,7 @@
       "file_type": "code",
       "norm_label": "corpuspassage",
       "source_file": "src/types/index.ts",
-      "source_location": "L104"
+      "source_location": "L107"
     },
     {
       "id": "src_types_index_corpussource",
@@ -222,7 +235,7 @@
       "file_type": "code",
       "norm_label": "corpussource",
       "source_file": "src/types/index.ts",
-      "source_location": "L70"
+      "source_location": "L73"
     },
     {
       "id": "src_types_index_dialecticalmap",
@@ -235,7 +248,7 @@
       "file_type": "code",
       "norm_label": "dialecticalmap",
       "source_file": "src/types/index.ts",
-      "source_location": "L196"
+      "source_location": "L199"
     },
     {
       "id": "src_types_index_displayfont",
@@ -248,7 +261,7 @@
       "file_type": "code",
       "norm_label": "displayfont",
       "source_file": "src/types/index.ts",
-      "source_location": "L244"
+      "source_location": "L247"
     },
     {
       "id": "src_types_index_displaytheme",
@@ -261,7 +274,7 @@
       "file_type": "code",
       "norm_label": "displaytheme",
       "source_file": "src/types/index.ts",
-      "source_location": "L243"
+      "source_location": "L246"
     },
     {
       "id": "src_types_index_intervention",
@@ -274,7 +287,7 @@
       "file_type": "code",
       "norm_label": "intervention",
       "source_file": "src/types/index.ts",
-      "source_location": "L145"
+      "source_location": "L148"
     },
     {
       "id": "src_types_index_interventionsections",
@@ -287,7 +300,7 @@
       "file_type": "code",
       "norm_label": "interventionsections",
       "source_file": "src/types/index.ts",
-      "source_location": "L136"
+      "source_location": "L139"
     },
     {
       "id": "src_types_index_meeting",
@@ -300,7 +313,7 @@
       "file_type": "code",
       "norm_label": "meeting",
       "source_file": "src/types/index.ts",
-      "source_location": "L115"
+      "source_location": "L118"
     },
     {
       "id": "src_types_index_passsummary",
@@ -313,7 +326,7 @@
       "file_type": "code",
       "norm_label": "passsummary",
       "source_file": "src/types/index.ts",
-      "source_location": "L177"
+      "source_location": "L180"
     },
     {
       "id": "src_types_index_philosopher",
@@ -326,7 +339,7 @@
       "file_type": "code",
       "norm_label": "philosopher",
       "source_file": "src/types/index.ts",
-      "source_location": "L44"
+      "source_location": "L47"
     },
     {
       "id": "src_types_index_philosopherdefinition",
@@ -339,7 +352,7 @@
       "file_type": "code",
       "norm_label": "philosopherdefinition",
       "source_file": "src/types/index.ts",
-      "source_location": "L68"
+      "source_location": "L71"
     },
     {
       "id": "src_types_index_positionmemory",
@@ -352,7 +365,7 @@
       "file_type": "code",
       "norm_label": "positionmemory",
       "source_file": "src/types/index.ts",
-      "source_location": "L159"
+      "source_location": "L162"
     },
     {
       "id": "src_types_index_problemmap",
@@ -365,7 +378,7 @@
       "file_type": "code",
       "norm_label": "problemmap",
       "source_file": "src/types/index.ts",
-      "source_location": "L186"
+      "source_location": "L189"
     },
     {
       "id": "src_types_index_spiralsynthesis",
@@ -378,7 +391,7 @@
       "file_type": "code",
       "norm_label": "spiralsynthesis",
       "source_file": "src/types/index.ts",
-      "source_location": "L206"
+      "source_location": "L209"
     },
     {
       "id": "src_types_index_stockphrases",
@@ -729,7 +742,7 @@
       "file_type": "code",
       "norm_label": "servicehistoryitem",
       "source_file": "src/lib/service-chat.ts",
-      "source_location": "L60"
+      "source_location": "L62"
     },
     {
       "id": "src_lib_service_chat_serviceusermessageargs",
@@ -742,7 +755,7 @@
       "file_type": "code",
       "norm_label": "serviceusermessageargs",
       "source_file": "src/lib/service-chat.ts",
-      "source_location": "L66"
+      "source_location": "L68"
     },
     {
       "id": "src_philosophers_influences_cabinetdebt",
@@ -1111,7 +1124,7 @@
       "file_type": "code",
       "norm_label": "buildcodaprompt()",
       "source_file": "src/lib/dialectic/prompts.ts",
-      "source_location": "L224"
+      "source_location": "L226"
     },
     {
       "id": "src_lib_dialectic_prompts_buildturninstruction",
@@ -1135,7 +1148,7 @@
       "file_type": "code",
       "norm_label": "buildusermessage()",
       "source_file": "src/lib/dialectic/prompts.ts",
-      "source_location": "L157"
+      "source_location": "L159"
     },
     {
       "id": "src_lib_dialectic_prompts_getturnkind",
@@ -1315,7 +1328,19 @@
       "file_type": "code",
       "norm_label": "renderpersona()",
       "source_file": "src/philosophers/index.ts",
-      "source_location": "L38"
+      "source_location": "L39"
+    },
+    {
+      "id": "src_philosophers_shared_anti_waffle_renderantiwaffle",
+      "label": "renderAntiWaffle()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 15,
+      "community_name": "philosophers/index.ts",
+      "file_type": "code",
+      "norm_label": "renderantiwaffle()",
+      "source_file": "src/philosophers/shared/anti-waffle.ts",
+      "source_location": "L70"
     },
     {
       "id": "src_philosophers_shared_low_style_renderlanguagelevel",
@@ -1327,7 +1352,7 @@
       "file_type": "code",
       "norm_label": "renderlanguagelevel()",
       "source_file": "src/philosophers/shared/low-style.ts",
-      "source_location": "L55"
+      "source_location": "L59"
     },
     {
       "id": "src_philosophers_shared_low_style_renderlowstyleessence",
@@ -1339,7 +1364,7 @@
       "file_type": "code",
       "norm_label": "renderlowstyleessence()",
       "source_file": "src/philosophers/shared/low-style.ts",
-      "source_location": "L15"
+      "source_location": "L16"
     },
     {
       "id": "src_philosophers_shared_universal_mechanisms_renderuniversalmechanisms",
@@ -1822,18 +1847,6 @@
       "source_location": "L21"
     },
     {
-      "id": "src_philosophers_shared_anti_waffle_renderantiwaffle",
-      "label": "renderAntiWaffle()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 27,
-      "community_name": "anti-waffle.ts",
-      "file_type": "code",
-      "norm_label": "renderantiwaffle()",
-      "source_file": "src/philosophers/shared/anti-waffle.ts",
-      "source_location": "L70"
-    },
-    {
       "id": "src_app_app",
       "label": "App()",
       "_callable": true,
@@ -2110,6 +2123,30 @@
       "source_location": "L45"
     },
     {
+      "id": "scripts_rag_chunk_chunkparagraphs",
+      "label": "chunkParagraphs()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 49,
+      "community_name": "rag-search.ts",
+      "file_type": "code",
+      "norm_label": "chunkparagraphs()",
+      "source_file": "scripts/rag-chunk.mjs",
+      "source_location": "L32"
+    },
+    {
+      "id": "scripts_rag_chunk_splitlongparagraph",
+      "label": "splitLongParagraph()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 49,
+      "community_name": "rag-search.ts",
+      "file_type": "code",
+      "norm_label": "splitlongparagraph()",
+      "source_file": "scripts/rag-chunk.mjs",
+      "source_location": "L14"
+    },
+    {
       "id": "scripts_rag_eval_pct",
       "label": "pct()",
       "_callable": true,
@@ -2264,6 +2301,18 @@
       "norm_label": "tokenize()",
       "source_file": "src/lib/rag-text.ts",
       "source_location": "L29"
+    },
+    {
+      "id": "src_lib_rag_text_wordcount",
+      "label": "wordCount()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 49,
+      "community_name": "rag-search.ts",
+      "file_type": "code",
+      "norm_label": "wordcount()",
+      "source_file": "src/lib/rag-text.ts",
+      "source_location": "L53"
     },
     {
       "id": "src_lib_openrouter_attemptmodel",
@@ -2467,7 +2516,7 @@
       "file_type": "code",
       "norm_label": "buildserviceusermessage()",
       "source_file": "src/lib/service-chat.ts",
-      "source_location": "L73"
+      "source_location": "L75"
     },
     {
       "id": "src_lib_service_chat_generateservicetext",
@@ -2479,7 +2528,7 @@
       "file_type": "code",
       "norm_label": "generateservicetext()",
       "source_file": "src/lib/service-chat.ts",
-      "source_location": "L96"
+      "source_location": "L98"
     },
     {
       "id": "src_lib_porter_endscvc",
@@ -2612,30 +2661,6 @@
       "norm_label": "step5()",
       "source_file": "src/lib/porter.ts",
       "source_location": "L118"
-    },
-    {
-      "id": "scripts_rag_chunk_chunkparagraphs",
-      "label": "chunkParagraphs()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 53,
-      "community_name": "rag-ingest.mjs",
-      "file_type": "code",
-      "norm_label": "chunkparagraphs()",
-      "source_file": "scripts/rag-chunk.mjs",
-      "source_location": "L32"
-    },
-    {
-      "id": "scripts_rag_chunk_splitlongparagraph",
-      "label": "splitLongParagraph()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 53,
-      "community_name": "rag-ingest.mjs",
-      "file_type": "code",
-      "norm_label": "splitlongparagraph()",
-      "source_file": "scripts/rag-chunk.mjs",
-      "source_location": "L14"
     },
     {
       "id": "scripts_rag_ingest_authorslug",
@@ -2816,18 +2841,6 @@
       "norm_label": "normalizetext()",
       "source_file": "src/lib/rag-text.ts",
       "source_location": "L21"
-    },
-    {
-      "id": "src_lib_rag_text_wordcount",
-      "label": "wordCount()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 53,
-      "community_name": "rag-ingest.mjs",
-      "file_type": "code",
-      "norm_label": "wordcount()",
-      "source_file": "src/lib/rag-text.ts",
-      "source_location": "L53"
     },
     {
       "id": "scripts_rag_inspect_get",
@@ -3039,171 +3052,6 @@
       "source_location": "L21"
     },
     {
-      "id": "package_devdependencies",
-      "label": "devDependencies",
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "package.json",
-      "file_type": "code",
-      "norm_label": "devdependencies",
-      "source_file": "package.json",
-      "source_location": "L26"
-    },
-    {
-      "id": "package_devdependencies_autoprefixer",
-      "label": "autoprefixer",
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "package.json",
-      "file_type": "code",
-      "norm_label": "autoprefixer",
-      "source_file": "package.json",
-      "source_location": "L31"
-    },
-    {
-      "id": "package_devdependencies_eslint",
-      "label": "eslint",
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "package.json",
-      "file_type": "code",
-      "norm_label": "eslint",
-      "source_file": "package.json",
-      "source_location": "L32"
-    },
-    {
-      "id": "package_devdependencies_eslint_js",
-      "label": "@eslint/js",
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "package.json",
-      "file_type": "code",
-      "norm_label": "@eslint/js",
-      "source_file": "package.json",
-      "source_location": "L27"
-    },
-    {
-      "id": "package_devdependencies_eslint_plugin_react_hooks",
-      "label": "eslint-plugin-react-hooks",
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "package.json",
-      "file_type": "code",
-      "norm_label": "eslint-plugin-react-hooks",
-      "source_file": "package.json",
-      "source_location": "L33"
-    },
-    {
-      "id": "package_devdependencies_eslint_plugin_react_refresh",
-      "label": "eslint-plugin-react-refresh",
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "package.json",
-      "file_type": "code",
-      "norm_label": "eslint-plugin-react-refresh",
-      "source_file": "package.json",
-      "source_location": "L34"
-    },
-    {
-      "id": "package_devdependencies_globals",
-      "label": "globals",
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "package.json",
-      "file_type": "code",
-      "norm_label": "globals",
-      "source_file": "package.json",
-      "source_location": "L35"
-    },
-    {
-      "id": "package_devdependencies_postcss",
-      "label": "postcss",
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "package.json",
-      "file_type": "code",
-      "norm_label": "postcss",
-      "source_file": "package.json",
-      "source_location": "L36"
-    },
-    {
-      "id": "package_devdependencies_tailwindcss",
-      "label": "tailwindcss",
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "package.json",
-      "file_type": "code",
-      "norm_label": "tailwindcss",
-      "source_file": "package.json",
-      "source_location": "L37"
-    },
-    {
-      "id": "package_devdependencies_types_react",
-      "label": "@types/react",
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "package.json",
-      "file_type": "code",
-      "norm_label": "@types/react",
-      "source_file": "package.json",
-      "source_location": "L28"
-    },
-    {
-      "id": "package_devdependencies_types_react_dom",
-      "label": "@types/react-dom",
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "package.json",
-      "file_type": "code",
-      "norm_label": "@types/react-dom",
-      "source_file": "package.json",
-      "source_location": "L29"
-    },
-    {
-      "id": "package_devdependencies_typescript",
-      "label": "typescript",
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "package.json",
-      "file_type": "code",
-      "norm_label": "typescript",
-      "source_file": "package.json",
-      "source_location": "L38"
-    },
-    {
-      "id": "package_devdependencies_typescript_eslint",
-      "label": "typescript-eslint",
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "package.json",
-      "file_type": "code",
-      "norm_label": "typescript-eslint",
-      "source_file": "package.json",
-      "source_location": "L39"
-    },
-    {
-      "id": "package_devdependencies_vite",
-      "label": "vite",
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "package.json",
-      "file_type": "code",
-      "norm_label": "vite",
-      "source_file": "package.json",
-      "source_location": "L40"
-    },
-    {
-      "id": "package_devdependencies_vitejs_plugin_react",
-      "label": "@vitejs/plugin-react",
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "package.json",
-      "file_type": "code",
-      "norm_label": "@vitejs/plugin-react",
-      "source_file": "package.json",
-      "source_location": "L30"
-    },
-    {
       "id": "package_name",
       "label": "name",
       "_origin": "ast",
@@ -3224,6 +3072,149 @@
       "norm_label": "private",
       "source_file": "package.json",
       "source_location": "L3"
+    },
+    {
+      "id": "package_scripts",
+      "label": "scripts",
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "package.json",
+      "file_type": "code",
+      "norm_label": "scripts",
+      "source_file": "package.json",
+      "source_location": "L6"
+    },
+    {
+      "id": "package_scripts_build",
+      "label": "build",
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "package.json",
+      "file_type": "code",
+      "norm_label": "build",
+      "source_file": "package.json",
+      "source_location": "L8"
+    },
+    {
+      "id": "package_scripts_check_links",
+      "label": "check-links",
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "package.json",
+      "file_type": "code",
+      "norm_label": "check-links",
+      "source_file": "package.json",
+      "source_location": "L12"
+    },
+    {
+      "id": "package_scripts_check_links_fix",
+      "label": "check-links:fix",
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "package.json",
+      "file_type": "code",
+      "norm_label": "check-links:fix",
+      "source_file": "package.json",
+      "source_location": "L13"
+    },
+    {
+      "id": "package_scripts_dev",
+      "label": "dev",
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "package.json",
+      "file_type": "code",
+      "norm_label": "dev",
+      "source_file": "package.json",
+      "source_location": "L7"
+    },
+    {
+      "id": "package_scripts_lint",
+      "label": "lint",
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "package.json",
+      "file_type": "code",
+      "norm_label": "lint",
+      "source_file": "package.json",
+      "source_location": "L9"
+    },
+    {
+      "id": "package_scripts_preview",
+      "label": "preview",
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "package.json",
+      "file_type": "code",
+      "norm_label": "preview",
+      "source_file": "package.json",
+      "source_location": "L10"
+    },
+    {
+      "id": "package_scripts_rag_eval",
+      "label": "rag:eval",
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "package.json",
+      "file_type": "code",
+      "norm_label": "rag:eval",
+      "source_file": "package.json",
+      "source_location": "L17"
+    },
+    {
+      "id": "package_scripts_rag_ingest",
+      "label": "rag:ingest",
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "package.json",
+      "file_type": "code",
+      "norm_label": "rag:ingest",
+      "source_file": "package.json",
+      "source_location": "L14"
+    },
+    {
+      "id": "package_scripts_rag_inspect",
+      "label": "rag:inspect",
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "package.json",
+      "file_type": "code",
+      "norm_label": "rag:inspect",
+      "source_file": "package.json",
+      "source_location": "L15"
+    },
+    {
+      "id": "package_scripts_rag_search",
+      "label": "rag:search",
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "package.json",
+      "file_type": "code",
+      "norm_label": "rag:search",
+      "source_file": "package.json",
+      "source_location": "L16"
+    },
+    {
+      "id": "package_scripts_test_rag",
+      "label": "test:rag",
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "package.json",
+      "file_type": "code",
+      "norm_label": "test:rag",
+      "source_file": "package.json",
+      "source_location": "L18"
+    },
+    {
+      "id": "package_scripts_typecheck",
+      "label": "typecheck",
+      "_origin": "ast",
+      "community": 0,
+      "community_name": "package.json",
+      "file_type": "code",
+      "norm_label": "typecheck",
+      "source_file": "package.json",
+      "source_location": "L11"
     },
     {
       "id": "package_type",
@@ -3641,7 +3632,7 @@
       "file_type": "code",
       "norm_label": "coda_repair_suffix",
       "source_file": "src/lib/dialectic/prompts.ts",
-      "source_location": "L242"
+      "source_location": "L244"
     },
     {
       "id": "src_lib_dialectic_prompts_coda_system",
@@ -3652,7 +3643,7 @@
       "file_type": "code",
       "norm_label": "coda_system",
       "source_file": "src/lib/dialectic/prompts.ts",
-      "source_location": "L218"
+      "source_location": "L220"
     },
     {
       "id": "src_lib_dialectic_prompts_low_closing_reminder",
@@ -3663,7 +3654,7 @@
       "file_type": "code",
       "norm_label": "low_closing_reminder",
       "source_file": "src/lib/dialectic/prompts.ts",
-      "source_location": "L201"
+      "source_location": "L203"
     },
     {
       "id": "src_lib_dialectic_prompts_max_output_tokens",
@@ -3685,7 +3676,7 @@
       "file_type": "code",
       "norm_label": "structured_output_hint",
       "source_file": "src/lib/dialectic/prompts.ts",
-      "source_location": "L204"
+      "source_location": "L206"
     },
     {
       "id": "src_lib_dialectic_prompts_word_budgets",
@@ -3762,7 +3753,7 @@
       "file_type": "code",
       "norm_label": "default_seating_order",
       "source_file": "src/philosophers/index.ts",
-      "source_location": "L27"
+      "source_location": "L28"
     },
     {
       "id": "src_philosophers_index_definitions",
@@ -3773,7 +3764,7 @@
       "file_type": "code",
       "norm_label": "definitions",
       "source_file": "src/philosophers/index.ts",
-      "source_location": "L17"
+      "source_location": "L18"
     },
     {
       "id": "src_philosophers_index_philosopher_by_slug",
@@ -3784,7 +3775,7 @@
       "file_type": "code",
       "norm_label": "philosopher_by_slug",
       "source_file": "src/philosophers/index.ts",
-      "source_location": "L29"
+      "source_location": "L30"
     },
     {
       "id": "src_philosophers_index_philosopher_data",
@@ -3795,7 +3786,7 @@
       "file_type": "code",
       "norm_label": "philosopher_data",
       "source_file": "src/philosophers/index.ts",
-      "source_location": "L23"
+      "source_location": "L24"
     },
     {
       "id": "src_philosophers_shared_low_style",
@@ -3817,7 +3808,7 @@
       "file_type": "code",
       "norm_label": "language_common",
       "source_file": "src/philosophers/shared/low-style.ts",
-      "source_location": "L52"
+      "source_location": "L56"
     },
     {
       "id": "src_philosophers_shared_low_style_language_levels",
@@ -3828,7 +3819,7 @@
       "file_type": "code",
       "norm_label": "language_levels",
       "source_file": "src/philosophers/shared/low-style.ts",
-      "source_location": "L45"
+      "source_location": "L49"
     },
     {
       "id": "src_philosophers_shared_low_style_low_override",
@@ -3839,7 +3830,7 @@
       "file_type": "code",
       "norm_label": "low_override",
       "source_file": "src/philosophers/shared/low-style.ts",
-      "source_location": "L33"
+      "source_location": "L37"
     },
     {
       "id": "src_philosophers_shared_low_style_low_plain_rules",
@@ -3850,73 +3841,40 @@
       "file_type": "code",
       "norm_label": "low_plain_rules",
       "source_file": "src/philosophers/shared/low-style.ts",
-      "source_location": "L25"
+      "source_location": "L29"
     },
     {
-      "id": "src_philosophers_shared_universal_mechanisms",
-      "label": "universal-mechanisms.ts",
+      "id": "src_philosophers_trios",
+      "label": "trios.ts",
       "_origin": "ast",
       "community": 15,
       "community_name": "philosophers/index.ts",
       "file_type": "code",
-      "norm_label": "universal-mechanisms.ts",
-      "source_file": "src/philosophers/shared/universal-mechanisms.ts",
+      "norm_label": "trios.ts",
+      "source_file": "src/philosophers/trios.ts",
       "source_location": "L1"
     },
     {
-      "id": "src_philosophers_shared_universal_mechanisms_avoid_caricature",
-      "label": "AVOID_CARICATURE",
+      "id": "src_philosophers_trios_fallback_medium_example",
+      "label": "FALLBACK_MEDIUM_EXAMPLE",
       "_origin": "ast",
       "community": 15,
       "community_name": "philosophers/index.ts",
       "file_type": "code",
-      "norm_label": "avoid_caricature",
-      "source_file": "src/philosophers/shared/universal-mechanisms.ts",
-      "source_location": "L19"
+      "norm_label": "fallback_medium_example",
+      "source_file": "src/philosophers/trios.ts",
+      "source_location": "L63"
     },
     {
-      "id": "src_philosophers_shared_universal_mechanisms_forensic_preamble",
-      "label": "FORENSIC_PREAMBLE",
+      "id": "src_philosophers_trios_seat_trios",
+      "label": "SEAT_TRIOS",
       "_origin": "ast",
       "community": 15,
       "community_name": "philosophers/index.ts",
       "file_type": "code",
-      "norm_label": "forensic_preamble",
-      "source_file": "src/philosophers/shared/universal-mechanisms.ts",
-      "source_location": "L6"
-    },
-    {
-      "id": "src_philosophers_shared_universal_mechanisms_generative_argument_model",
-      "label": "GENERATIVE_ARGUMENT_MODEL",
-      "_origin": "ast",
-      "community": 15,
-      "community_name": "philosophers/index.ts",
-      "file_type": "code",
-      "norm_label": "generative_argument_model",
-      "source_file": "src/philosophers/shared/universal-mechanisms.ts",
-      "source_location": "L28"
-    },
-    {
-      "id": "src_philosophers_shared_universal_mechanisms_style_control_description",
-      "label": "STYLE_CONTROL_DESCRIPTION",
-      "_origin": "ast",
-      "community": 15,
-      "community_name": "philosophers/index.ts",
-      "file_type": "code",
-      "norm_label": "style_control_description",
-      "source_file": "src/philosophers/shared/universal-mechanisms.ts",
-      "source_location": "L36"
-    },
-    {
-      "id": "src_philosophers_shared_universal_mechanisms_universal_supporting_mechanisms",
-      "label": "UNIVERSAL_SUPPORTING_MECHANISMS",
-      "_origin": "ast",
-      "community": 15,
-      "community_name": "philosophers/index.ts",
-      "file_type": "code",
-      "norm_label": "universal_supporting_mechanisms",
-      "source_file": "src/philosophers/shared/universal-mechanisms.ts",
-      "source_location": "L8"
+      "norm_label": "seat_trios",
+      "source_file": "src/philosophers/trios.ts",
+      "source_location": "L15"
     },
     {
       "id": "src_lib_prompts",
@@ -4281,7 +4239,7 @@
       "file_type": "code",
       "norm_label": "chronological_order",
       "source_file": "src/types/index.ts",
-      "source_location": "L221"
+      "source_location": "L224"
     },
     {
       "id": "src_types_index_default_accessibility",
@@ -4292,7 +4250,7 @@
       "file_type": "code",
       "norm_label": "default_accessibility",
       "source_file": "src/types/index.ts",
-      "source_location": "L260"
+      "source_location": "L263"
     },
     {
       "id": "src_types_index_default_seating_order",
@@ -4303,7 +4261,7 @@
       "file_type": "code",
       "norm_label": "default_seating_order",
       "source_file": "src/types/index.ts",
-      "source_location": "L234"
+      "source_location": "L237"
     },
     {
       "id": "src_types_index_pass_descriptions",
@@ -4314,7 +4272,7 @@
       "file_type": "code",
       "norm_label": "pass_descriptions",
       "source_file": "src/types/index.ts",
-      "source_location": "L237"
+      "source_location": "L240"
     },
     {
       "id": "src_types_index_pass_names",
@@ -4325,7 +4283,7 @@
       "file_type": "code",
       "norm_label": "pass_names",
       "source_file": "src/types/index.ts",
-      "source_location": "L236"
+      "source_location": "L239"
     },
     {
       "id": "src_lib_shared",
@@ -5578,6 +5536,50 @@
       "source_location": "L1"
     },
     {
+      "id": "scripts_rag_chunk",
+      "label": "rag-chunk.mjs",
+      "_origin": "ast",
+      "community": 49,
+      "community_name": "rag-search.ts",
+      "file_type": "code",
+      "norm_label": "rag-chunk.mjs",
+      "source_file": "scripts/rag-chunk.mjs",
+      "source_location": "L1"
+    },
+    {
+      "id": "scripts_rag_chunk_chunk_soft_max",
+      "label": "CHUNK_SOFT_MAX",
+      "_origin": "ast",
+      "community": 49,
+      "community_name": "rag-search.ts",
+      "file_type": "code",
+      "norm_label": "chunk_soft_max",
+      "source_file": "scripts/rag-chunk.mjs",
+      "source_location": "L12"
+    },
+    {
+      "id": "scripts_rag_chunk_chunk_soft_min",
+      "label": "CHUNK_SOFT_MIN",
+      "_origin": "ast",
+      "community": 49,
+      "community_name": "rag-search.ts",
+      "file_type": "code",
+      "norm_label": "chunk_soft_min",
+      "source_file": "scripts/rag-chunk.mjs",
+      "source_location": "L11"
+    },
+    {
+      "id": "scripts_rag_chunk_chunk_target_words",
+      "label": "CHUNK_TARGET_WORDS",
+      "_origin": "ast",
+      "community": 49,
+      "community_name": "rag-search.ts",
+      "file_type": "code",
+      "norm_label": "chunk_target_words",
+      "source_file": "scripts/rag-chunk.mjs",
+      "source_location": "L10"
+    },
+    {
       "id": "scripts_rag_eval",
       "label": "rag-eval.mjs",
       "_origin": "ast",
@@ -5784,6 +5786,17 @@
       "file_type": "code",
       "norm_label": "rag-selftest.mjs",
       "source_file": "scripts/rag-selftest.mjs",
+      "source_location": "L1"
+    },
+    {
+      "id": "scripts_rag_text",
+      "label": "rag-text.mjs",
+      "_origin": "ast",
+      "community": 49,
+      "community_name": "rag-search.ts",
+      "file_type": "code",
+      "norm_label": "rag-text.mjs",
+      "source_file": "scripts/rag-text.mjs",
       "source_location": "L1"
     },
     {
@@ -6008,28 +6021,28 @@
       "source_location": "L1"
     },
     {
-      "id": "docs_language_levels_cost_vs_rate_limits_sep_2026",
-      "label": "Cost vs rate limits (Sep 2026)",
+      "id": "docs_language_levels_how_to_make_trios_worked_procedure",
+      "label": "How to make trios (worked procedure)",
       "_origin": "ast",
       "community": 52,
       "community_name": "Language levels (Low / Medium / High)",
       "file_type": "document",
       "node_kind": "heading",
-      "norm_label": "cost vs rate limits (sep 2026)",
+      "norm_label": "how to make trios (worked procedure)",
       "source_file": "docs/language-levels.md",
-      "source_location": "L122"
+      "source_location": "L89"
     },
     {
-      "id": "docs_language_levels_evaluation",
-      "label": "Evaluation",
+      "id": "docs_language_levels_how_to_set_difficulty_levels",
+      "label": "How to set difficulty levels",
       "_origin": "ast",
       "community": 52,
       "community_name": "Language levels (Low / Medium / High)",
       "file_type": "document",
       "node_kind": "heading",
-      "norm_label": "evaluation",
+      "norm_label": "how to set difficulty levels",
       "source_file": "docs/language-levels.md",
-      "source_location": "L140"
+      "source_location": "L8"
     },
     {
       "id": "docs_language_levels_language_levels_low_medium_high",
@@ -6044,108 +6057,28 @@
       "source_location": "L1"
     },
     {
-      "id": "docs_language_levels_quote_example_proposal_not_built_yet",
-      "label": "Quote-example proposal (not built yet)",
+      "id": "docs_language_levels_reference_verified_prompt_order_bookchin_low_critique_turn",
+      "label": "Reference: verified prompt order (Bookchin, Low, critique turn)",
       "_origin": "ast",
       "community": 52,
       "community_name": "Language levels (Low / Medium / High)",
       "file_type": "document",
       "node_kind": "heading",
-      "norm_label": "quote-example proposal (not built yet)",
+      "norm_label": "reference: verified prompt order (bookchin, low, critique turn)",
       "source_file": "docs/language-levels.md",
-      "source_location": "L88"
+      "source_location": "L163"
     },
     {
-      "id": "docs_language_levels_run_1_sep_2026_low_debate_high_desk_deepinfra_llama_3_3_70b_turbo",
-      "label": "Run 1 (Sep 2026) \u2014 Low debate + High desk, DeepInfra Llama-3.3-70B-Turbo",
+      "id": "docs_language_levels_trio_creation_instructions_that_did_not_work",
+      "label": "Trio-creation instructions that did NOT work",
       "_origin": "ast",
       "community": 52,
       "community_name": "Language levels (Low / Medium / High)",
       "file_type": "document",
       "node_kind": "heading",
-      "norm_label": "run 1 (sep 2026) \u2014 low debate + high desk, deepinfra llama-3.3-70b-turbo",
+      "norm_label": "trio-creation instructions that did not work",
       "source_file": "docs/language-levels.md",
-      "source_location": "L154"
-    },
-    {
-      "id": "docs_language_levels_the_strategy",
-      "label": "The strategy",
-      "_origin": "ast",
-      "community": 52,
-      "community_name": "Language levels (Low / Medium / High)",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "the strategy",
-      "source_file": "docs/language-levels.md",
-      "source_location": "L8"
-    },
-    {
-      "id": "docs_language_levels_transfer_notes_other_apps",
-      "label": "Transfer notes (other apps)",
-      "_origin": "ast",
-      "community": 52,
-      "community_name": "Language levels (Low / Medium / High)",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "transfer notes (other apps)",
-      "source_file": "docs/language-levels.md",
-      "source_location": "L214"
-    },
-    {
-      "id": "docs_language_levels_verified_prompt_order_bookchin_low_critique_turn",
-      "label": "Verified prompt order (Bookchin, Low, critique turn)",
-      "_origin": "ast",
-      "community": 52,
-      "community_name": "Language levels (Low / Medium / High)",
-      "file_type": "document",
-      "node_kind": "heading",
-      "norm_label": "verified prompt order (bookchin, low, critique turn)",
-      "source_file": "docs/language-levels.md",
-      "source_location": "L42"
-    },
-    {
-      "id": "scripts_rag_chunk",
-      "label": "rag-chunk.mjs",
-      "_origin": "ast",
-      "community": 53,
-      "community_name": "rag-ingest.mjs",
-      "file_type": "code",
-      "norm_label": "rag-chunk.mjs",
-      "source_file": "scripts/rag-chunk.mjs",
-      "source_location": "L1"
-    },
-    {
-      "id": "scripts_rag_chunk_chunk_soft_max",
-      "label": "CHUNK_SOFT_MAX",
-      "_origin": "ast",
-      "community": 53,
-      "community_name": "rag-ingest.mjs",
-      "file_type": "code",
-      "norm_label": "chunk_soft_max",
-      "source_file": "scripts/rag-chunk.mjs",
-      "source_location": "L12"
-    },
-    {
-      "id": "scripts_rag_chunk_chunk_soft_min",
-      "label": "CHUNK_SOFT_MIN",
-      "_origin": "ast",
-      "community": 53,
-      "community_name": "rag-ingest.mjs",
-      "file_type": "code",
-      "norm_label": "chunk_soft_min",
-      "source_file": "scripts/rag-chunk.mjs",
-      "source_location": "L11"
-    },
-    {
-      "id": "scripts_rag_chunk_chunk_target_words",
-      "label": "CHUNK_TARGET_WORDS",
-      "_origin": "ast",
-      "community": 53,
-      "community_name": "rag-ingest.mjs",
-      "file_type": "code",
-      "norm_label": "chunk_target_words",
-      "source_file": "scripts/rag-chunk.mjs",
-      "source_location": "L10"
+      "source_location": "L110"
     },
     {
       "id": "scripts_rag_ingest",
@@ -6201,17 +6134,6 @@
       "norm_label": "root",
       "source_file": "scripts/rag-ingest.mjs",
       "source_location": "L20"
-    },
-    {
-      "id": "scripts_rag_text",
-      "label": "rag-text.mjs",
-      "_origin": "ast",
-      "community": 53,
-      "community_name": "rag-ingest.mjs",
-      "file_type": "code",
-      "norm_label": "rag-text.mjs",
-      "source_file": "scripts/rag-text.mjs",
-      "source_location": "L1"
     },
     {
       "id": "scripts_rag_inspect",
@@ -6489,6 +6411,219 @@
       "source_location": "L23"
     },
     {
+      "id": "docs_new_philosopher_brief",
+      "label": "new-philosopher-brief.md",
+      "_origin": "ast",
+      "community": 58,
+      "community_name": "New philosopher brief (reusable)",
+      "file_type": "document",
+      "node_kind": "page",
+      "norm_label": "new-philosopher-brief.md",
+      "source_file": "docs/new-philosopher-brief.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "docs_new_philosopher_brief_new_philosopher_brief_reusable",
+      "label": "New philosopher brief (reusable)",
+      "_origin": "ast",
+      "community": 58,
+      "community_name": "New philosopher brief (reusable)",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "new philosopher brief (reusable)",
+      "source_file": "docs/new-philosopher-brief.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "docs_new_philosopher_brief_phase_1_research_prompt_paste_to_research_llm",
+      "label": "Phase 1 \u2014 research prompt (paste to research LLM)",
+      "_origin": "ast",
+      "community": 58,
+      "community_name": "New philosopher brief (reusable)",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "phase 1 \u2014 research prompt (paste to research llm)",
+      "source_file": "docs/new-philosopher-brief.md",
+      "source_location": "L9"
+    },
+    {
+      "id": "docs_new_philosopher_brief_phase_2_build_checklist_builder",
+      "label": "Phase 2 \u2014 build checklist (builder)",
+      "_origin": "ast",
+      "community": 58,
+      "community_name": "New philosopher brief (reusable)",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "phase 2 \u2014 build checklist (builder)",
+      "source_file": "docs/new-philosopher-brief.md",
+      "source_location": "L50"
+    },
+    {
+      "id": "package_devdependencies",
+      "label": "devDependencies",
+      "_origin": "ast",
+      "community": 59,
+      "community_name": "devDependencies",
+      "file_type": "code",
+      "norm_label": "devdependencies",
+      "source_file": "package.json",
+      "source_location": "L26"
+    },
+    {
+      "id": "package_devdependencies_autoprefixer",
+      "label": "autoprefixer",
+      "_origin": "ast",
+      "community": 59,
+      "community_name": "devDependencies",
+      "file_type": "code",
+      "norm_label": "autoprefixer",
+      "source_file": "package.json",
+      "source_location": "L31"
+    },
+    {
+      "id": "package_devdependencies_eslint",
+      "label": "eslint",
+      "_origin": "ast",
+      "community": 59,
+      "community_name": "devDependencies",
+      "file_type": "code",
+      "norm_label": "eslint",
+      "source_file": "package.json",
+      "source_location": "L32"
+    },
+    {
+      "id": "package_devdependencies_eslint_js",
+      "label": "@eslint/js",
+      "_origin": "ast",
+      "community": 59,
+      "community_name": "devDependencies",
+      "file_type": "code",
+      "norm_label": "@eslint/js",
+      "source_file": "package.json",
+      "source_location": "L27"
+    },
+    {
+      "id": "package_devdependencies_eslint_plugin_react_hooks",
+      "label": "eslint-plugin-react-hooks",
+      "_origin": "ast",
+      "community": 59,
+      "community_name": "devDependencies",
+      "file_type": "code",
+      "norm_label": "eslint-plugin-react-hooks",
+      "source_file": "package.json",
+      "source_location": "L33"
+    },
+    {
+      "id": "package_devdependencies_eslint_plugin_react_refresh",
+      "label": "eslint-plugin-react-refresh",
+      "_origin": "ast",
+      "community": 59,
+      "community_name": "devDependencies",
+      "file_type": "code",
+      "norm_label": "eslint-plugin-react-refresh",
+      "source_file": "package.json",
+      "source_location": "L34"
+    },
+    {
+      "id": "package_devdependencies_globals",
+      "label": "globals",
+      "_origin": "ast",
+      "community": 59,
+      "community_name": "devDependencies",
+      "file_type": "code",
+      "norm_label": "globals",
+      "source_file": "package.json",
+      "source_location": "L35"
+    },
+    {
+      "id": "package_devdependencies_postcss",
+      "label": "postcss",
+      "_origin": "ast",
+      "community": 59,
+      "community_name": "devDependencies",
+      "file_type": "code",
+      "norm_label": "postcss",
+      "source_file": "package.json",
+      "source_location": "L36"
+    },
+    {
+      "id": "package_devdependencies_tailwindcss",
+      "label": "tailwindcss",
+      "_origin": "ast",
+      "community": 59,
+      "community_name": "devDependencies",
+      "file_type": "code",
+      "norm_label": "tailwindcss",
+      "source_file": "package.json",
+      "source_location": "L37"
+    },
+    {
+      "id": "package_devdependencies_types_react",
+      "label": "@types/react",
+      "_origin": "ast",
+      "community": 59,
+      "community_name": "devDependencies",
+      "file_type": "code",
+      "norm_label": "@types/react",
+      "source_file": "package.json",
+      "source_location": "L28"
+    },
+    {
+      "id": "package_devdependencies_types_react_dom",
+      "label": "@types/react-dom",
+      "_origin": "ast",
+      "community": 59,
+      "community_name": "devDependencies",
+      "file_type": "code",
+      "norm_label": "@types/react-dom",
+      "source_file": "package.json",
+      "source_location": "L29"
+    },
+    {
+      "id": "package_devdependencies_typescript",
+      "label": "typescript",
+      "_origin": "ast",
+      "community": 59,
+      "community_name": "devDependencies",
+      "file_type": "code",
+      "norm_label": "typescript",
+      "source_file": "package.json",
+      "source_location": "L38"
+    },
+    {
+      "id": "package_devdependencies_typescript_eslint",
+      "label": "typescript-eslint",
+      "_origin": "ast",
+      "community": 59,
+      "community_name": "devDependencies",
+      "file_type": "code",
+      "norm_label": "typescript-eslint",
+      "source_file": "package.json",
+      "source_location": "L39"
+    },
+    {
+      "id": "package_devdependencies_vite",
+      "label": "vite",
+      "_origin": "ast",
+      "community": 59,
+      "community_name": "devDependencies",
+      "file_type": "code",
+      "norm_label": "vite",
+      "source_file": "package.json",
+      "source_location": "L40"
+    },
+    {
+      "id": "package_devdependencies_vitejs_plugin_react",
+      "label": "@vitejs/plugin-react",
+      "_origin": "ast",
+      "community": 59,
+      "community_name": "devDependencies",
+      "file_type": "code",
+      "norm_label": "@vitejs/plugin-react",
+      "source_file": "package.json",
+      "source_location": "L30"
+    },
+    {
       "id": "tsconfig_node",
       "label": "tsconfig.node.json",
       "_origin": "ast",
@@ -6665,147 +6800,70 @@
       "source_location": "L21"
     },
     {
-      "id": "package_scripts",
-      "label": "scripts",
+      "id": "src_philosophers_shared_universal_mechanisms",
+      "label": "universal-mechanisms.ts",
       "_origin": "ast",
-      "community": 7,
-      "community_name": "scripts",
+      "community": 64,
+      "community_name": "universal-mechanisms.ts",
       "file_type": "code",
-      "norm_label": "scripts",
-      "source_file": "package.json",
+      "norm_label": "universal-mechanisms.ts",
+      "source_file": "src/philosophers/shared/universal-mechanisms.ts",
+      "source_location": "L1"
+    },
+    {
+      "id": "src_philosophers_shared_universal_mechanisms_avoid_caricature",
+      "label": "AVOID_CARICATURE",
+      "_origin": "ast",
+      "community": 64,
+      "community_name": "universal-mechanisms.ts",
+      "file_type": "code",
+      "norm_label": "avoid_caricature",
+      "source_file": "src/philosophers/shared/universal-mechanisms.ts",
+      "source_location": "L19"
+    },
+    {
+      "id": "src_philosophers_shared_universal_mechanisms_forensic_preamble",
+      "label": "FORENSIC_PREAMBLE",
+      "_origin": "ast",
+      "community": 64,
+      "community_name": "universal-mechanisms.ts",
+      "file_type": "code",
+      "norm_label": "forensic_preamble",
+      "source_file": "src/philosophers/shared/universal-mechanisms.ts",
       "source_location": "L6"
     },
     {
-      "id": "package_scripts_build",
-      "label": "build",
+      "id": "src_philosophers_shared_universal_mechanisms_generative_argument_model",
+      "label": "GENERATIVE_ARGUMENT_MODEL",
       "_origin": "ast",
-      "community": 7,
-      "community_name": "scripts",
+      "community": 64,
+      "community_name": "universal-mechanisms.ts",
       "file_type": "code",
-      "norm_label": "build",
-      "source_file": "package.json",
+      "norm_label": "generative_argument_model",
+      "source_file": "src/philosophers/shared/universal-mechanisms.ts",
+      "source_location": "L28"
+    },
+    {
+      "id": "src_philosophers_shared_universal_mechanisms_style_control_description",
+      "label": "STYLE_CONTROL_DESCRIPTION",
+      "_origin": "ast",
+      "community": 64,
+      "community_name": "universal-mechanisms.ts",
+      "file_type": "code",
+      "norm_label": "style_control_description",
+      "source_file": "src/philosophers/shared/universal-mechanisms.ts",
+      "source_location": "L36"
+    },
+    {
+      "id": "src_philosophers_shared_universal_mechanisms_universal_supporting_mechanisms",
+      "label": "UNIVERSAL_SUPPORTING_MECHANISMS",
+      "_origin": "ast",
+      "community": 64,
+      "community_name": "universal-mechanisms.ts",
+      "file_type": "code",
+      "norm_label": "universal_supporting_mechanisms",
+      "source_file": "src/philosophers/shared/universal-mechanisms.ts",
       "source_location": "L8"
-    },
-    {
-      "id": "package_scripts_check_links",
-      "label": "check-links",
-      "_origin": "ast",
-      "community": 7,
-      "community_name": "scripts",
-      "file_type": "code",
-      "norm_label": "check-links",
-      "source_file": "package.json",
-      "source_location": "L12"
-    },
-    {
-      "id": "package_scripts_check_links_fix",
-      "label": "check-links:fix",
-      "_origin": "ast",
-      "community": 7,
-      "community_name": "scripts",
-      "file_type": "code",
-      "norm_label": "check-links:fix",
-      "source_file": "package.json",
-      "source_location": "L13"
-    },
-    {
-      "id": "package_scripts_dev",
-      "label": "dev",
-      "_origin": "ast",
-      "community": 7,
-      "community_name": "scripts",
-      "file_type": "code",
-      "norm_label": "dev",
-      "source_file": "package.json",
-      "source_location": "L7"
-    },
-    {
-      "id": "package_scripts_lint",
-      "label": "lint",
-      "_origin": "ast",
-      "community": 7,
-      "community_name": "scripts",
-      "file_type": "code",
-      "norm_label": "lint",
-      "source_file": "package.json",
-      "source_location": "L9"
-    },
-    {
-      "id": "package_scripts_preview",
-      "label": "preview",
-      "_origin": "ast",
-      "community": 7,
-      "community_name": "scripts",
-      "file_type": "code",
-      "norm_label": "preview",
-      "source_file": "package.json",
-      "source_location": "L10"
-    },
-    {
-      "id": "package_scripts_rag_eval",
-      "label": "rag:eval",
-      "_origin": "ast",
-      "community": 7,
-      "community_name": "scripts",
-      "file_type": "code",
-      "norm_label": "rag:eval",
-      "source_file": "package.json",
-      "source_location": "L17"
-    },
-    {
-      "id": "package_scripts_rag_ingest",
-      "label": "rag:ingest",
-      "_origin": "ast",
-      "community": 7,
-      "community_name": "scripts",
-      "file_type": "code",
-      "norm_label": "rag:ingest",
-      "source_file": "package.json",
-      "source_location": "L14"
-    },
-    {
-      "id": "package_scripts_rag_inspect",
-      "label": "rag:inspect",
-      "_origin": "ast",
-      "community": 7,
-      "community_name": "scripts",
-      "file_type": "code",
-      "norm_label": "rag:inspect",
-      "source_file": "package.json",
-      "source_location": "L15"
-    },
-    {
-      "id": "package_scripts_rag_search",
-      "label": "rag:search",
-      "_origin": "ast",
-      "community": 7,
-      "community_name": "scripts",
-      "file_type": "code",
-      "norm_label": "rag:search",
-      "source_file": "package.json",
-      "source_location": "L16"
-    },
-    {
-      "id": "package_scripts_test_rag",
-      "label": "test:rag",
-      "_origin": "ast",
-      "community": 7,
-      "community_name": "scripts",
-      "file_type": "code",
-      "norm_label": "test:rag",
-      "source_file": "package.json",
-      "source_location": "L18"
-    },
-    {
-      "id": "package_scripts_typecheck",
-      "label": "typecheck",
-      "_origin": "ast",
-      "community": 7,
-      "community_name": "scripts",
-      "file_type": "code",
-      "norm_label": "typecheck",
-      "source_file": "package.json",
-      "source_location": "L11"
     },
     {
       "id": "src_lib_llm",
@@ -8605,6 +8663,18 @@
     },
     {
       "source": "src_philosophers_index_renderpersona",
+      "target": "src_philosophers_shared_low_style_renderlanguagelevel",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "src/philosophers/index.ts",
+      "source_location": "L101",
+      "weight": 1.0
+    },
+    {
+      "source": "src_philosophers_index_renderpersona",
       "target": "src_philosophers_shared_low_style_renderlowstyleessence",
       "relation": "calls",
       "_origin": "ast",
@@ -8612,7 +8682,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "src/philosophers/index.ts",
-      "source_location": "L54",
+      "source_location": "L56",
       "weight": 1.0
     },
     {
@@ -8624,7 +8694,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "src/philosophers/index.ts",
-      "source_location": "L81",
+      "source_location": "L93",
       "weight": 1.0
     },
     {
@@ -8636,19 +8706,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "src/philosophers/index.ts",
-      "source_location": "L83",
-      "weight": 1.0
-    },
-    {
-      "source": "src_philosophers_index_renderpersona",
-      "target": "src_philosophers_shared_low_style_renderlanguagelevel",
-      "relation": "calls",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "context": "call",
-      "source_file": "src/philosophers/index.ts",
-      "source_location": "L89",
+      "source_location": "L95",
       "weight": 1.0
     },
     {
@@ -9409,6 +9467,30 @@
     },
     {
       "source": "src_philosophers_index",
+      "target": "src_philosophers_trios_fallback_medium_example",
+      "relation": "imports",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "src/philosophers/index.ts",
+      "source_location": "L16",
+      "weight": 1.0
+    },
+    {
+      "source": "src_philosophers_index",
+      "target": "src_philosophers_trios_seat_trios",
+      "relation": "imports",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "src/philosophers/index.ts",
+      "source_location": "L16",
+      "weight": 1.0
+    },
+    {
+      "source": "src_philosophers_index",
       "target": "src_philosophers_spinoza_spinoza",
       "relation": "imports",
       "_origin": "ast",
@@ -10010,6 +10092,18 @@
     },
     {
       "source": "src_philosophers_index",
+      "target": "src_philosophers_trios",
+      "relation": "imports_from",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "src/philosophers/index.ts",
+      "source_location": "L16",
+      "weight": 1.0
+    },
+    {
+      "source": "src_philosophers_index",
       "target": "src_philosophers_spinoza",
       "relation": "imports_from",
       "_origin": "ast",
@@ -10295,63 +10389,30 @@
       "weight": 1.0
     },
     {
-      "source": "docs_language_levels_evaluation",
-      "target": "docs_language_levels_run_1_sep_2026_low_debate_high_desk_deepinfra_llama_3_3_70b_turbo",
+      "source": "docs_language_levels_language_levels_low_medium_high",
+      "target": "docs_language_levels_trio_creation_instructions_that_did_not_work",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/language-levels.md",
-      "source_location": "L154",
+      "source_location": "L110",
       "weight": 1.0
     },
     {
       "source": "docs_language_levels_language_levels_low_medium_high",
-      "target": "docs_language_levels_cost_vs_rate_limits_sep_2026",
+      "target": "docs_language_levels_reference_verified_prompt_order_bookchin_low_critique_turn",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/language-levels.md",
-      "source_location": "L122",
+      "source_location": "L163",
       "weight": 1.0
     },
     {
       "source": "docs_language_levels_language_levels_low_medium_high",
-      "target": "docs_language_levels_evaluation",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "docs/language-levels.md",
-      "source_location": "L140",
-      "weight": 1.0
-    },
-    {
-      "source": "docs_language_levels_language_levels_low_medium_high",
-      "target": "docs_language_levels_transfer_notes_other_apps",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "docs/language-levels.md",
-      "source_location": "L214",
-      "weight": 1.0
-    },
-    {
-      "source": "docs_language_levels_language_levels_low_medium_high",
-      "target": "docs_language_levels_verified_prompt_order_bookchin_low_critique_turn",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "docs/language-levels.md",
-      "source_location": "L42",
-      "weight": 1.0
-    },
-    {
-      "source": "docs_language_levels_language_levels_low_medium_high",
-      "target": "docs_language_levels_the_strategy",
+      "target": "docs_language_levels_how_to_set_difficulty_levels",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
@@ -10362,13 +10423,13 @@
     },
     {
       "source": "docs_language_levels_language_levels_low_medium_high",
-      "target": "docs_language_levels_quote_example_proposal_not_built_yet",
+      "target": "docs_language_levels_how_to_make_trios_worked_procedure",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/language-levels.md",
-      "source_location": "L88",
+      "source_location": "L89",
       "weight": 1.0
     },
     {
@@ -10402,6 +10463,39 @@
       "confidence_score": 1.0,
       "source_file": "docs/models-tried.md",
       "source_location": "L6",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_new_philosopher_brief",
+      "target": "docs_new_philosopher_brief_new_philosopher_brief_reusable",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/new-philosopher-brief.md",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_new_philosopher_brief_new_philosopher_brief_reusable",
+      "target": "docs_new_philosopher_brief_phase_2_build_checklist_builder",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/new-philosopher-brief.md",
+      "source_location": "L50",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_new_philosopher_brief_new_philosopher_brief_reusable",
+      "target": "docs_new_philosopher_brief_phase_1_research_prompt_paste_to_research_llm",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/new-philosopher-brief.md",
+      "source_location": "L9",
       "weight": 1.0
     },
     {
@@ -12513,7 +12607,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/lib/dialectic/prompts.ts",
-      "source_location": "L142",
+      "source_location": "L144",
       "weight": 1.0
     },
     {
@@ -12524,7 +12618,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/lib/dialectic/prompts.ts",
-      "source_location": "L157",
+      "source_location": "L159",
       "weight": 1.0
     },
     {
@@ -12535,7 +12629,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/lib/dialectic/prompts.ts",
-      "source_location": "L201",
+      "source_location": "L203",
       "weight": 1.0
     },
     {
@@ -12546,7 +12640,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/lib/dialectic/prompts.ts",
-      "source_location": "L204",
+      "source_location": "L206",
       "weight": 1.0
     },
     {
@@ -12557,7 +12651,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/lib/dialectic/prompts.ts",
-      "source_location": "L218",
+      "source_location": "L220",
       "weight": 1.0
     },
     {
@@ -12568,7 +12662,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/lib/dialectic/prompts.ts",
-      "source_location": "L224",
+      "source_location": "L226",
       "weight": 1.0
     },
     {
@@ -12579,7 +12673,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/lib/dialectic/prompts.ts",
-      "source_location": "L242",
+      "source_location": "L244",
       "weight": 1.0
     },
     {
@@ -13855,7 +13949,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/lib/service-chat.ts",
-      "source_location": "L60",
+      "source_location": "L62",
       "weight": 1.0
     },
     {
@@ -13866,7 +13960,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/lib/service-chat.ts",
-      "source_location": "L66",
+      "source_location": "L68",
       "weight": 1.0
     },
     {
@@ -13877,7 +13971,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/lib/service-chat.ts",
-      "source_location": "L73",
+      "source_location": "L75",
       "weight": 1.0
     },
     {
@@ -13888,7 +13982,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/lib/service-chat.ts",
-      "source_location": "L96",
+      "source_location": "L98",
       "weight": 1.0
     },
     {
@@ -14548,7 +14642,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/philosophers/index.ts",
-      "source_location": "L17",
+      "source_location": "L18",
       "weight": 1.0
     },
     {
@@ -14559,7 +14653,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/philosophers/index.ts",
-      "source_location": "L23",
+      "source_location": "L24",
       "weight": 1.0
     },
     {
@@ -14570,7 +14664,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/philosophers/index.ts",
-      "source_location": "L27",
+      "source_location": "L28",
       "weight": 1.0
     },
     {
@@ -14581,7 +14675,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/philosophers/index.ts",
-      "source_location": "L29",
+      "source_location": "L30",
       "weight": 1.0
     },
     {
@@ -14592,7 +14686,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/philosophers/index.ts",
-      "source_location": "L38",
+      "source_location": "L39",
       "weight": 1.0
     },
     {
@@ -14768,7 +14862,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/philosophers/shared/low-style.ts",
-      "source_location": "L15",
+      "source_location": "L16",
       "weight": 1.0
     },
     {
@@ -14779,7 +14873,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/philosophers/shared/low-style.ts",
-      "source_location": "L25",
+      "source_location": "L29",
       "weight": 1.0
     },
     {
@@ -14790,7 +14884,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/philosophers/shared/low-style.ts",
-      "source_location": "L33",
+      "source_location": "L37",
       "weight": 1.0
     },
     {
@@ -14801,7 +14895,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/philosophers/shared/low-style.ts",
-      "source_location": "L45",
+      "source_location": "L49",
       "weight": 1.0
     },
     {
@@ -14812,7 +14906,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/philosophers/shared/low-style.ts",
-      "source_location": "L52",
+      "source_location": "L56",
       "weight": 1.0
     },
     {
@@ -14823,7 +14917,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/philosophers/shared/low-style.ts",
-      "source_location": "L55",
+      "source_location": "L59",
       "weight": 1.0
     },
     {
@@ -14915,6 +15009,39 @@
       "weight": 1.0
     },
     {
+      "source": "src_philosophers_trios",
+      "target": "src_philosophers_trios_seattrio",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/philosophers/trios.ts",
+      "source_location": "L10",
+      "weight": 1.0
+    },
+    {
+      "source": "src_philosophers_trios",
+      "target": "src_philosophers_trios_seat_trios",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/philosophers/trios.ts",
+      "source_location": "L15",
+      "weight": 1.0
+    },
+    {
+      "source": "src_philosophers_trios",
+      "target": "src_philosophers_trios_fallback_medium_example",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/philosophers/trios.ts",
+      "source_location": "L63",
+      "weight": 1.0
+    },
+    {
       "source": "src_philosophers_weil",
       "target": "src_philosophers_weil_weil",
       "relation": "contains",
@@ -14955,7 +15082,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/types/index.ts",
-      "source_location": "L104",
+      "source_location": "L107",
       "weight": 1.0
     },
     {
@@ -14966,7 +15093,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/types/index.ts",
-      "source_location": "L115",
+      "source_location": "L118",
       "weight": 1.0
     },
     {
@@ -14988,7 +15115,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/types/index.ts",
-      "source_location": "L128",
+      "source_location": "L131",
       "weight": 1.0
     },
     {
@@ -14999,7 +15126,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/types/index.ts",
-      "source_location": "L136",
+      "source_location": "L139",
       "weight": 1.0
     },
     {
@@ -15010,7 +15137,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/types/index.ts",
-      "source_location": "L145",
+      "source_location": "L148",
       "weight": 1.0
     },
     {
@@ -15021,18 +15148,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/types/index.ts",
-      "source_location": "L159",
-      "weight": 1.0
-    },
-    {
-      "source": "src_types_index",
-      "target": "src_types_index_passsummary",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "src/types/index.ts",
-      "source_location": "L177",
+      "source_location": "L162",
       "weight": 1.0
     },
     {
@@ -15048,13 +15164,24 @@
     },
     {
       "source": "src_types_index",
+      "target": "src_types_index_passsummary",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/types/index.ts",
+      "source_location": "L180",
+      "weight": 1.0
+    },
+    {
+      "source": "src_types_index",
       "target": "src_types_index_problemmap",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/types/index.ts",
-      "source_location": "L186",
+      "source_location": "L189",
       "weight": 1.0
     },
     {
@@ -15065,7 +15192,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/types/index.ts",
-      "source_location": "L196",
+      "source_location": "L199",
       "weight": 1.0
     },
     {
@@ -15076,7 +15203,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/types/index.ts",
-      "source_location": "L206",
+      "source_location": "L209",
       "weight": 1.0
     },
     {
@@ -15087,7 +15214,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/types/index.ts",
-      "source_location": "L221",
+      "source_location": "L224",
       "weight": 1.0
     },
     {
@@ -15098,7 +15225,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/types/index.ts",
-      "source_location": "L234",
+      "source_location": "L237",
       "weight": 1.0
     },
     {
@@ -15109,7 +15236,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/types/index.ts",
-      "source_location": "L236",
+      "source_location": "L239",
       "weight": 1.0
     },
     {
@@ -15120,7 +15247,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/types/index.ts",
-      "source_location": "L237",
+      "source_location": "L240",
       "weight": 1.0
     },
     {
@@ -15131,7 +15258,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/types/index.ts",
-      "source_location": "L243",
+      "source_location": "L246",
       "weight": 1.0
     },
     {
@@ -15142,7 +15269,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/types/index.ts",
-      "source_location": "L244",
+      "source_location": "L247",
       "weight": 1.0
     },
     {
@@ -15153,7 +15280,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/types/index.ts",
-      "source_location": "L246",
+      "source_location": "L249",
       "weight": 1.0
     },
     {
@@ -15164,7 +15291,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/types/index.ts",
-      "source_location": "L260",
+      "source_location": "L263",
       "weight": 1.0
     },
     {
@@ -15175,7 +15302,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/types/index.ts",
-      "source_location": "L44",
+      "source_location": "L47",
       "weight": 1.0
     },
     {
@@ -15186,7 +15313,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/types/index.ts",
-      "source_location": "L68",
+      "source_location": "L71",
       "weight": 1.0
     },
     {
@@ -15197,7 +15324,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/types/index.ts",
-      "source_location": "L70",
+      "source_location": "L73",
       "weight": 1.0
     },
     {
@@ -15208,7 +15335,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/types/index.ts",
-      "source_location": "L92",
+      "source_location": "L95",
       "weight": 1.0
     },
     {
@@ -15707,5 +15834,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "3448c43e610e17b84e85ca85ad30c1fa5e0c6ab4"
+  "built_at_commit": "eb5b690c58eb2b97b95277ee2a8e2e9fa52f2f38"
 }

@@ -39,6 +39,11 @@ export const KANT_STYLE: StyleEssence = {
   prompt:
     'Write in a Legislative-Taxonomic register. Use long periodic sentences with nested clauses and parenthetical definitions, delaying the main conclusion. Use technical Latinate abstraction and treat faculties as actors. Begin by establishing conditions of possibility; divide the field into exhaustive distinctions; map it as a surveyor and judge; use apodictic necessity and universality; avoid tentative or emotive language.',
 
+  high_exemplar: {
+    quote: 'Now all pure conceptions have to do in general with the synthetical unity of representations; conceptions of pure reason (transcendental ideas), on the other hand, with the unconditional synthetical unity of all conditions.',
+    source: 'Critique of Pure Reason, First Division, Book II, Section III',
+  },
+
   stock_phrases: {
     rebuttal: [
       'You allege (X), but this oversteps...',
