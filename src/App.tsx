@@ -241,11 +241,10 @@ function App() {
   };
   const [selectedIntervention, setSelectedIntervention] = useState<Intervention | null>(null);
   const [selectedPhilosopher, setSelectedPhilosopher] = useState<Philosopher | null>(null);
-  // Default cabinet: Hegel, Marx, Weil, Bookchin, Deleuze — freedom,
-  // consciousness, and organisation against hierarchy and control, ending
-  // in new forms of life. Full chronological order lives in
-  // DEFAULT_SEATING_ORDER.
-  const [activeSlugs, setActiveSlugs] = useState<string[]>(['hegel', 'marx', 'weil', 'bookchin', 'deleuze']);
+  // Default cabinet: Hegel, Marx, Bloch, Bookchin, Deleuze — dialectics,
+  // labour, hope, municipality, and control, ending in new forms of life.
+  // Full chronological order lives in DEFAULT_SEATING_ORDER.
+  const [activeSlugs, setActiveSlugs] = useState<string[]>(['hegel', 'marx', 'bloch', 'bookchin', 'deleuze']);
   const [showSources, setShowSources] = useState(false);
   const [sourceTarget, setSourceTarget] = useState<number | null>(null);
   const openSourcesAt = (n?: number) => {
@@ -253,11 +252,11 @@ function App() {
     setShowSources(true);
   };
   const [showSettings, setShowSettings] = useState(false);
-  const [settingsTab, setSettingsTab] = useState<'key' | 'cabinet' | 'display'>('key');
+  const [settingsTab, setSettingsTab] = useState<'key' | 'cabinet' | 'display'>('cabinet');
   // Philosophers' Service desk: floating tutor window + its export log.
   const [showService, setShowService] = useState(false);
   const [serviceLog, setServiceLog] = useState<ServiceLogEntry[]>([]);
-  const openSettings = (tab: 'key' | 'cabinet' | 'display' = 'key') => {
+  const openSettings = (tab: 'key' | 'cabinet' | 'display' = 'cabinet') => {
     setSettingsTab(tab);
     setShowSettings(true);
   };
@@ -556,6 +555,7 @@ function App() {
         marginsNote: pass === 2 && !!codaRef.current,
         marginsFirst: pass === 2 && index === 0 && !!codaRef.current,
         intensity: snap.intensity,
+        heat: typeof speaker.profile['emotional_tone'] === 'string' ? speaker.profile['emotional_tone'] : undefined,
       });
       const systemPrompt = renderPersona(speaker, snap.intensity);
       // Efficient economy trims the fed-back predecessor text (the displayed
@@ -565,7 +565,7 @@ function App() {
       const prevText = rawPrev && snap.economy === 'efficient' && rawPrev.length > 1200
         ? `${rawPrev.slice(0, 1200)}\n[…earlier part trimmed for economy; the full text stands in the transcript]`
         : rawPrev;
-      // Experimental grounding (default off): searched passages from the
+      // Experimental grounding (on by default): searched passages from the
       // speaker's own indexed works first (no fetch, no quota beyond the
       // turn itself), live page fetching as fallback. Fails soft.
       // The receipt (what was actually shown) is stored per turn for verification.
@@ -625,20 +625,23 @@ function App() {
             // slot is exhausted it drops out instead of repeating.
             const unspent = (vs: string[]) => vs.filter((v) => !spentRef.current.includes(v));
             const rebuttal = snap.intensity === 'low' ? [] : unspent(speaker.style_essence.stock_phrases.rebuttal);
-            const concession = unspent(speaker.style_essence.stock_phrases.concession);
-            const reframing = unspent(speaker.style_essence.stock_phrases.reframing);
+            // Low sees no toolkit at all: the transcript shows variants lifted
+            // verbatim three-to-a-turn despite "at most ONE" — the entry
+            // is ordered in own words by LOW ORDERS instead.
+            const concession = snap.intensity === 'low' ? [] : unspent(speaker.style_essence.stock_phrases.concession);
+            const reframing = snap.intensity === 'low' ? [] : unspent(speaker.style_essence.stock_phrases.reframing);
             if (!rebuttal.length && !concession.length && !reframing.length) return '';
             return [
               'YOUR TRANSITIONAL TOOLKIT (your own phrasing — at most ONE of these per turn, often none; never force them, and never open two turns of yours the same way):',
               // Low never sees the rebuttal variants: every one of them is an
               // attack shape, and the transcript shows turns open with them
-              // verbatim. Concession-first openings carry the calm entry.
+              // verbatim. Own-words openings carry the entry instead.
               ...(rebuttal.length ? [`REBUTTAL: ${rebuttal.join(' / ')}`] : []),
               ...(concession.length ? [`CONCESSION: ${concession.join(' / ')}`] : []),
               ...(reframing.length ? [`REFRAMING: ${reframing.join(' / ')}`] : []),
             ].join('\n');
           })(),
-          spentPhrases: isOpeningTurn ? [] : spentRef.current,
+          spentPhrases: isOpeningTurn || snap.intensity === 'low' ? [] : spentRef.current,
           intensity: snap.intensity,
         }),
       ];
@@ -889,9 +892,12 @@ function App() {
     const provenanceText = trail.length
       ? `\nMODELS USED\n${trail.map((t) => `— ${t}`).join('\n')}\n`
       : '';
+    // Sitting settings at export (diagnostic: proves which level produced
+    // these turns — intensity can change between runs of one sitting).
+    const settingsText = `\nSITTING\n— Level: ${settings.intensity} · Long form: ${settings.longForm ? 'on' : 'off'} · Grounding: ${settings.grounding ? 'on' : 'off'} · Economy: ${settings.economy} (at export)\n`;
     // BOM + explicit charset: without them some viewers (notably Windows
     // Notepad) decode UTF-8 smart quotes/dashes as Latin-1 mojibake (â€…).
-    const text = `\uFEFF${body}${trailingCoda}${serviceText}${readingList}${provenanceText}`;
+    const text = `\uFEFF${body}${trailingCoda}${serviceText}${readingList}${provenanceText}${settingsText}`;
     const blob = new Blob([text], { type: 'text/plain;charset=utf-8' });
     const url = URL.createObjectURL(blob);
     const anchor = document.createElement('a');
@@ -1315,7 +1321,7 @@ function SettingsDrawer({ philosophers, activeSlugs, togglePhilosopher, settings
           <button className="btn-secondary !px-3" onClick={onClose} aria-label="Close settings"><X size={17} /></button>
         </div>
         <div className="flex gap-2 mb-6" role="tablist" aria-label="Settings sections">
-          {(['key', 'cabinet', 'display'] as const).map((t) => (
+          {(['cabinet', 'display', 'key'] as const).map((t) => (
             <button key={t} role="tab" aria-selected={tab === t} onClick={() => setTab(t)} className={`btn-secondary capitalize ${tab === t ? '!border-[#8b5254] !text-[#8b5254]' : ''}`}>
               {t === 'key' ? 'Key' : t === 'cabinet' ? 'Cabinet' : 'Display'}
             </button>
@@ -1413,8 +1419,9 @@ function SettingsDrawer({ philosophers, activeSlugs, togglePhilosopher, settings
             <div className="flex items-start justify-between mb-4"><div><p className="pass-indicator text-[#8b5254]">Experimental variable</p><h2 className="text-2xl">Cabinet selection</h2></div></div>
             <div className="space-y-3 border-b border-[#4a392d]/15 pb-6 mb-6">
               <span className="font-heading text-sm uppercase tracking-[0.16em] text-[#4a392d] block" title="How hard the language hits. Ideas stay the same at every level — only the words change.">How it speaks (all seats)</span>
+              <p className="text-xs italic text-[#465f75]/70">Low speaks plainly · Medium explains its terms · High runs at full difficulty — the ideas stay the same.</p>
               <div className="flex gap-2" role="radiogroup" aria-label="Style intensity">
-                <button role="radio" aria-checked={settings.intensity === 'low'} title="Plain everyday words, calm entries — the easiest read. Ideas unchanged." onClick={() => onSettingsChange({ ...settings, intensity: 'low' })} className={`btn-secondary capitalize ${settings.intensity === 'low' ? '!border-[#8b5254] !text-[#8b5254]' : ''}`}>Low</button>
+                <button role="radio" aria-checked={settings.intensity === 'low'} title="Plain everyday words — the easiest read. Temper unchanged." onClick={() => onSettingsChange({ ...settings, intensity: 'low' })} className={`btn-secondary capitalize ${settings.intensity === 'low' ? '!border-[#8b5254] !text-[#8b5254]' : ''}`}>Low</button>
                 <button role="radio" aria-checked={settings.intensity === 'medium'} title="The standard seminar — important terms kept and explained." onClick={() => onSettingsChange({ ...settings, intensity: 'medium' })} className={`btn-secondary capitalize ${settings.intensity === 'medium' ? '!border-[#8b5254] !text-[#8b5254]' : ''}`}>Medium</button>
                 <button role="radio" aria-checked={settings.intensity === 'high'} title="Full voice — authentic vocabulary, hostile where the author warrants it." onClick={() => onSettingsChange({ ...settings, intensity: 'high' })} className={`btn-secondary capitalize ${settings.intensity === 'high' ? '!border-[#8b5254] !text-[#8b5254]' : ''}`}>High</button>
               </div>
@@ -1425,7 +1432,7 @@ function SettingsDrawer({ philosophers, activeSlugs, togglePhilosopher, settings
                 <button role="radio" aria-checked={settings.economy === 'efficient'} title="Trim predecessor text re-sent each turn. About a third fewer input tokens." onClick={() => onSettingsChange({ ...settings, economy: 'efficient' })} className={`btn-secondary ${settings.economy === 'efficient' ? '!border-[#8b5254] !text-[#8b5254]' : ''}`}>Efficient</button>
               </div>
               <p className="text-xs text-[#465f75]/70">Efficient trims the predecessor text fed back each turn (shown and exported in full regardless). Voices are untouched — personas are never trimmed. Roughly a third fewer input tokens.</p>
-              <label className="flex items-start gap-3 text-xs text-[#465f75]/70 pt-1" title="Fetch each speaker's key work and inject the most relevant passages. Slower, more tokens, better grounded. Off by default."><input type="checkbox" checked={settings.grounding} onChange={(event) => onSettingsChange({ ...settings, grounding: event.target.checked })} className="w-4 h-4 mt-0.5 accent-[#8b5254]" /> Ground turns in source texts (experimental): fetches each speaker's key work and injects the most relevant passages. Slower, more tokens, better grounded. Off by default.</label>
+              <label className="flex items-start gap-3 text-xs text-[#465f75]/70 pt-1" title="Fetch each speaker's key work and inject the most relevant passages. Slower, more tokens, better grounded. On by default."><input type="checkbox" checked={settings.grounding} onChange={(event) => onSettingsChange({ ...settings, grounding: event.target.checked })} className="w-4 h-4 mt-0.5 accent-[#8b5254]" /> Ground turns in source texts (experimental): fetches each speaker's key work and injects the most relevant passages. Slower, more tokens, better grounded. On by default.</label>
             </div>
             <div className="space-y-2">{DEFAULT_SEATING_ORDER.map((slug) => {
               const philosopher = philosophers.find((item) => item.slug === slug);

@@ -19,6 +19,7 @@ export const SPINOZA: PhilosopherDefinition = {
     'institutions and political affects',
   ],
   profile: {
+    emotional_tone: 'Serene geometric calm; nothing surprises and nothing offends — even enemies are explained as necessary effects.',
     identity: 'Baruch Spinoza, mature philosophical position, principally from the Ethics (1677) and the Tractatus Politicus',
     historical_boundary: '21 February 1677',
     reasoning: 'ULTRA THINK',

@@ -12,7 +12,8 @@ import { DELEUZE } from './deleuze';
 import { FISHER } from './fisher';
 import { renderUniversalMechanisms } from './shared/universal-mechanisms';
 import { renderAntiWaffle } from './shared/anti-waffle';
-import { LOW_OVERRIDE, LOW_PLAIN_RULES, renderLanguageLevel, renderLowStyleEssence } from './shared/low-style';
+import { LOW_CONCEPT_RULES, LOW_OVERRIDE, LOW_PLAIN_RULES, renderLanguageLevel, renderLowStyleEssence } from './shared/low-style';
+import { FALLBACK_MEDIUM_EXAMPLE, SEAT_TRIOS } from './trios';
 
 const DEFINITIONS: PhilosopherDefinition[] = [SPINOZA, KANT, HEGEL, MARX, LENIN, BOGDANOV, BLOCH, WEIL, BOOKCHIN, DELEUZE, FISHER];
 
@@ -35,23 +36,29 @@ export const PHILOSOPHER_BY_SLUG: Record<string, Omit<Philosopher, 'id' | 'creat
  * think (profile), how they write (style essence at the chosen intensity), plus the
  * cross-author rules. Turn-specific instructions are appended by the dialectic engine.
  */
-export function renderPersona(philosopher: Pick<Philosopher, 'full_name' | 'name' | 'historical_boundary' | 'profile' | 'analytical_center' | 'style_essence'>, intensity: StyleIntensity): string {
+export function renderPersona(philosopher: Pick<Philosopher, 'slug' | 'full_name' | 'name' | 'historical_boundary' | 'profile' | 'analytical_center' | 'style_essence'>, intensity: StyleIntensity): string {
   const essence = philosopher.style_essence;
   const profile = philosopher.profile;
   const low = intensity === 'low';
+  const trio = SEAT_TRIOS[philosopher.slug];
 
   const profileLines = Object.entries(profile)
     // Reasoning scaffolding, house style notes, and rhetorical_style (pure
     // style instruction — long sentences, prosecutorial force — never
     // knowledge) stay out; rhetorical_style drops at Low only, since Medium
     // and High need it for voice.
-    .filter(([key]) => !['reasoning', 'self_review', 'meta_fix', 'style'].includes(key) && !(low && key === 'rhetorical_style'))
+    // At Low the vocabulary-dense lists drop too: core_principle issues
+    // imperatives ("think in terms of assemblages"), and the moves/concepts/
+    // distinctions/criticisms/methods/authorities read as word-hoards the
+    // model mirrors verbatim. Knowledge (conceptions, influences, whats)
+    // stays — only the word-hoards go.
+    .filter(([key]) => !['reasoning', 'self_review', 'meta_fix', 'style'].includes(key) && !(low && key === 'rhetorical_style') && !(low && ['core_principle', 'characteristic_argumentative_moves', 'characteristic_concepts', 'recurring_distinctions', 'recurring_criticisms', 'methodological_habits', 'primary_authority', 'modern_adaptation'].includes(key)))
     .map(([key, value]) => `${key.toUpperCase()}: ${Array.isArray(value) ? value.join('; ') : String(value)}`);
 
   // Low sends the abridged style block (separate file): flavour without the
   // machinery. Knowledge (profile) is never abridged — only style is.
   const styleBlock: string[] = low
-    ? [...renderLowStyleEssence(essence), '', 'PLAIN RULES:', ...LOW_PLAIN_RULES]
+    ? [...renderLowStyleEssence(essence, trio), '', 'PLAIN RULES:', ...LOW_PLAIN_RULES, '', ...LOW_CONCEPT_RULES]
     : [
         'STYLE ESSENCE (think in this machinery; do not decorate with vocabulary)',
         `STYLE DNA: ${essence.style_dna}`,
@@ -65,6 +72,16 @@ export function renderPersona(philosopher: Pick<Philosopher, 'full_name' | 'name
         '',
         `REGISTER: ${essence.prompt}`,
         `INTENSITY (${intensity.toUpperCase()}): ${essence.intensity[intensity]}`,
+        ...(intensity === 'medium'
+          ? [
+              trio || essence.high_exemplar
+                ? `YOUR WORKED EXAMPLE — the same idea at two levels. HIGH (their authentic voice): “${essence.high_exemplar?.quote ?? '(see grounding loans)'}” MEDIUM (your level — term kept, meaning woven beside it, never announced): “${trio?.medium ?? FALLBACK_MEDIUM_EXAMPLE}”. Render every kept term the Medium way.`
+                : `YOUR WORKED EXAMPLE — shape every kept term exactly like this (term kept, meaning woven beside it, never announced): “${FALLBACK_MEDIUM_EXAMPLE}”`,
+            ]
+          : []),
+        ...(intensity === 'high' && essence.high_exemplar
+          ? [`VOICE ANCHOR — a genuine sentence of theirs; you may quote it verbatim where it fits: “${essence.high_exemplar.quote}” (${essence.high_exemplar.source}). Let its diction, tics, and rhythm colour everything you write.`]
+          : []),
       ];
 
   return [

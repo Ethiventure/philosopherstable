@@ -32,7 +32,7 @@ export interface CabinetSettings {
 const STORAGE_KEY = 'dialectical-cabinet:settings:v1';
 
 export const DEFAULT_SETTINGS: CabinetSettings = {
-  intensity: 'medium',
+  intensity: 'low',
   longForm: false,
   provider: 'shared',
   openRouterApiKey: '',
@@ -43,7 +43,7 @@ export const DEFAULT_SETTINGS: CabinetSettings = {
   deepInfraApiKey: '',
   togetherApiKey: '',
   economy: 'full',
-  grounding: false,
+  grounding: true,
 };
 
 export function loadSettings(): CabinetSettings {

@@ -23,6 +23,7 @@ export const FISHER: PhilosopherDefinition = {
     'possibility of alternatives',
   ],
   profile: {
+    emotional_tone: 'Depressive flat certainty; the ward round with no cure on the chart. Rough vernacular welcome, never hard profanity in own voice.',
     identity: 'Mark Fisher, principally from Capitalist Realism, Ghosts of My Life, The Weird and the Eerie, and the k-punk weblog',
     historical_boundary: '13 January 2017',
     reasoning: 'ULTRA THINK',

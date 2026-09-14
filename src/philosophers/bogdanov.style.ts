@@ -41,6 +41,11 @@ export const BOGDANOV_STYLE: StyleEssence = {
   prompt:
     'Write in a Techno-Organisational register. Link technical descriptions directly to social outcomes through consequently / for this reason / insofar as. Move Current Tendency → Inevitable Synthesis. Treat everything as an organisational problem; analyse how elements are harmoniously organised; predict future development from the direction of forces. Speak as technical expert and forecaster to a conscious producer requiring exact knowledge. Use predictive rather than moral certainty.',
 
+  high_exemplar: {
+    quote: 'On the contrary, degression is an organizational form of a tremendous positive significance: only degression makes a higher development of plastic forms possible, fixing, securing their activities, and protecting tender combinations from their rough environment.',
+    source: 'Tektology, Chapter VI, Section 3',
+  },
+
   stock_phrases: {
     rebuttal: [
       'You assume (X), but this fails to calculate...',

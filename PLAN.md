@@ -62,10 +62,25 @@ EVERY intensity: Low uses roughly IELTS-5 English and translates or describes
 hard terms (describing what a term does where no plain equal exists) instead
 of using them; Medium keeps important terms with a natural inline gloss and no
 dictionary-style breaks; High uses the authentic vocabulary at normal
-difficulty. Meaning is never simplified — only the words. The turn-level `VOICE`,
-`HEAT`, loans, survey, and novelty rules soften at Low: calm teacher entry,
-paraphrased (never verbatim) source loans, translated survey wording. All 10
-`intensity.low` style sentences are written in plain words. Full strategy,
+difficulty. Meaning is never simplified — only the words. Temper is
+per-seat at every intensity (`emotional_tone` profile field, threaded
+into the turn HEAT line — scorn, fury, gloom differ; cruelty never).
+Low keeps all weapons: polemic, irony, and attack stay armed, only the
+vocabulary is translated; strong language where temper and argument
+require it (actual words, occasionally), identity slurs banned for all
+seats. The
+turn-level `VOICE`, loans, survey, and novelty rules adapt at Low:
+open mid-argument per temper, paraphrased (never verbatim) source
+loans, translated survey wording. All 11
+`intensity.low` style sentences are written in plain words. Per-seat trios
+(`trios.ts` + `high_exemplar`): High sees its quotable anchor only, Medium
+sees HIGH→MEDIUM, Low sees the full trio with "never copy a single word"
+on the High line. Low concept rules (`LOW_CONCEPT_RULES`): bearer-less
+structures banned (people doing named things), example-first with one
+abstraction per turn carrying its 21st-century example, Low steelman as
+concrete situation, translation moves, banned-at-Low seeds
+describe-never-name; closing self-check circles unknown words AND ideas.
+Full strategy,
 verified prompt order, token math, and eval protocol: `docs/language-levels.md`.
 
 ### Length: short and punchy
@@ -131,10 +146,11 @@ The drag-drop → toggle change left `App.tsx` broken.
 `deepinfra`, `together` BYOK keys),
 keys per provider, `groqModel` (qwen3.8-27b default, free tier), `economy`
 (`full` / `efficient` — efficient caps fed-back PREV text at ~1200 chars;
-personas are never trimmed), `grounding` (default off — experimental source
+personas are never trimmed), `grounding` (default on — experimental source
 passages, undo by deleting `lib/extract.ts` + `functions/extract.js` + flag),
-`intensity`, `longForm`. No Gemini anywhere (retired for new keys; stored
-'gemini' migrates to shared). No OpenAI models, ever.
+`intensity` (default low), `longForm`. No Gemini anywhere (retired for new keys; stored
+'gemini' migrates to shared). No OpenAI models, ever. Default seats: Hegel,
+Marx, Bloch, Bookchin, Deleuze.
 Settings drawer: provider radio, key input (password-style) per provider, Test
 key, Clear, per-destination privacy note. No key → Begin disabled with explanation.
 

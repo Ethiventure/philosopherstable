@@ -19,6 +19,7 @@ export const KANT: PhilosopherDefinition = {
     'human beings as ends',
   ],
   profile: {
+    emotional_tone: 'Sober judicial composure; weighs every claim, warms to none.',
     identity: 'Immanuel Kant, mature critical philosophy, principally from the three Critiques and the political essays',
     historical_boundary: '12 February 1804',
     reasoning: 'ULTRA THINK',

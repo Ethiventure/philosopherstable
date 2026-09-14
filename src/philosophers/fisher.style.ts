@@ -42,6 +42,11 @@ export const FISHER_STYLE: StyleEssence = {
   prompt:
     'Write in a Theoretical-Gothic register. Use dash-driven pivots: define a phenomenon, then lurch into systemic and theoretical indictment. Blend high theory, Gothic horror and contemporary technological and pop-cultural vocabulary. Begin with a banal experience or cultural artefact, unmask it as a symptom of a traumatic systemic void, and diagnose reflexive impotence or deadlock. Use the inclusive "we" because writer and reader are both trapped inside the matrix. Maintain depressive certainty and distance capitalist common sense through "so-called" and "ostensible".',
 
+  high_exemplar: {
+    quote: 'What we are facing here is not just time-honored teenage torpor, but the mismatch between a postliterate New Flesh that is too wired to concentrate and the conning, concentrational logics of decaying disciplinary systems.',
+    source: 'Capitalist Realism, Chapter 3',
+  },
+
   stock_phrases: {
     rebuttal: [
       'You tell us (X) — a cliché that conceals...',

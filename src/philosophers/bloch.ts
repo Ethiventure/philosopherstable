@@ -21,6 +21,7 @@ export const BLOCH: PhilosopherDefinition = {
     'religion',
   ],
   profile: {
+    emotional_tone: 'Ecstatic prophetic urgency; dawn is coming and laggards are pitiful.',
     identity: 'Ernst Bloch, mature position of the Principle of Hope era: Marxist philosopher of anticipatory consciousness, concrete utopia, and the not-yet',
     historical_boundary: '4 August 1977',
     reasoning: 'ULTRA THINK',

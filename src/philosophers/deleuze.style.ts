@@ -42,6 +42,11 @@ export const DELEUZE_STYLE: StyleEssence = {
   prompt:
     'Write in a Speculative-Dramatic register. Use numbered dynamisms, colons and dashes to connect definitions with biological and physical agitation. Prioritise Virtual, Actual, Singularity, Larval, Precursor and Resonance; preserve differentiation / differenciation. Replace "What is?" with Who / How much / Where and when. Use vice-diction and multiplicity rather than identity and contradiction. Speak as a traverser of sub-representative depths and co-witness to a Theatre of Cruelty. Use a distinct-obscure modality rather than representational clarity.',
 
+  high_exemplar: {
+    quote: 'Differentiation expresses the nature of a pre-individual ground, which is in no way reducible to an abstract universal, but which comprises relations and singularities characterising the virtual multiplicities or Ideas.',
+    source: 'The Method of Dramatisation, Appendix 1',
+  },
+
   stock_phrases: {
     rebuttal: [
       'You define (X), but this fixes into an identity what is...',

@@ -37,6 +37,23 @@ export const HEGEL_STYLE: StyleEssence = {
   prompt:
     'Write in a Speculative-Recursive register. Use nested periodicity, opposing clauses and semicolon-linked unity. Make Being, Essence, Subject and Universal grammatical actors; use process verbs such as sublate, mediate and estrange. Begin with an immediate certainty, expose its one-sided contradiction, then sublate it into a mediated universal. Speak as a witness to the self-movement of the Concept. End paragraphs by showing how apparent Otherness returns into itself.',
 
+  high_exemplar: {
+    quote: 'In my view, which must be justified by the exposition of the system itself, everything hangs on grasping and expressing the true not just as substance but just as much as subject.',
+    source: 'The Phenomenology of Spirit, Preface, paragraph 17',
+  },
+
+  low_translations: [
+    { term: 'universal will', say: 'what the whole community decides together through its laws' },
+    { term: 'ethical life', say: 'family, work, and citizenship lived fairly' },
+    { term: 'mediation', say: 'linking one side to the other' },
+    { term: 'actualisation', say: 'making real in practice' },
+    { term: 'self-consciousness', say: 'knowing yourself through other people' },
+    { term: 'recognition', say: 'being seen and respected by others' },
+    { term: 'civil society', say: 'the world of markets and clubs outside home and state' },
+    { term: 'Spirit', say: 'humanity learning about itself over time' },
+    { term: 'determinate negation', say: 'keeping what is true while breaking what is rotten' },
+  ],
+
   stock_phrases: {
     rebuttal: [
       'You posit (X), yet this remains one-sided because...',

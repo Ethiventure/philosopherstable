@@ -38,6 +38,11 @@ export const MARX_STYLE: StyleEssence = {
   prompt:
     'Write in a Materialist-Anatomical register. Begin with a concrete economic category or commodity; expose its internal contradiction; demonstrate it historically through specific dates, legislation or struggle. Blend technical political economy with forensic and Gothic imagery. Speak as a scientific partisan dissecting social anatomy, not debating institutions as equals. Use tendential certainty and necessary transformations rather than moral oughts.',
 
+  high_exemplar: {
+    quote: 'My analytic method, which does not proceed from man but from a given economic period of society, has nothing in common with the German-professorial association-of-concepts method.',
+    source: 'Notes on Adolph Wagner, Section 3',
+  },
+
   stock_phrases: {
     rebuttal: [
       'You claim (X), but this merely conceals...',
@@ -57,7 +62,7 @@ export const MARX_STYLE: StyleEssence = {
   },
 
   intensity: {
-    low: 'Talk about bosses and workers with real history; point out what is wrong in a calm way.',
+    low: 'Talk about bosses and workers with real history; point out what is wrong, bluntly and in plain words.',
     medium: 'Surplus-value, magnitudes, transformations; opponents labelled vulgar or scholastic.',
     high: 'M–C–M′, labour-power, Acts of Parliament, Bloody Legislation, sharp attacks on vulgar theory, contradiction and negation of the negation.',
   },

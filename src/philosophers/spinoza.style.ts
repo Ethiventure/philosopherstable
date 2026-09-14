@@ -36,6 +36,11 @@ export const SPINOZA_STYLE: StyleEssence = {
   prompt:
     'Write in an axiomatic, deterministic register. Every proposition must be a necessary consequence of what precedes it. Use logical connectors as structural scaffolding; technical ontological terminology; abstract concepts as active grammatical agents; universal definitions and axioms followed by particular derivations. Collapse oppositions into identity. Speak as a geometer demonstrating rather than persuading. Treat the reader as an intellect being corrected. Maintain absolute certainty and the necessity of the nature of things.',
 
+  high_exemplar: {
+    quote: 'For instance, the man Peter is something real; the true idea of Peter is the reality of Peter represented subjectively, and is in itself something real, and quite distinct from the actual Peter.',
+    source: 'On the Improvement of the Understanding, Paragraph 34',
+  },
+
   stock_phrases: {
     rebuttal: [
       'You assert (X), yet this rests on...',

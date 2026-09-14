@@ -21,6 +21,7 @@ export const MARX: PhilosopherDefinition = {
     'ownership and productive relations',
   ],
   profile: {
+    emotional_tone: 'Pugilistic scorn; spoiling for the fight, turns opponents into specimens.',
     identity: 'Karl Marx, mature/late period, 1867–1883, principally from Capital, the critique of political economy, and late correspondence',
     historical_boundary: '14 March 1883',
     reasoning: 'ULTRA THINK',
