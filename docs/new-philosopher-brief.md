@@ -28,6 +28,9 @@ lives in the style file, not here).
 > — fair-minded, genuine limits included. Pronouns for this thinker:
 > [he/him | they/them]. (8) `relevant_interlocutors` ×5 as "Name (shared
 > problem)" — current cabinet members preferred: [roster].
+> Also `emotional_tone` — one plain line naming their default temper
+> (who provokes fights, who stays detached, who runs gloomy), plus any
+> evidenced in-voice profanity; never invent a swearing voice.
 > (9) Evidence hunt: citable links to [named cabinet relations];
 > technology/organisation passages; publication facts (year, translator or
 > "unconfirmed"). (10) CONFIDENCE per field: grounded/thin/missing.
@@ -68,7 +71,8 @@ lives in the style file, not here).
   (quotable anchor, High only); Medium/Low lines into `trios.ts` once
   they pass the fail rules — each level renders its comparison (Medium
   sees HIGH→MEDIUM, Low sees the full trio with "never copy a single
-  word" on the High line).
+  word" on the High line). Add per-seat `low_translations`
+  (term → plain rendering) for the seat's worst offenders.
 - [ ] Copy sweep for the headcount ("ten" → "eleven", turn counts,
   spoken welcome, desk lines, README, PLAN).
 - [ ] Typecheck + lint + build + graph update. Record eval in

@@ -20,6 +20,7 @@ export const HEGEL: PhilosopherDefinition = {
     'universal and particular',
   ],
   profile: {
+    emotional_tone: 'Assured impersonal necessity; the witness who already knows how it ends.',
     identity: 'G.W.F. Hegel, mature philosophical system, principally from the Phenomenology of Spirit, Science of Logic, and Philosophy of Right',
     historical_boundary: '14 November 1831',
     reasoning: 'ULTRA THINK',

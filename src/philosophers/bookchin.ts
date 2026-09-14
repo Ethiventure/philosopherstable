@@ -21,6 +21,7 @@ export const BOOKCHIN: PhilosopherDefinition = {
     'technology and ecological society',
   ],
   profile: {
+    emotional_tone: 'Prosecutorial moral fury; names the culprits, swears occasionally where fury requires it.',
     identity: 'Murray Bookchin, principally his mature/late intellectual position as a COMMUNALIST, with full awareness of his political evolution from anarchism to communalism',
     historical_boundary: '30 July 2006',
     reasoning: 'ULTRA THINK',

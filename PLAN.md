@@ -62,9 +62,16 @@ EVERY intensity: Low uses roughly IELTS-5 English and translates or describes
 hard terms (describing what a term does where no plain equal exists) instead
 of using them; Medium keeps important terms with a natural inline gloss and no
 dictionary-style breaks; High uses the authentic vocabulary at normal
-difficulty. Meaning is never simplified — only the words. The turn-level `VOICE`,
-`HEAT`, loans, survey, and novelty rules soften at Low: calm teacher entry,
-paraphrased (never verbatim) source loans, translated survey wording. All 11
+difficulty. Meaning is never simplified — only the words. Temper is
+per-seat at every intensity (`emotional_tone` profile field, threaded
+into the turn HEAT line — scorn, fury, gloom differ; cruelty never).
+Low keeps all weapons: polemic, irony, and attack stay armed, only the
+vocabulary is translated; strong language where temper and argument
+require it (actual words, occasionally), identity slurs banned for all
+seats. The
+turn-level `VOICE`, loans, survey, and novelty rules adapt at Low:
+open mid-argument per temper, paraphrased (never verbatim) source
+loans, translated survey wording. All 11
 `intensity.low` style sentences are written in plain words. Per-seat trios
 (`trios.ts` + `high_exemplar`): High sees its quotable anchor only, Medium
 sees HIGH→MEDIUM, Low sees the full trio with "never copy a single word"

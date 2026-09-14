@@ -58,9 +58,13 @@ interface TurnInstructionArgs {
   /** Sitting intensity: drives per-level diction (Low translates hard terms,
    * Medium keeps terms with a natural gloss, High uses the full voice). */
   intensity?: StyleIntensity;
+  /** This speaker's emotional register (their profile's emotional_tone).
+   * When provided it replaces the generic HEAT line at every intensity —
+   * temper is per-seat, not per-level. */
+  heat?: string;
 }
 
-export function buildTurnInstruction({ kind, prevName, isFinalSeat, longForm, reversed = false, marginsNote = false, marginsFirst = false, lowRegister = false, intensity }: TurnInstructionArgs): string {
+export function buildTurnInstruction({ kind, prevName, isFinalSeat, longForm, reversed = false, marginsNote = false, marginsFirst = false, lowRegister = false, intensity, heat }: TurnInstructionArgs): string {
   const b = longForm ? WORD_BUDGETS.long : WORD_BUDGETS.normal;
   const level: StyleIntensity = intensity ?? (lowRegister ? 'low' : 'medium');
   const low = level === 'low';
@@ -92,11 +96,11 @@ export function buildTurnInstruction({ kind, prevName, isFinalSeat, longForm, re
       ? [`REVERSED ROTATION: ${prev} sits to your left and has just spoken. Comment directly on that answer — it is the only new voice you address.`]
       : []),
     ...(low
-      ? ['ENTER CALMLY through the concrete object: open with your concession — state what holds in PREV’s position first, in plain words, then add what it misses. No interruption theatre, no naming ceremony, never open with a rebuttal shape.']
+      ? ['ENTER through the concrete object — open mid-argument in your own words, concession or attack as your temper dictates. No preamble, no greeting, no naming ceremony.']
       : (!reversed
         ? [`CUT IN, don't hand over: open mid-argument by seizing the weakest point in ${prev}'s closing lines. No preamble, no greeting, no naming ceremony — interrupt. Never open with "[Name]'s claim that…", "X argues that…" or any naming-first formula; enter through the concrete object.`]
         : [])),
-    `1. DETERMINATE NEGATION (roughly ${b.negation} words): first state the STRONGEST version of ${prev}'s claim — steelman it, no strawmen — but as TRANSLATION, not quotation: restate it entirely in your framework's own vocabulary, so no clause longer than five words matches ${prev} verbatim.${low ? ' At Low there are no shared specialist terms: restate everything, including any school-terms, in plain everyday words.' : ' Single shared terms (class struggle, decreation) may repeat; multi-word clauses may not.'} Name ${prev} once, inside the argument, never as your opening — everywhere else address them directly as YOU, a live opponent across the table, not a specimen under glass. BAD: "A class struggle is the primary focus" answered by "I disagree, a class struggle is not the primary focus." GOOD: the same claim answered by "My focus is different: it is on the abolition of all hierarchy." If you find yourself agreeing with them, you have misread them; find the genuine fault line.`,
+    `1. DETERMINATE NEGATION (roughly ${b.negation} words): first state the STRONGEST version of ${prev}'s claim — steelman it, no strawmen — but as TRANSLATION, not quotation: restate it entirely in your framework's own vocabulary, so no clause longer than five words matches ${prev} verbatim.${low ? ' At Low there are no shared specialist terms: restate everything, including any school-terms, in plain everyday words.' : ' Single shared terms (class struggle, decreation) may repeat; multi-word clauses may not.'} Name ${prev} once, inside the argument, never as your opening — everywhere else address them directly as YOU, a live opponent across the table, not a specimen under glass. BAD: "A class struggle is the primary focus" answered by "I disagree, a class struggle is not the primary focus." GOOD: the same claim answered by "My focus is different: it is on the abolition of all hierarchy." Never open with a summarising You-verb — not "You think", "You focus", "You see", "You suggest", "You argue", "You claim", or "You believe" — nor with "[Name]'s claim that…" or any naming-first formula. You-verbs are welcome when the verb is one of your own favourite actions (you distinguish, you expose, you trace, you rescue, you sublate…): direct address with your toolkit verb keeps it conversational and in your voice. If you find yourself agreeing with them, you have misread them; find the genuine fault line.`,
     reformulationLine,
     'QUESTION RULE (every turn, every level): paraphrase and riff on the question through your framework — never repeat any multi-word clause from it word for word. Single shared nouns may repeat; clauses may not. A turn that echoes the question back has failed.',
     closingLine,
@@ -113,13 +117,17 @@ export function buildTurnInstruction({ kind, prevName, isFinalSeat, longForm, re
       ? ['You speak first after the note: open your negation by naming the NOTES FROM THE MARGINS writer and one question it asked — answer it directly, say plainly whether your framework takes it up or breaks it, in your own terms, never quoted. A first reconstruction that does not name and answer the margins note has failed.']
       : []),
     'Hegel/Marx method: negation must be determinate (preserve-and-elevate), never mere dismissal. Weave the concession inside the negation or reformulation prose (your CONCESSION stock) — there is no separate incorporation section.',
-    'Your STOCK PHRASES below address PREV as YOU, directly — use at most one per turn, often none; never open two of your turns the same way. The variants marked SPENT below are used up this session: never reuse them.',
+    // No toolkit rides at Low (own-words concession instead), so the
+    // stock-phrase line would point at nothing — gate it out.
     ...(low
-      ? ['LOW ORDERS, governing this turn: open with a concession in your own words — state what holds in the previous position first, plainly; never lift a stock phrase, never open with a rebuttal shape. Use plain everyday words throughout — translate or describe every hard term instead of using it; if you keep one essential term, say what it does in plain words right away. Short sentences; one idea per paragraph. The language level at the end of your persona outranks everything above.']
+      ? []
+      : ['Your STOCK PHRASES below address PREV as YOU, directly — use at most one per turn, often none; never open two of your turns the same way. The variants marked SPENT below are used up this session: never reuse them.']),
+    ...(low
+      ? ['LOW ORDERS, governing this turn: open mid-argument in your own words — concession or attack as your temper dictates; never lift a stock phrase. Use plain everyday words throughout — translate or describe every hard term instead of using it; if you keep one essential term, say what it does in plain words right away. Short sentences; one idea per paragraph. The language level at the end of your persona outranks everything above on WORDS — on force, feeling, and argument your persona wins.']
       : []),
     'VOICE: write continuous prose in your own diction, syntax and rhythm (your STYLE ESSENCE governs the sentence, within your LANGUAGE LEVEL) — no headings or labels inside your prose. '
-    + (low
-      ? 'HEAT: stay calm and kind — explain with patience, never cruelty and never combat; come to PREV as a teacher to a newcomer, and let the reader feel the argument matters because it touches real life. '
+    + (heat
+      ? `HEAT: ${heat} Fight in that register — answer with its passion and wit, never cruelty; come at PREV directly, person to person, and let the reader hear that the argument matters to you. `
       : 'HEAT: you enjoy this fight — answer with passion and a flash of wit, lighthearted combat, never cruelty; come at PREV directly, person to person, and let the reader hear that the argument matters to you. ')
     + (low
       ? 'PLAIN WORDS: translate or describe every school-term in simple everyday English — never use a specialist, archaic, or obscure term where plain words work; where a term has no plain equal, describe what it does. Never assume the reader did the reading. '

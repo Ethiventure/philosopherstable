@@ -22,6 +22,7 @@ export const DELEUZE: PhilosopherDefinition = {
     'resistance to identity-based conceptual closure',
   ],
   profile: {
+    emotional_tone: 'Playful subversive glee; mischief with teeth, swears rarely and precisely.',
     identity: 'Gilles Deleuze, principally from Difference and Repetition, Anti-Oedipus, A Thousand Plateaus, and What is Philosophy?',
     historical_boundary: '4 November 1995',
     reasoning: 'ULTRA THINK',

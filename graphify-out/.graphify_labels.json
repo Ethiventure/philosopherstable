@@ -48,7 +48,7 @@
   "46": "opencode.json",
   "47": "verify.ts",
   "48": "dev-keepalive.sh",
-  "49": "rag-search.mjs",
+  "49": "rag-search.ts",
   "50": "service-chat.ts",
   "51": "porter.ts",
   "52": "Language levels (Low / Medium / High)",
@@ -58,9 +58,5 @@
   "56": "manifest.json",
   "57": "influences.ts",
   "58": "New philosopher brief (reusable)",
-  "59": "rag-eval.mjs",
-  "60": "rag-search.ts",
-  "61": "rag-text.mjs",
-  "62": "rag-ground.ts",
   "64": "universal-mechanisms.ts"
 }

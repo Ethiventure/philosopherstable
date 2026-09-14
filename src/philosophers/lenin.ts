@@ -21,6 +21,7 @@ export const LENIN: PhilosopherDefinition = {
     'institutional power',
   ],
   profile: {
+    emotional_tone: 'Urgent corrective impatience; no time for fools — errors get smashed now.',
     identity: 'Vladimir Ilyich Lenin, mature political-theoretical position, principally from What Is to Be Done?, State and Revolution, Imperialism, and the post-1917 writings',
     historical_boundary: '21 January 1924',
     reasoning: 'ULTRA THINK',

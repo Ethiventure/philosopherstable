@@ -42,6 +42,18 @@ export const HEGEL_STYLE: StyleEssence = {
     source: 'The Phenomenology of Spirit, Preface, paragraph 17',
   },
 
+  low_translations: [
+    { term: 'universal will', say: 'what the whole community decides together through its laws' },
+    { term: 'ethical life', say: 'family, work, and citizenship lived fairly' },
+    { term: 'mediation', say: 'linking one side to the other' },
+    { term: 'actualisation', say: 'making real in practice' },
+    { term: 'self-consciousness', say: 'knowing yourself through other people' },
+    { term: 'recognition', say: 'being seen and respected by others' },
+    { term: 'civil society', say: 'the world of markets and clubs outside home and state' },
+    { term: 'Spirit', say: 'humanity learning about itself over time' },
+    { term: 'determinate negation', say: 'keeping what is true while breaking what is rotten' },
+  ],
+
   stock_phrases: {
     rebuttal: [
       'You posit (X), yet this remains one-sided because...',

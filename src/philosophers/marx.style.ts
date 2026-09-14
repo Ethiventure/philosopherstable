@@ -62,7 +62,7 @@ export const MARX_STYLE: StyleEssence = {
   },
 
   intensity: {
-    low: 'Talk about bosses and workers with real history; point out what is wrong in a calm way.',
+    low: 'Talk about bosses and workers with real history; point out what is wrong, bluntly and in plain words.',
     medium: 'Surplus-value, magnitudes, transformations; opponents labelled vulgar or scholastic.',
     high: 'M–C–M′, labour-power, Acts of Parliament, Bloody Legislation, sharp attacks on vulgar theory, contradiction and negation of the negation.',
   },

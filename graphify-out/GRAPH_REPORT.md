@@ -1,16 +1,16 @@
 # Graph Report - philosopherstable  (2026-09-14)
 
 ## Corpus Check
-- 101 files · ~3,985,532 words
+- 101 files · ~3,986,283 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 598 nodes · 785 edges · 64 communities (43 shown, 18 thin omitted)
+- 599 nodes · 786 edges · 60 communities (39 shown, 18 thin omitted)
 - Extraction: 100% EXTRACTED · 0% INFERRED · 0% AMBIGUOUS · INFERRED: 3 edges (avg confidence: 0.85)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `82b8ec25`
+- Built from commit: `a1dc30bf`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -61,7 +61,7 @@
 - opencode.json
 - verify.ts
 - dev-keepalive.sh
-- rag-search.mjs
+- rag-search.ts
 - service-chat.ts
 - porter.ts
 - Language levels (Low / Medium / High)
@@ -71,10 +71,6 @@
 - manifest.json
 - influences.ts
 - New philosopher brief (reusable)
-- rag-eval.mjs
-- rag-search.ts
-- rag-text.mjs
-- rag-ground.ts
 - universal-mechanisms.ts
 
 ## God Nodes (most connected - your core abstractions)
@@ -90,21 +86,21 @@
 10. `Decisions` - 8 edges
 
 ## Surprising Connections (you probably didn't know these)
-- `extractReadable()` --calls--> `wordCount()`  [EXTRACTED]
-  scripts/rag-ingest.mjs → src/lib/rag-text.ts
-- `ingestOne()` --calls--> `wordCount()`  [EXTRACTED]
-  scripts/rag-ingest.mjs → src/lib/rag-text.ts
 - `loadIndex()` --calls--> `joinShard()`  [EXTRACTED]
   scripts/rag-search.mjs → src/lib/rag-shard.ts
 - `splitLongParagraph()` --calls--> `wordCount()`  [EXTRACTED]
   scripts/rag-chunk.mjs → src/lib/rag-text.ts
 - `chunkParagraphs()` --calls--> `wordCount()`  [EXTRACTED]
   scripts/rag-chunk.mjs → src/lib/rag-text.ts
+- `extractReadable()` --calls--> `normalizeText()`  [EXTRACTED]
+  scripts/rag-ingest.mjs → src/lib/rag-text.ts
+- `extractReadable()` --calls--> `wordCount()`  [EXTRACTED]
+  scripts/rag-ingest.mjs → src/lib/rag-text.ts
 
 ## Import Cycles
 - None detected.
 
-## Communities (64 total, 18 thin omitted)
+## Communities (60 total, 18 thin omitted)
 
 ### Community 0 - "package.json"
 Cohesion: 0.05
@@ -218,9 +214,9 @@ Nodes (3): Models tried, Pending verification (user fetching keys), Verdicts
 Cohesion: 0.60
 Nodes (4): extractQuotes(), normalise(), QuoteCheck, verifyQuotes()
 
-### Community 49 - "rag-search.mjs"
-Cohesion: 0.16
-Nodes (11): args, debug, loadIndex(), { manifest, passages }, prepared, query, IndexPassage, AuthorShard (+3 more)
+### Community 49 - "rag-search.ts"
+Cohesion: 0.07
+Nodes (41): byCategory, failures, index, lat, latencies, passages, pos, prepared (+33 more)
 
 ### Community 50 - "service-chat.ts"
 Cohesion: 0.25
@@ -231,12 +227,12 @@ Cohesion: 0.30
 Nodes (14): endsCvc(), endsDouble(), hasVowel(), isConsonant(), measure(), stem(), step1(), step1b() (+6 more)
 
 ### Community 52 - "Language levels (Low / Medium / High)"
-Cohesion: 0.33
-Nodes (5): How to make trios (worked procedure), How to set difficulty levels, Language levels (Low / Medium / High), Reference: verified prompt order (Bookchin, Low, critique turn), Trio-creation instructions that did NOT work
+Cohesion: 0.29
+Nodes (6): How to make trios (worked procedure), How to set difficulty levels, Language levels (Low / Medium / High), Reference: verified prompt order (Bookchin, Low, critique turn), Rollback points (read before changing anything below), Trio-creation instructions that did NOT work
 
 ### Community 53 - "rag-ingest.mjs"
-Cohesion: 0.19
-Nodes (19): authorSlug(), DB_PATH, exportJson(), extractReadable(), fail(), fetchText(), ingestOne(), main() (+11 more)
+Cohesion: 0.15
+Nodes (25): CHUNK_SOFT_MAX, CHUNK_SOFT_MIN, CHUNK_TARGET_WORDS, chunkParagraphs(), splitLongParagraph(), authorSlug(), DB_PATH, exportJson() (+17 more)
 
 ### Community 54 - "rag-inspect.mjs"
 Cohesion: 0.22
@@ -258,29 +254,13 @@ Nodes (3): CABINET_DEBTS, CabinetDebt, CabinetHeir
 Cohesion: 0.50
 Nodes (3): New philosopher brief (reusable), Phase 1 — research prompt (paste to research LLM), Phase 2 — build checklist (builder)
 
-### Community 59 - "rag-eval.mjs"
-Cohesion: 0.15
-Nodes (11): byCategory, failures, index, lat, latencies, passages, pos, prepared (+3 more)
-
-### Community 60 - "rag-search.ts"
-Cohesion: 0.27
-Nodes (9): bm25Term(), ScoredPassage, SearchDebug, searchIndex(), SearchOptions, STOP, queryTerms(), STOPWORDS (+1 more)
-
-### Community 61 - "rag-text.mjs"
-Cohesion: 0.42
-Nodes (7): CHUNK_SOFT_MAX, CHUNK_SOFT_MIN, CHUNK_TARGET_WORDS, chunkParagraphs(), splitLongParagraph(), STOP, wordCount()
-
-### Community 62 - "rag-ground.ts"
-Cohesion: 0.29
-Nodes (9): cache, CachedAuthor, loadThinker(), manifestNumberForUrl(), RagGrounding, searchThinkerPassages(), ShardHit, PreparedIndex (+1 more)
-
 ### Community 64 - "universal-mechanisms.ts"
 Cohesion: 0.33
 Nodes (5): AVOID_CARICATURE, FORENSIC_PREAMBLE, GENERATIVE_ARGUMENT_MODEL, STYLE_CONTROL_DESCRIPTION, UNIVERSAL_SUPPORTING_MECHANISMS
 
 ## Knowledge Gaps
-- **276 isolated node(s):** `$schema`, `plugin`, `DEFAULT_MODELS`, `usageDay`, `perIp` (+271 more)
-  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 329 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
+- **277 isolated node(s):** `$schema`, `plugin`, `DEFAULT_MODELS`, `usageDay`, `perIp` (+272 more)
+  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 330 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
 - **18 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
@@ -291,7 +271,7 @@ _Questions this graph is uniquely positioned to answer:_
 - **Why does `react` connect `App.tsx` to `package.json`?**
   _High betweenness centrality (0.005) - this node is a cross-community bridge._
 - **What connects `$schema`, `plugin`, `DEFAULT_MODELS` to the rest of the system?**
-  _276 weakly-connected nodes found - possible documentation gaps or missing edges._
+  _277 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `package.json` be split into smaller, more focused modules?**
   _Cohesion score 0.04717853839037928 - nodes in this community are weakly interconnected._
 - **Should `types/index.ts` be split into smaller, more focused modules?**

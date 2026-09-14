@@ -555,6 +555,7 @@ function App() {
         marginsNote: pass === 2 && !!codaRef.current,
         marginsFirst: pass === 2 && index === 0 && !!codaRef.current,
         intensity: snap.intensity,
+        heat: typeof speaker.profile['emotional_tone'] === 'string' ? speaker.profile['emotional_tone'] : undefined,
       });
       const systemPrompt = renderPersona(speaker, snap.intensity);
       // Efficient economy trims the fed-back predecessor text (the displayed
@@ -625,7 +626,7 @@ function App() {
             const unspent = (vs: string[]) => vs.filter((v) => !spentRef.current.includes(v));
             const rebuttal = snap.intensity === 'low' ? [] : unspent(speaker.style_essence.stock_phrases.rebuttal);
             // Low sees no toolkit at all: the transcript shows variants lifted
-            // verbatim three-to-a-turn despite "at most ONE" — the calm entry
+            // verbatim three-to-a-turn despite "at most ONE" — the entry
             // is ordered in own words by LOW ORDERS instead.
             const concession = snap.intensity === 'low' ? [] : unspent(speaker.style_essence.stock_phrases.concession);
             const reframing = snap.intensity === 'low' ? [] : unspent(speaker.style_essence.stock_phrases.reframing);
@@ -634,7 +635,7 @@ function App() {
               'YOUR TRANSITIONAL TOOLKIT (your own phrasing — at most ONE of these per turn, often none; never force them, and never open two turns of yours the same way):',
               // Low never sees the rebuttal variants: every one of them is an
               // attack shape, and the transcript shows turns open with them
-              // verbatim. Concession-first openings carry the calm entry.
+              // verbatim. Own-words openings carry the entry instead.
               ...(rebuttal.length ? [`REBUTTAL: ${rebuttal.join(' / ')}`] : []),
               ...(concession.length ? [`CONCESSION: ${concession.join(' / ')}`] : []),
               ...(reframing.length ? [`REFRAMING: ${reframing.join(' / ')}`] : []),
@@ -1420,7 +1421,7 @@ function SettingsDrawer({ philosophers, activeSlugs, togglePhilosopher, settings
               <span className="font-heading text-sm uppercase tracking-[0.16em] text-[#4a392d] block" title="How hard the language hits. Ideas stay the same at every level — only the words change.">How it speaks (all seats)</span>
               <p className="text-xs italic text-[#465f75]/70">Low speaks plainly · Medium explains its terms · High runs at full difficulty — the ideas stay the same.</p>
               <div className="flex gap-2" role="radiogroup" aria-label="Style intensity">
-                <button role="radio" aria-checked={settings.intensity === 'low'} title="Plain everyday words, calm entries — the easiest read. Ideas unchanged." onClick={() => onSettingsChange({ ...settings, intensity: 'low' })} className={`btn-secondary capitalize ${settings.intensity === 'low' ? '!border-[#8b5254] !text-[#8b5254]' : ''}`}>Low</button>
+                <button role="radio" aria-checked={settings.intensity === 'low'} title="Plain everyday words — the easiest read. Temper unchanged." onClick={() => onSettingsChange({ ...settings, intensity: 'low' })} className={`btn-secondary capitalize ${settings.intensity === 'low' ? '!border-[#8b5254] !text-[#8b5254]' : ''}`}>Low</button>
                 <button role="radio" aria-checked={settings.intensity === 'medium'} title="The standard seminar — important terms kept and explained." onClick={() => onSettingsChange({ ...settings, intensity: 'medium' })} className={`btn-secondary capitalize ${settings.intensity === 'medium' ? '!border-[#8b5254] !text-[#8b5254]' : ''}`}>Medium</button>
                 <button role="radio" aria-checked={settings.intensity === 'high'} title="Full voice — authentic vocabulary, hostile where the author warrants it." onClick={() => onSettingsChange({ ...settings, intensity: 'high' })} className={`btn-secondary capitalize ${settings.intensity === 'high' ? '!border-[#8b5254] !text-[#8b5254]' : ''}`}>High</button>
               </div>

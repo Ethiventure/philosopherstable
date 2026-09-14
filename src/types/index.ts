@@ -28,6 +28,9 @@ export interface StyleEssence {
   /** Verified genuine sentence of theirs (quote + source). Shown at High
    * only, as a voice anchor the seat may quote. Medium/Low never see it. */
   high_exemplar?: { quote: string; source: string };
+  /** Per-term plain renderings, Low only. Positive instruction beats bans:
+   * when the seat means the left side, it writes the right side. */
+  low_translations?: { term: string; say: string }[];
   intensity: Record<StyleIntensity, string>;
   /** The author's distinctive transformation logic, e.g. "Immediate → Negation → Sublation". */
   characteristic_movement: string;

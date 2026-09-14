@@ -1,5 +1,17 @@
 # Language levels (Low / Medium / High)
 
+## Rollback points (read before changing anything below)
+
+- **Deployed (Netlify live app):** `origin/main` at `0f604ae` (PR #18 merge).
+  Restore with: `git checkout -b restore-live 0f604ae` (inspect first —
+  this predates Bloch, trios, and all language work).
+- **Draft (localhost:5173 working state):** local commit `a1dc30b`
+  ("Checkpoint: draft before Low-overhaul fixes"). Restore with:
+  `git stash -u` (if uncommitted work exists) then
+  `git checkout a1dc30b`, or `git revert` specific later commits.
+- **Rule:** commit before each new experiment; never force-push shared
+  branches to move these markers.
+
 Instructions for setting reading difficulty without dumbing down ideas —
 what to build, in order, followed by the trio-creation instructions that
 did not work and why. Evidence: one evaluated Low/High session (DeepInfra
@@ -25,9 +37,14 @@ drifts while the others stay undefined:
 - HIGH: authentic vocabulary at normal difficulty; simplify only for
   clarity.
 - Every level ends: preserve meaning, distinctions, reasoning. Simplify
-  the language, not the ideas.
+  the language, not the ideas. Temper is per-seat, not per-level
+  (`emotional_tone` in every profile, threaded into the turn HEAT line):
+  scorn, fury, urgency, gloom load at full strength at Low too — Low
+  translates the vocabulary, never blunts the blow. Strong language where
+  temper and argument require it (actual words, occasionally, never
+  decoration); identity slurs banned for all seats.
 
-**2. Starve Low of difficulty generators.** The language block alone
+**2. Starve Low of difficulty generators — never of temper.** The language block alone
 loses to ~3,000 tokens of academic profile above it — Deleuze's profile
 alone orders "think in terms of assemblages" forty times over. At Low:
 drop the style machinery (generation rules, REGISTER, CDA detail, special
@@ -58,7 +75,11 @@ and a banned-at-Low seed list
 (assemblage, deterritorialisation, haecceity, rhizome, ethical life,
 self-consciousness, mediation, actualisation, recognition, universal
 will, civil society, the noumenal, … — describe,
-never name). Position: translate, don't reduce — distinctions survive
+never name). Bans order but don't prevent (proven: banned terms used
+anyway on fresh-tab Low) — so per-seat `low_translations` give the
+positive form instead (term → plain rendering, "SAY IT LIKE THIS"),
+starting with Hegel's nine worst offenders. Position: translate, don't
+reduce — distinctions survive
 as differences you can point at. The Low closing reminder becomes a
 self-check (circle every unknown word AND idea, rewrite both).
 

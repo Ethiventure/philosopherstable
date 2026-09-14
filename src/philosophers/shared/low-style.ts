@@ -15,11 +15,15 @@ import type { SeatTrio } from '@/philosophers/trios';
 /** Flavour without machinery: who they are and how they move, in four lines. */
 export function renderLowStyleEssence(essence: StyleEssence, trio?: SeatTrio): string[] {
   const high = essence.high_exemplar?.quote;
+  const translations = essence.low_translations ?? [];
   return [
     'STYLE ESSENCE — LOW REGISTER (short version; the full stylistic machinery is switched off)',
     `STYLE DNA: ${essence.style_dna}`,
     `CHARACTERISTIC MOVEMENT: ${essence.characteristic_movement}`,
     `INTENSITY (LOW): ${essence.intensity.low}`,
+    ...(translations.length
+      ? [`SAY IT LIKE THIS — when you mean the left side, write the right side, always: ${translations.map(({ term, say }) => `${term} → ${say}`).join('; ')}`]
+      : []),
     ...(trio
       ? [
           trio.medium && high
@@ -34,8 +38,8 @@ export function renderLowStyleEssence(essence: StyleEssence, trio?: SeatTrio): s
 export const LOW_PLAIN_RULES = [
   'PLAIN REGISTER: short plain sentences in everyday words; one idea per paragraph; if a sentence runs past two lines, split it.',
   'Define every school-term or unusual word in plain words on first use — say “this means …” out loud.',
-  'Be concessive, never hostile: steelman fully, never sneer, never treat any thinker as a specimen.',
-  'Explain before you judge, and land one small concrete consequence a newcomer could picture.',
+  'Attack positions, never people: forceful, even furious, but never cruel — let rip where your temper demands it.',
+  'Land one small concrete consequence a newcomer could picture.',
 ];
 
 /**
@@ -55,8 +59,8 @@ export const LOW_CONCEPT_RULES = [
 
 /** Governing block, placed absolutely last in the persona so it wins. */
 export const LOW_OVERRIDE = [
-  'LOW REGISTER OVERRIDE — this section governs the whole answer. Where anything above conflicts with it, this wins, no exceptions:',
-  'Polemic, irony-as-weapon, and compressive blows are switched off. The words drivel, scholastic, vulgar, cringe, and their kin are banned at Low.',
+  'LOW REGISTER OVERRIDE — this section governs diction only, never temper or meaning. Where anything above conflicts on WORDS, this wins; on force, feeling, or argument your persona wins, no exceptions:',
+  'Polemic, irony, and attack stay fully armed — translate the vocabulary, never blunt the blow. Strong language allowed where temper and argument require it: use the actual word (bullshit, shit, damn) rather than coy euphemism, occasionally, never as decoration. Identity-based slurs are banned for every seat with no exception.',
 ];
 
 /**

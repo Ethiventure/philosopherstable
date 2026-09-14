@@ -21,6 +21,7 @@ export const BOGDANOV: PhilosopherDefinition = {
     'epistemological organisation',
   ],
   profile: {
+    emotional_tone: 'Cool constructive optimism; the engineer holding the schematic.',
     identity: 'Alexander Bogdanov, principally from Tektology: Universal Organization Science, Essays in Tektology, and the writings on proletarian culture',
     historical_boundary: '7 April 1928',
     reasoning: 'ULTRA THINK',
