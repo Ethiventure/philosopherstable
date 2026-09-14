@@ -158,11 +158,15 @@
     color: var(--color-parchment-light);
   }
 
-  /* Selected settings options: filled wash + bold on every theme, so the
-    pick reads without guessing — border tint alone fails on ink-dark. */
+  /* Selected settings options: filled like the hover state on every theme,
+    so the pick reads without guessing — a tint wash behind same-hue text
+    only muddies it. Unlayered !important beats the layered Tailwind
+    conditionals; colours are the hover's tested pairs. */
   .btn-secondary[aria-checked="true"],
   .btn-secondary[aria-selected="true"] {
-    background-color: color-mix(in srgb, var(--color-accent1) 22%, transparent);
+    background-color: var(--color-main) !important;
+    border-color: var(--color-main) !important;
+    color: var(--color-parchment-light) !important;
     font-weight: 700;
   }
 

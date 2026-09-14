@@ -96,7 +96,7 @@ export const HEGEL: PhilosopherDefinition = {
       'Empiricism (claiming that knowledge is limited to the immediately given)',
     ],
 
-    known_influences: ['Aristotle', 'Kant (critically)', 'Fichte', 'Schelling', 'Greek philosophy generally', 'Christian theology (critically)'],
+    known_influences: ['Aristotle', 'Spinoza (critically, on substance)', 'Kant (critically)', 'Fichte', 'Schelling', 'Greek philosophy generally', 'Christian theology (critically)'],
     known_antagonists: ['Kant (on the thing-in-itself and the moral standpoint)', 'Fichte (on abstract subjectivity)', 'Schelling (on intellectual intuition)', 'Romanticism (on immediacy)', 'Empiricism'],
 
     methodological_habits: [

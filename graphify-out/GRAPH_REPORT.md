@@ -1,16 +1,16 @@
 # Graph Report - philosopherstable  (2026-09-14)
 
 ## Corpus Check
-- 95 files · ~3,764,696 words
+- 99 files · ~3,982,054 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 583 nodes · 767 edges · 57 communities (37 shown, 17 thin omitted)
+- 592 nodes · 777 edges · 58 communities (37 shown, 18 thin omitted)
 - Extraction: 100% EXTRACTED · 0% INFERRED · 0% AMBIGUOUS · INFERRED: 3 edges (avg confidence: 0.85)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `b0f43e09`
+- Built from commit: `3448c43e`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -22,7 +22,7 @@
 - compilerOptions
 - openrouter.ts
 - compilerOptions
-- devDependencies
+- scripts
 - llm.ts
 - settings.ts
 - tts.ts
@@ -33,7 +33,7 @@
 - philosophers/index.ts
 - lib/prompts.ts
 - The Dialectical Cabinet — Implementation Plan
-- universal-mechanisms.ts
+- bloch.ts
 - The Dialectical Cabinet
 - shared.ts
 - AGENTS.md
@@ -69,6 +69,7 @@
 - rag-inspect.mjs
 - rag-manifest.mjs
 - manifest.json
+- influences.ts
 
 ## God Nodes (most connected - your core abstractions)
 1. `compilerOptions` - 18 edges
@@ -97,11 +98,11 @@
 ## Import Cycles
 - None detected.
 
-## Communities (57 total, 17 thin omitted)
+## Communities (58 total, 18 thin omitted)
 
 ### Community 0 - "package.json"
 Cohesion: 0.05
-Nodes (41): dependencies, lucide-react, react, react-dom, @supabase/supabase-js, name, private, scripts (+33 more)
+Nodes (43): dependencies, lucide-react, react, react-dom, @supabase/supabase-js, devDependencies, autoprefixer, eslint (+35 more)
 
 ### Community 1 - "check-links.mjs"
 Cohesion: 0.20
@@ -127,9 +128,9 @@ Nodes (19): attemptModel(), extractDetail(), fetchModelText(), FREE_MODEL_CYCLE,
 Cohesion: 0.12
 Nodes (15): compilerOptions, allowImportingTsExtensions, isolatedModules, lib, module, moduleDetection, moduleResolution, noEmit (+7 more)
 
-### Community 7 - "devDependencies"
-Cohesion: 0.13
-Nodes (15): devDependencies, autoprefixer, eslint, @eslint/js, eslint-plugin-react-hooks, eslint-plugin-react-refresh, globals, postcss (+7 more)
+### Community 7 - "scripts"
+Cohesion: 0.15
+Nodes (13): scripts, build, check-links, check-links:fix, dev, lint, preview, rag:eval (+5 more)
 
 ### Community 8 - "llm.ts"
 Cohesion: 0.22
@@ -160,8 +161,8 @@ Cohesion: 0.32
 Nodes (5): clamp(), DEFAULT_DISPLAY, DisplayPreferences, loadDisplay(), prefersReducedMotion()
 
 ### Community 15 - "philosophers/index.ts"
-Cohesion: 0.21
-Nodes (13): DEFAULT_SEATING_ORDER, DEFINITIONS, PHILOSOPHER_BY_SLUG, PHILOSOPHER_DATA, renderPersona(), renderAntiWaffle(), LANGUAGE_COMMON, LANGUAGE_LEVELS (+5 more)
+Cohesion: 0.14
+Nodes (17): DEFAULT_SEATING_ORDER, DEFINITIONS, PHILOSOPHER_BY_SLUG, PHILOSOPHER_DATA, renderPersona(), LANGUAGE_COMMON, LANGUAGE_LEVELS, LOW_OVERRIDE (+9 more)
 
 ### Community 16 - "lib/prompts.ts"
 Cohesion: 0.52
@@ -170,10 +171,6 @@ Nodes (6): buildExportPrompt(), buildPrompt(), findPhilosopher(), interventionSu
 ### Community 17 - "The Dialectical Cabinet — Implementation Plan"
 Cohesion: 0.12
 Nodes (16): API key: Bring-Your-Own-Key (BYOK) for personal providers, API keys: shared default, BYOK fallback, Decisions, Embeddings (Phase 5), Length: short and punchy, Phase 0 — Make the current tree build  ✅ (this session), Phase 1 — Per-philosopher files with style essences  ✅ (shipped; boxes ticked Sep 2026), Phase 2 — Gemini + dialectical engine (replaces `makeMockIntervention`) (+8 more)
-
-### Community 18 - "universal-mechanisms.ts"
-Cohesion: 0.33
-Nodes (5): AVOID_CARICATURE, FORENSIC_PREAMBLE, GENERATIVE_ARGUMENT_MODEL, STYLE_CONTROL_DESCRIPTION, UNIVERSAL_SUPPORTING_MECHANISMS
 
 ### Community 19 - "The Dialectical Cabinet"
 Cohesion: 0.29
@@ -204,8 +201,8 @@ Cohesion: 0.25
 Nodes (4): ExtractReason, GroundedPassage, SKIP_EXTENSIONS, SKIP_HOSTS
 
 ### Community 27 - "anti-waffle.ts"
-Cohesion: 0.40
-Nodes (4): ANTI_WAFFLE_RULES, BANNED_PHRASES, DIALECTICAL_MATERIALISM_FRAME, ROLE_INTEGRITY
+Cohesion: 0.33
+Nodes (5): ANTI_WAFFLE_RULES, BANNED_PHRASES, DIALECTICAL_MATERIALISM_FRAME, renderAntiWaffle(), ROLE_INTEGRITY
 
 ### Community 28 - "Models tried"
 Cohesion: 0.50
@@ -247,22 +244,26 @@ Nodes (7): APPROVE_ALL, blocks, byId, CORPUS, MANIFEST, SKIP_IDS, src
 Cohesion: 0.29
 Nodes (6): authors, chunker_version, exported_at, schema_version, total_passages, version
 
+### Community 57 - "influences.ts"
+Cohesion: 0.40
+Nodes (3): CABINET_DEBTS, CabinetDebt, CabinetHeir
+
 ## Knowledge Gaps
-- **272 isolated node(s):** `$schema`, `plugin`, `DEFAULT_MODELS`, `usageDay`, `perIp` (+267 more)
-  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 323 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
-- **17 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
+- **275 isolated node(s):** `$schema`, `plugin`, `DEFAULT_MODELS`, `usageDay`, `perIp` (+270 more)
+  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 327 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
+- **18 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `devDependencies` connect `devDependencies` to `package.json`?**
-  _High betweenness centrality (0.007) - this node is a cross-community bridge._
+- **Why does `scripts` connect `scripts` to `package.json`?**
+  _High betweenness centrality (0.006) - this node is a cross-community bridge._
 - **Why does `react` connect `App.tsx` to `package.json`?**
   _High betweenness centrality (0.005) - this node is a cross-community bridge._
 - **What connects `$schema`, `plugin`, `DEFAULT_MODELS` to the rest of the system?**
-  _272 weakly-connected nodes found - possible documentation gaps or missing edges._
+  _275 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `package.json` be split into smaller, more focused modules?**
-  _Cohesion score 0.049494949494949494 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.04717853839037928 - nodes in this community are weakly interconnected._
 - **Should `types/index.ts` be split into smaller, more focused modules?**
   _Cohesion score 0.07692307692307693 - nodes in this community are weakly interconnected._
 - **Should `App.tsx` be split into smaller, more focused modules?**

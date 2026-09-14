@@ -129,7 +129,7 @@ standing rules.
   70B models" (`src/lib/deepinfra.ts`) with 429 → wait-and-resume handling.
 - Call counts: one turn = one API call. A 5-seat sitting is 15 turns + 1
   margins call = 16 minimum, plus one repair retry per parse failure and up
-  to 3 client attempts on 429/5xx. A full 10-seat cabinet is 30 + 1 = **31
+  to 3 client attempts on 429/5xx. A full 11-seat cabinet is 33 + 1 = **34
   calls minimum** — fine sequentially (each call's inference time spreads
   them over many minutes, so 30 RPM never binds), but 31 × ~6.5K input
   tokens ≈ 200K input tokens per session, so DeepInfra credit burn and TPM

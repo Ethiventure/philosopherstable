@@ -5,6 +5,7 @@ import { HEGEL } from './hegel';
 import { MARX } from './marx';
 import { LENIN } from './lenin';
 import { BOGDANOV } from './bogdanov';
+import { BLOCH } from './bloch';
 import { WEIL } from './weil';
 import { BOOKCHIN } from './bookchin';
 import { DELEUZE } from './deleuze';
@@ -13,7 +14,7 @@ import { renderUniversalMechanisms } from './shared/universal-mechanisms';
 import { renderAntiWaffle } from './shared/anti-waffle';
 import { LOW_OVERRIDE, LOW_PLAIN_RULES, renderLanguageLevel, renderLowStyleEssence } from './shared/low-style';
 
-const DEFINITIONS: PhilosopherDefinition[] = [SPINOZA, KANT, HEGEL, MARX, LENIN, BOGDANOV, WEIL, BOOKCHIN, DELEUZE, FISHER];
+const DEFINITIONS: PhilosopherDefinition[] = [SPINOZA, KANT, HEGEL, MARX, LENIN, BOGDANOV, BLOCH, WEIL, BOOKCHIN, DELEUZE, FISHER];
 
 /**
  * The cabinet always sits in chronological order of birth, Spinoza (1632) first.
