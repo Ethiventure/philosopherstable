@@ -1,16 +1,16 @@
-# Graph Report - philosopherstable  (2026-09-13)
+# Graph Report - philosopherstable  (2026-09-14)
 
 ## Corpus Check
-- 94 files · ~3,705,095 words
+- 94 files · ~3,760,885 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 569 nodes · 752 edges · 57 communities (37 shown, 17 thin omitted)
+- 570 nodes · 753 edges · 57 communities (37 shown, 17 thin omitted)
 - Extraction: 100% EXTRACTED · 0% INFERRED · 0% AMBIGUOUS · INFERRED: 3 edges (avg confidence: 0.85)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `8634203b`
+- Built from commit: `3ed5e123`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -83,16 +83,16 @@
 10. `Decisions` - 8 edges
 
 ## Surprising Connections (you probably didn't know these)
-- `extractReadable()` --calls--> `wordCount()`  [EXTRACTED]
-  scripts/rag-ingest.mjs → src/lib/rag-text.ts
-- `ingestOne()` --calls--> `wordCount()`  [EXTRACTED]
-  scripts/rag-ingest.mjs → src/lib/rag-text.ts
 - `loadIndex()` --calls--> `joinShard()`  [EXTRACTED]
   scripts/rag-search.mjs → src/lib/rag-shard.ts
 - `splitLongParagraph()` --calls--> `wordCount()`  [EXTRACTED]
   scripts/rag-chunk.mjs → src/lib/rag-text.ts
 - `chunkParagraphs()` --calls--> `wordCount()`  [EXTRACTED]
   scripts/rag-chunk.mjs → src/lib/rag-text.ts
+- `extractReadable()` --calls--> `normalizeText()`  [EXTRACTED]
+  scripts/rag-ingest.mjs → src/lib/rag-text.ts
+- `extractReadable()` --calls--> `wordCount()`  [EXTRACTED]
+  scripts/rag-ingest.mjs → src/lib/rag-text.ts
 
 ## Import Cycles
 - None detected.
@@ -169,15 +169,15 @@ Nodes (6): buildExportPrompt(), buildPrompt(), findPhilosopher(), interventionSu
 
 ### Community 17 - "The Dialectical Cabinet — Implementation Plan"
 Cohesion: 0.12
-Nodes (16): API key: Bring-Your-Own-Key (BYOK) for personal providers, API keys: shared default, BYOK fallback, Decisions, Embeddings (Phase 5), Length: short and punchy, Phase 0 — Make the current tree build  ✅ (this session), Phase 1 — Per-philosopher files with style essences, Phase 2 — Gemini + dialectical engine (replaces `makeMockIntervention`) (+8 more)
+Nodes (16): API key: Bring-Your-Own-Key (BYOK) for personal providers, API keys: shared default, BYOK fallback, Decisions, Embeddings (Phase 5), Length: short and punchy, Phase 0 — Make the current tree build  ✅ (this session), Phase 1 — Per-philosopher files with style essences  ✅ (shipped; boxes ticked Sep 2026), Phase 2 — Gemini + dialectical engine (replaces `makeMockIntervention`) (+8 more)
 
 ### Community 18 - "universal-mechanisms.ts"
 Cohesion: 0.33
 Nodes (5): AVOID_CARICATURE, FORENSIC_PREAMBLE, GENERATIVE_ARGUMENT_MODEL, STYLE_CONTROL_DESCRIPTION, UNIVERSAL_SUPPORTING_MECHANISMS
 
 ### Community 19 - "The Dialectical Cabinet"
-Cohesion: 0.33
-Nodes (5): For the curious, Quotas (the honest version), Run it yourself (developers), The Dialectical Cabinet, Try it
+Cohesion: 0.29
+Nodes (6): For the curious, Quotas (the honest version), Run it yourself (developers), Settings, explained (all three tabs), The Dialectical Cabinet, Try it
 
 ### Community 20 - "shared.ts"
 Cohesion: 0.43
@@ -216,8 +216,8 @@ Cohesion: 0.60
 Nodes (4): extractQuotes(), normalise(), QuoteCheck, verifyQuotes()
 
 ### Community 49 - "rag-search.ts"
-Cohesion: 0.06
-Nodes (47): CHUNK_SOFT_MAX, CHUNK_SOFT_MIN, CHUNK_TARGET_WORDS, chunkParagraphs(), splitLongParagraph(), byCategory, failures, index (+39 more)
+Cohesion: 0.07
+Nodes (41): byCategory, failures, index, lat, latencies, passages, pos, prepared (+33 more)
 
 ### Community 50 - "service-chat.ts"
 Cohesion: 0.25
@@ -232,8 +232,8 @@ Cohesion: 0.15
 Nodes (13): scripts, build, check-links, check-links:fix, dev, lint, preview, rag:eval (+5 more)
 
 ### Community 53 - "rag-ingest.mjs"
-Cohesion: 0.19
-Nodes (19): authorSlug(), DB_PATH, exportJson(), extractReadable(), fail(), fetchText(), ingestOne(), main() (+11 more)
+Cohesion: 0.15
+Nodes (25): CHUNK_SOFT_MAX, CHUNK_SOFT_MIN, CHUNK_TARGET_WORDS, chunkParagraphs(), splitLongParagraph(), authorSlug(), DB_PATH, exportJson() (+17 more)
 
 ### Community 54 - "rag-inspect.mjs"
 Cohesion: 0.22
@@ -248,8 +248,8 @@ Cohesion: 0.29
 Nodes (6): authors, chunker_version, exported_at, schema_version, total_passages, version
 
 ## Knowledge Gaps
-- **262 isolated node(s):** `$schema`, `plugin`, `DEFAULT_MODELS`, `usageDay`, `perIp` (+257 more)
-  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 312 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
+- **263 isolated node(s):** `$schema`, `plugin`, `DEFAULT_MODELS`, `usageDay`, `perIp` (+258 more)
+  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 313 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
 - **17 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
@@ -262,7 +262,7 @@ _Questions this graph is uniquely positioned to answer:_
 - **Why does `react` connect `App.tsx` to `package.json`?**
   _High betweenness centrality (0.005) - this node is a cross-community bridge._
 - **What connects `$schema`, `plugin`, `DEFAULT_MODELS` to the rest of the system?**
-  _262 weakly-connected nodes found - possible documentation gaps or missing edges._
+  _263 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `package.json` be split into smaller, more focused modules?**
   _Cohesion score 0.07258064516129033 - nodes in this community are weakly interconnected._
 - **Should `types/index.ts` be split into smaller, more focused modules?**

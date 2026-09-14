@@ -219,14 +219,17 @@ Stored as `Intervention.sections`; `response_text` kept as a joined string.
 pause flag checked between turns; "X is thinking…" state. Between pass 2 and
 pass 3, `runCoda` fires once: reads ONLY the question + the first two passes'
 one-line determinations, writes the margin note in a plain-speaking
-working-class Global South voice, well-read in queer/crip/decolonial theory
-(`CODA_SYSTEM` + `buildCodaPrompt`, opens with Marx Thesis Eleven in single
-quotes, 180-word ceiling, role-actors never named individuals, they/them for
-Weil), stored as separate `coda` state
+working-class Global South voice, Gen Z Redditor rude, well-read in
+queer/crip/feminism/decolonial theory
+(`CODA_SYSTEM` + `buildCodaPrompt`, paraphrased Thesis Eleven opener never
+the same twice, 200-word ceiling, role-actors never named individuals,
+they/them for Weil, presence-aware via a PRESENT header — only sitting
+members addressed, absent thinkers never insulted), stored as separate `coda` state
 (never an Intervention — seats/passes/deck math untouched). The note rides
 in the pass-3 survey (listed first, as `Notes from the margins`) rather than
-an appended block; every pass-3 turn must name it AND carry a demand
-(`marginsNote`; `marginsFirst` makes the opening seat acknowledge the writer
+an appended block; every pass-3 turn must name it AND answer one of its
+questions directly
+(`marginsNote`; `marginsFirst` makes the opening seat answer the writer
 first); a failed
 note never blocks pass 3 (visible failed + retry, session stands). Nothing
 fires after the final seat. The reading deck (`deckEntries`) is chronological:
@@ -234,10 +237,10 @@ passes 1–2, the note card where it spoke, then pass 3 — and the export
 interleaves the note the same way. The note rides in the pass-3 survey
 (listed first, as `Notes from the margins`) rather than an appended block;
 turn instructions name it explicitly (`marginsNote`, plus `marginsFirst` for
-the opening seat, which must name the writer). The coda prompt fixes attitude
-(impatience with abstraction, hunger for the concrete) and form (Thesis Eleven
-open, concrete demands) but orders variety — one stinging absence per sitting,
-different people and first steps each time — so notes don't repeat across
+the opening seat, which must name and answer the writer). The coda prompt fixes attitude
+(impatience with abstraction, hunger for the concrete) and form (paraphrased
+Thesis Eleven open, demand-questions plus a Gen Z action suggestion) but orders variety — one stinging absence per sitting,
+3 hard-to-evade questions, never insult absent thinkers — so notes don't repeat across
 sessions. Per-turn `noteMap` receipts +
 console log record which prompts carried it; deck badges read "saw the
 margins note" (attached ≠ answered). Own visible status

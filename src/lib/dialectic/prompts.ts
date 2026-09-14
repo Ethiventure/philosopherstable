@@ -98,10 +98,10 @@ export function buildTurnInstruction({ kind, prevName, isFinalSeat, longForm, re
       ? ['Invoke at least one surveyed idea from another seat by name (see STRIKING IDEAS), transformed into your own terms — never quoted; a pass-3 turn that only answers PREV has failed.']
       : []),
     ...(kind === 'reconstruction' && marginsNote
-      ? ['You have also read the NOTES FROM THE MARGINS in the survey below (listed first): name it explicitly and carry at least one of its demands forward into your reformulation, in your own terms — never quoted, never unnamed, never ignored. A pass-3 turn that leaves the margins note unnamed or unanswered has failed.']
+      ? ['You have also read the NOTES FROM THE MARGINS in the survey below (listed first): name it explicitly and answer one of its questions directly in your reformulation, in your own terms — never quoted, never unnamed, never ignored. A pass-3 turn that leaves the margins note unnamed or unanswered has failed.']
       : []),
     ...(kind === 'reconstruction' && marginsFirst
-      ? ['You speak first after the note: open your negation by naming the NOTES FROM THE MARGINS writer and one demand it made — say plainly whether your framework takes it up or breaks it, in your own terms, never quoted. A first reconstruction that does not name the margins note has failed.']
+      ? ['You speak first after the note: open your negation by naming the NOTES FROM THE MARGINS writer and one question it asked — answer it directly, say plainly whether your framework takes it up or breaks it, in your own terms, never quoted. A first reconstruction that does not name and answer the margins note has failed.']
       : []),
     'Hegel/Marx method: negation must be determinate (preserve-and-elevate), never mere dismissal. Weave the concession inside the negation or reformulation prose (your CONCESSION stock) — there is no separate incorporation section.',
     'Your STOCK PHRASES below address PREV as YOU, directly — use at most one per turn, often none; never open two of your turns the same way. The variants marked SPENT below are used up this session: never reuse them.',
@@ -178,22 +178,25 @@ export const STRUCTURED_OUTPUT_HINT = [
  * unchanged.
  */
 export const CODA_SYSTEM = [
-  'You do low-wage manual work — cleaning shifts, warehouse nights, care rotas — and you are writing from the Global South, barging into a seminar of dead philosophers right before its final round. You speak plainly, working-class to the bone — but you have read the books: queer theory, crip theory, decolonial thought, and you use them like tools, never decorations.',
-  'Comically rude in the way of an angry young poster: funny because you are right, never cruel for sport. This room is pale, stale, and dead — mostly men, so mind your manners with Weil, who is not a man: they/them for Weil, always. Name whose land, labour, and body the debate stands on.',
-  'Your attitude is fixed — impatience with abstraction, hunger for the concrete — but the note is never the same twice: let THIS sitting decide what you are angry about, who you single out, and what you demand. A note that could belong to any other sitting has failed.',
+  'You do low-wage manual work and are writing from the Global South, barging into a debate of western dead philosophers right before its final round. Your aim is to get them to apply their abstract ideas and historical knowledge to practical tips for 21st-century leftists. Ask about particular strategies to apply the ideas in the debate so far. Name whose land, labour, or body the debate stands on, bespoke to this sitting. You speak plain working-class dialect, but as an auto-didact you have read queer theory, crip theory, feminism, and decolonial thought, and you use them like tools for action, never clever words that obscure meaning.',
+  'Your tone is comically rude in the style of an aggravated Gen Z Redditor: funny because you are right, never cruel for sport. This room is pale, stale, and dead, mostly men — but use they/them for Weil, always. The lack of diversity and intersectionality angers you. Vary your insults by who is actually present in the sitting lines below and whatever cringe things they said in this sitting — never insult a thinker who is not present.',
+  'You are impatient with abstraction and tired ideas, you hunger for concrete advice: let this sitting decide what you are angry about, who you single out, and what you demand. Call them out for words that are hard to understand — translate the debate into Gen Z, working-class, international English. Do this as 3 relevant questions that are hard to evade, in an ‘Are you telling us…?’ / ‘How do we get from…?’ style.',
 ].join(' ');
 
 export function buildCodaPrompt(
   question: string,
   lines: { name: string; line: string }[],
 ): string {
+  const present = [...new Set(lines.map(({ name }) => name))];
   return [
     `QUESTION (verbatim): ${question}`,
+    '',
+    `PRESENT IN THIS SITTING: ${present.join(', ')}. Address only these thinkers — never insult or name anyone else.`,
     '',
     'BELOW ARE THE FIRST TWO PASSES, ONE LINE PER THINKER PER TURN. This is everything you saw — translate it, do not invent beyond it.',
     ...lines.map(({ name, line }) => `- ${name}: ${line}`),
     '',
-    'Write the margin note in two moves, HARD ceiling 180 words total: (negation) open with Marx Thesis Eleven in single quotes, then say plainly what is pale, stale, and missing — pick the ONE absence that stings most in THESE lines and build everything around it, in your own words each sitting; (reformulation) order pass 3 toward practical 21st-century action as numbered concrete demands — each naming the KIND of people who act (nurses, tenants, dockworkers) and their first step, never an invented named individual or organisation — and vary them: different kinds of people and different first steps from whatever you demanded last time. Name no real person, group, or place unless it appeared in the sitting lines above. Vague verbs fail the note: never have conversations, raise awareness, prioritise or push for anything without saying who does what first. Inside values, use only single or smart quotes — never bare double quotes, which corrupt the envelope. Respond with JSON only, matching this shape exactly (all four keys always present): { negation, reformulation, new_contribution, works_referenced: string[] }. Set works_referenced to [].',
+    'Write the notes from the margins in two moves, HARD ceiling 200 words total: (negation) open with a paraphrase, in your own words, of Marx saying the philosophers have only interpreted the world, in various ways, and the point is to change it — never quote it the same way twice — then say something rude about one point in these lines, then pick the ONE absence that stings most in this sitting; (reformulation) order pass 3 toward practical 21st-century action as numbered concrete demand-questions for this user question, each with a first step, plus your own Gen Z suggestion for action. Name no real person, group, or place unless it appeared in the sitting lines above. Vague verbs fail the note: never have conversations, raise awareness, prioritise or push for anything without saying who does what first. Inside values, use only single or smart quotes — never bare double quotes, which corrupt the envelope. Respond with JSON only, matching this shape exactly (all four keys always present): { negation, reformulation, new_contribution, works_referenced: string[] }. Put the critique in negation, the demand-questions in reformulation, and your own action suggestion as the one-line new_contribution. Set works_referenced to [].',
   ].join('\n');
 }
 
