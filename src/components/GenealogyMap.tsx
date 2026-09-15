@@ -79,21 +79,11 @@ function edgePath(fromSlug: string, toSlug: string): string {
     const dir = Math.sign(dy) || 1;
     return `M ${a.x} ${a.y} L ${b.x} ${b.y - dir * RIM}`;
   }
-  // Side-bowed arcs, always bowing toward the off-spine end's side, so the
-  // fan opens symmetric around the spine (creditor left bows left, right
-  // bows right; the one backward feud bows right with the rest).
-  const len = Math.hypot(dx, dy);
-  const side = b.x >= SPINE_X ? 1 : -1;
-  const k = Math.min(70, len * 0.18);
-  const cx = (a.x + b.x) / 2 + (dy / len) * side * k;
-  const cy = (a.y + b.y) / 2 + (-dx / len) * side * k;
-  // Pull the end back to the rim along the arrival tangent.
-  const tx = b.x - cx;
-  const ty = b.y - cy;
-  const tl = Math.hypot(tx, ty) || 1;
-  const ex = b.x - (tx / tl) * RIM;
-  const ey = b.y - (ty / tl) * RIM;
-  return `M ${a.x} ${a.y} Q ${cx.toFixed(1)} ${cy.toFixed(1)} ${ex.toFixed(1)} ${ey.toFixed(1)}`;
+  // Balanced S-curves: leave and arrive heading down the years (or up them,
+  // for the one backward feud), arching the same way on both sides.
+  const bend = Math.max(30, Math.abs(dy) / 2);
+  const dir = Math.sign(dy) || 1;
+  return `M ${a.x} ${a.y} C ${a.x} ${a.y + bend}, ${b.x} ${b.y - bend}, ${b.x} ${b.y - dir * RIM}`;
 }
 
 export default function GenealogyMap({
