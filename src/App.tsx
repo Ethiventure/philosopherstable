@@ -161,7 +161,7 @@ export type DeckEntry =
 
 function App() {
   const [philosophers, setPhilosophers] = useState<Philosopher[]>([]);
-  const [question, setQuestion] = useState('How should autonomous AI agents be best used to bring about positive social change?');
+  const [question, setQuestion] = useState('AGI can now do most paid work cheaper than people, and some say humans need jobs to have purpose. So who works, who eats, who decides — and does the system that paid for the machines survive them?');
   const [activePass, setActivePass] = useState(0);
   const [activeAgent, setActiveAgent] = useState(-1);
   const [isRunning, setIsRunning] = useState(false);

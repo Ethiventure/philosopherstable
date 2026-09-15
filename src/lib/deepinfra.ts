@@ -212,7 +212,7 @@ export async function testDeepInfraKey(apiKey: string): Promise<void> {
     method: 'POST',
     headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${apiKey}` },
     body: JSON.stringify({
-      model,
+      model: DEEPINFRA_MODEL,
       messages: [{ role: 'user', content: 'Reply with exactly: ok' }],
       max_tokens: 10,
     }),
