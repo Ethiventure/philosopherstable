@@ -24,7 +24,9 @@ const RAG_DIR = new URL('../public/rag/', import.meta.url);
 const SCHEMA_VERSION = 1;
 // Bump when chunking/extraction changes: passage IDs are positional, so any
 // chunker change can shift ordinals and invalidate eval IDs (caught by eval).
-const CHUNKER_VERSION = 2;
+// v3: non-author front matter (translator/editor intros, title-page
+// boilerplate) filtered before chunking.
+const CHUNKER_VERSION = 3;
 
 const UA = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (PhilosophersCabinet/1.0; ingest)';
 const FETCH_TIMEOUT_MS = 30000;
@@ -149,6 +151,90 @@ export function extractReadable(html) {
     }
   }
   return { paragraphs: blocks, linkRatio: links / Math.max(1, blocks.length) };
+}
+
+/**
+ * Non-author matter filter: drops front/back matter not written by the
+ * philosopher — translator/editor introductions, forewords, title-page and
+ * cataloguing boilerplate — so retrieval never quotes someone else's framing
+ * as the thinker's own words. Only EXPLICITLY other-handed sections go:
+ * bare "Preface"/"Introduction" headings are kept (often the author's own,
+ * e.g. Hegel's Phenomenology preface), as are author-owned markers.
+ * Two signals: HTML heading paths (TAL/MIA pages) and ALL-CAPS running
+ * headers glued to paragraph starts (archive.org OCR, which has no headings).
+ * Best-effort by design: when unsure it keeps the text (recall over purity).
+ */
+const NON_AUTHOR_SECTION_RE = new RegExp([
+  String.raw`\btranslator(?:['’]s|s| s)\s+(introduction|preface|foreword|note|notes)\b`,
+  String.raw`\beditor(?:['’]s|s| s)\s+(introduction|preface|foreword|note|notes)\b`,
+  String.raw`\b(introduction|foreword|preface)\s+by\s+[A-Z\u00C0-\u024F]`,
+].join('|'), 'i');
+// Bare bylines ("Translated by X") drop only their own paragraph — they open
+// no section, so a credit line near the top can never swallow the whole work.
+const BYLINE_RE = /\b(translated|edited)\s+by\s+[A-Z\u00C0-\u024F]/i;
+// The author's own framing stays: never treat these as other-handed.
+const AUTHOR_OWN_RE = /\bauthor(?:['’]s|s| s)\b/i;
+// Publisher-imprint furniture: never ends a skipped section (a "COLUMBIA
+// UNIVERSITY PRESS" line inside front matter is not the next chapter).
+const FURNITURE_RE = /\buniversity press\b|\bzone books\b|publishers since|acid-free|chichester|\bcolumbia\b/i;
+// Title-page/cataloguing boilerplate: single paragraphs, always front matter.
+// Position-guarded (first ~6% of blocks) so matches deep in a text survive.
+const FRONT_PAGE_RE = /cataloguing in publication|this page intentionally left blank|financial support of|all rights reserved|printed and bound|printed in|isbn[\s:]|library and archives/i;
+
+/** Leading ALL-CAPS run at a paragraph start (OCR running header). Needs real
+ * bulk (8+ letters) so footnote openers like "12 G.W.F. Hegel, …" don't read
+ * as section headers and end the skip mode early. */
+function leadingCapsRun(text) {
+  const m = text.match(/^\s*(?:[0-9ivxlIVXL]+\s+)?([A-Z][A-Z\s',;:\-.()&’]{5,})/);
+  if (!m) return null;
+  const run = m[1].trim();
+  return run.replace(/[^A-Za-z]/g, '').length >= 8 ? run : null;
+}
+
+export function stripNonAuthorMatter(blocks, extraExclude = []) {
+  const extra = extraExclude.map((s) => new RegExp(s, 'i'));
+  const otherHanded = (head, path) => {
+    if (AUTHOR_OWN_RE.test(`${head} ${path ?? ''}`)) return false;
+    if (NON_AUTHOR_SECTION_RE.test(head)) return true;
+    if (path && NON_AUTHOR_SECTION_RE.test(path)) return true;
+    return extra.some((re) => re.test(head) || (path && re.test(path)));
+  };
+  const kept = [];
+  let dropped = 0;
+  let inOtherSection = false;
+  let lastPath = null;
+  const frontGuard = Math.max(8, Math.floor(blocks.length * 0.06));
+  blocks.forEach((b, i) => {
+    // Real heading paths (HTML sources) bound the skip mode: a new section
+    // always ends it. OCR text has no paths, so running headers do the job.
+    if ((b.path ?? null) !== lastPath) {
+      lastPath = b.path ?? null;
+      inOtherSection = false;
+    }
+    if (inOtherSection) {
+      const run = leadingCapsRun(b.text);
+      if (run && !otherHanded(run, b.path) && !FURNITURE_RE.test(run)) inOtherSection = false;
+      else {
+        dropped += 1;
+        return;
+      }
+    }
+    if (!inOtherSection && otherHanded(b.text.slice(0, 90), b.path)) {
+      inOtherSection = true;
+      dropped += 1;
+      return;
+    }
+    if (BYLINE_RE.test(b.text.slice(0, 90))) {
+      dropped += 1;
+      return;
+    }
+    if (i < frontGuard && FRONT_PAGE_RE.test(b.text.slice(0, 300))) {
+      dropped += 1;
+      return;
+    }
+    kept.push(b);
+  });
+  return { kept, dropped };
 }
 
 function sha1(s) {
@@ -276,6 +362,15 @@ async function ingestOne(db, entry) {
   if (!viaChapters && linkRatio > 2.0) {
     return { id: entry.id, status: 'no-match', detail: `link-dense page (${linkRatio.toFixed(1)} content links per paragraph) — looks like an index/contents page, not the text (use LOCAL_FULL_TEXT or CURATED_EXCERPTS)` };
   }
+  // Non-author matter (translator/editor intros, title-page boilerplate) goes
+  // before chunking so it can never become a quotable passage. Per-source
+  // `exclude_headings` (regex strings) extend the default filter.
+  const stripped = stripNonAuthorMatter(paragraphs, entry.exclude_headings ?? []);
+  paragraphs = stripped.kept;
+  const droppedFront = stripped.dropped;
+  if (paragraphs.length < 5) {
+    return { id: entry.id, status: 'no-match', detail: `only ${paragraphs.length} paragraphs remain after non-author-matter filtering (${droppedFront} dropped)` };
+  }
   const chunks = chunkParagraphs(paragraphs);
   if (!chunks.length) return { id: entry.id, status: 'no-match', detail: 'chunking produced zero usable passages' };
   const totalWords = chunks.reduce((a, c) => a + c.word_count, 0);
@@ -306,7 +401,7 @@ async function ingestOne(db, entry) {
   });
   const words = fresh.map((c) => c.word_count).sort((a, b) => a - b);
   return {
-    id: entry.id, status: 'ok', passages: fresh.length,
+    id: entry.id, status: 'ok', passages: fresh.length, droppedFront,
     words: { min: words[0], median: words[Math.floor(words.length / 2)], max: words[words.length - 1] },
     ms: Date.now() - t0,
   };
@@ -385,7 +480,7 @@ for (const entry of wanted) {
   const r = await ingestOne(db, entry);
   results.push(r);
   console.log(r.status === 'ok'
-    ? `ok           ${r.id}: ${r.passages} passages (words min/med/max ${r.words.min}/${r.words.median}/${r.words.max}) in ${r.ms}ms`
+    ? `ok           ${r.id}: ${r.passages} passages (words min/med/max ${r.words.min}/${r.words.median}/${r.words.max}, -${r.droppedFront ?? 0} front-matter) in ${r.ms}ms`
     : `${r.status}  ${r.id}: ${r.detail}`);
   await new Promise((resolve) => setTimeout(resolve, 800)); // rate-limit politeness
 }

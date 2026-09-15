@@ -7,6 +7,8 @@ export const GROQ_MODELS: { id: GroqModel; label: string; hint: string }[] = [
   { id: 'qwen/qwen3.6-27b', label: 'qwen3.6-27b', hint: 'Alternative voice, free tier' },
 ];
 
+export type DeepInfraModel = 'deepseek-ai/DeepSeek-V4-Flash-0731' | 'meta-llama/Llama-3.3-70B-Instruct-Turbo';
+
 export type TurnEconomy = 'full' | 'efficient';
 
 export type LlmProvider = 'shared' | 'openrouter' | 'groq' | 'deepinfra' | 'together';

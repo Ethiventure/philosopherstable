@@ -641,6 +641,13 @@ body {
 [data-theme="ink"] .border-\[\#4a392d\]\/15 { border-color: color-mix(in srgb, var(--color-main) 26%, transparent); }
 [data-theme="ink"] .border-\[\#4a392d\]\/10 { border-color: color-mix(in srgb, var(--color-main) 22%, transparent); }
 
+/* Genealogy map nodes: keyboard focus matches the global gold ring. */
+.genealogy-node:focus-visible {
+  outline: 2px solid var(--color-gold);
+  outline-offset: 4px;
+  border-radius: 50%;
+}
+
 /* Reading deck arrival: a new card settles down into the pile. */
 .card-arrive {
   animation: card-arrive 0.9s ease-out;

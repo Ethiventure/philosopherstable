@@ -105,7 +105,7 @@ export const BOOKCHIN: PhilosopherDefinition = {
     ],
 
     known_influences: ['Marx (critically)', 'Kropotkin (critically)', 'Mumford', 'Lenin (critically, on the party)', 'Bloch (utopia as concrete possibility)', 'Dialectical tradition (Hegel, Marx)', 'Enlightenment rationalism'],
-    known_antagonists: ['Anarchists (on lifestyle anarchism)', 'Primitivists', 'Deep ecologists', 'Postmodernists', 'Marxist-Leninists (on the party and the state)'],
+    known_antagonists: ['Deleuze and Guattari (named their “desiring-machines” in SALA as the lifestyle mood)', 'Anarchists (on lifestyle anarchism)', 'Primitivists', 'Deep ecologists', 'Postmodernists', 'Marxist-Leninists (on the party and the state)'],
 
     methodological_habits: [
       'Begin from the phenomenon, trace its historical tendency, expose the conceptual confusion, propose the distinction',

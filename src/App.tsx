@@ -33,14 +33,14 @@ import {
   type Philosopher,
   type StyleEssence,
 } from '@/types';
-import { buildCodaPrompt, buildTurnInstruction, buildUserMessage, CODA_REPAIR_SUFFIX, CODA_SYSTEM, getTurnKind, LOW_CLOSING_REMINDER, STRUCTURED_OUTPUT_HINT } from '@/lib/dialectic/prompts';
+import { buildCodaEarlyPrompt, buildCodaPrompt, buildTurnInstruction, buildUserMessage, CODA_REPAIR_SUFFIX, CODA_SYSTEM, getTurnKind, LOW_CLOSING_REMINDER, STRUCTURED_OUTPUT_HINT } from '@/lib/dialectic/prompts';
 import { LlmError, type LlmErrorCode, type TurnOutput } from '@/lib/llm';
 import { loadSettings, saveSettings, type CabinetSettings, type GroqModel } from '@/lib/settings';
 import { applyDisplay, loadDisplay, saveDisplay } from '@/lib/preferences';
 import { generateTurnGroq, testGroqKey } from '@/lib/groq';
 import { generateTurnShared } from '@/lib/shared';
 import { generateTurnOpenRouter, testOpenRouterKey } from '@/lib/openrouter';
-import { generateTurnDeepInfra, testDeepInfraKey, DEEPINFRA_MODEL } from '@/lib/deepinfra';
+import { generateTurnDeepInfra, testDeepInfraKey, lastDeepInfraModel } from '@/lib/deepinfra';
 import { generateTurnTogether, testTogetherKey, TOGETHER_MODEL } from '@/lib/together';
 import { entriesForNumbers, splitLabels } from '@/lib/footnotes';
 import { extractPassages, formatGroundedBlock, groundableSource } from '@/lib/extract';
@@ -48,6 +48,7 @@ import { searchThinkerPassages } from '@/lib/rag-ground';
 import { verifyQuotes } from '@/lib/verify';
 import { createTtsController, ensureVoices, isTtsSupported, listVoices, resolveVoice, type TtsItem, type TtsStatus } from '@/lib/tts';
 import ServiceChat, { type ServiceLogEntry } from '@/components/ServiceChat';
+import GenealogyMap from '@/components/GenealogyMap';
 
 // "Read more" resolution: the philosopher's most relevant text from the corpus
 // manifest. Entries flagged with link_note (broken link) are skipped unless
@@ -153,10 +154,10 @@ function toIntervention(
   };
 }
 
-/** One card in the reading deck: a turn, or the margins note where it spoke. */
+/** One card in the reading deck: a turn, or a margins note where it spoke. */
 export type DeckEntry =
   | { kind: 'turn'; intervention: Intervention }
-  | { kind: 'margins' };
+  | { kind: 'margins'; which: 'early' | 'late' };
 
 function App() {
   const [philosophers, setPhilosophers] = useState<Philosopher[]>([]);
@@ -174,6 +175,13 @@ function App() {
   // Ref mirror of the note text so pass-3 turns can carry it in the same run
   // (state updates do not apply synchronously inside the async loop).
   const codaRef = useRef<string | null>(null);
+  // Early margin note: same voice, different job — reads pass 1 for
+  // contradictions, translations, banked actionables and missing perspectives
+  // so pass 2 can let them in. Own status + ref, same contract as the late one.
+  const [codaEarly, setCodaEarly] = useState<{ text: string } | null>(null);
+  const [codaEarlyError, setCodaEarlyError] = useState<string | null>(null);
+  const [codaEarlyState, setCodaEarlyState] = useState<'idle' | 'writing' | 'failed'>('idle');
+  const codaEarlyRef = useRef<string | null>(null);
   // Per-turn grounding receipts: what each speaker was actually shown, so its
   // quotes stay checkable after the fact. Keyed by intervention id.
   const [groundMap, setGroundMap] = useState<Record<string, { title: string; number: number; passages: string[]; reason: string | null }>>({});
@@ -232,7 +240,7 @@ function App() {
       case 'groq':
         return `Groq ${snap.groqModel} (visitor key)`;
       case 'deepinfra':
-        return `DeepInfra ${DEEPINFRA_MODEL} (visitor key)`;
+        return `DeepInfra ${lastDeepInfraModel} (visitor key)`;
       case 'together':
         return `Together ${TOGETHER_MODEL} (visitor key)`;
       default:
@@ -379,6 +387,10 @@ function App() {
     : s.provider === 'together' ? s.togetherApiKey
     : '';
   const hasKey = settings.provider === 'shared' ? true : providerKey(settings).trim().length > 0;
+  // Groq's free tier walls single requests at ~7k input tokens: Medium/High
+  // personas alone (≈5.6k) plus any context exceed it, so the shared key runs
+  // Low sittings only — stated up front, with a one-click path to Low.
+  const sharedNeedsLow = settings.provider === 'shared' && settings.intensity !== 'low';
   const activeKeyLabel = settings.provider === 'shared'
     ? 'Shared cabinet key'
     : settings.provider === 'openrouter' ? 'OpenRouter API key'
@@ -416,18 +428,23 @@ function App() {
     return () => window.clearTimeout(timer);
   }, [freshId]);
 
-  // Deck order is chronological: passes 1–2, then the margins note where it
-  // spoke, then pass 3. The note is a card in the flow, not an appendix.
+  // Deck order is chronological: pass 1, the early note where it spoke,
+  // pass 2, the late note where it spoke, then pass 3. Notes are cards in the
+  // flow, not appendices.
   const deckEntries: DeckEntry[] = useMemo(() => {
     const list: DeckEntry[] = interventions
-      .filter((item) => item.pass_number <= 2)
+      .filter((item) => item.pass_number <= 1)
       .map((intervention) => ({ kind: 'turn', intervention }));
-    if (coda || codaState !== 'idle') list.push({ kind: 'margins' });
+    if (codaEarly || codaEarlyState !== 'idle') list.push({ kind: 'margins', which: 'early' });
+    for (const intervention of interventions.filter((item) => item.pass_number === 2)) {
+      list.push({ kind: 'turn', intervention });
+    }
+    if (coda || codaState !== 'idle') list.push({ kind: 'margins', which: 'late' });
     for (const intervention of interventions.filter((item) => item.pass_number >= 3)) {
       list.push({ kind: 'turn', intervention });
     }
     return list;
-  }, [interventions, coda, codaState]);
+  }, [interventions, coda, codaState, codaEarly, codaEarlyState]);
 
   const jumpToLatest = () => {
     if (!deckEntries.length) return;
@@ -499,12 +516,19 @@ function App() {
       if (runRef.current !== runId) return;
       const pass = Math.floor(n / seats.length);
       const index = n % seats.length;
-      // The margin note barges in once, right before the final round,
+      // The early note barges in once, right before the second round,
+      // reading only pass 1 — contradictions, translations, banked actionables,
+      // missing perspectives. A failed note never blocks pass 2.
+      if (pass === 1 && index === 0 && !codaEarlyRef.current) {
+        await runCoda(runId, collected, snap, 'early');
+        if (runRef.current !== runId) return;
+      }
+      // The late margin note barges in once, right before the final round,
       // reading only the first two passes. A failed note never blocks
       // pass 3 — the sitting stands without it and the retry button
       // re-runs it.
       if (pass === 2 && index === 0 && !codaRef.current) {
-        await runCoda(runId, collected, snap);
+        await runCoda(runId, collected, snap, 'late');
         if (runRef.current !== runId) return;
       }
       // Pass 3 runs the rotation backwards: each seat answers the answer just
@@ -528,24 +552,28 @@ function App() {
       const ownPriorLines = collected
         .filter((item) => item.philosopher_id === speaker.id && item.sections?.new_contribution)
         .map((item) => String(item.sections?.new_contribution));
-      // Pass-3 survey: the margins note intervenes first, then other seats'
+      // Surveys: pass 2 carries ONLY the early note (pass-1 purity otherwise
+      // holds); pass 3 carries the late note first, then other seats'
       // determinations, labelled by name, so the final rotation can invoke
-      // the most striking ideas — including the note's demands. Passes 1–2
-      // stay pure.
-      const noteEntry = pass === 2 && codaRef.current
-        ? [{ name: 'Notes from the margins', line: codaRef.current }]
-        : [];
-      const othersPriorLines = pass === 2
-        ? [
-          ...noteEntry,
-          ...collected
-            .filter((item) => item.philosopher_id !== speaker.id && item.sections?.new_contribution)
-            .map((item) => ({
-              name: seats.find((s) => s.id === item.philosopher_id)?.name ?? 'A seat',
-              line: String(item.sections?.new_contribution),
-            })),
-        ]
-        : [];
+      // the most striking ideas — including the note's demands.
+      const noteEntry = pass === 1 && codaEarlyRef.current
+        ? [{ name: 'Notes from the margins (after pass 1)', line: codaEarlyRef.current }]
+        : pass === 2 && codaRef.current
+          ? [{ name: 'Notes from the margins', line: codaRef.current }]
+          : [];
+      const othersPriorLines = pass === 1
+        ? [...noteEntry]
+        : pass === 2
+          ? [
+            ...noteEntry,
+            ...collected
+              .filter((item) => item.philosopher_id !== speaker.id && item.sections?.new_contribution)
+              .map((item) => ({
+                name: seats.find((s) => s.id === item.philosopher_id)?.name ?? 'A seat',
+                line: String(item.sections?.new_contribution),
+              })),
+          ]
+          : [];
       const turnInstruction = buildTurnInstruction({
         kind,
         prevName: previousSpeaker?.name ?? null,
@@ -553,6 +581,7 @@ function App() {
         longForm: snap.longForm,
         reversed: pass === 2,
         marginsNote: pass === 2 && !!codaRef.current,
+        marginsEarly: pass === 1 && !!codaEarlyRef.current,
         marginsFirst: pass === 2 && index === 0 && !!codaRef.current,
         intensity: snap.intensity,
         heat: typeof speaker.profile['emotional_tone'] === 'string' ? speaker.profile['emotional_tone'] : undefined,
@@ -560,9 +589,11 @@ function App() {
       const systemPrompt = renderPersona(speaker, snap.intensity);
       // Efficient economy trims the fed-back predecessor text (the displayed
       // and exported transcript keeps everything). Voices are untouched —
-      // personas are never trimmed.
+      // personas are never trimmed. Shared/Groq always trim: Groq's free tier
+      // walls single requests at ~7k input tokens (observed 413 at 7271).
       const rawPrev = n === 0 ? null : (collected[collected.length - 1]?.response_text ?? null);
-      const prevText = rawPrev && snap.economy === 'efficient' && rawPrev.length > 1200
+      const trimPrev = snap.economy === 'efficient' || snap.provider === 'shared' || snap.provider === 'groq';
+      const prevText = rawPrev && trimPrev && rawPrev.length > 1200
         ? `${rawPrev.slice(0, 1200)}\n[…earlier part trimmed for economy; the full text stands in the transcript]`
         : rawPrev;
       // Experimental grounding (on by default): searched passages from the
@@ -572,6 +603,10 @@ function App() {
       let groundingBlock = '';
       let groundingReceipt: { title: string; number: number; passages: string[]; reason: string | null } | null = null;
       if (snap.grounding) {
+        // Shared/Groq take the lean ration (2 short passages): Groq's free
+        // tier walls single requests at ~7k input tokens (observed 413 at
+        // 7271). Other providers keep the full six.
+        const leanRation = snap.provider === 'shared' || snap.provider === 'groq';
         try {
           // Query in the speaker's OWN words: the question plus their own
           // developing line. PREV's full text used to ride here — another
@@ -580,8 +615,9 @@ function App() {
           const hit = await searchThinkerPassages(
             speaker.full_name,
             `${question} ${ownPriorLines.join(' ')}`.slice(0, 800),
-            snap.provider === 'shared' || snap.provider === 'groq' ? 4 : 6,
+            leanRation ? 2 : 6,
             snap.intensity,
+            leanRation ? 650 : 0,
           );
           if (runRef.current !== runId) return;
           if (hit) {
@@ -597,11 +633,15 @@ function App() {
             const prevSlice = (collected[collected.length - 1]?.response_text ?? '').slice(0, 300);
             const { passages, reason } = await extractPassages(g.source.source_url, question, prevSlice);
             if (runRef.current !== runId) return;
-            groundingBlock = formatGroundedBlock(g.source.title, g.number, passages, snap.intensity);
+            // Same lean ration for the live fallback on shared/Groq.
+            const rationed = leanRation
+              ? passages.slice(0, 2).map((p) => ({ text: p.text.length > 650 ? `${p.text.slice(0, 650)}…` : p.text }))
+              : passages;
+            groundingBlock = formatGroundedBlock(g.source.title, g.number, rationed, snap.intensity);
             groundingReceipt = {
               title: g.source.title,
               number: g.number,
-              passages: passages.map((p) => p.text),
+              passages: rationed.map((p) => p.text),
               reason,
             };
           }
@@ -612,7 +652,11 @@ function App() {
           question,
           prevText,
           ownPriorLines,
-          othersPriorLines,
+          // Lean ration on shared/Groq: the margins note (first when present)
+          // plus five seats — the full survey can't fit Groq's free-tier wall.
+          othersPriorLines: (snap.provider === 'shared' || snap.provider === 'groq') && othersPriorLines.length > 6
+            ? [othersPriorLines[0], ...othersPriorLines.slice(1, 6)]
+            : othersPriorLines,
           turnInstruction,
           stockBlock: (() => {
             // The opener has no predecessor ("Do not refer to any other
@@ -643,6 +687,7 @@ function App() {
           })(),
           spentPhrases: isOpeningTurn || snap.intensity === 'low' ? [] : spentRef.current,
           intensity: snap.intensity,
+          surveyKind: pass === 1 ? 'early' : 'late',
         }),
       ];
       if (groundingBlock) messageParts.push('', groundingBlock);
@@ -653,7 +698,7 @@ function App() {
       setActivePass(pass);
       setActiveAgent(seatPos);
       setThinkingName(speaker.full_name);
-      if (typeof console !== 'undefined') console.info(`[Turn] pass ${pass + 1} ${speaker.full_name} intensity=${snap.intensity}${pass === 2 && codaRef.current ? ' margins=attached' : ''}.`);
+      if (typeof console !== 'undefined') console.info(`[Turn] pass ${pass + 1} ${speaker.full_name} intensity=${snap.intensity}${pass === 1 && codaEarlyRef.current ? ' early-margins=attached' : ''}${pass === 2 && codaRef.current ? ' margins=attached' : ''}.`);
       let output: TurnOutput;
       try {
         output = await generateWithProvider(snap, systemPrompt, userMessage, snap.longForm);
@@ -676,8 +721,13 @@ function App() {
         const receipt = groundingReceipt;
         setGroundMap((m) => ({ ...m, [item.id]: receipt }));
       }
-      // Receipt: this turn's prompt carried the margins note in its survey,
+      // Receipt: this turn's prompt carried a margins note in its survey,
       // so "did they see it" is never a guess — check the badge + console.
+      if (pass === 1 && noteEntry.length > 0) {
+        const id = item.id;
+        setNoteMap((m) => ({ ...m, [id]: true }));
+        if (typeof console !== 'undefined') console.info(`[Margins] early note in survey for ${speaker.full_name} (${codaEarlyRef.current?.length ?? 0} chars).`);
+      }
       if (pass === 2 && noteEntry.length > 0) {
         const id = item.id;
         setNoteMap((m) => ({ ...m, [id]: true }));
@@ -696,33 +746,43 @@ function App() {
   };
 
   /**
-   * Margin note: one extra call between pass 2 and pass 3, reading ONLY the
-   * first two passes' one-line determinations. Not a seat, not an
-   * intervention — stored separately so seats/passes/deck math never shifts.
-   * Returns the text so pass 3 can carry its demand; a failure never blocks
-   * pass 3 and the retry button re-runs it. Same visible-status contract as
-   * before: writing / failed + reason + retry + console diagnostics, never a
-   * silent catch.
+   * Margin notes: extra calls that barge in outside the rotation — early
+   * (after pass 1) and late (before pass 3). See runCoda below.
    */
-  const runCoda = async (runId: number, collected: Intervention[], snap: CabinetSettings): Promise<string | null> => {
+  /**
+   * Margin note: one extra call that barges in outside the rotation — early
+   * (after pass 1, reading pass 1 only) or late (before pass 3, reading passes
+   * 1–2). Not a seat, not an intervention — stored separately so
+   * seats/passes/deck math never shifts. Returns the text so the next round
+   * can carry it; a failure never blocks the round and the retry button
+   * re-runs it. Same visible-status contract: writing / failed + reason +
+   * retry + console diagnostics, never a silent catch.
+   */
+  const runCoda = async (runId: number, collected: Intervention[], snap: CabinetSettings, which: 'early' | 'late' = 'late'): Promise<string | null> => {
+    const early = which === 'early';
     const lines = collected
-      .filter((item) => item.pass_number <= 2 && item.sections?.new_contribution)
+      .filter((item) => (early ? item.pass_number <= 1 : item.pass_number <= 2) && item.sections?.new_contribution)
       .map((item) => ({
         name: philosophers.find((p) => p.id === item.philosopher_id)?.full_name ?? 'A seat',
         line: String(item.sections?.new_contribution),
       }));
     if (!lines.length) return null;
+    const setText = early ? setCodaEarly : setCoda;
+    const setState = early ? setCodaEarlyState : setCodaState;
+    const setErr = early ? setCodaEarlyError : setCodaError;
+    const ref = early ? codaEarlyRef : codaRef;
+    const tag = early ? '[Margins-early]' : '[Margins]';
     setThinkingName('Notes from the margins');
-    setCodaState('writing');
-    setCodaError(null);
-    const codaUser = buildCodaPrompt(question, lines);
+    setState('writing');
+    setErr(null);
+    const codaUser = early ? buildCodaEarlyPrompt(question, lines) : buildCodaPrompt(question, lines);
     const attempt = async (repair = false): Promise<string> => {
       const output = await generateWithProvider(snap, CODA_SYSTEM, repair ? codaUser + CODA_REPAIR_SUFFIX : codaUser, false);
       if (runRef.current !== runId) throw new LlmError('Superseded.', false, 'unknown');
       const text = [output.negation, output.incorporation, output.reformulation].filter((s) => s && s.trim()).join('\n\n');
-      setCoda({ text });
-      codaRef.current = text;
-      setCodaState('idle');
+      setText({ text });
+      ref.current = text;
+      setState('idle');
       return text;
     };
     try {
@@ -749,36 +809,45 @@ function App() {
           codaFailure = retryError;
         }
       }
-      if (typeof console !== 'undefined') console.error('[Margins] note failed:', codaFailure);
-      setCoda(null);
-      codaRef.current = null;
-      setCodaState('failed');
-      setCodaError(codaFailure instanceof Error ? codaFailure.message : 'Unknown error.');
+      if (typeof console !== 'undefined') console.error(`${tag} note failed:`, codaFailure);
+      setText(null);
+      ref.current = null;
+      setState('failed');
+      setErr(codaFailure instanceof Error ? codaFailure.message : 'Unknown error.');
       return null;
     } finally {
       if (runRef.current === runId) setThinkingName(null);
     }
   };
 
-  const runCodaNow = () => {
+  const runCodaNow = (which: 'early' | 'late' = 'late') => {
     if (!interventions.length || isRunning) return;
     setRunError(null);
-    setCodaState('idle');
-    setCodaError(null);
-    void runCoda(runRef.current, [...interventions], settings);
+    if (which === 'early') {
+      setCodaEarlyState('idle');
+      setCodaEarlyError(null);
+    } else {
+      setCodaState('idle');
+      setCodaError(null);
+    }
+    void runCoda(runRef.current, [...interventions], settings, which);
   };
 
-  const toggleCodaSpeech = () => {
-    if (!ttsSupported || !coda) return;
-    if (ttsStatus.state !== 'idle' && ttsStatus.currentId === 'coda') {
+  const toggleCodaSpeech = (which: 'early' | 'late' = 'late') => {
+    if (!ttsSupported) return;
+    const note = which === 'early' ? codaEarly : coda;
+    const id = which === 'early' ? 'coda-early' : 'coda';
+    if (!note) return;
+    if (ttsStatus.state !== 'idle' && ttsStatus.currentId === id) {
       ttsRef.current?.stop();
       return;
     }
-    ttsRef.current?.speak([{ id: 'coda', heading: 'Notes from the margins', text: coda.text }]);
+    ttsRef.current?.speak([{ id, heading: which === 'early' ? 'Notes from the margins, after pass 1' : 'Notes from the margins', text: note.text }]);
   };
 
   const startMeeting = () => {
     if (orderedPhilosophers.length < 2 || !activeKeyReady(settings)) return;
+    if (settings.provider === 'shared' && settings.intensity !== 'low') return;
     const runId = runRef.current + 1;
     runRef.current = runId;
     setInterventions([]);
@@ -786,6 +855,10 @@ function App() {
     setCodaState('idle');
     setCodaError(null);
     codaRef.current = null;
+    setCodaEarly(null);
+    setCodaEarlyState('idle');
+    setCodaEarlyError(null);
+    codaEarlyRef.current = null;
     setGroundMap({});
     setNoteMap({});
     provRef.current = [];
@@ -799,6 +872,7 @@ function App() {
 
   const resumeMeeting = () => {
     if (orderedPhilosophers.length < 2 || !activeKeyReady(settings)) return;
+    if (settings.provider === 'shared' && settings.intensity !== 'low') return;
     if (interventions.length >= orderedPhilosophers.length * 3) return;
     const runId = runRef.current + 1;
     runRef.current = runId;
@@ -821,6 +895,13 @@ function App() {
 
   const switchProviderAndResume = (provider: CabinetSettings['provider']) => {
     const next = { ...settings, provider };
+    if (next.provider === 'shared' && next.intensity !== 'low') {
+      // Landing on shared at Medium/High would 413 mid-sitting: switch the
+      // provider but hold at the question card, where the Low notice waits.
+      updateSettings(next);
+      setShowSettings(false);
+      return;
+    }
     if (orderedPhilosophers.length < 2 || !activeKeyReady(next)) {
       setShowSettings(true);
       return;
@@ -853,6 +934,10 @@ function App() {
     setCodaState('idle');
     setCodaError(null);
     codaRef.current = null;
+    setCodaEarly(null);
+    setCodaEarlyState('idle');
+    setCodaEarlyError(null);
+    codaEarlyRef.current = null;
     setServiceLog([]);
     setGroundMap({});
     setNoteMap({});
@@ -875,13 +960,16 @@ function App() {
       }
       return `PASS ${item.pass_number} — ${philosopher?.full_name ?? 'Unknown'}\n\n${item.response_text}\n`;
     };
-    // The note sits where it spoke: between the pass-2 close and pass-3 open.
-    const early = interventions.filter((item) => item.pass_number <= 2).map(turnText);
+    // Each note sits where it spoke: the early note between pass 1 and pass 2,
+    // the late note between the pass-2 close and pass-3 open.
+    const pass1 = interventions.filter((item) => item.pass_number <= 1).map(turnText);
+    const pass2 = interventions.filter((item) => item.pass_number === 2).map(turnText);
     const late = interventions.filter((item) => item.pass_number >= 3).map(turnText);
+    const earlyText = codaEarly ? `\nNOTES FROM THE MARGINS (after pass 1)\n${codaEarly.text}\n` : '';
     const codaText = coda ? `\nNOTES FROM THE MARGINS (before pass 3)\n${coda.text}\n` : '';
-    const body = [`THE DIALECTICAL CABINET\n\nQUESTION\n${question}\n`, ...early, ...(coda && late.length ? [codaText] : []), ...late].join('\n');
-    // A note written but pass 3 never ran (paused session) still exports.
-    const trailingCoda = coda && !late.length ? codaText : '';
+    const body = [`THE DIALECTICAL CABINET\n\nQUESTION\n${question}\n`, ...pass1, ...(codaEarly ? [earlyText] : []), ...pass2, ...(coda && late.length ? [codaText] : []), ...late].join('\n');
+    // Notes written but their next round never ran (paused session) still export.
+    const trailingCoda = `${codaEarly && !pass2.length ? earlyText : ''}${coda && !late.length ? codaText : ''}`;
     const serviceText = serviceLog.length
       ? `\nPHILOSOPHERS' SERVICE\n${serviceLog.map((entry) => `— ${entry.thinker} was asked:\n${entry.question}\n— ${entry.thinker} answered:\n${entry.answer}\n${entry.sources.length ? `— Sources shown: ${entry.sources.join('; ')}\n` : ''}`).join('\n')}`
       : '';
@@ -965,17 +1053,18 @@ function App() {
               {isRunning && <div className="flex items-center gap-2 text-sm italic text-[#8b5254]"><span className="w-2 h-2 rounded-full bg-[#cc5f68] speaker-glow" /> Cabinet in motion</div>}
             </div>
 
-            <div className="dark-academia-card p-4 md:p-5 mb-5">
+            <div className="dark-academia-card p-4 md:p-5 mb-5" id="question-card">
               <div className="flex items-center justify-between gap-4 mb-3">
                 <label htmlFor="question" className="font-heading text-sm uppercase tracking-[0.16em] text-[#4a392d]">The contemporary problem</label>
                 <span className="text-xs text-[#465f75]/65">The question remains constant; its formulation may change.</span>
               </div>
               <textarea id="question" value={question} onChange={(event) => setQuestion(event.target.value)} disabled={isRunning} className="w-full min-h-[72px] resize-y bg-[#eae1ca]/60 border border-[#4a392d]/25 rounded-sm p-3 text-base leading-relaxed text-[#465f75] placeholder:text-[#465f75]/45 focus:outline-none focus:ring-2 focus:ring-[#8b5254]/30" />
               <div className="flex flex-wrap gap-3 mt-4">
-                <button className="btn-primary flex items-center gap-2" onClick={isRunning ? pauseMeeting : interventions.length ? resumeMeeting : startMeeting} disabled={!question.trim() || orderedPhilosophers.length < 2 || (!isRunning && (!hasKey || isComplete))}>{isRunning ? <><CirclePause size={17} /> Pause circuit</> : <><CirclePlay size={17} /> {isComplete ? 'Cabinet complete' : interventions.length ? 'Resume cabinet' : 'Begin cabinet'}</>}</button>
+                <button className="btn-primary flex items-center gap-2" onClick={isRunning ? pauseMeeting : interventions.length ? resumeMeeting : startMeeting} disabled={!question.trim() || orderedPhilosophers.length < 2 || (!isRunning && (!hasKey || isComplete || sharedNeedsLow))}>{isRunning ? <><CirclePause size={17} /> Pause circuit</> : <><CirclePlay size={17} /> {isComplete ? 'Cabinet complete' : interventions.length ? 'Resume cabinet' : 'Begin cabinet'}</>}</button>
                 <button className="btn-secondary flex items-center gap-2" onClick={resetMeeting}><RotateCcw size={15} /> Restart</button>
                 <button className="btn-secondary flex items-center gap-2" onClick={exportTranscript} disabled={!interventions.length}><Download size={15} /> Export</button>
               </div>
+              {sharedNeedsLow && !isRunning && <p className="text-sm italic text-[#8b5254] mt-3">The shared key speaks Low only — its free tier cannot fit Medium or High prompts (they halt mid-sitting). <button className="underline" onClick={() => updateSettings({ ...settings, intensity: 'low' })}>Continue at Low</button> or <button className="underline" onClick={() => openSettings('key')}>add your own key</button> for the full voice.</p>}
               {!hasKey && <p className="text-sm italic text-[#8b5254] mt-3">Add your {activeKeyLabel} in <button className="underline" onClick={() => setShowSettings(true)}>Settings</button> to begin — it stays in this browser and goes straight to the provider alone; we never see it{settings.provider === 'openrouter' ? ', and goes straight to OpenRouter.' : settings.provider === 'groq' ? ', and goes straight to Groq.' : settings.provider === 'deepinfra' ? ', and goes straight to DeepInfra.' : settings.provider === 'together' ? ', and goes straight to Together.' : '.'}</p>}
               {runError && (runError.code === 'quota' ? <div role="alert" className="mt-3 p-5 bg-[#8b5254]/10 border-l-2 border-[#8b5254]"><p className="text-xs uppercase tracking-widest text-[#8b5254]">Paused — free-tier quota reached</p><p className="text-sm mt-2 text-[#465f75]">{runError.message}</p><p className="text-sm mt-2 text-[#465f75]">Nothing is lost: {interventions.length} of {orderedPhilosophers.length * 3} interventions are kept, and read-aloud plus export keep working. Quotas reset with time — per-minute caps within minutes, daily caps the next day.</p><div className="flex flex-wrap gap-2 mt-3"><button className="btn-secondary" onClick={() => resumeMeeting()} disabled={!hasKey}>Try resume</button>{settings.provider === 'shared' && <button className="btn-secondary" onClick={() => { setRunError(null); setShowSettings(true); }}>Use my own key instead</button>}{settings.provider === 'openrouter' && settings.openRouterMode === 'paid' && <button className="btn-secondary" onClick={switchToFreeCycleAndResume}>Back to free cycle & resume</button>}{(settings.provider === 'groq' || settings.provider === 'deepinfra' || settings.provider === 'together') && <button className="btn-secondary" onClick={() => switchProviderAndResume('shared')}>Fall back to shared</button>}<button className="btn-secondary" onClick={() => setShowSettings(true)}>Open settings</button>{settings.provider === 'openrouter' ? <a className="btn-secondary" href="https://openrouter.ai/activity" target="_blank" rel="noreferrer">Check usage</a> : settings.provider === 'groq' ? <a className="btn-secondary" href="https://console.groq.com" target="_blank" rel="noreferrer">Check usage</a> : settings.provider === 'deepinfra' ? <a className="btn-secondary" href="https://deepinfra.com/dash" target="_blank" rel="noreferrer">Check usage</a> : settings.provider === 'together' ? <a className="btn-secondary" href="https://api.together.xyz/settings/api-keys" target="_blank" rel="noreferrer">Check usage</a> : null}<button className="btn-secondary" onClick={() => setRunError(null)}>Dismiss</button></div></div> : <div className="mt-3 p-4 bg-[#8b5254]/8 border-l-2 border-[#8b5254]"><p className="text-xs uppercase tracking-widest text-[#8b5254]">Philosopher Strike Demand Reasons</p><p className="text-sm mt-1 text-[#465f75]">{runError.message}</p><div className="flex flex-wrap gap-2 mt-3"><button className="btn-secondary" onClick={resumeMeeting} disabled={!hasKey}>Resume cabinet</button><button className="btn-secondary" onClick={() => setShowSettings(true)}>Open settings</button><button className="btn-secondary" onClick={() => setRunError(null)}>Dismiss</button></div></div>)}
             </div>
@@ -1019,6 +1108,11 @@ function App() {
           </aside>
         </section>
 
+        <section id="genealogy" className="mt-10" aria-label="Genealogy of influence">
+          <div className="ornament-divider mb-6"><span className="text-xl">✦</span></div>
+          <GenealogyMap philosophers={philosophers} onSelect={(p) => setSelectedPhilosopher(p)} />
+        </section>
+
         <section className="mt-10" ref={deckRef} aria-label="Reading deck">
           <div className="ornament-divider mb-6"><span className="text-xl">✦</span></div>
           <div className="flex flex-wrap items-end justify-between gap-4 mb-5"><div><p className="pass-indicator text-[#8b5254]">The developing transcript</p><h2 className="text-3xl">Voices around the table</h2></div><p className="hidden md:block max-w-md text-right italic text-[#465f75]/65">Read at your own pace with the arrows — new turns collect underneath without pulling you away.</p></div>
@@ -1036,9 +1130,10 @@ function App() {
               onToggleNoteSpeech={toggleCodaSpeech}
               onInspect={(item) => setSelectedIntervention(item)}
               onOpenSources={openSourcesAt}
-              noteText={coda?.text ?? null}
-              noteState={codaState}
-              noteError={codaError}
+              notes={{
+                early: { text: codaEarly?.text ?? null, state: codaEarlyState, error: codaEarlyError },
+                late: { text: coda?.text ?? null, state: codaState, error: codaError },
+              }}
               onRetryNote={runCodaNow}
               noteSeenFor={noteMap}
             />
@@ -1050,8 +1145,21 @@ function App() {
         {interventions.length > orderedPhilosophers.length && <PositionComparison philosophers={orderedPhilosophers} interventions={interventions} onOpenSources={openSourcesAt} />}
       </main>
 
-      {showSources && <SourceDrawer target={sourceTarget} onClose={() => { setSourceTarget(null); setShowSources(false); }} />}
-      <ServiceChat
+      {/* Halt banner: the inline error panel lives up at the question card, so
+          a halt mid-deck would otherwise pass unnoticed. Fixed, so it alerts
+          wherever the reader sits; Details scrolls to the full recovery panel. */}
+      {runError && !isRunning && (
+        <div role="alert" className="fixed bottom-0 inset-x-0 z-40 px-4 pb-4 pointer-events-none">
+          <div className="pointer-events-auto max-w-3xl mx-auto dark-academia-card p-4 flex flex-wrap items-center gap-x-4 gap-y-2">
+            <p className="text-sm text-[#465f75]"><span className="font-heading uppercase tracking-wider text-[#8b5254] text-xs mr-2">{runError.code === 'quota' ? 'Paused — quota reached' : 'Paused — provider error'}</span>{runError.message.length > 140 ? `${runError.message.slice(0, 140)}…` : runError.message}</p>
+            <span className="flex gap-2 ml-auto">
+              <button className="btn-secondary !text-xs" onClick={() => resumeMeeting()} disabled={!hasKey}>Try resume</button>
+              <button className="btn-secondary !text-xs" onClick={() => document.getElementById('question-card')?.scrollIntoView({ behavior: display.reduceMotion ? 'auto' : 'smooth', block: 'start' })}>Full details</button>
+            </span>
+          </div>
+        </div>
+      )}
+      {showSources && <SourceDrawer target={sourceTarget} onClose={() => { setSourceTarget(null); setShowSources(false); }} />}      <ServiceChat
         thinkers={allOrderedPhilosophers}
         interventions={interventions}
         settings={settings}
@@ -1067,7 +1175,7 @@ function App() {
   );
 }
 
-function ReadingDeck({ entries, philosophers, readIdx, onNav, freshId, ttsSupported, ttsStatus, onToggleSpeech, onToggleNoteSpeech, onInspect, onOpenSources, noteText, noteState, noteError, onRetryNote, noteSeenFor }: {
+function ReadingDeck({ entries, philosophers, readIdx, onNav, freshId, ttsSupported, ttsStatus, onToggleSpeech, onToggleNoteSpeech, onInspect, onOpenSources, notes, onRetryNote, noteSeenFor }: {
   entries: DeckEntry[];
   philosophers: Philosopher[];
   readIdx: number;
@@ -1076,48 +1184,54 @@ function ReadingDeck({ entries, philosophers, readIdx, onNav, freshId, ttsSuppor
   ttsSupported: boolean;
   ttsStatus: TtsStatus;
   onToggleSpeech: (item: Intervention) => void;
-  onToggleNoteSpeech: () => void;
+  onToggleNoteSpeech: (which: 'early' | 'late') => void;
   onInspect: (item: Intervention) => void;
   onOpenSources: (n: number) => void;
-  noteText: string | null;
-  noteState: 'idle' | 'writing' | 'failed';
-  noteError: string | null;
-  onRetryNote: () => void;
+  notes: {
+    early: { text: string | null; state: 'idle' | 'writing' | 'failed'; error: string | null };
+    late: { text: string | null; state: 'idle' | 'writing' | 'failed'; error: string | null };
+  };
+  onRetryNote: (which: 'early' | 'late') => void;
   noteSeenFor: Record<string, true>;
 }) {
   const entry = entries[readIdx];
   if (!entry) return null;
   const upcoming = entries.slice(readIdx + 1, readIdx + 4);
   const behind = entries.length - 1 - readIdx;
+  const noteName = (which: 'early' | 'late') => which === 'early' ? 'Notes from the margins (after pass 1)' : 'Notes from the margins (before pass 3)';
   const entryLabel = (e: DeckEntry): string => {
-    if (e.kind === 'margins') return 'Notes from the margins';
+    if (e.kind === 'margins') return noteName(e.which);
     const p = philosophers.find((x) => x.id === e.intervention.philosopher_id);
     return `${p?.full_name ?? 'Unknown'}, pass ${e.intervention.pass_number}`;
   };
   const label = `Now reading ${readIdx + 1} of ${entries.length}: ${entryLabel(entry)}`;
-  const noteSpeaking = ttsStatus.state !== 'idle' && ttsStatus.currentId === 'coda';
+  const noteSpeaking = (which: 'early' | 'late') => ttsStatus.state !== 'idle' && ttsStatus.currentId === (which === 'early' ? 'coda-early' : 'coda');
   return (
     <div role="region" aria-roledescription="carousel" aria-label="Reading deck: move through the sitting with the arrow buttons">
       <p className="sr-only" aria-live="polite">{label}</p>
-      {entry.kind === 'margins' ? (
-        <article aria-label="Notes from the margins" className="dark-academia-card p-5 md:p-8 max-w-3xl">
-          <p className="pass-indicator text-[#8b5254]">☞ Notes from the margins</p>
-          {noteText ? (
+      {entry.kind === 'margins' ? (() => {
+        const which = entry.which;
+        const note = notes[which];
+        const speaking = noteSpeaking(which);
+        return (
+        <article aria-label={noteName(which)} className="dark-academia-card p-5 md:p-8 max-w-3xl">
+          <p className="pass-indicator text-[#8b5254]">☞ {which === 'early' ? 'Notes from the margins · after pass 1' : 'Notes from the margins'}</p>
+          {note.text ? (
             <>
-              <p className="whitespace-pre-line text-[15px] leading-relaxed text-[#465f75] mt-3">{noteText}</p>
+              <p className="whitespace-pre-line text-[15px] leading-relaxed text-[#465f75] mt-3">{note.text}</p>
               <div className="flex flex-wrap gap-2 mt-5">
-                {ttsSupported && <button onClick={onToggleNoteSpeech} className="btn-secondary !text-xs flex items-center gap-2" aria-label={noteSpeaking ? 'Stop reading margin notes' : 'Listen to margin notes'}>{noteSpeaking ? <><Square size={13} /> Stop reading</> : <><Volume2 size={13} /> Listen</>}</button>}
+                {ttsSupported && <button onClick={() => onToggleNoteSpeech(which)} className="btn-secondary !text-xs flex items-center gap-2" aria-label={speaking ? 'Stop reading margin notes' : 'Listen to margin notes'}>{speaking ? <><Square size={13} /> Stop reading</> : <><Volume2 size={13} /> Listen</>}</button>}
               </div>
             </>
-          ) : noteState === 'writing' ? (
+          ) : note.state === 'writing' ? (
             <p className="text-sm italic text-[#465f75]/70 mt-3" aria-live="polite">Notes from the margins are interrupting…</p>
           ) : (
             <>
-              <p className="text-sm italic text-[#465f75]/70 mt-3">The note failed to arrive — the final round carries on without it.</p>
-              {noteState === 'failed' && noteError && (
-                <p className="text-xs mt-2 text-[#8b5254]">Reason: {noteError.length > 220 ? `${noteError.slice(0, 220)}…` : noteError}</p>
+              <p className="text-sm italic text-[#465f75]/70 mt-3">{which === 'early' ? 'The note failed to arrive — pass 2 carries on without it.' : 'The note failed to arrive — the final round carries on without it.'}</p>
+              {note.state === 'failed' && note.error && (
+                <p className="text-xs mt-2 text-[#8b5254]">Reason: {note.error.length > 220 ? `${note.error.slice(0, 220)}…` : note.error}</p>
               )}
-              <button className="btn-secondary !text-xs mt-3" onClick={onRetryNote}>Bring the note</button>
+              <button className="btn-secondary !text-xs mt-3" onClick={() => onRetryNote(which)}>Bring the note</button>
             </>
           )}
           <div className="flex items-center justify-between mt-4">
@@ -1125,7 +1239,8 @@ function ReadingDeck({ entries, philosophers, readIdx, onNav, freshId, ttsSuppor
             <button onClick={() => onNav(Math.min(entries.length - 1, readIdx + 1))} disabled={readIdx >= entries.length - 1} className="manicule-next" aria-label={readIdx >= entries.length - 1 ? 'Latest card — awaiting the next turn' : `Next: ${entryLabel(entries[readIdx + 1] ?? entry)}`}>☞</button>
           </div>
         </article>
-      ) : (() => {
+        );
+      })() : (() => {
         const item = entry.intervention;
         const philosopher = philosophers.find((p) => p.id === item.philosopher_id);
         if (!philosopher) return null;
@@ -1166,10 +1281,10 @@ function ReadingDeck({ entries, philosophers, readIdx, onNav, freshId, ttsSuppor
             {upcoming.map((next, offset) => {
               if (next.kind === 'margins') {
                 return (
-                  <button key="margins" onClick={() => onNav(readIdx + 1 + offset)} className="w-full text-left dark-academia-card px-4 py-3 flex items-center gap-3" aria-label="Skip ahead to Notes from the margins">
+                  <button key={`margins-${next.which}`} onClick={() => onNav(readIdx + 1 + offset)} className="w-full text-left dark-academia-card px-4 py-3 flex items-center gap-3" aria-label={`Skip ahead to ${noteName(next.which)}`}>
                     <span className="w-7 h-7 rounded-full border border-[#8b5254] flex items-center justify-center font-heading text-sm shrink-0 text-[#8b5254]" aria-hidden="true">☞</span>
                     <span className="font-heading text-base text-[#4a392d]">Notes from the margins</span>
-                    <span className="text-[10px] uppercase tracking-wider text-[#465f75]/60 ml-auto shrink-0">Before pass 3</span>
+                    <span className="text-[10px] uppercase tracking-wider text-[#465f75]/60 ml-auto shrink-0">{next.which === 'early' ? 'After pass 1' : 'Before pass 3'}</span>
                   </button>
                 );
               }
@@ -1273,7 +1388,7 @@ function SettingsDrawer({ philosophers, activeSlugs, togglePhilosopher, settings
       } else if (usingDeepInfra) {
         await testDeepInfraKey(key);
         setTestState('ok');
-        setTestMessage(`Key works on ${DEEPINFRA_MODEL}. Saved for this browser.`);
+        setTestMessage(`Key works (DeepSeek V4 Flash first, Llama 3.3 70B backup). Saved for this browser.`);
         onSettingsChange({ ...settings, deepInfraApiKey: key });
       } else if (usingTogether) {
         await testTogetherKey(key);
@@ -1335,7 +1450,7 @@ function SettingsDrawer({ philosophers, activeSlugs, togglePhilosopher, settings
               <button role="radio" aria-checked={settings.provider === 'shared'} title="No key needed — shared Groq-backed key, a few sittings a day each." onClick={() => { setTestState('idle'); setTestMessage(''); onSettingsChange({ ...settings, provider: 'shared' }); }} className={`btn-secondary ${settings.provider === 'shared' ? '!border-[#8b5254] !text-[#8b5254]' : ''}`}>Cabinet shared</button>
               <button role="radio" aria-checked={usingOpenRouter} title="Your OpenRouter key — free model cycle, or a pinned paid model." onClick={() => { setTestState('idle'); setTestMessage(''); onSettingsChange({ ...settings, provider: 'openrouter' }); }} className={`btn-secondary ${usingOpenRouter ? '!border-[#8b5254] !text-[#8b5254]' : ''}`}>OpenRouter free cycle</button>
               <button role="radio" aria-checked={usingGroq} title="Your Groq key — free tier, no card." onClick={() => { setTestState('idle'); setTestMessage(''); onSettingsChange({ ...settings, provider: 'groq' }); }} className={`btn-secondary ${usingGroq ? '!border-[#8b5254] !text-[#8b5254]' : ''}`}>Groq free</button>
-              <button role="radio" aria-checked={usingDeepInfra} title="Your DeepInfra key — pinned Llama 70B Turbo, card on file." onClick={() => { setTestState('idle'); setTestMessage(''); onSettingsChange({ ...settings, provider: 'deepinfra' }); }} className={`btn-secondary ${usingDeepInfra ? '!border-[#8b5254] !text-[#8b5254]' : ''}`}>DeepInfra</button>
+              <button role="radio" aria-checked={usingDeepInfra} title="Your DeepInfra key — DeepSeek V4 Flash first, Llama 70B backup, card on file." onClick={() => { setTestState('idle'); setTestMessage(''); onSettingsChange({ ...settings, provider: 'deepinfra' }); }} className={`btn-secondary ${usingDeepInfra ? '!border-[#8b5254] !text-[#8b5254]' : ''}`}>DeepInfra</button>
               <button role="radio" aria-checked={usingTogether} title="Your Together key — pinned Qwen 30B, card required." onClick={() => { setTestState('idle'); setTestMessage(''); onSettingsChange({ ...settings, provider: 'together' }); }} className={`btn-secondary ${usingTogether ? '!border-[#8b5254] !text-[#8b5254]' : ''}`}>Together</button>
             </div>
             {settings.provider === 'shared' ? (
@@ -1393,7 +1508,7 @@ function SettingsDrawer({ philosophers, activeSlugs, togglePhilosopher, settings
                   {keySaved && <span className="text-xs italic self-center text-[#4a6b3f]">Saved in this browser.</span>}
                 </div>
                 {testMessage && <p className={`text-sm italic ${testState === 'ok' ? 'text-[#4a6b3f]' : 'text-[#8b5254]'}`}>{testMessage}</p>}
-                <p className="text-xs text-[#465f75]/70">Pinned model <span className="font-heading">meta-llama/Llama-3.3-70B-Instruct-Turbo</span>. Needs a card on file — get a key at <a className="underline" href="https://deepinfra.com/dash/api_keys" target="_blank" rel="noreferrer">deepinfra.com</a>.</p>
+                <p className="text-xs text-[#465f75]/70">DeepSeek V4 Flash 0731 speaks first (~6× cheaper); Llama 3.3 70B takes over automatically if it fails — the export says who spoke. Needs a card on file — get a key at <a className="underline" href="https://deepinfra.com/dash/api_keys" target="_blank" rel="noreferrer">deepinfra.com</a>.</p>
               </>
             ) : usingTogether ? (
               <>

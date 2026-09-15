@@ -3,13 +3,20 @@ import { LlmError, REPAIR_SUFFIX, parseTurnOutput, retryAfterMs, type TurnOutput
 /**
  * DeepInfra direct provider (visitor's own key).
  * OpenAI-compatible `chat/completions` at api.deepinfra.com/v1/openai.
- * Pinned model: meta-llama/Llama-3.3-70B-Instruct-Turbo (verified in the
- * DeepInfra catalog Sep 2026 — public, JSON mode supported — and working
- * end-to-end on a visitor key). Turns try `response_format: json_object`
- * first, plain fallback on 400.
+ * Fixed order with automatic failover: DeepSeek V4 Flash 0731 speaks first
+ * (~6× cheaper than the Llama pin); if it fails on anything but auth/quota
+ * (same key, same credits — a backup can't help those), Llama 3.3 70B Turbo
+ * takes the turn so the sitting survives. `lastDeepInfraModel` records who
+ * actually spoke for the export provenance trail. Turns try
+ * `response_format: json_object` first, plain fallback on 400.
  */
+import type { DeepInfraModel } from '@/lib/settings';
 
-export const DEEPINFRA_MODEL = 'meta-llama/Llama-3.3-70B-Instruct-Turbo';
+export const DEEPINFRA_MODEL: DeepInfraModel = 'deepseek-ai/DeepSeek-V4-Flash-0731';
+export const DEEPINFRA_MODEL_BACKUP: DeepInfraModel = 'meta-llama/Llama-3.3-70B-Instruct-Turbo';
+
+/** Model that spoke last on this provider (turns and desk alike). */
+export let lastDeepInfraModel: DeepInfraModel = DEEPINFRA_MODEL;
 const DEEPINFRA_MAX_TOKENS = { normal: 4000, long: 8000 } as const;
 
 interface DeepInfraTurnArgs {
@@ -41,7 +48,7 @@ function deepInfraError(status: number, detail: string): LlmError {
   }
   if (status === 404) {
     return new LlmError(
-      `DeepInfra has no such model (${DEEPINFRA_MODEL}) — verify the ID at deepinfra.com/models.` +
+      `DeepInfra has no such model — verify the ID at deepinfra.com/models.` +
         (detail ? ` Detail: ${detail}` : ''),
       false,
       'model',
@@ -79,18 +86,19 @@ const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
 interface DeepInfraPostArgs {
   apiKey: string;
+  model: DeepInfraModel;
   systemPrompt: string;
   maxTokens: number;
   useJsonMode: boolean;
 }
 
-const postDeepInfra = async ({ apiKey, systemPrompt, maxTokens, useJsonMode }: DeepInfraPostArgs, msg: string): Promise<string> => {
+const postDeepInfra = async ({ apiKey, model, systemPrompt, maxTokens, useJsonMode }: DeepInfraPostArgs, msg: string): Promise<string> => {
     // Constrained decoding first (turns only): response_format forces
     // syntactically valid JSON. If the server rejects the parameter (400),
     // fall back to plain requests. Plain-text callers pass useJsonMode false.
     const jsonMode = { current: useJsonMode };
     const makeBody = (m: string) => ({
-      model: DEEPINFRA_MODEL,
+      model,
       messages: [
         { role: 'system', content: systemPrompt },
         { role: 'user', content: m },
@@ -151,29 +159,60 @@ const postDeepInfra = async ({ apiKey, systemPrompt, maxTokens, useJsonMode }: D
 
 export async function generateTurnDeepInfra({ apiKey, systemPrompt, userMessage, longForm }: DeepInfraTurnArgs): Promise<TurnOutput> {
   const maxTokens = longForm ? DEEPINFRA_MAX_TOKENS.long : DEEPINFRA_MAX_TOKENS.normal;
-  const post = (msg: string) => postDeepInfra({ apiKey, systemPrompt, maxTokens, useJsonMode: true }, msg);
-  const text = await post(userMessage);
+  const runFlow = async (model: DeepInfraModel): Promise<TurnOutput> => {
+    const post = (msg: string) => postDeepInfra({ apiKey, model, systemPrompt, maxTokens, useJsonMode: true }, msg);
+    const text = await post(userMessage);
+    try {
+      const out = parseTurnOutput(stripFences(text), 'DeepInfra');
+      lastDeepInfraModel = model;
+      return out;
+    } catch (error) {
+      if (!(error instanceof LlmError) || error.code !== 'parse') throw error;
+      const repaired = parseTurnOutput(stripFences(await post(userMessage + REPAIR_SUFFIX)), 'DeepInfra');
+      lastDeepInfraModel = model;
+      return repaired;
+    }
+  };
   try {
-    return parseTurnOutput(stripFences(text), 'DeepInfra');
+    return await runFlow(DEEPINFRA_MODEL);
   } catch (error) {
-    if (!(error instanceof LlmError) || error.code !== 'parse') throw error;
-    return parseTurnOutput(stripFences(await post(userMessage + REPAIR_SUFFIX)), 'DeepInfra');
+    // Auth/quota belong to the key, not the model — a backup would fail
+    // identically, so don't burn a second call. Anything else (server death,
+    // retired ID, mangled JSON) is worth one Llama rescue before halting.
+    if (error instanceof LlmError && (error.code === 'auth' || error.code === 'quota')) throw error;
+    if (typeof console !== 'undefined') console.warn(`[DeepInfra] primary ${DEEPINFRA_MODEL} failed, trying backup ${DEEPINFRA_MODEL_BACKUP}:`, error instanceof Error ? error.message : error);
+    try {
+      return await runFlow(DEEPINFRA_MODEL_BACKUP);
+    } catch (backupError) {
+      if (typeof console !== 'undefined') console.error('[DeepInfra] backup also failed:', backupError instanceof Error ? backupError.message : backupError);
+      throw backupError;
+    }
   }
 }
 
-/** Plain-text path for the Philosophers' Service desk: same model, retries
- * and quota mapping, no JSON contract — the reply is the answer. */
+/** Plain-text path for the Philosophers' Service desk: same failover order,
+ * no JSON contract — the reply is the answer. */
 export async function generateTextDeepInfra({ apiKey, systemPrompt, userMessage }: { apiKey: string; systemPrompt: string; userMessage: string }): Promise<string> {
-  return postDeepInfra({ apiKey, systemPrompt, maxTokens: DEEPINFRA_MAX_TOKENS.normal, useJsonMode: false }, userMessage);
+  const post = (model: DeepInfraModel) => postDeepInfra({ apiKey, model, systemPrompt, maxTokens: DEEPINFRA_MAX_TOKENS.normal, useJsonMode: false }, userMessage);
+  try {
+    const text = await post(DEEPINFRA_MODEL);
+    lastDeepInfraModel = DEEPINFRA_MODEL;
+    return text;
+  } catch (error) {
+    if (error instanceof LlmError && (error.code === 'auth' || error.code === 'quota')) throw error;
+    const text = await post(DEEPINFRA_MODEL_BACKUP);
+    lastDeepInfraModel = DEEPINFRA_MODEL_BACKUP;
+    return text;
+  }
 }
 
-/** Cheap key check: one tiny call. */
+/** Cheap key check: one tiny call against the primary. */
 export async function testDeepInfraKey(apiKey: string): Promise<void> {
   const response = await fetch('https://api.deepinfra.com/v1/openai/chat/completions', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${apiKey}` },
     body: JSON.stringify({
-      model: DEEPINFRA_MODEL,
+      model,
       messages: [{ role: 'user', content: 'Reply with exactly: ok' }],
       max_tokens: 10,
     }),

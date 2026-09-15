@@ -197,6 +197,7 @@ async function fetchModelText(
   apiKey: string,
   body: Record<string, unknown>,
   tag = 'Free model',
+  useJsonMode = false,
 ): Promise<string> {
   for (let attempt = 0; attempt < 2; attempt += 1) {
     let response: Response;
@@ -214,7 +215,7 @@ async function fetchModelText(
       response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
         method: 'POST',
         headers,
-        body: JSON.stringify({ ...body, model }),
+        body: JSON.stringify({ ...body, model, ...(useJsonMode ? { response_format: { type: 'json_object' } } : {}) }),
         signal: AbortSignal.timeout(60000),
       });
     } catch (error) {
@@ -278,8 +279,9 @@ async function attemptModel(
   apiKey: string,
   body: Record<string, unknown>,
   tag = 'Free model',
+  useJsonMode = false,
 ): Promise<TurnOutput> {
-  const text = await fetchModelText(model, apiKey, body, tag);
+  const text = await fetchModelText(model, apiKey, body, tag, useJsonMode);
   try {
     return parseTurnOutput(stripFences(text), 'OpenRouter');
   } catch (error) {
@@ -316,24 +318,37 @@ export async function generateTurnOpenRouter({ apiKey, systemPrompt, userMessage
   };
   const paidId = mode === 'paid' ? modelId.trim() : '';
   if (paidId) {
-    // Pinned paid model: same-model retry lives in attemptModel; one repair
-    // attempt on malformed JSON, mirroring the other single-model clients.
-    // One plain retry on transient server faults (e.g. a mangled 200 body).
-    try {
-      return await attemptModel(paidId, apiKey, body, 'Paid model');
-    } catch (error) {
-      if (isFailFast(error)) throw error;
-      if (error instanceof LlmError && error.code === 'parse') {
-        return attemptModel(paidId, apiKey, {
-          ...body,
-          messages: [
-            { role: 'system', content: systemPrompt },
-            { role: 'user', content: userMessage + REPAIR_SUFFIX },
-          ],
-        }, 'Paid model');
+    // Pinned paid model: constrained decoding first (DeepSeek-class hosts
+    // honour response_format: json_object — the "PHILOSOPHER STRIKE DEMAND
+    // REASONS" prose-instead-of-JSON failure dies mechanically), plain retry
+    // on 400, then the usual parse-repair. Free cycle never sends
+    // response_format (most free models 400/empty on it).
+    const runPaid = async (json: boolean): Promise<TurnOutput> => {
+      try {
+        return await attemptModel(paidId, apiKey, body, 'Paid model', json);
+      } catch (error) {
+        if (isFailFast(error)) throw error;
+        if (error instanceof LlmError && error.code === 'parse') {
+          return attemptModel(paidId, apiKey, {
+            ...body,
+            messages: [
+              { role: 'system', content: systemPrompt },
+              { role: 'user', content: userMessage + REPAIR_SUFFIX },
+            ],
+          }, 'Paid model', json);
+        }
+        throw error;
       }
+    };
+    try {
+      return await runPaid(true);
+    } catch (error) {
+      if (error instanceof LlmError && error.code === 'server' && /\(400\)/.test(error.message)) {
+        return runPaid(false);
+      }
+      if (isFailFast(error)) throw error;
       if (error instanceof LlmError && error.code === 'server') {
-        return attemptModel(paidId, apiKey, body, 'Paid model');
+        return runPaid(true);
       }
       // Quota on a pinned model means the key's cap or credits, not a dead
       // model — say so plainly instead of the cycle's "trying the next one".

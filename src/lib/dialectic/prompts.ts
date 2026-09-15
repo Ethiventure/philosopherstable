@@ -47,7 +47,10 @@ interface TurnInstructionArgs {
   reversed?: boolean;
   /** Pass 3 only: the margins note ran and rides in the survey below — the
    * turn must answer it, not just PREV. */
-  marginsNote?: boolean;
+  marginsNote?: boolean;  /** Pass 2 only: the early margins note rides in the survey below — the
+   * turn should let its named perspectives into the critique. Soft: considered,
+   * never a fail condition (pass-2 purity matters). */
+  marginsEarly?: boolean;
   /** Pass 3 only: this seat speaks first after the note — it must name the
    * margins writer explicitly before anything else. */
   marginsFirst?: boolean;
@@ -64,7 +67,7 @@ interface TurnInstructionArgs {
   heat?: string;
 }
 
-export function buildTurnInstruction({ kind, prevName, isFinalSeat, longForm, reversed = false, marginsNote = false, marginsFirst = false, lowRegister = false, intensity, heat }: TurnInstructionArgs): string {
+export function buildTurnInstruction({ kind, prevName, isFinalSeat, longForm, reversed = false, marginsNote = false, marginsEarly = false, marginsFirst = false, lowRegister = false, intensity, heat }: TurnInstructionArgs): string {
   const b = longForm ? WORD_BUDGETS.long : WORD_BUDGETS.normal;
   const level: StyleIntensity = intensity ?? (lowRegister ? 'low' : 'medium');
   const low = level === 'low';
@@ -91,61 +94,62 @@ export function buildTurnInstruction({ kind, prevName, isFinalSeat, longForm, re
     : 'End on the live edge: the unresolved tension, stated as your framework\'s own problem. Do not address or name any next speaker — the next voice cuts in on its own.';
 
   return [
-    `${kind === 'reconstruction' ? 'RECONSTRUCTION' : 'IMMANENT CRITIQUE'} TURN (HARD ceiling: ${b.total} words total across both sections — shorter is welcome; section lengths are guidance, the total is the cap; as you near it, finish the current idea and sentence, then stop — never trail off mid-thought, never open a new point past it). A turn is a spoken intervention, not an essay: say it once, then stop. Respond ONLY to your immediate predecessor ${prev}.`,
+    // One contract, said once: small models (notably the Groq free tier, hard
+    // wall ~7k input tokens/turn) follow short instructions better than long
+    // ones restating the same rule three ways. Every rule below fires — each
+    // exactly once.
+    `${kind === 'reconstruction' ? 'RECONSTRUCTION' : 'IMMANENT CRITIQUE'} TURN (HARD ceiling: ${b.total} words total — shorter welcome; finish the current sentence, then stop). A spoken intervention, not an essay. Respond ONLY to your immediate predecessor ${prev}.`,
     ...(reversed
-      ? [`REVERSED ROTATION: ${prev} sits to your left and has just spoken. Comment directly on that answer — it is the only new voice you address.`]
+      ? [`REVERSED ROTATION: ${prev} sits to your left and just spoke — address only that answer.`]
       : []),
     ...(low
-      ? ['ENTER through the concrete object — open mid-argument in your own words, concession or attack as your temper dictates. No preamble, no greeting, no naming ceremony.']
+      ? ['Open mid-argument through the concrete object, in your own words — concession or attack as temper dictates. No preamble, no greeting, no naming ceremony.']
       : (!reversed
-        ? [`CUT IN, don't hand over: open mid-argument by seizing the weakest point in ${prev}'s closing lines. No preamble, no greeting, no naming ceremony — interrupt. Never open with "[Name]'s claim that…", "X argues that…" or any naming-first formula; enter through the concrete object.`]
+        ? [`CUT IN, don't hand over: seize the weakest point in ${prev}'s closing lines. No preamble, no greeting, no naming ceremony — interrupt. Never open with "[Name]'s claim that…", "X argues that…" or any naming-first formula; enter through the concrete object.`]
         : [])),
-    `1. DETERMINATE NEGATION (roughly ${b.negation} words): first state the STRONGEST version of ${prev}'s claim — steelman it, no strawmen — but as TRANSLATION, not quotation: restate it entirely in your framework's own vocabulary, so no clause longer than five words matches ${prev} verbatim.${low ? ' At Low there are no shared specialist terms: restate everything, including any school-terms, in plain everyday words.' : ' Single shared terms (class struggle, decreation) may repeat; multi-word clauses may not.'} Name ${prev} once, inside the argument, never as your opening — everywhere else address them directly as YOU, a live opponent across the table, not a specimen under glass. BAD: "A class struggle is the primary focus" answered by "I disagree, a class struggle is not the primary focus." GOOD: the same claim answered by "My focus is different: it is on the abolition of all hierarchy." Never open with a summarising You-verb — not "You think", "You focus", "You see", "You suggest", "You argue", "You claim", or "You believe" — nor with "[Name]'s claim that…" or any naming-first formula. You-verbs are welcome when the verb is one of your own favourite actions (you distinguish, you expose, you trace, you rescue, you sublate…): direct address with your toolkit verb keeps it conversational and in your voice. If you find yourself agreeing with them, you have misread them; find the genuine fault line.`,
+    `1. DETERMINATE NEGATION (roughly ${b.negation} words): steelman ${prev}'s claim at its strongest — then break its genuine fault line — but as TRANSLATION: restate it wholly in your framework's own vocabulary, no clause over five words matching ${prev} verbatim.${low ? ' At Low there are no shared specialist terms: restate everything, including school-terms, in plain everyday words.' : ' Single shared terms (class struggle, decreation) may repeat; multi-word clauses may not.'} Name ${prev} once, inside the argument — everywhere else address them as YOU, a live opponent, not a specimen. Never open with a summarising You-verb (think, focus, see, suggest, argue, claim, believe) or a naming-first formula; You-verbs are welcome when they are your toolkit verbs (you distinguish, expose, trace, rescue, sublate). If you agree with them you have misread them.`,
     reformulationLine,
-    'QUESTION RULE (every turn, every level): paraphrase and riff on the question through your framework — never repeat any multi-word clause from it word for word. Single shared nouns may repeat; clauses may not. A turn that echoes the question back has failed.',
+    'QUESTION RULE: paraphrase the question through your framework — never repeat any multi-word clause of it verbatim.',
     closingLine,
     ...(isFinalSeat
-      ? ['FINAL SEAT: close by returning the question, changed, to the user — no new claims after it.']
+      ? ['FINAL SEAT: return the question, changed, to the user — no new claims after it.']
       : []),
     ...(kind === 'reconstruction' && !isFinalSeat
-      ? ['Invoke at least one surveyed idea from another seat by name (see STRIKING IDEAS), transformed into your own terms — never quoted; a pass-3 turn that only answers PREV has failed.']
+      ? ['Invoke at least one surveyed idea from another seat by name (STRIKING IDEAS), transformed into your terms, never quoted; a pass-3 turn answering only PREV has failed.']
       : []),
     ...(kind === 'reconstruction' && marginsNote
-      ? ['You have also read the NOTES FROM THE MARGINS in the survey below (listed first): name it explicitly and answer one of its questions directly in your reformulation, in your own terms — never quoted, never unnamed, never ignored. A pass-3 turn that leaves the margins note unnamed or unanswered has failed.']
+      ? ['The NOTES FROM THE MARGINS ride first in the survey: name it explicitly and answer one of its questions directly in your reformulation, in your own terms. Unnamed or unanswered has failed.']
+      : []),
+    ...(marginsEarly
+      ? ['The early NOTES FROM THE MARGINS ride in the survey: weigh which marginalised perspectives it names and let them into your critique — name the note when you take one up.']
       : []),
     ...(kind === 'reconstruction' && marginsFirst
-      ? ['You speak first after the note: open your negation by naming the NOTES FROM THE MARGINS writer and one question it asked — answer it directly, say plainly whether your framework takes it up or breaks it, in your own terms, never quoted. A first reconstruction that does not name and answer the margins note has failed.']
+      ? ['You speak first after the note: open by naming its writer and one question it asked — answer it directly, say plainly whether your framework takes it up or breaks it.']
       : []),
-    'Hegel/Marx method: negation must be determinate (preserve-and-elevate), never mere dismissal. Weave the concession inside the negation or reformulation prose (your CONCESSION stock) — there is no separate incorporation section.',
+    'Negation must be determinate (preserve-and-elevate), never dismissal; weave the concession inside the prose — no separate incorporation section.',
     // No toolkit rides at Low (own-words concession instead), so the
     // stock-phrase line would point at nothing — gate it out.
     ...(low
       ? []
-      : ['Your STOCK PHRASES below address PREV as YOU, directly — use at most one per turn, often none; never open two of your turns the same way. The variants marked SPENT below are used up this session: never reuse them.']),
+      : ['STOCK PHRASES below address PREV as YOU — at most one per turn, often none; never open two of your turns the same way; SPENT variants are used up, never reuse them.']),
     ...(low
-      ? ['LOW ORDERS, governing this turn: open mid-argument in your own words — concession or attack as your temper dictates; never lift a stock phrase. Use plain everyday words throughout — translate or describe every hard term instead of using it; if you keep one essential term, say what it does in plain words right away. Short sentences; one idea per paragraph. The language level at the end of your persona outranks everything above on WORDS — on force, feeling, and argument your persona wins.']
+      ? ['LOW ORDERS: never lift a stock phrase. Plain everyday words throughout; translate or describe every hard term, keeping one essential term only with its plain meaning beside it at once. Short sentences, one idea per paragraph. The persona LANGUAGE LEVEL outranks everything above on WORDS; on force, feeling, argument your persona wins.']
       : []),
-    'VOICE: write continuous prose in your own diction, syntax and rhythm (your STYLE ESSENCE governs the sentence, within your LANGUAGE LEVEL) — no headings or labels inside your prose. '
+    'VOICE: continuous prose in your diction, syntax and rhythm within your LANGUAGE LEVEL — no headings or labels. '
     + (heat
-      ? `HEAT: ${heat} Fight in that register — answer with its passion and wit, never cruelty; come at PREV directly, person to person, and let the reader hear that the argument matters to you. `
-      : 'HEAT: you enjoy this fight — answer with passion and a flash of wit, lighthearted combat, never cruelty; come at PREV directly, person to person, and let the reader hear that the argument matters to you. ')
+      ? `HEAT: ${heat} Fight in that register — passion and wit, never cruelty; person to person, let the reader hear it matters. `
+      : 'HEAT: enjoy this fight — passion and a flash of wit, never cruelty; person to person. ')
     + (low
-      ? 'PLAIN WORDS: translate or describe every school-term in simple everyday English — never use a specialist, archaic, or obscure term where plain words work; where a term has no plain equal, describe what it does. Never assume the reader did the reading. '
+      ? 'PLAIN WORDS: translate or describe every school-term in simple everyday English; never assume the reader did the reading. '
       : level === 'medium'
-        ? 'Keep important school-terms but explain each one naturally inside the sentence in plain words — no separate dictionary-style breaks; never assume the reader did the reading. A Medium turn that leaves a hard term unexplained has failed. '
-        : 'Use your authentic vocabulary at full difficulty — never simplify, never gloss, never define out loud. ')
+        ? 'Keep important school-terms but explain each inside its sentence in plain words — no dictionary breaks; a Medium turn leaving a hard term unexplained has failed. '
+        : 'Full authentic vocabulary — never simplify, gloss, or define out loud. ')
     + (low
-      ? 'When SOURCE or INDEXED passages ride in this prompt, paraphrase what they say in plain words — never lift rare or distinctive words verbatim, not even in single quotes (bare double quotes corrupt your reply). When no passages are shown, carry plain colour from your persona instead. '
+      ? 'SOURCE passages below are paraphrased, never lifted — not even single rare words in quotes (bare double quotes corrupt your reply). No passages shown: carry plain colour from your persona. '
       : level === 'high'
-        ? 'When SOURCE or INDEXED passages ride in this prompt, quote generously: weave at least four distinctive single words or short phrases (no more than six words each, in single quotes — bare double quotes corrupt your reply) from them into your own sentences, and echo their filler words, diction tics, and rhythms. When no passages are shown, carry that colour from your persona and voice anchor instead. '
-        : 'When SOURCE or INDEXED passages ride in this prompt, borrow visibly: weave at least two distinctive single words or short phrases (no more than six words each, in single quotes — bare double quotes corrupt your reply) from them into your own sentences, so their less famous vocabulary colours your diction; when no passages are shown, carry that colour from your persona instead. ')
-    + 'Everything — the question above, PREV, the survey, the margins note, your own prior turns — stays under the five-word rule: never lift a multi-word clause from any of them; paraphrase and riff on the question through your framework instead of repeating it verbatim; if another seat said it, restate it in your own terms or leave it out.'
-    + (low ? ' At Low, restated means translated into plain words — never reuse a specialist term from the survey or the margins note.' : '')
-    + ' Agreement and disagreement alike must be phrased afresh: never reuse the predecessor wording to agree with it, never reuse your own earlier wording to repeat yourself.'
-    + (low
-      ? ' Do not repeat yourself: each sentence should move the thought forward in plain words.'
-      : ' Every sentence must introduce a new idea or angle — a sentence that only restates its predecessor fails the turn.')
-    + ' Grammar is standard written English for every seat without exception: complete sentences, capitalised starts, and every value must end with terminal punctuation (. ? !). Never trail off mid-thought. The dialectical movement (cutting in, negation of PREV, incorporation of what holds, reformulation) must be audible in the argument itself, never announced. Never open with a generic verdict on PREV (errs, fails to see, is mistaken, overlooks) — begin from the concrete object and criticise with your own toolkit\'s verbs.',
+        ? 'SOURCE passages below: quote generously (at least four distinctive words/phrases, ≤6 words each, single quotes only) and echo their tics and rhythms; none shown: carry colour from persona and voice anchor. '
+        : 'SOURCE passages below: borrow visibly (at least two distinctive words/phrases, ≤6 words each, single quotes only); none shown: carry colour from your persona. ')
+    + 'FIVE-WORD RULE on everything — question, PREV, survey, margins, priors: never lift a multi-word clause; paraphrase always, agreements and self-repeats phrased afresh; every sentence moves thought forward. Standard grammar: complete sentences, terminal punctuation. The dialectical movement stays audible in the argument, never announced. Never open with a generic verdict (errs, fails to see, overlooks) — begin from the concrete object with your own verbs.',
   ].join(' ');
 }
 
@@ -162,9 +166,12 @@ interface UserMessageArgs {
   spentPhrases?: string[];
   /** Sitting intensity: at Low the survey must be translated, never quoted. */
   intensity?: StyleIntensity;
+  /** Which margins note heads the survey: the late one (pass-3 survey) or the
+   * early one (pass-2 survey, note only). Changes the header, not the rules. */
+  surveyKind?: 'late' | 'early';
 }
 
-export function buildUserMessage({ question, prevText, ownPriorLines, turnInstruction, othersPriorLines = [], stockBlock = '', spentPhrases = [], intensity }: UserMessageArgs): string {
+export function buildUserMessage({ question, prevText, ownPriorLines, turnInstruction, othersPriorLines = [], stockBlock = '', spentPhrases = [], intensity, surveyKind = 'late' }: UserMessageArgs): string {
   const parts = [
     `QUESTION (verbatim): ${question}`,
     '',
@@ -193,8 +200,11 @@ export function buildUserMessage({ question, prevText, ownPriorLines, turnInstru
   if (othersPriorLines.length > 0) {
     parts.push(
       '',
-      'STRIKING IDEAS FROM OTHER SEATS (pass 3 only — the NOTES FROM THE MARGINS intervene first, then seats; you may invoke any of these by name alongside PREV. Transform what you invoke into your framework\'s own terms; the five-word rule holds here too — never quote survey lines verbatim)'
-      + (intensity === 'low' ? ' At Low, transform means translate into plain everyday words — never reuse a specialist, archaic, or obscure term from the survey or the margins note; describe it instead.:' : ':'),
+      surveyKind === 'early'
+        ? 'NOTES FROM THE MARGINS (after pass 1 — weigh which marginalised perspectives it names and let them into your critique; name the note when you take one up. Transform what you invoke into your framework\'s own terms; the five-word rule holds — never quote survey lines verbatim)'
+          + (intensity === 'low' ? ' At Low, transform means translate into plain everyday words — never reuse a specialist, archaic, or obscure term from the margins note; describe it instead.:' : ':')
+        : 'STRIKING IDEAS FROM OTHER SEATS (pass 3 only — the NOTES FROM THE MARGINS intervene first, then seats; you may invoke any of these by name alongside PREV. Transform what you invoke into your framework\'s own terms; the five-word rule holds here too — never quote survey lines verbatim)'
+          + (intensity === 'low' ? ' At Low, transform means translate into plain everyday words — never reuse a specialist, archaic, or obscure term from the survey or the margins note; describe it instead.:' : ':'),
       ...othersPriorLines.map(({ name, line }) => `- ${name}: ${line}`),
     );
   }
@@ -251,3 +261,28 @@ export function buildCodaPrompt(
 /** Repair suffix for the margin note: restates the single-quotes-only rule. */
 export const CODA_REPAIR_SUFFIX =
   ' Your previous reply was not valid JSON, almost always because of bare double quotes inside values. Reply again with JSON only: the complete four-key object, using only single or smart quotes inside values.';
+
+/**
+ * Early margin note: runs once between pass 1 and pass 2, outside the
+ * rotation. Reads ONLY the question plus pass 1's one-line determinations.
+ * Same voice and JSON contract as the late note, different content: where the
+ * late note orders the final round toward action, this one reads the opening
+ * rotation for contradictions, translates the advanced bits, banks what is
+ * already actionable, and tells pass 2 whose perspectives are still missing.
+ */
+export function buildCodaEarlyPrompt(
+  question: string,
+  lines: { name: string; line: string }[],
+): string {
+  const present = [...new Set(lines.map(({ name }) => name))];
+  return [
+    `QUESTION (verbatim): ${question}`,
+    '',
+    `PRESENT IN THIS SITTING: ${present.join(', ')}. Address only these thinkers — never insult or name anyone else.`,
+    '',
+    'BELOW IS PASS 1 ONLY, ONE LINE PER THINKER. This is everything you saw — translate it, do not invent beyond it. Never quote seat wording or specialist terms verbatim: render every hard idea in your own plain working-class English, describing what it does rather than naming it. Paraphrase the question above in your own voice too — never repeat it verbatim.',
+    ...lines.map(({ name, line }) => `- ${name}: ${line}`),
+    '',
+    'Write the notes from the margins in three moves, HARD ceiling 200 words total: (negation) open with a paraphrase, in your own words, of Marx saying the philosophers have only interpreted the world, in various ways, and the point is to change it — never quote it the same way twice — then say something rude about one point in these lines, then name the ONE contradiction surfacing between these opening turns that pass 2 must press; (reformulation) first translate the single most advanced idea above into one plain question a visitor overhearing this table would actually ask, then bank the concrete actionable ideas already on the table as numbered first steps, then name which marginalised perspectives pass 2 must bring into the room. Name no real person, group, or place unless it appeared in the sitting lines above. Vague verbs fail the note: never have conversations, raise awareness, prioritise or push for anything without saying who does what first. Inside values, use only single or smart quotes — never bare double quotes, which corrupt the envelope. Respond with JSON only, matching this shape exactly (all four keys always present): { negation, reformulation, new_contribution, works_referenced: string[] }. Put the contradiction in negation, the visitor question plus actionable bank plus missing perspectives in reformulation, and the single sharpest demand as the one-line new_contribution. Set works_referenced to [].',
+  ].join('\n');
+}

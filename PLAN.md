@@ -14,16 +14,21 @@ model) / `groq`, `deepinfra`, `together` (visitor BYOK keys). No Gemini
 anywhere (retired for new keys); no OpenAI models, ever.
 
 - **Shared** = the cabinet's own Groq key, held ONLY in `netlify/functions/cabinet.js`
-  via the `GROQ_API_KEY` env var set in the Netlify dashboard. The browser calls
-  same-origin `/.netlify/functions/cabinet`; the key never enters the repo or the
-  bundle. Never `VITE_*` it, never commit it (`.env` + `.netlify` gitignored,
-  `.env.example` is the template). Per-IP daily cap (default 60 ≈ 2 sessions) +
-  global daily cap (default 900) enforced in-function; quota errors reuse the
-  `quota` code so the halt/resume UI behaves identically. Groq free tier has no
-  billing, so abuse costs shared quota, not money. If the key leaks: rotate in
-  console.groq.com + Netlify env, no code change. Local dev serves functions via
-  `netlify dev` (plain `npm run dev` has no functions → shared shows a friendly
-  unreachable note, BYOK still works).
+via the `GROQ_API_KEY` env var set in the Netlify dashboard. The browser calls
+same-origin `/.netlify/functions/cabinet`; the key never enters the repo or the
+bundle. Never `VITE_*` it, never commit it (`.env` + `.netlify` gitignored,
+`.env.example` is the template). Per-IP daily cap (default 60 ≈ 2 sessions) +
+global daily cap (default 900) enforced in-function; quota errors reuse the
+`quota` code so the halt/resume UI behaves identically. Groq free tier has no
+billing, so abuse costs shared quota, not money. If the key leaks: rotate in
+console.groq.com + Netlify env, no code change. Local dev serves functions via
+`netlify dev` (plain `npm run dev` has no functions → shared shows a friendly
+unreachable note, BYOK still works). Groq walls single requests at ~7k input
+tokens (observed 413 at 7271), so shared turns take a lean ration (2 grounding
+passages × 650 chars, trimmed PREV, note + 5 survey lines) and shared runs at
+Low only — Medium/High personas alone exceed the wall; the Begin card says so
+with a one-click path to Low. Turn instructions are kept short globally (small
+models follow short contracts better).
 - **Visitor BYOK** (OpenRouter / Groq / DeepInfra / Together) = the visitor's own
   key, `localStorage` only, sent straight to that provider. Privacy: OpenRouter
   free models may log prompts for training — the Settings panel says so per
@@ -160,8 +165,10 @@ brace-slice, then bare-value requoting for models that emit unquoted strings,
 then halt; full raw text goes to console on failure, 140-char snippet in the
 panel, `REPAIR_SUFFIX`,
 `retryAfterMs`); its Gemini provider client is retired with the provider.
-`src/lib/openrouter.ts`: OpenAI-compatible `chat/completions` (no `response_format` —
-most free models can't do it; prompt-instructed JSON + salvage instead), cycling an
+`src/lib/openrouter.ts`: OpenAI-compatible `chat/completions` (no `response_format` on
+free models — most can't do it; prompt-instructed JSON + salvage instead; the pinned
+PAID model tries `response_format: json_object` first with plain fallback on 400),
+cycling an
 ordered free-model list with `openrouter/free` as last-resort fallback; unusable
 models are skipped mid-run, last-good is remembered. Quota halt shows a recovery
 panel (resume / switch provider / usage link).
@@ -175,9 +182,11 @@ functions time out at 10s — slow Groq turns will die on deploy; client resume
 covers it, but watch this if shared sessions stall live.
 `src/lib/groq.ts`: visitor Groq direct, free tier (OpenAI-compatible, no response_format —
 prompt-instructed JSON plus salvage, same lesson as OpenRouter).
-`src/lib/deepinfra.ts` / `src/lib/together.ts`: same OpenAI-compatible shape,
-pinned models (`DEEPINFRA_MODEL`, `TOGETHER_MODEL` — user-supplied IDs, verify on
-404), single-model retry + repair. Full history in `docs/models-tried.md`.
+`src/lib/deepinfra.ts` / `src/lib/together.ts`: same OpenAI-compatible shape.
+DeepInfra runs a fixed failover pair (DeepSeek V4 Flash 0731 first, Llama 3.3 70B
+backup on non-auth/quota failures; provenance records who spoke). Together pins
+`TOGETHER_MODEL` (user-supplied ID, verify on 404). Single-model retry + repair.
+Full history in `docs/models-tried.md`.
 
 Token discipline (voices never trimmed): only the active speaker's persona is sent
 per turn. Stock phrases live in the per-turn message (relocated from the persona
@@ -253,7 +262,11 @@ with it instead — every seat speaks once per pass and gets critiqued.
 Stored as `Intervention.sections`; `response_text` kept as a joined string.
 
 **2f Orchestration** — async loop over passes × seats replaces `setInterval`;
-pause flag checked between turns; "X is thinking…" state. Between pass 2 and
+pause flag checked between turns; "X is thinking…" state. Two margin notes
+bracket the middle: after pass 1, `runCoda(…, 'early')` reads pass 1 only
+(`buildCodaEarlyPrompt` — surfacing contradiction, visitor-question
+translation, banked actionables, missing perspectives for pass 2, which carries
+it softly in its survey); between pass 2 and
 pass 3, `runCoda` fires once: reads ONLY the question + the first two passes'
 one-line determinations, writes the margin note in a plain-speaking
 working-class Global South voice, Gen Z Redditor rude, well-read in
@@ -359,7 +372,11 @@ organisation queries now hit Tektology first, verified live.
 RAG v1 (lexical, Sep 2026 test PASSES on Bookchin): `data/sources.json`
 manifest with explicit rights gate (importer refuses unapproved sources
 before fetching); `scripts/rag-ingest.mjs` (TAL `.html` full-text, generic
-HTML extraction with TOC/boilerplate/entity handling, heading-aware ~350w
+HTML extraction with TOC/boilerplate/entity handling, non-author front matter
+filtered before chunking — translator/editor intros, forewords, title-page
+boilerplate via heading paths + OCR running headers, author's own prefaces
+kept; per-source `exclude_headings` overrides; chunker v3, eval re-validated
+12/12 Sep 2026), heading-aware ~350w
 chunks, idempotent stable IDs) → local `data/rag.sqlite` (gitignored truth)
 + shipped per-author shards under `public/rag/` (+ `manifest.json` with
 schema/chunker versions); shared scorer `src/lib/rag-search.ts`
