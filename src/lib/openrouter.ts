@@ -6,15 +6,20 @@ import { LlmError, REPAIR_SUFFIX, parseTurnOutput, retryAfterMs, type TurnOutput
  * cycle through free models: if one is rate-limited, down, retired, or can't
  * produce the required JSON, the next one takes over mid-session.
  *
- * Why a fixed ordered cycle instead of `openrouter/free` up front: the router
- * picks a random model per call, which would shatter voice continuity across
- * the 30 turns. Family pins (Qwen, then DeepSeek) lead so Low/Med/High
- * behaviour stays in one family for as long as it behaves; the router serves
- * mid-list as the auto-refresh safety net, and the named bench follows in
- * prompt-adherence order. NOTE: the router can return any free model incl.
- * OpenAI `gpt-oss` (standing rule: no OpenAI models, ever) — family pins +
- * named bench exist partly to avoid ever reaching it; a future pass could
- * detect and skip router answers that identify as OpenAI.
+ * Why a fixed ordered cycle with the router first: the router picks a random
+ * model per call, which can shift voice across the 30 turns — but the named
+ * bench alone goes stale in days (Sep 2026: zero Qwen/DeepSeek `:free` on the
+ * live API, both families gone). Router-first means relisted family models
+ * rejoin with no code change; last-good memory then holds one working model
+ * for as long as it behaves. NOTE: the router can return any free model incl.
+ * OpenAI `gpt-oss` (standing rule: no OpenAI models, ever); a future pass
+ * could detect and skip router answers that identify as OpenAI.
+ *
+ * Removed Sep 2026 per owner: `qwen/qwen3-coder:free` (coder-tuned, wrong
+ * shape for chatbot turns), `deepseek/deepseek-v4-flash:free` (404 since Jun
+ * 2026 — dead IDs stay out, no first-try placeholders),
+ * `qwen/qwen3-next-80b-a3b-instruct:free` (also gone from the live API).
+ * Re-add a family pin only when the `/models` API lists it as live.
  *
  * Free-model IDs churn — check https://openrouter.ai/models?max_price=0 when
  * the whole cycle fails. Free-tier note: limits apply PER MODEL
@@ -23,17 +28,12 @@ import { LlmError, REPAIR_SUFFIX, parseTurnOutput, retryAfterMs, type TurnOutput
  * says so.
  */
 
-export const FAMILY_FIRST_FREE = [
-  'qwen/qwen3-next-80b-a3b-instruct:free',
-  'qwen/qwen3-coder:free',
-  // Retired Jun 2026 (404) — kept first-try so it auto-rejoins if relisted; 404 skips fast.
-  'deepseek/deepseek-v4-flash:free',
-] as const;
-
+// All IDs verified live via the /models API Sep 15 2026 (20 free total).
+// Deliberately NOT in cycle: coder-tuned qwen3-coder, dead deepseek:free,
+// content-safety filter model, and 4 untested new arrivals (dots-3,
+// ling-flash-vl, nano-omni-reasoning, inkling ×2, glm-5.2 relisted) — see
+// docs/models-tried.md pending list.
 export const FREE_MODEL_CYCLE = [
-  ...FAMILY_FIRST_FREE,
-  // Auto-rotating router sits AFTER the family pins (voice continuity first)
-  // and BEFORE the generic bench, per owner decision Sep 2026.
   'openrouter/free',
   'google/gemma-4-31b-it:free',
   'google/gemma-4-26b-a4b-it:free',
@@ -53,10 +53,8 @@ export const FREE_MODEL_CYCLE = [
 const LASTGOOD_KEY = 'dialectical-cabinet:openrouter-lastgood:v1';
 
 /**
- * Last-resort fallback. The router picks a random free model per call, which
- * would shatter voice continuity if used up front — so it only ever runs
- * after every named model has failed. A stranger's voice for the remaining
- * turns beats a halted cabinet, and it never needs a list refresh.
+ * Auto-rotating router: first in cycle (no family pins live), never persisted
+ * as last-good (starting there would randomise every session).
  */
 export const FREE_ROUTER_FALLBACK = 'openrouter/free';
 

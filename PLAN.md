@@ -168,10 +168,10 @@ panel, `REPAIR_SUFFIX`,
 `src/lib/openrouter.ts`: OpenAI-compatible `chat/completions` (no `response_format` on
 free models — most can't do it; prompt-instructed JSON + salvage instead; the pinned
 PAID model tries `response_format: json_object` first with plain fallback on 400),
-cycling a family-first free list (`FAMILY_FIRST_FREE`: best free Qwen
-`qwen3-next-80b-a3b-instruct` + `qwen3-coder`, best free DeepSeek
-`v4-flash:free` kept first-try though 404 since Jun 2026) then the
-`openrouter/free` auto-router mid-list then the Gemma/Nemotron/Nex/Laguna/
+cycling a router-first free list (Sep 15 2026: zero Qwen/DeepSeek `:free` on the
+live `/models` API — coder-tuned `qwen3-coder`, dead `deepseek-v4-flash:free`
+(404 since Jun), and gone `qwen3-next:free` all removed per owner; dead IDs
+stay out, never as placeholders) then the 13-model Gemma/Nemotron/Nex/Laguna/
 Ling/North/Liquid bench in prompt-adherence order; unusable
 models are skipped mid-run, last-good is remembered (router never persisted).
 Router risk: it can return OpenAI `gpt-oss` (standing rule bans OpenAI) — pins
@@ -444,8 +444,10 @@ Low/Medium/High prompt behaviour stays in one failure shape. Research Sep 2026
   (DeepInfra); Qwen3.6-27B ~$0.32 in / $3.20 out, Qwen3.6-35B-A3B ~$0.10–0.15
   in / ~$0.95–1.00 out. Output price is the lever — Qwen dense-27B output
   costs ~10–17× DeepSeek Flash. Cheap crown stays DeepSeek.
-- Free: Qwen `:free` exists (`qwen3-next-80b-a3b-instruct`, `qwen3-coder`);
-  DeepSeek `:free` retired Jun 2026 (404, kept first-try in case of relist).
+- Free: no Qwen/DeepSeek `:free` on the live API Sep 15 2026 (20 free total,
+  both families gone) — there is NO free DeepSeek alternative to add; family
+  A/B must run on paid/cheap pins (DeepSeek paid `v4.1-flash` verified LIVE
+  same day; Qwen paid IDs live but pricey on output).
   Groq free stays the Qwen path (30 RPM / 1K RPD / 8K TPM, 7k input wall,
   Low-only lean ration). Together Qwen3-30B-A3B unverified + priciest
   (~$0.03/5-seat) — drop candidate once the A/B settles.
