@@ -168,10 +168,13 @@ panel, `REPAIR_SUFFIX`,
 `src/lib/openrouter.ts`: OpenAI-compatible `chat/completions` (no `response_format` on
 free models — most can't do it; prompt-instructed JSON + salvage instead; the pinned
 PAID model tries `response_format: json_object` first with plain fallback on 400),
-cycling a router-first free list (Sep 15 2026: zero Qwen/DeepSeek `:free` on the
-live `/models` API — coder-tuned `qwen3-coder`, dead `deepseek-v4-flash:free`
-(404 since Jun), and gone `qwen3-next:free` all removed per owner; dead IDs
-stay out, never as placeholders) then the 13-model Gemma/Nemotron/Nex/Laguna/
+cycling a router-first free list (Sep 15 2026: full live coverage — 19 named
+models = all 20 free minus the content-safety filter, ordered by context desc
+past the router since each model carries its own quota; coder-tuned
+`qwen3-coder`, dead `deepseek-v4-flash:free` (404 since Jun), and gone
+`qwen3-next:free` all removed per owner; dead IDs stay out, never as
+placeholders; owner accepts gpt-oss arriving via the router, never pinned;
+turn-to-turn voice shift accepted as entertaining) then the 13-model Gemma/Nemotron/Nex/Laguna/
 Ling/North/Liquid bench in prompt-adherence order; unusable
 models are skipped mid-run, last-good is remembered (router never persisted).
 Router risk: it can return OpenAI `gpt-oss` (standing rule bans OpenAI) — pins
@@ -444,10 +447,15 @@ Low/Medium/High prompt behaviour stays in one failure shape. Research Sep 2026
   (DeepInfra); Qwen3.6-27B ~$0.32 in / $3.20 out, Qwen3.6-35B-A3B ~$0.10–0.15
   in / ~$0.95–1.00 out. Output price is the lever — Qwen dense-27B output
   costs ~10–17× DeepSeek Flash. Cheap crown stays DeepSeek.
-- Free: no Qwen/DeepSeek `:free` on the live API Sep 15 2026 (20 free total,
-  both families gone) — there is NO free DeepSeek alternative to add; family
-  A/B must run on paid/cheap pins (DeepSeek paid `v4.1-flash` verified LIVE
-  same day; Qwen paid IDs live but pricey on output).
+- Free: no Qwen/DeepSeek `:free` on OpenRouter's live API Sep 15 2026 (20 free
+  total, both families gone) — that platform has NO free DeepSeek alternative,
+  not even older versions. Other platforms do: Groq's free tier hosts
+  `deepseek-r1-distill-qwen-32b` / `deepseek-r1-distill-llama-70b` (Groq docs
+  live; fit caveat — Groq advises no system prompt on distills, and this
+  cabinet leans on system prompts, so verify live before adding as a Groq
+  `groqModel` option). Older paid DeepSeek (`v3.2`, `chat-v3.1`) exists on
+  OpenRouter for a cheap-pin A/B. Paid pin `deepseek-v4.1-flash` verified LIVE
+  Sep 15 2026.
   Groq free stays the Qwen path (30 RPM / 1K RPD / 8K TPM, 7k input wall,
   Low-only lean ration). Together Qwen3-30B-A3B unverified + priciest
   (~$0.03/5-seat) — drop candidate once the A/B settles.
@@ -461,9 +469,9 @@ gloss hygiene, example-first, loans, heat). Log both runs in
 No model IDs change until that eval lands.
 
 ## Phase 8 — Content-agnostic template repo (planned, not yet scaffolded)
-Not `cabinet-template`: name should carry the advantages. Shortlist —
-`vibe-commons-template` (recommended: vibe-coding + shared-resource fairness),
-`honest-ai-starter`, `commons-web-starter`. Must include: accessibility layer
+Not `cabinet-template`: name should carry the advantages. Owner pick —
+`webapp-commons-template` (says what it is: a web-app shell holding the
+commons pattern — no signup, shared quota made fair, accessible, static-first). Must include: accessibility layer
 (prefs, themes as tested pairs, font tri-state, TTS recipe, focus/aria rules),
 theme system, Low/Med/High difficulty pattern (block-last + trios + failure
 lines), BYOK settings (shared-proxy + per-provider keys, quota-honest halt/

@@ -7,13 +7,11 @@ import { LlmError, REPAIR_SUFFIX, parseTurnOutput, retryAfterMs, type TurnOutput
  * produce the required JSON, the next one takes over mid-session.
  *
  * Why a fixed ordered cycle with the router first: the router picks a random
- * model per call, which can shift voice across the 30 turns — but the named
- * bench alone goes stale in days (Sep 2026: zero Qwen/DeepSeek `:free` on the
- * live API, both families gone). Router-first means relisted family models
- * rejoin with no code change; last-good memory then holds one working model
- * for as long as it behaves. NOTE: the router can return any free model incl.
- * OpenAI `gpt-oss` (standing rule: no OpenAI models, ever); a future pass
- * could detect and skip router answers that identify as OpenAI.
+ * model per call, which shifts voice across the 30 turns — owner Sep 2026 finds
+ * that entertaining, so router-first stays. Last-good memory still holds a
+ * named model once one succeeds; router hits never persist, so variety lasts
+ * until the bench catches. NOTE: gpt-oss arriving via the router is accepted
+ * (owner call) — it is never pinned separately.
  *
  * Removed Sep 2026 per owner: `qwen/qwen3-coder:free` (coder-tuned, wrong
  * shape for chatbot turns), `deepseek/deepseek-v4-flash:free` (404 since Jun
@@ -29,25 +27,32 @@ import { LlmError, REPAIR_SUFFIX, parseTurnOutput, retryAfterMs, type TurnOutput
  */
 
 // All IDs verified live via the /models API Sep 15 2026 (20 free total).
-// Deliberately NOT in cycle: coder-tuned qwen3-coder, dead deepseek:free,
-// content-safety filter model, and 4 untested new arrivals (dots-3,
-// ling-flash-vl, nano-omni-reasoning, inkling ×2, glm-5.2 relisted) — see
-// docs/models-tried.md pending list.
+// Ordered by context window (desc) past the router: each free model carries
+// its own per-model quota, so more models = more tokens/session. Owner Sep
+// 2026: gpt-oss arriving via the router is acceptable (never pinned
+// separately). Deliberately excluded: coder-tuned qwen3-coder, dead
+// deepseek:free + gone qwen:free, and the content-safety filter model.
 export const FREE_MODEL_CYCLE = [
   'openrouter/free',
+  'thinkingmachines/inkling:free',
+  'thinkingmachines/inkling-small:free',
+  'nvidia/nemotron-3-ultra-550b-a55b:free',
+  'nvidia/nemotron-3.5-lightning:free',
+  'dots-studio/dots-3-note-preview:free',
   'google/gemma-4-31b-it:free',
   'google/gemma-4-26b-a4b-it:free',
-  'nvidia/nemotron-3-super-120b-a12b:free',
-  'nvidia/nemotron-3.5-lightning:free',
-  'nvidia/nemotron-3-ultra-550b-a55b:free',
-  'nex-agi/nex-n2.5-pro:free',
-  'nex-agi/nex-n2.5-mini:free',
-  'poolside/laguna-s-2.1:free',
-  'poolside/laguna-xs-2.1:free',
   'inclusionai/ling-3.0-flash-fin:free',
   'inclusionai/ling-3.0-flash-sante:free',
+  'inclusionai/ling-3.0-flash-vl:free',
+  'nex-agi/nex-n2.5-pro:free',
+  'nex-agi/nex-n2.5-mini:free',
+  'nvidia/nemotron-3-super-120b-a12b:free',
+  'poolside/laguna-s-2.1:free',
+  'poolside/laguna-xs-2.1:free',
+  'nvidia/nemotron-3-nano-omni-30b-a3b-reasoning:free',
   'cohere/north-mini-code:free',
   'liquid/lfm-2.5-2.6b:free',
+  'z-ai/glm-5.2:free',
 ] as const;
 
 const LASTGOOD_KEY = 'dialectical-cabinet:openrouter-lastgood:v1';
