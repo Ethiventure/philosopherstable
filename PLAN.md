@@ -168,9 +168,15 @@ panel, `REPAIR_SUFFIX`,
 `src/lib/openrouter.ts`: OpenAI-compatible `chat/completions` (no `response_format` on
 free models — most can't do it; prompt-instructed JSON + salvage instead; the pinned
 PAID model tries `response_format: json_object` first with plain fallback on 400),
-cycling an
-ordered free-model list with `openrouter/free` as last-resort fallback; unusable
-models are skipped mid-run, last-good is remembered. Quota halt shows a recovery
+cycling a family-first free list (`FAMILY_FIRST_FREE`: best free Qwen
+`qwen3-next-80b-a3b-instruct` + `qwen3-coder`, best free DeepSeek
+`v4-flash:free` kept first-try though 404 since Jun 2026) then the
+`openrouter/free` auto-router mid-list then the Gemma/Nemotron/Nex/Laguna/
+Ling/North/Liquid bench in prompt-adherence order; unusable
+models are skipped mid-run, last-good is remembered (router never persisted).
+Router risk: it can return OpenAI `gpt-oss` (standing rule bans OpenAI) — pins
+exist partly to avoid reaching it; future pass could detect-and-skip router
+answers that identify as OpenAI. Quota halt shows a recovery
 panel (resume / switch provider / usage link).
 `src/lib/shared.ts` + `netlify/functions/cabinet.js`: shared Groq turns through the
 server-side proxy (see Decisions). Client maps function errors to the same codes.
@@ -398,7 +404,7 @@ Deleuze OCR batch (Thousand Plateaus 933, Bergsonism 149, Logique du sens FR
 TAL entry), Bogdanov Religious→Scientific Monism (23) + English Tektology OCR
 (481; replaced the Russian OCR, which English queries could never match) —
 all via archive.org `/stream/…_djvu.txt` (HTML+`<pre>`, indexable; `/download/`
-raw text extracts zero paragraphs), total 11,022 passages,
+raw text extracts zero paragraphs), total 11,342 passages (Sep 2026 eval),
 per-author shards
 under public/rag/ (lazy-fetched per thinker, cached; static, so Netlify needs
 nothing new). Wired behind the existing grounding toggle: desk + turns search
@@ -422,3 +428,56 @@ Per file: `biography` (display only, never prompt input), `key_works[]`
 (title/year/note), `why_this_seat` (hand-off line). Profile modal
 tabs: Thought / Voice / Works / In this cabinet (biography + analytical
 centre stay above the tabs). Seat hover shows the hand-off line via `title`.
+Kant→Marx and Kant→Bogdanov corrected to direct (solid pink; were dotted
+by error). Grid regen via `node scripts/influence-grid.mjs` after every debt
+change — the grid doc is generated, never hand-edited.
+
+## Phase 7 — Model-family A/B: Qwen-first or DeepSeek-first (open, Sep 2026)
+Goal: one family first across every pipe, the other always second, so
+Low/Medium/High prompt behaviour stays in one failure shape. Research Sep 2026
+(web, not live runs — verify before pinning):
+- Prompt/JSON adherence: DeepSeek V4 Flash leads — explicit structured-output
+  + function-call support, 1M ctx, MMLU-Pro ~86.4 vs Qwen3.6-27B ~86.2,
+  LiveCodeBench 91.6 vs 83.9; Qwen3.6-27B/35B list no structured-output flag.
+  For our JSON turn contract that favours DeepSeek-first on paid pipes.
+- Cost: DeepSeek V4 Flash 0731 ~$0.09–0.10 in / $0.18–0.30 out per 1M
+  (DeepInfra); Qwen3.6-27B ~$0.32 in / $3.20 out, Qwen3.6-35B-A3B ~$0.10–0.15
+  in / ~$0.95–1.00 out. Output price is the lever — Qwen dense-27B output
+  costs ~10–17× DeepSeek Flash. Cheap crown stays DeepSeek.
+- Free: Qwen `:free` exists (`qwen3-next-80b-a3b-instruct`, `qwen3-coder`);
+  DeepSeek `:free` retired Jun 2026 (404, kept first-try in case of relist).
+  Groq free stays the Qwen path (30 RPM / 1K RPD / 8K TPM, 7k input wall,
+  Low-only lean ration). Together Qwen3-30B-A3B unverified + priciest
+  (~$0.03/5-seat) — drop candidate once the A/B settles.
+- Reliability: both families rotate IDs fast; OpenRouter free IDs rot in days.
+  DeepInfra fixed pair currently mixes families (DeepSeek first, Llama backup)
+  — proposal is a second DeepSeek as backup so the pipe stays one family.
+Protocol: one fixed question, 5 seats, Low/Med/High on (a) DeepInfra DeepSeek
+vs (b) Groq Qwen; grade with the `language-levels.md` trio rubric (hard terms,
+gloss hygiene, example-first, loans, heat). Log both runs in
+`docs/models-tried.md`, then pin winner-first / runner-up-second on every pipe.
+No model IDs change until that eval lands.
+
+## Phase 8 — Content-agnostic template repo (planned, not yet scaffolded)
+Not `cabinet-template`: name should carry the advantages. Shortlist —
+`vibe-commons-template` (recommended: vibe-coding + shared-resource fairness),
+`honest-ai-starter`, `commons-web-starter`. Must include: accessibility layer
+(prefs, themes as tested pairs, font tri-state, TTS recipe, focus/aria rules),
+theme system, Low/Med/High difficulty pattern (block-last + trios + failure
+lines), BYOK settings (shared-proxy + per-provider keys, quota-honest halt/
+resume), service-desk chat pattern, lexical RAG pattern (manifest + rights gate
++ BM25 shards + eval + abstention traps), node-and-debt diagram
+(`docs/diagram-style.md` + layout + checker), graphify instructions
+(`graphify install/query/path/explain/update` per AGENTS.md) plus the
+content-agnostic code (layout, scorer, settings, preferences, diagram).
+Exclude content: philosopher files, dialectic prompts, corpus shards,
+influence debts. Ship as bare Vite shell + seven modules + one "how to tweak"
+doc per module, public on GitHub.
+
+## Missing-features backlog (considered, not yet scheduled)
+Rotation/recovery doc (keys, quota, rollback markers — standing rule says write
+before needed); LICENSE file for sharing; print/export-PDF stylesheet; session
+resume + shareable URL hash; transcript search; per-seat mute; live cost
+estimator per sitting; level A/B eval harness wiring (§Phase 7); provider-health
+indicator; keyboard shortcuts + shortcuts list; mobile 390×844 verification log;
+README demo clip. Pick by need, not all at once.
