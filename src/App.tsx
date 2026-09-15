@@ -35,12 +35,12 @@ import {
 } from '@/types';
 import { buildCodaEarlyPrompt, buildCodaPrompt, buildTurnInstruction, buildUserMessage, CODA_REPAIR_SUFFIX, CODA_SYSTEM, getTurnKind, LOW_CLOSING_REMINDER, STRUCTURED_OUTPUT_HINT } from '@/lib/dialectic/prompts';
 import { LlmError, type LlmErrorCode, type TurnOutput } from '@/lib/llm';
-import { loadSettings, saveSettings, type CabinetSettings, type GroqModel } from '@/lib/settings';
+import { loadSettings, saveSettings, DEEPINFRA_MODELS, type CabinetSettings, type GroqModel } from '@/lib/settings';
 import { applyDisplay, loadDisplay, saveDisplay } from '@/lib/preferences';
 import { generateTurnGroq, testGroqKey } from '@/lib/groq';
 import { generateTurnShared } from '@/lib/shared';
 import { generateTurnOpenRouter, testOpenRouterKey } from '@/lib/openrouter';
-import { generateTurnDeepInfra, testDeepInfraKey, DEEPINFRA_MODEL } from '@/lib/deepinfra';
+import { generateTurnDeepInfra, testDeepInfraKey } from '@/lib/deepinfra';
 import { generateTurnTogether, testTogetherKey, TOGETHER_MODEL } from '@/lib/together';
 import { entriesForNumbers, splitLabels } from '@/lib/footnotes';
 import { extractPassages, formatGroundedBlock, groundableSource } from '@/lib/extract';
@@ -240,7 +240,7 @@ function App() {
       case 'groq':
         return `Groq ${snap.groqModel} (visitor key)`;
       case 'deepinfra':
-        return `DeepInfra ${DEEPINFRA_MODEL} (visitor key)`;
+        return `DeepInfra ${snap.deepInfraModel} (visitor key)`;
       case 'together':
         return `Together ${TOGETHER_MODEL} (visitor key)`;
       default:
@@ -494,6 +494,7 @@ function App() {
       case 'deepinfra':
         return generateTurnDeepInfra({
           apiKey: snap.deepInfraApiKey,
+          model: snap.deepInfraModel,
           systemPrompt,
           userMessage,
           longForm,
@@ -1386,9 +1387,9 @@ function SettingsDrawer({ philosophers, activeSlugs, togglePhilosopher, settings
         setTestMessage(`Key works (via ${modelUsed}). Saved for this browser.`);
         onSettingsChange({ ...settings, openRouterApiKey: key });
       } else if (usingDeepInfra) {
-        await testDeepInfraKey(key);
+        await testDeepInfraKey(key, settings.deepInfraModel);
         setTestState('ok');
-        setTestMessage(`Key works on ${DEEPINFRA_MODEL}. Saved for this browser.`);
+        setTestMessage(`Key works on ${settings.deepInfraModel}. Saved for this browser.`);
         onSettingsChange({ ...settings, deepInfraApiKey: key });
       } else if (usingTogether) {
         await testTogetherKey(key);
@@ -1450,7 +1451,7 @@ function SettingsDrawer({ philosophers, activeSlugs, togglePhilosopher, settings
               <button role="radio" aria-checked={settings.provider === 'shared'} title="No key needed — shared Groq-backed key, a few sittings a day each." onClick={() => { setTestState('idle'); setTestMessage(''); onSettingsChange({ ...settings, provider: 'shared' }); }} className={`btn-secondary ${settings.provider === 'shared' ? '!border-[#8b5254] !text-[#8b5254]' : ''}`}>Cabinet shared</button>
               <button role="radio" aria-checked={usingOpenRouter} title="Your OpenRouter key — free model cycle, or a pinned paid model." onClick={() => { setTestState('idle'); setTestMessage(''); onSettingsChange({ ...settings, provider: 'openrouter' }); }} className={`btn-secondary ${usingOpenRouter ? '!border-[#8b5254] !text-[#8b5254]' : ''}`}>OpenRouter free cycle</button>
               <button role="radio" aria-checked={usingGroq} title="Your Groq key — free tier, no card." onClick={() => { setTestState('idle'); setTestMessage(''); onSettingsChange({ ...settings, provider: 'groq' }); }} className={`btn-secondary ${usingGroq ? '!border-[#8b5254] !text-[#8b5254]' : ''}`}>Groq free</button>
-              <button role="radio" aria-checked={usingDeepInfra} title="Your DeepInfra key — pinned Llama 70B Turbo, card on file." onClick={() => { setTestState('idle'); setTestMessage(''); onSettingsChange({ ...settings, provider: 'deepinfra' }); }} className={`btn-secondary ${usingDeepInfra ? '!border-[#8b5254] !text-[#8b5254]' : ''}`}>DeepInfra</button>
+              <button role="radio" aria-checked={usingDeepInfra} title="Your DeepInfra key — Llama 70B or DeepSeek V4 Flash, card on file." onClick={() => { setTestState('idle'); setTestMessage(''); onSettingsChange({ ...settings, provider: 'deepinfra' }); }} className={`btn-secondary ${usingDeepInfra ? '!border-[#8b5254] !text-[#8b5254]' : ''}`}>DeepInfra</button>
               <button role="radio" aria-checked={usingTogether} title="Your Together key — pinned Qwen 30B, card required." onClick={() => { setTestState('idle'); setTestMessage(''); onSettingsChange({ ...settings, provider: 'together' }); }} className={`btn-secondary ${usingTogether ? '!border-[#8b5254] !text-[#8b5254]' : ''}`}>Together</button>
             </div>
             {settings.provider === 'shared' ? (
@@ -1508,7 +1509,14 @@ function SettingsDrawer({ philosophers, activeSlugs, togglePhilosopher, settings
                   {keySaved && <span className="text-xs italic self-center text-[#4a6b3f]">Saved in this browser.</span>}
                 </div>
                 {testMessage && <p className={`text-sm italic ${testState === 'ok' ? 'text-[#4a6b3f]' : 'text-[#8b5254]'}`}>{testMessage}</p>}
-                <p className="text-xs text-[#465f75]/70">Pinned model <span className="font-heading">meta-llama/Llama-3.3-70B-Instruct-Turbo</span>. Needs a card on file — get a key at <a className="underline" href="https://deepinfra.com/dash/api_keys" target="_blank" rel="noreferrer">deepinfra.com</a>.</p>
+                <p className="text-xs text-[#465f75]/70">Needs a card on file — get a key at <a className="underline" href="https://deepinfra.com/dash/api_keys" target="_blank" rel="noreferrer">deepinfra.com</a>.</p>
+                <span className="font-heading text-sm uppercase tracking-[0.16em] text-[#4a392d] pt-2 block">Model</span>
+                <div className="flex flex-wrap gap-2" role="radiogroup" aria-label="DeepInfra model">
+                  {DEEPINFRA_MODELS.map((m) => (
+                    <button key={m.id} role="radio" aria-checked={settings.deepInfraModel === m.id} title={m.hint} onClick={() => onSettingsChange({ ...settings, deepInfraModel: m.id })} className={`btn-secondary ${settings.deepInfraModel === m.id ? '!border-[#8b5254] !text-[#8b5254]' : ''}`}>{m.label}</button>
+                  ))}
+                </div>
+                <p className="text-xs text-[#465f75]/70">Llama 3.3 70B is the proven full-cabinet finisher; DeepSeek V4 Flash is the ~6× cheaper backup, adherence untested.</p>
               </>
             ) : usingTogether ? (
               <>

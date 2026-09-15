@@ -10,7 +10,12 @@ first. Check here before (re)trying anything — corpses stay buried.
 | Sep 2026 | OpenRouter paid | `deepseek/deepseek-v4.1-flash` | Current paid default ($0.15/$0.60, 1M ctx). Reasoning burn observed (content null, finish_reason length) — mitigated with `reasoning.effort:low` + 4000/8000 output caps. |
 | Sep 2026 | OpenRouter free cycle | Gemma/Nemotron/Nex/Laguna/Ling/North/Liquid `:free` IDs + `openrouter/free` fallback | Works, variable voice/quality. IDs rot in days — recheck via `/models` API. |
 | Sep 2026 | Groq direct + shared proxy | `qwen/qwen3.8-27b`, `qwen/qwen3.6-27b` | Current free picks (30 RPM / 1K RPD / 8K TPM). Needs 2000+ output budget — tight caps truncate JSON mid-object. |
-| Sep 2026 | OpenRouter | `thinkingmachines/inkling-small:free` | Dead for API keys: 403 harness-only. Never re-add. |
+| Sep 2026 | DeepInfra | `deepseek-ai/DeepSeek-V4-Flash-0731` ($0.06/$0.18) | Backup pin added beside Llama (Settings → Key → DeepInfra model choice). Quality-first policy: debates cost <1¢, so adherence outranks price. Adherence untested — blind A/B vs v4.1-flash pending. |
+| Sep 2026 | DeepInfra | `deepseek-ai/DeepSeek-V4.1-Flash` ($0.20/$0.60) | Deliberately NOT pinned on DeepInfra — stays the OpenRouter paid default; one winner per pipe, less confusion. |
+| Sep 2026 | DeepInfra | Qwen3.8-27B ($0.40/$3.00 output) | Exists on DeepInfra but rejected on price — output rate kills the value case. Groq free stays the qwen path. |
+| Sep 2026 | Together | `Qwen/Qwen3-30B-A3B` ($0.30/$1.20 — priciest in the cabinet) | Still unverified AND most expensive per debate (~$0.03/5-seat). Drop candidate once the A/B settles. |
+| Sep 2026 | OpenRouter | `qwen/qwen3.8-27b` (paid, ~$0.15–0.35 in / ~$2–3 out) | Exists but rejected on output price vs DeepSeek. |
+| Sep 2026 | Shared/desk | Groq free-tier input wall (~7k/req, observed 413 at 7271) | Shared turns take the lean ration (2×650-char passages, trimmed PREV, note+5 survey) and run Low only; desk takes the same ration on shared/groq (history + full table lines untouched). |
 | Sep 2026 | OpenRouter | `z-ai/glm-5.2:free`, `minimax/minimax-m3:free` | Retired (404). Never re-add without re-verifying. |
 | Sep 2026 | OpenRouter | `openai/gpt-oss-120b` (paid) | Worked, then daily key cap hit. Removed: no OpenAI models, ever (standing rule). |
 | Sep 2026 | Gemini direct | `gemini-3.6-flash`, `gemini-3.5-flash-lite` | Worked with `thinkingLevel:low`. Provider removed Sep 2026: 2.5 retired (404 for new keys), consolidating on fewer providers. |

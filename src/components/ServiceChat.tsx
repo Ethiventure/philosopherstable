@@ -101,19 +101,25 @@ export default function ServiceChat({ thinkers, interventions, settings, open, o
         }));
       // Own works only, index first: the resolver keys off this thinker's
       // family name, so other seats' sources can never enter the prompt.
-      // Falls back to live page fetching; fails soft like turns.
+      // Falls back to live page fetching; fails soft like turns. Lean ration
+      // on shared/Groq (same 7k wall as turns); history and table lines ride
+      // whole regardless — the desk always sees the full debate.
       let groundingBlock = '';
       let grounding: RagGrounding | null = null;
       if (settings.grounding) {
+        const lean = settings.provider === 'shared' || settings.provider === 'groq';
         try {
-          grounding = await searchThinkerPassages(thinker.full_name, text, 5);
+          grounding = await searchThinkerPassages(thinker.full_name, text, lean ? 2 : 5, undefined, lean ? 650 : 0);
           if (grounding) {
             groundingBlock = grounding.block;
           } else {
             const g = groundableSource(thinker.name);
             if (g?.source.source_url) {
               const { passages } = await extractPassages(g.source.source_url, text, '');
-              groundingBlock = formatGroundedBlock(g.source.title, g.number, passages);
+              const rationed = lean
+                ? passages.slice(0, 2).map((p) => ({ text: p.text.length > 650 ? `${p.text.slice(0, 650)}…` : p.text }))
+                : passages;
+              groundingBlock = formatGroundedBlock(g.source.title, g.number, rationed);
             }
           }
         } catch {

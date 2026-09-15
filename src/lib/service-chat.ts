@@ -122,6 +122,7 @@ export function generateServiceText(
     case 'deepinfra':
       return generateTextDeepInfra({
         apiKey: snap.deepInfraApiKey,
+        model: snap.deepInfraModel,
         systemPrompt,
         userMessage,
       });
