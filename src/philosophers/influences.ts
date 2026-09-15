@@ -15,7 +15,11 @@
  * no direct influence, but Bookchin read and critiqued Bertalanffy general
  * systems theory, which was deeply shaped by Bogdanov's Tektology.
  * Deleuze→Bloch is direct (read and cited), Deleuze→Lenin is direct
- * (explicit references in the political works), Kant→Spinoza is direct-critical
+ * (explicit references in the political works), Weil→Spinoza is direct
+ * (Alain curriculum, returned to in the Notebooks), Weil→Hegel is
+ * direct-critical (Geist measured against force), Weil→Lenin is
+ * direct-critical (the party model answered with abolition),
+ * Kant→Spinoza is direct-critical
  * (Pantheismusstreit reaction), Hegel→Spinoza is direct-positive ("first be a
  * Spinozist"), Marx→Spinoza is direct-positive (hand-copied TTP, democratic
  * blueprint), Deleuze→Spinoza is direct-positive ("Prince of Philosophers",
@@ -50,7 +54,10 @@ export const CABINET_DEBTS: Record<string, CabinetDebt[]> = {
     { to: 'lenin', kind: 'direct', note: 'comrade, then rupture — expelled from the Bolsheviks in 1909' },
   ],
   weil: [
+    { to: 'spinoza', kind: 'direct', note: 'studied under Alain and returned to in the Notebooks — necessity consented to, not merely understood' },
+    { to: 'hegel', kind: 'direct', note: 'measured Hegel’s Geist against force — history has no self-developing spirit' },
     { to: 'marx', kind: 'direct', note: 'measured Marx against affliction — labour without grace is still force' },
+    { to: 'lenin', kind: 'direct', note: 'answered the party model with abolition — parties manufacture collective passion' },
     { to: 'kant', kind: 'indirect', note: 'through the philosophical curriculum and notebooks' },
   ],
   bloch: [
