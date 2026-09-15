@@ -163,21 +163,14 @@ export function relationshipLine(
   return null;
 }
 
-/** One attitude phrase per debt — how the debtor stands toward the creditor. */
-function attitude(debt: CabinetDebt): string {
-  if (debt.kind === 'indirect') return 'reached you through others';
-  if (debt.stance === 'positive') return 'you carry forward';
-  if (debt.stance === 'critical') return 'you broke with';
-  return 'you wrestle with';
-}
-
 /**
- * Table stances: how the speaker stands toward every OTHER sitting seat
- * (PREV excluded — the relationship line above covers them in full). One
- * compressed line, names plus attitude phrases, never the full notes: the
- * room's old honours and ruptures ride along at ~40 tokens so turns meet
- * non-adjacent seats with real history instead of blank politeness. Null
- * when no sitting seat (besides PREV) holds a link either way.
+ * Your people: how the speaker stands toward every OTHER sitting seat
+ * (PREV excluded — the relationship line above covers them in full). Names
+ * only, grouped by feeling — fans, critics, rated, done-with, tangled — and
+ * only seats actually sitting, never the whole cabinet. One line, ~40 tokens:
+ * the room's old honours and ruptures ride along so turns meet non-adjacent
+ * seats with real history instead of blank politeness. Null when no sitting
+ * seat (besides PREV) holds a link either way.
  */
 export function tableStancesLine(
   speakerSlug: string,
@@ -187,21 +180,27 @@ export function tableStancesLine(
 ): string | null {
   const others = sitting.filter((s) => s.slug !== speakerSlug && s.slug !== prevSlug);
   if (others.length === 0) return null;
-  const owed: string[] = [];
-  const owing: string[] = [];
+  const fans: string[] = [];
+  const critics: string[] = [];
+  const rated: string[] = [];
+  const doneWith: string[] = [];
+  const tangled: string[] = [];
   for (const other of others) {
     const debt = (CABINET_DEBTS[speakerSlug] ?? []).find((d) => d.to === other.slug);
     if (debt) {
-      owed.push(`${other.name} (${attitude(debt)})`);
+      (debt.stance === 'positive' ? rated : debt.stance === 'critical' ? doneWith : tangled).push(other.name);
       continue;
     }
     const held = (CABINET_DEBTS[other.slug] ?? []).find((d) => d.to === speakerSlug);
-    if (held) owing.push(`${other.name} (${held.stance === 'positive' ? 'carries you forward' : held.stance === 'critical' ? 'broke with you' : 'wrestles with you'})`);
+    if (held) (held.stance === 'positive' ? fans : held.stance === 'critical' ? critics : tangled).push(other.name);
   }
-  if (owed.length === 0 && owing.length === 0) return null;
   const bits: string[] = [];
-  if (owed.length > 0) bits.push(`you owe ${owed.join(', ')}`);
-  if (owing.length > 0) bits.push(`${owing.join(', ')} owe you`);
+  if (fans.length > 0) bits.push(`your fans here: ${fans.join(', ')}`);
+  if (critics.length > 0) bits.push(`your critics here: ${critics.join(', ')}`);
+  if (rated.length > 0) bits.push(`you rate: ${rated.join(', ')}`);
+  if (doneWith.length > 0) bits.push(`you're done with: ${doneWith.join(', ')}`);
+  if (tangled.length > 0) bits.push(`tangled with: ${tangled.join(', ')}`);
+  if (bits.length === 0) return null;
   const plain = low ? ' Render any hard terms here into plain everyday words.' : '';
-  return `TABLE DEBTS — among the sitting: ${bits.join('; ')}. Let old honours and ruptures colour how you meet them — in your own terms, never listed back, never announced.${plain}`;
+  return `YOUR PEOPLE — other thinkers you've read may be sitting with you: ${bits.join('; ')}. Feel all of it in your own terms — never list it back, never announce it.${plain}`;
 }
