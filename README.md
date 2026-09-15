@@ -1,6 +1,6 @@
 # The Dialectical Cabinet
 
-Eleven dead philosophers around a table — Spinoza, Kant, Hegel, Marx, Lenin, Bogdanov, Bloch, **Weil**, Bookchin, Deleuze, Fisher — made to answer *your* question across three clockwise passes. Each thinker grabs their predecessor by the collar, in their own voice, until the problem comes out changed. It is the liveliest seminar none of them ever agreed to attend — part fencing match, part tribunal of reason — and the cover charge is whatever the machines demand: nothing on the shared key but your patience, or about two cents a session if you bring your own.
+Eleven dead philosophers around a table — Spinoza, Kant, Hegel, Marx, Lenin, Bogdanov, Bloch, **Weil**, Bookchin, Deleuze, Fisher — made to answer *your* question across three passes of the table. Each thinker grabs their predecessor by the collar, in their own voice, until the problem comes out changed. It is the liveliest seminar none of them ever agreed to attend and the cover charge is whatever the machines demand: nothing on the shared key but your patience, or about a cent a session if you bring your own.
 
 ## Try it
 
@@ -20,7 +20,8 @@ Try it here: https://philosopherstable.netlify.app/
 - **Shared** (default): the cabinet's own key, no action needed. One quota split across every visitor (see below).
 - **OpenRouter**: your key. *Free cycle* hops across free models each turn so limits stretch; *Paid model* pins one ID (default `deepseek/deepseek-v4.1-flash`, ~$0.15/$0.60 per 1M — about two cents a session). Test-key button included; keys live in your browser only, never touch our servers (OpenRouter's free models may log prompts for training — the panel says so).
 - **Groq / DeepInfra / Together**: your key, pinned models (`qwen3.8-27b`, `Llama-3.3-70B-Instruct-Turbo`, `Qwen3-30B-A3B`). Groq's free tier needs no card; DeepInfra and Together want one on file.
-- Below the keys, everything sits in the **Cabinet** tab so one screen shows the whole sitting: **who sits** (toggle thinkers, hover any name for the two-line life), **how it speaks** (Low = plain words, temper unchanged; Medium = the standard seminar; High = full machinery, hostile where the author warrants it), **Long form** (~280 words a turn instead of ~100 — a 12-minute read becomes a 30-minute one), and **Turn economy** (Efficient trims the predecessor text re-sent each turn — the transcript stays whole; voices are never trimmed). Hover anything for the one-line version.
+- Below the keys, everything sits in the **Cabinet** tab so one screen shows the whole sitting: **who sits** (toggle thinkers, hover any name for the two-line life),
+- **how it speaks** (Low = plain words, temper unchanged; Medium = the standard seminar; High = full machinery, hostile where the author warrants it), **Long form** (~280 words a turn instead of ~100 — a 12-minute read becomes a 30-minute one), and **Turn economy** (Efficient trims the predecessor text re-sent each turn — the transcript stays whole; voices are never trimmed). Hover anything for the one-line version.
 
 **Cabinet** — who sits and how deep it goes:
 - Toggle any of the eleven in or out (minimum two — a debate needs an opponent). Five seats (≈15 turns) is the recommended sitting: the full arc at half the tokens.
@@ -30,7 +31,7 @@ Try it here: https://philosopherstable.netlify.app/
 - Parchment / dim / ink-dark themes (background and text always change as tested pairs), three typefaces including dyslexia-friendly, text size, line spacing, high contrast, reduced motion. The house style stays; adjustments layer on top.
 - **Read aloud**: speaking rate plus a real **voice picker with preview** — device default suits most, but some iPads pick a poor default, so choose once and it sticks. Free, browser-built-in, nothing leaves the page.
 
-## Quotas (the honest version)
+## Quotas 
 
 The shared key is one quota split across every visitor — a few sittings a day each, resetting at midnight UTC. (A full eleven-seat table takes ~33 turns; the default five-seat sitting is about half that.) If the shared well runs dry, the cabinet pauses (nothing is lost) and offers one-click recovery:
 
