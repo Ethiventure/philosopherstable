@@ -166,7 +166,7 @@ export default function GenealogyMap({
             const def = PHILOSOPHER_BY_SLUG[slug];
             const live = bySlug(slug);
             const { x, y } = nodePos(slug);
-            const label = `${def.full_name}, ${def.birth_year}–${def.death_year}, ${DEGREE[slug] ?? 0} connections`;
+            const label = `${def.full_name}, ${DEGREE[slug] ?? 0} connections`;
             const centred = SPINE_SEATS.has(slug);
             const left = LEFT_SEATS.has(slug);
             const size = labelSize(slug);
@@ -175,11 +175,6 @@ export default function GenealogyMap({
               : left
                 ? { textAnchor: 'end' as const, x: -NODE_R - 12, y: 2 }
                 : { textAnchor: 'start' as const, x: NODE_R + 12, y: 2 };
-            const dateProps = centred
-              ? { textAnchor: 'middle' as const, x: 0, y: NODE_R + 42 }
-              : left
-                ? { textAnchor: 'end' as const, x: -NODE_R - 12, y: 22 }
-                : { textAnchor: 'start' as const, x: NODE_R + 12, y: 22 };
             return (
               <g
                 key={slug}
@@ -223,18 +218,6 @@ export default function GenealogyMap({
                   aria-hidden="true"
                 >
                   {def.name}
-                </text>
-                <text
-                  textAnchor={dateProps.textAnchor}
-                  x={dateProps.x}
-                  y={dateProps.y}
-                  fontSize={12.5}
-                  fontStyle="italic"
-                  style={{ fontFamily: 'var(--font-body)', fill: 'var(--color-text)', paintOrder: 'stroke', stroke: 'var(--color-parchment-light)', strokeWidth: 3 }}
-                  opacity={0.7}
-                  aria-hidden="true"
-                >
-                  {def.birth_year}–{def.death_year}
                 </text>
               </g>
             );
