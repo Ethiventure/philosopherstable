@@ -6,7 +6,12 @@ test). Winner takes Medium + High.
 
 ## The question (reuse verbatim for every run)
 
-> Who does the organizing when nobody is in charge — and who gets to say no?
+> AGI can now do most paid work cheaper than people. Who works, who eats, and who decides?
+
+Post-2020 for all eleven seats (fair — none saw it), earthed in wages and
+dinners rather than essences, and it splits the table: property and ownership
+one way, recognition and meaning another, organization a third. Concrete
+answers (pay, kitchens, rotas) and abstract ones (what work is for) both count.
 
 ## Round 1 — Low, one run per pipe
 
