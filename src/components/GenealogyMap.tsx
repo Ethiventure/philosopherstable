@@ -13,27 +13,33 @@ const ALL_EDGES: Edge[] = Object.entries(CABINET_DEBTS).flatMap(([debtor, debts]
   debts.map((d) => ({ from: d.to, to: debtor, kind: d.kind, note: d.note })),
 );
 
-// Chronology runs left-to-right in shared columns: Spinoza above Kant at the
-// left edge, Deleuze above Fisher at the right edge, the middle seats waving
-// between upper and lower rows so long arcs stay readable.
-const W = 1160;
+// Time runs top-to-bottom down a central spine. Spinoza opens on the spine,
+// the middle seats alternate left–right in chronological pairs, and the line
+// converges back onto the spine for the Deleuze → Fisher finale — so both
+// ends mirror each other.
+const W = 640;
 const NODE_R = 22;
-
-const COL_X = (c: number) => 75 + c * 125;
+const SPINE_X = 320;
 
 const POS: Record<string, { x: number; y: number }> = {
-  spinoza: { x: COL_X(0), y: 80 },
-  kant: { x: COL_X(0), y: 330 },
-  hegel: { x: COL_X(1), y: 140 },
-  marx: { x: COL_X(2), y: 260 },
-  lenin: { x: COL_X(3), y: 140 },
-  bogdanov: { x: COL_X(4), y: 260 },
-  bloch: { x: COL_X(5), y: 140 },
-  weil: { x: COL_X(6), y: 260 },
-  bookchin: { x: COL_X(7), y: 140 },
-  deleuze: { x: COL_X(8), y: 80 },
-  fisher: { x: COL_X(8), y: 330 },
+  spinoza: { x: SPINE_X, y: 70 },
+  kant: { x: 190, y: 180 },
+  hegel: { x: 450, y: 180 },
+  marx: { x: 190, y: 290 },
+  lenin: { x: 450, y: 290 },
+  bogdanov: { x: 190, y: 400 },
+  bloch: { x: 450, y: 400 },
+  weil: { x: 190, y: 510 },
+  bookchin: { x: 450, y: 510 },
+  deleuze: { x: SPINE_X, y: 620 },
+  fisher: { x: SPINE_X, y: 730 },
 };
+
+const ROW_Y = [70, 180, 290, 400, 510, 620, 730];
+
+// Seats on the spine get centred labels below; the paired rows label outward.
+const SPINE_SEATS = new Set(['spinoza', 'deleuze', 'fisher']);
+const LEFT_SEATS = new Set(['kant', 'marx', 'bogdanov', 'weil']);
 
 // Label size: standard body (16px) for the least-connected seat, +2px per
 // extra connection. Degree counts every debt in or out.
@@ -57,12 +63,16 @@ function nodePos(slug: string): { x: number; y: number } {
 function edgePath(fromSlug: string, toSlug: string): string {
   const a = nodePos(fromSlug);
   const b = nodePos(toSlug);
-  const span = Math.abs(a.x - b.x) / 125;
-  // Arcs lift above the nodes; longer jumps arc higher to clear intermediates.
-  const lift = 34 + span * 16;
-  const mx = (a.x + b.x) / 2;
-  const my = Math.min(a.y, b.y) - lift;
-  return `M ${a.x} ${a.y} Q ${mx} ${my} ${b.x} ${b.y}`;
+  const dy = b.y - a.y;
+  if (Math.abs(dy) < 1) {
+    // Same-row pair (Kant → Hegel): a gentle bow below the row.
+    const mx = (a.x + b.x) / 2;
+    return `M ${a.x} ${a.y} Q ${mx} ${a.y + 44} ${b.x} ${b.y}`;
+  }
+  // Vertical S-curves that leave and enter heading down the years
+  // (or up them, for the one backward feud).
+  const bend = Math.max(30, Math.abs(dy) / 2);
+  return `M ${a.x} ${a.y} C ${a.x} ${a.y + bend}, ${b.x} ${b.y - bend}, ${b.x} ${b.y}`;
 }
 
 export default function GenealogyMap({
@@ -80,9 +90,9 @@ export default function GenealogyMap({
       <p className="pass-indicator text-[#8b5254]">Debts and heirs</p>
       <h2 className="text-3xl mt-1">A Genealogy of Influence</h2>
       <p className="italic text-[#465f75]/70 mt-1 max-w-2xl">
-        Oldest left, youngest right. Arrows run forward in time — from creditor to heir.
-        Solid crimson is direct (read closely, even to break); dashed gold is indirect.
-        Select a seat to open its profile.
+        Oldest at the top, youngest at the bottom. Arrows run down the years —
+        from creditor to heir. Solid crimson is direct (read closely, even to
+        break); dashed gold is indirect. Select a seat to open its profile.
       </p>
 
       <div className="flex flex-wrap gap-x-5 gap-y-1 mt-3 text-sm text-[#465f75]/80" aria-label="Legend">
@@ -104,10 +114,10 @@ export default function GenealogyMap({
 
       <div className="overflow-x-auto custom-scroll mt-4 -mx-1 px-1" tabIndex={0} aria-label="Genealogy diagram, scrollable horizontally on small screens">
         <svg
-          viewBox={`0 -120 ${W} 540`}
-          className="w-full min-w-[720px] h-auto"
+          viewBox={`0 0 ${W} 820`}
+          className="w-full max-w-[620px] min-w-[420px] h-auto mx-auto"
           role="img"
-          aria-label={`Genealogy of influence across ${order.length} thinkers, Spinoza to Fisher. ${ALL_EDGES.length} debts shown. Name size grows with connections: smallest names at body size, 2 points larger per extra connection.`}
+          aria-label={`Genealogy of influence across ${order.length} thinkers, Spinoza at the top to Fisher at the bottom. ${ALL_EDGES.length} debts shown. Name size grows with connections: smallest names at body size, 2 points larger per extra connection.`}
         >
           <defs>
             <marker id="gen-arrow-direct" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
@@ -117,6 +127,17 @@ export default function GenealogyMap({
               <path d="M 0 1 L 9 5 L 0 9 z" style={{ fill: 'var(--color-gold)' }} />
             </marker>
           </defs>
+
+          {/* Central spine with a bead for every row of seats. */}
+          <line
+            x1={SPINE_X} y1={40} x2={SPINE_X} y2={762}
+            style={{ stroke: 'var(--color-gold)' }}
+            strokeWidth={1.5}
+            opacity={0.4}
+          />
+          {ROW_Y.map((y) => (
+            <circle key={y} cx={SPINE_X} cy={y} r={3.5} style={{ fill: 'var(--color-gold)' }} opacity={0.55} />
+          ))}
 
           {ALL_EDGES.map((e, i) => {
             if (!POS[e.from] || !POS[e.to]) return null;
@@ -144,6 +165,19 @@ export default function GenealogyMap({
             const live = bySlug(slug);
             const { x, y } = nodePos(slug);
             const label = `${def.full_name}, ${def.birth_year}–${def.death_year}, ${DEGREE[slug] ?? 0} connections`;
+            const centred = SPINE_SEATS.has(slug);
+            const left = LEFT_SEATS.has(slug);
+            const size = labelSize(slug);
+            const nameProps = centred
+              ? { textAnchor: 'middle' as const, x: 0, y: NODE_R + 24 }
+              : left
+                ? { textAnchor: 'end' as const, x: -NODE_R - 12, y: 2 }
+                : { textAnchor: 'start' as const, x: NODE_R + 12, y: 2 };
+            const dateProps = centred
+              ? { textAnchor: 'middle' as const, x: 0, y: NODE_R + 42 }
+              : left
+                ? { textAnchor: 'end' as const, x: -NODE_R - 12, y: 22 }
+                : { textAnchor: 'start' as const, x: NODE_R + 12, y: 22 };
             return (
               <g
                 key={slug}
@@ -178,14 +212,27 @@ export default function GenealogyMap({
                   {def.name.charAt(0)}
                 </text>
                 <text
-                  textAnchor="middle"
-                  y={NODE_R + 20}
-                  fontSize={labelSize(slug)}
+                  textAnchor={nameProps.textAnchor}
+                  x={nameProps.x}
+                  y={nameProps.y}
+                  fontSize={size}
                   fontWeight={700}
-                  style={{ fontFamily: 'var(--font-heading)', fill: 'var(--color-main)' }}
+                  style={{ fontFamily: 'var(--font-heading)', fill: 'var(--color-main)', paintOrder: 'stroke', stroke: 'var(--color-parchment-light)', strokeWidth: 4 }}
                   aria-hidden="true"
                 >
                   {def.name}
+                </text>
+                <text
+                  textAnchor={dateProps.textAnchor}
+                  x={dateProps.x}
+                  y={dateProps.y}
+                  fontSize={12.5}
+                  fontStyle="italic"
+                  style={{ fontFamily: 'var(--font-body)', fill: 'var(--color-text)', paintOrder: 'stroke', stroke: 'var(--color-parchment-light)', strokeWidth: 3 }}
+                  opacity={0.7}
+                  aria-hidden="true"
+                >
+                  {def.birth_year}–{def.death_year}
                 </text>
               </g>
             );
