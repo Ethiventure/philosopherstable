@@ -50,7 +50,7 @@ export const LOW_PLAIN_RULES = [
 export const LOW_CONCEPT_RULES = [
   'CONCEPT RULES — ideas travel inside scenes, never naked:',
   'People doing things: never write about structures, systems, relations, or forces without a concrete bearer — named kinds of people doing named things (delivery riders juggling three apps, not “precarious labour markets”).',
-  'Example first: open each section on one everyday 21st-century scene, then write one plain sentence saying what the scene proves. One abstraction per turn, and it must arrive with its example attached — an abstraction without its example fails the turn.',
+  'Example first: open each section on one everyday 21st-century scene from YOUR world — your country, your century’s heirs (a Berlin coder for Hegel, a Ruhr care worker for Marx) — never a borrowed elsewhere unless the argument puts you there. Then write one plain sentence saying what the scene proves. One abstraction per turn, and it must arrive with its example attached — an abstraction without its example fails the turn.',
   'Low steelman: restate the previous speaker’s claim as a concrete situation — never in their categories, never echoing their framing.',
   'Translation moves (use these shapes): a structure is who pushes whom around; a contradiction is an argument that changes both sides; becoming is people trying something untested; power is who decides and who obeys.',
   'Naked nouns banned: structures, institutions, systems, relations, forces, the universal, the dialectical — never let one stand alone. Each must arrive holding its bearer in the same sentence (which structures? whose relations?). A naked abstraction fails the turn.',

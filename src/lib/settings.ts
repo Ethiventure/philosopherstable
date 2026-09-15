@@ -3,11 +3,19 @@ import type { StyleIntensity } from '@/types';
 export type GroqModel = 'qwen/qwen3.8-27b' | 'qwen/qwen3.6-27b';
 
 export const GROQ_MODELS: { id: GroqModel; label: string; hint: string }[] = [
-  { id: 'qwen/qwen3.8-27b', label: 'qwen3.8-27b', hint: 'Better quality, free tier' },
-  { id: 'qwen/qwen3.6-27b', label: 'qwen3.6-27b', hint: 'Alternative voice, free tier' },
+  { id: 'qwen/qwen3.8-27b', label: 'qwen3.8-27b', hint: 'Best voice, slow on free tier (long waits + resumes)' },
+  { id: 'qwen/qwen3.6-27b', label: 'qwen3.6-27b', hint: 'Faster alternative voice, free tier' },
 ];
 
-export type DeepInfraModel = 'deepseek-ai/DeepSeek-V4-Flash-0731' | 'meta-llama/Llama-3.3-70B-Instruct-Turbo';
+export type DeepInfraModel = 'deepseek-ai/DeepSeek-V4-Flash-0731' | 'Qwen/Qwen3.6-35B-A3B' | 'meta-llama/Llama-3.3-70B-Instruct-Turbo';
+
+/** Who speaks first on DeepInfra (backup Llama rescues either). */
+export type DeepInfraPrimary = 'deepseek' | 'qwen';
+
+export const DEEPINFRA_PRIMARIES: { id: DeepInfraPrimary; label: string; hint: string }[] = [
+  { id: 'deepseek', label: 'DeepSeek V4 Flash 0731', hint: 'Fast, obedient JSON (~$0.10/$0.30 per 1M)' },
+  { id: 'qwen', label: 'Qwen3.6-35B-A3B', hint: 'Cheap Qwen voice (~$0.10/$0.95 per 1M); thinking-burn watch item' },
+];
 
 export type TurnEconomy = 'full' | 'efficient';
 
@@ -23,6 +31,7 @@ export interface CabinetSettings {
   groqApiKey: string;
   groqModel: GroqModel;
   deepInfraApiKey: string;
+  deepInfraPrimary: DeepInfraPrimary;
   togetherApiKey: string;
   economy: TurnEconomy;
   /** Experimental source grounding (Phase 2, item ii): fetch + keyword-extract
@@ -43,6 +52,7 @@ export const DEFAULT_SETTINGS: CabinetSettings = {
   groqApiKey: '',
   groqModel: 'qwen/qwen3.8-27b',
   deepInfraApiKey: '',
+  deepInfraPrimary: 'deepseek',
   togetherApiKey: '',
   economy: 'full',
   grounding: true,
@@ -65,6 +75,7 @@ export function loadSettings(): CabinetSettings {
       groqApiKey: typeof parsed.groqApiKey === 'string' ? parsed.groqApiKey : '',
       groqModel: GROQ_MODELS.some((m) => m.id === parsed.groqModel) ? (parsed.groqModel as GroqModel) : 'qwen/qwen3.8-27b',
       deepInfraApiKey: typeof parsed.deepInfraApiKey === 'string' ? parsed.deepInfraApiKey : '',
+      deepInfraPrimary: parsed.deepInfraPrimary === 'qwen' ? 'qwen' : 'deepseek',
       togetherApiKey: typeof parsed.togetherApiKey === 'string' ? parsed.togetherApiKey : '',
       // No OpenAI models, ever: stored openai/* IDs migrate to the default.
       openRouterModel: typeof parsed.openRouterModel === 'string' && parsed.openRouterModel.trim() && !parsed.openRouterModel.trim().startsWith('openai/')

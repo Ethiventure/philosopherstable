@@ -129,7 +129,7 @@ export default function ServiceChat({ thinkers, interventions, settings, open, o
       const answer = await generateServiceText(
         settings,
         buildServiceSystemPrompt(thinker, level),
-        buildServiceUserMessage({ question: text, history, tableLines, groundingBlock }),
+        buildServiceUserMessage({ question: text, history, tableLines, groundingBlock, intensity: level }),
       );
       const sources = grounding?.chunks ?? [];
       setItems((prev) => [...prev, { kind: 'thinker', thinker: thinker.full_name, text: answer, sources }]);

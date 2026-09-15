@@ -3,17 +3,25 @@ import { LlmError, REPAIR_SUFFIX, parseTurnOutput, retryAfterMs, type TurnOutput
 /**
  * DeepInfra direct provider (visitor's own key).
  * OpenAI-compatible `chat/completions` at api.deepinfra.com/v1/openai.
- * Fixed order with automatic failover: DeepSeek V4 Flash 0731 speaks first
- * (~6× cheaper than the Llama pin); if it fails on anything but auth/quota
- * (same key, same credits — a backup can't help those), Llama 3.3 70B Turbo
- * takes the turn so the sitting survives. `lastDeepInfraModel` records who
+ * Visitor's chosen primary (DeepSeek V4 Flash 0731 or Qwen3.6-35B-A3B) speaks
+ * first; if it fails on anything but auth/quota (same key, same credits — a
+ * backup can't help those), Llama 3.3 70B Turbo takes the turn so the sitting
+ * survives. `lastDeepInfraModel` records who
  * actually spoke for the export provenance trail. Turns try
- * `response_format: json_object` first, plain fallback on 400.
+ * `response_format: json_object` first, plain fallback on 400. NOTE: the Qwen
+ * primary thinks by default — no thinking-dampening param is sent (unverified
+ * server support); if Qwen turns arrive truncated, revisit.
  */
-import type { DeepInfraModel } from '@/lib/settings';
+import type { DeepInfraModel, DeepInfraPrimary } from '@/lib/settings';
 
 export const DEEPINFRA_MODEL: DeepInfraModel = 'deepseek-ai/DeepSeek-V4-Flash-0731';
+export const DEEPINFRA_MODEL_QWEN: DeepInfraModel = 'Qwen/Qwen3.6-35B-A3B';
 export const DEEPINFRA_MODEL_BACKUP: DeepInfraModel = 'meta-llama/Llama-3.3-70B-Instruct-Turbo';
+
+/** Visitor's chosen first voice; the Llama backup rescues either. */
+export function resolveDeepInfraPrimary(primary: DeepInfraPrimary): DeepInfraModel {
+  return primary === 'qwen' ? DEEPINFRA_MODEL_QWEN : DEEPINFRA_MODEL;
+}
 
 /** Model that spoke last on this provider (turns and desk alike). */
 export let lastDeepInfraModel: DeepInfraModel = DEEPINFRA_MODEL;
@@ -21,6 +29,7 @@ const DEEPINFRA_MAX_TOKENS = { normal: 4000, long: 8000 } as const;
 
 interface DeepInfraTurnArgs {
   apiKey: string;
+  primary: DeepInfraPrimary;
   systemPrompt: string;
   userMessage: string;
   longForm: boolean;
@@ -157,7 +166,8 @@ const postDeepInfra = async ({ apiKey, model, systemPrompt, maxTokens, useJsonMo
     throw lastError ?? new LlmError('DeepInfra request failed. Resume the cabinet to retry the turn.', true, 'unknown');
   };
 
-export async function generateTurnDeepInfra({ apiKey, systemPrompt, userMessage, longForm }: DeepInfraTurnArgs): Promise<TurnOutput> {
+export async function generateTurnDeepInfra({ apiKey, primary, systemPrompt, userMessage, longForm }: DeepInfraTurnArgs): Promise<TurnOutput> {
+  const first = resolveDeepInfraPrimary(primary);
   const maxTokens = longForm ? DEEPINFRA_MAX_TOKENS.long : DEEPINFRA_MAX_TOKENS.normal;
   const runFlow = async (model: DeepInfraModel): Promise<TurnOutput> => {
     const post = (msg: string) => postDeepInfra({ apiKey, model, systemPrompt, maxTokens, useJsonMode: true }, msg);
@@ -174,13 +184,13 @@ export async function generateTurnDeepInfra({ apiKey, systemPrompt, userMessage,
     }
   };
   try {
-    return await runFlow(DEEPINFRA_MODEL);
+    return await runFlow(first);
   } catch (error) {
     // Auth/quota belong to the key, not the model — a backup would fail
     // identically, so don't burn a second call. Anything else (server death,
     // retired ID, mangled JSON) is worth one Llama rescue before halting.
     if (error instanceof LlmError && (error.code === 'auth' || error.code === 'quota')) throw error;
-    if (typeof console !== 'undefined') console.warn(`[DeepInfra] primary ${DEEPINFRA_MODEL} failed, trying backup ${DEEPINFRA_MODEL_BACKUP}:`, error instanceof Error ? error.message : error);
+    if (typeof console !== 'undefined') console.warn(`[DeepInfra] primary ${first} failed, trying backup ${DEEPINFRA_MODEL_BACKUP}:`, error instanceof Error ? error.message : error);
     try {
       return await runFlow(DEEPINFRA_MODEL_BACKUP);
     } catch (backupError) {
@@ -192,11 +202,12 @@ export async function generateTurnDeepInfra({ apiKey, systemPrompt, userMessage,
 
 /** Plain-text path for the Philosophers' Service desk: same failover order,
  * no JSON contract — the reply is the answer. */
-export async function generateTextDeepInfra({ apiKey, systemPrompt, userMessage }: { apiKey: string; systemPrompt: string; userMessage: string }): Promise<string> {
+export async function generateTextDeepInfra({ apiKey, primary, systemPrompt, userMessage }: { apiKey: string; primary: DeepInfraPrimary; systemPrompt: string; userMessage: string }): Promise<string> {
+  const first = resolveDeepInfraPrimary(primary);
   const post = (model: DeepInfraModel) => postDeepInfra({ apiKey, model, systemPrompt, maxTokens: DEEPINFRA_MAX_TOKENS.normal, useJsonMode: false }, userMessage);
   try {
-    const text = await post(DEEPINFRA_MODEL);
-    lastDeepInfraModel = DEEPINFRA_MODEL;
+    const text = await post(first);
+    lastDeepInfraModel = first;
     return text;
   } catch (error) {
     if (error instanceof LlmError && (error.code === 'auth' || error.code === 'quota')) throw error;
@@ -206,13 +217,13 @@ export async function generateTextDeepInfra({ apiKey, systemPrompt, userMessage 
   }
 }
 
-/** Cheap key check: one tiny call against the primary. */
-export async function testDeepInfraKey(apiKey: string): Promise<void> {
+/** Cheap key check: one tiny call against the chosen primary. */
+export async function testDeepInfraKey(apiKey: string, primary: DeepInfraPrimary = 'deepseek'): Promise<void> {
   const response = await fetch('https://api.deepinfra.com/v1/openai/chat/completions', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${apiKey}` },
     body: JSON.stringify({
-      model: DEEPINFRA_MODEL,
+      model: resolveDeepInfraPrimary(primary),
       messages: [{ role: 'user', content: 'Reply with exactly: ok' }],
       max_tokens: 10,
     }),

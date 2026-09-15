@@ -70,9 +70,16 @@ interface ServiceUserMessageArgs {
   history: ServiceHistoryItem[];
   tableLines: { name: string; line: string }[];
   groundingBlock?: string;
+  intensity?: StyleIntensity;
 }
 
-export function buildServiceUserMessage({ question, history, tableLines, groundingBlock = '' }: ServiceUserMessageArgs): string {
+/** Desk Low closing check: the persona's plain rules sit far above generation,
+ * so the last line re-orders plainness — the missing reinforcement that let
+ * Low desk answers drift to Medium (Sep 2026 eval). */
+const DESK_LOW_CLOSING =
+  'FINAL CHECK before answering, Low only: reread your draft and circle every word AND every idea a school-leaver would not know — rewrite both in plain words and concrete scenes from your world. Quoted source loans stay verbatim; everything around them stays plain.';
+
+export function buildServiceUserMessage({ question, history, tableLines, groundingBlock = '', intensity = 'high' }: ServiceUserMessageArgs): string {
   const parts = [`VISITOR'S QUESTION (answer this): ${question}`];
   const recent = history.slice(-HISTORY_EXCHANGES * 2);
   if (recent.length > 0) {
@@ -91,6 +98,7 @@ export function buildServiceUserMessage({ question, history, tableLines, groundi
   }
   if (groundingBlock) parts.push('', groundingBlock);
   parts.push('', 'Answer the visitor’s question now, in your own voice, following the desk scaffold.');
+  if (intensity === 'low') parts.push('', DESK_LOW_CLOSING);
   return parts.join('\n');
 }
 
@@ -122,6 +130,7 @@ export function generateServiceText(
     case 'deepinfra':
       return generateTextDeepInfra({
         apiKey: snap.deepInfraApiKey,
+        primary: snap.deepInfraPrimary,
         systemPrompt,
         userMessage,
       });

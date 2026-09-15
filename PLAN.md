@@ -228,7 +228,8 @@ covers it, but watch this if shared sessions stall live.
 `src/lib/groq.ts`: visitor Groq direct, free tier (OpenAI-compatible, no response_format —
 prompt-instructed JSON plus salvage, same lesson as OpenRouter).
 `src/lib/deepinfra.ts` / `src/lib/together.ts`: same OpenAI-compatible shape.
-DeepInfra runs a fixed failover pair (DeepSeek V4 Flash 0731 first, Llama 3.3 70B
+DeepInfra runs a visitor-chosen primary (DeepSeek V4 Flash 0731 default, or cheap
+Qwen3.6-35B-A3B for the family A/B — thinking-burn untested) with Llama 3.3 70B
 backup on non-auth/quota failures; provenance records who spoke). Together pins
 `TOGETHER_MODEL` (user-supplied ID, verify on 404). Single-model retry + repair.
 Full history in `docs/models-tried.md`.

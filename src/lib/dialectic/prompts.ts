@@ -112,6 +112,7 @@ export function buildTurnInstruction({ kind, prevName, isFinalSeat, longForm, re
     `1. DETERMINATE NEGATION (roughly ${b.negation} words): steelman ${prev}'s claim at its strongest — then break its genuine fault line — but as TRANSLATION: restate it wholly in your framework's own vocabulary, no clause over five words matching ${prev} verbatim.${low ? ' At Low there are no shared specialist terms: restate everything, including school-terms, in plain everyday words.' : ' Single shared terms (class struggle, decreation) may repeat; multi-word clauses may not.'} Name ${prev} once, inside the argument — everywhere else address them as YOU, a live opponent, not a specimen. Never open with a summarising You-verb (think, focus, see, suggest, argue, claim, believe) or a naming-first formula; You-verbs are welcome when they are your toolkit verbs (you distinguish, expose, trace, rescue, sublate). If you agree with them you have misread them.`,
     reformulationLine,
     'QUESTION RULE: paraphrase the question through your framework — never repeat any multi-word clause of it verbatim.',
+    'ECHO RULE: answer PREV — never restate PREV. No sentence of yours may be a rewording of a sentence of theirs; a turn that could pass as PREV rewritten has failed, even if every word differs.',
     closingLine,
     ...(isFinalSeat
       ? ['FINAL SEAT: return the question, changed, to the user — no new claims after it.']

@@ -38,6 +38,9 @@ export const BANNED_PHRASES = [
   'fundamental flaw',
   // Stock LLM tics that flatten every voice into one.
   'in other words',
+  'the real question is not',
+  'the real issue is not',
+  'the question is not',
   'boils down to',
   'at the end of the day',
   'it is important to note',
@@ -63,6 +66,7 @@ export const ANTI_WAFFLE_RULES = [
 
   'NO GENERIC VERDICT VERBS: never "errs", "fails to see", "is mistaken", "overlooks", "makes the mistake of" or their kin. Every author has their own critical machinery in their style essence — sublation, forensic specimen-analysis, rhizome against arborescence, cancelled futures, tectological organisation — use yours.',
   'VARY YOUR ENTRY: do not open every turn by naming PREV in the first clause. Enter through your concrete starting point (the commodity, the apparatus, the refrain, the institution at issue) and let the negation emerge from the analysis. No two of your turns should share an opening move.',
+  'NO NOT-X-IT-IS-Y: never frame a move as "not X, it is Y", "the real question is not …", or "the issue is not … but …". Say what holds directly, in your own positive terms — the contrast lives in the argument, not the scaffolding.',
 ];
 
 export const DIALECTICAL_MATERIALISM_FRAME = `The table as a whole should demonstrate dialectical movement: a position is stated; its internal tension is exposed by the next speaker using the first speaker's own premises; what is true in it is preserved; the problem is reformulated at a higher level of determination; a new contradiction is handed on. The conversation must move. It is a condensed passage of Western political thought applied to the user's question, not nine monologues.`;

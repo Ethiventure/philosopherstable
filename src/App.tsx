@@ -35,7 +35,7 @@ import {
 } from '@/types';
 import { buildCodaEarlyPrompt, buildCodaPrompt, buildTurnInstruction, buildUserMessage, CODA_REPAIR_SUFFIX, CODA_SYSTEM, getTurnKind, LOW_CLOSING_REMINDER, STRUCTURED_OUTPUT_HINT } from '@/lib/dialectic/prompts';
 import { LlmError, type LlmErrorCode, type TurnOutput } from '@/lib/llm';
-import { loadSettings, saveSettings, type CabinetSettings, type GroqModel } from '@/lib/settings';
+import { loadSettings, saveSettings, type CabinetSettings, type DeepInfraPrimary, type GroqModel } from '@/lib/settings';
 import { applyDisplay, loadDisplay, saveDisplay } from '@/lib/preferences';
 import { generateTurnGroq, testGroqKey } from '@/lib/groq';
 import { generateTurnShared } from '@/lib/shared';
@@ -494,6 +494,7 @@ function App() {
       case 'deepinfra':
         return generateTurnDeepInfra({
           apiKey: snap.deepInfraApiKey,
+          primary: snap.deepInfraPrimary,
           systemPrompt,
           userMessage,
           longForm,
@@ -1392,9 +1393,9 @@ function SettingsDrawer({ philosophers, activeSlugs, togglePhilosopher, settings
         setTestMessage(`Key works (via ${modelUsed}). Saved for this browser.`);
         onSettingsChange({ ...settings, openRouterApiKey: key });
       } else if (usingDeepInfra) {
-        await testDeepInfraKey(key);
+        await testDeepInfraKey(key, settings.deepInfraPrimary);
         setTestState('ok');
-        setTestMessage(`Key works (DeepSeek V4 Flash first, Llama 3.3 70B backup). Saved for this browser.`);
+        setTestMessage(`Key works (${settings.deepInfraPrimary === 'qwen' ? 'Qwen3.6-35B first' : 'DeepSeek V4 Flash first'}, Llama 3.3 70B backup). Saved for this browser.`);
         onSettingsChange({ ...settings, deepInfraApiKey: key });
       } else if (usingTogether) {
         await testTogetherKey(key);
@@ -1456,7 +1457,7 @@ function SettingsDrawer({ philosophers, activeSlugs, togglePhilosopher, settings
               <button role="radio" aria-checked={settings.provider === 'shared'} title="No key needed — shared Groq-backed key, a few sittings a day each." onClick={() => { setTestState('idle'); setTestMessage(''); onSettingsChange({ ...settings, provider: 'shared' }); }} className={`btn-secondary ${settings.provider === 'shared' ? '!border-[#8b5254] !text-[#8b5254]' : ''}`}>Cabinet shared</button>
               <button role="radio" aria-checked={usingOpenRouter} title="Your OpenRouter key — free model cycle, or a pinned paid model." onClick={() => { setTestState('idle'); setTestMessage(''); onSettingsChange({ ...settings, provider: 'openrouter' }); }} className={`btn-secondary ${usingOpenRouter ? '!border-[#8b5254] !text-[#8b5254]' : ''}`}>OpenRouter free cycle</button>
               <button role="radio" aria-checked={usingGroq} title="Your Groq key — free tier, no card." onClick={() => { setTestState('idle'); setTestMessage(''); onSettingsChange({ ...settings, provider: 'groq' }); }} className={`btn-secondary ${usingGroq ? '!border-[#8b5254] !text-[#8b5254]' : ''}`}>Groq free</button>
-              <button role="radio" aria-checked={usingDeepInfra} title="Your DeepInfra key — DeepSeek V4 Flash first, Llama 70B backup, card on file." onClick={() => { setTestState('idle'); setTestMessage(''); onSettingsChange({ ...settings, provider: 'deepinfra' }); }} className={`btn-secondary ${usingDeepInfra ? '!border-[#8b5254] !text-[#8b5254]' : ''}`}>DeepInfra</button>
+              <button role="radio" aria-checked={usingDeepInfra} title="Your DeepInfra key — DeepSeek or Qwen first, Llama 70B backup, card on file." onClick={() => { setTestState('idle'); setTestMessage(''); onSettingsChange({ ...settings, provider: 'deepinfra' }); }} className={`btn-secondary ${usingDeepInfra ? '!border-[#8b5254] !text-[#8b5254]' : ''}`}>DeepInfra</button>
               <button role="radio" aria-checked={usingTogether} title="Your Together key — pinned Qwen 30B, card required." onClick={() => { setTestState('idle'); setTestMessage(''); onSettingsChange({ ...settings, provider: 'together' }); }} className={`btn-secondary ${usingTogether ? '!border-[#8b5254] !text-[#8b5254]' : ''}`}>Together</button>
             </div>
             {settings.provider === 'shared' ? (
@@ -1474,8 +1475,8 @@ function SettingsDrawer({ philosophers, activeSlugs, togglePhilosopher, settings
                 <p className="text-xs text-[#465f75]/70">Free tier, no card: 30 requests/min, ~1K/day shared across your uses. Get a key at <a className="underline" href="https://console.groq.com/keys" target="_blank" rel="noreferrer">console.groq.com</a>.</p>
                 <label htmlFor="groq-model" className="font-heading text-sm uppercase tracking-[0.16em] text-[#4a392d] pt-2 block">Model</label>
                 <select id="groq-model" value={settings.groqModel} onChange={(event) => onSettingsChange({ ...settings, groqModel: event.target.value as GroqModel })} className="w-full bg-[#eae1ca]/60 border border-[#4a392d]/25 rounded-sm p-3 text-[15px] text-[#465f75] focus:outline-none focus:ring-2 focus:ring-[#8b5254]/30">
-                  <option value="qwen/qwen3.8-27b">qwen3.8-27b (better quality, free tier)</option>
-                  <option value="qwen/qwen3.6-27b">qwen3.6-27b (alternative voice, free tier)</option>
+                  <option value="qwen/qwen3.8-27b">qwen3.8-27b (best voice, slow on free tier — long waits)</option>
+                  <option value="qwen/qwen3.6-27b">qwen3.6-27b (faster alternative voice, free tier)</option>
                 </select>
               </>
             ) : usingOpenRouter ? (
@@ -1495,7 +1496,7 @@ function SettingsDrawer({ philosophers, activeSlugs, togglePhilosopher, settings
                   <button role="radio" aria-checked={settings.openRouterMode === 'paid'} onClick={() => onSettingsChange({ ...settings, openRouterMode: 'paid' })} className={`btn-secondary ${settings.openRouterMode === 'paid' ? '!border-[#8b5254] !text-[#8b5254]' : ''}`}>Paid model</button>
                 </div>
                 {settings.openRouterMode === 'free' ? (
-                  <p className="text-xs text-[#465f75]/70">Each turn tries free models in order — Gemma, Nemotron, Nex, Laguna and others — moving to the next when one is limited, down, or retired. OpenRouter's own free router is the last resort, so a stale list degrades voices rather than halting. Limits apply per model, so cycling stretches the free quota across a session.</p>
+                  <p className="text-xs text-[#465f75]/70">Each turn tries free models in order — the auto-router first, then the named bench by context size — moving to the next when one is limited, down, or retired. Limits apply per model, so cycling stretches the free quota across a session. Voices may shift turn to turn; the export says who spoke.</p>
                 ) : (
                   <>
                     <label htmlFor="or-model" className="font-heading text-sm uppercase tracking-[0.16em] text-[#4a392d] pt-1 block">Paid model ID</label>
@@ -1514,7 +1515,12 @@ function SettingsDrawer({ philosophers, activeSlugs, togglePhilosopher, settings
                   {keySaved && <span className="text-xs italic self-center text-[#4a6b3f]">Saved in this browser.</span>}
                 </div>
                 {testMessage && <p className={`text-sm italic ${testState === 'ok' ? 'text-[#4a6b3f]' : 'text-[#8b5254]'}`}>{testMessage}</p>}
-                <p className="text-xs text-[#465f75]/70">DeepSeek V4 Flash 0731 speaks first (~6× cheaper); Llama 3.3 70B takes over automatically if it fails — the export says who spoke. Needs a card on file — get a key at <a className="underline" href="https://deepinfra.com/dash/api_keys" target="_blank" rel="noreferrer">deepinfra.com</a>.</p>
+                <p className="text-xs text-[#465f75]/70">Your chosen primary speaks first; Llama 3.3 70B takes over automatically if it fails — the export says who spoke. Needs a card on file — get a key at <a className="underline" href="https://deepinfra.com/dash/api_keys" target="_blank" rel="noreferrer">deepinfra.com</a>.</p>
+                <label htmlFor="di-primary" className="font-heading text-sm uppercase tracking-[0.16em] text-[#4a392d] pt-2 block">First voice</label>
+                <select id="di-primary" value={settings.deepInfraPrimary} onChange={(event) => onSettingsChange({ ...settings, deepInfraPrimary: event.target.value as DeepInfraPrimary })} className="w-full bg-[#eae1ca]/60 border border-[#4a392d]/25 rounded-sm p-3 text-[15px] text-[#465f75] focus:outline-none focus:ring-2 focus:ring-[#8b5254]/30">
+                  <option value="deepseek">DeepSeek V4 Flash 0731 (fast, obedient JSON)</option>
+                  <option value="qwen">Qwen3.6-35B-A3B (cheap Qwen voice — thinking-burn watch item)</option>
+                </select>
               </>
             ) : usingTogether ? (
               <>
