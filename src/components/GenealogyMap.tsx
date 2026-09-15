@@ -1,41 +1,42 @@
 import { CABINET_DEBTS } from '@/philosophers/influences';
 import { DEFAULT_SEATING_ORDER, PHILOSOPHER_BY_SLUG } from '@/philosophers';
+import {
+  GEN_NODE_R,
+  GEN_POS,
+  GEN_W,
+  genEdgePath,
+  genLateralShift,
+  genNodePos,
+  type GeomEdge,
+} from '@/lib/genealogy-layout';
 import type { Philosopher } from '@/types';
 
-interface Edge {
-  from: string;
-  to: string;
-  kind: 'direct' | 'indirect';
+interface Edge extends GeomEdge {
+  stance: 'positive' | 'critical' | 'ambivalent';
   note: string;
 }
 
 const ALL_EDGES: Edge[] = Object.entries(CABINET_DEBTS).flatMap(([debtor, debts]) =>
-  debts.map((d) => ({ from: d.to, to: debtor, kind: d.kind, note: d.note })),
+  debts.map((d) => ({ from: d.to, to: debtor, kind: d.kind, stance: d.stance, note: d.note })),
 );
 
-// Time runs top-to-bottom down a central spine. Spinoza opens on the spine,
-// the middle seats alternate left–right in chronological pairs, and the line
-// converges back onto the spine for the Deleuze → Fisher finale — so both
-// ends mirror each other.
-const W = 704;
-const NODE_R = 22;
-const SPINE_X = 352;
+/** Line treatment per edge: kind sets solid/dashed. Stance lives in the data
+ *  and the tooltips, never in the rendering — one calm monochrome canvas. */
+function edgeStyle(e: Edge): { w: number; o: number; stroke: string; dash?: string; marker: string } {
+  // D- (direct-critical) debts sit back at 80% transparency so breaks
+  // read as quieter than carried-forward lines. Kind still sets solid/dashed.
+  if (e.kind === 'direct' && e.stance === 'critical') {
+    return { w: 1.1, o: 0.9, cls: 'gen-edge gen-edge-direct', marker: 'url(#gen-arrow-direct)' };
+  }
+  if (e.kind === 'indirect') {
+    return { w: 1.1, o: 0.8, cls: 'gen-edge gen-edge-indirect', dash: '5 4', marker: 'url(#gen-arrow-indirect)' };
+  }
+  return { w: 1.3, o: 0.8, cls: 'gen-edge gen-edge-direct', marker: 'url(#gen-arrow-direct)' };
+}
 
-const POS: Record<string, { x: number; y: number }> = {
-  spinoza: { x: SPINE_X, y: 60 },
-  kant: { x: 210, y: 155 },
-  hegel: { x: 494, y: 155 },
-  marx: { x: 210, y: 250 },
-  lenin: { x: 494, y: 250 },
-  bogdanov: { x: 210, y: 345 },
-  bloch: { x: 494, y: 345 },
-  weil: { x: 210, y: 440 },
-  bookchin: { x: 494, y: 440 },
-  deleuze: { x: SPINE_X, y: 535 },
-  fisher: { x: SPINE_X, y: 630 },
-};
-
-const ROW_Y = [60, 155, 250, 345, 440, 535, 630];
+// Layout geometry lives in `@/lib/genealogy-layout` (shared with the
+// geometry checker, so the two can never drift). This file keeps only
+// presentation: styling, labels, and interaction.
 
 // Seats on the spine get centred labels below; the paired rows label outward.
 const SPINE_SEATS = new Set(['spinoza', 'deleuze', 'fisher']);
@@ -56,25 +57,6 @@ function labelSize(slug: string): number {
   return BASE_LABEL + 2 * ((DEGREE[slug] ?? 0) - MIN_DEGREE);
 }
 
-function nodePos(slug: string): { x: number; y: number } {
-  return POS[slug] ?? { x: 0, y: 0 };
-}
-
-function edgePath(fromSlug: string, toSlug: string): string {
-  const a = nodePos(fromSlug);
-  const b = nodePos(toSlug);
-  const dy = b.y - a.y;
-  if (Math.abs(dy) < 1) {
-    // Same-row pair (Kant → Hegel): a gentle bow below the row.
-    const mx = (a.x + b.x) / 2;
-    return `M ${a.x} ${a.y} Q ${mx} ${a.y + 44} ${b.x} ${b.y}`;
-  }
-  // Vertical S-curves that leave and enter heading down the years
-  // (or up them, for the one backward feud).
-  const bend = Math.max(30, Math.abs(dy) / 2);
-  return `M ${a.x} ${a.y} C ${a.x} ${a.y + bend}, ${b.x} ${b.y - bend}, ${b.x} ${b.y}`;
-}
-
 export default function GenealogyMap({
   philosophers,
   onSelect,
@@ -86,27 +68,27 @@ export default function GenealogyMap({
   const bySlug = (slug: string) => philosophers.find((p) => p.slug === slug);
 
   return (
-    <div className="dark-academia-card p-5 md:p-7">
+    <div className="dark-academia-card genealogy-dark p-5 md:p-7">
       <p className="pass-indicator text-[#8b5254]">Debts and heirs</p>
       <h2 className="text-3xl mt-1">A Genealogy of Influence</h2>
       <p className="italic text-[#465f75]/70 mt-1 max-w-2xl">
         Oldest at the top, youngest at the bottom. Arrows run down the years —
-        from creditor to heir. Solid crimson is direct (read closely, even to
-        break); dashed gold is indirect. Select a seat to open its profile.
+        from creditor to heir. Solid is direct (read closely, even to break);
+        dashed is indirect. Select a seat to open its profile.
       </p>
 
       <div className="flex flex-wrap gap-x-5 gap-y-1 mt-3 text-sm text-[#465f75]/80" aria-label="Legend">
         <span className="inline-flex items-center gap-2">
           <svg width="34" height="8" aria-hidden="true">
-            <line x1="0" y1="4" x2="28" y2="4" stroke="var(--color-accent1)" strokeWidth="2" />
-            <polygon points="28,1 34,4 28,7" fill="var(--color-accent1)" />
+            <line x1="0" y1="4" x2="28" y2="4" className="gen-edge-direct" strokeWidth="2" />
+            <polygon points="28,1 34,4 28,7" className="gen-poly-direct" />
           </svg>
           Direct — read and answered
         </span>
         <span className="inline-flex items-center gap-2">
           <svg width="34" height="8" aria-hidden="true">
-            <line x1="0" y1="4" x2="28" y2="4" stroke="var(--color-gold)" strokeWidth="2" strokeDasharray="5 4" />
-            <polygon points="28,1 34,4 28,7" fill="var(--color-gold)" />
+            <line x1="0" y1="4" x2="28" y2="4" className="gen-edge-indirect" strokeWidth="2" strokeDasharray="5 4" />
+            <polygon points="28,1 34,4 28,7" className="gen-poly-indirect" />
           </svg>
           Indirect — through intermediaries
         </span>
@@ -114,50 +96,46 @@ export default function GenealogyMap({
 
       <div className="overflow-x-auto custom-scroll mt-4 -mx-1 px-1" tabIndex={0} aria-label="Genealogy diagram, scrollable horizontally on small screens">
         <svg
-          viewBox={`0 0 ${W} 738`}
+          viewBox={`0 0 ${GEN_W} 738`}
           className="w-full max-w-[660px] min-w-[420px] h-auto mx-auto"
           role="img"
           aria-label={`Genealogy of influence across ${order.length} thinkers, Spinoza at the top to Fisher at the bottom. ${ALL_EDGES.length} debts shown. Name size grows with connections: smallest names at body size, 2 points larger per extra connection.`}
         >
           <defs>
             <marker id="gen-arrow-direct" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
-              <path d="M 0 1 L 9 5 L 0 9 z" style={{ fill: 'var(--color-accent1)' }} />
+              <path d="M 0 1 L 9 5 L 0 9 z" />
             </marker>
             <marker id="gen-arrow-indirect" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
-              <path d="M 0 1 L 9 5 L 0 9 z" style={{ fill: 'var(--color-gold)' }} />
+              <path d="M 0 1 L 9 5 L 0 9 z" />
             </marker>
           </defs>
 
-          {/* Central spine with a bead for every row of seats. It runs exactly
-              from Spinoza's centre to Fisher's centre so no line sticks out
-              past either end circle (nodes draw over the spine). */}
-          <line
-            x1={SPINE_X} y1={60} x2={SPINE_X} y2={630}
-            style={{ stroke: 'var(--color-gold)' }}
-            strokeWidth={1.5}
-            opacity={0.4}
-          />
-          {ROW_Y.map((y) => (
-            <circle key={y} cx={SPINE_X} cy={y} r={3.5} style={{ fill: 'var(--color-gold)' }} opacity={0.55} />
-          ))}
+          {/* No drawn spine: the edges themselves trace the descent. */}
 
-          {ALL_EDGES.map((e, i) => {
-            if (!POS[e.from] || !POS[e.to]) return null;
-            const direct = e.kind === 'direct';
+          {/* Direct threads first so the dashed indirect threads always
+              paint on top — otherwise a dashed spine run (e.g.
+              Bogdanov→Weil) disappears under the solid lines sharing
+              its spine. */}
+          {[...ALL_EDGES]
+            .sort((a, b) => (a.kind === b.kind ? 0 : a.kind === 'direct' ? -1 : 1))
+            .map((e, i) => {
+            if (!GEN_POS[e.from] || !GEN_POS[e.to]) return null;
+            const st = edgeStyle(e);
+            const stanceWord = e.stance === 'positive' ? 'embraces' : e.stance === 'critical' ? 'attacks' : 'mixed';
             const fromName = PHILOSOPHER_BY_SLUG[e.from]?.full_name ?? e.from;
             const toName = PHILOSOPHER_BY_SLUG[e.to]?.full_name ?? e.to;
             return (
               <path
                 key={`${e.from}-${e.to}-${i}`}
-                d={edgePath(e.from, e.to)}
+                d={genEdgePath(ALL_EDGES, e.from, e.to, genLateralShift(ALL_EDGES, e))}
                 fill="none"
-                style={{ stroke: direct ? 'var(--color-accent1)' : 'var(--color-gold)' }}
-                strokeWidth={direct ? 1.6 : 1.4}
-                strokeDasharray={direct ? undefined : '5 4'}
-                opacity={direct ? 0.85 : 0.8}
-                markerEnd={direct ? 'url(#gen-arrow-direct)' : 'url(#gen-arrow-indirect)'}
+                className={st.cls}
+                strokeWidth={st.w}
+                strokeDasharray={st.dash}
+                opacity={st.o}
+                markerEnd={st.marker}
               >
-                <title>{`${fromName} → ${toName} (${e.kind}): ${e.note}`}</title>
+                <title>{`${fromName} → ${toName} (${e.kind}, ${stanceWord}): ${e.note}`}</title>
               </path>
             );
           })}
@@ -165,16 +143,16 @@ export default function GenealogyMap({
           {order.map((slug) => {
             const def = PHILOSOPHER_BY_SLUG[slug];
             const live = bySlug(slug);
-            const { x, y } = nodePos(slug);
+            const { x, y } = genNodePos(slug);
             const label = `${def.full_name}, ${DEGREE[slug] ?? 0} connections`;
             const centred = SPINE_SEATS.has(slug);
             const left = LEFT_SEATS.has(slug);
             const size = labelSize(slug);
             const nameProps = centred
-              ? { textAnchor: 'middle' as const, x: 0, y: NODE_R + 24 }
+              ? { textAnchor: 'middle' as const, x: 0, y: GEN_NODE_R + 24 }
               : left
-                ? { textAnchor: 'end' as const, x: -NODE_R - 12, y: 2 }
-                : { textAnchor: 'start' as const, x: NODE_R + 12, y: 2 };
+                ? { textAnchor: 'end' as const, x: -GEN_NODE_R - 12, y: 2 }
+                : { textAnchor: 'start' as const, x: GEN_NODE_R + 12, y: 2 };
             return (
               <g
                 key={slug}
@@ -194,16 +172,15 @@ export default function GenealogyMap({
               >
                 <title>{label}</title>
                 <circle
-                  r={NODE_R}
-                  style={{ fill: 'var(--color-parchment-light)', stroke: def.accent_color }}
+                  r={GEN_NODE_R}
+                  className="gen-node-circle"
                   strokeWidth={2.5}
                 />
                 <text
                   textAnchor="middle"
                   dy="0.36em"
                   fontSize="19"
-                  fill={def.accent_color}
-                  style={{ fontFamily: 'var(--font-heading)' }}
+                  className="gen-node-initial"
                   aria-hidden="true"
                 >
                   {def.name.charAt(0)}
@@ -214,7 +191,7 @@ export default function GenealogyMap({
                   y={nameProps.y}
                   fontSize={size}
                   fontWeight={700}
-                  style={{ fontFamily: 'var(--font-heading)', fill: 'var(--color-main)', paintOrder: 'stroke', stroke: 'var(--color-parchment-light)', strokeWidth: 4 }}
+                  className="gen-node-name"
                   aria-hidden="true"
                 >
                   {def.name}

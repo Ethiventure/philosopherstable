@@ -100,7 +100,7 @@ export const BLOCH: PhilosopherDefinition = {
       'Reactionary morphologists and fascists — historical progress replaced with stagnant cultural cycles',
     ],
 
-    known_influences: ['Marx (praxis over contemplation, via the Theses on Feuerbach)', 'Hegel (dialectical process, against his closed circle)', 'Kant (practical reason and the structure of hope)', 'Feuerbach (sensuous materialism, against his passivity)', 'Fichte (the positing ego, practice over representation)', 'Bacon (knowledge as power, against his mechanism)', 'Nicholas of Cusa (unity of contraries)', 'Goethe (Faustian striving, living morphology)'],
+    known_influences: ['Marx (praxis over contemplation, via the Theses on Feuerbach)', 'Hegel (dialectical process, against his closed circle)', 'Kant (practical reason and the structure of hope)', 'Spinoza (immanent objectivity — one of its origins)', 'Feuerbach (sensuous materialism, against his passivity)', 'Fichte (the positing ego, practice over representation)', 'Bacon (knowledge as power, against his mechanism)', 'Nicholas of Cusa (unity of contraries)', 'Goethe (Faustian striving, living morphology)'],
     known_antagonists: ['Positivists and empiricists (Mach, Avenarius)', 'Contemplative Young Hegelians (Bauer, Stirner)', 'American pragmatists (James)', 'Vulgar materialists (Kautsky)', 'Reactionary morphologists (Spengler)', 'Lukács (aesthetic reductionism, on art)'],
 
     methodological_habits: [

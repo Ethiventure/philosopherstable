@@ -648,6 +648,87 @@ body {
   border-radius: 50%;
 }
 
+/* Genealogy diagram line colours, tuned per scheme: the default gold washes
+   out on parchment, and the default crimson sits dull on dim. Ink keeps the
+   pairing that already works there. */
+:root {
+  --gen-gold: #7d5f2e;
+  --gen-crimson: #8b5254;
+  /* Fixed panel palette: the genealogy cabinet never follows display themes,
+     so every painted thing inside it resolves against THESE fixed vars —
+     never travelling theme vars or hardcoded utilities. Break this rule and
+     light schemes render dark-on-dark. See scripts/check-diagram-contrast.mjs. */
+  --gen-ink: #ecdfc4;
+  --gen-ground: #221910;
+  --gen-node-fill: #2e2318;
+  --gen-ring: #6e7f5c;
+}
+[data-theme="dim"] {
+  --gen-gold: #77602f;
+  --gen-crimson: #7a4648;
+}
+[data-theme="ink"] {
+  --gen-gold: #d3ab6b;
+  --gen-crimson: #d98a8f;
+}
+.high-contrast {
+  --gen-gold: #6b4d1f;
+  --gen-crimson: #6b1a1c;
+}
+[data-theme="ink"].high-contrast {
+  --gen-gold: #e3bd7d;
+  --gen-crimson: #f0a3a8;
+}
+
+/* Genealogy paint, all in the stylesheet on purpose: var() inside SVG
+   presentation attributes is invalid in several browsers (legend samples
+   rendered black and never followed themes), and marker innards inherit
+   unreliably — direct selector matches are the robust path. Nodes are
+   deliberately monochrome ink: eleven accent colours on one canvas read busy. */
+.gen-edge-direct { stroke: var(--gen-crimson); }
+.gen-edge-indirect { stroke: var(--gen-gold); }
+#gen-arrow-direct path { fill: var(--gen-crimson); }
+#gen-arrow-indirect path { fill: var(--gen-gold); }
+.gen-poly-direct { fill: var(--gen-crimson); }
+.gen-poly-indirect { fill: var(--gen-gold); }
+.gen-spine { stroke: var(--gen-gold); }
+.gen-node-circle { fill: var(--gen-node-fill); stroke: var(--gen-ring); }
+.gen-node-initial { fill: var(--gen-ink); font-family: var(--font-heading); }
+.gen-node-name {
+  fill: var(--gen-ink);
+  font-family: var(--font-heading);
+  paint-order: stroke;
+  stroke: var(--gen-ground);
+  stroke-width: 4;
+}
+
+/* Fixed dark cabinet for the genealogy map: the one surface that never
+   follows the display theme. Deep walnut ground, parchment ink, teal rings —
+   the nocturnal side of the house palette. Scoped overrides translate the
+   component's hardcoded light-theme utilities; the SVG paints only from the
+   fixed --gen-* vars, repointed here. */
+.dark-academia-card.genealogy-dark {
+  background-color: #221910;
+  background-image:
+    radial-gradient(ellipse at 30% 15%, rgba(211, 171, 107, 0.12), transparent 55%),
+    radial-gradient(ellipse at 75% 85%, rgba(217, 138, 143, 0.07), transparent 55%),
+    radial-gradient(ellipse at 50% 50%, rgba(0, 0, 0, 0.25), transparent 75%);
+  border-color: rgba(211, 171, 107, 0.35);
+}
+.genealogy-dark {
+  --gen-gold: #d3ab6b;
+  --gen-crimson: #d98a8f;
+  --gen-halo: #221910;
+}
+.genealogy-dark h2 { color: var(--gen-ink); }
+.genealogy-dark .text-\[\#8b5254\] { color: #d98a8f; }
+.genealogy-dark .text-\[\#465f75\]\/70 { color: rgba(232, 220, 195, 0.72); }
+.genealogy-dark .text-\[\#465f75\]\/80 { color: rgba(232, 220, 195, 0.8); }
+.genealogy-dark .text-\[\#465f75\]\/85 { color: rgba(232, 220, 195, 0.85); }
+.genealogy-dark .text-\[\#465f75\]\/60 { color: rgba(232, 220, 195, 0.62); }
+.genealogy-dark .text-\[\#4a392d\] { color: #ecdfc4; }
+.genealogy-dark .border-\[\#4a392d\]\/20 { border-color: rgba(211, 171, 107, 0.25); }
+
 /* Reading deck arrival: a new card settles down into the pile. */
 .card-arrive {
   animation: card-arrive 0.9s ease-out;
