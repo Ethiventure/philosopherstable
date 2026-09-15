@@ -74,7 +74,7 @@ export const CABINET_DEBTS: Record<string, CabinetDebt[]> = {
   bookchin: [
     { to: 'hegel', kind: 'indirect', note: 'dialectic inherited through the Marxist tradition' },
     { to: 'marx', kind: 'direct', note: 'kept the critique of capital, refused economism' },
-    { to: 'lenin', kind: 'direct', note: 'answered the party model with the assembly' },
+    { to: 'lenin', kind: 'direct', note: 'answered the party model with the assembly — Listen, Marxist! takes on What Is to Be Done? directly' },
     { to: 'deleuze', kind: 'direct', note: 'named D&G’s “desiring-machines” in SALA (1995) as the lifestyle mood made flesh' },
     { to: 'kant', kind: 'indirect', note: 'Enlightenment reason kept, metaphysics dropped' },
     { to: 'bloch', kind: 'direct', note: 'cited the Principle of Hope in The Ecology of Freedom — alliance technology, co-productivity, hope as foundation' },
@@ -82,7 +82,7 @@ export const CABINET_DEBTS: Record<string, CabinetDebt[]> = {
   deleuze: [
     { to: 'spinoza', kind: 'direct', note: '"Prince of Philosophers": immanence ontology, power to affect and be affected' },
     { to: 'kant', kind: 'direct', note: 'a whole book: Kant’s Critical Philosophy' },
-    { to: 'hegel', kind: 'direct', note: 'read against, via Hyppolite and Kojève' },
+    { to: 'hegel', kind: 'direct', note: 'a generalized anti-Hegelianism (D&R preface): difference against contradiction, via Hyppolite and Kojève' },
     { to: 'marx', kind: 'direct', note: 'read with Guattari: capital as desiring-production' },
     { to: 'lenin', kind: 'direct', note: 'honoured the Leninist break in Anti-Oedipus; studied “On Slogans” in A Thousand Plateaus — then refused the father-function' },
   ],

@@ -17,25 +17,25 @@ const ALL_EDGES: Edge[] = Object.entries(CABINET_DEBTS).flatMap(([debtor, debts]
 // the middle seats alternate left–right in chronological pairs, and the line
 // converges back onto the spine for the Deleuze → Fisher finale — so both
 // ends mirror each other.
-const W = 640;
+const W = 704;
 const NODE_R = 22;
-const SPINE_X = 320;
+const SPINE_X = 352;
 
 const POS: Record<string, { x: number; y: number }> = {
-  spinoza: { x: SPINE_X, y: 70 },
-  kant: { x: 190, y: 180 },
-  hegel: { x: 450, y: 180 },
-  marx: { x: 190, y: 290 },
-  lenin: { x: 450, y: 290 },
-  bogdanov: { x: 190, y: 400 },
-  bloch: { x: 450, y: 400 },
-  weil: { x: 190, y: 510 },
-  bookchin: { x: 450, y: 510 },
-  deleuze: { x: SPINE_X, y: 620 },
-  fisher: { x: SPINE_X, y: 730 },
+  spinoza: { x: SPINE_X, y: 60 },
+  kant: { x: 210, y: 155 },
+  hegel: { x: 494, y: 155 },
+  marx: { x: 210, y: 250 },
+  lenin: { x: 494, y: 250 },
+  bogdanov: { x: 210, y: 345 },
+  bloch: { x: 494, y: 345 },
+  weil: { x: 210, y: 440 },
+  bookchin: { x: 494, y: 440 },
+  deleuze: { x: SPINE_X, y: 535 },
+  fisher: { x: SPINE_X, y: 630 },
 };
 
-const ROW_Y = [70, 180, 290, 400, 510, 620, 730];
+const ROW_Y = [60, 155, 250, 345, 440, 535, 630];
 
 // Seats on the spine get centred labels below; the paired rows label outward.
 const SPINE_SEATS = new Set(['spinoza', 'deleuze', 'fisher']);
@@ -114,8 +114,8 @@ export default function GenealogyMap({
 
       <div className="overflow-x-auto custom-scroll mt-4 -mx-1 px-1" tabIndex={0} aria-label="Genealogy diagram, scrollable horizontally on small screens">
         <svg
-          viewBox={`0 0 ${W} 820`}
-          className="w-full max-w-[620px] min-w-[420px] h-auto mx-auto"
+          viewBox={`0 0 ${W} 738`}
+          className="w-full max-w-[660px] min-w-[420px] h-auto mx-auto"
           role="img"
           aria-label={`Genealogy of influence across ${order.length} thinkers, Spinoza at the top to Fisher at the bottom. ${ALL_EDGES.length} debts shown. Name size grows with connections: smallest names at body size, 2 points larger per extra connection.`}
         >
@@ -128,9 +128,11 @@ export default function GenealogyMap({
             </marker>
           </defs>
 
-          {/* Central spine with a bead for every row of seats. */}
+          {/* Central spine with a bead for every row of seats. It runs exactly
+              from Spinoza's centre to Fisher's centre so no line sticks out
+              past either end circle (nodes draw over the spine). */}
           <line
-            x1={SPINE_X} y1={40} x2={SPINE_X} y2={762}
+            x1={SPINE_X} y1={60} x2={SPINE_X} y2={630}
             style={{ stroke: 'var(--color-gold)' }}
             strokeWidth={1.5}
             opacity={0.4}
