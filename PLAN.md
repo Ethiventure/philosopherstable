@@ -466,7 +466,30 @@ Protocol: one fixed question, 5 seats, Low/Med/High on (a) DeepInfra DeepSeek
 vs (b) Groq Qwen; grade with the `language-levels.md` trio rubric (hard terms,
 gloss hygiene, example-first, loans, heat). Log both runs in
 `docs/models-tried.md`, then pin winner-first / runner-up-second on every pipe.
-No model IDs change until that eval lands.
+No model IDs change until that eval lands. Human grades stay the verdict —
+auto-metrics below are assistants, never judges.
+
+## Phase 7b — Auto-metrics for Low/Med/High (read all three repos Sep 2026)
+- **AlignScore** (MIT, clean; `yuh-zha/AlignScore`, RoBERTa-base 125M / large
+  355M, torch + spacy + checkpoint download, GPU preferred): claim-vs-context
+  factual check. Use: Low turn = claim, High turn + profile = context. Catches
+  invented content and contradictions (= meaning drift, our "simplify language,
+  not ideas" line). Sees NOTHING about simplicity, voice, or omissions.
+  Adopt as the every-session meaning guardrail; flag low scores for human review.
+- **LENS-SALSA** (Apache-2.0, clean; `davidheineman/salsa`, `pip install
+  lens-metric` + HF `davidheineman/lens-salsa` weights, GPU): REFERENCELESS
+  source→rewrite scorer with word-level error tags. Strongest fit — scores our
+  own High→Low pairs with no refs, and error tags map onto leaked hard terms.
+  Calibrate first: run on one past Low session, adopt as leak detector only if
+  its tags agree with the owner's leaked-term list (generic-simplification
+  training may misread philosophical voice).
+- **ASSET + EASSE** (idea yes, dependency no): ASSET is 2,359 Wikipedia
+  sentences × 10 refs with SARI — wrong genre for multi-sentence philosophical
+  turns, and SARI would punish High voice if misapplied. EASSE is 2019-era,
+  Python 3.6/7 deps (likely bit-rot) and GPL-3.0 (never a repo dependency —
+  external script only). Adopt the method, not the package: owner writes 3–5
+  plain refs for ~20 sampled High sentences, SARI-score Low/Med rewrites,
+  optional one-off EASSE run outside the repo.
 
 ## Phase 8 — Content-agnostic template repo (planned, not yet scaffolded)
 Not `cabinet-template`: name should carry the advantages. Owner pick —
@@ -485,6 +508,16 @@ influence debts. Ship as bare Vite shell + seven modules + one "how to tweak"
 doc per module, public on GitHub.
 
 ## Missing-features backlog (considered, not yet scheduled)
+Favicon ("little icon on the tab"): ship `public/favicon-32x32.png` (32×32,
+the tab), `public/apple-touch-icon.png` (180×180, iOS bookmarks), optional
+inline SVG data-URI (scalable, no file), plus 192×192 + 512×512 manifest icons
+for Android — then add the `<link>` tags in `index.html` (tags last, once art
+exists, never pointing at missing files). Art needed from owner (one letter in
+house serif on parchment does the job).
+og-image recompose: file IS 1200×630 and meta tags are correct — but the
+artwork is a portrait panel centred with big empty brown sides. Recompose to
+FILL the landscape frame (e.g. title left, table screenshot right), keep
+1200×630 JPG, no code change.
 Rotation/recovery doc (keys, quota, rollback markers — standing rule says write
 before needed); LICENSE file for sharing; print/export-PDF stylesheet; session
 resume + shareable URL hash; transcript search; per-seat mute; live cost
