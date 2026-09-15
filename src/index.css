@@ -691,7 +691,6 @@ body {
 #gen-arrow-indirect path { fill: var(--gen-gold); }
 .gen-poly-direct { fill: var(--gen-crimson); }
 .gen-poly-indirect { fill: var(--gen-gold); }
-.gen-spine { stroke: var(--gen-gold); }
 .gen-node-circle { fill: var(--gen-node-fill); stroke: var(--gen-ring); }
 .gen-node-initial { fill: var(--gen-ink); font-family: var(--font-heading); }
 .gen-node-name {

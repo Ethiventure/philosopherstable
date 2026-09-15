@@ -102,7 +102,7 @@ export const MARX: PhilosopherDefinition = {
       'Anarchism for rejecting political organisation and the state question',
     ],
 
-    known_influences: ['Spinoza (hand-copied the TTP in youth — critique of superstition, democratic blueprint)', 'Hegel (dialectics, critically inverted)', 'Feuerbach (materialism, critically)', 'British political economy (Smith, Ricardo)', 'French socialism (Saint-Simon, Fourier)', 'Ancient philosophy (Aristotle, Epicurus)'],
+    known_influences: ['Spinoza (hand-copied the TTP in youth — critique of superstition, democratic blueprint)', 'Hegel (dialectics, critically inverted)', 'Kant (indirectly, through Hegel and Feuerbach)', 'Feuerbach (materialism, critically)', 'British political economy (Smith, Ricardo)', 'French socialism (Saint-Simon, Fourier)', 'Ancient philosophy (Aristotle, Epicurus)'],
     known_antagonists: ['Hegel (on idealism)', 'Proudhon (on political economy)', 'Bakunin (on the state and organisation)', 'Lassalle (on the iron law of wages)', 'Bourgeois political economy generally'],
 
     methodological_habits: [

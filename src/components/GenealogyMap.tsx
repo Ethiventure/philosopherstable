@@ -17,7 +17,11 @@ interface Edge extends GeomEdge {
 }
 
 const ALL_EDGES: Edge[] = Object.entries(CABINET_DEBTS).flatMap(([debtor, debts]) =>
-  debts.map((d) => ({ from: d.to, to: debtor, kind: d.kind, stance: d.stance, note: d.note })),
+  debts
+    // Same ordered pair holding both kinds: the direct thread wins, the
+    // dotted one is dropped so a debt never reads twice.
+    .filter((d) => d.kind === 'direct' || !debts.some((o) => o.to === d.to && o.kind === 'direct'))
+    .map((d) => ({ from: d.to, to: debtor, kind: d.kind, stance: d.stance, note: d.note })),
 );
 
 /** Line treatment per edge: kind sets solid/dashed. Stance lives in the data
@@ -124,10 +128,26 @@ export default function GenealogyMap({
             const stanceWord = e.stance === 'positive' ? 'embraces' : e.stance === 'critical' ? 'attacks' : 'mixed';
             const fromName = PHILOSOPHER_BY_SLUG[e.from]?.full_name ?? e.from;
             const toName = PHILOSOPHER_BY_SLUG[e.to]?.full_name ?? e.to;
+            const d = genEdgePath(ALL_EDGES, e.from, e.to, genLateralShift(ALL_EDGES, e));
+            // Indirect threads get a ground-coloured underlay so the dashes
+            // read cleanly: on a shared spine (e.g. Bogdanov→Weil over
+            // Marx→Weil) no solid pink shows through the gaps.
+            const under = e.kind === 'indirect' ? (
+              <path
+                key={`${e.from}-${e.to}-${i}-under`}
+                d={d}
+                fill="none"
+                stroke="var(--gen-ground)"
+                strokeWidth={st.w + 3.4}
+                opacity={1}
+              />
+            ) : null;
             return (
+              <>
+                {under}
               <path
                 key={`${e.from}-${e.to}-${i}`}
-                d={genEdgePath(ALL_EDGES, e.from, e.to, genLateralShift(ALL_EDGES, e))}
+                d={d}
                 fill="none"
                 className={st.cls}
                 strokeWidth={st.w}

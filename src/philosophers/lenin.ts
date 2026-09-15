@@ -98,7 +98,7 @@ export const LENIN: PhilosopherDefinition = {
       'Dogmatism — applying formulas without analysing concrete conditions',
     ],
 
-    known_influences: ['Marx (critically developed)', 'Engels', 'Plekhanov', 'Hegel (Logic notebooks, directly)', 'Chernyshevsky'],
+    known_influences: ['Marx (critically developed)', 'Engels', 'Plekhanov', 'Hegel (Logic notebooks, directly)', 'Kant (critically — the thing-in-itself taken apart in Materialism and Empirio-criticism)', 'Chernyshevsky'],
     known_antagonists: ['Kautsky (reformism)', 'Bernstein (revisionism)', 'Mensheviks (class collaboration)', 'Anarchists (on the state)', 'Bogdanov (on philosophy and organisation)'],
 
     methodological_habits: [

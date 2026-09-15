@@ -219,7 +219,8 @@ with it instead — every seat speaks once per pass and gets critiqued.
    on it through its framework, never quoting it (five-word rule names the
    question; opening turn and desk and coda carry the same order).
 2. Full text of the previous intervention (PREV) — the only other voice
-   the speaker ever sees (passes 1–2).
+the speaker ever sees (passes 1–2), plus the pair's relationship line
+where the influence map holds one (`relationshipLine` — honour/rupture/theft).
 3. Speaker's own prior turns (one-line summaries): *"Do not restate your prior
    position. Name it in one clause and show how it has shifted."* Anti-
    self-repetition only; no other history is passed.

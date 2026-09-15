@@ -23,7 +23,7 @@ import {
 import { supabase } from '@/lib/supabase';
 import { CORPUS_SOURCES_DATA } from '@/data/corpus-sources';
 import { DEFAULT_SEATING_ORDER, PHILOSOPHER_BY_SLUG, PHILOSOPHER_DATA, renderPersona } from '@/philosophers';
-import { CABINET_DEBTS, cabinetHeirs } from '@/philosophers/influences';
+import { CABINET_DEBTS, cabinetHeirs, relationshipLine } from '@/philosophers/influences';
 import {
   DEFAULT_ACCESSIBILITY,
   PASS_DESCRIPTIONS,
@@ -549,6 +549,11 @@ function App() {
         : seats.find((s) => s.id === prevItem.philosopher_id) ?? null;
       const isFinalTurn = pass === 2 && index === seats.length - 1;
       const kind = getTurnKind(pass + 1, index + 1);
+      // The pair's history rides along: where the map holds a debt between
+      // speaker and PREV (either direction), the turn meets them through it.
+      const pairHistory = previousSpeaker
+        ? relationshipLine(speaker.slug, previousSpeaker.slug, previousSpeaker.name, snap.intensity === 'low')
+        : null;
       const ownPriorLines = collected
         .filter((item) => item.philosopher_id === speaker.id && item.sections?.new_contribution)
         .map((item) => String(item.sections?.new_contribution));
@@ -651,6 +656,7 @@ function App() {
         buildUserMessage({
           question,
           prevText,
+          relationshipLine: pairHistory,
           ownPriorLines,
           // Lean ration on shared/Groq: the margins note (first when present)
           // plus five seats — the full survey can't fit Groq's free-tier wall.
@@ -1540,6 +1546,7 @@ function SettingsDrawer({ philosophers, activeSlugs, togglePhilosopher, settings
                 <button role="radio" aria-checked={settings.intensity === 'medium'} title="The standard seminar — important terms kept and explained." onClick={() => onSettingsChange({ ...settings, intensity: 'medium' })} className={`btn-secondary capitalize ${settings.intensity === 'medium' ? '!border-[#8b5254] !text-[#8b5254]' : ''}`}>Medium</button>
                 <button role="radio" aria-checked={settings.intensity === 'high'} title="Full voice — authentic vocabulary, hostile where the author warrants it." onClick={() => onSettingsChange({ ...settings, intensity: 'high' })} className={`btn-secondary capitalize ${settings.intensity === 'high' ? '!border-[#8b5254] !text-[#8b5254]' : ''}`}>High</button>
               </div>
+              {settings.intensity === 'medium' && <p className="text-xs italic text-[#8b5254]">Medium sends the most tokens of any level — pricier on metered keys and likelier to strain free-tier limits than Low or High.</p>}
               <label className="flex items-center gap-3 text-[15px] text-[#465f75] pt-1" title="Longer turns: about 280 words each instead of 100. A 12-minute read becomes a 30-minute one."><input type="checkbox" checked={settings.longForm} onChange={(event) => onSettingsChange({ ...settings, longForm: event.target.checked })} className="w-4 h-4 accent-[#8b5254]" /> Long form (~280 words/turn instead of ~100)</label>
               <span className="font-heading text-sm uppercase tracking-[0.16em] text-[#4a392d] pt-2 block" title="How much of the previous turn is re-sent each call. The shown transcript and export always stay whole.">Turn economy</span>
               <div className="flex gap-2" role="radiogroup" aria-label="Turn economy">
