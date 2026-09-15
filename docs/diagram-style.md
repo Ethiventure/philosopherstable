@@ -1,10 +1,13 @@
-# Genealogy diagram — style, preferences, and quick-start
+# Node-and-debt diagram — style, preferences, and quick-start
 
-Content-agnostic recipe for node-and-debt diagrams. Implementation pointers
-naming this repo's files are marked [repo]; everything else transfers to any
-UI scheme. Data contract always: a debts table is the single source of
-truth; heirs derive; a generator script exports the audit grid and fails
-loudly on drift.
+Content-agnostic recipe for relationship diagrams on any topic (people,
+texts, systems, events — anything with nodes and directed debts). It was
+built for a genealogy of thinkers but depends on none of that content:
+substitute any entities, any axis (time or otherwise). Implementation
+pointers naming this repo's files are marked [repo]; everything else
+transfers to any UI scheme. Data contract always: a debts table is the
+single source of truth; heirs derive; a generator script exports the audit
+grid and fails loudly on drift.
 
 ## Fixed dark cabinet (hard rule)
 
@@ -28,84 +31,97 @@ are the spec and survive any reskin:
 | Ink (names, initials, heading) | the scheme's light ink, full strength |
 | Rings | one muted cool metal (sage/teal family), lifted until it passes on the fill |
 | Direct lines + arrows | the scheme's warm accent (rose/crimson family) |
-| Indirect lines + arrows, spine | the scheme's gold, deepened until it passes on the ground |
+| Indirect lines + arrows | the scheme's gold, deepened until it passes on the ground |
 | Muted text | base ink dimmed to 60–85%, weakest pair still ≥ 4.5 |
 
 Monochrome nodes always: one ring metal, one ink — never per-entity colours.
 
 ## Layout (current instantiation [repo]; roles are the spec)
 
-- Time runs top-to-bottom down a central spine at x=352. Spinoza opens on
-  the spine (60), Deleuze (535) and Fisher (630) close on it — both ends
-  mirror. Middle seats alternate left (x=210) / right (x=494) in
-  chronological pairs, rows at y = 60, 155, 250, 345, 440, 535, 630.
-- Node radius 22; arrows land on rims (offset 27) along the arrival tangent,
-  never buried, never floating. Labels: names only, no dates or metadata.
+- Order runs top-to-bottom: one opening seat on the central axis, paired
+  seats alternating left / right down the rows, closing seats back on the
+  axis — both ends mirror. ([repo]: axis x=352; sides x=210 / x=494;
+  rows y = 60, 155, 250, 345, 440, 535, 630.)
+- Node radius 22; arrows land on rims (offset 27) along the arrival
+  direction, never buried, never floating. Labels: names only, no dates or
+  metadata.
 - Type: the scheme's display face; least-connected seat at standard body 16px,
   +2px per extra connection (in or out). Halo behind labels in ground
   colour so lines pass behind text.
-- No drawn spine: the edges themselves trace the descent. Alignment still
-  runs down the central axis — nothing sticks out past either end circle.
+- No drawn spine, ever: a drawn line implies one continuous transmission,
+  which is not an evidenced claim. The threads themselves form the spines.
+  Nothing sticks out past either end circle.
 
-## Curves (one family)
+## Lines (straight-spine design — the default)
 
-- All free curves are S-curves leaving and arriving along the flow of years.
-  Mirror rule in two parts: edges crossing the axis follow travel direction
-  (rightward bellies right, leftward bellies left), so crossing pairs
-  reflect; edges staying one side drape toward the centre. Bow depth ∝
-  span, capped before looping. Same-row pairs get one gentle bow below.
-  Stacked dotted tracks nest by span (shallowest hop innermost) so every
-  debt keeps its own arrow.
-  Backward feuds arc to the debtor's side, never
-  dipping past either seat.
-- The spine trio keeps fixed characters (showcase S-curves with opposed
-  controls, never ruled straight: Deleuze echoes Fisher's right-first
-  gesture at smaller amplitude so the pair nests, Fisher sweeps right
-  before diving wide left around Deleuze's circle, the finale
-  nearly straight). Verticals sharing a track: dashed steps spine-side and drapes
-  with the rest; blocked verticals swing wide clear (peaks ~25px+ off every
-  circle — never a near-miss).
-- Left/right pairs mirror about the axis — check reflection, never one side
-  alone. Crossings are fine; overlaps and near-misses are bugs.
-- Edge kinds are absolute: solid = direct, dashed = indirect. Stance lives
-  in data and tooltips, never in rendering.
+Precisely how to draw it:
+
+1. Every debt draws exactly one straight segment: `M creditor-centre L
+   heir-rim`, where the rim point is the heir's centre pulled back 27px
+   along the segment's own direction (so the arrowhead lands on the rim,
+   continuing the line — never buried, never floating, never kinked on).
+2. Same-side debts therefore run exactly down the left, central or right
+   spine. They WILL overlap there. That is accepted by design, never routed
+   around: the full edge list beside the diagram carries complete
+   understanding, so the drawing optimises for calm, not provability.
+3. Cross-axis debts run straight diagonally, rim to rim, with no bow.
+4. Crowded heirs may assign explicit fanned rim points ([repo]
+   `GEN_RIM_POINTS`) so arrowheads never share one tip. Fan within the
+   available rim; never move the node.
+5. Kind sets treatment only: solid warm accent = direct, dashed gold =
+   indirect ([repo] dash `5 4`). Critical direct debts sit back slightly
+   ([repo] opacity 0.9 vs 0.8). Stance lives in data and tooltips, never in
+   geometry.
+6. Thin strokes throughout ([repo] 1.3 direct / 1.1 indirect): the nodes
+   dominate, the lines are threads.
+
+## Lines (S-curve variant — simple diagrams only)
+
+When the diagram is small (roughly ≤ 15 debts) and the canvas is uncrowded,
+single-gesture S-curves may read more elegantly than straight threads:
+
+- One belly per debt, never a curve that changes its mind mid-flight;
+  amplitude in three capped buckets by span (short / medium / long).
+- Sides mirror by travel direction (rightward bellies right, leftward
+  bellies left); same-side debts drape toward the centre.
+- Opposed controls give the S; thin strokes and fanned rims as above.
+- Rule of thumb: if any two threads overlap for most of their length, the
+  diagram is no longer simple — switch back to straight spines.
 
 ## Priority order (never sacrifice a higher rule for a lower one)
 
 ```text
-1. Historical accuracy
+1. Factual accuracy (the debts table is truth)
 2. Correct relationship direction and type
-3. Chronological/layout constraints
+3. Ordering/layout constraints
 4. Legibility
 5. Node clearance and collision avoidance
 6. Symmetrical visual balance
-7. Graceful S-curve composition
+7. Graceful line composition
 8. Decorative refinement
 ```
 
 The renderer must never alter factual data to improve visual symmetry.
-Symmetry is a design preference, not a historical claim.
+Symmetry is a design preference, not a factual claim.
 
 ## Visual specification (what the human sees)
 
-The genealogy uses graceful S-curves, symmetrical composition, nested
-parallel tracks, tangential arrowheads and deliberate negative space.
-Left and right feel visually balanced. Long relationships may use deeper
-S-curves. Crossings are acceptable but appear deliberate rather than
-clustered. Ornamental and scholarly, still easy to follow. Mirror
-balance, not mirror blindness: geometrically equivalent edges mirror;
-different node layouts may diverge.
+Straight threads on shared spines, symmetrical composition, fanned
+arrowheads and deliberate negative space. Left and right feel visually
+balanced. Same-spine overlaps read as one calm channel with the text list
+beside it for exactness. Crossings are acceptable but appear deliberate
+rather than clustered. Ornamental and scholarly, still easy to follow.
 
 ## Geometry specification (what the code may do)
 
 Node positions and factual edges are authoritative. The routing engine
-may alter control points, lateral displacement, track assignment,
-crossing position and rim arrival point. It must not alter edge
-identity, direction, type or node position. Obstacle avoidance precedes
-aesthetic optimisation. Symmetry is a soft constraint. S-curve geometry
-is preferred but may bend for obstacle avoidance or edge separation.
-Geometry stays independent of node names and historical identities;
-unavoidable exceptions are documented and justified.
+may alter rim arrival points and nothing else in straight-spine mode (no
+control points exist). In the S-curve variant it may also alter control
+points, lateral displacement, track assignment and crossing position. It
+must never alter edge identity, direction, type or node position.
+Clearance exemptions must be explicit and documented (e.g. accepted
+same-spine overlap). Geometry stays independent of node names and
+identities; unavoidable exceptions are documented and justified.
 
 ## Data contract [repo]
 

@@ -26,12 +26,12 @@ function edgeStyle(e: Edge): { w: number; o: number; stroke: string; dash?: stri
   // D- (direct-critical) debts sit back at 80% transparency so breaks
   // read as quieter than carried-forward lines. Kind still sets solid/dashed.
   if (e.kind === 'direct' && e.stance === 'critical') {
-    return { w: 1.4, o: 0.2, cls: 'gen-edge gen-edge-direct', marker: 'url(#gen-arrow-direct)' };
+    return { w: 1.1, o: 0.9, cls: 'gen-edge gen-edge-direct', marker: 'url(#gen-arrow-direct)' };
   }
   if (e.kind === 'indirect') {
-    return { w: 1.4, o: 0.8, cls: 'gen-edge gen-edge-indirect', dash: '5 4', marker: 'url(#gen-arrow-indirect)' };
+    return { w: 1.1, o: 0.8, cls: 'gen-edge gen-edge-indirect', dash: '5 4', marker: 'url(#gen-arrow-indirect)' };
   }
-  return { w: 1.6, o: 0.8, cls: 'gen-edge gen-edge-direct', marker: 'url(#gen-arrow-direct)' };
+  return { w: 1.3, o: 0.8, cls: 'gen-edge gen-edge-direct', marker: 'url(#gen-arrow-direct)' };
 }
 
 // Layout geometry lives in `@/lib/genealogy-layout` (shared with the

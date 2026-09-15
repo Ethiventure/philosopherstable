@@ -81,10 +81,32 @@ export function genTrackRank(edges: GeomEdge[], fromSlug: string, shift: number,
   return spans.filter((s) => s < span - 1).length;
 }
 
-/** Unison prototype flag: cross-axis S-curves all belly one way (right)
- *  instead of mirroring by travel direction. Flip to false to restore the
- *  mirrored version for screenshot comparison. */
-export const UNISON_PROTO = true;
+/** Straight-spine mode: every debt draws one straight thread from creditor
+ *  to heir rim. Same-side debts run exactly down the left (x=210), right
+ *  (x=494) or central (x=352) spine and may overlap — overlap there is
+ *  accepted, the text list carries full understanding. */
+export const STRAIGHT_SPINES = true;
+
+/** Lane index among free-line debts leaving the same creditor: keeps
+ *  same-source threads from collapsing into one apparent line now that
+ *  amplitude comes in shared buckets. */
+function braidLane(edges: GeomEdge[], fromSlug: string, toSlug: string): number {
+  const spans = edges
+    .filter((o) => o.from === fromSlug && genNodePos(o.to).x !== genNodePos(o.from).x)
+    .map((o) => Math.abs(genNodePos(o.to).y - genNodePos(o.from).y))
+    .sort((p, q) => p - q);
+  const span = Math.abs(genNodePos(toSlug).y - genNodePos(fromSlug).y);
+  return spans.filter((s) => s < span - 1).length;
+}
+
+/** Deterministic stagger so neighbouring threads cross at different
+ *  heights: small offset derived from the edge key, no randomness. */
+function braidPhase(fromSlug: string, toSlug: string): number {
+  const key = `${fromSlug}→${toSlug}`;
+  let h = 0;
+  for (let i = 0; i < key.length; i++) h = (h * 31 + key.charCodeAt(i)) % 97;
+  return ((h % 5) - 2) * 6;
+}
 
 /** Corridor prototype flag: left-vertical family (x=210) gets span-ranked
  *  S corridors instead of the old shift/nest split. Flip to false to compare
@@ -128,20 +150,32 @@ export const GEN_RIM_POINTS: Record<string, [number, number]> = {
  *  family rules would drive them through. Keep empty unless the checker
  *  demands it — every entry here is a reviewed exception. */
 export const GEN_BOW_EXTRA: Record<string, number> = {
-  // Marx→Fisher must clear Deleuze's circle on its way to the left rim.
-  'marx→fisher': -70,
-  // Kant→Fisher ditto, shallower (different corridor depth keeps the pair apart).
-  'kant→fisher': -100,
-  // Hegel→Weil threads Bogdanov's circle under the family rule — swing right.
-  'hegel→weil': 92,
-  // Fisher→Bloch would climb straight through Deleuze and Bookchin's
-  // circles — swing east around both instead.
-  'fisher→bloch': 140,
+  // Fisher lanes nest inside as S-threads (longer debt runs deeper),
+  // clearing Deleuze's circle on the way to their rim points.
+  'marx→fisher': 15,
+  'kant→fisher': 30,
+  // Hegel→Weil nests with the mirrored family; no extra needed.
+  'hegel→weil': 0,
+  // Fisher→Bloch climbs past Deleuze and Bookchin's circles with the
+  // standard mid bow — no extra needed.
+  'fisher→bloch': 0,
 };
 
 export function genEdgePath(edges: GeomEdge[], fromSlug: string, toSlug: string, shift = 0): string {
   const a = genNodePos(fromSlug);
   const b = genNodePos(toSlug);
+  if (STRAIGHT_SPINES) {
+    // One straight thread, ending at the heir's rim along the line's own
+    // direction (or a fanned rim point where one is assigned).
+    const rim = GEN_RIM_POINTS[`${fromSlug}→${toSlug}`];
+    if (rim) return `M ${a.x} ${a.y} L ${rim[0]} ${rim[1]}`;
+    const vx = b.x - a.x;
+    const vy = b.y - a.y;
+    const len = Math.hypot(vx, vy) || 1;
+    const ex = b.x - (vx / len) * GEN_RIM;
+    const ey = b.y - (vy / len) * GEN_RIM;
+    return `M ${a.x} ${a.y} L ${ex.toFixed(1)} ${ey.toFixed(1)}`;
+  }
   const ax = a.x + shift;
   const bx = b.x + shift;
   const dx = bx - ax;
@@ -222,21 +256,32 @@ export function genEdgePath(edges: GeomEdge[], fromSlug: string, toSlug: string,
     const tl = Math.hypot(tx, ty) || 1;
     return `M ${a.x} ${a.y} C ${mx1.toFixed(1)} ${a.y.toFixed(1)}, ${mx2.toFixed(1)} ${cy.toFixed(1)}, ${(b.x - (tx / tl) * GEN_RIM).toFixed(1)} ${(b.y - (ty / tl) * GEN_RIM).toFixed(1)}`;
   }
-  // Every other free line is an S-curve, leaving and arriving along the flow
-  // of years. Unison rule (prototype): edges crossing the axis ALL belly
-  // the same way (right), so crossings meet as glancing overlaps instead
-  // of head-on collisions; edges staying one side drape toward the centre.
-  // The right-vertical family keeps its own corridors above and never
-  // reaches this branch. Bow depth ∝ span, capped before looping.
+  // Braid family: true nested S-curves with opposed controls. Sides
+  // mirror by travel direction (rightward bellies right, leftward bellies
+  // left) so each thread keeps one continuous gesture and neighbouring
+  // threads nest instead of colliding. Amplitude comes in three calm
+  // buckets by span; a small per-edge phase staggers crossings down the
+  // axis. The vertical families keep their own corridors above and never
+  // reach this branch.
   const bend = Math.max(30, Math.abs(dy) / 2);
   const dir = Math.sign(dy) || 1;
   const span = Math.abs(dy);
-  const bow = span <= 100 ? 0 : Math.min(60, (span - 100) * 0.25);
-  const crosses = (a.x - GEN_SPINE_X) * (b.x - GEN_SPINE_X) < 0;
-  const side = UNISON_PROTO && crosses ? 1 : crosses ? (dx >= 0 ? 1 : -1) : ((a.x + b.x) / 2 < GEN_SPINE_X ? 1 : -1);
+  const bow = BRAID_PROTO
+    ? span <= 140 ? 18 : span <= 260 ? 34 : 48
+    : span <= 100 ? 0 : Math.min(60, (span - 100) * 0.25);
+  const side = dx >= 0 ? 1 : -1;
   const ox = side * bow + (GEN_BOW_EXTRA[`${fromSlug}→${toSlug}`] ?? 0);
   const rim = GEN_RIM_POINTS[`${fromSlug}→${toSlug}`];
   const ex = rim ? rim[0] : bx;
   const ey = rim ? rim[1] : b.y - dir * GEN_RIM;
-  return `M ${ax} ${a.y} C ${ax + ox} ${a.y + dir * bend}, ${bx + ox} ${b.y - dir * bend}, ${ex} ${ey}`;
+  if (!BRAID_PROTO) {
+    return `M ${ax} ${a.y} C ${ax + ox} ${a.y + dir * bend}, ${bx + ox} ${b.y - dir * bend}, ${ex} ${ey}`;
+  }
+  // Opposed controls: first bows with travel, second counters, so the
+  // thread flows S-like through the middle instead of arcing one way.
+  const ph = braidPhase(fromSlug, toSlug);
+  const lane = (braidLane(edges, fromSlug, toSlug) % 3 - 1) * 10;
+  const c1x = ax + ox + lane;
+  const c2x = bx - ox * 0.7 + lane;
+  return `M ${ax} ${a.y} C ${c1x} ${a.y + dir * bend + ph}, ${c2x} ${b.y - dir * bend + ph}, ${ex} ${ey}`;
 }
