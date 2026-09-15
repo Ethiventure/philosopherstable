@@ -17,6 +17,21 @@ const ALL_EDGES: Edge[] = Object.entries(CABINET_DEBTS).flatMap(([debtor, debts]
 const W = 1160;
 const NODE_R = 22;
 
+// Label size: standard body (16px) for the least-connected seat, +2px per
+// extra connection. Degree counts every debt in or out.
+const DEGREE: Record<string, number> = Object.fromEntries(
+  Object.keys(PHILOSOPHER_BY_SLUG).map((slug) => [
+    slug,
+    ALL_EDGES.filter((e) => e.from === slug || e.to === slug).length,
+  ]),
+);
+const MIN_DEGREE = Math.min(...Object.values(DEGREE));
+const BASE_LABEL = 16;
+
+function labelSize(slug: string): number {
+  return BASE_LABEL + 2 * ((DEGREE[slug] ?? 0) - MIN_DEGREE);
+}
+
 function nodePos(index: number): { x: number; y: number } {
   const x = 60 + index * 104;
   const y = index % 2 === 0 ? 105 : 225;
@@ -74,10 +89,10 @@ export default function GenealogyMap({
 
       <div className="overflow-x-auto custom-scroll mt-4 -mx-1 px-1" tabIndex={0} aria-label="Genealogy diagram, scrollable horizontally on small screens">
         <svg
-          viewBox={`0 0 ${W} 300`}
+          viewBox={`0 -110 ${W} 430`}
           className="w-full min-w-[720px] h-auto"
           role="img"
-          aria-label={`Genealogy of influence across ${order.length} thinkers, Spinoza to Fisher. ${ALL_EDGES.length} debts shown.`}
+          aria-label={`Genealogy of influence across ${order.length} thinkers, Spinoza to Fisher. ${ALL_EDGES.length} debts shown. Name size grows with connections: smallest names at body size, 2 points larger per extra connection.`}
         >
           <defs>
             <marker id="gen-arrow-direct" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
@@ -115,14 +130,14 @@ export default function GenealogyMap({
             const def = PHILOSOPHER_BY_SLUG[slug];
             const live = bySlug(slug);
             const { x, y } = nodePos(i);
-            const label = `${def.full_name}, ${def.birth_year}–${def.death_year}`;
+            const label = `${def.full_name}, ${def.birth_year}–${def.death_year}, ${DEGREE[slug] ?? 0} connections`;
             return (
               <g
                 key={slug}
                 transform={`translate(${x}, ${y})`}
                 tabIndex={0}
                 role="button"
-                aria-label={`${label}. Activate to open profile.`}
+                aria-label={`${label}. Name shown at ${labelSize(slug)} points. Activate to open profile.`}
                 className="genealogy-node"
                 style={{ cursor: live ? 'pointer' : 'default' }}
                 onClick={() => live && onSelect(live)}
@@ -151,8 +166,9 @@ export default function GenealogyMap({
                 </text>
                 <text
                   textAnchor="middle"
-                  y={NODE_R + 18}
-                  fontSize="13.5"
+                  y={NODE_R + 20}
+                  fontSize={labelSize(slug)}
+                  fontWeight={700}
                   style={{ fontFamily: 'var(--font-heading)', fill: 'var(--color-main)' }}
                   aria-hidden="true"
                 >
