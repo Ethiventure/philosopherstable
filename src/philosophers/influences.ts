@@ -8,7 +8,10 @@
  * indirect = arrived through intermediaries or a wider tradition.
  * stance = the debtor's attitude: positive (carries forward), critical
  * (attacks or breaks), ambivalent (mixed or unclear). Grid codes combine
- * both: D+/D−/D and I+/I−/I, N for no evidenced link.
+ * both: D+/D-/D and I+/I-/I, N for no evidenced link. N means "cannot
+ * currently demonstrate under these rules" — never "unrelated". Chat
+ * evidence from the owner outranks both the repo's prior text and any
+ * outside model; the notes say whose evidence each link stands on.
  * Only links with evidence are listed. The Bloch→Bookchin link is
  * documentary: Bookchin cites and quotes The Principle of Hope in The
  * Ecology of Freedom (Ch. 12) — alliance technology, co-productivity of
@@ -17,9 +20,10 @@
  * "desiring-machines" as the lifestyle mood made flesh. No Bookchin link to
  * Bogdanov is claimed: Bertalanffy's GST cites no Bogdanov, direct
  * Tektology→GST influence is unproven, and no Bookchin reading of
- * Bertalanffy is documented. No Deleuze link to Bloch is claimed either:
- * full-text checks of Anti-Oedipus and A Thousand Plateaus find zero Ernst
- * Bloch (the two "Bloch" hits are Jules Bloch the linguist).
+ * Bertalanffy is documented. Deleuze→Bloch is direct but bare: a single
+ * Ernst Bloch mention in What Is Philosophy? (p.100) — contact, not debt
+ * (full-text checks of Anti-Oedipus and A Thousand Plateaus find zero Ernst
+ * Bloch; the two "Bloch" hits there are Jules Bloch the linguist).
  * Deleuze→Lenin is direct and substantive: Anti-Oedipus honours the
  * Leninist break while refusing the father-function, and A Thousand Plateaus
  * studies Lenin's "On Slogans" ("the Leninist wager, an act of audacity").
@@ -67,6 +71,7 @@ export const CABINET_DEBTS: Record<string, CabinetDebt[]> = {
     { to: 'marx', kind: 'direct', stance: 'positive', note: 'developed Marx into a theory of party and revolution' },
     { to: 'hegel', kind: 'direct', stance: 'positive', note: 'read the Logic cover to cover in 1914–15' },
     { to: 'kant', kind: 'direct', stance: 'critical', note: 'took the thing-in-itself apart in Materialism and Empirio-criticism — knowable, not unknowable' },
+    { to: 'bogdanov', kind: 'direct', stance: 'critical', note: 'read closely in order to refute — Materialism and Empirio-criticism (1909) is aimed largely at Bogdanov, then expelled him from the Bolsheviks' },
   ],
   bogdanov: [
     { to: 'marx', kind: 'direct', stance: 'positive', note: 'rebuilt Marxism as a science of organisation' },
@@ -131,4 +136,30 @@ export function cabinetHeirs(slug: string): CabinetHeir[] {
     }
   }
   return out;
+}
+
+/**
+ * The relationship line a turn carries about its immediate predecessor:
+ * turns always address PREV, so the speaker meets them with the real history
+ * between the seats — honour, rupture, or theft, in the speaker's own terms.
+ * Null when the pair has no evidenced link (most pairs): the turn then runs
+ * on live argument alone. Low appends a plain-words order since debt notes
+ * may carry school-terms.
+ */
+export function relationshipLine(
+  speakerSlug: string,
+  prevSlug: string,
+  prevName: string,
+  low: boolean,
+): string | null {
+  const plain = low ? ' Render any hard terms here into plain everyday words.' : '';
+  const owed = (CABINET_DEBTS[speakerSlug] ?? []).find((d) => d.to === prevSlug);
+  if (owed) {
+    return `YOUR DEBT — you owe ${prevName} this: ${owed.note}. Let that history colour this meeting: honour it, rupture it, or steal from it, in your own terms.${plain}`;
+  }
+  const owing = (CABINET_DEBTS[prevSlug] ?? []).find((d) => d.to === speakerSlug);
+  if (owing) {
+    return `${prevName} OWES YOU this: ${owing.note}. They come to you already shaped by it — answer them in light of that, in your own terms.${plain}`;
+  }
+  return null;
 }

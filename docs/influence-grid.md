@@ -7,7 +7,8 @@ any debt change.
 D = direct (read closely and answered, criticism and ruptures count) ·
 I = indirect (through intermediaries or the wider tradition) ·
 + embraces and carries forward · − attacks or breaks · bare is mixed ·
-N = no evidenced link · — = self.
+N = no evidenced link (cannot currently demonstrate — not "unrelated") ·
+— = self.
 
 | debtor ↓ / creditor → | Spinoza | Kant | Hegel | Marx | Lenin | Bogdanov | Bloch | Weil | Bookchin | Deleuze | Fisher |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
@@ -15,7 +16,7 @@ N = no evidenced link · — = self.
 | **Kant** | D- | — | N | N | N | N | N | N | N | N | N |
 | **Hegel** | D+ | D- | — | N | N | N | N | N | N | N | N |
 | **Marx** | D+ | I | D | — | N | N | N | N | N | N | N |
-| **Lenin** | N | D- | D+ | D+ | — | N | N | N | N | N | N |
+| **Lenin** | N | D- | D+ | D+ | — | D- | N | N | N | N | N |
 | **Bogdanov** | N | I | D+ | D+ | D- | — | N | N | N | N | N |
 | **Bloch** | D+ | D+ | D | D+ | N | N | — | N | N | N | N |
 | **Weil** | D | D | D- | D | D- | I | N | — | N | N | N |
@@ -31,8 +32,8 @@ N = no evidenced link · — = self.
 | **Kant** | 1 | 9 | 10 |
 | **Hegel** | 2 | 7 | 9 |
 | **Marx** | 3 | 7 | 10 |
-| **Lenin** | 3 | 4 | 7 |
-| **Bogdanov** | 4 | 1 | 5 |
+| **Lenin** | 4 | 4 | 8 |
+| **Bogdanov** | 4 | 2 | 6 |
 | **Bloch** | 4 | 3 | 7 |
 | **Weil** | 6 | 0 | 6 |
 | **Bookchin** | 7 | 0 | 7 |
