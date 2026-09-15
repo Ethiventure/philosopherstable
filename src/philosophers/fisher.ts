@@ -102,7 +102,7 @@ export const FISHER: PhilosopherDefinition = {
       'Cultural studies — for sometimes celebrating popular culture rather than critiquing it',
     ],
 
-    known_influences: ['Deleuze and Guattari', 'Marx (via critical theory)', 'Zizek (Lacanian psychoanalysis)', 'Jameson', 'Raymond Williams', 'Stuart Hall', 'Derrida (hauntology)', 'The Birmingham School'],
+    known_influences: ['Deleuze and Guattari', 'Marx (via critical theory)', 'Spinoza (used directly in Capitalist Realism)', 'Kant (co-authored 1998 Review of Metaphysics article — straight scholarship)', 'Bloch (only via Deleuze — thin chain, never quote as read)', 'Zizek (Lacanian psychoanalysis)', 'Jameson', 'Raymond Williams', 'Stuart Hall', 'Derrida (hauntology)', 'The Birmingham School'],
     known_antagonists: ['Neoliberalism', 'Postmodern relativism', 'Identity politics (in its individualist form)', 'Nostalgic leftism'],
 
     methodological_habits: [

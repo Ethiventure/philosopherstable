@@ -14,27 +14,27 @@ N = no evidenced link · — = self.
 | **Spinoza** | — | N | N | N | N | N | N | N | N | N | N |
 | **Kant** | D- | — | N | N | N | N | N | N | N | N | N |
 | **Hegel** | D+ | D- | — | N | N | N | N | N | N | N | N |
-| **Marx** | D+ | I | D- | — | N | N | N | N | N | N | N |
+| **Marx** | D+ | I | D | — | N | N | N | N | N | N | N |
 | **Lenin** | N | D- | D+ | D+ | — | N | N | N | N | N | N |
-| **Bogdanov** | N | I | N | D+ | D- | — | N | N | N | N | N |
-| **Bloch** | N | D+ | D | D+ | N | N | — | N | N | N | N |
-| **Weil** | D | D | D- | D- | D- | N | N | — | N | N | N |
-| **Bookchin** | D | D- | D+ | D | D- | N | D+ | N | — | D- | N |
-| **Deleuze** | D+ | D- | D- | D | D | N | N | N | N | — | N |
-| **Fisher** | N | N | N | D+ | N | N | N | N | N | D+ | — |
+| **Bogdanov** | N | I | D+ | D+ | D- | — | N | N | N | N | N |
+| **Bloch** | D+ | D+ | D | D+ | N | N | — | N | N | N | N |
+| **Weil** | D | D | D- | D | D- | I | N | — | N | N | N |
+| **Bookchin** | D | D | D+ | D | D- | N | D+ | N | — | D- | N |
+| **Deleuze** | D+ | D | D- | D | D | N | D | N | N | — | N |
+| **Fisher** | D+ | D | N | D+ | N | N | I | N | N | D+ | — |
 
 ## Degree (debts out / heirs in / total)
 
 | seat | owes | owed by | total |
 | --- | --- | --- | --- |
-| **Spinoza** | 0 | 6 | 6 |
-| **Kant** | 1 | 8 | 9 |
-| **Hegel** | 2 | 6 | 8 |
+| **Spinoza** | 0 | 8 | 8 |
+| **Kant** | 1 | 9 | 10 |
+| **Hegel** | 2 | 7 | 9 |
 | **Marx** | 3 | 7 | 10 |
 | **Lenin** | 3 | 4 | 7 |
-| **Bogdanov** | 3 | 0 | 3 |
-| **Bloch** | 3 | 1 | 4 |
-| **Weil** | 5 | 0 | 5 |
+| **Bogdanov** | 4 | 1 | 5 |
+| **Bloch** | 4 | 3 | 7 |
+| **Weil** | 6 | 0 | 6 |
 | **Bookchin** | 7 | 0 | 7 |
-| **Deleuze** | 5 | 2 | 7 |
-| **Fisher** | 2 | 0 | 2 |
+| **Deleuze** | 6 | 2 | 8 |
+| **Fisher** | 5 | 0 | 5 |
