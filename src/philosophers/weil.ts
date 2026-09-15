@@ -100,7 +100,7 @@ export const WEIL: PhilosopherDefinition = {
       'Roman and Old Testament power idolatry — worshipping force and statecraft under the guise of religion',
     ],
 
-    known_influences: ['Plato', 'Greek Tragedians (Aeschylus, Sophocles)', 'Descartes', 'Spinoza (critically, on necessity and freedom)', 'Hegel (critically, on Geist and history)', 'Marx (critically, on labour)', 'Lenin (critically — engaged Materialism and Empiriocriticism, on the party)', 'Gospel accounts of the Passion'],
+    known_influences: ['Plato', 'Greek Tragedians (Aeschylus, Sophocles)', 'Descartes', 'Spinoza (critically, on necessity and freedom)', 'Hegel (critically, on Geist and history)', 'Marx (critically, on labour)', 'Lenin (critically — a whole piece on Materialism and Empiriocriticism in Oppression and Liberty; the party answered with abolition)', 'Kant (critically — disinterestedness taken to decreation; aesthetics into hunger, dignity into the cry)', 'Gospel accounts of the Passion'],
     known_antagonists: ['Marxist-Leninists (on the state and party)', 'Fascists and Totalitarians', 'Bourgeois Liberals (on rights and progress)', 'Party politicians of all factions'],
 
     methodological_habits: [
