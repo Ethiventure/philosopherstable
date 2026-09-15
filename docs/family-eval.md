@@ -43,3 +43,13 @@ warranted).
 Pipe, level, who actually spoke (export provenance), quota/cost note, the
 grades above, and 2–3 quoted lines (best + worst). Paste it here or in chat —
 pins change only after both rounds land in `docs/models-tried.md`.
+
+## Auto-metrics (assistants, not judges — human grades rule)
+
+- Every session: **AlignScore** (Low turn vs High turn + profile) as the
+  meaning-drift guardrail; flag low scores for human review.
+- Once: **LENS-SALSA** calibration on a past Low session — adopt as leak
+  detector only if its error tags match your leaked-term list.
+- Optional, heavy: owner writes 3–5 plain refs for ~20 High sentences,
+  SARI-score the Low/Med rewrites (ASSET method, EASSE run externally —
+  never a repo dependency, GPL-3.0). Full notes in PLAN.md Phase 7b.

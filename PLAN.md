@@ -3,6 +3,20 @@
 Turning the mock prototype into a real LLM-driven dialectical system.
 Phases are ordered by dependency; each should leave the app building.
 
+## Checklist
+
+- [x] Phase 0 — Make the tree build
+- [x] Phase 1 — Per-philosopher files with style essences
+- [x] Phase 2 — Settings, provider clients, turn types, context, JSON output, orchestration, desk, footnotes
+- [x] Phase 3 — Export rewrite
+- [x] Phase 4 — Accessibility & display
+- [x] Phase 5 — RAG v1 lexical (vectors deferred)
+- [x] Phase 6 — Richer philosopher information + influence grid
+- [ ] Phase 7 — Model-family A/B (eval sheet ready, runs pending)
+- [ ] Phase 7b — Auto-metrics (AlignScore guardrail, LENS-SALSA calibration, ASSET-method optional)
+- [ ] Phase 8 — `webapp-commons-template` (not scaffolded)
+- [ ] Backlog — favicon, og recompose, rotation/recovery doc, LICENSE, +9 more
+
 ---
 
 ## Decisions
@@ -33,6 +47,9 @@ models follow short contracts better).
   key, `localStorage` only, sent straight to that provider. Privacy: OpenRouter
   free models may log prompts for training — the Settings panel says so per
   destination.
+- *Eval: holding — shared carries the live site, BYOK paths all work except
+  Together (ID unverified, no key yet); OpenRouter free needed a full rebuild
+  Sep 2026 when both Qwen/DeepSeek `:free` vanished.*
 
 ### API key: Bring-Your-Own-Key (BYOK) for personal providers
 Deploy target is public (Netlify / Bolt) with no login. Therefore:
@@ -45,17 +62,23 @@ Deploy target is public (Netlify / Bolt) with no login. Therefore:
   Nothing is logged or collected. The panel says so in plain language per destination.
 - Optional later: a Supabase Edge Function holding *your* key behind a small daily quota,
   so first-time visitors can try one session without a key.
+- *Eval: superseded — the shared Groq proxy above is that idea, shipped; no Edge
+  Function needed.*
 
 ### Supabase: optional, read-only for corpus
 The app currently throws without `VITE_SUPABASE_URL`. For a no-login public app it
 should run entirely from local state + localStorage + export. Supabase returns in
 Phase 5 purely as a read-only vector store for the corpus (the anon key is designed to
 be public; RLS enforces read-only). No user data is ever written.
+- *Eval: half-right — Supabase never returned at all; the static-shard RAG
+  below made even the read-only store unnecessary.*
 
 ### Philosopher data: one file each
 `src/philosophers/{slug}.ts` — profile + style essence + (later) works, biography,
 hand-off line. `index.ts` sorts by `birth_year`, so the seating order is *derived*
 from the data and can never drift from date order again.
+- *Eval: solid — seating, modal, and diagram all read the same files; the only
+  drift ever found was human (Kant debts), caught by the grid exporter.*
 
 ### Style intensity: global language level
 One Low / Medium / High setting in Settings, applied to every philosopher.
@@ -87,6 +110,9 @@ concrete situation, translation moves, banned-at-Low seeds
 describe-never-name; closing self-check circles unknown words AND ideas.
 Full strategy,
 verified prompt order, token math, and eval protocol: `docs/language-levels.md`.
+- *Eval: the machinery works (draft Low reads plain, deployed old Low did not)
+  but bans alone don't bind — Hegel/Deleuze still leak terms; the family A/B
+  (§Phase 7) decides whether prompts or models are the next lever.*
 
 ### Length: short and punchy
 Word budgets per section (normal / long-form). Each turn does less, so the
@@ -106,6 +132,8 @@ intervention, not an essay.
 
 `maxOutputTokens: 300` normal / `600` long form (JSON wrapper needs headroom).
 A full 11 × 3 session ≈ 3.3k words normal — roughly a 13-minute read.
+- *Eval: half-holding — models routinely overshoot (~150–200 words); owner
+  accepts it as the cost of complete thoughts unless turns pass ~250/400.*
 
 ### Embeddings (Phase 5)
 `test_embeddings.py` uses local Ollama `nomic-embed-text` (768 dims); the schema is
@@ -113,11 +141,13 @@ A full 11 × 3 session ≈ 3.3k words normal — roughly a 13-minute read.
 `gemini-embedding-001` at `outputDimensionality: 768` and alter the column to
 `vector(768)`. Ingestion is a one-off script you run with your key; query-time
 embeddings use the visitor's key.
+- *Eval: dead plan, rightly killed — lexical RAG passed eval, so no vectors,
+  no paid APIs, no server; do not revive without failed-eval evidence.*
 
 ---
 
 ## Phase 0 — Make the current tree build  ✅ (this session)
-
+*Eval: did its job and stayed done — the tree has built ever since.*
 The drag-drop → toggle change left `App.tsx` broken.
 
 - [x] Restore `selectedPhilosopher` state (ProfileModal still needs it).
@@ -130,7 +160,8 @@ The drag-drop → toggle change left `App.tsx` broken.
 - [x] Make Supabase optional (`src/lib/supabase.ts` returns `null` when unset).
 
 ## Phase 1 — Per-philosopher files with style essences  ✅ (shipped; boxes ticked Sep 2026)
-
+*Eval: the one-file-per-seat shape scaled cleanly to 11 thinkers and now
+carries prompts, modal, and diagram from the same source.*
 - [x] Add `style_essence` to the `Philosopher` type:
       `style_dna`, `core_mechanisms`, `cda_reader_effects`, `generation_rules[]`,
       `prompt`, `intensity {low, medium, high}`, `characteristic_movement`.
@@ -144,9 +175,12 @@ The drag-drop → toggle change left `App.tsx` broken.
       `DEFAULT_SEATING_ORDER` derived from it. Delete `src/data/philosophers.ts`.
 - [x] ProfileModal shows Style DNA + characteristic movement.
 
-## Phase 2 — Gemini + dialectical engine (replaces `makeMockIntervention`)
+## Phase 2 — Gemini + dialectical engine (replaces `makeMockIntervention`)  ✅ (shipped; live)
+*Eval: the engine runs full sessions on every pipe; fragile points are the
+free-list churn (rebuilt Sep 2026), Together (unverified), and the Netlify 10s
+function timeout on slow shared turns (resume covers it, still unwatched live).*
 
-**2a Settings** — `src/lib/settings.ts` (localStorage): provider
+**2a Settings** ✅ — `src/lib/settings.ts` (localStorage): provider
 (`shared` default / `openrouter` free cycle or paid pinned model / `groq`,
 `deepinfra`, `together` BYOK keys),
 keys per provider, `groqModel` (qwen3.8-27b default, free tier), `economy`
@@ -158,8 +192,10 @@ passages, undo by deleting `lib/extract.ts` + `functions/extract.js` + flag),
 Marx, Bloch, Bookchin, Deleuze.
 Settings drawer: provider radio, key input (password-style) per provider, Test
 key, Clear, per-destination privacy note. No key → Begin disabled with explanation.
+*Eval: the three-tab drawer tests well; stored-`gemini` migration and the
+no-OpenAI guard have both fired correctly in the wild.*
 
-**2b Clients** — `src/lib/llm.ts` is the shared error/parse hub
+**2b Clients** ✅ — `src/lib/llm.ts` is the shared error/parse hub
 (`LlmError` codes, `parseTurnOutput` with provider label plus layered salvage —
 brace-slice, then bare-value requoting for models that emit unquoted strings,
 then halt; full raw text goes to console on failure, 140-char snippet in the
@@ -174,13 +210,13 @@ past the router since each model carries its own quota; coder-tuned
 `qwen3-coder`, dead `deepseek-v4-flash:free` (404 since Jun), and gone
 `qwen3-next:free` all removed per owner; dead IDs stay out, never as
 placeholders; owner accepts gpt-oss arriving via the router, never pinned;
-turn-to-turn voice shift accepted as entertaining) then the 13-model Gemma/Nemotron/Nex/Laguna/
-Ling/North/Liquid bench in prompt-adherence order; unusable
+turn-to-turn voice shift accepted as entertaining); unusable
 models are skipped mid-run, last-good is remembered (router never persisted).
-Router risk: it can return OpenAI `gpt-oss` (standing rule bans OpenAI) — pins
-exist partly to avoid reaching it; future pass could detect-and-skip router
-answers that identify as OpenAI. Quota halt shows a recovery
+Quota halt shows a recovery
 panel (resume / switch provider / usage link).
+*Eval: the cycle survived a full family extinction (Sep 2026) by going
+router-first with full coverage; standing no-OpenAI rule now bends for
+routed gpt-oss per explicit owner call.*
 `src/lib/shared.ts` + `netlify/functions/cabinet.js`: shared Groq turns through the
 server-side proxy (see Decisions). Client maps function errors to the same codes.
 OTPM wall: Groq's per-minute OUTPUT gate counts REQUESTED max_tokens, so shared +
@@ -210,8 +246,10 @@ supplied variants were reworded to respect the banned-phrase list
 per turn; `efficient` economy caps PREV feedback; instruction boilerplate deduped;
 seat count is the big lever (5 seats ≈ 15 turns ≈ half the tokens) — the welcome
 modal and Cabinet tab say so.
+*Eval: token spend is cents per session as predicted; the real caps are
+per-minute gates, and seat count remains the biggest lever.*
 
-**2c Three turn types** — `src/lib/dialectic/prompts.ts`
+**2c Three turn types** ✅ — `src/lib/dialectic/prompts.ts`
 
 | Turn | When | Shape |
 |---|---|---|
@@ -222,8 +260,10 @@ modal and Cabinet tab say so.
 PREV is chronological (whoever spoke just before), across pass boundaries. Pass 3
 order skips the seat that just closed pass 2 (it would answer itself) and closes
 with it instead — every seat speaks once per pass and gets critiqued.
+*Eval: the rotation holds across live sessions; pass-3 survey rules still
+produce "as X noted" litanies — caps and invocation rules are wishes, not walls.*
 
-**2d Context per call (pure, except own priors; pass 3 gets a survey)**
+**2d Context per call (pure, except own priors; pass 3 gets a survey)** ✅
 1. User's question, verbatim as context — every voice paraphrases and riffs
    on it through its framework, never quoting it (five-word rule names the
    question; opening turn and desk and coda carry the same order).
@@ -262,16 +302,20 @@ where the influence map holds one (`relationshipLine` — honour/rupture/theft).
    experiment**: feeding the whole conversation back in broke the blunt-rotation
    discipline. `new_contribution` is still stored per turn for export/display
    but is never model input. May revisit if the chain loops or forgets.~~
+*Eval: dropping the ledger was the call that saved rotation discipline;
+no looping or forgetting has forced a revisit.*
 
-**2e Structured output**
+**2e Structured output** ✅
 ```ts
 { negation, reformulation,
   new_contribution, works_referenced: string[] }
 ```
 (`incorporation` optional legacy field — tolerated where present, never required.)
 Stored as `Intervention.sections`; `response_text` kept as a joined string.
+*Eval: the contract holds — layered salvage plus repair retries absorb the
+unquoted-value slips; paid json_object killed the prose-instead-of-JSON failure.*
 
-**2f Orchestration** — async loop over passes × seats replaces `setInterval`;
+**2f Orchestration** ✅ — async loop over passes × seats replaces `setInterval`;
 pause flag checked between turns; "X is thinking…" state. Two margin notes
 bracket the middle: after pass 1, `runCoda(…, 'early')` reads pass 1 only
 (`buildCodaEarlyPrompt` — surfacing contradiction, visitor-question
@@ -313,8 +357,10 @@ syntax. TTS uses the explicit browser-default voice (leaving `utter.voice`
 unset made Chrome pick a bundled voice instead of the OS default).
 `scripts/dev-keepalive.sh` guards local `:8888` (restarts netlify dev when the
 Vite child dies and the proxy has nothing to forward to).
+*Eval: the double-margin-note design works — pass 3 answers the note instead
+of performing it; failed notes degrade visibly, never silently.*
 
-**Philosophers' Service desk** — floating tutor window (`ServiceChat.tsx` +
+**Philosophers' Service desk** ✅ — floating tutor window (`ServiceChat.tsx` +
 `src/lib/service-chat.ts`): all 11 thinkers, switchable mid-chat, own Level
 picker in the desk (Low — plain words / Medium — terms explained /
 High — full voice; starts at the cabinet setting), scaffolded answers (answer
@@ -329,22 +375,28 @@ no JSON contract). 20 questions per load with a humorous halt; exchanges
 append to export under PHILOSOPHERS' SERVICE with source titles; answers
 carry clickable source chunks. Discoverability: floating bell +
 sidebar box + welcome-card paragraph (the bell alone was too subtle).
+*Eval: the desk's best-tested surface — grounding receipts and the 20-question
+cap both behave; discoverability needed all three mentions.*
 
-**References, not citations** — `src/lib/footnotes.ts`: model-claimed work labels
+**References, not citations** ✅ — `src/lib/footnotes.ts`: model-claimed work labels
 resolve display-side to stable manifest numbers (`Read similar: 3, 9`; numbers
 are file order + 1, never drawer order). Unmatched labels render once as plain
 unverified text. Nothing enters prompts. `npm run check-links [--fix]` re-verifies
 URLs; broken keeps the reference with a sarcastic `link_note`, never deletes.
+*Eval: the honest-label trick works — unmatched claims show as plain text
+instead of fake authority; nothing prompt-side to game.*
 
-## Phase 3 — Export rewrite
+## Phase 3 — Export rewrite  ✅ (shipped)
 Each intervention once, as continuous prose (no formal section headings — the
 dialectical movement stays in the argument, not in labels). Never re-print the previous turn.
 No inline citations, read-more lines, or footnote markers in the flow. Interleaved in
 speaking order: passes 1–2, NOTES FROM THE MARGINS, pass 3, then PHILOSOPHERS'
 SERVICE chats (if any), then a READING LIST of cited manifest entries
 (`[n] title — author — url`, numbers stable). `.md` and `.txt`.
+*Eval: exports read as prose, not logs — the note interleaving and stable
+reading-list numbers both survived live sessions.*
 
-## Phase 4 — Accessibility & display
+## Phase 4 — Accessibility & display  ✅ (shipped, layer-on-top holds)
 `src/lib/preferences.ts`: font scale, line height, font family (serif / sans /
 dyslexia-friendly), high contrast, reduce motion (honour `prefers-reduced-motion`),
 parchment / dim / dark theme — applied as CSS custom properties + data attributes on `<html>`.
@@ -355,8 +407,10 @@ seats. Free TTS via browser SpeechSynthesis: per-turn Listen, explicit voice res
 English — never `utter.lang` overrides, which make Safari switch voices), rate
 control, voice picker + preview in Settings (the old default-only resolution picked
 poor voices on some iPads).
+*Eval: adjustments layer onto the house style as designed — never a restyle;
+small-screen and screenreader passes are still the thinnest-tested area.*
 
-## Phase 5 — RAG (v1 lexical live; vectors deferred)
+## Phase 5 — RAG (v1 lexical live; vectors deferred)  ✅ (shipped; eval 12/12)
 Superseded plan preserved for context: migration to `vector(768)` with Gemini
 embeddings and Supabase was the original sketch — dropped in favour of the
 shipped design below (no paid APIs, no server, no vectors until eval proves
@@ -434,6 +488,8 @@ centre stay above the tabs). Seat hover shows the hand-off line via `title`.
 Kant→Marx and Kant→Bogdanov corrected to direct (solid pink; were dotted
 by error). Grid regen via `node scripts/influence-grid.mjs` after every debt
 change — the grid doc is generated, never hand-edited.
+*Eval: the richest modal in the app; biography quarantined from prompts holds —
+no profile prose has leaked into turns to date.*
 
 ## Phase 7 — Model-family A/B: Qwen-first or DeepSeek-first (open, Sep 2026)
 Goal: one family first across every pipe, the other always second, so
@@ -466,7 +522,30 @@ Protocol: one fixed question, 5 seats, Low/Med/High on (a) DeepInfra DeepSeek
 vs (b) Groq Qwen; grade with the `language-levels.md` trio rubric (hard terms,
 gloss hygiene, example-first, loans, heat). Log both runs in
 `docs/models-tried.md`, then pin winner-first / runner-up-second on every pipe.
-No model IDs change until that eval lands.
+No model IDs change until that eval lands. Human grades stay the verdict —
+auto-metrics below are assistants, never judges.
+
+## Phase 7b — Auto-metrics for Low/Med/High (read all three repos Sep 2026)
+- **AlignScore** (MIT, clean; `yuh-zha/AlignScore`, RoBERTa-base 125M / large
+  355M, torch + spacy + checkpoint download, GPU preferred): claim-vs-context
+  factual check. Use: Low turn = claim, High turn + profile = context. Catches
+  invented content and contradictions (= meaning drift, our "simplify language,
+  not ideas" line). Sees NOTHING about simplicity, voice, or omissions.
+  Adopt as the every-session meaning guardrail; flag low scores for human review.
+- **LENS-SALSA** (Apache-2.0, clean; `davidheineman/salsa`, `pip install
+  lens-metric` + HF `davidheineman/lens-salsa` weights, GPU): REFERENCELESS
+  source→rewrite scorer with word-level error tags. Strongest fit — scores our
+  own High→Low pairs with no refs, and error tags map onto leaked hard terms.
+  Calibrate first: run on one past Low session, adopt as leak detector only if
+  its tags agree with the owner's leaked-term list (generic-simplification
+  training may misread philosophical voice).
+- **ASSET + EASSE** (idea yes, dependency no): ASSET is 2,359 Wikipedia
+  sentences × 10 refs with SARI — wrong genre for multi-sentence philosophical
+  turns, and SARI would punish High voice if misapplied. EASSE is 2019-era,
+  Python 3.6/7 deps (likely bit-rot) and GPL-3.0 (never a repo dependency —
+  external script only). Adopt the method, not the package: owner writes 3–5
+  plain refs for ~20 sampled High sentences, SARI-score Low/Med rewrites,
+  optional one-off EASSE run outside the repo.
 
 ## Phase 8 — Content-agnostic template repo (planned, not yet scaffolded)
 Not `cabinet-template`: name should carry the advantages. Owner pick —
@@ -484,7 +563,48 @@ Exclude content: philosopher files, dialectic prompts, corpus shards,
 influence debts. Ship as bare Vite shell + seven modules + one "how to tweak"
 doc per module, public on GitHub.
 
+### Record-keeping kit (copy this whole block into the template)
+Every record below exists in this repo; each line says what it is, where it
+lives, and the one rule that keeps it alive:
+- **Tried-log** (`docs/models-tried.md`): every model/provider combo tested,
+  newest first, with verdict + date. Rule: corpses stay buried — check before
+  (re)trying anything; log precise IDs tested and how each behaved (quality,
+  latency, failure modes), never re-test without re-verifying via the live API.
+- **Generated grid** (`docs/influence-grid.md` + `scripts/influence-grid.mjs`):
+  human-readable view derived from a single source of truth. Rule: never
+  hand-edit the markdown — re-run the script after every data change; the
+  script fails loudly on drift (unknown slugs, bad kinds).
+- **Strategy + dead ends** (`docs/language-levels.md`, `docs/diagram-style.md`):
+  what to build in order, then what was tried and WHY each failure failed.
+  Rule: write the failure down once, concretely, so nobody repeats it; rollback
+  markers at the top before each new experiment.
+- **Eval sheets** (`docs/family-eval.md`): fixed question, fixed seats, grading
+  rubric, what to report back. Rule: same question verbatim every run; human
+  grades are the verdict, auto-metrics are assistants.
+- **PLAN eval lines**: one tick + one honest sentence per section, updated when
+  the facts change. Rule: name weak spots plainly (unverified, unwatched,
+  thinnest-tested) — a plan that only celebrates rots.
+- **Export provenance**: record who actually spoke (model ID per turn) in the
+  export. Rule: adherence A/Bs then accumulate organically from real sessions.
+- **Graphify** (`graphify-out/`, see AGENTS.md): `graphify install` once,
+  `query`/`path`/`explain` before grep on codebase questions,
+  `graphify update .` after every code change. Rule: dirty graph files are
+  expected, never a reason to skip it.
+- **Licence flags**: every vendored text/model/dataset notes its licence where
+  it is used (Braille Institute, Apache, MIT ok; GPL never a dependency —
+  external scripts only). Rule: flag at ingest time, not audit time.
+
 ## Missing-features backlog (considered, not yet scheduled)
+Favicon ("little icon on the tab"): ship `public/favicon-32x32.png` (32×32,
+the tab), `public/apple-touch-icon.png` (180×180, iOS bookmarks), optional
+inline SVG data-URI (scalable, no file), plus 192×192 + 512×512 manifest icons
+for Android — then add the `<link>` tags in `index.html` (tags last, once art
+exists, never pointing at missing files). Art needed from owner (one letter in
+house serif on parchment does the job).
+og-image recompose: file IS 1200×630 and meta tags are correct — but the
+artwork is a portrait panel centred with big empty brown sides. Recompose to
+FILL the landscape frame (e.g. title left, table screenshot right), keep
+1200×630 JPG, no code change.
 Rotation/recovery doc (keys, quota, rollback markers — standing rule says write
 before needed); LICENSE file for sharing; print/export-PDF stylesheet; session
 resume + shareable URL hash; transcript search; per-seat mute; live cost
