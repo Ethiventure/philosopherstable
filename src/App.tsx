@@ -966,7 +966,7 @@ function App() {
               {isRunning && <div className="flex items-center gap-2 text-sm italic text-[#8b5254]"><span className="w-2 h-2 rounded-full bg-[#cc5f68] speaker-glow" /> Cabinet in motion</div>}
             </div>
 
-            <div className="dark-academia-card p-4 md:p-5 mb-5">
+            <div className="dark-academia-card p-4 md:p-5 mb-5" id="question-card">
               <div className="flex items-center justify-between gap-4 mb-3">
                 <label htmlFor="question" className="font-heading text-sm uppercase tracking-[0.16em] text-[#4a392d]">The contemporary problem</label>
                 <span className="text-xs text-[#465f75]/65">The question remains constant; its formulation may change.</span>
@@ -1056,8 +1056,21 @@ function App() {
         {interventions.length > orderedPhilosophers.length && <PositionComparison philosophers={orderedPhilosophers} interventions={interventions} onOpenSources={openSourcesAt} />}
       </main>
 
-      {showSources && <SourceDrawer target={sourceTarget} onClose={() => { setSourceTarget(null); setShowSources(false); }} />}
-      <ServiceChat
+      {/* Halt banner: the inline error panel lives up at the question card, so
+          a halt mid-deck would otherwise pass unnoticed. Fixed, so it alerts
+          wherever the reader sits; Details scrolls to the full recovery panel. */}
+      {runError && !isRunning && (
+        <div role="alert" className="fixed bottom-0 inset-x-0 z-40 px-4 pb-4 pointer-events-none">
+          <div className="pointer-events-auto max-w-3xl mx-auto dark-academia-card p-4 flex flex-wrap items-center gap-x-4 gap-y-2">
+            <p className="text-sm text-[#465f75]"><span className="font-heading uppercase tracking-wider text-[#8b5254] text-xs mr-2">{runError.code === 'quota' ? 'Paused — quota reached' : 'Paused — provider error'}</span>{runError.message.length > 140 ? `${runError.message.slice(0, 140)}…` : runError.message}</p>
+            <span className="flex gap-2 ml-auto">
+              <button className="btn-secondary !text-xs" onClick={() => resumeMeeting()} disabled={!hasKey}>Try resume</button>
+              <button className="btn-secondary !text-xs" onClick={() => document.getElementById('question-card')?.scrollIntoView({ behavior: display.reduceMotion ? 'auto' : 'smooth', block: 'start' })}>Full details</button>
+            </span>
+          </div>
+        </div>
+      )}
+      {showSources && <SourceDrawer target={sourceTarget} onClose={() => { setSourceTarget(null); setShowSources(false); }} />}      <ServiceChat
         thinkers={allOrderedPhilosophers}
         interventions={interventions}
         settings={settings}
