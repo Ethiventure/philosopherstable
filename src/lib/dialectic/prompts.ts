@@ -14,7 +14,9 @@
  * Context discipline (pure, except own priors): each call sees ONLY
  * a) the original question, b) the immediate predecessor's full text,
  * c) the speaker's own prior turns (one line each, anti-self-repetition).
- * Pass 3 additionally sees d) every other seat's one-line determinations,
+ * d) the speaker's relationship to PREV, where the map holds one
+ * (influences.ts `relationshipLine` — honour, rupture, or theft).
+ * Pass 3 additionally sees e) every other seat's one-line determinations,
  * so the final rotation can invoke the most striking ideas by name.
  * The global ledger is NOT fed back. `new_contribution` is still stored per
  * turn for export/display, never as model input (except the pass-3 survey).
@@ -156,6 +158,8 @@ export function buildTurnInstruction({ kind, prevName, isFinalSeat, longForm, re
 interface UserMessageArgs {
   question: string;
   prevText: string | null;
+  /** Speaker↔PREV history line, where the map holds one (null most pairs). */
+  relationshipLine?: string | null;
   ownPriorLines: string[];
   turnInstruction: string;
   /** Pass 3 only: other seats' one-line determinations, labelled by name. */
@@ -171,7 +175,7 @@ interface UserMessageArgs {
   surveyKind?: 'late' | 'early';
 }
 
-export function buildUserMessage({ question, prevText, ownPriorLines, turnInstruction, othersPriorLines = [], stockBlock = '', spentPhrases = [], intensity, surveyKind = 'late' }: UserMessageArgs): string {
+export function buildUserMessage({ question, prevText, relationshipLine = null, ownPriorLines, turnInstruction, othersPriorLines = [], stockBlock = '', spentPhrases = [], intensity, surveyKind = 'late' }: UserMessageArgs): string {
   const parts = [
     `QUESTION (verbatim): ${question}`,
     '',
@@ -180,6 +184,10 @@ export function buildUserMessage({ question, prevText, ownPriorLines, turnInstru
 
   if (prevText) {
     parts.push('', `IMMEDIATE PREDECESSOR'S FULL TEXT:\n${prevText}`);
+  }
+
+  if (relationshipLine) {
+    parts.push('', relationshipLine);
   }
 
   if (ownPriorLines.length > 0) {

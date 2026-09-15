@@ -6,12 +6,18 @@ import { LlmError, REPAIR_SUFFIX, parseTurnOutput, retryAfterMs, type TurnOutput
  * cycle through free models: if one is rate-limited, down, retired, or can't
  * produce the required JSON, the next one takes over mid-session.
  *
- * Why a fixed ordered cycle instead of `openrouter/free` up front: the router
- * picks a random model per call, which would shatter voice continuity across
- * the 30 turns. The cycle keeps one working model for as long as it behaves;
- * the router serves only as the final fallback so a rotted list degrades to
- * mixed voices instead of a halted cabinet. It also filters for structured
- * outputs, which our JSON contract needs.
+ * Why a fixed ordered cycle with the router first: the router picks a random
+ * model per call, which shifts voice across the 30 turns — owner Sep 2026 finds
+ * that entertaining, so router-first stays. Last-good memory still holds a
+ * named model once one succeeds; router hits never persist, so variety lasts
+ * until the bench catches. NOTE: gpt-oss arriving via the router is accepted
+ * (owner call) — it is never pinned separately.
+ *
+ * Removed Sep 2026 per owner: `qwen/qwen3-coder:free` (coder-tuned, wrong
+ * shape for chatbot turns), `deepseek/deepseek-v4-flash:free` (404 since Jun
+ * 2026 — dead IDs stay out, no first-try placeholders),
+ * `qwen/qwen3-next-80b-a3b-instruct:free` (also gone from the live API).
+ * Re-add a family pin only when the `/models` API lists it as live.
  *
  * Free-model IDs churn — check https://openrouter.ai/models?max_price=0 when
  * the whole cycle fails. Free-tier note: limits apply PER MODEL
@@ -20,30 +26,40 @@ import { LlmError, REPAIR_SUFFIX, parseTurnOutput, retryAfterMs, type TurnOutput
  * says so.
  */
 
+// All IDs verified live via the /models API Sep 15 2026 (20 free total).
+// Ordered by context window (desc) past the router: each free model carries
+// its own per-model quota, so more models = more tokens/session. Owner Sep
+// 2026: gpt-oss arriving via the router is acceptable (never pinned
+// separately). Deliberately excluded: coder-tuned qwen3-coder, dead
+// deepseek:free + gone qwen:free, and the content-safety filter model.
 export const FREE_MODEL_CYCLE = [
-  'google/gemma-4-31b-it:free',
-  'nvidia/nemotron-3.5-lightning:free',
   'openrouter/free',
-  'google/gemma-4-26b-a4b-it:free',
-  'nvidia/nemotron-3-super-120b-a12b:free',
-  'nex-agi/nex-n2.5-pro:free',
-  'poolside/laguna-s-2.1:free',
-  'inclusionai/ling-3.0-flash-fin:free',
+  'thinkingmachines/inkling:free',
+  'thinkingmachines/inkling-small:free',
   'nvidia/nemotron-3-ultra-550b-a55b:free',
-  'cohere/north-mini-code:free',
-  'poolside/laguna-xs-2.1:free',
-  'nex-agi/nex-n2.5-mini:free',
-  'liquid/lfm-2.5-2.6b:free',
+  'nvidia/nemotron-3.5-lightning:free',
+  'dots-studio/dots-3-note-preview:free',
+  'google/gemma-4-31b-it:free',
+  'google/gemma-4-26b-a4b-it:free',
+  'inclusionai/ling-3.0-flash-fin:free',
   'inclusionai/ling-3.0-flash-sante:free',
+  'inclusionai/ling-3.0-flash-vl:free',
+  'nex-agi/nex-n2.5-pro:free',
+  'nex-agi/nex-n2.5-mini:free',
+  'nvidia/nemotron-3-super-120b-a12b:free',
+  'poolside/laguna-s-2.1:free',
+  'poolside/laguna-xs-2.1:free',
+  'nvidia/nemotron-3-nano-omni-30b-a3b-reasoning:free',
+  'cohere/north-mini-code:free',
+  'liquid/lfm-2.5-2.6b:free',
+  'z-ai/glm-5.2:free',
 ] as const;
 
 const LASTGOOD_KEY = 'dialectical-cabinet:openrouter-lastgood:v1';
 
 /**
- * Last-resort fallback. The router picks a random free model per call, which
- * would shatter voice continuity if used up front — so it only ever runs
- * after every named model has failed. A stranger's voice for the remaining
- * turns beats a halted cabinet, and it never needs a list refresh.
+ * Auto-rotating router: first in cycle (no family pins live), never persisted
+ * as last-good (starting there would randomise every session).
  */
 export const FREE_ROUTER_FALLBACK = 'openrouter/free';
 
@@ -72,7 +88,8 @@ function orderedCycle(): string[] {
   const named = lastGood
     ? [lastGood, ...FREE_MODEL_CYCLE.filter((m) => m !== lastGood)]
     : [...FREE_MODEL_CYCLE];
-  return [...named, FREE_ROUTER_FALLBACK];
+  // Router already sits mid-list; append only if some edit removed it.
+  return named.includes(FREE_ROUTER_FALLBACK) ? named : [...named, FREE_ROUTER_FALLBACK];
 }
 
 interface OpenRouterTurnArgs {

@@ -104,7 +104,7 @@ export const BOOKCHIN: PhilosopherDefinition = {
       'Liberal individualism — confusing autonomy with privatism',
     ],
 
-    known_influences: ['Marx (critically)', 'Kropotkin (critically)', 'Mumford', 'Lenin (critically, on the party)', 'Bloch (utopia as concrete possibility)', 'Dialectical tradition (Hegel, Marx)', 'Enlightenment rationalism'],
+    known_influences: ['Marx (critically)', 'Kropotkin (critically)', 'Mumford', 'Hegel (directly — Dialectical Naturalism built on his dialectic)', 'Lenin (critically, on the party)', 'Bloch (utopia as concrete possibility)', 'Kant (directly, as the dualist foil; moral imperative kept)', 'Spinoza (directly — named in EoF; tradition carries the rest)', 'Enlightenment rationalism'],
     known_antagonists: ['Deleuze and Guattari (named their “desiring-machines” in SALA as the lifestyle mood)', 'Anarchists (on lifestyle anarchism)', 'Primitivists', 'Deep ecologists', 'Postmodernists', 'Marxist-Leninists (on the party and the state)'],
 
     methodological_habits: [

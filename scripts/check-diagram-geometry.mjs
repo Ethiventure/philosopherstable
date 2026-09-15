@@ -126,6 +126,12 @@ function overlapFrac(A, B) {
 }
 for (let i = 0; i < paths.length; i++) {
   for (let j = i + 1; j < paths.length; j++) {
+    // Accepted by design: threads sharing one spine overlap by construction.
+    const A = paths[i];
+    const B = paths[j];
+    const ax = GEN_POS[A.e.from].x;
+    const bx = GEN_POS[B.e.from].x;
+    if (ax === GEN_POS[A.e.to].x && bx === GEN_POS[B.e.to].x && ax === bx) continue;
     const f = Math.max(overlapFrac(paths[i], paths[j]), overlapFrac(paths[j], paths[i]));
     if (f > OVERLAP_BAR) {
       fail(

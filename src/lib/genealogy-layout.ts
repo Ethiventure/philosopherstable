@@ -169,12 +169,35 @@ export function genEdgePath(edges: GeomEdge[], fromSlug: string, toSlug: string,
     // direction (or a fanned rim point where one is assigned).
     const rim = GEN_RIM_POINTS[`${fromSlug}→${toSlug}`];
     if (rim) return `M ${a.x} ${a.y} L ${rim[0]} ${rim[1]}`;
-    const vx = b.x - a.x;
-    const vy = b.y - a.y;
+    const vx0 = b.x - a.x;
+    const vy0 = b.y - a.y;
+    const len0 = Math.hypot(vx0, vy0) || 1;
+    // Bidirectional pairs (e.g. Bogdanov↔Lenin) run as a two-way street:
+    // each direction offsets 5px to its own side so both arrows stay
+    // visible instead of sharing one thread. The offset uses the pair's
+    // canonical orientation so the two lanes land on opposite sides.
+    let sx = a.x;
+    let sy = a.y;
+    let ox = 0;
+    let oy = 0;
+    if (edges.some((o) => o.from === toSlug && o.to === fromSlug)) {
+      const fwd = fromSlug < toSlug ? 1 : -1;
+      const cx = fwd * vx0;
+      const cy = fwd * vy0;
+      ox = (-cy / len0) * 5;
+      oy = (cx / len0) * 5;
+      const s = fromSlug < toSlug ? 1 : -1;
+      sx += ox * s;
+      sy += oy * s;
+      ox *= s;
+      oy *= s;
+    }
+    const vx = b.x - sx;
+    const vy = b.y - sy;
     const len = Math.hypot(vx, vy) || 1;
-    const ex = b.x - (vx / len) * GEN_RIM;
-    const ey = b.y - (vy / len) * GEN_RIM;
-    return `M ${a.x} ${a.y} L ${ex.toFixed(1)} ${ey.toFixed(1)}`;
+    const ex = b.x - (vx / len) * GEN_RIM + ox;
+    const ey = b.y - (vy / len) * GEN_RIM + oy;
+    return `M ${sx.toFixed(1)} ${sy.toFixed(1)} L ${ex.toFixed(1)} ${ey.toFixed(1)}`;
   }
   const ax = a.x + shift;
   const bx = b.x + shift;
