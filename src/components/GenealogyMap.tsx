@@ -13,9 +13,27 @@ const ALL_EDGES: Edge[] = Object.entries(CABINET_DEBTS).flatMap(([debtor, debts]
   debts.map((d) => ({ from: d.to, to: debtor, kind: d.kind, note: d.note })),
 );
 
-// Chronological left-to-right, zigzag rows so long arcs stay readable.
+// Chronology runs left-to-right in shared columns: Spinoza above Kant at the
+// left edge, Deleuze above Fisher at the right edge, the middle seats waving
+// between upper and lower rows so long arcs stay readable.
 const W = 1160;
 const NODE_R = 22;
+
+const COL_X = (c: number) => 75 + c * 125;
+
+const POS: Record<string, { x: number; y: number }> = {
+  spinoza: { x: COL_X(0), y: 80 },
+  kant: { x: COL_X(0), y: 330 },
+  hegel: { x: COL_X(1), y: 140 },
+  marx: { x: COL_X(2), y: 260 },
+  lenin: { x: COL_X(3), y: 140 },
+  bogdanov: { x: COL_X(4), y: 260 },
+  bloch: { x: COL_X(5), y: 140 },
+  weil: { x: COL_X(6), y: 260 },
+  bookchin: { x: COL_X(7), y: 140 },
+  deleuze: { x: COL_X(8), y: 80 },
+  fisher: { x: COL_X(8), y: 330 },
+};
 
 // Label size: standard body (16px) for the least-connected seat, +2px per
 // extra connection. Degree counts every debt in or out.
@@ -32,16 +50,14 @@ function labelSize(slug: string): number {
   return BASE_LABEL + 2 * ((DEGREE[slug] ?? 0) - MIN_DEGREE);
 }
 
-function nodePos(index: number): { x: number; y: number } {
-  const x = 60 + index * 104;
-  const y = index % 2 === 0 ? 105 : 225;
-  return { x, y };
+function nodePos(slug: string): { x: number; y: number } {
+  return POS[slug] ?? { x: 0, y: 0 };
 }
 
-function edgePath(fromIdx: number, toIdx: number): string {
-  const a = nodePos(fromIdx);
-  const b = nodePos(toIdx);
-  const span = Math.abs(toIdx - fromIdx);
+function edgePath(fromSlug: string, toSlug: string): string {
+  const a = nodePos(fromSlug);
+  const b = nodePos(toSlug);
+  const span = Math.abs(a.x - b.x) / 125;
   // Arcs lift above the nodes; longer jumps arc higher to clear intermediates.
   const lift = 34 + span * 16;
   const mx = (a.x + b.x) / 2;
@@ -57,7 +73,6 @@ export default function GenealogyMap({
   onSelect: (p: Philosopher) => void;
 }) {
   const order = DEFAULT_SEATING_ORDER.filter((slug) => PHILOSOPHER_BY_SLUG[slug]);
-  const idxOf = (slug: string) => order.indexOf(slug);
   const bySlug = (slug: string) => philosophers.find((p) => p.slug === slug);
 
   return (
@@ -89,7 +104,7 @@ export default function GenealogyMap({
 
       <div className="overflow-x-auto custom-scroll mt-4 -mx-1 px-1" tabIndex={0} aria-label="Genealogy diagram, scrollable horizontally on small screens">
         <svg
-          viewBox={`0 -110 ${W} 430`}
+          viewBox={`0 -120 ${W} 540`}
           className="w-full min-w-[720px] h-auto"
           role="img"
           aria-label={`Genealogy of influence across ${order.length} thinkers, Spinoza to Fisher. ${ALL_EDGES.length} debts shown. Name size grows with connections: smallest names at body size, 2 points larger per extra connection.`}
@@ -104,16 +119,14 @@ export default function GenealogyMap({
           </defs>
 
           {ALL_EDGES.map((e, i) => {
-            const fi = idxOf(e.from);
-            const ti = idxOf(e.to);
-            if (fi < 0 || ti < 0) return null;
+            if (!POS[e.from] || !POS[e.to]) return null;
             const direct = e.kind === 'direct';
             const fromName = PHILOSOPHER_BY_SLUG[e.from]?.full_name ?? e.from;
             const toName = PHILOSOPHER_BY_SLUG[e.to]?.full_name ?? e.to;
             return (
               <path
                 key={`${e.from}-${e.to}-${i}`}
-                d={edgePath(fi, ti)}
+                d={edgePath(e.from, e.to)}
                 fill="none"
                 style={{ stroke: direct ? 'var(--color-accent1)' : 'var(--color-gold)' }}
                 strokeWidth={direct ? 1.6 : 1.4}
@@ -126,10 +139,10 @@ export default function GenealogyMap({
             );
           })}
 
-          {order.map((slug, i) => {
+          {order.map((slug) => {
             const def = PHILOSOPHER_BY_SLUG[slug];
             const live = bySlug(slug);
-            const { x, y } = nodePos(i);
+            const { x, y } = nodePos(slug);
             const label = `${def.full_name}, ${def.birth_year}–${def.death_year}, ${DEGREE[slug] ?? 0} connections`;
             return (
               <g
