@@ -112,7 +112,13 @@ export default function GenealogyMap({
 
           {/* No drawn spine: the edges themselves trace the descent. */}
 
-          {ALL_EDGES.map((e, i) => {
+          {/* Direct threads first so the dashed indirect threads always
+              paint on top — otherwise a dashed spine run (e.g.
+              Bogdanov→Weil) disappears under the solid lines sharing
+              its spine. */}
+          {[...ALL_EDGES]
+            .sort((a, b) => (a.kind === b.kind ? 0 : a.kind === 'direct' ? -1 : 1))
+            .map((e, i) => {
             if (!GEN_POS[e.from] || !GEN_POS[e.to]) return null;
             const st = edgeStyle(e);
             const stanceWord = e.stance === 'positive' ? 'embraces' : e.stance === 'critical' ? 'attacks' : 'mixed';
