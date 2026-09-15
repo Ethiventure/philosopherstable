@@ -3,6 +3,20 @@
 Turning the mock prototype into a real LLM-driven dialectical system.
 Phases are ordered by dependency; each should leave the app building.
 
+## Checklist
+
+- [x] Phase 0 — Make the tree build
+- [x] Phase 1 — Per-philosopher files with style essences
+- [x] Phase 2 — Settings, provider clients, turn types, context, JSON output, orchestration, desk, footnotes
+- [x] Phase 3 — Export rewrite
+- [x] Phase 4 — Accessibility & display
+- [x] Phase 5 — RAG v1 lexical (vectors deferred)
+- [x] Phase 6 — Richer philosopher information + influence grid
+- [ ] Phase 7 — Model-family A/B (eval sheet ready, runs pending)
+- [ ] Phase 7b — Auto-metrics (AlignScore guardrail, LENS-SALSA calibration, ASSET-method optional)
+- [ ] Phase 8 — `webapp-commons-template` (not scaffolded)
+- [ ] Backlog — favicon, og recompose, rotation/recovery doc, LICENSE, +9 more
+
 ---
 
 ## Decisions
@@ -548,6 +562,37 @@ content-agnostic code (layout, scorer, settings, preferences, diagram).
 Exclude content: philosopher files, dialectic prompts, corpus shards,
 influence debts. Ship as bare Vite shell + seven modules + one "how to tweak"
 doc per module, public on GitHub.
+
+### Record-keeping kit (copy this whole block into the template)
+Every record below exists in this repo; each line says what it is, where it
+lives, and the one rule that keeps it alive:
+- **Tried-log** (`docs/models-tried.md`): every model/provider combo tested,
+  newest first, with verdict + date. Rule: corpses stay buried — check before
+  (re)trying anything; log precise IDs tested and how each behaved (quality,
+  latency, failure modes), never re-test without re-verifying via the live API.
+- **Generated grid** (`docs/influence-grid.md` + `scripts/influence-grid.mjs`):
+  human-readable view derived from a single source of truth. Rule: never
+  hand-edit the markdown — re-run the script after every data change; the
+  script fails loudly on drift (unknown slugs, bad kinds).
+- **Strategy + dead ends** (`docs/language-levels.md`, `docs/diagram-style.md`):
+  what to build in order, then what was tried and WHY each failure failed.
+  Rule: write the failure down once, concretely, so nobody repeats it; rollback
+  markers at the top before each new experiment.
+- **Eval sheets** (`docs/family-eval.md`): fixed question, fixed seats, grading
+  rubric, what to report back. Rule: same question verbatim every run; human
+  grades are the verdict, auto-metrics are assistants.
+- **PLAN eval lines**: one tick + one honest sentence per section, updated when
+  the facts change. Rule: name weak spots plainly (unverified, unwatched,
+  thinnest-tested) — a plan that only celebrates rots.
+- **Export provenance**: record who actually spoke (model ID per turn) in the
+  export. Rule: adherence A/Bs then accumulate organically from real sessions.
+- **Graphify** (`graphify-out/`, see AGENTS.md): `graphify install` once,
+  `query`/`path`/`explain` before grep on codebase questions,
+  `graphify update .` after every code change. Rule: dirty graph files are
+  expected, never a reason to skip it.
+- **Licence flags**: every vendored text/model/dataset notes its licence where
+  it is used (Braille Institute, Apache, MIT ok; GPL never a dependency —
+  external scripts only). Rule: flag at ingest time, not audit time.
 
 ## Missing-features backlog (considered, not yet scheduled)
 Favicon ("little icon on the tab"): ship `public/favicon-32x32.png` (32×32,
