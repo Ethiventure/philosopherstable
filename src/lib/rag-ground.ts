@@ -92,6 +92,13 @@ export async function searchThinkerPassages(
   query: string,
   limit = 5,
   intensity?: StyleIntensity,
+  /**
+   * Groq's free tier walls single requests at ~7k input tokens: shared/groq
+   * turns pass a small cap so two short passages ride instead of six full
+   * ones. Voices are untouched — only the grounding block shrinks, and the
+   * receipt records exactly what was shown.
+   */
+  maxChars = 0,
 ): Promise<RagGrounding | null> {
   const loaded = await loadThinker(authorName);
   if (!loaded) return null;
@@ -114,7 +121,8 @@ export async function searchThinkerPassages(
   // URL may be an OCR dump with no manifest entry of its own).
   const number = manifestNumberForUrl(work.corpus_source_url ?? work.source_url) ?? manifestNumberForUrl(first.passage.source_url);
   if (number === null) return null;
-  const quoted = merged.map((s) => `> ${s.passage.text}`).join('\n');
+  const cut = (t: string) => (maxChars > 0 && t.length > maxChars ? `${t.slice(0, maxChars)}…` : t);
+  const quoted = merged.map((s) => `> ${cut(s.passage.text)}`).join('\n');
   const header = intensity === 'low'
     ? `INDEXED PASSAGES from '${work.title}' [${number}] — searched from this thinker's own indexed works for this question. Read these for ideas, then PARAPHRASE: describe what they say in your own plain everyday words and cite the use [${number}]. Never lift rare, distinctive, archaic, or specialist words verbatim — not even in single quotes (bare double quotes corrupt your reply). Plain description beats the passage's own terms; closely paraphrase everything, always citing [${number}]:`
     : intensity === 'high'
@@ -128,12 +136,12 @@ export async function searchThinkerPassages(
     receipt: {
       title: work.title,
       number,
-      passages: merged.map((s) => s.passage.text),
+      passages: merged.map((s) => cut(s.passage.text)),
       reason: null,
     },
     chunks: merged.map((s) => {
       const w = workOf(s.passage.work_title, s.passage.source_url);
-      return { title: w.title, text: s.passage.text, source_url: w.source_url };
+      return { title: w.title, text: cut(s.passage.text), source_url: w.source_url };
     }),
   };
 }

@@ -14,16 +14,21 @@ model) / `groq`, `deepinfra`, `together` (visitor BYOK keys). No Gemini
 anywhere (retired for new keys); no OpenAI models, ever.
 
 - **Shared** = the cabinet's own Groq key, held ONLY in `netlify/functions/cabinet.js`
-  via the `GROQ_API_KEY` env var set in the Netlify dashboard. The browser calls
-  same-origin `/.netlify/functions/cabinet`; the key never enters the repo or the
-  bundle. Never `VITE_*` it, never commit it (`.env` + `.netlify` gitignored,
-  `.env.example` is the template). Per-IP daily cap (default 60 ≈ 2 sessions) +
-  global daily cap (default 900) enforced in-function; quota errors reuse the
-  `quota` code so the halt/resume UI behaves identically. Groq free tier has no
-  billing, so abuse costs shared quota, not money. If the key leaks: rotate in
-  console.groq.com + Netlify env, no code change. Local dev serves functions via
-  `netlify dev` (plain `npm run dev` has no functions → shared shows a friendly
-  unreachable note, BYOK still works).
+via the `GROQ_API_KEY` env var set in the Netlify dashboard. The browser calls
+same-origin `/.netlify/functions/cabinet`; the key never enters the repo or the
+bundle. Never `VITE_*` it, never commit it (`.env` + `.netlify` gitignored,
+`.env.example` is the template). Per-IP daily cap (default 60 ≈ 2 sessions) +
+global daily cap (default 900) enforced in-function; quota errors reuse the
+`quota` code so the halt/resume UI behaves identically. Groq free tier has no
+billing, so abuse costs shared quota, not money. If the key leaks: rotate in
+console.groq.com + Netlify env, no code change. Local dev serves functions via
+`netlify dev` (plain `npm run dev` has no functions → shared shows a friendly
+unreachable note, BYOK still works). Groq walls single requests at ~7k input
+tokens (observed 413 at 7271), so shared turns take a lean ration (2 grounding
+passages × 650 chars, trimmed PREV, note + 5 survey lines) and shared runs at
+Low only — Medium/High personas alone exceed the wall; the Begin card says so
+with a one-click path to Low. Turn instructions are kept short globally (small
+models follow short contracts better).
 - **Visitor BYOK** (OpenRouter / Groq / DeepInfra / Together) = the visitor's own
   key, `localStorage` only, sent straight to that provider. Privacy: OpenRouter
   free models may log prompts for training — the Settings panel says so per
@@ -160,8 +165,10 @@ brace-slice, then bare-value requoting for models that emit unquoted strings,
 then halt; full raw text goes to console on failure, 140-char snippet in the
 panel, `REPAIR_SUFFIX`,
 `retryAfterMs`); its Gemini provider client is retired with the provider.
-`src/lib/openrouter.ts`: OpenAI-compatible `chat/completions` (no `response_format` —
-most free models can't do it; prompt-instructed JSON + salvage instead), cycling an
+`src/lib/openrouter.ts`: OpenAI-compatible `chat/completions` (no `response_format` on
+free models — most can't do it; prompt-instructed JSON + salvage instead; the pinned
+PAID model tries `response_format: json_object` first with plain fallback on 400),
+cycling an
 ordered free-model list with `openrouter/free` as last-resort fallback; unusable
 models are skipped mid-run, last-good is remembered. Quota halt shows a recovery
 panel (resume / switch provider / usage link).
@@ -253,7 +260,11 @@ with it instead — every seat speaks once per pass and gets critiqued.
 Stored as `Intervention.sections`; `response_text` kept as a joined string.
 
 **2f Orchestration** — async loop over passes × seats replaces `setInterval`;
-pause flag checked between turns; "X is thinking…" state. Between pass 2 and
+pause flag checked between turns; "X is thinking…" state. Two margin notes
+bracket the middle: after pass 1, `runCoda(…, 'early')` reads pass 1 only
+(`buildCodaEarlyPrompt` — surfacing contradiction, visitor-question
+translation, banked actionables, missing perspectives for pass 2, which carries
+it softly in its survey); between pass 2 and
 pass 3, `runCoda` fires once: reads ONLY the question + the first two passes'
 one-line determinations, writes the margin note in a plain-speaking
 working-class Global South voice, Gen Z Redditor rude, well-read in
