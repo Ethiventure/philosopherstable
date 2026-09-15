@@ -35,8 +35,6 @@ const POS: Record<string, { x: number; y: number }> = {
   fisher: { x: SPINE_X, y: 630 },
 };
 
-const ROW_Y = [60, 155, 250, 345, 440, 535, 630];
-
 // Seats on the spine get centred labels below; the paired rows label outward.
 const SPINE_SEATS = new Set(['spinoza', 'deleuze', 'fisher']);
 const LEFT_SEATS = new Set(['kant', 'marx', 'bogdanov', 'weil']);
@@ -60,19 +58,42 @@ function nodePos(slug: string): { x: number; y: number } {
   return POS[slug] ?? { x: 0, y: 0 };
 }
 
+/** Rim offset: arrowheads land just outside the heir's circle instead of
+ *  buried under it (buried markers peeked out as stray blobs). */
+const RIM = NODE_R + 5;
+
 function edgePath(fromSlug: string, toSlug: string): string {
   const a = nodePos(fromSlug);
   const b = nodePos(toSlug);
+  const dx = b.x - a.x;
   const dy = b.y - a.y;
   if (Math.abs(dy) < 1) {
-    // Same-row pair (Kant → Hegel): a gentle bow below the row.
+    // Same-row pair (Kant → Hegel): a gentle bow below the row, arrow at rim.
+    const dir = Math.sign(dx) || 1;
     const mx = (a.x + b.x) / 2;
-    return `M ${a.x} ${a.y} Q ${mx} ${a.y + 44} ${b.x} ${b.y}`;
+    return `M ${a.x} ${a.y} Q ${mx} ${a.y + 44} ${b.x - dir * RIM} ${b.y}`;
   }
-  // Vertical S-curves that leave and enter heading down the years
-  // (or up them, for the one backward feud).
-  const bend = Math.max(30, Math.abs(dy) / 2);
-  return `M ${a.x} ${a.y} C ${a.x} ${a.y + bend}, ${b.x} ${b.y - bend}, ${b.x} ${b.y}`;
+  if (Math.abs(dx) < 1) {
+    // Shared spine (Spinoza → Deleuze, Deleuze → Fisher): straight run down
+    // the line, arrow at rim.
+    const dir = Math.sign(dy) || 1;
+    return `M ${a.x} ${a.y} L ${b.x} ${b.y - dir * RIM}`;
+  }
+  // Side-bowed arcs, always bowing toward the off-spine end's side, so the
+  // fan opens symmetric around the spine (creditor left bows left, right
+  // bows right; the one backward feud bows right with the rest).
+  const len = Math.hypot(dx, dy);
+  const side = b.x >= SPINE_X ? 1 : -1;
+  const k = Math.min(70, len * 0.18);
+  const cx = (a.x + b.x) / 2 + (dy / len) * side * k;
+  const cy = (a.y + b.y) / 2 + (-dx / len) * side * k;
+  // Pull the end back to the rim along the arrival tangent.
+  const tx = b.x - cx;
+  const ty = b.y - cy;
+  const tl = Math.hypot(tx, ty) || 1;
+  const ex = b.x - (tx / tl) * RIM;
+  const ey = b.y - (ty / tl) * RIM;
+  return `M ${a.x} ${a.y} Q ${cx.toFixed(1)} ${cy.toFixed(1)} ${ex.toFixed(1)} ${ey.toFixed(1)}`;
 }
 
 export default function GenealogyMap({
@@ -128,18 +149,14 @@ export default function GenealogyMap({
             </marker>
           </defs>
 
-          {/* Central spine with a bead for every row of seats. It runs exactly
-              from Spinoza's centre to Fisher's centre so no line sticks out
-              past either end circle (nodes draw over the spine). */}
+          {/* Central spine, exactly Spinoza's centre to Fisher's centre, so no
+              line sticks out past either end circle (nodes draw over it). */}
           <line
             x1={SPINE_X} y1={60} x2={SPINE_X} y2={630}
             style={{ stroke: 'var(--color-gold)' }}
             strokeWidth={1.5}
             opacity={0.4}
           />
-          {ROW_Y.map((y) => (
-            <circle key={y} cx={SPINE_X} cy={y} r={3.5} style={{ fill: 'var(--color-gold)' }} opacity={0.55} />
-          ))}
 
           {ALL_EDGES.map((e, i) => {
             if (!POS[e.from] || !POS[e.to]) return null;
