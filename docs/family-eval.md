@@ -6,7 +6,9 @@ test). Winner takes Medium + High.
 
 ## The question (reuse verbatim for every run)
 
-> AGI can now do most paid work cheaper than people. Who works, who eats, and who decides?
+> AGI can now do most paid work cheaper than people, and some say humans need
+> jobs to have purpose. So who works, who eats, who decides — and does the
+> system that paid for the machines survive them?
 
 Post-2020 for all eleven seats (fair — none saw it), earthed in wages and
 dinners rather than essences, and it splits the table: property and ownership
