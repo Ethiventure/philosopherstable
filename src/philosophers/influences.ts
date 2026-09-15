@@ -10,20 +10,26 @@
  * documentary: Bookchin cites and quotes The Principle of Hope in The
  * Ecology of Freedom (Ch. 12) — alliance technology, co-productivity of
  * nature, the principle of hope named as foundational. Bookchin→Deleuze is
- * a direct critical debt: Bookchin explicitly lambasted Deleuze (postmodernism,
- * lifestyle anarchism milieu). Bogdanov→Bookchin is indirect via Bertalanffy:
- * no direct influence, but Bookchin read and critiqued Bertalanffy general
- * systems theory, which was deeply shaped by Bogdanov's Tektology.
- * Deleuze→Bloch is direct (read and cited), Deleuze→Lenin is direct
- * (explicit references in the political works), Weil→Spinoza is direct
+ * a direct critical debt: SALA (1995) explicitly names D&G's
+ * "desiring-machines" as the lifestyle mood made flesh. No Bookchin link to
+ * Bogdanov is claimed: Bertalanffy's GST cites no Bogdanov, direct
+ * Tektology→GST influence is unproven, and no Bookchin reading of
+ * Bertalanffy is documented. No Deleuze link to Bloch is claimed either:
+ * full-text checks of Anti-Oedipus and A Thousand Plateaus find zero Ernst
+ * Bloch (the two "Bloch" hits are Jules Bloch the linguist).
+ * Deleuze→Lenin is direct and substantive: Anti-Oedipus honours the
+ * Leninist break while refusing the father-function, and A Thousand Plateaus
+ * studies Lenin's "On Slogans" ("the Leninist wager, an act of audacity").
+ * Kant→Spinoza is indirect: Kant answered Spinozism through the
+ * Pantheismusstreit intermediaries (Jacobi, Mendelssohn), not by close
+ * reading of the Ethics. Hegel→Spinoza is direct-positive ("first be a
+ * Spinozist"), Marx→Spinoza is direct-positive (1841 notebooks hand-copying
+ * the TTP, democratic blueprint), Deleuze→Spinoza is direct-positive
+ * ("Prince of Philosophers", immanence ontology). Weil→Spinoza is direct
  * (Alain curriculum, returned to in the Notebooks), Weil→Hegel is
  * direct-critical (Geist measured against force), Weil→Lenin is
- * direct-critical (the party model answered with abolition),
- * Kant→Spinoza is direct-critical
- * (Pantheismusstreit reaction), Hegel→Spinoza is direct-positive ("first be a
- * Spinozist"), Marx→Spinoza is direct-positive (hand-copied TTP, democratic
- * blueprint), Deleuze→Spinoza is direct-positive ("Prince of Philosophers",
- * immanence ontology).
+ * direct-critical (engaged Lenin's Materialism and Empiriocriticism in
+ * Oppression and Liberty; the party model answered with abolition).
  */
 export interface CabinetDebt {
   /** Slug of the creditor seat. */
@@ -35,7 +41,7 @@ export interface CabinetDebt {
 export const CABINET_DEBTS: Record<string, CabinetDebt[]> = {
   spinoza: [],
   kant: [
-    { to: 'spinoza', kind: 'direct', note: 'reacted against Spinoza through the Pantheismusstreit — critical engagement' },
+    { to: 'spinoza', kind: 'indirect', note: 'answered Spinozism through the Pantheismusstreit intermediaries — Jacobi and Mendelssohn, not the Ethics itself' },
   ],
   hegel: [
     { to: 'spinoza', kind: 'direct', note: '"first be a Spinozist": substance taken up as subject' },
@@ -57,7 +63,7 @@ export const CABINET_DEBTS: Record<string, CabinetDebt[]> = {
     { to: 'spinoza', kind: 'direct', note: 'studied under Alain and returned to in the Notebooks — necessity consented to, not merely understood' },
     { to: 'hegel', kind: 'direct', note: 'measured Hegel’s Geist against force — history has no self-developing spirit' },
     { to: 'marx', kind: 'direct', note: 'measured Marx against affliction — labour without grace is still force' },
-    { to: 'lenin', kind: 'direct', note: 'answered the party model with abolition — parties manufacture collective passion' },
+    { to: 'lenin', kind: 'direct', note: 'read Lenin’s Materialism and Empiriocriticism; answered the party model with abolition' },
     { to: 'kant', kind: 'indirect', note: 'through the philosophical curriculum and notebooks' },
   ],
   bloch: [
@@ -69,18 +75,16 @@ export const CABINET_DEBTS: Record<string, CabinetDebt[]> = {
     { to: 'hegel', kind: 'indirect', note: 'dialectic inherited through the Marxist tradition' },
     { to: 'marx', kind: 'direct', note: 'kept the critique of capital, refused economism' },
     { to: 'lenin', kind: 'direct', note: 'answered the party model with the assembly' },
-    { to: 'deleuze', kind: 'direct', note: 'explicitly lambasted Deleuze and the postmodern milieu' },
+    { to: 'deleuze', kind: 'direct', note: 'named D&G’s “desiring-machines” in SALA (1995) as the lifestyle mood made flesh' },
     { to: 'kant', kind: 'indirect', note: 'Enlightenment reason kept, metaphysics dropped' },
     { to: 'bloch', kind: 'direct', note: 'cited the Principle of Hope in The Ecology of Freedom — alliance technology, co-productivity, hope as foundation' },
-    { to: 'bogdanov', kind: 'indirect', note: 'no direct link; read and critiqued Bertalanffy systems theory, deeply shaped by Bogdanov’s Tektology' },
   ],
   deleuze: [
     { to: 'spinoza', kind: 'direct', note: '"Prince of Philosophers": immanence ontology, power to affect and be affected' },
     { to: 'kant', kind: 'direct', note: 'a whole book: Kant’s Critical Philosophy' },
     { to: 'hegel', kind: 'direct', note: 'read against, via Hyppolite and Kojève' },
     { to: 'marx', kind: 'direct', note: 'read with Guattari: capital as desiring-production' },
-    { to: 'lenin', kind: 'direct', note: 'actively read and explicitly referenced in the political works' },
-    { to: 'bloch', kind: 'direct', note: 'explicitly read and cited; shared network of common influences' },
+    { to: 'lenin', kind: 'direct', note: 'honoured the Leninist break in Anti-Oedipus; studied “On Slogans” in A Thousand Plateaus — then refused the father-function' },
   ],
   fisher: [
     { to: 'deleuze', kind: 'direct', note: 'CCRU and k-punk: assemblages, control, the weird' },
