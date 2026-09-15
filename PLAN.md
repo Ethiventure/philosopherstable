@@ -182,9 +182,11 @@ functions time out at 10s — slow Groq turns will die on deploy; client resume
 covers it, but watch this if shared sessions stall live.
 `src/lib/groq.ts`: visitor Groq direct, free tier (OpenAI-compatible, no response_format —
 prompt-instructed JSON plus salvage, same lesson as OpenRouter).
-`src/lib/deepinfra.ts` / `src/lib/together.ts`: same OpenAI-compatible shape,
-pinned models (`DEEPINFRA_MODEL`, `TOGETHER_MODEL` — user-supplied IDs, verify on
-404), single-model retry + repair. Full history in `docs/models-tried.md`.
+`src/lib/deepinfra.ts` / `src/lib/together.ts`: same OpenAI-compatible shape.
+DeepInfra runs a fixed failover pair (DeepSeek V4 Flash 0731 first, Llama 3.3 70B
+backup on non-auth/quota failures; provenance records who spoke). Together pins
+`TOGETHER_MODEL` (user-supplied ID, verify on 404). Single-model retry + repair.
+Full history in `docs/models-tried.md`.
 
 Token discipline (voices never trimmed): only the active speaker's persona is sent
 per turn. Stock phrases live in the per-turn message (relocated from the persona
