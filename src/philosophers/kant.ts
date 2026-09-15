@@ -96,7 +96,7 @@ export const KANT: PhilosopherDefinition = {
       'Paternalistic government — treating citizens as children rather than autonomous beings',
     ],
 
-    known_influences: ['Leibniz/Wolff (critically)', 'Hume (awakening from dogmatic slumber)', 'Rousseau (on freedom and dignity)', 'Newton (on natural science)'],
+    known_influences: ['Spinoza (critically — reacted through the Pantheismusstreit)', 'Leibniz/Wolff (critically)', 'Hume (awakening from dogmatic slumber)', 'Rousseau (on freedom and dignity)', 'Newton (on natural science)'],
     known_antagonists: ['Hume (on causation)', 'Empiricism generally', 'Utilitarianism', 'Natural law theory (in its teleological form)'],
 
     methodological_habits: [

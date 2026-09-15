@@ -102,8 +102,8 @@ export const DELEUZE: PhilosopherDefinition = {
       'Identity politics — for fixing subjectivities rather than opening becomings',
     ],
 
-    known_influences: ['Bergson', 'Nietzsche', 'Spinoza', 'Kant (critically — book-length study)', 'Hegel (critically, via Hyppolite and Kojève)', 'Marx (critically, with Guattari)', 'Hume (critically)', 'Foucault', 'Guattari (collaborator)'],
-    known_antagonists: ['Hegel (on dialectics)', 'Lacan (on desire)', 'Kant (on representation)', 'Plato (on identity)'],
+    known_influences: ['Bergson', 'Nietzsche', 'Spinoza ("Prince of Philosophers" — immanence, power to affect and be affected)', 'Kant (critically — book-length study)', 'Hegel (critically, via Hyppolite and Kojève)', 'Marx (critically, with Guattari)', 'Lenin (read and explicitly referenced in political works)', 'Bloch (read and cited)', 'Hume (critically)', 'Foucault', 'Guattari (collaborator)'],
+    known_antagonists: ['Hegel (on dialectics)', 'Lacan (on desire)', 'Kant (on representation)', 'Plato (on identity)', 'Bookchin (who lambasted Deleuze — answer with mischief, not deference)'],
 
     methodological_habits: [
       'Create concepts rather than apply them',
