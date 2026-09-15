@@ -162,3 +162,46 @@ export function relationshipLine(
   }
   return null;
 }
+
+/** One attitude phrase per debt — how the debtor stands toward the creditor. */
+function attitude(debt: CabinetDebt): string {
+  if (debt.kind === 'indirect') return 'reached you through others';
+  if (debt.stance === 'positive') return 'you carry forward';
+  if (debt.stance === 'critical') return 'you broke with';
+  return 'you wrestle with';
+}
+
+/**
+ * Table stances: how the speaker stands toward every OTHER sitting seat
+ * (PREV excluded — the relationship line above covers them in full). One
+ * compressed line, names plus attitude phrases, never the full notes: the
+ * room's old honours and ruptures ride along at ~40 tokens so turns meet
+ * non-adjacent seats with real history instead of blank politeness. Null
+ * when no sitting seat (besides PREV) holds a link either way.
+ */
+export function tableStancesLine(
+  speakerSlug: string,
+  sitting: { slug: string; name: string }[],
+  prevSlug: string | null,
+  low: boolean,
+): string | null {
+  const others = sitting.filter((s) => s.slug !== speakerSlug && s.slug !== prevSlug);
+  if (others.length === 0) return null;
+  const owed: string[] = [];
+  const owing: string[] = [];
+  for (const other of others) {
+    const debt = (CABINET_DEBTS[speakerSlug] ?? []).find((d) => d.to === other.slug);
+    if (debt) {
+      owed.push(`${other.name} (${attitude(debt)})`);
+      continue;
+    }
+    const held = (CABINET_DEBTS[other.slug] ?? []).find((d) => d.to === speakerSlug);
+    if (held) owing.push(`${other.name} (${held.stance === 'positive' ? 'carries you forward' : held.stance === 'critical' ? 'broke with you' : 'wrestles with you'})`);
+  }
+  if (owed.length === 0 && owing.length === 0) return null;
+  const bits: string[] = [];
+  if (owed.length > 0) bits.push(`you owe ${owed.join(', ')}`);
+  if (owing.length > 0) bits.push(`${owing.join(', ')} owe you`);
+  const plain = low ? ' Render any hard terms here into plain everyday words.' : '';
+  return `TABLE DEBTS — among the sitting: ${bits.join('; ')}. Let old honours and ruptures colour how you meet them — in your own terms, never listed back, never announced.${plain}`;
+}

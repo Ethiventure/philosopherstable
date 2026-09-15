@@ -23,7 +23,7 @@ import {
 import { supabase } from '@/lib/supabase';
 import { CORPUS_SOURCES_DATA } from '@/data/corpus-sources';
 import { DEFAULT_SEATING_ORDER, PHILOSOPHER_BY_SLUG, PHILOSOPHER_DATA, renderPersona } from '@/philosophers';
-import { CABINET_DEBTS, cabinetHeirs, relationshipLine } from '@/philosophers/influences';
+import { CABINET_DEBTS, cabinetHeirs, relationshipLine, tableStancesLine } from '@/philosophers/influences';
 import {
   DEFAULT_ACCESSIBILITY,
   PASS_DESCRIPTIONS,
@@ -555,6 +555,15 @@ function App() {
       const pairHistory = previousSpeaker
         ? relationshipLine(speaker.slug, previousSpeaker.slug, previousSpeaker.name, snap.intensity === 'low')
         : null;
+      // The room's history rides too: one compressed line on how the speaker
+      // stands toward every other sitting seat (PREV already covered above).
+      const tableHistory = tableStancesLine(
+        speaker.slug,
+        seats.map((s) => ({ slug: s.slug, name: s.name })),
+        previousSpeaker?.slug ?? null,
+        snap.intensity === 'low',
+      );
+      const relationshipBlock = [pairHistory, tableHistory].filter(Boolean).join('\n');
       const ownPriorLines = collected
         .filter((item) => item.philosopher_id === speaker.id && item.sections?.new_contribution)
         .map((item) => String(item.sections?.new_contribution));
@@ -657,7 +666,7 @@ function App() {
         buildUserMessage({
           question,
           prevText,
-          relationshipLine: pairHistory,
+          relationshipLine: relationshipBlock || null,
           ownPriorLines,
           // Lean ration on shared/Groq: the margins note (first when present)
           // plus five seats — the full survey can't fit Groq's free-tier wall.
