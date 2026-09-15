@@ -48,6 +48,7 @@ import { searchThinkerPassages } from '@/lib/rag-ground';
 import { verifyQuotes } from '@/lib/verify';
 import { createTtsController, ensureVoices, isTtsSupported, listVoices, resolveVoice, type TtsItem, type TtsStatus } from '@/lib/tts';
 import ServiceChat, { type ServiceLogEntry } from '@/components/ServiceChat';
+import GenealogyMap from '@/components/GenealogyMap';
 
 // "Read more" resolution: the philosopher's most relevant text from the corpus
 // manifest. Entries flagged with link_note (broken link) are skipped unless
@@ -1017,6 +1018,11 @@ function App() {
               <button className="btn-secondary w-full mt-4 flex justify-center items-center gap-2" onClick={() => setShowService(true)}><ConciergeBell size={15} /> Ask a thinker</button>
             </div>
           </aside>
+        </section>
+
+        <section id="genealogy" className="mt-10" aria-label="Genealogy of influence">
+          <div className="ornament-divider mb-6"><span className="text-xl">✦</span></div>
+          <GenealogyMap philosophers={philosophers} onSelect={(p) => setSelectedPhilosopher(p)} />
         </section>
 
         <section className="mt-10" ref={deckRef} aria-label="Reading deck">
