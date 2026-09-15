@@ -203,8 +203,9 @@
     }
   ],
   "validated_against": {
-    "chunker_version": 2,
-    "index_passages": 8426,
-    "validated_at": "2026-09-13"
+    "chunker_version": 3,
+    "index_passages": 11342,
+    "validated_at": "2026-09-15",
+    "revalidation_note": "v2->v3 re-ingested 9 works for the non-author-matter filter; no eval-referenced Bookchin work was touched (SALA re-ingest is outside all eval cases), so acceptable IDs stand and the suite re-confirms them."
   }
 }

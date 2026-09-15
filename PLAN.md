@@ -359,7 +359,11 @@ organisation queries now hit Tektology first, verified live.
 RAG v1 (lexical, Sep 2026 test PASSES on Bookchin): `data/sources.json`
 manifest with explicit rights gate (importer refuses unapproved sources
 before fetching); `scripts/rag-ingest.mjs` (TAL `.html` full-text, generic
-HTML extraction with TOC/boilerplate/entity handling, heading-aware ~350w
+HTML extraction with TOC/boilerplate/entity handling, non-author front matter
+filtered before chunking — translator/editor intros, forewords, title-page
+boilerplate via heading paths + OCR running headers, author's own prefaces
+kept; per-source `exclude_headings` overrides; chunker v3, eval re-validated
+12/12 Sep 2026), heading-aware ~350w
 chunks, idempotent stable IDs) → local `data/rag.sqlite` (gitignored truth)
 + shipped per-author shards under `public/rag/` (+ `manifest.json` with
 schema/chunker versions); shared scorer `src/lib/rag-search.ts`
