@@ -6,7 +6,7 @@
   "4": "compilerOptions",
   "5": "openrouter.ts",
   "6": "compilerOptions",
-  "7": "scripts",
+  "7": "devDependencies",
   "8": "llm.ts",
   "9": "settings.ts",
   "10": "tts.ts",
@@ -58,5 +58,6 @@
   "56": "manifest.json",
   "57": "influences.ts",
   "58": "New philosopher brief (reusable)",
+  "59": "GenealogyMap.tsx",
   "64": "universal-mechanisms.ts"
 }

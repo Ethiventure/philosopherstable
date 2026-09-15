@@ -1,3 +1,4 @@
+import { Fragment } from 'react';
 import { CABINET_DEBTS } from '@/philosophers/influences';
 import { DEFAULT_SEATING_ORDER, PHILOSOPHER_BY_SLUG } from '@/philosophers';
 import {
@@ -26,7 +27,7 @@ const ALL_EDGES: Edge[] = Object.entries(CABINET_DEBTS).flatMap(([debtor, debts]
 
 /** Line treatment per edge: kind sets solid/dashed. Stance lives in the data
  *  and the tooltips, never in the rendering — one calm monochrome canvas. */
-function edgeStyle(e: Edge): { w: number; o: number; stroke: string; dash?: string; marker: string } {
+function edgeStyle(e: Edge): { w: number; o: number; cls: string; dash?: string; marker: string } {
   // D- (direct-critical) debts sit back at 80% transparency so breaks
   // read as quieter than carried-forward lines. Kind still sets solid/dashed.
   if (e.kind === 'direct' && e.stance === 'critical') {
@@ -143,10 +144,9 @@ export default function GenealogyMap({
               />
             ) : null;
             return (
-              <>
+              <Fragment key={`${e.from}-${e.to}-${i}`}>
                 {under}
               <path
-                key={`${e.from}-${e.to}-${i}`}
                 d={d}
                 fill="none"
                 className={st.cls}
@@ -157,6 +157,7 @@ export default function GenealogyMap({
               >
                 <title>{`${fromName} → ${toName} (${e.kind}, ${stanceWord}): ${e.note}`}</title>
               </path>
+              </Fragment>
             );
           })}
 

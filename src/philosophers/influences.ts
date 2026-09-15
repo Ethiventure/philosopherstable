@@ -29,9 +29,8 @@
  * studies Lenin's "On Slogans" ("the Leninist wager, an act of audacity").
  * Kant→Spinoza is direct-critical: Kant talks about Spinoza only to refuse
  * him — the adversary named through the Pantheismusstreit (Jacobi,
- * Mendelssohn). Kant creditor to nearly all: direct to Hegel, Lenin, Weil,
- * Bloch, Bookchin, Deleuze; indirect to Marx (through Hegel and Feuerbach)
- * and Bogdanov (through Mach and Avenarius); no evidenced Fisher link.
+ * Mendelssohn). Kant creditor to nearly all: direct to Hegel, Marx, Lenin, Weil,
+ * Bloch, Bookchin, Deleuze, Bogdanov; no evidenced Fisher link.
  * Hegel→Spinoza is direct-positive ("first be a
  * Spinozist"), Marx→Spinoza is direct-positive (1841 notebooks hand-copying
  * the TTP, democratic blueprint), Deleuze→Spinoza is direct-positive
@@ -65,7 +64,7 @@ export const CABINET_DEBTS: Record<string, CabinetDebt[]> = {
   marx: [
     { to: 'spinoza', kind: 'direct', stance: 'positive', note: 'hand-copied the TTP in youth; democratic blueprint and critique of superstition shaped historical materialism' },
     { to: 'hegel', kind: 'direct', stance: 'ambivalent', note: 'turned the dialectic right-side up, keeping the method: matter first, ideas second' },
-    { to: 'kant', kind: 'indirect', stance: 'ambivalent', note: 'never answered head-on; Kant arrived through Hegel and Feuerbach' },
+    { to: 'kant', kind: 'direct', stance: 'ambivalent', note: 'read and answered head-on — early notes through to Capital, via Hegel and Feuerbach and past them' },
   ],
   lenin: [
     { to: 'marx', kind: 'direct', stance: 'positive', note: 'developed Marx into a theory of party and revolution' },
@@ -77,7 +76,7 @@ export const CABINET_DEBTS: Record<string, CabinetDebt[]> = {
     { to: 'marx', kind: 'direct', stance: 'positive', note: 'rebuilt Marxism as a science of organisation' },
     { to: 'hegel', kind: 'direct', stance: 'positive', note: 'Hegelian and Marxian dialectics the major precursors of Tektology — internal contradictions carried over' },
     { to: 'lenin', kind: 'direct', stance: 'critical', note: 'comrade, then rupture — expelled from the Bolsheviks in 1909' },
-    { to: 'kant', kind: 'indirect', stance: 'ambivalent', note: 'through Mach and Avenarius, the empiriocriticist post-Kantians' },
+    { to: 'kant', kind: 'direct', stance: 'ambivalent', note: 'answered head-on through and past the empiriocriticist post-Kantians (Mach, Avenarius)' },
   ],
   weil: [
     { to: 'spinoza', kind: 'direct', stance: 'ambivalent', note: 'studied under Alain and returned to in the Notebooks — necessity consented to, not merely understood; grace parts them' },

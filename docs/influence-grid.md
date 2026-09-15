@@ -15,9 +15,9 @@ N = no evidenced link (cannot currently demonstrate — not "unrelated") ·
 | **Spinoza** | — | N | N | N | N | N | N | N | N | N | N |
 | **Kant** | D- | — | N | N | N | N | N | N | N | N | N |
 | **Hegel** | D+ | D- | — | N | N | N | N | N | N | N | N |
-| **Marx** | D+ | I | D | — | N | N | N | N | N | N | N |
+| **Marx** | D+ | D | D | — | N | N | N | N | N | N | N |
 | **Lenin** | N | D- | D+ | D+ | — | D- | N | N | N | N | N |
-| **Bogdanov** | N | I | D+ | D+ | D- | — | N | N | N | N | N |
+| **Bogdanov** | N | D | D+ | D+ | D- | — | N | N | N | N | N |
 | **Bloch** | D+ | D+ | D | D+ | N | N | — | N | N | N | N |
 | **Weil** | D | D | D- | D | D- | I | N | — | N | N | N |
 | **Bookchin** | D | D | D+ | D | D- | N | D+ | N | — | D- | N |

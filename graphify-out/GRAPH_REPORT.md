@@ -1,16 +1,16 @@
-# Graph Report - philosopherstable  (2026-09-14)
+# Graph Report - philosopherstable  (2026-09-15)
 
 ## Corpus Check
-- 101 files · ~3,986,283 words
+- 102 files · ~3,931,679 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 599 nodes · 786 edges · 60 communities (39 shown, 18 thin omitted)
+- 619 nodes · 811 edges · 61 communities (40 shown, 18 thin omitted)
 - Extraction: 100% EXTRACTED · 0% INFERRED · 0% AMBIGUOUS · INFERRED: 3 edges (avg confidence: 0.85)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `a1dc30bf`
+- Built from commit: `84cadf09`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -22,7 +22,7 @@
 - compilerOptions
 - openrouter.ts
 - compilerOptions
-- scripts
+- devDependencies
 - llm.ts
 - settings.ts
 - tts.ts
@@ -71,13 +71,14 @@
 - manifest.json
 - influences.ts
 - New philosopher brief (reusable)
+- GenealogyMap.tsx
 - universal-mechanisms.ts
 
 ## God Nodes (most connected - your core abstractions)
 1. `compilerOptions` - 18 edges
 2. `compilerOptions` - 14 edges
 3. `scripts` - 13 edges
-4. `ingestOne()` - 10 edges
+4. `ingestOne()` - 11 edges
 5. `searchIndex()` - 10 edges
 6. `stem()` - 9 edges
 7. `wordCount()` - 9 edges
@@ -100,11 +101,11 @@
 ## Import Cycles
 - None detected.
 
-## Communities (60 total, 18 thin omitted)
+## Communities (61 total, 18 thin omitted)
 
 ### Community 0 - "package.json"
 Cohesion: 0.05
-Nodes (43): dependencies, lucide-react, react, react-dom, @supabase/supabase-js, devDependencies, autoprefixer, eslint (+35 more)
+Nodes (41): dependencies, lucide-react, react, react-dom, @supabase/supabase-js, name, private, scripts (+33 more)
 
 ### Community 1 - "check-links.mjs"
 Cohesion: 0.20
@@ -130,17 +131,17 @@ Nodes (19): attemptModel(), extractDetail(), fetchModelText(), FREE_MODEL_CYCLE,
 Cohesion: 0.12
 Nodes (15): compilerOptions, allowImportingTsExtensions, isolatedModules, lib, module, moduleDetection, moduleResolution, noEmit (+7 more)
 
-### Community 7 - "scripts"
-Cohesion: 0.15
-Nodes (13): scripts, build, check-links, check-links:fix, dev, lint, preview, rag:eval (+5 more)
+### Community 7 - "devDependencies"
+Cohesion: 0.13
+Nodes (15): devDependencies, autoprefixer, eslint, @eslint/js, eslint-plugin-react-hooks, eslint-plugin-react-refresh, globals, postcss (+7 more)
 
 ### Community 8 - "llm.ts"
 Cohesion: 0.22
 Nodes (7): LlmError, LlmErrorCode, parseTurnOutput(), REPAIR_SUFFIX, requoteBareValues(), TURN_KEYS, TurnOutput
 
 ### Community 9 - "settings.ts"
-Cohesion: 0.24
-Nodes (9): CabinetSettings, clearApiKey(), DEFAULT_SETTINGS, GROQ_MODELS, GroqModel, LlmProvider, loadSettings(), saveSettings() (+1 more)
+Cohesion: 0.22
+Nodes (10): CabinetSettings, clearApiKey(), DeepInfraModel, DEFAULT_SETTINGS, GROQ_MODELS, GroqModel, LlmProvider, loadSettings() (+2 more)
 
 ### Community 10 - "tts.ts"
 Cohesion: 0.22
@@ -151,7 +152,7 @@ Cohesion: 0.30
 Nodes (11): clientIp(), DEFAULT_MODELS, handler(), isModelFault(), json(), perIp, resetIfNewDay(), safeDetail() (+3 more)
 
 ### Community 12 - "dialectic/prompts.ts"
-Cohesion: 0.14
+Cohesion: 0.13
 Nodes (9): CODA_REPAIR_SUFFIX, CODA_SYSTEM, LOW_CLOSING_REMINDER, MAX_OUTPUT_TOKENS, STRUCTURED_OUTPUT_HINT, TurnInstructionArgs, TurnKind, UserMessageArgs (+1 more)
 
 ### Community 13 - "groq.ts"
@@ -183,8 +184,8 @@ Cohesion: 0.43
 Nodes (6): generateTextShared(), generateTurnShared(), postShared(), SHARED_MAX_TOKENS, SharedTurnArgs, stripFences()
 
 ### Community 22 - "deepinfra.ts"
-Cohesion: 0.26
-Nodes (12): DEEPINFRA_MAX_TOKENS, DEEPINFRA_MODEL, deepInfraError(), DeepInfraPostArgs, DeepInfraTurnArgs, extractDetail(), generateTextDeepInfra(), generateTurnDeepInfra() (+4 more)
+Cohesion: 0.21
+Nodes (14): DEEPINFRA_MAX_TOKENS, DEEPINFRA_MODEL, DEEPINFRA_MODEL_BACKUP, deepInfraError(), DeepInfraPostArgs, DeepInfraTurnArgs, extractDetail(), generateTextDeepInfra() (+6 more)
 
 ### Community 23 - "together.ts"
 Cohesion: 0.29
@@ -231,8 +232,8 @@ Cohesion: 0.29
 Nodes (6): How to make trios (worked procedure), How to set difficulty levels, Language levels (Low / Medium / High), Reference: verified prompt order (Bookchin, Low, critique turn), Rollback points (read before changing anything below), Trio-creation instructions that did NOT work
 
 ### Community 53 - "rag-ingest.mjs"
-Cohesion: 0.15
-Nodes (25): CHUNK_SOFT_MAX, CHUNK_SOFT_MIN, CHUNK_TARGET_WORDS, chunkParagraphs(), splitLongParagraph(), authorSlug(), DB_PATH, exportJson() (+17 more)
+Cohesion: 0.14
+Nodes (28): CHUNK_SOFT_MAX, CHUNK_SOFT_MIN, CHUNK_TARGET_WORDS, chunkParagraphs(), splitLongParagraph(), authorSlug(), DB_PATH, exportJson() (+20 more)
 
 ### Community 54 - "rag-inspect.mjs"
 Cohesion: 0.22
@@ -254,26 +255,30 @@ Nodes (3): CABINET_DEBTS, CabinetDebt, CabinetHeir
 Cohesion: 0.50
 Nodes (3): New philosopher brief (reusable), Phase 1 — research prompt (paste to research LLM), Phase 2 — build checklist (builder)
 
+### Community 59 - "GenealogyMap.tsx"
+Cohesion: 0.21
+Nodes (12): ALL_EDGES, DEGREE, Edge, edgePath(), GenealogyMap(), labelSize(), LEFT_SEATS, MIN_DEGREE (+4 more)
+
 ### Community 64 - "universal-mechanisms.ts"
 Cohesion: 0.33
 Nodes (5): AVOID_CARICATURE, FORENSIC_PREAMBLE, GENERATIVE_ARGUMENT_MODEL, STYLE_CONTROL_DESCRIPTION, UNIVERSAL_SUPPORTING_MECHANISMS
 
 ## Knowledge Gaps
-- **277 isolated node(s):** `$schema`, `plugin`, `DEFAULT_MODELS`, `usageDay`, `perIp` (+272 more)
-  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 330 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
+- **289 isolated node(s):** `$schema`, `plugin`, `DEFAULT_MODELS`, `usageDay`, `perIp` (+284 more)
+  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 343 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
 - **18 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `scripts` connect `scripts` to `package.json`?**
-  _High betweenness centrality (0.005) - this node is a cross-community bridge._
+- **Why does `devDependencies` connect `devDependencies` to `package.json`?**
+  _High betweenness centrality (0.006) - this node is a cross-community bridge._
 - **Why does `react` connect `App.tsx` to `package.json`?**
   _High betweenness centrality (0.005) - this node is a cross-community bridge._
 - **What connects `$schema`, `plugin`, `DEFAULT_MODELS` to the rest of the system?**
-  _277 weakly-connected nodes found - possible documentation gaps or missing edges._
+  _289 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `package.json` be split into smaller, more focused modules?**
-  _Cohesion score 0.04717853839037928 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.049494949494949494 - nodes in this community are weakly interconnected._
 - **Should `types/index.ts` be split into smaller, more focused modules?**
   _Cohesion score 0.07692307692307693 - nodes in this community are weakly interconnected._
 - **Should `App.tsx` be split into smaller, more focused modules?**
