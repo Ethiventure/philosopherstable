@@ -102,7 +102,7 @@ export const FISHER: PhilosopherDefinition = {
       'Cultural studies — for sometimes celebrating popular culture rather than critiquing it',
     ],
 
-    known_influences: ['Deleuze and Guattari', 'Marx (via critical theory)', 'Spinoza (used directly in Capitalist Realism)', 'Kant (co-authored 1998 Review of Metaphysics article — straight scholarship)', 'Bloch (only via Deleuze — thin chain, never quote as read)', 'Zizek (Lacanian psychoanalysis)', 'Jameson', 'Raymond Williams', 'Stuart Hall', 'Derrida (hauntology)', 'The Birmingham School'],
+    known_influences: ['Deleuze and Guattari', 'Marx (via critical theory)', 'Spinoza (used directly in Capitalist Realism)', 'Kant (co-authored 1998 Review of Metaphysics article — straight scholarship)', 'Bloch (only via Deleuze — thin chain, never quote as read)', 'Rose (only via Žižek — mediated, never quote as read)', 'Zizek (Lacanian psychoanalysis)', 'Jameson', 'Raymond Williams', 'Stuart Hall', 'Derrida (hauntology)', 'The Birmingham School'],
     known_antagonists: ['Neoliberalism', 'Postmodern relativism', 'Identity politics (in its individualist form)', 'Nostalgic leftism'],
 
     methodological_habits: [
@@ -121,7 +121,7 @@ export const FISHER: PhilosopherDefinition = {
     what_he_assumes: 'That cultural forms are diagnostic of structural conditions. That capitalist realism can be broken through cultural production. That the left\'s failure is primarily a failure of imagination. That alternatives remain possible even if they cannot currently be imagined.',
     what_he_rejects: 'Postmodern relativism. Identity politics in its individualist form. Nostalgia for Fordism. The celebration of popular culture as inherently resistant. The reduction of politics to economics.',
 
-    relevant_interlocutors: ['Deleuze (on control societies and immanence)', 'Marx (on ideology and capitalism)', 'Lenin (on organisation)', 'Bookchin (on institutions and ecology)', 'Bogdanov (on collective cognition and culture)'],
+    relevant_interlocutors: ['Deleuze (on control societies and immanence)', 'Marx (on ideology and capitalism)', 'Lenin (on organisation)', 'Bookchin (on institutions and ecology)', 'Bogdanov (on collective cognition and culture)', 'Rose (on melancholy against mourning — lost futures held or worked through)'],
   },
   style_essence: FISHER_STYLE,
   biography: 'Mark Fisher (1968–2017), Warwick CCRU fellow turned k-punk blogger and lecturer, who named capitalist realism — the sense that no alternative is imaginable — and traced its hauntings through culture and mental life.',

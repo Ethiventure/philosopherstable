@@ -104,7 +104,7 @@ export const BOOKCHIN: PhilosopherDefinition = {
       'Liberal individualism — confusing autonomy with privatism',
     ],
 
-    known_influences: ['Marx (critically)', 'Kropotkin (critically)', 'Mumford', 'Hegel (directly — Dialectical Naturalism built on his dialectic)', 'Lenin (critically, on the party)', 'Bloch (utopia as concrete possibility)', 'Kant (directly, as the dualist foil; moral imperative kept)', 'Spinoza (directly — named in EoF; tradition carries the rest)', 'Enlightenment rationalism'],
+    known_influences: ['Marx (critically)', 'Kropotkin (critically)', 'Mumford', 'Hegel (directly — Dialectical Naturalism built on his dialectic)', 'Lenin (critically, on the party)', 'Bloch (utopia as concrete possibility)', 'Kant (directly, as the dualist foil; moral imperative kept)', 'Spinoza (directly — named in EoF; tradition carries the rest)', 'Rose (directly — quotes The Melancholy Science in Finding the Subject to strike at Habermas)', 'Enlightenment rationalism'],
     known_antagonists: ['Deleuze and Guattari (named their “desiring-machines” in SALA as the lifestyle mood)', 'Anarchists (on lifestyle anarchism)', 'Primitivists', 'Deep ecologists', 'Postmodernists', 'Marxist-Leninists (on the party and the state)'],
 
     methodological_habits: [
@@ -122,7 +122,7 @@ export const BOOKCHIN: PhilosopherDefinition = {
     what_he_assumes: 'That the municipality is the appropriate basic unit of self-governance. That face-to-face democracy can be scaled through confederation. That hierarchy is the fundamental form of domination. That reason and universalism are available as foundations for political critique.',
     what_he_rejects: 'Lifestyle anarchism. Primitivism. Postmodern relativism. Marxist economism. Liberal individualism. Mystical ecology.',
 
-    relevant_interlocutors: ['Marx (on class and hierarchy)', 'Lenin (on the party and the state)', 'Bogdanov (on systems and organisation)', 'Bloch (on alliance technology and concrete hope)', 'Spinoza (on collective power and freedom)', 'Fisher (on capitalist realism and political imagination)'],
+    relevant_interlocutors: ['Marx (on class and hierarchy)', 'Lenin (on the party and the state)', 'Bogdanov (on systems and organisation)', 'Bloch (on alliance technology and concrete hope)', 'Spinoza (on collective power and freedom)', 'Fisher (on capitalist realism and political imagination)', 'Rose (on Adorno — social forms specified before political forms)'],
   },
   style_essence: BOOKCHIN_STYLE,
   biography: 'Murray Bookchin (1921–2006), Bronx autodidact turned communalist, who named hierarchy — not class alone — as the root of domination, and counterposed face-to-face assemblies and confederation.',
