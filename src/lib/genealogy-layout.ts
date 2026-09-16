@@ -120,8 +120,19 @@ export function genEdgePath(_edges: GeomEdge[], fromSlug: string, toSlug: string
   const bDir = channel >= b.x ? 1 : -1;
   const sx = a.x + aDir * GEN_RIM;
   const sy = a.y;
+  // Arrival fan: threads sharing one heir land at slightly staggered rim
+  // heights (±7px), so stacked arrowheads separate into a readable row
+  // instead of one blob sitting on through-traffic.
+  const heirSibs = _edges
+    .filter((o) => o.to === toSlug)
+    .map((o) => `${o.from}:${o.kind}`)
+    .filter((v, i, arr) => arr.indexOf(v) === i)
+    .sort();
+  const selfKey = _edges.find((o) => o.from === fromSlug && o.to === toSlug);
+  const heirIdx = selfKey ? heirSibs.indexOf(`${selfKey.from}:${selfKey.kind}`) : 0;
+  const fanEy = heirSibs.length > 1 ? (heirIdx - (heirSibs.length - 1) / 2) * 7 : 0;
   const ex = b.x + bDir * GEN_RIM;
-  const ey = b.y;
+  const ey = b.y + fanEy;
   const c1x = channel;
   const c1y = sy + (ey - sy) * 0.05;
   const c2x = channel;
