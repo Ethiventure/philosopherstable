@@ -31,6 +31,20 @@ for (const [debtor, debts] of Object.entries(CABINET_DEBTS)) {
 }
 console.log(`debts: ${edges.length}`);
 
+// Mirror the renderer: reciprocal pairs (A owes B and B owes A) draw as ONE
+// bidirectional line, so checking counts one path per unordered pair.
+// Same-pair dual-kind entries (none today) keep separate fanned paths.
+const drawnKeys = new Set();
+const drawn = [];
+for (const e of edges) {
+  const key = [e.from, e.to].sort().join('|');
+  const reciprocal = edges.some((o) => o.from === e.to && o.to === e.from);
+  const dkey = reciprocal ? `pair:${key}` : `one:${e.from}>${e.to}:${e.kind}`;
+  if (drawnKeys.has(dkey)) continue;
+  drawnKeys.add(dkey);
+  drawn.push(e);
+}
+
 function samplePath(d) {
   const nums = d.match(/-?\d+\.?\d*/g).map(Number);
   const isL = !d.includes('C');
@@ -43,16 +57,16 @@ function samplePath(d) {
       pts.push([nums[0] + t * (nums[2] - nums[0]), nums[1] + t * (nums[3] - nums[1])]);
       continue;
     }
-    const [a, b, c, e, f, g, h, k] = nums;
+    const [ax, ay, c1x, c1y, c2x, c2y, ex, ey] = nums;
     pts.push([
-      u * u * u * a + 3 * u * u * t * c + 3 * u * t * t * e + t * t * t * g,
-      u * u * u * b + 3 * u * u * t * e + 3 * u * t * t * f + t * t * t * h,
+      u * u * u * ax + 3 * u * u * t * c1x + 3 * u * t * t * c2x + t * t * t * ex,
+      u * u * u * ay + 3 * u * u * t * c1y + 3 * u * t * t * c2y + t * t * t * ey,
     ]);
   }
   return pts;
 }
 
-const paths = edges.map((e) => ({
+const paths = drawn.map((e) => ({
   e,
   d: genEdgePath(edges, e.from, e.to, genLateralShift(edges, e)),
   pts: null,
@@ -145,7 +159,7 @@ if (failed) {
   console.error(`\n${failed} geometr${failed === 1 ? 'y failure' : 'y failures'} — adjust paths, not thresholds.`);
   process.exitCode = 1;
 } else {
-  console.log('geometry clean: 41 lines, no drive-throughs, no merges');
+  console.log(`geometry clean: ${paths.length} lines, no drive-throughs, no merges`);
 }
 
 // 4. Near-identical arrivals (WARN only): same heir, final segments running

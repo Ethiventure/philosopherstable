@@ -700,6 +700,11 @@ body {
   stroke: var(--gen-ground);
   stroke-width: 4;
 }
+/* Horizontal timeline: chronology axis only, no transmission claim. */
+.gen-timeline { stroke: var(--gen-ring); opacity: 0.55; }
+.gen-timeline-label { fill: var(--gen-ink); opacity: 0.6; font-family: var(--font-heading); }
+/* Keyboard focus matches the global gold ring on debt threads too. */
+.gen-edge:focus-visible { outline: 2px solid var(--color-gold); outline-offset: 4px; }
 
 /* Fixed dark cabinet for the genealogy map: the one surface that never
    follows the display theme. Deep walnut ground, parchment ink, teal rings —

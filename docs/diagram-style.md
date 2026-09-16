@@ -38,55 +38,53 @@ Monochrome nodes always: one ring metal, one ink — never per-entity colours.
 
 ## Layout (current instantiation [repo]; roles are the spec)
 
-- Order runs top-to-bottom: one opening seat on the central axis, paired
-  seats alternating left / right down the rows, closing seats back on the
-  axis — both ends mirror. ([repo]: axis x=352; sides x=210 / x=494;
-  rows y = 60, 155, 250, 345, 440, 535, 630.)
-- Node radius 22; arrows land on rims (offset 27) along the arrival
-  direction, never buried, never floating. Labels: names only, no dates or
-  metadata.
-- Type: the scheme's display face; least-connected seat at standard body 16px,
-  +2px per extra connection (in or out). Halo behind labels in ground
+- Time runs left-to-right: seats in chronological order along a horizontal
+  axis, alternating above / below the timeline row by row, earliest left
+  and latest right. ([repo]: canvas 1500×850; timeline y=425; rows y=285 /
+  565; 12 seats.) Arrows run creditor → heir and may point back across the
+  timeline — direction shows debt, position shows time, never the reverse.
+- Node radius 34; threads trim to rims along perpendiculars and arrowheads
+  land on rims, never buried, never floating. Labels: names only, sized by
+  degree (least-connected seat at standard body 16px, +2px per extra
+  connection — a legibility aid, never a ranking); dates live in hover
+  text, accessible labels and the detail panel, never painted.
+- Type: the scheme's display face. Halo behind labels in ground
   colour so lines pass behind text.
-- No drawn spine, ever: a drawn line implies one continuous transmission,
-  which is not an evidenced claim. The threads themselves form the spines.
-  Nothing sticks out past either end circle.
+- One drawn timeline, labelled earlier / later: chronology only, never a
+  transmission claim. The threads themselves carry the debts. Nothing
+  sticks out past either end circle.
 
-## Lines (straight-spine design — the default)
+## Lines (curved-landscape design — the default)
 
 Precisely how to draw it:
 
-1. Every debt draws exactly one straight segment: `M creditor-centre L
-   heir-rim`, where the rim point is the heir's centre pulled back 27px
-   along the segment's own direction (so the arrowhead lands on the rim,
-   continuing the line — never buried, never floating, never kinked on).
-2. Same-side debts therefore run exactly down the left, central or right
-   spine. They WILL overlap there. That is accepted by design, never routed
-   around: the full edge list beside the diagram carries complete
-   understanding, so the drawing optimises for calm, not provability.
-3. Cross-axis debts run straight diagonally, rim to rim, with no bow.
-4. Crowded heirs may assign explicit fanned rim points ([repo]
-   `GEN_RIM_POINTS`) so arrowheads never share one tip. Fan within the
-   available rim; never move the node.
-5. Kind sets treatment only: solid warm accent = direct, dashed gold =
-   indirect ([repo] dash `5 4`). Critical direct debts sit back slightly
-   ([repo] opacity 0.9 vs 0.8). Stance lives in data and tooltips, never in
-   geometry.
-6. Thin strokes throughout ([repo] 1.3 direct / 1.1 indirect): the nodes
+1. Every debt draws exactly one calm cubic, rim to rim. Reciprocal pairs
+   (A owes B and B owes A) draw as ONE line with arrowheads at both ends.
+   Same-pair dual-kind never draws twice: the direct thread wins (guard —
+   zero such pairs today).
+2. Threads leave and arrive near-perpendicular to their row and never
+   travel along it. Same-row pairs arch outward (top bows up, bottom bows
+   down), nested by span, then sibling order, then a small deterministic
+   lane. Opposite-row pairs cross the open middle band in one gesture,
+   each on its own fixed lane (six lanes, 32px apart), like lanes on a
+   road: parallel, separated, same angle family.
+3. One belly per debt; amplitude in capped buckets by span. Crowded heirs
+   fan rim arrivals laterally; documented per-edge exceptions
+   (`GEN_KICK_EXTRA` / `GEN_LANE_EXTRA`) where buckets still share a
+   thread — reviewed, never silent.
+4. Kind sets treatment only: solid warm accent = direct, dashed gold =
+   indirect (dash `8 7`). Stance lives in data, tooltips and the detail
+   panel, never in geometry.
+5. Strokes stay calm ([repo] 2.4 direct / 2.0 indirect): the nodes
    dominate, the lines are threads.
 
-## Lines (S-curve variant — simple diagrams only)
+## Lines (single-thread variant — simple diagrams only)
 
 When the diagram is small (roughly ≤ 15 debts) and the canvas is uncrowded,
-single-gesture S-curves may read more elegantly than straight threads:
-
-- One belly per debt, never a curve that changes its mind mid-flight;
-  amplitude in three capped buckets by span (short / medium / long).
-- Sides mirror by travel direction (rightward bellies right, leftward
-  bellies left); same-side debts drape toward the centre.
-- Opposed controls give the S; thin strokes and fanned rims as above.
-- Rule of thumb: if any two threads overlap for most of their length, the
-  diagram is no longer simple — switch back to straight spines.
+single straight threads may read more calmly than curves: one segment per
+debt, rim to rim, same-side debts sharing one channel by design (the text
+list carries exactness). Rule of thumb: if any two threads overlap for
+most of their length, the diagram is no longer simple — switch to curves.
 
 ## Priority order (never sacrifice a higher rule for a lower one)
 
@@ -115,10 +113,10 @@ rather than clustered. Ornamental and scholarly, still easy to follow.
 ## Geometry specification (what the code may do)
 
 Node positions and factual edges are authoritative. The routing engine
-may alter rim arrival points and nothing else in straight-spine mode (no
-control points exist). In the S-curve variant it may also alter control
-points, lateral displacement, track assignment and crossing position. It
-must never alter edge identity, direction, type or node position.
+may alter rim arrival/departure fans, lane assignment, kick buckets and
+documented per-edge exceptions — nothing else. Reciprocal pairs are one
+drawn line (both arrowheads); the text list still carries each directed
+debt separately.
 Clearance exemptions must be explicit and documented (e.g. accepted
 same-spine overlap). Geometry stays independent of node names and
 identities; unavoidable exceptions are documented and justified.
