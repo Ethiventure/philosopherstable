@@ -166,10 +166,11 @@ export function genEdgePath(_edges: GeomEdge[], fromSlug: string, toSlug: string
   const aDir = channel >= a.x ? 1 : -1;
   const bDir = channel >= b.x ? 1 : -1;
   const rims = endRims(_edges, fromSlug, toSlug);
-  // Departure hug: threads leave along their circle's tangent, peeling
-  // off at staggered heights, so tails embrace the circle before joining
-  // their channel. Mirrors the arrival fan (±14px per thread, ±7 where
-  // the Spinoza fountain already spreads rims).
+  // Departure hug: cross-side tails leave along their circle's tangent,
+  // peeling off at staggered heights, so tails embrace the circle before
+  // joining their channel. Same-column pairs skip it — they travel their
+  // own column and any glide clips seated neighbours. Mirrors the arrival
+  // fan (±14px per thread, ±7 where the Spinoza fountain spreads rims).
   const fromSibs = _edges
     .filter((o) => o.from === fromSlug)
     .map((o) => `${o.to}:${o.kind}`)
@@ -178,7 +179,7 @@ export function genEdgePath(_edges: GeomEdge[], fromSlug: string, toSlug: string
   const fromSelf = _edges.find((o) => o.from === fromSlug && o.to === toSlug);
   const fromIdx = fromSelf ? fromSibs.indexOf(`${fromSelf.to}:${fromSelf.kind}`) : 0;
   const hugStep = fromSlug === 'spinoza' ? 7 : 14;
-  const rawHug = fromSibs.length > 1 ? (fromIdx - (fromSibs.length - 1) / 2) * hugStep : 0;
+  const rawHug = fromSibs.length > 1 && !sameSide ? (fromIdx - (fromSibs.length - 1) / 2) * hugStep : 0;
   // Capped so wide fans never swing into neighbouring circles.
   const hug = Math.max(-35, Math.min(35, rawHug));
   const sx = fromSlug === 'spinoza' ? rims.sx : a.x + aDir * GEN_RIM;
@@ -203,10 +204,18 @@ export function genEdgePath(_edges: GeomEdge[], fromSlug: string, toSlug: string
   const cradle: [number, number] = GEN_BOW_EXTRA[`${fromSlug}→${toSlug}`] ?? [0, 0];
   // The hug: first control stays near the circle and drifts tangentially,
   // so the tail glides along the circle before peeling to its channel.
-  const c1x = sx + aDir * 30 + cradle[0];
-  const c1y = sy + hug * 2.5;
-  const c2x = channel + belly + cradle[1];
-  const c2y = sy + (ey - sy) * 0.95;
+  // Arrivals mirror it: last control hugs the heir's flank, so heads land
+  // after travelling the circle, never stabbing it.
+  // The hug scales with span: short hops have no room to embrace (plain
+  // channel curve), long sweeps get the full flank glide. Same-column
+  // pairs always take the plain channel — any glide clips seated
+  // neighbours on their own column.
+  const span = Math.abs(ey - sy);
+  const hugScale = sameSide ? 0 : Math.max(0, Math.min(1, (span - 120) / 300));
+  const c1x = (channel + belly) * (1 - hugScale) + (sx + aDir * 20) * hugScale + cradle[0];
+  const c1y = (sy + (ey - sy) * 0.05) * (1 - hugScale) + (sy + hug * 1.2) * hugScale;
+  const c2x = (channel + belly) * (1 - hugScale) + (ex - bDir * 20) * hugScale + cradle[1];
+  const c2y = (sy + (ey - sy) * 0.95) * (1 - hugScale) + (ey + fanEy * 1.2) * hugScale;
   const f = (n: number) => (Math.round(n * 10) / 10).toFixed(1);
   return `M ${f(sx)} ${f(sy)} C ${f(c1x)} ${f(c1y)}, ${f(c2x)} ${f(c2y)}, ${f(ex)} ${f(ey)}`;
 }
