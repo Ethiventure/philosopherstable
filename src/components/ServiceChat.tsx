@@ -77,8 +77,8 @@ export default function ServiceChat({ thinkers, interventions, settings, open, o
   const thinker = thinkers.find((t) => t.slug === slug) ?? thinkers[0];
   if (!thinker) return null;
 
-  const send = async () => {
-    const text = input.trim();
+  const send = async (preset?: string) => {
+    const text = (preset ?? input).trim();
     if (!text || busy) return;
     if (asked >= SERVICE_MAX_QUESTIONS) {
       setItems((prev) => [...prev, { kind: 'note', text: SERVICE_LIMIT_MESSAGE }]);
@@ -190,7 +190,17 @@ export default function ServiceChat({ thinkers, interventions, settings, open, o
       </div>
       <div className="flex-1 overflow-y-auto px-4 py-3 space-y-3 min-h-[140px]" aria-live="polite">
         {items.length === 0 && (
-          <p className="text-sm italic text-[#465f75]/65">Ask {thinker.name} anything — definitions come in plain words, with an example and a check question.</p>
+          <>
+            <p className="text-sm italic text-[#465f75]/65">Ask {thinker.name} anything — definitions come in plain words, with an example and a check question.</p>
+            <button
+              type="button"
+              disabled={busy}
+              onClick={() => void send('What are they talking about? Make it make sense.')}
+              className="btn-secondary !text-xs"
+            >
+              What are they talking about? Make it make sense.
+            </button>
+          </>
         )}
         {items.map((item, i) => item.kind === 'visitor' ? (
           <p key={i} className="ml-8 p-2.5 rounded-sm bg-[#4a392d] text-[#eae1ca] text-sm leading-relaxed">{item.text}</p>

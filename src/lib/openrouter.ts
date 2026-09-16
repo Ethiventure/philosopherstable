@@ -449,14 +449,31 @@ export async function generateTextOpenRouter({ apiKey, systemPrompt, userMessage
     try {
       return await fetchModelText(paidId, apiKey, body, 'Paid model');
     } catch (error) {
-      if (error instanceof LlmError && error.code === 'quota') {
-        throw new LlmError(
-          `OpenRouter cap hit on ${paidId} — new credit can take minutes to apply, and keys carry their own daily cap (check it at openrouter.ai/keys). Otherwise add credits at openrouter.ai/settings/credits, wait for the reset, or switch back to Free cycle. Detail: ${error.message}`,
-          true,
-          'quota',
-        );
+      // One retry on server-side failures (empty bodies, timeouts): the desk
+      // has no repair pass, and a single retry rescues most transient empties.
+      // Auth/quota/parse/model errors are final — retrying those burns money.
+      if (!(error instanceof LlmError) || error.code !== 'server') {
+        if (error instanceof LlmError && error.code === 'quota') {
+          throw new LlmError(
+            `OpenRouter cap hit on ${paidId} — new credit can take minutes to apply, and keys carry their own daily cap (check it at openrouter.ai/keys). Otherwise add credits at openrouter.ai/settings/credits, wait for the reset, or switch back to Free cycle. Detail: ${error.message}`,
+            true,
+            'quota',
+          );
+        }
+        throw error;
       }
-      throw error;
+      try {
+        return await fetchModelText(paidId, apiKey, body, 'Paid model');
+      } catch (retryError) {
+        if (retryError instanceof LlmError && retryError.code === 'quota') {
+          throw new LlmError(
+            `OpenRouter cap hit on ${paidId} — new credit can take minutes to apply, and keys carry their own daily cap (check it at openrouter.ai/keys). Otherwise add credits at openrouter.ai/settings/credits, wait for the reset, or switch back to Free cycle. Detail: ${retryError.message}`,
+            true,
+            'quota',
+          );
+        }
+        throw retryError;
+      }
     }
   }
   const tried: string[] = [];
