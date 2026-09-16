@@ -687,8 +687,8 @@ body {
    deliberately monochrome ink: twelve accent colours on one canvas read busy. */
 .gen-edge-direct { stroke: var(--gen-crimson); }
 .gen-edge-indirect { stroke: var(--gen-gold); }
-#gen-arrow-direct path { fill: var(--gen-crimson); }
-#gen-arrow-indirect path { fill: var(--gen-gold); }
+#gen-arrow-direct path { fill: color-mix(in srgb, var(--gen-crimson) 70%, var(--gen-ground)); }
+#gen-arrow-indirect path { fill: color-mix(in srgb, var(--gen-gold) 70%, var(--gen-ground)); }
 .gen-poly-direct { fill: var(--gen-crimson); }
 .gen-poly-indirect { fill: var(--gen-gold); }
 .gen-node-circle { fill: var(--gen-node-fill); stroke: var(--gen-ring); }

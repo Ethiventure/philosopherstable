@@ -16,6 +16,8 @@ const pairs = [
   ['muted text (60% on ground)', '#998e7b', '#221910', 'text'],
   ['crimson line', '#d98a8f', '#221910', 'graphics'],
   ['gold line', '#d3ab6b', '#221910', 'graphics'],
+  ['deep crimson head', '#a26869', '#221910', 'graphics'],
+  ['deep gold head', '#a08653', '#221910', 'graphics'],
   ['teal ring on fill', '#6e7f5c', '#2e2318', 'graphics'],
   ['teal ring on ground', '#6e7f5c', '#221910', 'graphics'],
 ];
