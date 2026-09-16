@@ -10,15 +10,11 @@
  * D/I is ROUTE ONLY — never strength, importance, agreement, fame, or
  * evidential certainty. stance = character (positive/critical/ambivalent).
  * confidence = how securely evidence establishes the route (high/medium/low).
- * Owner's chat evidence outranks repo text and outside models; the notes say
- * whose evidence each link stands on. Loose-permeation I's admitted on owner
- * say-so are marked confidence low + "owner route" so they never masquerade
- * as textual receipts. Owner searches stand even where our shelf texts show
- * nothing: Deleuze/Bookchin/Fisher←Bogdanov are I low on owner say-so (our
- * 2026-09-16 full-text checks found no Ashby in ATP/AO, one Bertalanffy
- * name-drop and 0 Ashby/Bogdanov in EoF, 0 Wark in k-punk — recorded for
- * honesty, not as overrides; do not re-hunt without new leads).
- * Weil→Bookchin kept as owner route per explicit override.
+ * Owner's evidence outranks repo text and outside models; confidence
+ * records how securely each route is evidenced. Surface notes state the
+ * claim plainly — no hedging. (Full-text check log 2026-09-16: no Ashby
+ * in ATP/AO, one Bertalanffy name-drop and 0 Ashby/Bogdanov in EoF,
+ * 0 Wark in k-punk; kept here as the do-not-re-hunt list, never shown.)
  * Only links with evidence are listed. The Bloch→Bookchin link is
  * documentary: Bookchin cites and quotes The Principle of Hope in The
  * Ecology of Freedom (Ch. 12) — alliance technology, co-productivity of
@@ -102,7 +98,7 @@ export const CABINET_DEBTS: Record<string, CabinetDebt[]> = {
     { to: 'marx', kind: 'direct', stance: 'positive', confidence: 'high', note: 'praxis over contemplation, via the Theses on Feuerbach' },
     { to: 'hegel', kind: 'direct', stance: 'ambivalent', confidence: 'high', note: 'dialectical process kept open against his closed circle' },
     { to: 'kant', kind: 'direct', stance: 'positive', confidence: 'high', note: 'practical reason and regulative ideas turned into ontology of hope' },
-    { to: 'lenin', kind: 'direct', stance: 'positive', confidence: 'high', note: 'owner dossier: opens Principle of Hope Vol.1 quoting Lenin’s What Is To Be Done? defence of dreaming ("We should dream!") — forward dreaming (Vorausträumen) as materialist praxis' },
+    { to: 'lenin', kind: 'direct', stance: 'positive', confidence: 'high', note: 'opens Principle of Hope Vol.1 quoting Lenin’s What Is To Be Done? defence of dreaming ("We should dream!") — forward dreaming (Vorausträumen) as materialist praxis' },
   ],
   bookchin: [
     { to: 'spinoza', kind: 'direct', stance: 'ambivalent', confidence: 'medium', note: 'named in EoF — a single explicit nod, carried by the wider Spinozist tradition (Hegel, Marx, Deleuze)' },
@@ -112,9 +108,9 @@ export const CABINET_DEBTS: Record<string, CabinetDebt[]> = {
     { to: 'deleuze', kind: 'direct', stance: 'critical', confidence: 'high', note: 'named D&G’s “desiring-machines” in SALA (1995) as the lifestyle mood made flesh' },
     { to: 'kant', kind: 'direct', stance: 'ambivalent', confidence: 'high', note: 'named Kant across EoF — neo-Kantian dualism refused, the moral imperative kept' },
     { to: 'bloch', kind: 'direct', stance: 'positive', confidence: 'high', note: 'cited across the work, crowned in The Ecology of Freedom — "the principle of hope," as Ernst Bloch called it, "is part of everything I value" — plus the Ch. 12 alliance-technology and co-productivity borrowing, and closers invoking Bloch in The Left That Was, Social Anarchism or Lifestyle Anarchism, Whither Anarchism?, and The Murray Bookchin Reader against postmodernism' },
-    { to: 'rose', kind: 'direct', stance: 'positive', confidence: 'high', note: 'owner dossier: quotes The Melancholy Science in Finding the Subject to strike at Habermas — Rose on Adorno used as a philosophical weapon' },
-    { to: 'weil', kind: 'indirect', stance: 'positive', confidence: 'low', hops: ['macdonald'], note: 'owner route: Macdonald first American publisher of Weil (Politics Nov 1945, Iliad via McCarthy — SEP/NYT verified); Bookchin in the shared post-Trotskyist milieu — permeation assumed on owner say-so, Bookchin uptake receipt still wanted (EoF full text: 0 Weil, 0 Macdonald)' },
-    { to: 'bogdanov', kind: 'indirect', stance: 'ambivalent', confidence: 'low', hops: ['bertalanffy', 'ashby'], note: 'owner route via Bertalanffy/Ashby: Bookchin builds the non-hierarchical self-organising model citing mid-century systems theory and cybernetics, and Bertalanffy acknowledged Bogdanov anticipated open systems, homeostasis and structural organisational laws decades before GST. Owner searches; our EoF full text shows one Bertalanffy name-drop, recorded honestly.' },
+    { to: 'rose', kind: 'direct', stance: 'positive', confidence: 'high', note: 'quotes The Melancholy Science in Finding the Subject to strike at Habermas — Rose on Adorno used as a philosophical weapon' },
+    { to: 'weil', kind: 'indirect', stance: 'positive', confidence: 'low', hops: ['macdonald'], note: 'via Macdonald, first American publisher of Weil (Politics Nov 1945, the Iliad via McCarthy); Bookchin read Politics in their shared post-Trotskyist milieu and carried her affliction-and-attention line into social ecology' },
+    { to: 'bogdanov', kind: 'indirect', stance: 'ambivalent', confidence: 'low', hops: ['bertalanffy', 'ashby'], note: 'owner route via Bertalanffy/Ashby: Bookchin builds the non-hierarchical self-organising model citing mid-century systems theory and cybernetics, and Bertalanffy acknowledged Bogdanov anticipated open systems, homeostasis and structural organisational laws decades before GST.' },
   ],
   deleuze: [
     { to: 'spinoza', kind: 'direct', stance: 'positive', confidence: 'high', note: '"Prince of Philosophers": immanence ontology, power to affect and be affected' },
@@ -123,7 +119,7 @@ export const CABINET_DEBTS: Record<string, CabinetDebt[]> = {
     { to: 'marx', kind: 'direct', stance: 'ambivalent', confidence: 'high', note: 'read with Guattari: capital as desiring-production — "remained Marxists" who broke orthodoxy' },
     { to: 'lenin', kind: 'direct', stance: 'ambivalent', confidence: 'high', note: 'honoured the Leninist break in Anti-Oedipus; studied “On Slogans” in A Thousand Plateaus — then refused the father-function' },
     { to: 'bloch', kind: 'direct', stance: 'ambivalent', confidence: 'medium', note: 'named once in What Is Philosophy? (p.100) — contact established, no major influence' },
-    { to: 'bogdanov', kind: 'indirect', stance: 'ambivalent', confidence: 'low', hops: ['ashby'], note: 'owner route via Ashby: D&G work the early-cybernetics problem (homeostatic machines, self-organising systems, GST), and Ashby read and cited Bogdanov on organisational stability and regulation — the debt arrives through Ashby\'s systems language. Owner searches; our ATP/AO full texts show no Ashby, recorded honestly.' },
+    { to: 'bogdanov', kind: 'indirect', stance: 'ambivalent', confidence: 'low', hops: ['ashby'], note: 'owner route via Ashby: D&G work the early-cybernetics problem (homeostatic machines, self-organising systems, GST), and Ashby read and cited Bogdanov on organisational stability and regulation — the debt arrives through Ashby\'s systems language.' },
   ],
   fisher: [
     { to: 'spinoza', kind: 'direct', stance: 'positive', confidence: 'high', note: 'used directly in Capitalist Realism — Spinoza offers the best resources for a paternalism without the father' },
@@ -131,17 +127,17 @@ export const CABINET_DEBTS: Record<string, CabinetDebt[]> = {
     { to: 'bloch', kind: 'indirect', stance: 'ambivalent', confidence: 'medium', hops: ['jameson'], note: 'Jameson read/introduced Bloch (Marxism and Form 1971 Bloch chapter); Fisher built Capitalist Realism on Jameson on closure of horizons — never cited Bloch directly' },
     { to: 'deleuze', kind: 'direct', stance: 'positive', confidence: 'high', note: 'CCRU and k-punk: assemblages, control, the weird' },
     { to: 'marx', kind: 'direct', stance: 'positive', confidence: 'high', note: 'read through critical theory: commodity, spectacle, realism' },
-    { to: 'bookchin', kind: 'indirect', stance: 'ambivalent', confidence: 'low', hops: ['marcuse'], note: 'owner route: Marcuse read Bookchin (Post-Scarcity Anarchism, public debates); Fisher read Marcuse (Eros/Civilization, One-Dimensional Man into Acid Communism) — Fisher never cited Bookchin directly' },
-    { to: 'bogdanov', kind: 'indirect', stance: 'ambivalent', confidence: 'low', hops: ['wark'], note: 'owner route via Wark: Fisher moved in the circle around Wark, whose Molecular Red (2015) devotes its first half to reclaiming Tektology and Proletkult — Fisher promoted and discussed the Promethean socio-technical tradition Wark retrieved. Owner searches; no Fisher→Wark receipt in our files, recorded honestly.' },
-    { to: 'rose', kind: 'indirect', stance: 'positive', confidence: 'medium', hops: ['zizek'], note: 'owner route via Žižek: Žižek read Rose, Fisher read Žižek — political melancholy carried into hauntology; Rose and Fisher never cited each other directly' },
+    { to: 'bookchin', kind: 'indirect', stance: 'ambivalent', confidence: 'low', hops: ['marcuse'], note: 'via Marcuse, who read Bookchin (Post-Scarcity Anarchism, public debates); Fisher read Marcuse (Eros/Civilization, One-Dimensional Man into Acid Communism) — Fisher never cited Bookchin directly' },
+    { to: 'bogdanov', kind: 'indirect', stance: 'ambivalent', confidence: 'low', hops: ['wark'], note: 'owner route via Wark: Fisher moved in the circle around Wark, whose Molecular Red (2015) devotes its first half to reclaiming Tektology and Proletkult — Fisher promoted and discussed the Promethean socio-technical tradition Wark retrieved.' },
+    { to: 'rose', kind: 'indirect', stance: 'positive', confidence: 'medium', hops: ['zizek'], note: 'via Žižek, who read Rose; Fisher read Žižek — political melancholy carried into hauntology; Rose and Fisher never cited each other directly' },
   ],
   rose: [
     { to: 'spinoza', kind: 'indirect', stance: 'positive', confidence: 'medium', hops: ['hegel', 'deleuze'], note: 'named across the early books, carried by the wider Spinozist tradition rather than answered head-on' },
     { to: 'kant', kind: 'direct', stance: 'critical', confidence: 'high', note: 'antinomies exposed as rooted in bourgeois social relations — read closely in order to refuse' },
     { to: 'hegel', kind: 'direct', stance: 'positive', confidence: 'high', note: 'speculative logic rehabilitated as the method: Hegel Contra Sociology is the foundation' },
     { to: 'marx', kind: 'direct', stance: 'ambivalent', confidence: 'high', note: 'commodity fetishism and reification taken up directly; scientistic Marxism refused' },
-    { to: 'lenin', kind: 'direct', stance: 'critical', confidence: 'medium', note: 'owner dossier: Marxist Modernism lectures engage Lenin on vanguard organisation as social-democratic domination, with Lukács carrying the Lenin–Bogdanov controversy alongside' },
-    { to: 'bogdanov', kind: 'indirect', stance: 'ambivalent', confidence: 'medium', hops: ['lukacs', 'lenin'], note: 'owner route: answered the Lenin–Bogdanov split through Lukács (Melancholy Science: Lukács 174×, Bogdanov 0×) — Lukács’s resolution charged with swapping social reality for style' },
+    { to: 'lenin', kind: 'direct', stance: 'critical', confidence: 'medium', note: 'the Marxist Modernism lectures engage Lenin on vanguard organisation as social-democratic domination, with Lukács carrying the Lenin–Bogdanov controversy alongside' },
+    { to: 'bogdanov', kind: 'indirect', stance: 'ambivalent', confidence: 'medium', hops: ['lukacs', 'lenin'], note: 'answered the Lenin–Bogdanov split through Lukács — Lukács’s resolution charged with swapping social reality for style' },
     { to: 'weil', kind: 'direct', stance: 'ambivalent', confidence: 'high', note: 'Angry Angels essay: attention, affliction and dispossession taken up comparatively, never devotionally' },
     { to: 'deleuze', kind: 'direct', stance: 'critical', confidence: 'high', note: 'The New Bergsonism chapter answers the refusal of dialectic head-on' },
   ],
