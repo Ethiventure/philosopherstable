@@ -39,11 +39,12 @@ const ALL_EDGES: Edge[] = Object.entries(CABINET_DEBTS).flatMap(([debtor, debts]
 );
 
 /** Line treatment: kind sets solid/dashed; opacity sets strength of
- *  evidence (high full / medium three-quarters / low half). Stance lives
- *  in the data and the text, never in the rendering. Element opacity
- *  covers markers too, so heads fade with their thread. */
+ *  evidence (high full / medium three-fifths / low one-third — clearly
+ *  visibly graded). Stance lives in the data and the text, never in the
+ *  rendering. Element opacity covers markers too, so heads fade with
+ *  their thread. */
 function edgeStyle(e: Edge): { w: number; o: number; cls: string; dash?: string; marker: string } {
-  const o = e.confidence === 'high' ? 1 : e.confidence === 'medium' ? 0.75 : 0.5;
+  const o = e.confidence === 'high' ? 1 : e.confidence === 'medium' ? 0.6 : 0.35;
   if (e.kind === 'indirect') {
     return { w: 2, o, cls: 'gen-edge gen-edge-indirect', dash: '8 7', marker: 'url(#gen-arrow-indirect)' };
   }
