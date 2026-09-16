@@ -1,13 +1,14 @@
 #!/usr/bin/env node
 /**
  * Geometry checker for the genealogy diagram: proves every debt draws
- * exactly one line, no line runs through a seat it doesn't involve, and no
- * two lines merge into one. Imports the renderer's own layout module plus
- * the debts table, so it can never drift from either.
+ * exactly one line and no line runs through a seat it doesn't involve.
+ * Threads bundle onto shared highways by design (road system — overlap is
+ * expected; the text list carries exactness), so merging is reported, not
+ * failed. Imports the renderer's own layout module plus the debts table,
+ * so it can never drift from either.
  *   node scripts/check-diagram-geometry.mjs
- * Exits non-zero on failure. Thresholds: node clearance 30px from centre
- * (node radius 22 + 8px air), path overlap fraction 0.4 outside shared
- * 40px endpoint zones. Renderer emits M + C only.
+ * Exits non-zero on failure. Thresholds: node clearance (radius + 8px
+ * air); 40px endpoint zones. Renderer emits M + C only.
  */
 import { CABINET_DEBTS } from '../src/philosophers/influences.ts';
 import {
@@ -18,12 +19,6 @@ import {
 } from '../src/lib/genealogy-layout.ts';
 
 const CLEAR = GEN_NODE_R + 8;
-const OVERLAP_BAR = 0.4;
-// Near-identical arrival warning: two edges reaching the same heir whose
-// final segments run within this distance and whose rim tips land within
-// this distance get flagged as WARN (not FAIL) so the renderer can fan out.
-const ARRIVE_SEG = 12;
-const ARRIVE_TIP = 10;
 
 const edges = [];
 for (const [debtor, debts] of Object.entries(CABINET_DEBTS)) {
@@ -102,12 +97,8 @@ for (const p of paths) {
 // crowded space near their creditor (e.g. Kant's fan over Marx).
 for (const p of paths) {
   const ends = [GEN_POS[p.e.from], GEN_POS[p.e.to]];
-  const spineRun = ends[0].x === ends[1].x;
   for (const [slug, pos] of Object.entries(GEN_POS)) {
     if (slug === p.e.from || slug === p.e.to) continue;
-    // Accepted by design: same-spine straight runs overlap intermediate
-    // seats on their spine (left / right / central).
-    if (spineRun && pos.x === ends[0].x) continue;
     let m = Infinity;
     for (const q of p.pts) {
       if (ends.some((e) => Math.hypot(q[0] - e.x, q[1] - e.y) < 40)) continue;
@@ -117,79 +108,27 @@ for (const p of paths) {
   }
 }
 
-// 3. No two lines merge: overlap fraction outside shared endpoint zones.
-function overlapFrac(A, B) {
-  const shared = [];
-  for (const p of [
-    GEN_POS[A.e.from], GEN_POS[A.e.to],
-  ]) {
-    for (const q of [GEN_POS[B.e.from], GEN_POS[B.e.to]]) {
-      if (Math.hypot(p.x - q.x, p.y - q.y) < 40) shared.push(q);
-    }
+// 3. Bundling report (INFO only): threads share four highways by design —
+// small roads joining motorways — so overlap is expected, not a failure.
+// Exactness lives in the text list and the selection panel. What still
+// fails is a thread running through a seat it doesn't involve (rule 2).
+{
+  const bands = new Map();
+  for (const p of paths) {
+    const ys = p.pts.filter((_, i) => i % 6 === 0).map((q) => Math.round(q[1] / 40) * 40);
+    const lane = [...ys].sort((a, b) =>
+      ys.filter((y) => y === a).length - ys.filter((y) => y === b).length).pop();
+    bands.set(lane, (bands.get(lane) ?? 0) + 1);
   }
-  let n = 0;
-  let tot = 0;
-  for (const p of A.pts) {
-    if (shared.some((q) => Math.hypot(p[0] - q.x, p[1] - q.y) < 40)) continue;
-    tot += 1;
-    let m = Infinity;
-    for (const q of B.pts) m = Math.min(m, Math.hypot(p[0] - q[0], p[1] - q[1]));
-    if (m < 9) n += 1;
-  }
-  return tot ? n / tot : 0;
-}
-for (let i = 0; i < paths.length; i++) {
-  for (let j = i + 1; j < paths.length; j++) {
-    // Accepted by design: threads sharing one spine overlap by construction.
-    const A = paths[i];
-    const B = paths[j];
-    const ax = GEN_POS[A.e.from].x;
-    const bx = GEN_POS[B.e.from].x;
-    if (ax === GEN_POS[A.e.to].x && bx === GEN_POS[B.e.to].x && ax === bx) continue;
-    const f = Math.max(overlapFrac(paths[i], paths[j]), overlapFrac(paths[j], paths[i]));
-    if (f > OVERLAP_BAR) {
-      fail(
-        `${paths[i].e.from}>${paths[i].e.to} merges with ${paths[j].e.from}>${paths[j].e.to} (${Math.round(f * 100)}% overlap)`,
-      );
-    }
-  }
+  console.log(`bundle bands: ${[...bands.entries()].map(([y, n]) => `y≈${y} ×${n}`).join(', ')}`);
 }
 
 if (failed) {
   console.error(`\n${failed} geometr${failed === 1 ? 'y failure' : 'y failures'} — adjust paths, not thresholds.`);
   process.exitCode = 1;
 } else {
-  console.log(`geometry clean: ${paths.length} lines, no drive-throughs, no merges`);
+  console.log(`geometry clean: ${paths.length} lines, no drive-throughs (bundling by design)`);
 }
 
-// 4. Near-identical arrivals (WARN only): same heir, final segments running
-// close together, tips landing at effectively the same rim point. Distinct
-// debts, so the fix is fanning out rim arrivals — never changing the data.
-{
-  const tail = (p) => p.pts.slice(-12);
-  const tip = (p) => p.pts[p.pts.length - 1];
-  let warns = 0;
-  for (let i = 0; i < paths.length; i++) {
-    for (let j = i + 1; j < paths.length; j++) {
-      const A = paths[i];
-      const B = paths[j];
-      if (A.e.to !== B.e.to) continue;
-      const tA = tip(A);
-      const tB = tip(B);
-      if (Math.hypot(tA[0] - tB[0], tA[1] - tB[1]) > ARRIVE_TIP) continue;
-      const sA = tail(A);
-      const sB = tail(B);
-      let close = 0;
-      for (const p of sA) {
-        let m = Infinity;
-        for (const q of sB) m = Math.min(m, Math.hypot(p[0] - q[0], p[1] - q[1]));
-        if (m < ARRIVE_SEG) close += 1;
-      }
-      if (close / sA.length > 0.5) {
-        warns += 1;
-        console.log(`WARN  near-identical arrival ${A.e.from}>${A.e.to} vs ${B.e.from}>${B.e.to} — fan out rim points`);
-      }
-    }
-  }
-  if (!warns) console.log('arrivals distinct: no near-identical rim approaches');
-}
+// 4. Retired: shared rims are the design now (small roads join at one
+// slip road), so near-identical arrivals are expected, not warned.

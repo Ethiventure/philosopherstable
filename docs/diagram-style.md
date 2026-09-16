@@ -54,7 +54,7 @@ Monochrome nodes always: one ring metal, one ink — never per-entity colours.
   transmission claim. The threads themselves carry the debts. Nothing
   sticks out past either end circle.
 
-## Lines (curved-landscape design — the default)
+## Lines (road-system design — the default)
 
 Precisely how to draw it:
 
@@ -62,16 +62,16 @@ Precisely how to draw it:
    (A owes B and B owes A) draw as ONE line with arrowheads at both ends.
    Same-pair dual-kind never draws twice: the direct thread wins (guard —
    zero such pairs today).
-2. Threads leave and arrive near-perpendicular to their row and never
-   travel along it. Same-row pairs arch outward (top bows up, bottom bows
-   down), nested by span, then sibling order, then a small deterministic
-   lane. Opposite-row pairs cross the open middle band in one gesture,
-   each on its own fixed lane (six lanes, 32px apart), like lanes on a
-   road: parallel, separated, same angle family.
-3. One belly per debt; amplitude in capped buckets by span. Crowded heirs
-   fan rim arrivals laterally; documented per-edge exceptions
-   (`GEN_KICK_EXTRA` / `GEN_LANE_EXTRA`) where buckets still share a
-   thread — reviewed, never silent.
+2. Threads bundle onto four shared highways like small roads joining
+   motorways: one outer highway per row for same-side traffic (top bows
+   up, bottom bows down), two middle highways for crossings, picked
+   deterministically per edge. Overlap is the design, never routed
+   around: the full edge list beside the diagram carries complete
+   understanding, so the drawing optimises for calm, not provability.
+3. Ramps hug the endpoints: threads leave their row almost vertically,
+   clearing seated neighbours before travelling, and rise only at their
+   heir. Arrowheads land on rims along the arrival perpendicular — never
+   buried, never floating.
 4. Kind sets treatment only: solid warm accent = direct, dashed gold =
    indirect (dash `8 7`). Stance lives in data, tooltips and the detail
    panel, never in geometry.
