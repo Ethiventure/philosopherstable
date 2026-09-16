@@ -39,12 +39,11 @@ const ALL_EDGES: Edge[] = Object.entries(CABINET_DEBTS).flatMap(([debtor, debts]
 );
 
 /** Line treatment: kind sets solid/dashed; opacity sets strength of
- *  evidence (high full, medium a step down, low clearly thinner — the
- *  90/80% steps proved perceptually flat, so the spread is wider).
- *  Stance lives in the data and the text, never in the rendering. Element
- *  opacity covers markers too, so heads fade with their thread. */
+ *  evidence (high full / medium three-quarters / low half). Stance lives
+ *  in the data and the text, never in the rendering. Element opacity
+ *  covers markers too, so heads fade with their thread. */
 function edgeStyle(e: Edge): { w: number; o: number; cls: string; dash?: string; marker: string } {
-  const o = e.confidence === 'high' ? 1 : e.confidence === 'medium' ? 0.85 : 0.65;
+  const o = e.confidence === 'high' ? 1 : e.confidence === 'medium' ? 0.75 : 0.5;
   if (e.kind === 'indirect') {
     return { w: 2, o, cls: 'gen-edge gen-edge-indirect', dash: '8 7', marker: 'url(#gen-arrow-indirect)' };
   }
@@ -189,21 +188,14 @@ export default function GenealogyMap({
             const isSel = selectedPair === key;
             const involves = !lit || g.some((e) => e.from === lit || e.to === lit);
             const opacity = !involves ? 0.08 : isSel ? 1 : st.o;
+            // Dimmed threads drop their heads too: marker opacity doesn't
+            // inherit reliably everywhere, so no markers off-focus, period.
+            const heads = involves ? st.marker : undefined;
             const label = g.map(relationshipLabel).join(' Also: ');
             const fromName = PHILOSOPHER_BY_SLUG[first.from]?.name ?? first.from;
             const toName = PHILOSOPHER_BY_SLUG[first.to]?.name ?? first.to;
             return (
               <Fragment key={key}>
-                {first.kind === 'indirect' && (
-                  <path
-                    d={d}
-                    fill="none"
-                    stroke="var(--gen-ground)"
-                    strokeWidth={st.w + 3.4}
-                    opacity={1}
-                    aria-hidden="true"
-                  />
-                )}
                 <path
                   d={d}
                   fill="none"
@@ -211,8 +203,8 @@ export default function GenealogyMap({
                   strokeWidth={isSel ? st.w + 1 : st.w}
                   strokeDasharray={st.dash}
                   opacity={opacity}
-                  markerEnd={st.marker}
-                  markerStart={reciprocal ? st.marker : undefined}
+                  markerEnd={heads}
+                  markerStart={reciprocal ? heads : undefined}
                   tabIndex={0}
                   role="button"
                   aria-label={`${label} Activate to read this debt.`}
