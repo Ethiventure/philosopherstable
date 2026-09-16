@@ -91,8 +91,9 @@ export function genIsReciprocal(edges: GeomEdge[], a: string, b: string): boolea
 const GEN_BOW_EXTRA: Record<string, [number, number]> = {
   'hegel→deleuze': [-35, 15],
   'kant→rose': [15, -35],
-  'lenin→bloch': [-18, 10],
-  'lenin→bookchin': [-18, 10],
+  'lenin→bloch': [-28, 18],
+  'lenin→bookchin': [-28, 18],
+  'lenin→bogdanov': [-15, 15],
 };
 
 /**
