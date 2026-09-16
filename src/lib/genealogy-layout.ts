@@ -91,8 +91,8 @@ export function genIsReciprocal(edges: GeomEdge[], a: string, b: string): boolea
 const GEN_BOW_EXTRA: Record<string, [number, number]> = {
   'hegel→deleuze': [-35, 15],
   'kant→rose': [15, -35],
-  'lenin→bloch': [-30, 20],
-  'lenin→bookchin': [-35, 15],
+  'lenin→bloch': [-18, 10],
+  'lenin→bookchin': [-18, 10],
 };
 
 /**
@@ -165,8 +165,20 @@ export function genEdgePath(_edges: GeomEdge[], fromSlug: string, toSlug: string
   const aDir = channel >= a.x ? 1 : -1;
   const bDir = channel >= b.x ? 1 : -1;
   const rims = endRims(_edges, fromSlug, toSlug);
+  // Departure fan: threads leaving one creditor start at slightly
+  // staggered rim heights (±5px), mirroring the arrival fan, so stacked
+  // departure heads separate instead of one blob. Skipped where the
+  // Spinoza fountain already spreads departures.
+  const fromSibs = _edges
+    .filter((o) => o.from === fromSlug)
+    .map((o) => `${o.to}:${o.kind}`)
+    .filter((v, i, arr) => arr.indexOf(v) === i)
+    .sort();
+  const fromSelf = _edges.find((o) => o.from === fromSlug && o.to === toSlug);
+  const fromIdx = fromSelf ? fromSibs.indexOf(`${fromSelf.to}:${fromSelf.kind}`) : 0;
+  const fanSy = fromSibs.length > 1 && fromSlug !== 'spinoza' ? (fromIdx - (fromSibs.length - 1) / 2) * 5 : 0;
   const sx = fromSlug === 'spinoza' ? rims.sx : a.x + aDir * GEN_RIM;
-  const sy = fromSlug === 'spinoza' ? rims.sy : a.y;
+  const sy = fromSlug === 'spinoza' ? rims.sy : a.y + fanSy;
   // Other heirs keep the small staggered landing so stacked arrowheads
   // separate into a readable row instead of one blob.
   const heirSibs = _edges
