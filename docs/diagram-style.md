@@ -90,6 +90,53 @@ debt, rim to rim, same-side debts sharing one channel by design (the text
 list carries exactness). Rule of thumb: if any two threads overlap for
 most of their length, the diagram is no longer simple — switch to curves.
 
+## Recipe B — vertical road system (built here, ~60 debts, reusable)
+
+Content-agnostic build order for any node-and-debt diagram at this scale.
+Substitute any entities, any axis direction. Data contract always: a debts
+table is truth, heirs derive, a generator fails loudly on drift.
+
+1. **Positions first, from data alone.** Order nodes chronologically down
+   the canvas (opening seat on axis, pairs alternating sides, closing
+   seats on axis). Node radius generous (34 units here) — threads need
+   rim room. Freeze positions before routing a single line.
+2. **Channels, not threads.** Give traffic 2–4 shared vertical levels
+   beside (never through) the node columns, with 50px+ clearance to every
+   circle. Same-side pairs take their side channel; cross-side pairs share
+   the centre one. Ramps hug the endpoints (5%/95% of span) so 90% of
+   every thread runs parallel: short slips, long travel, laminar flow.
+3. **One cubic per debt, rim to rim.** Trim endpoints to rims along the
+   arrival direction first, then bow all channels the same small degree
+   east (20 units here; less where heads sit close). Same curve family
+   everywhere; named S-swings only where a run reads ruled — each logged
+   in a per-edge exception table, never silent.
+4. **Reciprocals draw once.** A↔B pairs get one line, heads at both ends;
+   the text list still carries each directed debt. Same-pair dual-kind
+   never draws twice (direct wins; guard kept even at zero cases).
+5. **End-circle fountains.** The busiest source/sink nodes spray rim
+   points around their circle (angular fan, one step per thread) instead
+   of stacking loops. Compute BOTH ends in one helper — split helpers
+   return blanks for the combined case and one debt will land at 0,0.
+6. **Grade by evidence, state it.** Opacity carries confidence (here full
+   / half / quarter); solid vs dashed carries route. Say what strength
+   means in the caption. Stance never touches geometry.
+7. **Checker shares the router module.** Drive-throughs fail, bundling
+   reports, arrivals retired once rims are shared. The checker must sample
+   the DRAWN curve — an old sampler here tested a wrong curve for months
+   because control indices were misnamed; name them ax/ay/c1x/c1y/… .
+8. **Component behaviour.** Hover a seat to isolate its debts (rest fades);
+   click a line for its note(s); full edge list in a disclosure; no text
+   on hover, ever — native SVG titles included (they linger after custom
+   cards are removed). Dates live in labels/panels, never painted.
+9. **Styling traps.** Marker fill needs direct selectors (var() in
+   presentation attributes fails cross-browser); marker opacity does NOT
+   inherit reliably — drop markers off dimmed threads instead. Dark
+   cabinet: every painted pair resolves against fixed panel vars, checked
+   by script over every pair after any palette edit.
+10. **Review honestly.** HMR and stale tabs lie — hard-refresh before
+    judging, and never tune geometry from a stale screenshot (two rounds
+    here were).
+
 ## Priority order (never sacrifice a higher rule for a lower one)
 
 ```text
