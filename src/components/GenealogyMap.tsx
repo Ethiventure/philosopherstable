@@ -157,11 +157,11 @@ export default function GenealogyMap({
           aria-label={`Genealogy of influence across ${order.length} thinkers, Spinoza at the top to Fisher at the bottom. ${ALL_EDGES.length} debts shown. Name size grows with connections: smallest names at body size, 2 points larger per extra connection.`}
         >
           <defs>
-            <marker id="gen-arrow-direct" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-              <path d="M 0 0.5 L 9 5 L 0 9.5 z" />
+            <marker id="gen-arrow-direct" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+              <path d="M 0.5 0.8 Q 4.6 3.6 9 5 Q 4.6 6.4 0.5 9.2 Q 3.2 5 0.5 0.8 Z" />
             </marker>
-            <marker id="gen-arrow-indirect" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-              <path d="M 0 0.5 L 9 5 L 0 9.5 z" />
+            <marker id="gen-arrow-indirect" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+              <path d="M 0.5 0.8 Q 4.6 3.6 9 5 Q 4.6 6.4 0.5 9.2 Q 3.2 5 0.5 0.8 Z" />
             </marker>
           </defs>
 
