@@ -42,12 +42,12 @@ const ALL_EDGES: Edge[] = Object.entries(CABINET_DEBTS).flatMap(([debtor, debts]
  *  evidence (high full / medium half / low quarter — unmistakable steps).
  *  Stance lives in the data and the text, never in the rendering. Element
  *  opacity covers markers too, so heads fade with their thread. */
-function edgeStyle(e: Edge): { w: number; o: number; cls: string; dash?: string; marker: string } {
+function edgeStyle(e: Edge): { w: number; o: number; cls: string; dash?: string; marker: string; markerStart: string } {
   const o = e.confidence === 'high' ? 1 : e.confidence === 'medium' ? 0.5 : 0.25;
   if (e.kind === 'indirect') {
-    return { w: 2, o, cls: 'gen-edge gen-edge-indirect', dash: '8 7', marker: 'url(#gen-arrow-indirect)' };
+    return { w: 2, o, cls: 'gen-edge gen-edge-indirect', dash: '8 7', marker: 'url(#gen-arrow-indirect)', markerStart: 'url(#gen-arrow-indirect-start)' };
   }
-  return { w: 2.4, o, cls: 'gen-edge gen-edge-direct', marker: 'url(#gen-arrow-direct)' };
+  return { w: 2.4, o, cls: 'gen-edge gen-edge-direct', marker: 'url(#gen-arrow-direct)', markerStart: 'url(#gen-arrow-direct-start)' };
 }
 
 function stanceWord(stance: Edge['stance']): string {
@@ -156,11 +156,17 @@ export default function GenealogyMap({
           aria-label={`Genealogy of influence across ${order.length} thinkers, Spinoza at the top to Fisher at the bottom. ${ALL_EDGES.length} debts shown. Name size grows with connections: smallest names at body size, 2 points larger per extra connection.`}
         >
           <defs>
-            <marker id="gen-arrow-direct" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+            <marker id="gen-arrow-direct" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto">
               <path d="M 0.5 0.8 Q 4.6 3.6 9 5 Q 4.6 6.4 0.5 9.2 Q 3.2 5 0.5 0.8 Z" />
             </marker>
-            <marker id="gen-arrow-indirect" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+            <marker id="gen-arrow-indirect" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto">
               <path d="M 0.5 0.8 Q 4.6 3.6 9 5 Q 4.6 6.4 0.5 9.2 Q 3.2 5 0.5 0.8 Z" />
+            </marker>
+            <marker id="gen-arrow-direct-start" viewBox="0 0 10 10" refX="2" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+              <path d="M 9.5 0.8 Q 5.4 3.6 1 5 Q 5.4 6.4 9.5 9.2 Q 6.8 5 9.5 0.8 Z" />
+            </marker>
+            <marker id="gen-arrow-indirect-start" viewBox="0 0 10 10" refX="2" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+              <path d="M 9.5 0.8 Q 5.4 3.6 1 5 Q 5.4 6.4 9.5 9.2 Q 6.8 5 9.5 0.8 Z" />
             </marker>
           </defs>
 
@@ -191,7 +197,7 @@ export default function GenealogyMap({
                   strokeDasharray={st.dash}
                   opacity={opacity}
                   markerEnd={heads}
-                  markerStart={reciprocal ? heads : undefined}
+                  markerStart={reciprocal ? (heads ? st.markerStart : undefined) : undefined}
                   tabIndex={0}
                   role="button"
                   aria-label={`${label} Activate to read this debt.`}
