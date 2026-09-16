@@ -84,6 +84,17 @@ export function genIsReciprocal(edges: GeomEdge[], a: string, b: string): boolea
 }
 
 /**
+ * Per-edge lateral bows [c1x, c2x] for character, applied on top of the
+ * channel belly: end-seat threads cradle their circle, and two named runs
+ * get a gentle mirrored S. Same family as the belly. Documented, never
+ * silent.
+ */
+const GEN_BOW_EXTRA: Record<string, [number, number]> = {
+  'hegel→deleuze': [-35, 15],
+  'kant→rose': [15, -35],
+};
+
+/**
  * Compatibility shim: individual offsets no longer exist — threads bundle
  * by design. Kept so the checker call-shape never drifts from the renderer.
  */
@@ -135,11 +146,16 @@ export function genEdgePath(_edges: GeomEdge[], fromSlug: string, toSlug: string
   const ey = b.y + fanEy;
   // Gentle belly so no thread reads as a ruled line: left and centre
   // channels bow 20px east; the right channel holds 8px because arrival
-  // heads sit close beside it. Same family of curve everywhere.
+  // heads sit close beside it. Same family of curve everywhere. End-seat
+  // threads cradle their circle: Spinoza departures swing wide east,
+  // Fisher arrivals swing in from the east.
   const belly = channel >= GEN_CH_RIGHT ? 8 : 20;
-  const c1x = channel + belly;
+  const cradle: [number, number] =
+    GEN_BOW_EXTRA[`${fromSlug}→${toSlug}`] ??
+    (fromSlug === 'spinoza' ? [45, 10] : toSlug === 'fisher' ? [10, 45] : [0, 0]);
+  const c1x = channel + belly + cradle[0];
   const c1y = sy + (ey - sy) * 0.05;
-  const c2x = channel + belly;
+  const c2x = channel + belly + cradle[1];
   const c2y = sy + (ey - sy) * 0.95;
   const f = (n: number) => (Math.round(n * 10) / 10).toFixed(1);
   return `M ${f(sx)} ${f(sy)} C ${f(c1x)} ${f(c1y)}, ${f(c2x)} ${f(c2y)}, ${f(ex)} ${f(ey)}`;
