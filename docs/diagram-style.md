@@ -76,8 +76,9 @@ Precisely how to draw it:
    leave only at their heir. Arrowheads land on rims along the arrival
    horizontal — never buried, never floating.
 4. Kind sets solid vs dashed: solid warm accent = direct, dashed gold =
-   indirect (dash `8 7`). Opacity sets strength of evidence: high 100% /
-   medium 90% / low 80%. Stance lives in data, tooltips and the detail
+   indirect (dash `8 7`). Opacity sets strength of evidence: high full /
+   medium a step down / low clearly thinner (the 90/80% steps proved
+   perceptually flat). Stance lives in data, tooltips and the detail
    panel, never in geometry.
 5. Strokes stay calm ([repo] 2.4 direct / 2.0 indirect): the nodes
    dominate, the lines are threads.

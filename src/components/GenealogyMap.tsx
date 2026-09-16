@@ -39,11 +39,12 @@ const ALL_EDGES: Edge[] = Object.entries(CABINET_DEBTS).flatMap(([debtor, debts]
 );
 
 /** Line treatment: kind sets solid/dashed; opacity sets strength of
- *  evidence (high 100% / medium 90% / low 80%). Stance lives in the data
- *  and the text, never in the rendering. Element opacity covers markers
- *  too, so heads fade with their thread. */
+ *  evidence (high full, medium a step down, low clearly thinner — the
+ *  90/80% steps proved perceptually flat, so the spread is wider).
+ *  Stance lives in the data and the text, never in the rendering. Element
+ *  opacity covers markers too, so heads fade with their thread. */
 function edgeStyle(e: Edge): { w: number; o: number; cls: string; dash?: string; marker: string } {
-  const o = e.confidence === 'high' ? 1 : e.confidence === 'medium' ? 0.9 : 0.8;
+  const o = e.confidence === 'high' ? 1 : e.confidence === 'medium' ? 0.85 : 0.65;
   if (e.kind === 'indirect') {
     return { w: 2, o, cls: 'gen-edge gen-edge-indirect', dash: '8 7', marker: 'url(#gen-arrow-indirect)' };
   }
@@ -102,6 +103,7 @@ export default function GenealogyMap({
   const order = DEFAULT_SEATING_ORDER.filter((slug) => PHILOSOPHER_BY_SLUG[slug]);
   const bySlug = (slug: string) => philosophers.find((p) => p.slug === slug);
   const [selectedPair, setSelectedPair] = useState<string | null>(null);
+  const [hovered, setHovered] = useState<{ slug: string; x: number; y: number } | null>(null);
 
   // Reciprocal pairs draw once. Each group keeps every directed debt for
   // text, tooltips and the panel — the line never eats a relationship.
@@ -147,7 +149,17 @@ export default function GenealogyMap({
         </span>
       </div>
 
-      <div className="overflow-x-auto custom-scroll mt-4 -mx-1 px-1" tabIndex={0} aria-label="Genealogy diagram, scrollable horizontally on small screens">
+      <div className="overflow-x-auto custom-scroll mt-4 -mx-1 px-1 relative" tabIndex={0} aria-label="Genealogy diagram, scrollable horizontally on small screens">
+        {hovered && (
+          <div
+            className="absolute z-10 pointer-events-none px-3 py-2 rounded-sm border border-[#4a392d]/25 genealogy-hover-card"
+            style={{ left: hovered.x, top: hovered.y, transform: 'translate(-50%, -115%)' }}
+            aria-hidden="true"
+          >
+            <p className="font-heading text-[#4a392d]">{PHILOSOPHER_BY_SLUG[hovered.slug]?.full_name}</p>
+            <p className="text-xs text-[#465f75]/75">{seatDates(hovered.slug)} · {DEGREE[hovered.slug] ?? 0} connections</p>
+          </div>
+        )}
         <svg
           viewBox={`0 0 ${GEN_W} ${GEN_H}`}
           className="w-full max-w-[660px] min-w-[420px] h-auto mx-auto"
@@ -235,6 +247,13 @@ export default function GenealogyMap({
                 className="genealogy-node"
                 style={{ cursor: live ? 'pointer' : 'default' }}
                 onClick={() => live && onSelect(live)}
+                onMouseEnter={(ev) => {
+                  const box = ev.currentTarget.ownerSVGElement?.parentElement?.getBoundingClientRect();
+                  const r = ev.currentTarget.getBoundingClientRect();
+                  if (!box) return;
+                  setHovered({ slug, x: r.left - box.left + r.width / 2, y: r.top - box.top });
+                }}
+                onMouseLeave={() => setHovered(null)}
                 onKeyDown={(ev) => {
                   if ((ev.key === 'Enter' || ev.key === ' ') && live) {
                     ev.preventDefault();
