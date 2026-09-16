@@ -124,10 +124,16 @@ table is truth, heirs derive, a generator fails loudly on drift.
    reports, arrivals retired once rims are shared. The checker must sample
    the DRAWN curve — an old sampler here tested a wrong curve for months
    because control indices were misnamed; name them ax/ay/c1x/c1y/… .
-8. **Component behaviour.** Hover a seat to isolate its debts (rest fades);
-   click a line for its note(s); full edge list in a disclosure; no text
-   on hover, ever — native SVG titles included (they linger after custom
-   cards are removed). Dates live in labels/panels, never painted.
+8. **Component behaviour.** Hover a seat to isolate its debts: one `lit`
+   slug in state; threads not touching it drop to 0.08 opacity (and drop
+   their markers — marker opacity does not inherit reliably, so dimmed
+   threads must unmount markers, not fade them), unrelated seats to 0.35,
+   all eased over 0.18s via a single CSS transition on opacity. Keyboard
+   focus isolates identically (focus/blur set the same state); the hover
+   card, if any, is mouse-only. Click a line for its note(s); full edge
+   list in a disclosure; no text on hover, ever — remove native SVG
+   `<title>` elements too, not just custom cards (they linger). Dates live
+   in aria-labels and panels, never painted.
 9. **Styling traps.** Marker fill needs direct selectors (var() in
    presentation attributes fails cross-browser); marker opacity does NOT
    inherit reliably — drop markers off dimmed threads instead. Dark
