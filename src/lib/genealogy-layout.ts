@@ -51,7 +51,7 @@ export const GEN_ORDER = [
 ];
 
 export const GEN_POS: Record<string, { x: number; y: number }> = {
-  spinoza: { x: GEN_SPINE_X, y: 78 },
+  spinoza: { x: GEN_SPINE_X, y: 90 },
   kant: { x: GEN_LEFT_X, y: 155 },
   hegel: { x: GEN_RIGHT_X, y: 155 },
   marx: { x: GEN_LEFT_X, y: 250 },
@@ -62,7 +62,7 @@ export const GEN_POS: Record<string, { x: number; y: number }> = {
   bookchin: { x: GEN_RIGHT_X, y: 440 },
   rose: { x: GEN_LEFT_X, y: 535 },
   deleuze: { x: GEN_RIGHT_X, y: 535 },
-  fisher: { x: GEN_SPINE_X, y: 612 },
+  fisher: { x: GEN_SPINE_X, y: 600 },
 };
 
 export function genNodePos(slug: string): { x: number; y: number } {
