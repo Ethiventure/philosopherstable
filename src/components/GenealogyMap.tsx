@@ -182,8 +182,6 @@ export default function GenealogyMap({
             // inherit reliably everywhere, so no markers off-focus, period.
             const heads = involves ? st.marker : undefined;
             const label = g.map(relationshipLabel).join(' Also: ');
-            const fromName = PHILOSOPHER_BY_SLUG[first.from]?.name ?? first.from;
-            const toName = PHILOSOPHER_BY_SLUG[first.to]?.name ?? first.to;
             return (
               <Fragment key={key}>
                 <path
@@ -207,7 +205,6 @@ export default function GenealogyMap({
                     }
                   }}
                 >
-                  <title>{`${fromName} → ${toName}${reciprocal ? ' ⇄' : ''}: ${g.map((e) => e.note).join(' Also: ')}`}</title>
                 </path>
               </Fragment>
             );
@@ -247,7 +244,6 @@ export default function GenealogyMap({
                   }
                 }}
               >
-                <title>{label}</title>
                 <circle
                   r={GEN_NODE_R}
                   className="gen-node-circle"
