@@ -9,8 +9,6 @@ import { DEFAULT_SEATING_ORDER, PHILOSOPHER_BY_SLUG } from '@/philosophers';
 import {
   GEN_H,
   GEN_NODE_R,
-  GEN_POS,
-  GEN_TIMELINE_Y,
   GEN_W,
   genEdgePath,
   genIsReciprocal,
@@ -68,10 +66,9 @@ function relationshipLabel(e: Edge): string {
   return `${source} to ${debtor}: ${route}, ${stanceWord(e.stance)}. ${e.note}`;
 }
 
-// Seats alternate above/below the timeline; labels face outward.
-const TOP_SEATS = new Set(
-  Object.keys(GEN_POS).filter((_, i) => i % 2 === 0),
-);
+// Seats on the spine get centred labels below; the paired rows label outward.
+const SPINE_SEATS = new Set(['spinoza', 'fisher']);
+const LEFT_SEATS = new Set(['kant', 'marx', 'bogdanov', 'weil', 'rose']);
 
 // Label size: standard body (16px) for the least-connected seat, +2px per
 // extra connection. Degree counts every debt in or out. Size reflects
@@ -126,8 +123,8 @@ export default function GenealogyMap({
       <p className="pass-indicator text-[#8b5254]">Debts and heirs</p>
       <h2 className="text-3xl mt-1">A Genealogy of Influence</h2>
       <p className="italic text-[#465f75]/70 mt-1 max-w-3xl">
-        Time runs left to right; arrows run creditor to heir, so a debt may
-        point back across the timeline. Solid is direct (read closely, even
+        Oldest at the top, youngest at the bottom. Arrows run creditor to heir,
+        so a debt may point back up the years. Solid is direct (read closely, even
         to break); dashed is indirect. A line with heads at both ends is a
         two-way debt. Line strength shows strength of evidence, from full
         strength down through thinner claims. Select a line to read it. Select a seat to open its profile.
@@ -153,9 +150,9 @@ export default function GenealogyMap({
       <div className="overflow-x-auto custom-scroll mt-4 -mx-1 px-1" tabIndex={0} aria-label="Genealogy diagram, scrollable horizontally on small screens">
         <svg
           viewBox={`0 0 ${GEN_W} ${GEN_H}`}
-          className="w-full min-w-[1024px] h-auto mx-auto"
+          className="w-full max-w-[660px] min-w-[420px] h-auto mx-auto"
           role="img"
-          aria-label={`Genealogy of influence across ${order.length} thinkers, Spinoza at the left to Fisher at the right. ${ALL_EDGES.length} debts shown. Name size grows with connections: smallest names at body size, 2 points larger per extra connection.`}
+          aria-label={`Genealogy of influence across ${order.length} thinkers, Spinoza at the top to Fisher at the bottom. ${ALL_EDGES.length} debts shown. Name size grows with connections: smallest names at body size, 2 points larger per extra connection.`}
         >
           <defs>
             <marker id="gen-arrow-direct" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
@@ -166,19 +163,7 @@ export default function GenealogyMap({
             </marker>
           </defs>
 
-          {/* Chronology axis only: earlier left, later right. It carries no
-              transmission claim — the threads carry the debts. */}
-          <line
-            x1={90}
-            y1={GEN_TIMELINE_Y}
-            x2={GEN_W - 90}
-            y2={GEN_TIMELINE_Y}
-            className="gen-timeline"
-            strokeWidth={1}
-            aria-hidden="true"
-          />
-          <text x={90} y={GEN_TIMELINE_Y + 29} fontSize={11} className="gen-timeline-label" aria-hidden="true">earlier</text>
-          <text x={GEN_W - 90} y={GEN_TIMELINE_Y + 29} textAnchor="end" fontSize={11} className="gen-timeline-label" aria-hidden="true">later</text>
+          {/* No drawn spine: the bundled threads themselves trace the descent. */}
 
           {groups.map((g) => {
             const first = g[0];
@@ -237,7 +222,8 @@ export default function GenealogyMap({
             const { x, y } = genNodePos(slug);
             const dates = seatDates(slug);
             const label = `${def.full_name}${dates ? `, ${dates}` : ''}, ${DEGREE[slug] ?? 0} connections`;
-            const top = TOP_SEATS.has(slug);
+            const centred = SPINE_SEATS.has(slug);
+            const left = LEFT_SEATS.has(slug);
             const size = labelSize(slug);
             return (
               <g
@@ -272,9 +258,9 @@ export default function GenealogyMap({
                   {def.name.charAt(0)}
                 </text>
                 <text
-                  textAnchor="middle"
-                  x={0}
-                  y={top ? -GEN_NODE_R - 12 : GEN_NODE_R + 26}
+                  textAnchor={centred ? 'middle' : left ? 'end' : 'start'}
+                  x={centred ? 0 : left ? -GEN_NODE_R - 12 : GEN_NODE_R + 12}
+                  y={centred ? GEN_NODE_R + 26 : 2}
                   fontSize={size}
                   fontWeight={700}
                   className="gen-node-name"

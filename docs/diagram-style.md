@@ -38,11 +38,12 @@ Monochrome nodes always: one ring metal, one ink — never per-entity colours.
 
 ## Layout (current instantiation [repo]; roles are the spec)
 
-- Time runs left-to-right: seats in chronological order along a horizontal
-  axis, alternating above / below the timeline row by row, earliest left
-  and latest right. ([repo]: canvas 1500×850; timeline y=425; rows y=285 /
-  565; 12 seats.) Arrows run creditor → heir and may point back across the
-  timeline — direction shows debt, position shows time, never the reverse.
+- Time runs top to bottom: one opening seat on the central axis, paired
+  seats alternating left / right down the rows, closing seats back on the
+  axis — both ends mirror. ([repo]: canvas 704×738; axis x=352; sides
+  x=210 / x=494; rows y = 60–630.) Arrows run creditor → heir and may
+  point back up the years — direction shows debt, position shows time,
+  never the reverse.
 - Node radius 34; threads trim to rims along perpendiculars and arrowheads
   land on rims, never buried, never floating. Labels: names only, sized by
   degree (least-connected seat at standard body 16px, +2px per extra
@@ -50,9 +51,9 @@ Monochrome nodes always: one ring metal, one ink — never per-entity colours.
   text, accessible labels and the detail panel, never painted.
 - Type: the scheme's display face. Halo behind labels in ground
   colour so lines pass behind text.
-- One drawn timeline, labelled earlier / later: chronology only, never a
-  transmission claim. The threads themselves carry the debts. Nothing
-  sticks out past either end circle.
+- No drawn spine: a drawn line implies one continuous transmission,
+  which is not an evidenced claim. The bundled threads themselves trace
+  the descent. Nothing sticks out past either end circle.
 
 ## Lines (road-system design — the default)
 
@@ -62,16 +63,17 @@ Precisely how to draw it:
    (A owes B and B owes A) draw as ONE line with arrowheads at both ends.
    Same-pair dual-kind never draws twice: the direct thread wins (guard —
    zero such pairs today).
-2. Threads bundle onto four shared highways like small roads joining
-   motorways: one outer highway per row for same-side traffic (top bows
-   up, bottom bows down), two middle highways for crossings, picked
-   deterministically per edge. Overlap is the design, never routed
-   around: the full edge list beside the diagram carries complete
-   understanding, so the drawing optimises for calm, not provability.
-3. Ramps hug the endpoints: threads leave their row almost vertically,
-   clearing seated neighbours before travelling, and rise only at their
-   heir. Arrowheads land on rims along the arrival perpendicular — never
-   buried, never floating.
+2. Threads bundle onto three shared vertical channels beside the node
+   columns (left / centre / right): same-side pairs take their side
+   channel, cross-side pairs share the centre channel. Small roads join
+   on horizontal ramps and leave the same way. Overlap is the design,
+   never routed around: the full edge list beside the diagram carries
+   complete understanding, so the drawing optimises for calm, not
+   provability.
+3. Ramps hug the endpoints: threads leave their node almost horizontally
+   toward the channel, clearing seated neighbours before travelling, and
+   leave only at their heir. Arrowheads land on rims along the arrival
+   horizontal — never buried, never floating.
 4. Kind sets solid vs dashed: solid warm accent = direct, dashed gold =
    indirect (dash `8 7`). Opacity sets strength of evidence: high 100% /
    medium 90% / low 80%. Stance lives in data, tooltips and the detail
