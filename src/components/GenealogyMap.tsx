@@ -102,7 +102,6 @@ export default function GenealogyMap({
   const order = DEFAULT_SEATING_ORDER.filter((slug) => PHILOSOPHER_BY_SLUG[slug]);
   const bySlug = (slug: string) => philosophers.find((p) => p.slug === slug);
   const [selectedPair, setSelectedPair] = useState<string | null>(null);
-  const [hovered, setHovered] = useState<{ slug: string; x: number; y: number } | null>(null);
   const [lit, setLit] = useState<string | null>(null);
 
   // Reciprocal pairs draw once. Each group keeps every directed debt for
@@ -149,17 +148,7 @@ export default function GenealogyMap({
         </span>
       </div>
 
-      <div className="overflow-x-auto custom-scroll mt-4 -mx-1 px-1 relative" tabIndex={0} aria-label="Genealogy diagram, scrollable horizontally on small screens">
-        {hovered && (
-          <div
-            className="absolute z-10 pointer-events-none px-3 py-2 rounded-sm border border-[#4a392d]/25 genealogy-hover-card"
-            style={{ left: hovered.x, top: hovered.y, transform: 'translate(-50%, -115%)' }}
-            aria-hidden="true"
-          >
-            <p className="font-heading text-[#4a392d]">{PHILOSOPHER_BY_SLUG[hovered.slug]?.full_name}</p>
-            <p className="text-xs text-[#465f75]/75">{seatDates(hovered.slug)} · {DEGREE[hovered.slug] ?? 0} connections</p>
-          </div>
-        )}
+      <div className="overflow-x-auto custom-scroll mt-4 -mx-1 px-1" tabIndex={0} aria-label="Genealogy diagram, scrollable horizontally on small screens">
         <svg
           viewBox={`0 0 ${GEN_W} ${GEN_H}`}
           className="w-full max-w-[660px] min-w-[420px] h-auto mx-auto"
@@ -246,17 +235,8 @@ export default function GenealogyMap({
                 className="genealogy-node"
                 style={{ cursor: live ? 'pointer' : 'default', opacity: dimmed ? 0.35 : 1 }}
                 onClick={() => live && onSelect(live)}
-                onMouseEnter={(ev) => {
-                  const box = ev.currentTarget.ownerSVGElement?.parentElement?.getBoundingClientRect();
-                  const r = ev.currentTarget.getBoundingClientRect();
-                  if (!box) return;
-                  setHovered({ slug, x: r.left - box.left + r.width / 2, y: r.top - box.top });
-                  setLit(slug);
-                }}
-                onMouseLeave={() => {
-                  setHovered(null);
-                  setLit(null);
-                }}
+                onMouseEnter={() => setLit(slug)}
+                onMouseLeave={() => setLit(null)}
                 onFocus={() => setLit(slug)}
                 onBlur={() => setLit(null)}
                 onKeyDown={(ev) => {

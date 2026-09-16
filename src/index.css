@@ -707,8 +707,6 @@ body {
 .gen-edge:focus-visible { outline: 2px solid var(--color-gold); outline-offset: 4px; }
 /* Hover-to-isolate fades in and out instead of snapping. */
 .genealogy-node, .gen-edge { transition: opacity 0.18s ease; }
-/* Hover card over seats: name, dates, degree — panel vars, never theme ink. */
-.genealogy-hover-card { background: var(--gen-ground); box-shadow: 0 4px 18px rgba(0, 0, 0, 0.45); white-space: nowrap; }
 
 /* Fixed dark cabinet for the genealogy map: the one surface that never
    follows the display theme. Deep walnut ground, parchment ink, teal rings —
