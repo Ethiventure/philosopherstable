@@ -77,8 +77,8 @@ Precisely how to draw it:
    horizontal — never buried, never floating.
 4. Kind sets solid vs dashed: solid warm accent = direct, dashed gold =
    indirect (dash `8 7`). Opacity sets strength of evidence: high full /
-   medium three-fifths / low one-third. Stance lives in data, tooltips and
-   the detail panel, never in geometry.
+   medium half / low quarter. Stance lives in data, tooltips and the
+   detail panel, never in geometry.
 5. Strokes stay calm ([repo] 2.4 direct / 2.0 indirect): the nodes
    dominate, the lines are threads.
 
