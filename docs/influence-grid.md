@@ -17,7 +17,7 @@ N = no evidenced link (cannot currently demonstrate — not "unrelated") ·
 | **Hegel** | D+ | D- | — | N | N | N | N | N | N | N | N | N |
 | **Marx** | D+ | D | D | — | N | N | N | N | N | N | N | N |
 | **Lenin** | N | D- | D+ | D+ | — | D- | N | N | N | N | N | N |
-| **Bogdanov** | N | D | D+ | D+ | D- | — | N | N | N | N | N | N |
+| **Bogdanov** | D+ | D | D+ | D+ | D- | — | N | N | N | N | N | N |
 | **Bloch** | D+ | D+ | D | D+ | D+ | N | — | N | N | N | N | N |
 | **Weil** | D | D | D- | D | D- | I | N | — | N | N | N | N |
 | **Bookchin** | D | D | D+ | D | D- | I | D+ | I+ | — | D- | D+ | N |
@@ -29,12 +29,12 @@ N = no evidenced link (cannot currently demonstrate — not "unrelated") ·
 
 | seat | owes | owed by | total |
 | --- | --- | --- | --- |
-| **Spinoza** | 0 | 9 | 9 |
+| **Spinoza** | 0 | 10 | 10 |
 | **Kant** | 1 | 10 | 11 |
 | **Hegel** | 2 | 8 | 10 |
 | **Marx** | 3 | 8 | 11 |
 | **Lenin** | 4 | 6 | 10 |
-| **Bogdanov** | 4 | 6 | 10 |
+| **Bogdanov** | 5 | 6 | 11 |
 | **Bloch** | 5 | 3 | 8 |
 | **Weil** | 6 | 2 | 8 |
 | **Bookchin** | 10 | 1 | 11 |

@@ -80,6 +80,7 @@ export const CABINET_DEBTS: Record<string, CabinetDebt[]> = {
     { to: 'bogdanov', kind: 'direct', stance: 'critical', confidence: 'high', note: 'read closely in order to refute — Materialism and Empirio-criticism (1909) is aimed largely at Bogdanov, then expelled him from the Bolsheviks' },
   ],
   bogdanov: [
+    { to: 'spinoza', kind: 'direct', stance: 'positive', confidence: 'high', note: 'Tektology reads Spinoza organizationally: monistic structure of great strength and plasticity, unassimilated only for want of a favourable ideological environment — Descartes founded a school, Spinoza deserved one' },
     { to: 'marx', kind: 'direct', stance: 'positive', confidence: 'high', note: 'rebuilt Marxism as a science of organisation' },
     { to: 'hegel', kind: 'direct', stance: 'positive', confidence: 'medium', note: 'Hegelian and Marxian dialectics the major precursors of Tektology — internal contradictions carried over' },
     { to: 'lenin', kind: 'direct', stance: 'critical', confidence: 'high', note: 'comrade, then rupture — expelled from the Bolsheviks in 1909' },
