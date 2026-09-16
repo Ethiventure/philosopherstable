@@ -133,9 +133,11 @@ export function genEdgePath(_edges: GeomEdge[], fromSlug: string, toSlug: string
   const fanEy = heirSibs.length > 1 ? (heirIdx - (heirSibs.length - 1) / 2) * 7 : 0;
   const ex = b.x + bDir * GEN_RIM;
   const ey = b.y + fanEy;
-  const c1x = channel;
+  // Gentle uniform belly: channel runs bow 8px east so no thread reads
+  // as a ruled line. Same degree everywhere, clearances hold.
+  const c1x = channel + 8;
   const c1y = sy + (ey - sy) * 0.05;
-  const c2x = channel;
+  const c2x = channel + 8;
   const c2y = sy + (ey - sy) * 0.95;
   const f = (n: number) => (Math.round(n * 10) / 10).toFixed(1);
   return `M ${f(sx)} ${f(sy)} C ${f(c1x)} ${f(c1y)}, ${f(c2x)} ${f(c2y)}, ${f(ex)} ${f(ey)}`;
