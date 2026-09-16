@@ -29,7 +29,8 @@ export const GEN_POS: Record<string, { x: number; y: number }> = {
   bloch: { x: 494, y: 345 },
   weil: { x: 210, y: 440 },
   bookchin: { x: 494, y: 440 },
-  deleuze: { x: GEN_SPINE_X, y: 535 },
+  rose: { x: 210, y: 535 },
+  deleuze: { x: 494, y: 535 },
   fisher: { x: GEN_SPINE_X, y: 630 },
 };
 
@@ -139,6 +140,14 @@ export const GEN_RIM_POINTS: Record<string, [number, number]> = {
   // takes the left rim, so four arrows never share one approach.
   'kant→fisher': [333, 611],
   'marx→fisher': [327, 621],
+  // Deleuze sits on the right spine under Bookchin: Spinoza's diagonal
+  // arrives upper-left instead of threading Bookchin's circle (27px
+  // drive-through without the fan, 40px+ with it).
+  'spinoza→deleuze': [474, 516],
+  // Bogdanov→Fisher runs the left corridor beside Marx→Fisher (41% merge
+  // without the fan): it takes Fisher's lower-left rim while Marx keeps
+  // the upper-left, so the two threads diverge at the arrival.
+  'bogdanov→fisher': [326, 640],
   // Bookchin fan: Marx's long S arrives upper-left instead of threading
   // the 2px gap between Bloch's circle and the rim. Kant's arrives
   // upper-left too, a touch lower, so the two arrows never share a tip.

@@ -4,14 +4,21 @@
  * "In this cabinet" tab; `known_influences` in each philosopher file carries
  * the same facts into prompts.
  *
- * direct = read closely and answered (including critically, or by rupture).
- * indirect = arrived through intermediaries or a wider tradition.
- * stance = the debtor's attitude: positive (carries forward), critical
- * (attacks or breaks), ambivalent (mixed or unclear). Grid codes combine
- * both: D+/D-/D and I+/I-/I, N for no evidenced link. N means "cannot
- * currently demonstrate under these rules" — never "unrelated". Chat
- * evidence from the owner outranks both the repo's prior text and any
- * outside model; the notes say whose evidence each link stands on.
+ * direct = route of debt: debtor directly engaged creditor's thought
+ * (read, quoted, criticised, answered — ruptures count). indirect = route via
+ * one or more identifiable intermediaries (hops, may sit outside cabinet).
+ * D/I is ROUTE ONLY — never strength, importance, agreement, fame, or
+ * evidential certainty. stance = character (positive/critical/ambivalent).
+ * confidence = how securely evidence establishes the route (high/medium/low).
+ * Owner's chat evidence outranks repo text and outside models; the notes say
+ * whose evidence each link stands on. Loose-permeation I's admitted on owner
+ * say-so are marked confidence low + "owner route" so they never masquerade
+ * as textual receipts. Owner searches stand even where our shelf texts show
+ * nothing: Deleuze/Bookchin/Fisher←Bogdanov are I low on owner say-so (our
+ * 2026-09-16 full-text checks found no Ashby in ATP/AO, one Bertalanffy
+ * name-drop and 0 Ashby/Bogdanov in EoF, 0 Wark in k-punk — recorded for
+ * honesty, not as overrides; do not re-hunt without new leads).
+ * Weil→Bookchin kept as owner route per explicit override.
  * Only links with evidence are listed. The Bloch→Bookchin link is
  * documentary: Bookchin cites and quotes The Principle of Hope in The
  * Ecology of Freedom (Ch. 12) — alliance technology, co-productivity of
@@ -49,72 +56,82 @@ export interface CabinetDebt {
   kind: 'direct' | 'indirect';
   /** + embraces and carries forward, − attacks or breaks, bare is mixed. */
   stance: DebtStance;
+  /** Route certainty: high/medium/low — independent of kind and stance. */
+  confidence: 'high' | 'medium' | 'low';
+  /** Intermediary route for indirect debts (may sit outside cabinet). */
+  hops?: string[];
   note: string;
 }
 
 export const CABINET_DEBTS: Record<string, CabinetDebt[]> = {
   spinoza: [],
   kant: [
-    { to: 'spinoza', kind: 'direct', stance: 'critical', note: 'named Spinoza as the adversary — answered Spinozism head-on through the Pantheismusstreit (Jacobi, Mendelssohn)' },
+    { to: 'spinoza', kind: 'direct', stance: 'critical', confidence: 'high', note: 'named Spinoza as the adversary — answered Spinozism head-on through the Pantheismusstreit (Jacobi, Mendelssohn)' },
   ],
   hegel: [
-    { to: 'spinoza', kind: 'direct', stance: 'positive', note: '"first be a Spinozist": substance taken up as subject' },
-    { to: 'kant', kind: 'direct', stance: 'critical', note: 'system built on and past Kant — reason knowing itself' },
+    { to: 'spinoza', kind: 'direct', stance: 'positive', confidence: 'high', note: '"first be a Spinozist": substance taken up as subject' },
+    { to: 'kant', kind: 'direct', stance: 'critical', confidence: 'high', note: 'system built on and past Kant — reason knowing itself' },
   ],
   marx: [
-    { to: 'spinoza', kind: 'direct', stance: 'positive', note: 'hand-copied the TTP in youth; democratic blueprint and critique of superstition shaped historical materialism' },
-    { to: 'hegel', kind: 'direct', stance: 'ambivalent', note: 'turned the dialectic right-side up, keeping the method: matter first, ideas second' },
-    { to: 'kant', kind: 'direct', stance: 'ambivalent', note: 'read and answered head-on — early notes through to Capital, via Hegel and Feuerbach and past them' },
+    { to: 'spinoza', kind: 'direct', stance: 'positive', confidence: 'high', note: 'hand-copied the TTP in youth; democratic blueprint and critique of superstition shaped historical materialism' },
+    { to: 'hegel', kind: 'direct', stance: 'ambivalent', confidence: 'high', note: 'turned the dialectic right-side up, keeping the method: matter first, ideas second' },
+    { to: 'kant', kind: 'direct', stance: 'ambivalent', confidence: 'high', note: 'read and answered head-on — early notes through to Capital, via Hegel and Feuerbach and past them' },
   ],
   lenin: [
-    { to: 'marx', kind: 'direct', stance: 'positive', note: 'developed Marx into a theory of party and revolution' },
-    { to: 'hegel', kind: 'direct', stance: 'positive', note: 'read the Logic cover to cover in 1914–15' },
-    { to: 'kant', kind: 'direct', stance: 'critical', note: 'took the thing-in-itself apart in Materialism and Empirio-criticism — knowable, not unknowable' },
-    { to: 'bogdanov', kind: 'direct', stance: 'critical', note: 'read closely in order to refute — Materialism and Empirio-criticism (1909) is aimed largely at Bogdanov, then expelled him from the Bolsheviks' },
+    { to: 'marx', kind: 'direct', stance: 'positive', confidence: 'high', note: 'developed Marx into a theory of party and revolution' },
+    { to: 'hegel', kind: 'direct', stance: 'positive', confidence: 'high', note: 'read the Logic cover to cover in 1914–15' },
+    { to: 'kant', kind: 'direct', stance: 'critical', confidence: 'high', note: 'took the thing-in-itself apart in Materialism and Empirio-criticism — knowable, not unknowable' },
+    { to: 'bogdanov', kind: 'direct', stance: 'critical', confidence: 'high', note: 'read closely in order to refute — Materialism and Empirio-criticism (1909) is aimed largely at Bogdanov, then expelled him from the Bolsheviks' },
   ],
   bogdanov: [
-    { to: 'marx', kind: 'direct', stance: 'positive', note: 'rebuilt Marxism as a science of organisation' },
-    { to: 'hegel', kind: 'direct', stance: 'positive', note: 'Hegelian and Marxian dialectics the major precursors of Tektology — internal contradictions carried over' },
-    { to: 'lenin', kind: 'direct', stance: 'critical', note: 'comrade, then rupture — expelled from the Bolsheviks in 1909' },
-    { to: 'kant', kind: 'direct', stance: 'ambivalent', note: 'answered head-on through and past the empiriocriticist post-Kantians (Mach, Avenarius)' },
+    { to: 'marx', kind: 'direct', stance: 'positive', confidence: 'high', note: 'rebuilt Marxism as a science of organisation' },
+    { to: 'hegel', kind: 'direct', stance: 'positive', confidence: 'medium', note: 'Hegelian and Marxian dialectics the major precursors of Tektology — internal contradictions carried over' },
+    { to: 'lenin', kind: 'direct', stance: 'critical', confidence: 'high', note: 'comrade, then rupture — expelled from the Bolsheviks in 1909' },
+    { to: 'kant', kind: 'direct', stance: 'ambivalent', confidence: 'medium', note: 'answered head-on through and past the empiriocriticist post-Kantians (Mach, Avenarius)' },
   ],
   weil: [
-    { to: 'spinoza', kind: 'direct', stance: 'ambivalent', note: 'studied under Alain and returned to in the Notebooks — necessity consented to, not merely understood; grace parts them' },
-    { to: 'hegel', kind: 'direct', stance: 'critical', note: 'measured Hegel’s Geist against force — history has no self-developing spirit' },
-    { to: 'marx', kind: 'direct', stance: 'ambivalent', note: 'took up class analysis early, blasted Marxist orthodoxy late' },
-    { to: 'lenin', kind: 'direct', stance: 'critical', note: 'devoted a piece to Lenin’s Materialism and Empiriocriticism in Oppression and Liberty (26 Lenin hits); answered the party model with abolition' },
-    { to: 'kant', kind: 'direct', stance: 'ambivalent', note: 'took Kant’s disinterestedness to decreation — aesthetics inverted into hunger, dignity into the cry' },
-    { to: 'bogdanov', kind: 'indirect', stance: 'ambivalent', note: 'via Lenin’s M&EC controversy — O&L names Bogdanov as Lenin’s best-known opponent there; no inherited judgment' },
+    { to: 'spinoza', kind: 'direct', stance: 'ambivalent', confidence: 'high', note: 'studied under Alain and returned to in the Notebooks — necessity consented to, not merely understood; grace parts them' },
+    { to: 'hegel', kind: 'direct', stance: 'critical', confidence: 'high', note: 'measured Hegel’s Geist against force — history has no self-developing spirit' },
+    { to: 'marx', kind: 'direct', stance: 'ambivalent', confidence: 'high', note: 'took up class analysis early, blasted Marxist orthodoxy late' },
+    { to: 'lenin', kind: 'direct', stance: 'critical', confidence: 'high', note: 'devoted a piece to Lenin’s Materialism and Empiriocriticism in Oppression and Liberty (26 Lenin hits); answered the party model with abolition' },
+    { to: 'kant', kind: 'direct', stance: 'ambivalent', confidence: 'high', note: 'took Kant’s disinterestedness to decreation — aesthetics inverted into hunger, dignity into the cry' },
+    { to: 'bogdanov', kind: 'indirect', stance: 'ambivalent', confidence: 'medium', hops: ['lenin'], note: 'via Lenin’s M&EC controversy — O&L names Bogdanov as Lenin’s best-known opponent there; no inherited judgment' },
   ],
   bloch: [
-    { to: 'spinoza', kind: 'direct', stance: 'positive', note: 'immanent objectivity has Spinoza as one of its origins (SEP; Hindrichs on Bloch’s materialist Spinoza-reading)' },
-    { to: 'marx', kind: 'direct', stance: 'positive', note: 'praxis over contemplation, via the Theses on Feuerbach' },
-    { to: 'hegel', kind: 'direct', stance: 'ambivalent', note: 'dialectical process kept open against his closed circle' },
-    { to: 'kant', kind: 'direct', stance: 'positive', note: 'practical reason and regulative ideas turned into ontology of hope' },
+    { to: 'spinoza', kind: 'direct', stance: 'positive', confidence: 'high', note: 'immanent objectivity has Spinoza as one of its origins (SEP; Hindrichs on Bloch’s materialist Spinoza-reading)' },
+    { to: 'marx', kind: 'direct', stance: 'positive', confidence: 'high', note: 'praxis over contemplation, via the Theses on Feuerbach' },
+    { to: 'hegel', kind: 'direct', stance: 'ambivalent', confidence: 'high', note: 'dialectical process kept open against his closed circle' },
+    { to: 'kant', kind: 'direct', stance: 'positive', confidence: 'high', note: 'practical reason and regulative ideas turned into ontology of hope' },
+    { to: 'lenin', kind: 'direct', stance: 'positive', confidence: 'high', note: 'owner dossier: opens Principle of Hope Vol.1 quoting Lenin’s What Is To Be Done? defence of dreaming ("We should dream!") — forward dreaming (Vorausträumen) as materialist praxis' },
   ],
   bookchin: [
-    { to: 'spinoza', kind: 'direct', stance: 'ambivalent', note: 'named in EoF — a single explicit nod, carried by the wider Spinozist tradition (Hegel, Marx, Deleuze)' },
-    { to: 'hegel', kind: 'direct', stance: 'positive', note: 'Dialectical Naturalism built by decades of direct reading, quoting, and wrestling with Hegel' },
-    { to: 'marx', kind: 'direct', stance: 'ambivalent', note: 'kept the critique of capital, refused economism' },
-    { to: 'lenin', kind: 'direct', stance: 'critical', note: 'answered the party model with the assembly — Listen, Marxist! takes on What Is to Be Done? directly' },
-    { to: 'deleuze', kind: 'direct', stance: 'critical', note: 'named D&G’s “desiring-machines” in SALA (1995) as the lifestyle mood made flesh' },
-    { to: 'kant', kind: 'direct', stance: 'ambivalent', note: 'named Kant across EoF — neo-Kantian dualism refused, the moral imperative kept' },
-    { to: 'bloch', kind: 'direct', stance: 'positive', note: 'cited the Principle of Hope in The Ecology of Freedom — alliance technology, co-productivity, hope as foundation' },
+    { to: 'spinoza', kind: 'direct', stance: 'ambivalent', confidence: 'medium', note: 'named in EoF — a single explicit nod, carried by the wider Spinozist tradition (Hegel, Marx, Deleuze)' },
+    { to: 'hegel', kind: 'direct', stance: 'positive', confidence: 'high', note: 'Dialectical Naturalism built by decades of direct reading, quoting, and wrestling with Hegel' },
+    { to: 'marx', kind: 'direct', stance: 'ambivalent', confidence: 'high', note: 'kept the critique of capital, refused economism' },
+    { to: 'lenin', kind: 'direct', stance: 'critical', confidence: 'high', note: 'answered the party model with the assembly — Listen, Marxist! takes on What Is to Be Done? directly' },
+    { to: 'deleuze', kind: 'direct', stance: 'critical', confidence: 'high', note: 'named D&G’s “desiring-machines” in SALA (1995) as the lifestyle mood made flesh' },
+    { to: 'kant', kind: 'direct', stance: 'ambivalent', confidence: 'high', note: 'named Kant across EoF — neo-Kantian dualism refused, the moral imperative kept' },
+    { to: 'bloch', kind: 'direct', stance: 'positive', confidence: 'high', note: 'cited the Principle of Hope in The Ecology of Freedom — alliance technology, co-productivity, hope as foundation' },
+    { to: 'weil', kind: 'indirect', stance: 'positive', confidence: 'low', hops: ['macdonald'], note: 'owner route: Macdonald first American publisher of Weil (Politics Nov 1945, Iliad via McCarthy — SEP/NYT verified); Bookchin in the shared post-Trotskyist milieu — permeation assumed on owner say-so, Bookchin uptake receipt still wanted (EoF full text: 0 Weil, 0 Macdonald)' },
+    { to: 'bogdanov', kind: 'indirect', stance: 'ambivalent', confidence: 'low', hops: ['bertalanffy', 'ashby'], note: 'owner route via Bertalanffy/Ashby: Bookchin builds the non-hierarchical self-organising model citing mid-century systems theory and cybernetics, and Bertalanffy acknowledged Bogdanov anticipated open systems, homeostasis and structural organisational laws decades before GST. Owner searches; our EoF full text shows one Bertalanffy name-drop, recorded honestly.' },
   ],
   deleuze: [
-    { to: 'spinoza', kind: 'direct', stance: 'positive', note: '"Prince of Philosophers": immanence ontology, power to affect and be affected' },
-    { to: 'kant', kind: 'direct', stance: 'ambivalent', note: 'book-length study claimed as precursor, representation refused: Kant’s Critical Philosophy' },
-    { to: 'hegel', kind: 'direct', stance: 'critical', note: 'a generalized anti-Hegelianism (D&R preface): difference against contradiction, via Hyppolite and Kojève' },
-    { to: 'marx', kind: 'direct', stance: 'ambivalent', note: 'read with Guattari: capital as desiring-production — "remained Marxists" who broke orthodoxy' },
-    { to: 'lenin', kind: 'direct', stance: 'ambivalent', note: 'honoured the Leninist break in Anti-Oedipus; studied “On Slogans” in A Thousand Plateaus — then refused the father-function' },
-    { to: 'bloch', kind: 'direct', stance: 'ambivalent', note: 'named once in What Is Philosophy? (p.100) — contact established, no major influence' },
+    { to: 'spinoza', kind: 'direct', stance: 'positive', confidence: 'high', note: '"Prince of Philosophers": immanence ontology, power to affect and be affected' },
+    { to: 'kant', kind: 'direct', stance: 'ambivalent', confidence: 'high', note: 'book-length study claimed as precursor, representation refused: Kant’s Critical Philosophy' },
+    { to: 'hegel', kind: 'direct', stance: 'critical', confidence: 'high', note: 'a generalized anti-Hegelianism (D&R preface): difference against contradiction, via Hyppolite and Kojève' },
+    { to: 'marx', kind: 'direct', stance: 'ambivalent', confidence: 'high', note: 'read with Guattari: capital as desiring-production — "remained Marxists" who broke orthodoxy' },
+    { to: 'lenin', kind: 'direct', stance: 'ambivalent', confidence: 'high', note: 'honoured the Leninist break in Anti-Oedipus; studied “On Slogans” in A Thousand Plateaus — then refused the father-function' },
+    { to: 'bloch', kind: 'direct', stance: 'ambivalent', confidence: 'medium', note: 'named once in What Is Philosophy? (p.100) — contact established, no major influence' },
+    { to: 'bogdanov', kind: 'indirect', stance: 'ambivalent', confidence: 'low', hops: ['ashby'], note: 'owner route via Ashby: D&G work the early-cybernetics problem (homeostatic machines, self-organising systems, GST), and Ashby read and cited Bogdanov on organisational stability and regulation — the debt arrives through Ashby\'s systems language. Owner searches; our ATP/AO full texts show no Ashby, recorded honestly.' },
   ],
   fisher: [
-    { to: 'spinoza', kind: 'direct', stance: 'positive', note: 'used directly in Capitalist Realism — Spinoza offers the best resources for a paternalism without the father' },
-    { to: 'kant', kind: 'direct', stance: 'ambivalent', note: 'co-authored straight Kant scholarship (Fisher & Watkins 1998, Review of Metaphysics)' },
-    { to: 'bloch', kind: 'indirect', stance: 'ambivalent', note: 'thin chain: D&G mention Bloch once in WIP; Fisher read D&G closely' },
-    { to: 'deleuze', kind: 'direct', stance: 'positive', note: 'CCRU and k-punk: assemblages, control, the weird' },
-    { to: 'marx', kind: 'direct', stance: 'positive', note: 'read through critical theory: commodity, spectacle, realism' },
+    { to: 'spinoza', kind: 'direct', stance: 'positive', confidence: 'high', note: 'used directly in Capitalist Realism — Spinoza offers the best resources for a paternalism without the father' },
+    { to: 'kant', kind: 'direct', stance: 'ambivalent', confidence: 'high', note: 'co-authored straight Kant scholarship (Fisher & Watkins 1998, Review of Metaphysics)' },
+    { to: 'bloch', kind: 'indirect', stance: 'ambivalent', confidence: 'medium', hops: ['jameson'], note: 'Jameson read/introduced Bloch (Marxism and Form 1971 Bloch chapter); Fisher built Capitalist Realism on Jameson on closure of horizons — never cited Bloch directly' },
+    { to: 'deleuze', kind: 'direct', stance: 'positive', confidence: 'high', note: 'CCRU and k-punk: assemblages, control, the weird' },
+    { to: 'marx', kind: 'direct', stance: 'positive', confidence: 'high', note: 'read through critical theory: commodity, spectacle, realism' },
+    { to: 'bookchin', kind: 'indirect', stance: 'ambivalent', confidence: 'low', hops: ['marcuse'], note: 'owner route: Marcuse read Bookchin (Post-Scarcity Anarchism, public debates); Fisher read Marcuse (Eros/Civilization, One-Dimensional Man into Acid Communism) — Fisher never cited Bookchin directly' },
+    { to: 'bogdanov', kind: 'indirect', stance: 'ambivalent', confidence: 'low', hops: ['wark'], note: 'owner route via Wark: Fisher moved in the circle around Wark, whose Molecular Red (2015) devotes its first half to reclaiming Tektology and Proletkult — Fisher promoted and discussed the Promethean socio-technical tradition Wark retrieved. Owner searches; no Fisher→Wark receipt in our files, recorded honestly.' },
   ],
 };
 

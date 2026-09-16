@@ -18,11 +18,11 @@ N = no evidenced link (cannot currently demonstrate — not "unrelated") ·
 | **Marx** | D+ | D | D | — | N | N | N | N | N | N | N |
 | **Lenin** | N | D- | D+ | D+ | — | D- | N | N | N | N | N |
 | **Bogdanov** | N | D | D+ | D+ | D- | — | N | N | N | N | N |
-| **Bloch** | D+ | D+ | D | D+ | N | N | — | N | N | N | N |
+| **Bloch** | D+ | D+ | D | D+ | D+ | N | — | N | N | N | N |
 | **Weil** | D | D | D- | D | D- | I | N | — | N | N | N |
-| **Bookchin** | D | D | D+ | D | D- | N | D+ | N | — | D- | N |
-| **Deleuze** | D+ | D | D- | D | D | N | D | N | N | — | N |
-| **Fisher** | D+ | D | N | D+ | N | N | I | N | N | D+ | — |
+| **Bookchin** | D | D | D+ | D | D- | I | D+ | I+ | — | D- | N |
+| **Deleuze** | D+ | D | D- | D | D | I | D | N | N | — | N |
+| **Fisher** | D+ | D | N | D+ | N | I | I | N | I | D+ | — |
 
 ## Degree (debts out / heirs in / total)
 
@@ -32,10 +32,10 @@ N = no evidenced link (cannot currently demonstrate — not "unrelated") ·
 | **Kant** | 1 | 9 | 10 |
 | **Hegel** | 2 | 7 | 9 |
 | **Marx** | 3 | 7 | 10 |
-| **Lenin** | 4 | 4 | 8 |
-| **Bogdanov** | 4 | 2 | 6 |
-| **Bloch** | 4 | 3 | 7 |
-| **Weil** | 6 | 0 | 6 |
-| **Bookchin** | 7 | 0 | 7 |
-| **Deleuze** | 6 | 2 | 8 |
-| **Fisher** | 5 | 0 | 5 |
+| **Lenin** | 4 | 5 | 9 |
+| **Bogdanov** | 4 | 5 | 9 |
+| **Bloch** | 5 | 3 | 8 |
+| **Weil** | 6 | 1 | 7 |
+| **Bookchin** | 9 | 1 | 10 |
+| **Deleuze** | 7 | 2 | 9 |
+| **Fisher** | 7 | 0 | 7 |

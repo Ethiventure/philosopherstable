@@ -15,6 +15,7 @@ Phases are ordered by dependency; each should leave the app building.
 - [ ] Phase 7 — Model-family A/B (eval sheet ready, runs pending)
 - [ ] Phase 7b — Auto-metrics (AlignScore guardrail, LENS-SALSA calibration, ASSET-method optional)
 - [ ] Phase 8 — `webapp-commons-template` (not scaffolded)
+- [ ] Phase 9 — Rose seat (dossier pending; debts + diagram staged, RAG files awaited)
 - [ ] Backlog — favicon, og recompose, rotation/recovery doc, LICENSE, +9 more
 
 ---
@@ -547,6 +548,56 @@ auto-metrics below are assistants, never judges.
   external script only). Adopt the method, not the package: owner writes 3–5
   plain refs for ~20 sampled High sentences, SARI-score Low/Med rewrites,
   optional one-off EASSE run outside the repo.
+
+## Phase 9 — Rose seat (in progress, Sep 2026)
+Gillian Rose (1947–1995) dossier requested per `docs/new-philosopher-brief.md`
+Phase 1; seat + debts + diagram land together once it returns (grid exporter
+fails loudly on debts pointing at an unregistered seat).
+Staged: diagram move (Rose left-spine, Deleuze right-spine, Fisher stays
+centre) + debt grid (Hegel/Marx D+, Kant/Deleuze D-, Weil/Bloch D+,
+Spinoza I+, Lenin D stance TBD, Bogdanov I± via Lukács/Lenin, Bookchin N).
+Debts table now carries `confidence` + `hops` (route-only D/I per owner rule;
+loose-permeation I's marked low + "owner route"). Full-text negative checks
+logged in `influences.ts` header (D&G→Ashby, Bookchin←Bogdanov systems route,
+Fisher←Bogdanov via Wark — all N, do not re-hunt without new leads).
+RAG for Rose: books are in copyright — expect `metadata_only` corpus entries
+(never ingested) unless a freely-readable OCR link exists (archive.org
+`/stream/…_djvu.txt` pattern); short fair-use excerpts only with explicit
+owner approval per source id. Owner's local text drop (NOT in the repo, never
+shipped): iCloud `RAG text ` folder (note trailing space) holding
+`gillian-r-rose-dialectic-of-nihilism-*.txt`,
+`gillian-r-rose-hegel-contra-sociology.txt`,
+`gillian-r-rose-judaism-and-modernity-2.txt` — owner-stamped "approved for
+local index" Sep 2026. Files carry Verso/Athlone "All rights reserved"
+imprints (not CC as first thought), so full text stays local-only and OUT of
+`public/rag/` shards; retrieval grounding uses short excerpts only.
+RAG dead ends 2026-09-16 (verified through our own extractor — each
+`_djvu.txt` returns 26 paras / 98 words of borrow-page chrome, ingester
+refuses as stub; do not re-hunt): `melancholyscienc0000rose`,
+`mourningbecomesl0000rose`, `loveswork00gill` — all borrow-locked, no free
+full text. Only route: owner converts copies as before (same local-index
+path). No secondary sources — dossier and voice come from Rose's texts only. Style essence: built from the texts by the
+builder (fields per `fisher.style.ts`), or via the extraction prompt below.
+*Eval: waiting on dossier + text files.*
+
+### Style-essence extraction prompt (paste to research LLM with the texts)
+> Write a style essence for [THINKER] grounded ONLY in the attached texts.
+> Return exactly: (1) `style_dna` — one line, 4–6 hyphen-joined mechanisms
+> (e.g. X + Y + Z). (2) `characteristic_movement` — one sentence, the shape
+> every intervention follows (A → B → C). (3) `core_mechanisms` — one
+> paragraph: signature devices, syntax tics, example domains, positioning of
+> writer vs reader. (4) `cda_reader_effects` — one paragraph: who/what has
+> agency, key metaphors, neologisms, register shifts. (5) `generation_rules`
+> ×25 — short imperatives ("Read X as Y"). (6) `prompt` — one paragraph
+> REGISTER line (how to sound like them). (7) `intensity` — low (one plain
+> sentence, no specialist terms), medium (kept terms, comma-joined),
+> high (full voice, comma-joined). (8) `cda_profile` — agency / modality /
+> pronouns / presupposition / reader / objective, one line each.
+> (9) `high_exemplar` — one verbatim quote <40 words + source, or MISSING
+> (never faked). (10) `stock_phrases` 3×3 (rebuttal / concession /
+> reframing), each with an `(X)` slot and a distinct six-word opening
+> signature. British spelling; third-person description, never instructions
+> to a reader; 1–3 sentences per string.
 
 ## Phase 8 — Content-agnostic template repo (planned, not yet scaffolded)
 Not `cabinet-template`: name should carry the advantages. Owner pick —
