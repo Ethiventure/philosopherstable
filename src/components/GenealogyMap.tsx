@@ -50,22 +50,6 @@ function edgeStyle(e: Edge): { w: number; o: number; cls: string; dash?: string;
   return { w: 2.4, o, cls: 'gen-edge gen-edge-direct', marker: 'url(#gen-arrow-direct)', markerStart: 'url(#gen-arrow-direct-start)' };
 }
 
-function stanceWord(stance: Edge['stance']): string {
-  return stance === 'positive' ? 'appreciative' : stance === 'critical' ? 'critical' : 'mixed';
-}
-
-function relationshipLabel(e: Edge): string {
-  const source = PHILOSOPHER_BY_SLUG[e.from]?.full_name ?? e.from;
-  const debtor = PHILOSOPHER_BY_SLUG[e.to]?.full_name ?? e.to;
-  const route =
-    e.kind === 'direct'
-      ? 'direct engagement'
-      : e.hops?.length
-        ? `mediated through ${e.hops.join(', ')}`
-        : 'mediated inheritance';
-  return `${source} to ${debtor}: ${route}, ${stanceWord(e.stance)}. ${e.note}`;
-}
-
 // Seats on the spine get centred labels below; the paired rows label outward.
 const SPINE_SEATS = new Set(['spinoza', 'fisher']);
 const LEFT_SEATS = new Set(['kant', 'marx', 'bogdanov', 'weil', 'rose']);
@@ -101,11 +85,10 @@ export default function GenealogyMap({
 }) {
   const order = DEFAULT_SEATING_ORDER.filter((slug) => PHILOSOPHER_BY_SLUG[slug]);
   const bySlug = (slug: string) => philosophers.find((p) => p.slug === slug);
-  const [selectedPair, setSelectedPair] = useState<string | null>(null);
   const [lit, setLit] = useState<string | null>(null);
 
   // Reciprocal pairs draw once. Each group keeps every directed debt for
-  // text, tooltips and the panel — the line never eats a relationship.
+  // the text list — the line never eats a relationship.
   const groups = useMemo(() => {
     const map = new Map<string, Edge[]>();
     for (const e of ALL_EDGES) {
@@ -114,10 +97,6 @@ export default function GenealogyMap({
     }
     return [...map.values()];
   }, []);
-
-  const selected = groups.find(
-    (g) => genPairKey(g[0].from, g[0].to) === selectedPair,
-  );
 
   return (
     <div className="dark-academia-card genealogy-dark p-5 md:p-7">
@@ -183,35 +162,23 @@ export default function GenealogyMap({
             const d = genEdgePath(ALL_EDGES, first.from, first.to, genLateralShift(ALL_EDGES, first));
             const st = edgeStyle(first);
             const key = genPairKey(first.from, first.to);
-            const isSel = selectedPair === key;
             const involves = !lit || g.some((e) => e.from === lit || e.to === lit);
-            const opacity = !involves ? 0.08 : isSel ? 1 : st.o;
+            const opacity = !involves ? 0.08 : st.o;
             // Dimmed threads drop their heads too: marker opacity doesn't
             // inherit reliably everywhere, so no markers off-focus, period.
             const heads = involves ? st.marker : undefined;
-            const label = g.map(relationshipLabel).join(' Also: ');
             return (
               <Fragment key={key}>
                 <path
                   d={d}
                   fill="none"
-                  className={`${st.cls}${isSel ? ' is-selected' : ''}`}
-                  strokeWidth={isSel ? st.w + 1 : st.w}
+                  className={st.cls}
+                  strokeWidth={st.w}
                   strokeDasharray={st.dash}
                   opacity={opacity}
                   markerEnd={heads}
                   markerStart={reciprocal ? (heads ? st.markerStart : undefined) : undefined}
-                  tabIndex={0}
-                  role="button"
-                  aria-label={`${label} Activate to read this debt.`}
-                  style={{ cursor: 'pointer' }}
-                  onClick={() => setSelectedPair(isSel ? null : key)}
-                  onKeyDown={(ev) => {
-                    if (ev.key === 'Enter' || ev.key === ' ') {
-                      ev.preventDefault();
-                      setSelectedPair(isSel ? null : key);
-                    }
-                  }}
+                  aria-hidden="true"
                 >
                 </path>
               </Fragment>
@@ -287,23 +254,6 @@ export default function GenealogyMap({
           })}
         </svg>
       </div>
-
-      {selected && (
-        <aside className="mt-4 border border-[#4a392d]/20 rounded-sm p-4" aria-live="polite" aria-label="Selected debt">
-          {selected.map((e) => (
-            <div key={`${e.from}-${e.to}-${e.kind}`} className="mb-2 last:mb-0">
-              <p className="font-heading text-[#4a392d]">
-                {PHILOSOPHER_BY_SLUG[e.from]?.name} → {PHILOSOPHER_BY_SLUG[e.to]?.name}{' '}
-                <span className="text-xs italic text-[#465f75]/60">({e.kind}, {stanceWord(e.stance)})</span>
-              </p>
-              <p className="text-sm text-[#465f75]/85">{e.note}</p>
-              {e.hops?.length ? (
-                <p className="text-xs text-[#465f75]/65">Mediated route: {e.hops.join(' → ')}</p>
-              ) : null}
-            </div>
-          ))}
-        </aside>
-      )}
 
       <details className="mt-4 border border-[#4a392d]/20 rounded-sm">
         <summary className="cursor-pointer p-3 text-sm font-heading text-[#4a392d]">

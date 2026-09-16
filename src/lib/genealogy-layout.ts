@@ -94,6 +94,8 @@ const GEN_BOW_EXTRA: Record<string, [number, number]> = {
   'lenin→bloch': [-28, 18],
   'lenin→bookchin': [-28, 18],
   'lenin→bogdanov': [-15, 15],
+  // spinoza→deleuze threads Bookchin's circle after taming: west a touch.
+  'spinoza→deleuze': [-15, 0],
 };
 
 /**
@@ -105,7 +107,7 @@ const GEN_BOW_EXTRA: Record<string, [number, number]> = {
 function endRims(edges: GeomEdge[], fromSlug: string, toSlug: string): { sx: number; sy: number; ex: number; ey: number } {
   const a = genNodePos(fromSlug);
   const b = genNodePos(toSlug);
-  const step = 0.16;
+  const step = 0.12;
   // Default rims face the channel (aDir/bDir recomputed by the caller —
   // these are the fallback when no fountain applies).
   let sx = a.x + GEN_RIM;
@@ -181,7 +183,7 @@ export function genEdgePath(_edges: GeomEdge[], fromSlug: string, toSlug: string
   const hugStep = fromSlug === 'spinoza' ? 7 : 14;
   const rawHug = fromSibs.length > 1 && !sameSide ? (fromIdx - (fromSibs.length - 1) / 2) * hugStep : 0;
   // Capped so wide fans never swing into neighbouring circles.
-  const hug = Math.max(-35, Math.min(35, rawHug));
+  const hug = Math.max(-28, Math.min(28, rawHug));
   const sx = fromSlug === 'spinoza' ? rims.sx : a.x + aDir * GEN_RIM;
   const sy = (fromSlug === 'spinoza' ? rims.sy : a.y) + hug;
   // Other heirs keep the small staggered landing so stacked arrowheads
@@ -213,9 +215,9 @@ export function genEdgePath(_edges: GeomEdge[], fromSlug: string, toSlug: string
   const span = Math.abs(ey - sy);
   const hugScale = sameSide ? 0 : Math.max(0, Math.min(1, (span - 120) / 300));
   const c1x = (channel + belly) * (1 - hugScale) + (sx + aDir * 20) * hugScale + cradle[0];
-  const c1y = (sy + (ey - sy) * 0.05) * (1 - hugScale) + (sy + hug * 1.2) * hugScale;
+  const c1y = (sy + (ey - sy) * 0.05) * (1 - hugScale) + (sy + hug * 0.7) * hugScale;
   const c2x = (channel + belly) * (1 - hugScale) + (ex - bDir * 20) * hugScale + cradle[1];
-  const c2y = (sy + (ey - sy) * 0.95) * (1 - hugScale) + (ey + fanEy * 1.2) * hugScale;
+  const c2y = (sy + (ey - sy) * 0.95) * (1 - hugScale) + (ey + fanEy * 0.7) * hugScale;
   const f = (n: number) => (Math.round(n * 10) / 10).toFixed(1);
   return `M ${f(sx)} ${f(sy)} C ${f(c1x)} ${f(c1y)}, ${f(c2x)} ${f(c2y)}, ${f(ex)} ${f(ey)}`;
 }
