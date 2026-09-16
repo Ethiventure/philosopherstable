@@ -121,14 +121,17 @@ export default function GenealogyMap({
 
   return (
     <div className="dark-academia-card genealogy-dark p-5 md:p-7">
-      <p className="pass-indicator text-[#8b5254]">Debts and heirs</p>
+      <p className="pass-indicator text-[#8b5254]">Debts or heirs and ancestors?</p>
       <h2 className="text-3xl mt-1">A Genealogy of Influence</h2>
       <p className="italic text-[#465f75]/70 mt-1 max-w-3xl">
-        Oldest at the top, youngest at the bottom. Arrows run creditor to heir,
-        so a debt may point back up the years. Solid is direct (read closely, even
-        to break); dashed is indirect. A line with heads at both ends is a
-        two-way debt. Line strength shows strength of evidence, from full
-        strength down through thinner claims. Select a line to read it. Select a seat to open its profile.
+        Firstborn at the top, last at the bottom. Arrows run creditor to
+        debtor. Solid is direct (at least a quotation or in person
+        meeting); dashed is indirect via someone else. This is the route of
+        connection, it doesn't communicate strength or depth. Line strength
+        shows strength of evidence or depth of connection, from full
+        strength down through thinner claims. Hover over the thinker's
+        circle to see their connections to the others. Click on a seat to
+        open its profile.
       </p>
 
       <div className="flex flex-wrap gap-x-5 gap-y-1 mt-3 text-base text-[#465f75]/80" aria-label="Legend">
@@ -137,14 +140,14 @@ export default function GenealogyMap({
             <line x1="0" y1="4" x2="28" y2="4" className="gen-edge-direct" strokeWidth="2" />
             <polygon points="28,1 34,4 28,7" className="gen-poly-direct" />
           </svg>
-          Direct — read and answered
+          Direct — evidence of direct connection
         </span>
         <span className="inline-flex items-center gap-2">
           <svg width="34" height="8" aria-hidden="true">
             <line x1="0" y1="4" x2="28" y2="4" className="gen-edge-indirect" strokeWidth="2" strokeDasharray="8 7" />
             <polygon points="28,1 34,4 28,7" className="gen-poly-indirect" />
           </svg>
-          Indirect — through intermediaries
+          Indirect — influenced through intermediaries
         </span>
       </div>
 
