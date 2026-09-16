@@ -122,9 +122,12 @@ function openRouterError(status: number, detail: string, model: string, tag = 'F
   }
   // Quota wording wins over status: Google/OpenRouter report exhausted free
   // tiers as 400/402/403/429 alike, and those messages often mention "key".
+  // Pinned paid model has no "next one" — its failures must say Resume, never cycle.
+  const nextStep = tag === 'Paid model' ? 'Resume the cabinet to retry the turn.' : 'Trying the next one.';
+  const cycleNote = tag === 'Paid model' ? 'Resume the cabinet to retry the turn.' : 'the cycle will try the next one.';
   if (/quota|rate.?limit|exhausted|credits?|balance|too many requests|limit exceeded|daily limit|spend/i.test(detail)) {
     return new LlmError(
-      `OpenRouter quota/credits issue on ${model}. Free models are capped per day — the cycle will try the next one.` +
+      `OpenRouter quota/credits issue on ${model}. Free models are capped per day — ${cycleNote}` +
         (detail ? ` Detail: ${detail}` : ''),
       true,
       'quota',
@@ -136,7 +139,7 @@ function openRouterError(status: number, detail: string, model: string, tag = 'F
     // cycle should move on rather than blame the key.
     if (isAvailabilityDetail(detail) || !/auth|token|credential|permission|forbidden/i.test(detail)) {
       return new LlmError(
-        `${tag} ${model} refused this key (403) — restricted or retired. Trying the next one.` +
+        `${tag} ${model} refused this key (403) — restricted or retired. ${nextStep}` +
           (detail ? ` Detail: ${detail}` : ''),
         true,
         'model',
@@ -153,30 +156,30 @@ function openRouterError(status: number, detail: string, model: string, tag = 'F
     // Generic provider hiccup ("Provider returned error") — retryable, not a key verdict.
     // Happens on flaky free models; the next model usually works.
     if (/provider returned error|provider error/i.test(detail) || !detail.trim()) {
-      return new LlmError(`${tag} ${model} had a provider error (400). Trying the next one.`, true, 'server');
+      return new LlmError(`${tag} ${model} had a provider error (400). ${nextStep}`, true, 'server');
     }
     return new LlmError(
-      `OpenRouter request failed on ${model} (400).${detail ? ` Detail: ${detail}` : ''} Trying the next one.`,
+      `OpenRouter request failed on ${model} (400).${detail ? ` Detail: ${detail}` : ''} ${nextStep}`,
       true,
       'server',
     );
   }
   if (status === 402) {
     return new LlmError(
-      `OpenRouter needs credits for ${model} (402). Free models shouldn't bill — the cycle will try the next one.` +
+      `OpenRouter needs credits for ${model} (402). Free models shouldn't bill — ${cycleNote}` +
         (detail ? ` Detail: ${detail}` : ''),
       true,
       'quota',
     );
   }
   if (status === 429) {
-    return new LlmError(`OpenRouter rate limit on ${model} (429). Trying the next free model.`, true, 'quota');
+    return new LlmError(`OpenRouter rate limit on ${model} (429). ${tag === 'Paid model' ? 'Wait a minute and Resume the cabinet.' : 'Trying the next free model.'}`, true, 'quota');
   }
   if (status === 404) {
-    return new LlmError(`${tag} ${model} is gone (404) — the list rotates. Trying the next one.`, true, 'model');
+    return new LlmError(`${tag} ${model} is gone (404) — the list rotates. ${nextStep}`, true, 'model');
   }
   if (status >= 500) {
-    return new LlmError(`OpenRouter/model error on ${model} (${status}). Trying the next free model.`, true, 'server');
+    return new LlmError(`OpenRouter/model error on ${model} (${status}). ${tag === 'Paid model' ? 'Resume the cabinet to retry the turn.' : 'Trying the next free model.'}`, true, 'server');
   }
   return new LlmError(
     `OpenRouter request failed on ${model} (${status}).${detail ? ` Detail: ${detail}` : ''}`,
@@ -216,6 +219,8 @@ async function fetchModelText(
   tag = 'Free model',
   useJsonMode = false,
 ): Promise<string> {
+  // Pinned paid model has no "next one" — its failures must say Resume, never cycle.
+  const nextStep = tag === 'Paid model' ? 'Resume the cabinet to retry the turn.' : 'Trying the next one.';
   for (let attempt = 0; attempt < 2; attempt += 1) {
     let response: Response;
     try {
@@ -239,7 +244,7 @@ async function fetchModelText(
       if (error instanceof DOMException && error.name === 'TimeoutError') {
         // Cold free models hang — fail over to the next one immediately
         // rather than stalling the cabinet for another minute.
-        throw new LlmError(`${tag} ${model} timed out. Trying the next one.`, true, 'server');
+        throw new LlmError(`${tag} ${model} timed out. ${nextStep}`, true, 'server');
       }
       throw new LlmError(
         'Network error reaching OpenRouter. Check the connection and Resume the cabinet.',
@@ -264,10 +269,16 @@ async function fetchModelText(
       }[];
       error?: { message?: string };
     };
+    let rawBody = '';
     try {
-      data = (await response.json()) as typeof data;
+      rawBody = await response.text();
+      data = JSON.parse(rawBody) as typeof data;
     } catch {
-      throw new LlmError(`${tag} ${model} returned non-JSON. Trying the next one.`, true, 'server');
+      // Log the offending body: without it a non-JSON failure is undiagnosable
+      // (this path previously threw with no console trace at all).
+      if (typeof console !== 'undefined') console.warn(`[${tag}] non-JSON body from ${model}:`, rawBody.slice(0, 2000));
+      const snippet = rawBody.trim() ? `: ${rawBody.slice(0, 300)}` : ' (empty body)';
+      throw new LlmError(`${tag} ${model} returned non-JSON${snippet}. ${nextStep}`, true, 'server');
     }
     if (data.error?.message) {
       throw openRouterError(400, data.error.message, model, tag);
@@ -281,14 +292,14 @@ async function fetchModelText(
       // they can't follow the JSON instruction.
       const snippet = JSON.stringify(choice ?? {}).slice(0, 300);
       throw new LlmError(
-        `${tag} ${model} returned an empty response (no content). Snippet: ${snippet} — trying the next one.`,
+        `${tag} ${model} returned an empty response (no content). Snippet: ${snippet} — ${nextStep}`,
         true,
         'server',
       );
     }
     return text;
   }
-  throw new LlmError(`${tag} ${model} timed out twice. Trying the next one.`, true, 'server');
+  throw new LlmError(`${tag} ${model} timed out twice. ${nextStep}`, true, 'server');
 }
 
 async function attemptModel(
@@ -304,7 +315,7 @@ async function attemptModel(
   } catch (error) {
     // Model can't do the required JSON — a property of the model, so cycle on.
     if (error instanceof LlmError) throw error;
-    throw new LlmError(`${tag} ${model} broke the JSON shape. Trying the next one.`, true, 'parse');
+    throw new LlmError(`${tag} ${model} broke the JSON shape. ${tag === 'Paid model' ? 'Resume the cabinet to retry the turn.' : 'Trying the next one.'}`, true, 'parse');
   }
 }
 
