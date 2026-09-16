@@ -1,11 +1,13 @@
 import type { StyleIntensity } from '@/types';
 
-export type GroqModel = 'qwen/qwen3.8-27b' | 'qwen/qwen3.6-27b';
+/** Free text: Groq retires IDs without notice, so no pinned list survives.
+ *  Test key verifies the typed ID immediately. */
+export type GroqModel = string;
 
-export const GROQ_MODELS: { id: GroqModel; label: string; hint: string }[] = [
-  { id: 'qwen/qwen3.8-27b', label: 'qwen3.8-27b', hint: 'Best voice, slow on free tier (long waits + resumes)' },
-  { id: 'qwen/qwen3.6-27b', label: 'qwen3.6-27b', hint: 'Faster alternative voice, free tier' },
-];
+export const DEFAULT_GROQ_MODEL = 'qwen/qwen3.8-27b';
+
+/** IDs that 404 for visitor keys — stored picks migrate to the default. */
+const DEAD_GROQ_IDS = new Set(['qwen/qwen3.6-27b']);
 
 export type DeepInfraModel = 'deepseek-ai/DeepSeek-V4-Flash-0731' | 'Qwen/Qwen3.6-35B-A3B' | 'meta-llama/Llama-3.3-70B-Instruct-Turbo';
 
@@ -50,7 +52,7 @@ export const DEFAULT_SETTINGS: CabinetSettings = {
   openRouterMode: 'free',
   openRouterModel: 'deepseek/deepseek-v4.1-flash',
   groqApiKey: '',
-  groqModel: 'qwen/qwen3.8-27b',
+  groqModel: DEFAULT_GROQ_MODEL,
   deepInfraApiKey: '',
   deepInfraPrimary: 'deepseek',
   togetherApiKey: '',
@@ -73,7 +75,11 @@ export function loadSettings(): CabinetSettings {
       openRouterApiKey: typeof parsed.openRouterApiKey === 'string' ? parsed.openRouterApiKey : '',
       openRouterMode: parsed.openRouterMode === 'paid' ? 'paid' : 'free',
       groqApiKey: typeof parsed.groqApiKey === 'string' ? parsed.groqApiKey : '',
-      groqModel: GROQ_MODELS.some((m) => m.id === parsed.groqModel) ? (parsed.groqModel as GroqModel) : 'qwen/qwen3.8-27b',
+      // Free-text model ID (never openai/*, never a known-dead ID);
+      // anything else passes through — Test key is the live check.
+      groqModel: typeof parsed.groqModel === 'string' && parsed.groqModel.trim() && !parsed.groqModel.trim().startsWith('openai/') && !DEAD_GROQ_IDS.has(parsed.groqModel.trim())
+        ? parsed.groqModel.trim().slice(0, 120)
+        : DEFAULT_GROQ_MODEL,
       deepInfraApiKey: typeof parsed.deepInfraApiKey === 'string' ? parsed.deepInfraApiKey : '',
       deepInfraPrimary: parsed.deepInfraPrimary === 'qwen' ? 'qwen' : 'deepseek',
       togetherApiKey: typeof parsed.togetherApiKey === 'string' ? parsed.togetherApiKey : '',

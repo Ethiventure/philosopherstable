@@ -184,7 +184,8 @@ function timeout on slow shared turns (resume covers it, still unwatched live).*
 **2a Settings** ✅ — `src/lib/settings.ts` (localStorage): provider
 (`shared` default / `openrouter` free cycle or paid pinned model / `groq`,
 `deepinfra`, `together` BYOK keys),
-keys per provider, `groqModel` (qwen3.8-27b default, free tier), `economy`
+keys per provider, `groqModel` (free-text ID field, qwen3.8-27b default; dead IDs
+migrate on load — pinned dropdown removed Sep 2026 after 3.6 rotted), `economy`
 (`full` / `efficient` — efficient caps fed-back PREV text at ~1200 chars;
 personas are never trimmed), `grounding` (default on — experimental source
 passages, undo by deleting `lib/extract.ts` + `functions/extract.js` + flag),
@@ -229,8 +230,9 @@ covers it, but watch this if shared sessions stall live.
 `src/lib/groq.ts`: visitor Groq direct, free tier (OpenAI-compatible, no response_format —
 prompt-instructed JSON plus salvage, same lesson as OpenRouter).
 `src/lib/deepinfra.ts` / `src/lib/together.ts`: same OpenAI-compatible shape.
-DeepInfra runs a visitor-chosen primary (DeepSeek V4 Flash 0731 default, or cheap
-Qwen3.6-35B-A3B for the family A/B — thinking-burn untested) with Llama 3.3 70B
+DeepInfra runs a visitor-chosen primary (DeepSeek V4 Flash 0731 default, or
+Qwen3.6-35B-A3B — FAILED live Sep 2026: 2.5 min to first card, still pass 1 at
+11.5 min, Low ignored) with Llama 3.3 70B
 backup on non-auth/quota failures; provenance records who spoke). Together pins
 `TOGETHER_MODEL` (user-supplied ID, verify on 404). Single-model retry + repair.
 Full history in `docs/models-tried.md`.
@@ -520,6 +522,15 @@ Low/Medium/High prompt behaviour stays in one failure shape. Research Sep 2026
 - Reliability: both families rotate IDs fast; OpenRouter free IDs rot in days.
   DeepInfra fixed pair currently mixes families (DeepSeek first, Llama backup)
   — proposal is a second DeepSeek as backup so the pipe stays one family.
+- Checking order Sep 16 2026 (live verdicts in `docs/models-tried.md`):
+  1. `qwen/qwen3.8-flash` via the OpenRouter paid box (same family as the 27B
+  voice reference, ~$0.02/session; p50 TTFT ~4.6s watch item) → grade Low
+  obedience + voice. 2. Groq paid 3.8-27B same weights if Flash loses the
+  voice (fastest stream, priciest, Preview — never the sole pipe).
+  3. Qwen3.5-9B if both fail (cheapest, small, unproven). Rejected without
+  test: GPT-OSS (OpenAI-owned, banned), GLM-5.3 (not Qwen, later fallback),
+  free-tier-as-production (daily caps). Per-session cost rules (single
+  visitor, ~15–30 turns): DeepSeek ~$0.01, Flash ~$0.02, paid 3.8-27B ~$0.20+.
 Protocol: one fixed question, 5 seats, Low/Med/High on (a) DeepInfra DeepSeek
 vs (b) Groq Qwen; grade with the `language-levels.md` trio rubric (hard terms,
 gloss hygiene, example-first, loans, heat). Log both runs in
