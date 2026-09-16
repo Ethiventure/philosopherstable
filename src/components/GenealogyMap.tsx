@@ -231,7 +231,12 @@ export default function GenealogyMap({
                 aria-label={`${label}. Name shown at ${labelSize(slug)} points. Activate to open profile.`}
                 className="genealogy-node"
                 style={{ cursor: live ? 'pointer' : 'default', opacity: dimmed ? 0.35 : 1 }}
-                onClick={() => live && onSelect(live)}
+                onClick={() => {
+                  // Taps (touch) never fire mouse-leave: clear the highlight
+                  // or its heads linger on the next view.
+                  setLit(null);
+                  if (live) onSelect(live);
+                }}
                 onMouseEnter={() => setLit(slug)}
                 onMouseLeave={() => setLit(null)}
                 onFocus={() => setLit(slug)}
