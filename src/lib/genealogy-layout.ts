@@ -94,42 +94,13 @@ const GEN_BOW_EXTRA: Record<string, [number, number]> = {
   'lenin→bloch': [-28, 18],
   'lenin→bookchin': [-28, 18],
   'lenin→bogdanov': [-15, 15],
+  // Reciprocal pairs draw once following the first debt's direction
+  // (here bogdanov→lenin), so the tuned bow must exist under the drawn
+  // direction too — otherwise it silently never applies (swapped values).
+  'bogdanov→lenin': [15, -15],
   // spinoza→deleuze threads Bookchin's circle after taming: west a touch.
   'spinoza→deleuze': [-15, 0],
 };
-
-/**
- * End-circle fountain: Spinoza departures and Fisher arrivals spread
- * around the east rim of their circle (angular fan, one step per thread)
- * so the fans read as an embrace, not a stacked loop band. Returns full
- * rim points for both ends — plain channel-facing rims everywhere else.
- */
-function endRims(edges: GeomEdge[], fromSlug: string, toSlug: string): { sx: number; sy: number; ex: number; ey: number } {
-  const a = genNodePos(fromSlug);
-  const b = genNodePos(toSlug);
-  const step = 0.12;
-  // Default rims face the channel (aDir/bDir recomputed by the caller —
-  // these are the fallback when no fountain applies).
-  let sx = a.x + GEN_RIM;
-  let sy = a.y;
-  let ex = b.x + GEN_RIM;
-  let ey = b.y;
-  if (fromSlug === 'spinoza') {
-    const sibs = edges.filter((o) => o.from === 'spinoza').map((o) => `${o.to}:${o.kind}`).sort();
-    const i = sibs.indexOf(`${toSlug}:${edges.find((o) => o.from === 'spinoza' && o.to === toSlug)?.kind ?? 'direct'}`);
-    const ang = (i - (sibs.length - 1) / 2) * step;
-    sx = a.x + GEN_RIM * Math.cos(ang);
-    sy = a.y + GEN_RIM * Math.sin(ang);
-  }
-  if (toSlug === 'fisher') {
-    const sibs = edges.filter((o) => o.to === 'fisher').map((o) => `${o.from}:${o.kind}`).sort();
-    const i = sibs.indexOf(`${fromSlug}:${edges.find((o) => o.from === fromSlug && o.to === 'fisher')?.kind ?? 'direct'}`);
-    const ang = (i - (sibs.length - 1) / 2) * step;
-    ex = b.x + GEN_RIM * Math.cos(ang);
-    ey = b.y + GEN_RIM * Math.sin(ang);
-  }
-  return { sx, sy, ex, ey };
-}
 
 /**
  * Compatibility shim: individual offsets no longer exist — threads bundle
@@ -163,31 +134,14 @@ export function genEdgePath(_edges: GeomEdge[], fromSlug: string, toSlug: string
   const channel = sameSide
     ? (a.x < GEN_SPINE_X ? GEN_CH_LEFT : a.x > GEN_SPINE_X ? GEN_CH_RIGHT : GEN_CH_CENTRE)
     : GEN_CH_CENTRE;
-  // Rim points face the channel; the end-circle fountain spreads
-  // Spinoza departures and Fisher arrivals around the rim instead.
+  // Rim points facing the channel.
   const aDir = channel >= a.x ? 1 : -1;
   const bDir = channel >= b.x ? 1 : -1;
-  const rims = endRims(_edges, fromSlug, toSlug);
-  // Departure hug: cross-side tails leave along their circle's tangent,
-  // peeling off at staggered heights, so tails embrace the circle before
-  // joining their channel. Same-column pairs skip it — they travel their
-  // own column and any glide clips seated neighbours. Mirrors the arrival
-  // fan (±14px per thread, ±7 where the Spinoza fountain spreads rims).
-  const fromSibs = _edges
-    .filter((o) => o.from === fromSlug)
-    .map((o) => `${o.to}:${o.kind}`)
-    .filter((v, i, arr) => arr.indexOf(v) === i)
-    .sort();
-  const fromSelf = _edges.find((o) => o.from === fromSlug && o.to === toSlug);
-  const fromIdx = fromSelf ? fromSibs.indexOf(`${fromSelf.to}:${fromSelf.kind}`) : 0;
-  const hugStep = fromSlug === 'spinoza' ? 7 : 14;
-  const rawHug = fromSibs.length > 1 && !sameSide ? (fromIdx - (fromSibs.length - 1) / 2) * hugStep : 0;
-  // Capped so wide fans never swing into neighbouring circles.
-  const hug = Math.max(-28, Math.min(28, rawHug));
-  const sx = fromSlug === 'spinoza' ? rims.sx : a.x + aDir * GEN_RIM;
-  const sy = (fromSlug === 'spinoza' ? rims.sy : a.y) + hug;
-  // Other heirs keep the small staggered landing so stacked arrowheads
-  // separate into a readable row instead of one blob.
+  const sx = a.x + aDir * GEN_RIM;
+  const sy = a.y;
+  // Arrival fan: threads sharing one heir land at slightly staggered rim
+  // heights (±7px), so stacked arrowheads separate into a readable row
+  // instead of one blob sitting on through-traffic.
   const heirSibs = _edges
     .filter((o) => o.to === toSlug)
     .map((o) => `${o.from}:${o.kind}`)
@@ -196,28 +150,21 @@ export function genEdgePath(_edges: GeomEdge[], fromSlug: string, toSlug: string
   const selfKey = _edges.find((o) => o.from === fromSlug && o.to === toSlug);
   const heirIdx = selfKey ? heirSibs.indexOf(`${selfKey.from}:${selfKey.kind}`) : 0;
   const fanEy = heirSibs.length > 1 ? (heirIdx - (heirSibs.length - 1) / 2) * 7 : 0;
-  const ex = toSlug === 'fisher' ? rims.ex : b.x + bDir * GEN_RIM;
-  const ey = toSlug === 'fisher' ? rims.ey : b.y + fanEy;
+  const ex = b.x + bDir * GEN_RIM;
+  const ey = b.y + fanEy;
   // Gentle belly so no thread reads as a ruled line: left and centre
   // channels bow 20px east; the right channel holds 8px because arrival
-  // heads sit close beside it. Same family of curve everywhere. Named
-  // runs carry their S-bows from GEN_BOW_EXTRA.
+  // heads sit close beside it. Same family of curve everywhere. End-seat
+  // threads cradle their circle: Spinoza departures swing wide east,
+  // Fisher arrivals swing in from the east.
   const belly = channel >= GEN_CH_RIGHT ? 8 : 20;
-  const cradle: [number, number] = GEN_BOW_EXTRA[`${fromSlug}→${toSlug}`] ?? [0, 0];
-  // The hug: first control stays near the circle and drifts tangentially,
-  // so the tail glides along the circle before peeling to its channel.
-  // Arrivals mirror it: last control hugs the heir's flank, so heads land
-  // after travelling the circle, never stabbing it.
-  // The hug scales with span: short hops have no room to embrace (plain
-  // channel curve), long sweeps get the full flank glide. Same-column
-  // pairs always take the plain channel — any glide clips seated
-  // neighbours on their own column.
-  const span = Math.abs(ey - sy);
-  const hugScale = sameSide ? 0 : Math.max(0, Math.min(1, (span - 120) / 300));
-  const c1x = (channel + belly) * (1 - hugScale) + (sx + aDir * 20) * hugScale + cradle[0];
-  const c1y = (sy + (ey - sy) * 0.05) * (1 - hugScale) + (sy + hug * 0.7) * hugScale;
-  const c2x = (channel + belly) * (1 - hugScale) + (ex - bDir * 20) * hugScale + cradle[1];
-  const c2y = (sy + (ey - sy) * 0.95) * (1 - hugScale) + (ey + fanEy * 0.7) * hugScale;
+  const cradle: [number, number] =
+    GEN_BOW_EXTRA[`${fromSlug}→${toSlug}`] ??
+    (fromSlug === 'spinoza' ? [45, 10] : toSlug === 'fisher' ? [10, 45] : [0, 0]);
+  const c1x = channel + belly + cradle[0];
+  const c1y = sy + (ey - sy) * 0.05;
+  const c2x = channel + belly + cradle[1];
+  const c2y = sy + (ey - sy) * 0.95;
   const f = (n: number) => (Math.round(n * 10) / 10).toFixed(1);
   return `M ${f(sx)} ${f(sy)} C ${f(c1x)} ${f(c1y)}, ${f(c2x)} ${f(c2y)}, ${f(ex)} ${f(ey)}`;
 }

@@ -1,16 +1,16 @@
 # Graph Report - philosopherstable  (2026-09-16)
 
 ## Corpus Check
-- 112 files · ~3,946,134 words
+- 112 files · ~3,945,530 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 697 nodes · 909 edges · 67 communities (43 shown, 20 thin omitted)
+- 697 nodes · 901 edges · 68 communities (44 shown, 20 thin omitted)
 - Extraction: 100% EXTRACTED · 0% INFERRED · 0% AMBIGUOUS · INFERRED: 3 edges (avg confidence: 0.85)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `827d73c9`
+- Built from commit: `a9c79d22`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -63,7 +63,7 @@
 - dev-keepalive.sh
 - rag-search.ts
 - service-chat.ts
-- porter.ts
+- scripts
 - Language levels (Low / Medium / High)
 - rag-ingest.mjs
 - rag-inspect.mjs
@@ -78,18 +78,19 @@
 - trios.ts
 - universal-mechanisms.ts
 - Influence grid (generated)
+- GenealogyMap.tsx
 
 ## God Nodes (most connected - your core abstractions)
 1. `compilerOptions` - 18 edges
 2. `The Dialectical Cabinet — Implementation Plan` - 15 edges
 3. `compilerOptions` - 14 edges
 4. `scripts` - 13 edges
-5. `ingestOne()` - 11 edges
-6. `Node-and-debt diagram — style, preferences, and quick-start` - 11 edges
+5. `Node-and-debt diagram — style, preferences, and quick-start` - 12 edges
+6. `ingestOne()` - 11 edges
 7. `searchIndex()` - 10 edges
 8. `stem()` - 9 edges
 9. `wordCount()` - 9 edges
-10. `genEdgePath()` - 8 edges
+10. `prepareIndex()` - 8 edges
 
 ## Surprising Connections (you probably didn't know these)
 - `extractReadable()` --calls--> `wordCount()`  [EXTRACTED]
@@ -106,11 +107,11 @@
 ## Import Cycles
 - None detected.
 
-## Communities (67 total, 20 thin omitted)
+## Communities (68 total, 20 thin omitted)
 
 ### Community 0 - "package.json"
-Cohesion: 0.05
-Nodes (41): dependencies, lucide-react, react, react-dom, @supabase/supabase-js, name, private, scripts (+33 more)
+Cohesion: 0.07
+Nodes (28): dependencies, lucide-react, react, react-dom, @supabase/supabase-js, name, private, type (+20 more)
 
 ### Community 1 - "check-links.mjs"
 Cohesion: 0.20
@@ -121,8 +122,8 @@ Cohesion: 0.08
 Nodes (25): AccessibilitySettings, CHRONOLOGICAL_ORDER, Citation, CorpusChunk, CorpusPassage, CorpusSource, DEFAULT_ACCESSIBILITY, DEFAULT_SEATING_ORDER (+17 more)
 
 ### Community 3 - "App.tsx"
-Cohesion: 0.06
-Nodes (19): lucide-react, react, App(), DeckEntry, getReadMoreSource(), ReadMore(), toIntervention(), ALL_EDGES (+11 more)
+Cohesion: 0.08
+Nodes (10): lucide-react, react, App(), DeckEntry, getReadMoreSource(), ReadMore(), toIntervention(), DisplayItem (+2 more)
 
 ### Community 4 - "compilerOptions"
 Cohesion: 0.10
@@ -221,16 +222,16 @@ Cohesion: 0.60
 Nodes (4): extractQuotes(), normalise(), QuoteCheck, verifyQuotes()
 
 ### Community 49 - "rag-search.ts"
-Cohesion: 0.06
-Nodes (47): CHUNK_SOFT_MAX, CHUNK_SOFT_MIN, CHUNK_TARGET_WORDS, chunkParagraphs(), splitLongParagraph(), byCategory, failures, index (+39 more)
+Cohesion: 0.05
+Nodes (61): CHUNK_SOFT_MAX, CHUNK_SOFT_MIN, CHUNK_TARGET_WORDS, chunkParagraphs(), splitLongParagraph(), byCategory, failures, index (+53 more)
 
 ### Community 50 - "service-chat.ts"
 Cohesion: 0.25
 Nodes (4): SERVICE_LIMIT_MESSAGE, SERVICE_MAX_QUESTIONS, ServiceHistoryItem, ServiceUserMessageArgs
 
-### Community 51 - "porter.ts"
-Cohesion: 0.30
-Nodes (14): endsCvc(), endsDouble(), hasVowel(), isConsonant(), measure(), stem(), step1(), step1b() (+6 more)
+### Community 51 - "scripts"
+Cohesion: 0.15
+Nodes (13): scripts, build, check-links, check-links:fix, dev, lint, preview, rag:eval (+5 more)
 
 ### Community 52 - "Language levels (Low / Medium / High)"
 Cohesion: 0.29
@@ -253,16 +254,16 @@ Cohesion: 0.29
 Nodes (6): authors, chunker_version, exported_at, schema_version, total_passages, version
 
 ### Community 57 - "genealogy-layout.ts"
-Cohesion: 0.08
-Nodes (30): edges, paths, cell(), code(), counts, known, NAME, ORDER (+22 more)
+Cohesion: 0.07
+Nodes (27): drawn, drawnKeys, edges, paths, cell(), code(), counts, known (+19 more)
 
 ### Community 58 - "New philosopher brief (reusable)"
 Cohesion: 0.50
 Nodes (3): New philosopher brief (reusable), Phase 1 — research prompt (paste to research LLM), Phase 2 — build checklist (builder)
 
 ### Community 59 - "Node-and-debt diagram — style, preferences, and quick-start"
-Cohesion: 0.17
-Nodes (11): Access and review, Data contract [repo], Fixed dark cabinet (hard rule), Geometry specification (what the code may do), Layout (current instantiation [repo]; roles are the spec), Lines (S-curve variant — simple diagrams only), Lines (straight-spine design — the default), Node-and-debt diagram — style, preferences, and quick-start (+3 more)
+Cohesion: 0.15
+Nodes (12): Access and review, Data contract [repo], Fixed dark cabinet (hard rule), Geometry specification (what the code may do), Layout (current instantiation [repo]; roles are the spec), Lines (road-system design — the default), Lines (single-thread variant — simple diagrams only), Node-and-debt diagram — style, preferences, and quick-start (+4 more)
 
 ### Community 60 - "Family A/B eval — Qwen-first or DeepSeek-first (Phase 7)"
 Cohesion: 0.25
@@ -280,25 +281,29 @@ Nodes (3): FALLBACK_MEDIUM_EXAMPLE, SEAT_TRIOS, SeatTrio
 Cohesion: 0.33
 Nodes (5): AVOID_CARICATURE, FORENSIC_PREAMBLE, GENERATIVE_ARGUMENT_MODEL, STYLE_CONTROL_DESCRIPTION, UNIVERSAL_SUPPORTING_MECHANISMS
 
+### Community 67 - "GenealogyMap.tsx"
+Cohesion: 0.24
+Nodes (10): ALL_EDGES, DEGREE, Edge, edgeStyle(), GenealogyMap(), labelSize(), LEFT_SEATS, MIN_DEGREE (+2 more)
+
 ## Knowledge Gaps
-- **328 isolated node(s):** `$schema`, `plugin`, `DEFAULT_MODELS`, `usageDay`, `perIp` (+323 more)
-  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 391 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
+- **330 isolated node(s):** `$schema`, `plugin`, `DEFAULT_MODELS`, `usageDay`, `perIp` (+325 more)
+  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 394 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
 - **20 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `react` connect `App.tsx` to `package.json`?**
-  _High betweenness centrality (0.007) - this node is a cross-community bridge._
+- **Why does `react` connect `App.tsx` to `package.json`, `GenealogyMap.tsx`?**
+  _High betweenness centrality (0.008) - this node is a cross-community bridge._
 - **Why does `devDependencies` connect `devDependencies` to `package.json`?**
   _High betweenness centrality (0.005) - this node is a cross-community bridge._
+- **Why does `scripts` connect `scripts` to `package.json`?**
+  _High betweenness centrality (0.005) - this node is a cross-community bridge._
 - **What connects `$schema`, `plugin`, `DEFAULT_MODELS` to the rest of the system?**
-  _328 weakly-connected nodes found - possible documentation gaps or missing edges._
+  _330 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `package.json` be split into smaller, more focused modules?**
-  _Cohesion score 0.049494949494949494 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.07258064516129033 - nodes in this community are weakly interconnected._
 - **Should `types/index.ts` be split into smaller, more focused modules?**
   _Cohesion score 0.07692307692307693 - nodes in this community are weakly interconnected._
 - **Should `App.tsx` be split into smaller, more focused modules?**
-  _Cohesion score 0.06258890469416785 - nodes in this community are weakly interconnected._
-- **Should `compilerOptions` be split into smaller, more focused modules?**
-  _Cohesion score 0.1 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.08465608465608465 - nodes in this community are weakly interconnected._

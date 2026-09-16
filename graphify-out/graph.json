@@ -511,19 +511,6 @@
       "source_location": "L158"
     },
     {
-      "id": "src_components_genealogymap_edge",
-      "label": "Edge",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 3,
-      "community_name": "App.tsx",
-      "file_type": "code",
-      "norm_label": "edge",
-      "source_file": "src/components/GenealogyMap.tsx",
-      "source_location": "L15"
-    },
-    {
       "id": "src_components_servicechat_displayitem",
       "label": "DisplayItem",
       "_callable": true,
@@ -768,7 +755,7 @@
       "file_type": "code",
       "norm_label": "geomedge",
       "source_file": "src/lib/genealogy-layout.ts",
-      "source_location": "L8"
+      "source_location": "L20"
     },
     {
       "id": "src_philosophers_influences_cabinetdebt",
@@ -781,7 +768,7 @@
       "file_type": "code",
       "norm_label": "cabinetdebt",
       "source_file": "src/philosophers/influences.ts",
-      "source_location": "L53"
+      "source_location": "L49"
     },
     {
       "id": "src_philosophers_influences_cabinetheir",
@@ -794,7 +781,7 @@
       "file_type": "code",
       "norm_label": "cabinetheir",
       "source_file": "src/philosophers/influences.ts",
-      "source_location": "L150"
+      "source_location": "L147"
     },
     {
       "id": "src_philosophers_influences_debtstance",
@@ -807,7 +794,7 @@
       "file_type": "code",
       "norm_label": "debtstance",
       "source_file": "src/philosophers/influences.ts",
-      "source_location": "L51"
+      "source_location": "L47"
     },
     {
       "id": "src_philosophers_trios_seattrio",
@@ -821,6 +808,19 @@
       "norm_label": "seattrio",
       "source_file": "src/philosophers/trios.ts",
       "source_location": "L10"
+    },
+    {
+      "id": "src_components_genealogymap_edge",
+      "label": "Edge",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 67,
+      "community_name": "GenealogyMap.tsx",
+      "file_type": "code",
+      "norm_label": "edge",
+      "source_file": "src/components/GenealogyMap.tsx",
+      "source_location": "L22"
     },
     {
       "id": "src_lib_llm_llmerror",
@@ -2152,42 +2152,6 @@
       "source_location": "L1332"
     },
     {
-      "id": "src_components_genealogymap_edgestyle",
-      "label": "edgeStyle()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 3,
-      "community_name": "App.tsx",
-      "file_type": "code",
-      "norm_label": "edgestyle()",
-      "source_file": "src/components/GenealogyMap.tsx",
-      "source_location": "L30"
-    },
-    {
-      "id": "src_components_genealogymap_genealogymap",
-      "label": "GenealogyMap()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 3,
-      "community_name": "App.tsx",
-      "file_type": "code",
-      "norm_label": "genealogymap()",
-      "source_file": "src/components/GenealogyMap.tsx",
-      "source_location": "L65"
-    },
-    {
-      "id": "src_components_genealogymap_labelsize",
-      "label": "labelSize()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 3,
-      "community_name": "App.tsx",
-      "file_type": "code",
-      "norm_label": "labelsize()",
-      "source_file": "src/components/GenealogyMap.tsx",
-      "source_location": "L61"
-    },
-    {
       "id": "src_components_servicechat_servicechat",
       "label": "ServiceChat()",
       "_callable": true,
@@ -2306,6 +2270,138 @@
       "norm_label": "loadindex()",
       "source_file": "scripts/rag-search.mjs",
       "source_location": "L25"
+    },
+    {
+      "id": "src_lib_porter_endscvc",
+      "label": "endsCvc()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 49,
+      "community_name": "rag-search.ts",
+      "file_type": "code",
+      "norm_label": "endscvc()",
+      "source_file": "src/lib/porter.ts",
+      "source_location": "L40"
+    },
+    {
+      "id": "src_lib_porter_endsdouble",
+      "label": "endsDouble()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 49,
+      "community_name": "rag-search.ts",
+      "file_type": "code",
+      "norm_label": "endsdouble()",
+      "source_file": "src/lib/porter.ts",
+      "source_location": "L35"
+    },
+    {
+      "id": "src_lib_porter_hasvowel",
+      "label": "hasVowel()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 49,
+      "community_name": "rag-search.ts",
+      "file_type": "code",
+      "norm_label": "hasvowel()",
+      "source_file": "src/lib/porter.ts",
+      "source_location": "L30"
+    },
+    {
+      "id": "src_lib_porter_isconsonant",
+      "label": "isConsonant()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 49,
+      "community_name": "rag-search.ts",
+      "file_type": "code",
+      "norm_label": "isconsonant()",
+      "source_file": "src/lib/porter.ts",
+      "source_location": "L9"
+    },
+    {
+      "id": "src_lib_porter_measure",
+      "label": "measure()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 49,
+      "community_name": "rag-search.ts",
+      "file_type": "code",
+      "norm_label": "measure()",
+      "source_file": "src/lib/porter.ts",
+      "source_location": "L16"
+    },
+    {
+      "id": "src_lib_porter_stem",
+      "label": "stem()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 49,
+      "community_name": "rag-search.ts",
+      "file_type": "code",
+      "norm_label": "stem()",
+      "source_file": "src/lib/porter.ts",
+      "source_location": "L126"
+    },
+    {
+      "id": "src_lib_porter_step1",
+      "label": "step1()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 49,
+      "community_name": "rag-search.ts",
+      "file_type": "code",
+      "norm_label": "step1()",
+      "source_file": "src/lib/porter.ts",
+      "source_location": "L46"
+    },
+    {
+      "id": "src_lib_porter_step1b",
+      "label": "step1b()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 49,
+      "community_name": "rag-search.ts",
+      "file_type": "code",
+      "norm_label": "step1b()",
+      "source_file": "src/lib/porter.ts",
+      "source_location": "L54"
+    },
+    {
+      "id": "src_lib_porter_step1c",
+      "label": "step1c()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 49,
+      "community_name": "rag-search.ts",
+      "file_type": "code",
+      "norm_label": "step1c()",
+      "source_file": "src/lib/porter.ts",
+      "source_location": "L69"
+    },
+    {
+      "id": "src_lib_porter_step234",
+      "label": "step234()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 49,
+      "community_name": "rag-search.ts",
+      "file_type": "code",
+      "norm_label": "step234()",
+      "source_file": "src/lib/porter.ts",
+      "source_location": "L88"
+    },
+    {
+      "id": "src_lib_porter_step5",
+      "label": "step5()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 49,
+      "community_name": "rag-search.ts",
+      "file_type": "code",
+      "norm_label": "step5()",
+      "source_file": "src/lib/porter.ts",
+      "source_location": "L118"
     },
     {
       "id": "src_lib_rag_ground_loadthinker",
@@ -2656,138 +2752,6 @@
       "source_location": "L106"
     },
     {
-      "id": "src_lib_porter_endscvc",
-      "label": "endsCvc()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 51,
-      "community_name": "porter.ts",
-      "file_type": "code",
-      "norm_label": "endscvc()",
-      "source_file": "src/lib/porter.ts",
-      "source_location": "L40"
-    },
-    {
-      "id": "src_lib_porter_endsdouble",
-      "label": "endsDouble()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 51,
-      "community_name": "porter.ts",
-      "file_type": "code",
-      "norm_label": "endsdouble()",
-      "source_file": "src/lib/porter.ts",
-      "source_location": "L35"
-    },
-    {
-      "id": "src_lib_porter_hasvowel",
-      "label": "hasVowel()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 51,
-      "community_name": "porter.ts",
-      "file_type": "code",
-      "norm_label": "hasvowel()",
-      "source_file": "src/lib/porter.ts",
-      "source_location": "L30"
-    },
-    {
-      "id": "src_lib_porter_isconsonant",
-      "label": "isConsonant()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 51,
-      "community_name": "porter.ts",
-      "file_type": "code",
-      "norm_label": "isconsonant()",
-      "source_file": "src/lib/porter.ts",
-      "source_location": "L9"
-    },
-    {
-      "id": "src_lib_porter_measure",
-      "label": "measure()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 51,
-      "community_name": "porter.ts",
-      "file_type": "code",
-      "norm_label": "measure()",
-      "source_file": "src/lib/porter.ts",
-      "source_location": "L16"
-    },
-    {
-      "id": "src_lib_porter_stem",
-      "label": "stem()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 51,
-      "community_name": "porter.ts",
-      "file_type": "code",
-      "norm_label": "stem()",
-      "source_file": "src/lib/porter.ts",
-      "source_location": "L126"
-    },
-    {
-      "id": "src_lib_porter_step1",
-      "label": "step1()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 51,
-      "community_name": "porter.ts",
-      "file_type": "code",
-      "norm_label": "step1()",
-      "source_file": "src/lib/porter.ts",
-      "source_location": "L46"
-    },
-    {
-      "id": "src_lib_porter_step1b",
-      "label": "step1b()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 51,
-      "community_name": "porter.ts",
-      "file_type": "code",
-      "norm_label": "step1b()",
-      "source_file": "src/lib/porter.ts",
-      "source_location": "L54"
-    },
-    {
-      "id": "src_lib_porter_step1c",
-      "label": "step1c()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 51,
-      "community_name": "porter.ts",
-      "file_type": "code",
-      "norm_label": "step1c()",
-      "source_file": "src/lib/porter.ts",
-      "source_location": "L69"
-    },
-    {
-      "id": "src_lib_porter_step234",
-      "label": "step234()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 51,
-      "community_name": "porter.ts",
-      "file_type": "code",
-      "norm_label": "step234()",
-      "source_file": "src/lib/porter.ts",
-      "source_location": "L88"
-    },
-    {
-      "id": "src_lib_porter_step5",
-      "label": "step5()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 51,
-      "community_name": "porter.ts",
-      "file_type": "code",
-      "norm_label": "step5()",
-      "source_file": "src/lib/porter.ts",
-      "source_location": "L118"
-    },
-    {
       "id": "scripts_rag_ingest_authorslug",
       "label": "authorSlug()",
       "_callable": true,
@@ -3025,19 +2989,7 @@
       "file_type": "code",
       "norm_label": "fail()",
       "source_file": "scripts/check-diagram-geometry.mjs",
-      "source_location": "L63"
-    },
-    {
-      "id": "scripts_check_diagram_geometry_overlapfrac",
-      "label": "overlapFrac()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 57,
-      "community_name": "genealogy-layout.ts",
-      "file_type": "code",
-      "norm_label": "overlapfrac()",
-      "source_file": "scripts/check-diagram-geometry.mjs",
-      "source_location": "L107"
+      "source_location": "L72"
     },
     {
       "id": "scripts_check_diagram_geometry_samplepath",
@@ -3049,7 +3001,7 @@
       "file_type": "code",
       "norm_label": "samplepath()",
       "source_file": "scripts/check-diagram-geometry.mjs",
-      "source_location": "L34"
+      "source_location": "L43"
     },
     {
       "id": "scripts_influence_grid_cell",
@@ -3076,30 +3028,6 @@
       "source_location": "L37"
     },
     {
-      "id": "src_lib_genealogy_layout_braidlane",
-      "label": "braidLane()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 57,
-      "community_name": "genealogy-layout.ts",
-      "file_type": "code",
-      "norm_label": "braidlane()",
-      "source_file": "src/lib/genealogy-layout.ts",
-      "source_location": "L94"
-    },
-    {
-      "id": "src_lib_genealogy_layout_braidphase",
-      "label": "braidPhase()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 57,
-      "community_name": "genealogy-layout.ts",
-      "file_type": "code",
-      "norm_label": "braidphase()",
-      "source_file": "src/lib/genealogy-layout.ts",
-      "source_location": "L105"
-    },
-    {
       "id": "src_lib_genealogy_layout_genedgepath",
       "label": "genEdgePath()",
       "_callable": true,
@@ -3109,7 +3037,19 @@
       "file_type": "code",
       "norm_label": "genedgepath()",
       "source_file": "src/lib/genealogy-layout.ts",
-      "source_location": "L176"
+      "source_location": "L128"
+    },
+    {
+      "id": "src_lib_genealogy_layout_genisreciprocal",
+      "label": "genIsReciprocal()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 57,
+      "community_name": "genealogy-layout.ts",
+      "file_type": "code",
+      "norm_label": "genisreciprocal()",
+      "source_file": "src/lib/genealogy-layout.ts",
+      "source_location": "L79"
     },
     {
       "id": "src_lib_genealogy_layout_genlateralshift",
@@ -3121,7 +3061,7 @@
       "file_type": "code",
       "norm_label": "genlateralshift()",
       "source_file": "src/lib/genealogy-layout.ts",
-      "source_location": "L45"
+      "source_location": "L109"
     },
     {
       "id": "src_lib_genealogy_layout_gennodepos",
@@ -3133,31 +3073,19 @@
       "file_type": "code",
       "norm_label": "gennodepos()",
       "source_file": "src/lib/genealogy-layout.ts",
-      "source_location": "L37"
+      "source_location": "L68"
     },
     {
-      "id": "src_lib_genealogy_layout_gentrackrank",
-      "label": "genTrackRank()",
+      "id": "src_lib_genealogy_layout_genpairkey",
+      "label": "genPairKey()",
       "_callable": true,
       "_origin": "ast",
       "community": 57,
       "community_name": "genealogy-layout.ts",
       "file_type": "code",
-      "norm_label": "gentrackrank()",
+      "norm_label": "genpairkey()",
       "source_file": "src/lib/genealogy-layout.ts",
-      "source_location": "L70"
-    },
-    {
-      "id": "src_lib_genealogy_layout_leftcorridorrank",
-      "label": "leftCorridorRank()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 57,
-      "community_name": "genealogy-layout.ts",
-      "file_type": "code",
-      "norm_label": "leftcorridorrank()",
-      "source_file": "src/lib/genealogy-layout.ts",
-      "source_location": "L121"
+      "source_location": "L73"
     },
     {
       "id": "src_philosophers_influences_cabinetheirs",
@@ -3169,7 +3097,7 @@
       "file_type": "code",
       "norm_label": "cabinetheirs()",
       "source_file": "src/philosophers/influences.ts",
-      "source_location": "L159"
+      "source_location": "L156"
     },
     {
       "id": "src_philosophers_influences_relationshipline",
@@ -3181,7 +3109,7 @@
       "file_type": "code",
       "norm_label": "relationshipline()",
       "source_file": "src/philosophers/influences.ts",
-      "source_location": "L177"
+      "source_location": "L174"
     },
     {
       "id": "src_philosophers_influences_tablestancesline",
@@ -3193,7 +3121,7 @@
       "file_type": "code",
       "norm_label": "tablestancesline()",
       "source_file": "src/philosophers/influences.ts",
-      "source_location": "L204"
+      "source_location": "L201"
     },
     {
       "id": "scripts_check_diagram_contrast_luminance",
@@ -3205,7 +3133,7 @@
       "file_type": "code",
       "norm_label": "luminance()",
       "source_file": "scripts/check-diagram-contrast.mjs",
-      "source_location": "L23"
+      "source_location": "L25"
     },
     {
       "id": "scripts_check_diagram_contrast_ratio",
@@ -3217,7 +3145,55 @@
       "file_type": "code",
       "norm_label": "ratio()",
       "source_file": "scripts/check-diagram-contrast.mjs",
-      "source_location": "L33"
+      "source_location": "L35"
+    },
+    {
+      "id": "src_components_genealogymap_edgestyle",
+      "label": "edgeStyle()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 67,
+      "community_name": "GenealogyMap.tsx",
+      "file_type": "code",
+      "norm_label": "edgestyle()",
+      "source_file": "src/components/GenealogyMap.tsx",
+      "source_location": "L45"
+    },
+    {
+      "id": "src_components_genealogymap_genealogymap",
+      "label": "GenealogyMap()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 67,
+      "community_name": "GenealogyMap.tsx",
+      "file_type": "code",
+      "norm_label": "genealogymap()",
+      "source_file": "src/components/GenealogyMap.tsx",
+      "source_location": "L79"
+    },
+    {
+      "id": "src_components_genealogymap_labelsize",
+      "label": "labelSize()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 67,
+      "community_name": "GenealogyMap.tsx",
+      "file_type": "code",
+      "norm_label": "labelsize()",
+      "source_file": "src/components/GenealogyMap.tsx",
+      "source_location": "L69"
+    },
+    {
+      "id": "src_components_genealogymap_seatdates",
+      "label": "seatDates()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 67,
+      "community_name": "GenealogyMap.tsx",
+      "file_type": "code",
+      "norm_label": "seatdates()",
+      "source_file": "src/components/GenealogyMap.tsx",
+      "source_location": "L73"
     },
     {
       "id": "src_lib_llm_llmerror_constructor",
@@ -3413,149 +3389,6 @@
       "norm_label": "private",
       "source_file": "package.json",
       "source_location": "L3"
-    },
-    {
-      "id": "package_scripts",
-      "label": "scripts",
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "package.json",
-      "file_type": "code",
-      "norm_label": "scripts",
-      "source_file": "package.json",
-      "source_location": "L6"
-    },
-    {
-      "id": "package_scripts_build",
-      "label": "build",
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "package.json",
-      "file_type": "code",
-      "norm_label": "build",
-      "source_file": "package.json",
-      "source_location": "L8"
-    },
-    {
-      "id": "package_scripts_check_links",
-      "label": "check-links",
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "package.json",
-      "file_type": "code",
-      "norm_label": "check-links",
-      "source_file": "package.json",
-      "source_location": "L12"
-    },
-    {
-      "id": "package_scripts_check_links_fix",
-      "label": "check-links:fix",
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "package.json",
-      "file_type": "code",
-      "norm_label": "check-links:fix",
-      "source_file": "package.json",
-      "source_location": "L13"
-    },
-    {
-      "id": "package_scripts_dev",
-      "label": "dev",
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "package.json",
-      "file_type": "code",
-      "norm_label": "dev",
-      "source_file": "package.json",
-      "source_location": "L7"
-    },
-    {
-      "id": "package_scripts_lint",
-      "label": "lint",
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "package.json",
-      "file_type": "code",
-      "norm_label": "lint",
-      "source_file": "package.json",
-      "source_location": "L9"
-    },
-    {
-      "id": "package_scripts_preview",
-      "label": "preview",
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "package.json",
-      "file_type": "code",
-      "norm_label": "preview",
-      "source_file": "package.json",
-      "source_location": "L10"
-    },
-    {
-      "id": "package_scripts_rag_eval",
-      "label": "rag:eval",
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "package.json",
-      "file_type": "code",
-      "norm_label": "rag:eval",
-      "source_file": "package.json",
-      "source_location": "L17"
-    },
-    {
-      "id": "package_scripts_rag_ingest",
-      "label": "rag:ingest",
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "package.json",
-      "file_type": "code",
-      "norm_label": "rag:ingest",
-      "source_file": "package.json",
-      "source_location": "L14"
-    },
-    {
-      "id": "package_scripts_rag_inspect",
-      "label": "rag:inspect",
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "package.json",
-      "file_type": "code",
-      "norm_label": "rag:inspect",
-      "source_file": "package.json",
-      "source_location": "L15"
-    },
-    {
-      "id": "package_scripts_rag_search",
-      "label": "rag:search",
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "package.json",
-      "file_type": "code",
-      "norm_label": "rag:search",
-      "source_file": "package.json",
-      "source_location": "L16"
-    },
-    {
-      "id": "package_scripts_test_rag",
-      "label": "test:rag",
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "package.json",
-      "file_type": "code",
-      "norm_label": "test:rag",
-      "source_file": "package.json",
-      "source_location": "L18"
-    },
-    {
-      "id": "package_scripts_typecheck",
-      "label": "typecheck",
-      "_origin": "ast",
-      "community": 0,
-      "community_name": "package.json",
-      "file_type": "code",
-      "norm_label": "typecheck",
-      "source_file": "package.json",
-      "source_location": "L11"
     },
     {
       "id": "package_type",
@@ -5104,72 +4937,6 @@
       "source_location": "L1"
     },
     {
-      "id": "src_components_genealogymap",
-      "label": "GenealogyMap.tsx",
-      "_origin": "ast",
-      "community": 3,
-      "community_name": "App.tsx",
-      "file_type": "code",
-      "norm_label": "genealogymap.tsx",
-      "source_file": "src/components/GenealogyMap.tsx",
-      "source_location": "L1"
-    },
-    {
-      "id": "src_components_genealogymap_all_edges",
-      "label": "ALL_EDGES",
-      "_origin": "ast",
-      "community": 3,
-      "community_name": "App.tsx",
-      "file_type": "code",
-      "norm_label": "all_edges",
-      "source_file": "src/components/GenealogyMap.tsx",
-      "source_location": "L20"
-    },
-    {
-      "id": "src_components_genealogymap_degree",
-      "label": "DEGREE",
-      "_origin": "ast",
-      "community": 3,
-      "community_name": "App.tsx",
-      "file_type": "code",
-      "norm_label": "degree",
-      "source_file": "src/components/GenealogyMap.tsx",
-      "source_location": "L52"
-    },
-    {
-      "id": "src_components_genealogymap_left_seats",
-      "label": "LEFT_SEATS",
-      "_origin": "ast",
-      "community": 3,
-      "community_name": "App.tsx",
-      "file_type": "code",
-      "norm_label": "left_seats",
-      "source_file": "src/components/GenealogyMap.tsx",
-      "source_location": "L48"
-    },
-    {
-      "id": "src_components_genealogymap_min_degree",
-      "label": "MIN_DEGREE",
-      "_origin": "ast",
-      "community": 3,
-      "community_name": "App.tsx",
-      "file_type": "code",
-      "norm_label": "min_degree",
-      "source_file": "src/components/GenealogyMap.tsx",
-      "source_location": "L58"
-    },
-    {
-      "id": "src_components_genealogymap_spine_seats",
-      "label": "SPINE_SEATS",
-      "_origin": "ast",
-      "community": 3,
-      "community_name": "App.tsx",
-      "file_type": "code",
-      "norm_label": "spine_seats",
-      "source_file": "src/components/GenealogyMap.tsx",
-      "source_location": "L47"
-    },
-    {
       "id": "src_components_servicechat",
       "label": "ServiceChat.tsx",
       "_origin": "ast",
@@ -6326,6 +6093,50 @@
       "source_location": "L1"
     },
     {
+      "id": "src_lib_porter",
+      "label": "porter.ts",
+      "_origin": "ast",
+      "community": 49,
+      "community_name": "rag-search.ts",
+      "file_type": "code",
+      "norm_label": "porter.ts",
+      "source_file": "src/lib/porter.ts",
+      "source_location": "L1"
+    },
+    {
+      "id": "src_lib_porter_step2",
+      "label": "STEP2",
+      "_origin": "ast",
+      "community": 49,
+      "community_name": "rag-search.ts",
+      "file_type": "code",
+      "norm_label": "step2",
+      "source_file": "src/lib/porter.ts",
+      "source_location": "L73"
+    },
+    {
+      "id": "src_lib_porter_step3",
+      "label": "STEP3",
+      "_origin": "ast",
+      "community": 49,
+      "community_name": "rag-search.ts",
+      "file_type": "code",
+      "norm_label": "step3",
+      "source_file": "src/lib/porter.ts",
+      "source_location": "L81"
+    },
+    {
+      "id": "src_lib_porter_step4",
+      "label": "STEP4",
+      "_origin": "ast",
+      "community": 49,
+      "community_name": "rag-search.ts",
+      "file_type": "code",
+      "norm_label": "step4",
+      "source_file": "src/lib/porter.ts",
+      "source_location": "L86"
+    },
+    {
       "id": "src_lib_rag_ground",
       "label": "rag-ground.ts",
       "_origin": "ast",
@@ -6491,48 +6302,147 @@
       "source_location": "L25"
     },
     {
-      "id": "src_lib_porter",
-      "label": "porter.ts",
+      "id": "package_scripts",
+      "label": "scripts",
       "_origin": "ast",
       "community": 51,
-      "community_name": "porter.ts",
+      "community_name": "scripts",
       "file_type": "code",
-      "norm_label": "porter.ts",
-      "source_file": "src/lib/porter.ts",
-      "source_location": "L1"
+      "norm_label": "scripts",
+      "source_file": "package.json",
+      "source_location": "L6"
     },
     {
-      "id": "src_lib_porter_step2",
-      "label": "STEP2",
+      "id": "package_scripts_build",
+      "label": "build",
       "_origin": "ast",
       "community": 51,
-      "community_name": "porter.ts",
+      "community_name": "scripts",
       "file_type": "code",
-      "norm_label": "step2",
-      "source_file": "src/lib/porter.ts",
-      "source_location": "L73"
+      "norm_label": "build",
+      "source_file": "package.json",
+      "source_location": "L8"
     },
     {
-      "id": "src_lib_porter_step3",
-      "label": "STEP3",
+      "id": "package_scripts_check_links",
+      "label": "check-links",
       "_origin": "ast",
       "community": 51,
-      "community_name": "porter.ts",
+      "community_name": "scripts",
       "file_type": "code",
-      "norm_label": "step3",
-      "source_file": "src/lib/porter.ts",
-      "source_location": "L81"
+      "norm_label": "check-links",
+      "source_file": "package.json",
+      "source_location": "L12"
     },
     {
-      "id": "src_lib_porter_step4",
-      "label": "STEP4",
+      "id": "package_scripts_check_links_fix",
+      "label": "check-links:fix",
       "_origin": "ast",
       "community": 51,
-      "community_name": "porter.ts",
+      "community_name": "scripts",
       "file_type": "code",
-      "norm_label": "step4",
-      "source_file": "src/lib/porter.ts",
-      "source_location": "L86"
+      "norm_label": "check-links:fix",
+      "source_file": "package.json",
+      "source_location": "L13"
+    },
+    {
+      "id": "package_scripts_dev",
+      "label": "dev",
+      "_origin": "ast",
+      "community": 51,
+      "community_name": "scripts",
+      "file_type": "code",
+      "norm_label": "dev",
+      "source_file": "package.json",
+      "source_location": "L7"
+    },
+    {
+      "id": "package_scripts_lint",
+      "label": "lint",
+      "_origin": "ast",
+      "community": 51,
+      "community_name": "scripts",
+      "file_type": "code",
+      "norm_label": "lint",
+      "source_file": "package.json",
+      "source_location": "L9"
+    },
+    {
+      "id": "package_scripts_preview",
+      "label": "preview",
+      "_origin": "ast",
+      "community": 51,
+      "community_name": "scripts",
+      "file_type": "code",
+      "norm_label": "preview",
+      "source_file": "package.json",
+      "source_location": "L10"
+    },
+    {
+      "id": "package_scripts_rag_eval",
+      "label": "rag:eval",
+      "_origin": "ast",
+      "community": 51,
+      "community_name": "scripts",
+      "file_type": "code",
+      "norm_label": "rag:eval",
+      "source_file": "package.json",
+      "source_location": "L17"
+    },
+    {
+      "id": "package_scripts_rag_ingest",
+      "label": "rag:ingest",
+      "_origin": "ast",
+      "community": 51,
+      "community_name": "scripts",
+      "file_type": "code",
+      "norm_label": "rag:ingest",
+      "source_file": "package.json",
+      "source_location": "L14"
+    },
+    {
+      "id": "package_scripts_rag_inspect",
+      "label": "rag:inspect",
+      "_origin": "ast",
+      "community": 51,
+      "community_name": "scripts",
+      "file_type": "code",
+      "norm_label": "rag:inspect",
+      "source_file": "package.json",
+      "source_location": "L15"
+    },
+    {
+      "id": "package_scripts_rag_search",
+      "label": "rag:search",
+      "_origin": "ast",
+      "community": 51,
+      "community_name": "scripts",
+      "file_type": "code",
+      "norm_label": "rag:search",
+      "source_file": "package.json",
+      "source_location": "L16"
+    },
+    {
+      "id": "package_scripts_test_rag",
+      "label": "test:rag",
+      "_origin": "ast",
+      "community": 51,
+      "community_name": "scripts",
+      "file_type": "code",
+      "norm_label": "test:rag",
+      "source_file": "package.json",
+      "source_location": "L18"
+    },
+    {
+      "id": "package_scripts_typecheck",
+      "label": "typecheck",
+      "_origin": "ast",
+      "community": 51,
+      "community_name": "scripts",
+      "file_type": "code",
+      "norm_label": "typecheck",
+      "source_file": "package.json",
+      "source_location": "L11"
     },
     {
       "id": "docs_language_levels",
@@ -6949,6 +6859,28 @@
       "source_location": "L1"
     },
     {
+      "id": "scripts_check_diagram_geometry_drawn",
+      "label": "drawn",
+      "_origin": "ast",
+      "community": 57,
+      "community_name": "genealogy-layout.ts",
+      "file_type": "code",
+      "norm_label": "drawn",
+      "source_file": "scripts/check-diagram-geometry.mjs",
+      "source_location": "L33"
+    },
+    {
+      "id": "scripts_check_diagram_geometry_drawnkeys",
+      "label": "drawnKeys",
+      "_origin": "ast",
+      "community": 57,
+      "community_name": "genealogy-layout.ts",
+      "file_type": "code",
+      "norm_label": "drawnkeys",
+      "source_file": "scripts/check-diagram-geometry.mjs",
+      "source_location": "L32"
+    },
+    {
       "id": "scripts_check_diagram_geometry_edges",
       "label": "edges",
       "_origin": "ast",
@@ -6957,7 +6889,7 @@
       "file_type": "code",
       "norm_label": "edges",
       "source_file": "scripts/check-diagram-geometry.mjs",
-      "source_location": "L28"
+      "source_location": "L23"
     },
     {
       "id": "scripts_check_diagram_geometry_paths",
@@ -6968,7 +6900,7 @@
       "file_type": "code",
       "norm_label": "paths",
       "source_file": "scripts/check-diagram-geometry.mjs",
-      "source_location": "L55"
+      "source_location": "L64"
     },
     {
       "id": "scripts_influence_grid",
@@ -7056,7 +6988,18 @@
       "file_type": "code",
       "norm_label": "gen_bow_extra",
       "source_file": "src/lib/genealogy-layout.ts",
-      "source_location": "L164"
+      "source_location": "L91"
+    },
+    {
+      "id": "src_lib_genealogy_layout_gen_h",
+      "label": "GEN_H",
+      "_origin": "ast",
+      "community": 57,
+      "community_name": "genealogy-layout.ts",
+      "file_type": "code",
+      "norm_label": "gen_h",
+      "source_file": "src/lib/genealogy-layout.ts",
+      "source_location": "L27"
     },
     {
       "id": "src_lib_genealogy_layout_gen_node_r",
@@ -7067,7 +7010,18 @@
       "file_type": "code",
       "norm_label": "gen_node_r",
       "source_file": "src/lib/genealogy-layout.ts",
-      "source_location": "L15"
+      "source_location": "L28"
+    },
+    {
+      "id": "src_lib_genealogy_layout_gen_order",
+      "label": "GEN_ORDER",
+      "_origin": "ast",
+      "community": 57,
+      "community_name": "genealogy-layout.ts",
+      "file_type": "code",
+      "norm_label": "gen_order",
+      "source_file": "src/lib/genealogy-layout.ts",
+      "source_location": "L48"
     },
     {
       "id": "src_lib_genealogy_layout_gen_pos",
@@ -7078,7 +7032,7 @@
       "file_type": "code",
       "norm_label": "gen_pos",
       "source_file": "src/lib/genealogy-layout.ts",
-      "source_location": "L22"
+      "source_location": "L53"
     },
     {
       "id": "src_lib_genealogy_layout_gen_rim",
@@ -7089,18 +7043,7 @@
       "file_type": "code",
       "norm_label": "gen_rim",
       "source_file": "src/lib/genealogy-layout.ts",
-      "source_location": "L20"
-    },
-    {
-      "id": "src_lib_genealogy_layout_gen_rim_points",
-      "label": "GEN_RIM_POINTS",
-      "_origin": "ast",
-      "community": 57,
-      "community_name": "genealogy-layout.ts",
-      "file_type": "code",
-      "norm_label": "gen_rim_points",
-      "source_file": "src/lib/genealogy-layout.ts",
-      "source_location": "L138"
+      "source_location": "L35"
     },
     {
       "id": "src_lib_genealogy_layout_gen_spine_x",
@@ -7111,7 +7054,7 @@
       "file_type": "code",
       "norm_label": "gen_spine_x",
       "source_file": "src/lib/genealogy-layout.ts",
-      "source_location": "L16"
+      "source_location": "L29"
     },
     {
       "id": "src_lib_genealogy_layout_gen_w",
@@ -7122,29 +7065,7 @@
       "file_type": "code",
       "norm_label": "gen_w",
       "source_file": "src/lib/genealogy-layout.ts",
-      "source_location": "L14"
-    },
-    {
-      "id": "src_lib_genealogy_layout_left_corridor_proto",
-      "label": "LEFT_CORRIDOR_PROTO",
-      "_origin": "ast",
-      "community": 57,
-      "community_name": "genealogy-layout.ts",
-      "file_type": "code",
-      "norm_label": "left_corridor_proto",
-      "source_file": "src/lib/genealogy-layout.ts",
-      "source_location": "L115"
-    },
-    {
-      "id": "src_lib_genealogy_layout_straight_spines",
-      "label": "STRAIGHT_SPINES",
-      "_origin": "ast",
-      "community": 57,
-      "community_name": "genealogy-layout.ts",
-      "file_type": "code",
-      "norm_label": "straight_spines",
-      "source_file": "src/lib/genealogy-layout.ts",
-      "source_location": "L89"
+      "source_location": "L26"
     },
     {
       "id": "src_philosophers_influences",
@@ -7166,7 +7087,7 @@
       "file_type": "code",
       "norm_label": "cabinet_debts",
       "source_file": "src/philosophers/influences.ts",
-      "source_location": "L66"
+      "source_location": "L62"
     },
     {
       "id": "docs_new_philosopher_brief",
@@ -7238,7 +7159,7 @@
       "node_kind": "heading",
       "norm_label": "access and review",
       "source_file": "docs/diagram-style.md",
-      "source_location": "L133"
+      "source_location": "L188"
     },
     {
       "id": "docs_diagram_style_data_contract_repo",
@@ -7250,7 +7171,7 @@
       "node_kind": "heading",
       "norm_label": "data contract [repo]",
       "source_file": "docs/diagram-style.md",
-      "source_location": "L126"
+      "source_location": "L181"
     },
     {
       "id": "docs_diagram_style_fixed_dark_cabinet_hard_rule",
@@ -7274,7 +7195,7 @@
       "node_kind": "heading",
       "norm_label": "geometry specification (what the code may do)",
       "source_file": "docs/diagram-style.md",
-      "source_location": "L115"
+      "source_location": "L170"
     },
     {
       "id": "docs_diagram_style_layout_current_instantiation_repo_roles_are_the_spec",
@@ -7289,28 +7210,28 @@
       "source_location": "L39"
     },
     {
-      "id": "docs_diagram_style_lines_s_curve_variant_simple_diagrams_only",
-      "label": "Lines (S-curve variant \u2014 simple diagrams only)",
+      "id": "docs_diagram_style_lines_road_system_design_the_default",
+      "label": "Lines (road-system design \u2014 the default)",
       "_origin": "ast",
       "community": 59,
       "community_name": "Node-and-debt diagram \u2014 style, preferences, and quick-start",
       "file_type": "document",
       "node_kind": "heading",
-      "norm_label": "lines (s-curve variant \u2014 simple diagrams only)",
+      "norm_label": "lines (road-system design \u2014 the default)",
       "source_file": "docs/diagram-style.md",
-      "source_location": "L78"
+      "source_location": "L59"
     },
     {
-      "id": "docs_diagram_style_lines_straight_spine_design_the_default",
-      "label": "Lines (straight-spine design \u2014 the default)",
+      "id": "docs_diagram_style_lines_single_thread_variant_simple_diagrams_only",
+      "label": "Lines (single-thread variant \u2014 simple diagrams only)",
       "_origin": "ast",
       "community": 59,
       "community_name": "Node-and-debt diagram \u2014 style, preferences, and quick-start",
       "file_type": "document",
       "node_kind": "heading",
-      "norm_label": "lines (straight-spine design \u2014 the default)",
+      "norm_label": "lines (single-thread variant \u2014 simple diagrams only)",
       "source_file": "docs/diagram-style.md",
-      "source_location": "L55"
+      "source_location": "L85"
     },
     {
       "id": "docs_diagram_style_node_and_debt_diagram_style_preferences_and_quick_start",
@@ -7346,7 +7267,19 @@
       "node_kind": "heading",
       "norm_label": "priority order (never sacrifice a higher rule for a lower one)",
       "source_file": "docs/diagram-style.md",
-      "source_location": "L91"
+      "source_location": "L146"
+    },
+    {
+      "id": "docs_diagram_style_recipe_b_vertical_road_system_built_here_60_debts_reusable",
+      "label": "Recipe B \u2014 vertical road system (built here, ~60 debts, reusable)",
+      "_origin": "ast",
+      "community": 59,
+      "community_name": "Node-and-debt diagram \u2014 style, preferences, and quick-start",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "recipe b \u2014 vertical road system (built here, ~60 debts, reusable)",
+      "source_file": "docs/diagram-style.md",
+      "source_location": "L93"
     },
     {
       "id": "docs_diagram_style_visual_specification_what_the_human_sees",
@@ -7358,7 +7291,7 @@
       "node_kind": "heading",
       "norm_label": "visual specification (what the human sees)",
       "source_file": "docs/diagram-style.md",
-      "source_location": "L107"
+      "source_location": "L162"
     },
     {
       "id": "tsconfig_node",
@@ -7655,7 +7588,7 @@
       "source_location": "L10"
     },
     {
-      "id": "scripts_check_diagram_contrast_rationale_32",
+      "id": "scripts_check_diagram_contrast_rationale_34",
       "label": "NOTE: muted rgba() entries above are pre-blended approximations on #221910.",
       "_origin": "ast",
       "community": 61,
@@ -7663,7 +7596,7 @@
       "file_type": "rationale",
       "norm_label": "note: muted rgba() entries above are pre-blended approximations on #221910.",
       "source_file": "scripts/check-diagram-contrast.mjs",
-      "source_location": "L32"
+      "source_location": "L34"
     },
     {
       "id": "src_philosophers_rose",
@@ -7859,6 +7792,72 @@
       "norm_label": "gh.md",
       "source_file": ".opencode/commands/gh.md",
       "source_location": "L1"
+    },
+    {
+      "id": "src_components_genealogymap",
+      "label": "GenealogyMap.tsx",
+      "_origin": "ast",
+      "community": 67,
+      "community_name": "GenealogyMap.tsx",
+      "file_type": "code",
+      "norm_label": "genealogymap.tsx",
+      "source_file": "src/components/GenealogyMap.tsx",
+      "source_location": "L1"
+    },
+    {
+      "id": "src_components_genealogymap_all_edges",
+      "label": "ALL_EDGES",
+      "_origin": "ast",
+      "community": 67,
+      "community_name": "GenealogyMap.tsx",
+      "file_type": "code",
+      "norm_label": "all_edges",
+      "source_file": "src/components/GenealogyMap.tsx",
+      "source_location": "L35"
+    },
+    {
+      "id": "src_components_genealogymap_degree",
+      "label": "DEGREE",
+      "_origin": "ast",
+      "community": 67,
+      "community_name": "GenealogyMap.tsx",
+      "file_type": "code",
+      "norm_label": "degree",
+      "source_file": "src/components/GenealogyMap.tsx",
+      "source_location": "L60"
+    },
+    {
+      "id": "src_components_genealogymap_left_seats",
+      "label": "LEFT_SEATS",
+      "_origin": "ast",
+      "community": 67,
+      "community_name": "GenealogyMap.tsx",
+      "file_type": "code",
+      "norm_label": "left_seats",
+      "source_file": "src/components/GenealogyMap.tsx",
+      "source_location": "L55"
+    },
+    {
+      "id": "src_components_genealogymap_min_degree",
+      "label": "MIN_DEGREE",
+      "_origin": "ast",
+      "community": 67,
+      "community_name": "GenealogyMap.tsx",
+      "file_type": "code",
+      "norm_label": "min_degree",
+      "source_file": "src/components/GenealogyMap.tsx",
+      "source_location": "L66"
+    },
+    {
+      "id": "src_components_genealogymap_spine_seats",
+      "label": "SPINE_SEATS",
+      "_origin": "ast",
+      "community": 67,
+      "community_name": "GenealogyMap.tsx",
+      "file_type": "code",
+      "norm_label": "spine_seats",
+      "source_file": "src/components/GenealogyMap.tsx",
+      "source_location": "L54"
     },
     {
       "id": "package_devdependencies",
@@ -8281,7 +8280,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "scripts/check-diagram-contrast.mjs",
-      "source_location": "L34",
+      "source_location": "L36",
       "weight": 1.0
     },
     {
@@ -8293,7 +8292,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "scripts/check-diagram-geometry.mjs",
-      "source_location": "L57",
+      "source_location": "L66",
       "weight": 1.0
     },
     {
@@ -8305,7 +8304,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "scripts/check-diagram-geometry.mjs",
-      "source_location": "L57",
+      "source_location": "L66",
       "weight": 1.0
     },
     {
@@ -8701,7 +8700,19 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "src/components/GenealogyMap.tsx",
-      "source_location": "L128",
+      "source_location": "L163",
+      "weight": 1.0
+    },
+    {
+      "source": "src_components_genealogymap_genealogymap",
+      "target": "src_components_genealogymap_seatdates",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "src/components/GenealogyMap.tsx",
+      "source_location": "L192",
       "weight": 1.0
     },
     {
@@ -8713,7 +8724,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "src/components/GenealogyMap.tsx",
-      "source_location": "L171",
+      "source_location": "L196",
       "weight": 1.0
     },
     {
@@ -8909,18 +8920,6 @@
       "weight": 1.0
     },
     {
-      "source": "src_lib_genealogy_layout_braidlane",
-      "target": "src_lib_genealogy_layout_gennodepos",
-      "relation": "calls",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "context": "call",
-      "source_file": "src/lib/genealogy-layout.ts",
-      "source_location": "L96",
-      "weight": 1.0
-    },
-    {
       "source": "src_lib_genealogy_layout_genedgepath",
       "target": "src_lib_genealogy_layout_gennodepos",
       "relation": "calls",
@@ -8929,103 +8928,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "src/lib/genealogy-layout.ts",
-      "source_location": "L177",
-      "weight": 1.0
-    },
-    {
-      "source": "src_lib_genealogy_layout_genedgepath",
-      "target": "src_lib_genealogy_layout_leftcorridorrank",
-      "relation": "calls",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "context": "call",
-      "source_file": "src/lib/genealogy-layout.ts",
-      "source_location": "L237",
-      "weight": 1.0
-    },
-    {
-      "source": "src_lib_genealogy_layout_genedgepath",
-      "target": "src_lib_genealogy_layout_gentrackrank",
-      "relation": "calls",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "context": "call",
-      "source_file": "src/lib/genealogy-layout.ts",
-      "source_location": "L278",
-      "weight": 1.0
-    },
-    {
-      "source": "src_lib_genealogy_layout_genedgepath",
-      "target": "src_lib_genealogy_layout_braidphase",
-      "relation": "calls",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "context": "call",
-      "source_file": "src/lib/genealogy-layout.ts",
-      "source_location": "L317",
-      "weight": 1.0
-    },
-    {
-      "source": "src_lib_genealogy_layout_genedgepath",
-      "target": "src_lib_genealogy_layout_braidlane",
-      "relation": "calls",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "context": "call",
-      "source_file": "src/lib/genealogy-layout.ts",
-      "source_location": "L318",
-      "weight": 1.0
-    },
-    {
-      "source": "src_lib_genealogy_layout_genlateralshift",
-      "target": "src_lib_genealogy_layout_gennodepos",
-      "relation": "calls",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "context": "call",
-      "source_file": "src/lib/genealogy-layout.ts",
-      "source_location": "L47",
-      "weight": 1.0
-    },
-    {
-      "source": "src_lib_genealogy_layout_gentrackrank",
-      "target": "src_lib_genealogy_layout_gennodepos",
-      "relation": "calls",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "context": "call",
-      "source_file": "src/lib/genealogy-layout.ts",
-      "source_location": "L72",
-      "weight": 1.0
-    },
-    {
-      "source": "src_lib_genealogy_layout_gentrackrank",
-      "target": "src_lib_genealogy_layout_genlateralshift",
-      "relation": "calls",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "context": "call",
-      "source_file": "src/lib/genealogy-layout.ts",
-      "source_location": "L76",
-      "weight": 1.0
-    },
-    {
-      "source": "src_lib_genealogy_layout_leftcorridorrank",
-      "target": "src_lib_genealogy_layout_gennodepos",
-      "relation": "calls",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "context": "call",
-      "source_file": "src/lib/genealogy-layout.ts",
-      "source_location": "L125",
+      "source_location": "L131",
       "weight": 1.0
     },
     {
@@ -10417,7 +10320,7 @@
       "confidence_score": 1.0,
       "context": "import",
       "source_file": "scripts/check-diagram-geometry.mjs",
-      "source_location": "L12",
+      "source_location": "L13",
       "weight": 1.0
     },
     {
@@ -10429,7 +10332,7 @@
       "confidence_score": 1.0,
       "context": "import",
       "source_file": "scripts/check-diagram-geometry.mjs",
-      "source_location": "L13",
+      "source_location": "L14",
       "weight": 1.0
     },
     {
@@ -10441,7 +10344,7 @@
       "confidence_score": 1.0,
       "context": "import",
       "source_file": "scripts/check-diagram-geometry.mjs",
-      "source_location": "L13",
+      "source_location": "L14",
       "weight": 1.0
     },
     {
@@ -10453,7 +10356,7 @@
       "confidence_score": 1.0,
       "context": "import",
       "source_file": "scripts/check-diagram-geometry.mjs",
-      "source_location": "L13",
+      "source_location": "L14",
       "weight": 1.0
     },
     {
@@ -10465,7 +10368,7 @@
       "confidence_score": 1.0,
       "context": "import",
       "source_file": "scripts/check-diagram-geometry.mjs",
-      "source_location": "L13",
+      "source_location": "L14",
       "weight": 1.0
     },
     {
@@ -11257,7 +11160,7 @@
       "confidence_score": 1.0,
       "context": "import",
       "source_file": "scripts/check-diagram-geometry.mjs",
-      "source_location": "L12",
+      "source_location": "L13",
       "weight": 1.0
     },
     {
@@ -11269,7 +11172,7 @@
       "confidence_score": 1.0,
       "context": "import",
       "source_file": "scripts/check-diagram-geometry.mjs",
-      "source_location": "L13",
+      "source_location": "L14",
       "weight": 1.0
     },
     {
@@ -11413,7 +11316,7 @@
       "confidence_score": 1.0,
       "context": "import",
       "source_file": "src/components/GenealogyMap.tsx",
-      "source_location": "L1",
+      "source_location": "L6",
       "weight": 1.0
     },
     {
@@ -12016,28 +11919,6 @@
     },
     {
       "source": "docs_diagram_style_node_and_debt_diagram_style_preferences_and_quick_start",
-      "target": "docs_diagram_style_visual_specification_what_the_human_sees",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "docs/diagram-style.md",
-      "source_location": "L107",
-      "weight": 1.0
-    },
-    {
-      "source": "docs_diagram_style_node_and_debt_diagram_style_preferences_and_quick_start",
-      "target": "docs_diagram_style_geometry_specification_what_the_code_may_do",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "docs/diagram-style.md",
-      "source_location": "L115",
-      "weight": 1.0
-    },
-    {
-      "source": "docs_diagram_style_node_and_debt_diagram_style_preferences_and_quick_start",
       "target": "docs_diagram_style_fixed_dark_cabinet_hard_rule",
       "relation": "contains",
       "_origin": "ast",
@@ -12049,13 +11930,46 @@
     },
     {
       "source": "docs_diagram_style_node_and_debt_diagram_style_preferences_and_quick_start",
+      "target": "docs_diagram_style_priority_order_never_sacrifice_a_higher_rule_for_a_lower_one",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/diagram-style.md",
+      "source_location": "L146",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_diagram_style_node_and_debt_diagram_style_preferences_and_quick_start",
+      "target": "docs_diagram_style_visual_specification_what_the_human_sees",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/diagram-style.md",
+      "source_location": "L162",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_diagram_style_node_and_debt_diagram_style_preferences_and_quick_start",
+      "target": "docs_diagram_style_geometry_specification_what_the_code_may_do",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/diagram-style.md",
+      "source_location": "L170",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_diagram_style_node_and_debt_diagram_style_preferences_and_quick_start",
       "target": "docs_diagram_style_data_contract_repo",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/diagram-style.md",
-      "source_location": "L126",
+      "source_location": "L181",
       "weight": 1.0
     },
     {
@@ -12066,7 +11980,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/diagram-style.md",
-      "source_location": "L133",
+      "source_location": "L188",
       "weight": 1.0
     },
     {
@@ -12093,35 +12007,35 @@
     },
     {
       "source": "docs_diagram_style_node_and_debt_diagram_style_preferences_and_quick_start",
-      "target": "docs_diagram_style_lines_straight_spine_design_the_default",
+      "target": "docs_diagram_style_lines_road_system_design_the_default",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/diagram-style.md",
-      "source_location": "L55",
+      "source_location": "L59",
       "weight": 1.0
     },
     {
       "source": "docs_diagram_style_node_and_debt_diagram_style_preferences_and_quick_start",
-      "target": "docs_diagram_style_lines_s_curve_variant_simple_diagrams_only",
+      "target": "docs_diagram_style_lines_single_thread_variant_simple_diagrams_only",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/diagram-style.md",
-      "source_location": "L78",
+      "source_location": "L85",
       "weight": 1.0
     },
     {
       "source": "docs_diagram_style_node_and_debt_diagram_style_preferences_and_quick_start",
-      "target": "docs_diagram_style_priority_order_never_sacrifice_a_higher_rule_for_a_lower_one",
+      "target": "docs_diagram_style_recipe_b_vertical_road_system_built_here_60_debts_reusable",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/diagram-style.md",
-      "source_location": "L91",
+      "source_location": "L93",
       "weight": 1.0
     },
     {
@@ -13408,7 +13322,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "scripts/check-diagram-contrast.mjs",
-      "source_location": "L23",
+      "source_location": "L25",
       "weight": 1.0
     },
     {
@@ -13419,18 +13333,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "scripts/check-diagram-contrast.mjs",
-      "source_location": "L33",
-      "weight": 1.0
-    },
-    {
-      "source": "scripts_check_diagram_geometry",
-      "target": "scripts_check_diagram_geometry_overlapfrac",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "scripts/check-diagram-geometry.mjs",
-      "source_location": "L107",
+      "source_location": "L35",
       "weight": 1.0
     },
     {
@@ -13441,7 +13344,29 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "scripts/check-diagram-geometry.mjs",
-      "source_location": "L28",
+      "source_location": "L23",
+      "weight": 1.0
+    },
+    {
+      "source": "scripts_check_diagram_geometry",
+      "target": "scripts_check_diagram_geometry_drawnkeys",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "scripts/check-diagram-geometry.mjs",
+      "source_location": "L32",
+      "weight": 1.0
+    },
+    {
+      "source": "scripts_check_diagram_geometry",
+      "target": "scripts_check_diagram_geometry_drawn",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "scripts/check-diagram-geometry.mjs",
+      "source_location": "L33",
       "weight": 1.0
     },
     {
@@ -13452,7 +13377,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "scripts/check-diagram-geometry.mjs",
-      "source_location": "L34",
+      "source_location": "L43",
       "weight": 1.0
     },
     {
@@ -13463,7 +13388,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "scripts/check-diagram-geometry.mjs",
-      "source_location": "L55",
+      "source_location": "L64",
       "weight": 1.0
     },
     {
@@ -13474,7 +13399,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "scripts/check-diagram-geometry.mjs",
-      "source_location": "L63",
+      "source_location": "L72",
       "weight": 1.0
     },
     {
@@ -14563,7 +14488,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/components/GenealogyMap.tsx",
-      "source_location": "L15",
+      "source_location": "L22",
       "weight": 1.0
     },
     {
@@ -14574,7 +14499,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/components/GenealogyMap.tsx",
-      "source_location": "L20",
+      "source_location": "L35",
       "weight": 1.0
     },
     {
@@ -14585,7 +14510,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/components/GenealogyMap.tsx",
-      "source_location": "L30",
+      "source_location": "L45",
       "weight": 1.0
     },
     {
@@ -14596,7 +14521,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/components/GenealogyMap.tsx",
-      "source_location": "L47",
+      "source_location": "L54",
       "weight": 1.0
     },
     {
@@ -14607,7 +14532,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/components/GenealogyMap.tsx",
-      "source_location": "L48",
+      "source_location": "L55",
       "weight": 1.0
     },
     {
@@ -14618,7 +14543,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/components/GenealogyMap.tsx",
-      "source_location": "L52",
+      "source_location": "L60",
       "weight": 1.0
     },
     {
@@ -14629,7 +14554,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/components/GenealogyMap.tsx",
-      "source_location": "L58",
+      "source_location": "L66",
       "weight": 1.0
     },
     {
@@ -14640,7 +14565,18 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/components/GenealogyMap.tsx",
-      "source_location": "L61",
+      "source_location": "L69",
+      "weight": 1.0
+    },
+    {
+      "source": "src_components_genealogymap",
+      "target": "src_components_genealogymap_seatdates",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/components/GenealogyMap.tsx",
+      "source_location": "L73",
       "weight": 1.0
     },
     {
@@ -14651,7 +14587,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/components/GenealogyMap.tsx",
-      "source_location": "L65",
+      "source_location": "L79",
       "weight": 1.0
     },
     {
@@ -15195,90 +15131,13 @@
     },
     {
       "source": "src_lib_genealogy_layout",
-      "target": "src_lib_genealogy_layout_braidphase",
+      "target": "src_lib_genealogy_layout_genlateralshift",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/lib/genealogy-layout.ts",
-      "source_location": "L105",
-      "weight": 1.0
-    },
-    {
-      "source": "src_lib_genealogy_layout",
-      "target": "src_lib_genealogy_layout_left_corridor_proto",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "src/lib/genealogy-layout.ts",
-      "source_location": "L115",
-      "weight": 1.0
-    },
-    {
-      "source": "src_lib_genealogy_layout",
-      "target": "src_lib_genealogy_layout_leftcorridorrank",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "src/lib/genealogy-layout.ts",
-      "source_location": "L121",
-      "weight": 1.0
-    },
-    {
-      "source": "src_lib_genealogy_layout",
-      "target": "src_lib_genealogy_layout_gen_rim_points",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "src/lib/genealogy-layout.ts",
-      "source_location": "L138",
-      "weight": 1.0
-    },
-    {
-      "source": "src_lib_genealogy_layout",
-      "target": "src_lib_genealogy_layout_gen_w",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "src/lib/genealogy-layout.ts",
-      "source_location": "L14",
-      "weight": 1.0
-    },
-    {
-      "source": "src_lib_genealogy_layout",
-      "target": "src_lib_genealogy_layout_gen_node_r",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "src/lib/genealogy-layout.ts",
-      "source_location": "L15",
-      "weight": 1.0
-    },
-    {
-      "source": "src_lib_genealogy_layout",
-      "target": "src_lib_genealogy_layout_gen_spine_x",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "src/lib/genealogy-layout.ts",
-      "source_location": "L16",
-      "weight": 1.0
-    },
-    {
-      "source": "src_lib_genealogy_layout",
-      "target": "src_lib_genealogy_layout_gen_bow_extra",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "src/lib/genealogy-layout.ts",
-      "source_location": "L164",
+      "source_location": "L109",
       "weight": 1.0
     },
     {
@@ -15289,62 +15148,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/lib/genealogy-layout.ts",
-      "source_location": "L176",
-      "weight": 1.0
-    },
-    {
-      "source": "src_lib_genealogy_layout",
-      "target": "src_lib_genealogy_layout_gen_rim",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "src/lib/genealogy-layout.ts",
-      "source_location": "L20",
-      "weight": 1.0
-    },
-    {
-      "source": "src_lib_genealogy_layout",
-      "target": "src_lib_genealogy_layout_gen_pos",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "src/lib/genealogy-layout.ts",
-      "source_location": "L22",
-      "weight": 1.0
-    },
-    {
-      "source": "src_lib_genealogy_layout",
-      "target": "src_lib_genealogy_layout_gennodepos",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "src/lib/genealogy-layout.ts",
-      "source_location": "L37",
-      "weight": 1.0
-    },
-    {
-      "source": "src_lib_genealogy_layout",
-      "target": "src_lib_genealogy_layout_genlateralshift",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "src/lib/genealogy-layout.ts",
-      "source_location": "L45",
-      "weight": 1.0
-    },
-    {
-      "source": "src_lib_genealogy_layout",
-      "target": "src_lib_genealogy_layout_gentrackrank",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "src/lib/genealogy-layout.ts",
-      "source_location": "L70",
+      "source_location": "L128",
       "weight": 1.0
     },
     {
@@ -15355,29 +15159,128 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/lib/genealogy-layout.ts",
-      "source_location": "L8",
+      "source_location": "L20",
       "weight": 1.0
     },
     {
       "source": "src_lib_genealogy_layout",
-      "target": "src_lib_genealogy_layout_straight_spines",
+      "target": "src_lib_genealogy_layout_gen_w",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/lib/genealogy-layout.ts",
-      "source_location": "L89",
+      "source_location": "L26",
       "weight": 1.0
     },
     {
       "source": "src_lib_genealogy_layout",
-      "target": "src_lib_genealogy_layout_braidlane",
+      "target": "src_lib_genealogy_layout_gen_h",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/lib/genealogy-layout.ts",
-      "source_location": "L94",
+      "source_location": "L27",
+      "weight": 1.0
+    },
+    {
+      "source": "src_lib_genealogy_layout",
+      "target": "src_lib_genealogy_layout_gen_node_r",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/lib/genealogy-layout.ts",
+      "source_location": "L28",
+      "weight": 1.0
+    },
+    {
+      "source": "src_lib_genealogy_layout",
+      "target": "src_lib_genealogy_layout_gen_spine_x",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/lib/genealogy-layout.ts",
+      "source_location": "L29",
+      "weight": 1.0
+    },
+    {
+      "source": "src_lib_genealogy_layout",
+      "target": "src_lib_genealogy_layout_gen_rim",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/lib/genealogy-layout.ts",
+      "source_location": "L35",
+      "weight": 1.0
+    },
+    {
+      "source": "src_lib_genealogy_layout",
+      "target": "src_lib_genealogy_layout_gen_order",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/lib/genealogy-layout.ts",
+      "source_location": "L48",
+      "weight": 1.0
+    },
+    {
+      "source": "src_lib_genealogy_layout",
+      "target": "src_lib_genealogy_layout_gen_pos",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/lib/genealogy-layout.ts",
+      "source_location": "L53",
+      "weight": 1.0
+    },
+    {
+      "source": "src_lib_genealogy_layout",
+      "target": "src_lib_genealogy_layout_gennodepos",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/lib/genealogy-layout.ts",
+      "source_location": "L68",
+      "weight": 1.0
+    },
+    {
+      "source": "src_lib_genealogy_layout",
+      "target": "src_lib_genealogy_layout_genpairkey",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/lib/genealogy-layout.ts",
+      "source_location": "L73",
+      "weight": 1.0
+    },
+    {
+      "source": "src_lib_genealogy_layout",
+      "target": "src_lib_genealogy_layout_genisreciprocal",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/lib/genealogy-layout.ts",
+      "source_location": "L79",
+      "weight": 1.0
+    },
+    {
+      "source": "src_lib_genealogy_layout",
+      "target": "src_lib_genealogy_layout_gen_bow_extra",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/lib/genealogy-layout.ts",
+      "source_location": "L91",
       "weight": 1.0
     },
     {
@@ -17214,7 +17117,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/philosophers/influences.ts",
-      "source_location": "L150",
+      "source_location": "L147",
       "weight": 1.0
     },
     {
@@ -17225,7 +17128,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/philosophers/influences.ts",
-      "source_location": "L159",
+      "source_location": "L156",
       "weight": 1.0
     },
     {
@@ -17236,7 +17139,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/philosophers/influences.ts",
-      "source_location": "L177",
+      "source_location": "L174",
       "weight": 1.0
     },
     {
@@ -17247,7 +17150,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/philosophers/influences.ts",
-      "source_location": "L204",
+      "source_location": "L201",
       "weight": 1.0
     },
     {
@@ -17258,7 +17161,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/philosophers/influences.ts",
-      "source_location": "L51",
+      "source_location": "L47",
       "weight": 1.0
     },
     {
@@ -17269,7 +17172,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/philosophers/influences.ts",
-      "source_location": "L53",
+      "source_location": "L49",
       "weight": 1.0
     },
     {
@@ -17280,7 +17183,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/philosophers/influences.ts",
-      "source_location": "L66",
+      "source_location": "L62",
       "weight": 1.0
     },
     {
@@ -18369,14 +18272,14 @@
       "weight": 1.0
     },
     {
-      "source": "scripts_check_diagram_contrast_rationale_32",
+      "source": "scripts_check_diagram_contrast_rationale_34",
       "target": "scripts_check_diagram_contrast",
       "relation": "rationale_for",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "scripts/check-diagram-contrast.mjs",
-      "source_location": "L32",
+      "source_location": "L34",
       "weight": 1.0
     },
     {
@@ -18428,5 +18331,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "827d73c9b754995e7f40854e57a37965fd0fa8c3"
+  "built_at_commit": "a9c79d22f70d61dfdf1b8e7fb9a185dcd78fd8a1"
 }

@@ -94,40 +94,62 @@ most of their length, the diagram is no longer simple — switch to curves.
 
 Content-agnostic build order for any node-and-debt diagram at this scale.
 Substitute any entities, any axis direction. Data contract always: a debts
-table is truth, heirs derive, a generator fails loudly on drift.
+table is truth, heirs derive, a generator fails loudly on drift. Numbers
+below are this build's calibration — the rules travel, the numbers get
+re-tuned per canvas.
 
-1. **Positions first, from data alone.** Order nodes chronologically down
-   the canvas (opening seat on axis, pairs alternating sides, closing
-   seats on axis). Node radius generous (34 units here) — threads need
-   rim room. Freeze positions before routing a single line.
+1. **Positions first, from data alone.** Order nodes down the canvas (here:
+    chronological, opening seat on axis, pairs alternating sides, closing
+    seats on axis). Node radius generous (34 units here) — threads need
+    rim room. Freeze positions before routing a single line.
 2. **Channels, not threads.** Give traffic 2–4 shared vertical levels
-   beside (never through) the node columns, with 50px+ clearance to every
-   circle. Same-side pairs take their side channel; cross-side pairs share
-   the centre one. Ramps hug the endpoints (5%/95% of span) so 90% of
-   every thread runs parallel: short slips, long travel, laminar flow.
-3. **One cubic per debt, rim to rim.** Trim endpoints to rims along the
-   arrival direction first, then bow all channels the same small degree
-   east (20 units here; less where heads sit close). Same curve family
-   everywhere; named S-swings only where a run reads ruled — each logged
-   in a per-edge exception table, never silent.
-4. **Reciprocals draw once.** A↔B pairs get one line, heads at both ends;
-   the text list still carries each directed debt. Same-pair dual-kind
-   never draws twice (direct wins; guard kept even at zero cases).
-5. **End-circle fountains.** The busiest source/sink nodes spray rim
-   points around their circle (angular fan, one step per thread) instead
-   of stacking loops. Compute BOTH ends in one helper — split helpers
-   return blanks for the combined case and one debt will land at 0,0.
+    beside (never through) the node columns, with 50px+ clearance to every
+    circle. Same-side pairs take their side channel; cross-side pairs share
+    the centre one; seats on the axis itself take the centre channel.
+    Ramps hug the endpoints so 90% of every thread runs parallel: short
+    slips, long travel, laminar flow.
+3. **One cubic per debt, rim to rim.** Trim endpoints to rims FIRST, along
+    the channel-facing direction: rim = node radius + 5, departure side =
+    sign(channel − node.x), arrival side likewise. Arrowheads land ON rims
+    along the arrival horizontal — never buried under the circle (buried
+    markers peek out as stray blobs), never floating. Then bow all channels
+    the same small degree one way (20 units here; 8 where arrival heads sit
+    close beside the channel). Same curve family everywhere: controls at 5%
+    and 95% of span, so no thread reads ruled. Named S-swings only where a
+    run still reads ruled — each logged in a per-edge exception table keyed
+    `from→to` with `[c1x, c2x]` offsets, never silent. Round path numbers
+    to 0.1 so output strings are stable across runs.
+4. **Reciprocals draw once.** Pair key is direction-free (sorted slugs
+    joined) — A↔B pairs get one line, heads at both ends; the text list
+    still carries each directed debt. The drawn thread follows the FIRST
+    debt's direction in table order, so exception-table keys MUST use the
+    drawn direction: a bow filed under `lenin→bogdanov` silently never
+    applies when the line draws as `bogdanov→lenin` (one real bug here —
+    the head sat on the plain curve at a crowded spot). When in doubt, file
+    both keys with mirrored values. Same-pair dual-kind never draws twice
+    (direct wins; guard kept even at zero cases).
+5. **End circles cradle, never fountain.** The busiest source/sink nodes
+    keep plain channel-facing rims like everyone else; their threads swing
+    wide past the circle instead (here: departures +45/+10, arrivals
+    +10/+45 on the controls). Tried and REVERTED: an angular fan spraying
+    rim points around the circle drew loops above/below the end nodes —
+    worse than the stacked look it replaced. Arrival crowding is solved
+    downstream instead: threads sharing one heir land at staggered rim
+    heights (±7px per thread, index over sorted unique `from:kind`
+    siblings), so stacked heads separate into a readable row. Compute BOTH
+    ends in one helper — split helpers return blanks for the combined case
+    and one debt will land at 0,0 (a second real bug here).
 6. **Grade by evidence, state it.** Opacity carries confidence (here full
-   / half / quarter); solid vs dashed carries route. Say what strength
-   means in the caption. Stance never touches geometry.
+    / half / quarter); solid vs dashed carries route. Say what strength
+    means in the caption. Stance never touches geometry.
 7. **Checker shares the router module.** Drive-throughs fail, bundling
-   reports, arrivals retired once rims are shared. The checker must sample
-   the DRAWN curve — an old sampler here tested a wrong curve for months
-   because control indices were misnamed; name them ax/ay/c1x/c1y/… .
+    reports, arrivals retired once rims are shared. The checker must sample
+    the DRAWN curve — an old sampler here tested a wrong curve for months
+    because control indices were misnamed; name them ax/ay/c1x/c1y/… .
 8. **Component behaviour.** Hover a seat to isolate its debts: one `lit`
-   slug in state; threads not touching it drop to 0.08 opacity (and drop
-   their markers — marker opacity does not inherit reliably, so dimmed
-   threads must unmount markers, not fade them), unrelated seats to 0.35,
+    slug in state; threads not touching it drop to 0.08 opacity (and drop
+    their markers — marker opacity does not inherit reliably, so dimmed
+    threads must unmount markers, not fade them), unrelated seats to 0.35,
    all eased over 0.18s via a single CSS transition on opacity. Keyboard
    focus isolates identically (focus/blur set the same state); the hover
    card, if any, is mouse-only. Click a line for its note(s); full edge

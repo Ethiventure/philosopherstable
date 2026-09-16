@@ -50,7 +50,7 @@
   "48": "dev-keepalive.sh",
   "49": "rag-search.ts",
   "50": "service-chat.ts",
-  "51": "porter.ts",
+  "51": "scripts",
   "52": "Language levels (Low / Medium / High)",
   "53": "rag-ingest.mjs",
   "54": "rag-inspect.mjs",
@@ -65,5 +65,6 @@
   "63": "trios.ts",
   "64": "universal-mechanisms.ts",
   "65": "Influence grid (generated)",
-  "66": "gh.md"
+  "66": "gh.md",
+  "67": "GenealogyMap.tsx"
 }
