@@ -104,6 +104,7 @@ export default function GenealogyMap({
   const bySlug = (slug: string) => philosophers.find((p) => p.slug === slug);
   const [selectedPair, setSelectedPair] = useState<string | null>(null);
   const [hovered, setHovered] = useState<{ slug: string; x: number; y: number } | null>(null);
+  const [lit, setLit] = useState<string | null>(null);
 
   // Reciprocal pairs draw once. Each group keeps every directed debt for
   // text, tooltips and the panel — the line never eats a relationship.
@@ -186,6 +187,8 @@ export default function GenealogyMap({
             const st = edgeStyle(first);
             const key = genPairKey(first.from, first.to);
             const isSel = selectedPair === key;
+            const involves = !lit || g.some((e) => e.from === lit || e.to === lit);
+            const opacity = !involves ? 0.08 : isSel ? 1 : st.o;
             const label = g.map(relationshipLabel).join(' Also: ');
             const fromName = PHILOSOPHER_BY_SLUG[first.from]?.name ?? first.from;
             const toName = PHILOSOPHER_BY_SLUG[first.to]?.name ?? first.to;
@@ -207,7 +210,7 @@ export default function GenealogyMap({
                   className={`${st.cls}${isSel ? ' is-selected' : ''}`}
                   strokeWidth={isSel ? st.w + 1 : st.w}
                   strokeDasharray={st.dash}
-                  opacity={isSel ? 1 : st.o}
+                  opacity={opacity}
                   markerEnd={st.marker}
                   markerStart={reciprocal ? st.marker : undefined}
                   tabIndex={0}
@@ -237,6 +240,10 @@ export default function GenealogyMap({
             const centred = SPINE_SEATS.has(slug);
             const left = LEFT_SEATS.has(slug);
             const size = labelSize(slug);
+            const dimmed =
+              !!lit &&
+              slug !== lit &&
+              !ALL_EDGES.some((e) => (e.from === slug && e.to === lit) || (e.from === lit && e.to === slug));
             return (
               <g
                 key={slug}
@@ -245,15 +252,21 @@ export default function GenealogyMap({
                 role="button"
                 aria-label={`${label}. Name shown at ${labelSize(slug)} points. Activate to open profile.`}
                 className="genealogy-node"
-                style={{ cursor: live ? 'pointer' : 'default' }}
+                style={{ cursor: live ? 'pointer' : 'default', opacity: dimmed ? 0.35 : 1 }}
                 onClick={() => live && onSelect(live)}
                 onMouseEnter={(ev) => {
                   const box = ev.currentTarget.ownerSVGElement?.parentElement?.getBoundingClientRect();
                   const r = ev.currentTarget.getBoundingClientRect();
                   if (!box) return;
                   setHovered({ slug, x: r.left - box.left + r.width / 2, y: r.top - box.top });
+                  setLit(slug);
                 }}
-                onMouseLeave={() => setHovered(null)}
+                onMouseLeave={() => {
+                  setHovered(null);
+                  setLit(null);
+                }}
+                onFocus={() => setLit(slug)}
+                onBlur={() => setLit(null)}
                 onKeyDown={(ev) => {
                   if ((ev.key === 'Enter' || ev.key === ' ') && live) {
                     ev.preventDefault();

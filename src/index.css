@@ -705,6 +705,8 @@ body {
 .gen-timeline-label { fill: var(--gen-ink); opacity: 0.6; font-family: var(--font-heading); }
 /* Keyboard focus matches the global gold ring on debt threads too. */
 .gen-edge:focus-visible { outline: 2px solid var(--color-gold); outline-offset: 4px; }
+/* Hover-to-isolate fades in and out instead of snapping. */
+.genealogy-node, .gen-edge { transition: opacity 0.18s ease; }
 /* Hover card over seats: name, dates, degree — panel vars, never theme ink. */
 .genealogy-hover-card { background: var(--gen-ground); box-shadow: 0 4px 18px rgba(0, 0, 0, 0.45); white-space: nowrap; }
 
