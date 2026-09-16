@@ -144,6 +144,9 @@ export const GEN_RIM_POINTS: Record<string, [number, number]> = {
   // arrives upper-left instead of threading Bookchin's circle (27px
   // drive-through without the fan, 40px+ with it).
   'spinoza→deleuze': [474, 516],
+  // Mirror case on the left spine: Spinoza's diagonal to Rose arrives
+  // upper-right instead of threading Weil's circle (28px without the fan).
+  'spinoza→rose': [230, 516],
   // Bogdanov→Fisher runs the left corridor beside Marx→Fisher (41% merge
   // without the fan): it takes Fisher's lower-left rim while Marx keeps
   // the upper-left, so the two threads diverge at the arrival.

@@ -9,13 +9,14 @@ import { BLOCH } from './bloch';
 import { WEIL } from './weil';
 import { BOOKCHIN } from './bookchin';
 import { DELEUZE } from './deleuze';
+import { ROSE } from './rose';
 import { FISHER } from './fisher';
 import { renderUniversalMechanisms } from './shared/universal-mechanisms';
 import { renderAntiWaffle } from './shared/anti-waffle';
 import { LOW_CONCEPT_RULES, LOW_OVERRIDE, LOW_PLAIN_RULES, renderLanguageLevel, renderLowStyleEssence } from './shared/low-style';
 import { FALLBACK_MEDIUM_EXAMPLE, SEAT_TRIOS } from './trios';
 
-const DEFINITIONS: PhilosopherDefinition[] = [SPINOZA, KANT, HEGEL, MARX, LENIN, BOGDANOV, BLOCH, WEIL, BOOKCHIN, DELEUZE, FISHER];
+const DEFINITIONS: PhilosopherDefinition[] = [SPINOZA, KANT, HEGEL, MARX, LENIN, BOGDANOV, BLOCH, WEIL, BOOKCHIN, DELEUZE, ROSE, FISHER];
 
 /**
  * The cabinet always sits in chronological order of birth, Spinoza (1632) first.

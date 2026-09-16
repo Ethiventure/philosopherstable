@@ -344,7 +344,7 @@ function App() {
   };
 
   // Abridged spoken welcome (~40 seconds): the assembly, the seats, the keys.
-  const WELCOME_SPOKEN = 'How this cabinet works. We are eleven thinkers at this table, from Spinoza to Fisher, and none of us may rule it. Each of us speaks only against its predecessor — negating, preserving, reformulating — until your question returns to you, changed, after three passes. To begin: open Settings, choose who gets a seat — five is the lean assembly, eleven the full one — press Begin cabinet, and read at your own pace. The shared key carries the first sittings; when it runs dry, bring your own. We never see your keys and want no login — we are only here for the debate.';
+  const WELCOME_SPOKEN = 'How this cabinet works. We are twelve thinkers at this table, from Spinoza to Fisher, and none of us may rule it. Each of us speaks only against its predecessor — negating, preserving, reformulating — until your question returns to you, changed, after three passes. To begin: open Settings, choose who gets a seat — five is the lean assembly, twelve the full one — press Begin cabinet, and read at your own pace. The shared key carries the first sittings; when it runs dry, bring your own. We never see your keys and want no login — we are only here for the debate.';
 
   const toggleWelcomeSpeech = () => {
     if (!ttsSupported) return;
@@ -373,7 +373,7 @@ function App() {
   const orderedPhilosophers = useMemo(() => DEFAULT_SEATING_ORDER
     .map((slug) => philosophers.find((p) => p.slug === slug))
     .filter((p): p is Philosopher => p !== undefined && activeSlugs.includes(p.slug)), [philosophers, activeSlugs]);
-  // Service desk offers all eleven thinkers in chronological seating order,
+  // Service desk offers all twelve thinkers in chronological seating order,
   // whether or not they hold a seat in this sitting.
   const allOrderedPhilosophers = useMemo(() => DEFAULT_SEATING_ORDER
     .map((slug) => philosophers.find((p) => p.slug === slug))
@@ -1118,7 +1118,7 @@ function App() {
             </div>
             <div className="dark-academia-card p-5">
               <div className="flex items-center gap-3 mb-2"><ConciergeBell size={18} className="text-[#8b5254]" /><h3 className="text-xl">Philosophers&rsquo; Service</h3></div>
-              <p className="text-sm italic text-[#465f75]/70">One thinker, at your pace — plain definitions, a concrete example, a check question. Any of the eleven, switchable mid-chat.</p>
+              <p className="text-sm italic text-[#465f75]/70">One thinker, at your pace — plain definitions, a concrete example, a check question. Any of the twelve, switchable mid-chat.</p>
               <button className="btn-secondary w-full mt-4 flex justify-center items-center gap-2" onClick={() => setShowService(true)}><ConciergeBell size={15} /> Ask a thinker</button>
             </div>
           </aside>
@@ -1337,7 +1337,7 @@ function WelcomeModal({ onClose, onOpenSettings, ttsSupported, listening, onList
         <p className="pass-indicator text-[#8b5254]">The assembly is convened</p>
         <h2 className="text-3xl mt-1">How this cabinet works</h2>
         <div className="space-y-4 mt-5 text-[15px] leading-relaxed text-[#465f75]">
-          <p><span className="drop-cap">A</span>sk your question of the Philosophers' Table and watch dead thinkers debate it. Convene 4–6 of us (all 11 means a slow 33 turns); each speaks 3 times across three passes. Read along below the table, or export it all as one text file.</p>
+          <p><span className="drop-cap">A</span>sk your question of the Philosophers' Table and watch dead thinkers debate it. Convene 4–6 of us (all 12 means a slow 36 turns); each speaks 3 times across three passes. Read along below the table, or export it all as one text file.</p>
           <p>Each of us answers only our predecessor — negating on its own premises, preserving what holds, handing a contradiction clockwise. Whatever truth appears shows up <em>between</em> our seats, never handed down.</p>
           <p>Lost? Ring the Service desk bell (bottom-right): one thinker, plain definitions, an example, a check-back question — 20 per sitting, with its own voice picker. First set the table's voice in Settings → Cabinet: <strong>Low</strong> speaks plainly, <strong>Medium</strong> explains its terms, <strong>High</strong> runs at full difficulty. Ideas unchanged throughout.</p>
           <p>Start on the shared key: no account, nothing to configure. When the commons runs dry, bring your own — OpenRouter, Groq, DeepInfra or Together; keys stay in your browser. Test the key in Settings; if we ever halt, read the notice — Resume usually fixes it.</p>

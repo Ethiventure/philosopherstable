@@ -1,6 +1,6 @@
 # The Dialectical Cabinet
 
-Eleven dead philosophers around a table — Spinoza, Kant, Hegel, Marx, Lenin, Bogdanov, Bloch, **Weil**, Bookchin, Deleuze, Fisher — made to answer *your* question across three passes of the table. Each thinker grabs their predecessor by the collar, in their own voice, until the problem comes out changed. It is the liveliest seminar none of them ever agreed to attend and the cover charge is whatever the machines demand: nothing on the shared key but your patience, or about a cent a session if you bring your own.
+Twelve dead philosophers around a table — Spinoza, Kant, Hegel, Marx, Lenin, Bogdanov, Bloch, **Weil**, Bookchin, Deleuze, Rose, Fisher — made to answer *your* question across three passes of the table. Each thinker grabs their predecessor by the collar, in their own voice, until the problem comes out changed. It is the liveliest seminar none of them ever agreed to attend and the cover charge is whatever the machines demand: nothing on the shared key but your patience, or about a cent a session if you bring your own.
 
 ## Try it
 
@@ -12,7 +12,7 @@ Try it here: https://philosopherstable.netlify.app/
 - Click any intervention for footnoted references (`Read similar: 3, 9` — numbers match Further reading); click any seat for the thinker's profile — Thought, Voice, Works, and why they sit where they sit, plus who they owe at this table and who owes them. Hover a seat for the one-line version.
 - **Export** saves the whole session as clean prose with a Reading List of full links at the end — nothing inline.
 - **Notes from the margins**: between pass 2 and pass 3, one rude reader breaks in — naming what the table missed and asking hard, concrete questions. Pass 3 must answer one.
-- **Philosophers' Service** (service bell, raised bottom-right, a card beside the table, and a mention in the welcome card): ask any of the eleven thinkers one-to-one — plain definitions, an example, and a check question each time, with a Level picker (plain words / terms explained / full voice). Twenty questions per sitting; chats append to export.
+- **Philosophers' Service** (service bell, raised bottom-right, a card beside the table, and a mention in the welcome card): ask any of the twelve thinkers one-to-one — plain definitions, an example, and a check question each time, with a Level picker (plain words / terms explained / full voice). Twenty questions per sitting; chats append to export.
 
 ## Settings, explained (all three tabs)
 
@@ -24,7 +24,7 @@ Try it here: https://philosopherstable.netlify.app/
 - **how it speaks** (Low = plain words, temper unchanged; Medium = the standard seminar; High = full machinery, hostile where the author warrants it), **Long form** (~280 words a turn instead of ~100 — a 12-minute read becomes a 30-minute one), and **Turn economy** (Efficient trims the predecessor text re-sent each turn — the transcript stays whole; voices are never trimmed). Hover anything for the one-line version.
 
 **Cabinet** — who sits and how deep it goes:
-- Toggle any of the eleven in or out (minimum two — a debate needs an opponent). Five seats (≈15 turns) is the recommended sitting: the full arc at half the tokens.
+- Toggle any of the twelve in or out (minimum two — a debate needs an opponent). Five seats (≈15 turns) is the recommended sitting: the full arc at half the tokens.
 - **Ground turns in source texts** (experimental, on by default): each speaker searches its *own* indexed books first and must borrow their actual vocabulary — at least two short verbatim loans per turn (at Low, paraphrased in plain words instead of quoted), receipts inspectable under every intervention. Slower, more tokens, fewer stereotypes.
 
 **Display** — the reading room, your way:
@@ -33,7 +33,7 @@ Try it here: https://philosopherstable.netlify.app/
 
 ## Quotas 
 
-The shared key is one quota split across every visitor — a few sittings a day each, resetting at midnight UTC. (A full eleven-seat table takes ~33 turns; the default five-seat sitting is about half that.) If the shared well runs dry, the cabinet pauses (nothing is lost) and offers one-click recovery:
+The shared key is one quota split across every visitor — a few sittings a day each, resetting at midnight UTC. (A full twelve-seat table takes ~36 turns; the default five-seat sitting is about half that.) If the shared well runs dry, the cabinet pauses (nothing is lost) and offers one-click recovery:
 
 1. **Wait and resume** — per-minute caps recover in minutes, daily caps overnight.
 2. **Add your own key** in Settings → Key — OpenRouter (free cycle or cheap paid), Groq, DeepInfra or Together. Your keys stay in your browser only.

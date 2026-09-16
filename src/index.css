@@ -684,7 +684,7 @@ body {
    presentation attributes is invalid in several browsers (legend samples
    rendered black and never followed themes), and marker innards inherit
    unreliably — direct selector matches are the robust path. Nodes are
-   deliberately monochrome ink: eleven accent colours on one canvas read busy. */
+   deliberately monochrome ink: twelve accent colours on one canvas read busy. */
 .gen-edge-direct { stroke: var(--gen-crimson); }
 .gen-edge-indirect { stroke: var(--gen-gold); }
 #gen-arrow-direct path { fill: var(--gen-crimson); }

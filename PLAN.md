@@ -100,7 +100,7 @@ require it (actual words, occasionally), identity slurs banned for all
 seats. The
 turn-level `VOICE`, loans, survey, and novelty rules adapt at Low:
 open mid-argument per temper, paraphrased (never verbatim) source
-loans, translated survey wording. All 11
+loans, translated survey wording. All 12
 `intensity.low` style sentences are written in plain words. Per-seat trios
 (`trios.ts` + `high_exemplar`): High sees its quotable anchor only, Medium
 sees HIGH→MEDIUM, Low sees the full trio with "never copy a single word"
@@ -132,7 +132,7 @@ is enforced. Both parts must be present; the concession hides inside them
 intervention, not an essay.
 
 `maxOutputTokens: 300` normal / `600` long form (JSON wrapper needs headroom).
-A full 11 × 3 session ≈ 3.3k words normal — roughly a 13-minute read.
+A full 12 × 3 session ≈ 3.6k words normal — roughly a 14-minute read.
 - *Eval: half-holding — models routinely overshoot (~150–200 words); owner
   accepts it as the cost of complete thoughts unless turns pass ~250/400.*
 
@@ -161,7 +161,7 @@ The drag-drop → toggle change left `App.tsx` broken.
 - [x] Make Supabase optional (`src/lib/supabase.ts` returns `null` when unset).
 
 ## Phase 1 — Per-philosopher files with style essences  ✅ (shipped; boxes ticked Sep 2026)
-*Eval: the one-file-per-seat shape scaled cleanly to 11 thinkers and now
+*Eval: the one-file-per-seat shape scaled cleanly to 12 thinkers and now
 carries prompts, modal, and diagram from the same source.*
 - [x] Add `style_essence` to the `Philosopher` type:
       `style_dna`, `core_mechanisms`, `cda_reader_effects`, `generation_rules[]`,
@@ -363,7 +363,7 @@ Vite child dies and the proxy has nothing to forward to).
 of performing it; failed notes degrade visibly, never silently.*
 
 **Philosophers' Service desk** ✅ — floating tutor window (`ServiceChat.tsx` +
-`src/lib/service-chat.ts`): all 11 thinkers, switchable mid-chat, own Level
+`src/lib/service-chat.ts`): all 12 thinkers, switchable mid-chat, own Level
 picker in the desk (Low — plain words / Medium — terms explained /
 High — full voice; starts at the cabinet setting), scaffolded answers (answer
 → definitions → example → check question, 180 words; definition style follows
@@ -568,7 +568,11 @@ shipped): iCloud `RAG text ` folder (note trailing space) holding
 `gillian-r-rose-dialectic-of-nihilism-*.txt`,
 `gillian-r-rose-hegel-contra-sociology.txt`,
 `gillian-r-rose-judaism-and-modernity-2.txt` — owner-stamped "approved for
-local index" Sep 2026. Files carry Verso/Athlone "All rights reserved"
+local index" Sep 2026. Plus *Melancholy Science* Sep 2026 (90k words,
+validated: Lukács 174×, reification 166×, Bogdanov 0 — supports I± via
+Lukács/Lenin, not D; early voice pre-dates "diremption"/"speculative"
+diction). *Mourning* file is a 175-byte blank (re-convert); *Love's Work*
+still missing. Files carry Verso/Athlone "All rights reserved"
 imprints (not CC as first thought), so full text stays local-only and OUT of
 `public/rag/` shards; retrieval grounding uses short excerpts only.
 RAG dead ends 2026-09-16 (verified through our own extractor — each

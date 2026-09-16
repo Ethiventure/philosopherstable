@@ -56,8 +56,14 @@
   "54": "rag-inspect.mjs",
   "55": "rag-manifest.mjs",
   "56": "manifest.json",
-  "57": "influences.ts",
+  "57": "genealogy-layout.ts",
   "58": "New philosopher brief (reusable)",
-  "59": "GenealogyMap.tsx",
-  "64": "universal-mechanisms.ts"
+  "59": "Node-and-debt diagram — style, preferences, and quick-start",
+  "60": "Family A/B eval — Qwen-first or DeepSeek-first (Phase 7)",
+  "61": "check-diagram-contrast.mjs",
+  "62": "rose.ts",
+  "63": "trios.ts",
+  "64": "universal-mechanisms.ts",
+  "65": "Influence grid (generated)",
+  "66": "gh.md"
 }

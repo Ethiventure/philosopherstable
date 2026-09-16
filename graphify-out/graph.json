@@ -79,7 +79,7 @@
       "file_type": "code",
       "norm_label": "turninstructionargs",
       "source_file": "src/lib/dialectic/prompts.ts",
-      "source_location": "L41"
+      "source_location": "L43"
     },
     {
       "id": "src_lib_dialectic_prompts_turnkind",
@@ -92,7 +92,7 @@
       "file_type": "code",
       "norm_label": "turnkind",
       "source_file": "src/lib/dialectic/prompts.ts",
-      "source_location": "L25"
+      "source_location": "L27"
     },
     {
       "id": "src_lib_dialectic_prompts_usermessageargs",
@@ -105,7 +105,7 @@
       "file_type": "code",
       "norm_label": "usermessageargs",
       "source_file": "src/lib/dialectic/prompts.ts",
-      "source_location": "L156"
+      "source_location": "L159"
     },
     {
       "id": "src_lib_groq_groqtextargs",
@@ -145,19 +145,6 @@
       "norm_label": "displaypreferences",
       "source_file": "src/lib/preferences.ts",
       "source_location": "L4"
-    },
-    {
-      "id": "src_philosophers_trios_seattrio",
-      "label": "SeatTrio",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 15,
-      "community_name": "philosophers/index.ts",
-      "file_type": "code",
-      "norm_label": "seattrio",
-      "source_file": "src/philosophers/trios.ts",
-      "source_location": "L10"
     },
     {
       "id": "src_lib_prompts_promptcontext",
@@ -456,7 +443,7 @@
       "file_type": "code",
       "norm_label": "deepinfrapostargs",
       "source_file": "src/lib/deepinfra.ts",
-      "source_location": "L87"
+      "source_location": "L96"
     },
     {
       "id": "src_lib_deepinfra_deepinfraturnargs",
@@ -469,7 +456,7 @@
       "file_type": "code",
       "norm_label": "deepinfraturnargs",
       "source_file": "src/lib/deepinfra.ts",
-      "source_location": "L22"
+      "source_location": "L30"
     },
     {
       "id": "src_lib_together_togetherturnargs",
@@ -522,6 +509,19 @@
       "norm_label": "deckentry",
       "source_file": "src/App.tsx",
       "source_location": "L158"
+    },
+    {
+      "id": "src_components_genealogymap_edge",
+      "label": "Edge",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 3,
+      "community_name": "App.tsx",
+      "file_type": "code",
+      "norm_label": "edge",
+      "source_file": "src/components/GenealogyMap.tsx",
+      "source_location": "L15"
     },
     {
       "id": "src_components_servicechat_displayitem",
@@ -729,7 +729,7 @@
       "file_type": "code",
       "norm_label": "openrouterturnargs",
       "source_file": "src/lib/openrouter.ts",
-      "source_location": "L78"
+      "source_location": "L95"
     },
     {
       "id": "src_lib_service_chat_servicehistoryitem",
@@ -758,17 +758,30 @@
       "source_location": "L68"
     },
     {
+      "id": "src_lib_genealogy_layout_geomedge",
+      "label": "GeomEdge",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 57,
+      "community_name": "genealogy-layout.ts",
+      "file_type": "code",
+      "norm_label": "geomedge",
+      "source_file": "src/lib/genealogy-layout.ts",
+      "source_location": "L8"
+    },
+    {
       "id": "src_philosophers_influences_cabinetdebt",
       "label": "CabinetDebt",
       "_callable": true,
       "_callable_class": true,
       "_origin": "ast",
       "community": 57,
-      "community_name": "influences.ts",
+      "community_name": "genealogy-layout.ts",
       "file_type": "code",
       "norm_label": "cabinetdebt",
       "source_file": "src/philosophers/influences.ts",
-      "source_location": "L34"
+      "source_location": "L53"
     },
     {
       "id": "src_philosophers_influences_cabinetheir",
@@ -777,24 +790,37 @@
       "_callable_class": true,
       "_origin": "ast",
       "community": 57,
-      "community_name": "influences.ts",
+      "community_name": "genealogy-layout.ts",
       "file_type": "code",
       "norm_label": "cabinetheir",
       "source_file": "src/philosophers/influences.ts",
-      "source_location": "L95"
+      "source_location": "L150"
     },
     {
-      "id": "src_components_genealogymap_edge",
-      "label": "Edge",
+      "id": "src_philosophers_influences_debtstance",
+      "label": "DebtStance",
       "_callable": true,
       "_callable_class": true,
       "_origin": "ast",
-      "community": 59,
-      "community_name": "GenealogyMap.tsx",
+      "community": 57,
+      "community_name": "genealogy-layout.ts",
       "file_type": "code",
-      "norm_label": "edge",
-      "source_file": "src/components/GenealogyMap.tsx",
-      "source_location": "L5"
+      "norm_label": "debtstance",
+      "source_file": "src/philosophers/influences.ts",
+      "source_location": "L51"
+    },
+    {
+      "id": "src_philosophers_trios_seattrio",
+      "label": "SeatTrio",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 63,
+      "community_name": "trios.ts",
+      "file_type": "code",
+      "norm_label": "seattrio",
+      "source_file": "src/philosophers/trios.ts",
+      "source_location": "L10"
     },
     {
       "id": "src_lib_llm_llmerror",
@@ -846,7 +872,7 @@
       "file_type": "code",
       "norm_label": "cabinetsettings",
       "source_file": "src/lib/settings.ts",
-      "source_location": "L16"
+      "source_location": "L24"
     },
     {
       "id": "src_lib_settings_deepinframodel",
@@ -860,6 +886,19 @@
       "norm_label": "deepinframodel",
       "source_file": "src/lib/settings.ts",
       "source_location": "L10"
+    },
+    {
+      "id": "src_lib_settings_deepinfraprimary",
+      "label": "DeepInfraPrimary",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 9,
+      "community_name": "settings.ts",
+      "file_type": "code",
+      "norm_label": "deepinfraprimary",
+      "source_file": "src/lib/settings.ts",
+      "source_location": "L13"
     },
     {
       "id": "src_lib_settings_groqmodel",
@@ -885,7 +924,7 @@
       "file_type": "code",
       "norm_label": "llmprovider",
       "source_file": "src/lib/settings.ts",
-      "source_location": "L14"
+      "source_location": "L22"
     },
     {
       "id": "src_lib_settings_turneconomy",
@@ -898,7 +937,7 @@
       "file_type": "code",
       "norm_label": "turneconomy",
       "source_file": "src/lib/settings.ts",
-      "source_location": "L12"
+      "source_location": "L20"
     },
     {
       "id": "scripts_check_links_check",
@@ -1150,7 +1189,7 @@
       "file_type": "code",
       "norm_label": "buildcodaearlyprompt()",
       "source_file": "src/lib/dialectic/prompts.ts",
-      "source_location": "L273"
+      "source_location": "L282"
     },
     {
       "id": "src_lib_dialectic_prompts_buildcodaprompt",
@@ -1162,7 +1201,7 @@
       "file_type": "code",
       "norm_label": "buildcodaprompt()",
       "source_file": "src/lib/dialectic/prompts.ts",
-      "source_location": "L244"
+      "source_location": "L253"
     },
     {
       "id": "src_lib_dialectic_prompts_buildturninstruction",
@@ -1174,7 +1213,7 @@
       "file_type": "code",
       "norm_label": "buildturninstruction()",
       "source_file": "src/lib/dialectic/prompts.ts",
-      "source_location": "L70"
+      "source_location": "L72"
     },
     {
       "id": "src_lib_dialectic_prompts_buildusermessage",
@@ -1186,7 +1225,7 @@
       "file_type": "code",
       "norm_label": "buildusermessage()",
       "source_file": "src/lib/dialectic/prompts.ts",
-      "source_location": "L174"
+      "source_location": "L179"
     },
     {
       "id": "src_lib_dialectic_prompts_getturnkind",
@@ -1198,7 +1237,7 @@
       "file_type": "code",
       "norm_label": "getturnkind()",
       "source_file": "src/lib/dialectic/prompts.ts",
-      "source_location": "L35"
+      "source_location": "L37"
     },
     {
       "id": "src_lib_groq_extractdetail",
@@ -1366,7 +1405,7 @@
       "file_type": "code",
       "norm_label": "renderpersona()",
       "source_file": "src/philosophers/index.ts",
-      "source_location": "L39"
+      "source_location": "L40"
     },
     {
       "id": "src_philosophers_shared_anti_waffle_renderantiwaffle",
@@ -1378,7 +1417,7 @@
       "file_type": "code",
       "norm_label": "renderantiwaffle()",
       "source_file": "src/philosophers/shared/anti-waffle.ts",
-      "source_location": "L70"
+      "source_location": "L74"
     },
     {
       "id": "src_philosophers_shared_low_style_renderlanguagelevel",
@@ -1534,7 +1573,7 @@
       "file_type": "code",
       "norm_label": "deepinfraerror()",
       "source_file": "src/lib/deepinfra.ts",
-      "source_location": "L29"
+      "source_location": "L38"
     },
     {
       "id": "src_lib_deepinfra_extractdetail",
@@ -1546,7 +1585,7 @@
       "file_type": "code",
       "norm_label": "extractdetail()",
       "source_file": "src/lib/deepinfra.ts",
-      "source_location": "L67"
+      "source_location": "L76"
     },
     {
       "id": "src_lib_deepinfra_generatetextdeepinfra",
@@ -1558,7 +1597,7 @@
       "file_type": "code",
       "norm_label": "generatetextdeepinfra()",
       "source_file": "src/lib/deepinfra.ts",
-      "source_location": "L195"
+      "source_location": "L205"
     },
     {
       "id": "src_lib_deepinfra_generateturndeepinfra",
@@ -1570,7 +1609,7 @@
       "file_type": "code",
       "norm_label": "generateturndeepinfra()",
       "source_file": "src/lib/deepinfra.ts",
-      "source_location": "L160"
+      "source_location": "L169"
     },
     {
       "id": "src_lib_deepinfra_postdeepinfra",
@@ -1582,7 +1621,19 @@
       "file_type": "code",
       "norm_label": "postdeepinfra()",
       "source_file": "src/lib/deepinfra.ts",
-      "source_location": "L95"
+      "source_location": "L104"
+    },
+    {
+      "id": "src_lib_deepinfra_resolvedeepinfraprimary",
+      "label": "resolveDeepInfraPrimary()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 22,
+      "community_name": "deepinfra.ts",
+      "file_type": "code",
+      "norm_label": "resolvedeepinfraprimary()",
+      "source_file": "src/lib/deepinfra.ts",
+      "source_location": "L22"
     },
     {
       "id": "src_lib_deepinfra_sleep",
@@ -1594,7 +1645,7 @@
       "file_type": "code",
       "norm_label": "sleep()",
       "source_file": "src/lib/deepinfra.ts",
-      "source_location": "L85"
+      "source_location": "L94"
     },
     {
       "id": "src_lib_deepinfra_stripfences",
@@ -1606,7 +1657,7 @@
       "file_type": "code",
       "norm_label": "stripfences()",
       "source_file": "src/lib/deepinfra.ts",
-      "source_location": "L80"
+      "source_location": "L89"
     },
     {
       "id": "src_lib_deepinfra_testdeepinfrakey",
@@ -1618,7 +1669,7 @@
       "file_type": "code",
       "norm_label": "testdeepinfrakey()",
       "source_file": "src/lib/deepinfra.ts",
-      "source_location": "L210"
+      "source_location": "L221"
     },
     {
       "id": "src_lib_together_extractdetail",
@@ -1906,7 +1957,7 @@
       "file_type": "code",
       "norm_label": "cabinettable()",
       "source_file": "src/App.tsx",
-      "source_location": "L1308"
+      "source_location": "L1324"
     },
     {
       "id": "src_app_displaytab",
@@ -1918,7 +1969,7 @@
       "file_type": "code",
       "norm_label": "displaytab()",
       "source_file": "src/App.tsx",
-      "source_location": "L1570"
+      "source_location": "L1592"
     },
     {
       "id": "src_app_displaytoggle",
@@ -1930,7 +1981,7 @@
       "file_type": "code",
       "norm_label": "displaytoggle()",
       "source_file": "src/App.tsx",
-      "source_location": "L1694"
+      "source_location": "L1716"
     },
     {
       "id": "src_app_getreadmoresource",
@@ -1954,7 +2005,7 @@
       "file_type": "code",
       "norm_label": "groundingreceipt()",
       "source_file": "src/App.tsx",
-      "source_location": "L1704"
+      "source_location": "L1726"
     },
     {
       "id": "src_app_interventionmodal",
@@ -1966,7 +2017,7 @@
       "file_type": "code",
       "norm_label": "interventionmodal()",
       "source_file": "src/App.tsx",
-      "source_location": "L1709"
+      "source_location": "L1731"
     },
     {
       "id": "src_app_positioncomparison",
@@ -1978,7 +2029,7 @@
       "file_type": "code",
       "norm_label": "positioncomparison()",
       "source_file": "src/App.tsx",
-      "source_location": "L1314"
+      "source_location": "L1330"
     },
     {
       "id": "src_app_profilemodal",
@@ -1990,7 +2041,7 @@
       "file_type": "code",
       "norm_label": "profilemodal()",
       "source_file": "src/App.tsx",
-      "source_location": "L1712"
+      "source_location": "L1734"
     },
     {
       "id": "src_app_readingdeck",
@@ -2002,7 +2053,7 @@
       "file_type": "code",
       "norm_label": "readingdeck()",
       "source_file": "src/App.tsx",
-      "source_location": "L1178"
+      "source_location": "L1194"
     },
     {
       "id": "src_app_readmore",
@@ -2038,7 +2089,7 @@
       "file_type": "code",
       "norm_label": "settingsdrawer()",
       "source_file": "src/App.tsx",
-      "source_location": "L1357"
+      "source_location": "L1373"
     },
     {
       "id": "src_app_sourcedrawer",
@@ -2050,7 +2101,7 @@
       "file_type": "code",
       "norm_label": "sourcedrawer()",
       "source_file": "src/App.tsx",
-      "source_location": "L1340"
+      "source_location": "L1356"
     },
     {
       "id": "src_app_spiralview",
@@ -2062,7 +2113,7 @@
       "file_type": "code",
       "norm_label": "spiralview()",
       "source_file": "src/App.tsx",
-      "source_location": "L1312"
+      "source_location": "L1328"
     },
     {
       "id": "src_app_styleessencedisplay",
@@ -2074,7 +2125,7 @@
       "file_type": "code",
       "norm_label": "styleessencedisplay()",
       "source_file": "src/App.tsx",
-      "source_location": "L1711"
+      "source_location": "L1733"
     },
     {
       "id": "src_app_tointervention",
@@ -2098,7 +2149,43 @@
       "file_type": "code",
       "norm_label": "welcomemodal()",
       "source_file": "src/App.tsx",
-      "source_location": "L1316"
+      "source_location": "L1332"
+    },
+    {
+      "id": "src_components_genealogymap_edgestyle",
+      "label": "edgeStyle()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 3,
+      "community_name": "App.tsx",
+      "file_type": "code",
+      "norm_label": "edgestyle()",
+      "source_file": "src/components/GenealogyMap.tsx",
+      "source_location": "L30"
+    },
+    {
+      "id": "src_components_genealogymap_genealogymap",
+      "label": "GenealogyMap()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 3,
+      "community_name": "App.tsx",
+      "file_type": "code",
+      "norm_label": "genealogymap()",
+      "source_file": "src/components/GenealogyMap.tsx",
+      "source_location": "L65"
+    },
+    {
+      "id": "src_components_genealogymap_labelsize",
+      "label": "labelSize()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 3,
+      "community_name": "App.tsx",
+      "file_type": "code",
+      "norm_label": "labelsize()",
+      "source_file": "src/components/GenealogyMap.tsx",
+      "source_location": "L61"
     },
     {
       "id": "src_components_servicechat_servicechat",
@@ -2159,6 +2246,30 @@
       "norm_label": "verifyquotes()",
       "source_file": "src/lib/verify.ts",
       "source_location": "L45"
+    },
+    {
+      "id": "scripts_rag_chunk_chunkparagraphs",
+      "label": "chunkParagraphs()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 49,
+      "community_name": "rag-search.ts",
+      "file_type": "code",
+      "norm_label": "chunkparagraphs()",
+      "source_file": "scripts/rag-chunk.mjs",
+      "source_location": "L32"
+    },
+    {
+      "id": "scripts_rag_chunk_splitlongparagraph",
+      "label": "splitLongParagraph()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 49,
+      "community_name": "rag-search.ts",
+      "file_type": "code",
+      "norm_label": "splitlongparagraph()",
+      "source_file": "scripts/rag-chunk.mjs",
+      "source_location": "L14"
     },
     {
       "id": "scripts_rag_eval_pct",
@@ -2317,6 +2428,18 @@
       "source_location": "L29"
     },
     {
+      "id": "src_lib_rag_text_wordcount",
+      "label": "wordCount()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 49,
+      "community_name": "rag-search.ts",
+      "file_type": "code",
+      "norm_label": "wordcount()",
+      "source_file": "src/lib/rag-text.ts",
+      "source_location": "L53"
+    },
+    {
       "id": "src_lib_openrouter_attemptmodel",
       "label": "attemptModel()",
       "_callable": true,
@@ -2326,7 +2449,7 @@
       "file_type": "code",
       "norm_label": "attemptmodel()",
       "source_file": "src/lib/openrouter.ts",
-      "source_location": "L277"
+      "source_location": "L294"
     },
     {
       "id": "src_lib_openrouter_extractdetail",
@@ -2338,7 +2461,7 @@
       "file_type": "code",
       "norm_label": "extractdetail()",
       "source_file": "src/lib/openrouter.ts",
-      "source_location": "L171"
+      "source_location": "L188"
     },
     {
       "id": "src_lib_openrouter_fetchmodeltext",
@@ -2350,7 +2473,7 @@
       "file_type": "code",
       "norm_label": "fetchmodeltext()",
       "source_file": "src/lib/openrouter.ts",
-      "source_location": "L195"
+      "source_location": "L212"
     },
     {
       "id": "src_lib_openrouter_generatetextopenrouter",
@@ -2362,7 +2485,7 @@
       "file_type": "code",
       "norm_label": "generatetextopenrouter()",
       "source_file": "src/lib/openrouter.ts",
-      "source_location": "L408"
+      "source_location": "L425"
     },
     {
       "id": "src_lib_openrouter_generateturnopenrouter",
@@ -2374,7 +2497,7 @@
       "file_type": "code",
       "norm_label": "generateturnopenrouter()",
       "source_file": "src/lib/openrouter.ts",
-      "source_location": "L302"
+      "source_location": "L319"
     },
     {
       "id": "src_lib_openrouter_isavailabilitydetail",
@@ -2386,7 +2509,7 @@
       "file_type": "code",
       "norm_label": "isavailabilitydetail()",
       "source_file": "src/lib/openrouter.ts",
-      "source_location": "L93"
+      "source_location": "L110"
     },
     {
       "id": "src_lib_openrouter_isfailfast",
@@ -2398,7 +2521,7 @@
       "file_type": "code",
       "norm_label": "isfailfast()",
       "source_file": "src/lib/openrouter.ts",
-      "source_location": "L298"
+      "source_location": "L315"
     },
     {
       "id": "src_lib_openrouter_loadlastgood",
@@ -2410,7 +2533,7 @@
       "file_type": "code",
       "norm_label": "loadlastgood()",
       "source_file": "src/lib/openrouter.ts",
-      "source_location": "L50"
+      "source_location": "L66"
     },
     {
       "id": "src_lib_openrouter_openroutererror",
@@ -2422,7 +2545,7 @@
       "file_type": "code",
       "norm_label": "openroutererror()",
       "source_file": "src/lib/openrouter.ts",
-      "source_location": "L97"
+      "source_location": "L114"
     },
     {
       "id": "src_lib_openrouter_orderedcycle",
@@ -2434,7 +2557,7 @@
       "file_type": "code",
       "norm_label": "orderedcycle()",
       "source_file": "src/lib/openrouter.ts",
-      "source_location": "L70"
+      "source_location": "L86"
     },
     {
       "id": "src_lib_openrouter_savelastgood",
@@ -2446,7 +2569,7 @@
       "file_type": "code",
       "norm_label": "savelastgood()",
       "source_file": "src/lib/openrouter.ts",
-      "source_location": "L60"
+      "source_location": "L76"
     },
     {
       "id": "src_lib_openrouter_sleep",
@@ -2458,7 +2581,7 @@
       "file_type": "code",
       "norm_label": "sleep()",
       "source_file": "src/lib/openrouter.ts",
-      "source_location": "L188"
+      "source_location": "L205"
     },
     {
       "id": "src_lib_openrouter_statusisretryablemodel",
@@ -2470,7 +2593,7 @@
       "file_type": "code",
       "norm_label": "statusisretryablemodel()",
       "source_file": "src/lib/openrouter.ts",
-      "source_location": "L294"
+      "source_location": "L311"
     },
     {
       "id": "src_lib_openrouter_stripfences",
@@ -2482,7 +2605,7 @@
       "file_type": "code",
       "norm_label": "stripfences()",
       "source_file": "src/lib/openrouter.ts",
-      "source_location": "L190"
+      "source_location": "L207"
     },
     {
       "id": "src_lib_openrouter_testopenrouterkey",
@@ -2494,7 +2617,7 @@
       "file_type": "code",
       "norm_label": "testopenrouterkey()",
       "source_file": "src/lib/openrouter.ts",
-      "source_location": "L459"
+      "source_location": "L476"
     },
     {
       "id": "src_lib_service_chat_buildservicesystemprompt",
@@ -2518,7 +2641,7 @@
       "file_type": "code",
       "norm_label": "buildserviceusermessage()",
       "source_file": "src/lib/service-chat.ts",
-      "source_location": "L75"
+      "source_location": "L82"
     },
     {
       "id": "src_lib_service_chat_generateservicetext",
@@ -2530,7 +2653,7 @@
       "file_type": "code",
       "norm_label": "generateservicetext()",
       "source_file": "src/lib/service-chat.ts",
-      "source_location": "L98"
+      "source_location": "L106"
     },
     {
       "id": "src_lib_porter_endscvc",
@@ -2663,30 +2786,6 @@
       "norm_label": "step5()",
       "source_file": "src/lib/porter.ts",
       "source_location": "L118"
-    },
-    {
-      "id": "scripts_rag_chunk_chunkparagraphs",
-      "label": "chunkParagraphs()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 53,
-      "community_name": "rag-ingest.mjs",
-      "file_type": "code",
-      "norm_label": "chunkparagraphs()",
-      "source_file": "scripts/rag-chunk.mjs",
-      "source_location": "L32"
-    },
-    {
-      "id": "scripts_rag_chunk_splitlongparagraph",
-      "label": "splitLongParagraph()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 53,
-      "community_name": "rag-ingest.mjs",
-      "file_type": "code",
-      "norm_label": "splitlongparagraph()",
-      "source_file": "scripts/rag-chunk.mjs",
-      "source_location": "L14"
     },
     {
       "id": "scripts_rag_ingest_authorslug",
@@ -2893,18 +2992,6 @@
       "source_location": "L21"
     },
     {
-      "id": "src_lib_rag_text_wordcount",
-      "label": "wordCount()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 53,
-      "community_name": "rag-ingest.mjs",
-      "file_type": "code",
-      "norm_label": "wordcount()",
-      "source_file": "src/lib/rag-text.ts",
-      "source_location": "L53"
-    },
-    {
       "id": "scripts_rag_inspect_get",
       "label": "get()",
       "_callable": true,
@@ -2929,64 +3016,208 @@
       "source_location": "L20"
     },
     {
+      "id": "scripts_check_diagram_geometry_fail",
+      "label": "fail()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 57,
+      "community_name": "genealogy-layout.ts",
+      "file_type": "code",
+      "norm_label": "fail()",
+      "source_file": "scripts/check-diagram-geometry.mjs",
+      "source_location": "L63"
+    },
+    {
+      "id": "scripts_check_diagram_geometry_overlapfrac",
+      "label": "overlapFrac()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 57,
+      "community_name": "genealogy-layout.ts",
+      "file_type": "code",
+      "norm_label": "overlapfrac()",
+      "source_file": "scripts/check-diagram-geometry.mjs",
+      "source_location": "L107"
+    },
+    {
+      "id": "scripts_check_diagram_geometry_samplepath",
+      "label": "samplePath()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 57,
+      "community_name": "genealogy-layout.ts",
+      "file_type": "code",
+      "norm_label": "samplepath()",
+      "source_file": "scripts/check-diagram-geometry.mjs",
+      "source_location": "L34"
+    },
+    {
+      "id": "scripts_influence_grid_cell",
+      "label": "cell()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 57,
+      "community_name": "genealogy-layout.ts",
+      "file_type": "code",
+      "norm_label": "cell()",
+      "source_file": "scripts/influence-grid.mjs",
+      "source_location": "L43"
+    },
+    {
+      "id": "scripts_influence_grid_code",
+      "label": "code()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 57,
+      "community_name": "genealogy-layout.ts",
+      "file_type": "code",
+      "norm_label": "code()",
+      "source_file": "scripts/influence-grid.mjs",
+      "source_location": "L37"
+    },
+    {
+      "id": "src_lib_genealogy_layout_braidlane",
+      "label": "braidLane()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 57,
+      "community_name": "genealogy-layout.ts",
+      "file_type": "code",
+      "norm_label": "braidlane()",
+      "source_file": "src/lib/genealogy-layout.ts",
+      "source_location": "L94"
+    },
+    {
+      "id": "src_lib_genealogy_layout_braidphase",
+      "label": "braidPhase()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 57,
+      "community_name": "genealogy-layout.ts",
+      "file_type": "code",
+      "norm_label": "braidphase()",
+      "source_file": "src/lib/genealogy-layout.ts",
+      "source_location": "L105"
+    },
+    {
+      "id": "src_lib_genealogy_layout_genedgepath",
+      "label": "genEdgePath()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 57,
+      "community_name": "genealogy-layout.ts",
+      "file_type": "code",
+      "norm_label": "genedgepath()",
+      "source_file": "src/lib/genealogy-layout.ts",
+      "source_location": "L176"
+    },
+    {
+      "id": "src_lib_genealogy_layout_genlateralshift",
+      "label": "genLateralShift()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 57,
+      "community_name": "genealogy-layout.ts",
+      "file_type": "code",
+      "norm_label": "genlateralshift()",
+      "source_file": "src/lib/genealogy-layout.ts",
+      "source_location": "L45"
+    },
+    {
+      "id": "src_lib_genealogy_layout_gennodepos",
+      "label": "genNodePos()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 57,
+      "community_name": "genealogy-layout.ts",
+      "file_type": "code",
+      "norm_label": "gennodepos()",
+      "source_file": "src/lib/genealogy-layout.ts",
+      "source_location": "L37"
+    },
+    {
+      "id": "src_lib_genealogy_layout_gentrackrank",
+      "label": "genTrackRank()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 57,
+      "community_name": "genealogy-layout.ts",
+      "file_type": "code",
+      "norm_label": "gentrackrank()",
+      "source_file": "src/lib/genealogy-layout.ts",
+      "source_location": "L70"
+    },
+    {
+      "id": "src_lib_genealogy_layout_leftcorridorrank",
+      "label": "leftCorridorRank()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 57,
+      "community_name": "genealogy-layout.ts",
+      "file_type": "code",
+      "norm_label": "leftcorridorrank()",
+      "source_file": "src/lib/genealogy-layout.ts",
+      "source_location": "L121"
+    },
+    {
       "id": "src_philosophers_influences_cabinetheirs",
       "label": "cabinetHeirs()",
       "_callable": true,
       "_origin": "ast",
       "community": 57,
-      "community_name": "influences.ts",
+      "community_name": "genealogy-layout.ts",
       "file_type": "code",
       "norm_label": "cabinetheirs()",
       "source_file": "src/philosophers/influences.ts",
-      "source_location": "L103"
+      "source_location": "L159"
     },
     {
-      "id": "src_components_genealogymap_edgepath",
-      "label": "edgePath()",
+      "id": "src_philosophers_influences_relationshipline",
+      "label": "relationshipLine()",
       "_callable": true,
       "_origin": "ast",
-      "community": 59,
-      "community_name": "GenealogyMap.tsx",
+      "community": 57,
+      "community_name": "genealogy-layout.ts",
       "file_type": "code",
-      "norm_label": "edgepath()",
-      "source_file": "src/components/GenealogyMap.tsx",
-      "source_location": "L63"
+      "norm_label": "relationshipline()",
+      "source_file": "src/philosophers/influences.ts",
+      "source_location": "L177"
     },
     {
-      "id": "src_components_genealogymap_genealogymap",
-      "label": "GenealogyMap()",
+      "id": "src_philosophers_influences_tablestancesline",
+      "label": "tableStancesLine()",
       "_callable": true,
       "_origin": "ast",
-      "community": 59,
-      "community_name": "GenealogyMap.tsx",
+      "community": 57,
+      "community_name": "genealogy-layout.ts",
       "file_type": "code",
-      "norm_label": "genealogymap()",
-      "source_file": "src/components/GenealogyMap.tsx",
-      "source_location": "L78"
+      "norm_label": "tablestancesline()",
+      "source_file": "src/philosophers/influences.ts",
+      "source_location": "L204"
     },
     {
-      "id": "src_components_genealogymap_labelsize",
-      "label": "labelSize()",
+      "id": "scripts_check_diagram_contrast_luminance",
+      "label": "luminance()",
       "_callable": true,
       "_origin": "ast",
-      "community": 59,
-      "community_name": "GenealogyMap.tsx",
+      "community": 61,
+      "community_name": "check-diagram-contrast.mjs",
       "file_type": "code",
-      "norm_label": "labelsize()",
-      "source_file": "src/components/GenealogyMap.tsx",
-      "source_location": "L55"
+      "norm_label": "luminance()",
+      "source_file": "scripts/check-diagram-contrast.mjs",
+      "source_location": "L23"
     },
     {
-      "id": "src_components_genealogymap_nodepos",
-      "label": "nodePos()",
+      "id": "scripts_check_diagram_contrast_ratio",
+      "label": "ratio()",
       "_callable": true,
       "_origin": "ast",
-      "community": 59,
-      "community_name": "GenealogyMap.tsx",
+      "community": 61,
+      "community_name": "check-diagram-contrast.mjs",
       "file_type": "code",
-      "norm_label": "nodepos()",
-      "source_file": "src/components/GenealogyMap.tsx",
-      "source_location": "L59"
+      "norm_label": "ratio()",
+      "source_file": "scripts/check-diagram-contrast.mjs",
+      "source_location": "L33"
     },
     {
       "id": "src_lib_llm_llmerror_constructor",
@@ -3058,7 +3289,7 @@
       "file_type": "code",
       "norm_label": "clearapikey()",
       "source_file": "src/lib/settings.ts",
-      "source_location": "L89"
+      "source_location": "L100"
     },
     {
       "id": "src_lib_settings_loadsettings",
@@ -3070,7 +3301,7 @@
       "file_type": "code",
       "norm_label": "loadsettings()",
       "source_file": "src/lib/settings.ts",
-      "source_location": "L51"
+      "source_location": "L61"
     },
     {
       "id": "src_lib_settings_savesettings",
@@ -3082,7 +3313,7 @@
       "file_type": "code",
       "norm_label": "savesettings()",
       "source_file": "src/lib/settings.ts",
-      "source_location": "L81"
+      "source_location": "L92"
     },
     {
       "id": "eslint_config",
@@ -3742,7 +3973,7 @@
       "file_type": "code",
       "norm_label": "coda_repair_suffix",
       "source_file": "src/lib/dialectic/prompts.ts",
-      "source_location": "L262"
+      "source_location": "L271"
     },
     {
       "id": "src_lib_dialectic_prompts_coda_system",
@@ -3753,7 +3984,7 @@
       "file_type": "code",
       "norm_label": "coda_system",
       "source_file": "src/lib/dialectic/prompts.ts",
-      "source_location": "L238"
+      "source_location": "L247"
     },
     {
       "id": "src_lib_dialectic_prompts_low_closing_reminder",
@@ -3764,7 +3995,7 @@
       "file_type": "code",
       "norm_label": "low_closing_reminder",
       "source_file": "src/lib/dialectic/prompts.ts",
-      "source_location": "L221"
+      "source_location": "L230"
     },
     {
       "id": "src_lib_dialectic_prompts_max_output_tokens",
@@ -3775,7 +4006,7 @@
       "file_type": "code",
       "norm_label": "max_output_tokens",
       "source_file": "src/lib/dialectic/prompts.ts",
-      "source_location": "L32"
+      "source_location": "L34"
     },
     {
       "id": "src_lib_dialectic_prompts_structured_output_hint",
@@ -3786,7 +4017,7 @@
       "file_type": "code",
       "norm_label": "structured_output_hint",
       "source_file": "src/lib/dialectic/prompts.ts",
-      "source_location": "L224"
+      "source_location": "L233"
     },
     {
       "id": "src_lib_dialectic_prompts_word_budgets",
@@ -3797,7 +4028,7 @@
       "file_type": "code",
       "norm_label": "word_budgets",
       "source_file": "src/lib/dialectic/prompts.ts",
-      "source_location": "L27"
+      "source_location": "L29"
     },
     {
       "id": "src_lib_groq",
@@ -3863,7 +4094,7 @@
       "file_type": "code",
       "norm_label": "default_seating_order",
       "source_file": "src/philosophers/index.ts",
-      "source_location": "L28"
+      "source_location": "L29"
     },
     {
       "id": "src_philosophers_index_definitions",
@@ -3874,7 +4105,7 @@
       "file_type": "code",
       "norm_label": "definitions",
       "source_file": "src/philosophers/index.ts",
-      "source_location": "L18"
+      "source_location": "L19"
     },
     {
       "id": "src_philosophers_index_philosopher_by_slug",
@@ -3885,7 +4116,7 @@
       "file_type": "code",
       "norm_label": "philosopher_by_slug",
       "source_file": "src/philosophers/index.ts",
-      "source_location": "L30"
+      "source_location": "L31"
     },
     {
       "id": "src_philosophers_index_philosopher_data",
@@ -3896,7 +4127,7 @@
       "file_type": "code",
       "norm_label": "philosopher_data",
       "source_file": "src/philosophers/index.ts",
-      "source_location": "L24"
+      "source_location": "L25"
     },
     {
       "id": "src_philosophers_shared_low_style",
@@ -3965,39 +4196,6 @@
       "source_location": "L38"
     },
     {
-      "id": "src_philosophers_trios",
-      "label": "trios.ts",
-      "_origin": "ast",
-      "community": 15,
-      "community_name": "philosophers/index.ts",
-      "file_type": "code",
-      "norm_label": "trios.ts",
-      "source_file": "src/philosophers/trios.ts",
-      "source_location": "L1"
-    },
-    {
-      "id": "src_philosophers_trios_fallback_medium_example",
-      "label": "FALLBACK_MEDIUM_EXAMPLE",
-      "_origin": "ast",
-      "community": 15,
-      "community_name": "philosophers/index.ts",
-      "file_type": "code",
-      "norm_label": "fallback_medium_example",
-      "source_file": "src/philosophers/trios.ts",
-      "source_location": "L63"
-    },
-    {
-      "id": "src_philosophers_trios_seat_trios",
-      "label": "SEAT_TRIOS",
-      "_origin": "ast",
-      "community": 15,
-      "community_name": "philosophers/index.ts",
-      "file_type": "code",
-      "norm_label": "seat_trios",
-      "source_file": "src/philosophers/trios.ts",
-      "source_location": "L15"
-    },
-    {
       "id": "src_lib_prompts",
       "label": "lib/prompts.ts",
       "_origin": "ast",
@@ -4030,7 +4228,7 @@
       "node_kind": "heading",
       "norm_label": "api key: bring-your-own-key (byok) for personal providers",
       "source_file": "PLAN.md",
-      "source_location": "L37"
+      "source_location": "L55"
     },
     {
       "id": "plan_api_keys_shared_default_byok_fallback",
@@ -4042,7 +4240,19 @@
       "node_kind": "heading",
       "norm_label": "api keys: shared default, byok fallback",
       "source_file": "PLAN.md",
-      "source_location": "L10"
+      "source_location": "L25"
+    },
+    {
+      "id": "plan_checklist",
+      "label": "Checklist",
+      "_origin": "ast",
+      "community": 17,
+      "community_name": "The Dialectical Cabinet \u2014 Implementation Plan",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "checklist",
+      "source_file": "PLAN.md",
+      "source_location": "L6"
     },
     {
       "id": "plan_decisions",
@@ -4054,7 +4264,7 @@
       "node_kind": "heading",
       "norm_label": "decisions",
       "source_file": "PLAN.md",
-      "source_location": "L8"
+      "source_location": "L23"
     },
     {
       "id": "plan_embeddings_phase_5",
@@ -4066,7 +4276,7 @@
       "node_kind": "heading",
       "norm_label": "embeddings (phase 5)",
       "source_file": "PLAN.md",
-      "source_location": "L110"
+      "source_location": "L139"
     },
     {
       "id": "plan_length_short_and_punchy",
@@ -4078,7 +4288,19 @@
       "node_kind": "heading",
       "norm_label": "length: short and punchy",
       "source_file": "PLAN.md",
-      "source_location": "L91"
+      "source_location": "L118"
+    },
+    {
+      "id": "plan_missing_features_backlog_considered_not_yet_scheduled",
+      "label": "Missing-features backlog (considered, not yet scheduled)",
+      "_origin": "ast",
+      "community": 17,
+      "community_name": "The Dialectical Cabinet \u2014 Implementation Plan",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "missing-features backlog (considered, not yet scheduled)",
+      "source_file": "PLAN.md",
+      "source_location": "L653"
     },
     {
       "id": "plan_phase_0_make_the_current_tree_build_this_session",
@@ -4090,7 +4312,7 @@
       "node_kind": "heading",
       "norm_label": "phase 0 \u2014 make the current tree build  \u2705 (this session)",
       "source_file": "PLAN.md",
-      "source_location": "L119"
+      "source_location": "L150"
     },
     {
       "id": "plan_phase_1_per_philosopher_files_with_style_essences_shipped_boxes_ticked_sep_2026",
@@ -4102,55 +4324,55 @@
       "node_kind": "heading",
       "norm_label": "phase 1 \u2014 per-philosopher files with style essences  \u2705 (shipped; boxes ticked sep 2026)",
       "source_file": "PLAN.md",
-      "source_location": "L132"
+      "source_location": "L163"
     },
     {
-      "id": "plan_phase_2_gemini_dialectical_engine_replaces_makemockintervention",
-      "label": "Phase 2 \u2014 Gemini + dialectical engine (replaces `makeMockIntervention`)",
+      "id": "plan_phase_2_gemini_dialectical_engine_replaces_makemockintervention_shipped_live",
+      "label": "Phase 2 \u2014 Gemini + dialectical engine (replaces `makeMockIntervention`)  \u2705 (shipped; live)",
       "_origin": "ast",
       "community": 17,
       "community_name": "The Dialectical Cabinet \u2014 Implementation Plan",
       "file_type": "document",
       "node_kind": "heading",
-      "norm_label": "phase 2 \u2014 gemini + dialectical engine (replaces `makemockintervention`)",
+      "norm_label": "phase 2 \u2014 gemini + dialectical engine (replaces `makemockintervention`)  \u2705 (shipped; live)",
       "source_file": "PLAN.md",
-      "source_location": "L147"
+      "source_location": "L179"
     },
     {
-      "id": "plan_phase_3_export_rewrite",
-      "label": "Phase 3 \u2014 Export rewrite",
+      "id": "plan_phase_3_export_rewrite_shipped",
+      "label": "Phase 3 \u2014 Export rewrite  \u2705 (shipped)",
       "_origin": "ast",
       "community": 17,
       "community_name": "The Dialectical Cabinet \u2014 Implementation Plan",
       "file_type": "document",
       "node_kind": "heading",
-      "norm_label": "phase 3 \u2014 export rewrite",
+      "norm_label": "phase 3 \u2014 export rewrite  \u2705 (shipped)",
       "source_file": "PLAN.md",
-      "source_location": "L329"
+      "source_location": "L391"
     },
     {
-      "id": "plan_phase_4_accessibility_display",
-      "label": "Phase 4 \u2014 Accessibility & display",
+      "id": "plan_phase_4_accessibility_display_shipped_layer_on_top_holds",
+      "label": "Phase 4 \u2014 Accessibility & display  \u2705 (shipped, layer-on-top holds)",
       "_origin": "ast",
       "community": 17,
       "community_name": "The Dialectical Cabinet \u2014 Implementation Plan",
       "file_type": "document",
       "node_kind": "heading",
-      "norm_label": "phase 4 \u2014 accessibility & display",
+      "norm_label": "phase 4 \u2014 accessibility & display  \u2705 (shipped, layer-on-top holds)",
       "source_file": "PLAN.md",
-      "source_location": "L337"
+      "source_location": "L401"
     },
     {
-      "id": "plan_phase_5_rag_v1_lexical_live_vectors_deferred",
-      "label": "Phase 5 \u2014 RAG (v1 lexical live; vectors deferred)",
+      "id": "plan_phase_5_rag_v1_lexical_live_vectors_deferred_shipped_eval_12_12",
+      "label": "Phase 5 \u2014 RAG (v1 lexical live; vectors deferred)  \u2705 (shipped; eval 12/12)",
       "_origin": "ast",
       "community": 17,
       "community_name": "The Dialectical Cabinet \u2014 Implementation Plan",
       "file_type": "document",
       "node_kind": "heading",
-      "norm_label": "phase 5 \u2014 rag (v1 lexical live; vectors deferred)",
+      "norm_label": "phase 5 \u2014 rag (v1 lexical live; vectors deferred)  \u2705 (shipped; eval 12/12)",
       "source_file": "PLAN.md",
-      "source_location": "L349"
+      "source_location": "L415"
     },
     {
       "id": "plan_phase_6_richer_philosopher_information_shipped_sep_2026",
@@ -4162,7 +4384,55 @@
       "node_kind": "heading",
       "norm_label": "phase 6 \u2014 richer philosopher information  \u2705 (shipped sep 2026)",
       "source_file": "PLAN.md",
-      "source_location": "L419"
+      "source_location": "L485"
+    },
+    {
+      "id": "plan_phase_7_model_family_a_b_qwen_first_or_deepseek_first_open_sep_2026",
+      "label": "Phase 7 \u2014 Model-family A/B: Qwen-first or DeepSeek-first (open, Sep 2026)",
+      "_origin": "ast",
+      "community": 17,
+      "community_name": "The Dialectical Cabinet \u2014 Implementation Plan",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "phase 7 \u2014 model-family a/b: qwen-first or deepseek-first (open, sep 2026)",
+      "source_file": "PLAN.md",
+      "source_location": "L496"
+    },
+    {
+      "id": "plan_phase_7b_auto_metrics_for_low_med_high_read_all_three_repos_sep_2026",
+      "label": "Phase 7b \u2014 Auto-metrics for Low/Med/High (read all three repos Sep 2026)",
+      "_origin": "ast",
+      "community": 17,
+      "community_name": "The Dialectical Cabinet \u2014 Implementation Plan",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "phase 7b \u2014 auto-metrics for low/med/high (read all three repos sep 2026)",
+      "source_file": "PLAN.md",
+      "source_location": "L530"
+    },
+    {
+      "id": "plan_phase_8_content_agnostic_template_repo_planned_not_yet_scaffolded",
+      "label": "Phase 8 \u2014 Content-agnostic template repo (planned, not yet scaffolded)",
+      "_origin": "ast",
+      "community": 17,
+      "community_name": "The Dialectical Cabinet \u2014 Implementation Plan",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "phase 8 \u2014 content-agnostic template repo (planned, not yet scaffolded)",
+      "source_file": "PLAN.md",
+      "source_location": "L606"
+    },
+    {
+      "id": "plan_phase_9_rose_seat_in_progress_sep_2026",
+      "label": "Phase 9 \u2014 Rose seat (in progress, Sep 2026)",
+      "_origin": "ast",
+      "community": 17,
+      "community_name": "The Dialectical Cabinet \u2014 Implementation Plan",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "phase 9 \u2014 rose seat (in progress, sep 2026)",
+      "source_file": "PLAN.md",
+      "source_location": "L552"
     },
     {
       "id": "plan_philosopher_data_one_file_each",
@@ -4174,7 +4444,31 @@
       "node_kind": "heading",
       "norm_label": "philosopher data: one file each",
       "source_file": "PLAN.md",
-      "source_location": "L55"
+      "source_location": "L77"
+    },
+    {
+      "id": "plan_record_keeping_kit_copy_this_whole_block_into_the_template",
+      "label": "Record-keeping kit (copy this whole block into the template)",
+      "_origin": "ast",
+      "community": 17,
+      "community_name": "The Dialectical Cabinet \u2014 Implementation Plan",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "record-keeping kit (copy this whole block into the template)",
+      "source_file": "PLAN.md",
+      "source_location": "L622"
+    },
+    {
+      "id": "plan_style_essence_extraction_prompt_paste_to_research_llm_with_the_texts",
+      "label": "Style-essence extraction prompt (paste to research LLM with the texts)",
+      "_origin": "ast",
+      "community": 17,
+      "community_name": "The Dialectical Cabinet \u2014 Implementation Plan",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "style-essence extraction prompt (paste to research llm with the texts)",
+      "source_file": "PLAN.md",
+      "source_location": "L587"
     },
     {
       "id": "plan_style_intensity_global_language_level",
@@ -4186,7 +4480,7 @@
       "node_kind": "heading",
       "norm_label": "style intensity: global language level",
       "source_file": "PLAN.md",
-      "source_location": "L60"
+      "source_location": "L84"
     },
     {
       "id": "plan_supabase_optional_read_only_for_corpus",
@@ -4198,7 +4492,7 @@
       "node_kind": "heading",
       "norm_label": "supabase: optional, read-only for corpus",
       "source_file": "PLAN.md",
-      "source_location": "L49"
+      "source_location": "L69"
     },
     {
       "id": "plan_the_dialectical_cabinet_implementation_plan",
@@ -4278,19 +4572,19 @@
       "node_kind": "heading",
       "norm_label": "for the curious",
       "source_file": "README.md",
-      "source_location": "L42"
+      "source_location": "L43"
     },
     {
-      "id": "readme_quotas_the_honest_version",
-      "label": "Quotas (the honest version)",
+      "id": "readme_quotas",
+      "label": "Quotas",
       "_origin": "ast",
       "community": 19,
       "community_name": "The Dialectical Cabinet",
       "file_type": "document",
       "node_kind": "heading",
-      "norm_label": "quotas (the honest version)",
+      "norm_label": "quotas",
       "source_file": "README.md",
-      "source_location": "L33"
+      "source_location": "L34"
     },
     {
       "id": "readme_run_it_yourself_developers",
@@ -4302,7 +4596,7 @@
       "node_kind": "heading",
       "norm_label": "run it yourself (developers)",
       "source_file": "README.md",
-      "source_location": "L49"
+      "source_location": "L50"
     },
     {
       "id": "readme_settings_explained_all_three_tabs",
@@ -4441,6 +4735,18 @@
       "source_location": "L1"
     },
     {
+      "id": "agents_genealogy_diagram",
+      "label": "genealogy diagram",
+      "_origin": "ast",
+      "community": 21,
+      "community_name": "AGENTS.md",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "genealogy diagram",
+      "source_file": "AGENTS.md",
+      "source_location": "L14"
+    },
+    {
       "id": "agents_graphify",
       "label": "graphify",
       "_origin": "ast",
@@ -4472,7 +4778,7 @@
       "file_type": "code",
       "norm_label": "deepinfra_max_tokens",
       "source_file": "src/lib/deepinfra.ts",
-      "source_location": "L20"
+      "source_location": "L28"
     },
     {
       "id": "src_lib_deepinfra_deepinfra_model",
@@ -4483,7 +4789,7 @@
       "file_type": "code",
       "norm_label": "deepinfra_model",
       "source_file": "src/lib/deepinfra.ts",
-      "source_location": "L15"
+      "source_location": "L17"
     },
     {
       "id": "src_lib_deepinfra_deepinfra_model_backup",
@@ -4494,7 +4800,18 @@
       "file_type": "code",
       "norm_label": "deepinfra_model_backup",
       "source_file": "src/lib/deepinfra.ts",
-      "source_location": "L16"
+      "source_location": "L19"
+    },
+    {
+      "id": "src_lib_deepinfra_deepinfra_model_qwen",
+      "label": "DEEPINFRA_MODEL_QWEN",
+      "_origin": "ast",
+      "community": 22,
+      "community_name": "deepinfra.ts",
+      "file_type": "code",
+      "norm_label": "deepinfra_model_qwen",
+      "source_file": "src/lib/deepinfra.ts",
+      "source_location": "L18"
     },
     {
       "id": "src_lib_deepinfra_lastdeepinframodel",
@@ -4505,7 +4822,7 @@
       "file_type": "code",
       "norm_label": "lastdeepinframodel",
       "source_file": "src/lib/deepinfra.ts",
-      "source_location": "L19"
+      "source_location": "L27"
     },
     {
       "id": "src_lib_together",
@@ -4648,7 +4965,7 @@
       "file_type": "code",
       "norm_label": "anti_waffle_rules",
       "source_file": "src/philosophers/shared/anti-waffle.ts",
-      "source_location": "L55"
+      "source_location": "L58"
     },
     {
       "id": "src_philosophers_shared_anti_waffle_banned_phrases",
@@ -4670,7 +4987,7 @@
       "file_type": "code",
       "norm_label": "dialectical_materialism_frame",
       "source_file": "src/philosophers/shared/anti-waffle.ts",
-      "source_location": "L68"
+      "source_location": "L72"
     },
     {
       "id": "src_philosophers_shared_anti_waffle_role_integrity",
@@ -4717,7 +5034,7 @@
       "node_kind": "heading",
       "norm_label": "pending verification (user fetching keys)",
       "source_file": "docs/models-tried.md",
-      "source_location": "L24"
+      "source_location": "L25"
     },
     {
       "id": "docs_models_tried_verdicts",
@@ -4785,6 +5102,72 @@
       "norm_label": "app.tsx",
       "source_file": "src/App.tsx",
       "source_location": "L1"
+    },
+    {
+      "id": "src_components_genealogymap",
+      "label": "GenealogyMap.tsx",
+      "_origin": "ast",
+      "community": 3,
+      "community_name": "App.tsx",
+      "file_type": "code",
+      "norm_label": "genealogymap.tsx",
+      "source_file": "src/components/GenealogyMap.tsx",
+      "source_location": "L1"
+    },
+    {
+      "id": "src_components_genealogymap_all_edges",
+      "label": "ALL_EDGES",
+      "_origin": "ast",
+      "community": 3,
+      "community_name": "App.tsx",
+      "file_type": "code",
+      "norm_label": "all_edges",
+      "source_file": "src/components/GenealogyMap.tsx",
+      "source_location": "L20"
+    },
+    {
+      "id": "src_components_genealogymap_degree",
+      "label": "DEGREE",
+      "_origin": "ast",
+      "community": 3,
+      "community_name": "App.tsx",
+      "file_type": "code",
+      "norm_label": "degree",
+      "source_file": "src/components/GenealogyMap.tsx",
+      "source_location": "L52"
+    },
+    {
+      "id": "src_components_genealogymap_left_seats",
+      "label": "LEFT_SEATS",
+      "_origin": "ast",
+      "community": 3,
+      "community_name": "App.tsx",
+      "file_type": "code",
+      "norm_label": "left_seats",
+      "source_file": "src/components/GenealogyMap.tsx",
+      "source_location": "L48"
+    },
+    {
+      "id": "src_components_genealogymap_min_degree",
+      "label": "MIN_DEGREE",
+      "_origin": "ast",
+      "community": 3,
+      "community_name": "App.tsx",
+      "file_type": "code",
+      "norm_label": "min_degree",
+      "source_file": "src/components/GenealogyMap.tsx",
+      "source_location": "L58"
+    },
+    {
+      "id": "src_components_genealogymap_spine_seats",
+      "label": "SPINE_SEATS",
+      "_origin": "ast",
+      "community": 3,
+      "community_name": "App.tsx",
+      "file_type": "code",
+      "norm_label": "spine_seats",
+      "source_file": "src/components/GenealogyMap.tsx",
+      "source_location": "L47"
     },
     {
       "id": "src_components_servicechat",
@@ -5679,6 +6062,50 @@
       "source_location": "L1"
     },
     {
+      "id": "scripts_rag_chunk",
+      "label": "rag-chunk.mjs",
+      "_origin": "ast",
+      "community": 49,
+      "community_name": "rag-search.ts",
+      "file_type": "code",
+      "norm_label": "rag-chunk.mjs",
+      "source_file": "scripts/rag-chunk.mjs",
+      "source_location": "L1"
+    },
+    {
+      "id": "scripts_rag_chunk_chunk_soft_max",
+      "label": "CHUNK_SOFT_MAX",
+      "_origin": "ast",
+      "community": 49,
+      "community_name": "rag-search.ts",
+      "file_type": "code",
+      "norm_label": "chunk_soft_max",
+      "source_file": "scripts/rag-chunk.mjs",
+      "source_location": "L12"
+    },
+    {
+      "id": "scripts_rag_chunk_chunk_soft_min",
+      "label": "CHUNK_SOFT_MIN",
+      "_origin": "ast",
+      "community": 49,
+      "community_name": "rag-search.ts",
+      "file_type": "code",
+      "norm_label": "chunk_soft_min",
+      "source_file": "scripts/rag-chunk.mjs",
+      "source_location": "L11"
+    },
+    {
+      "id": "scripts_rag_chunk_chunk_target_words",
+      "label": "CHUNK_TARGET_WORDS",
+      "_origin": "ast",
+      "community": 49,
+      "community_name": "rag-search.ts",
+      "file_type": "code",
+      "norm_label": "chunk_target_words",
+      "source_file": "scripts/rag-chunk.mjs",
+      "source_location": "L10"
+    },
+    {
       "id": "scripts_rag_eval",
       "label": "rag-eval.mjs",
       "_origin": "ast",
@@ -5888,6 +6315,17 @@
       "source_location": "L1"
     },
     {
+      "id": "scripts_rag_text",
+      "label": "rag-text.mjs",
+      "_origin": "ast",
+      "community": 49,
+      "community_name": "rag-search.ts",
+      "file_type": "code",
+      "norm_label": "rag-text.mjs",
+      "source_file": "scripts/rag-text.mjs",
+      "source_location": "L1"
+    },
+    {
       "id": "src_lib_rag_ground",
       "label": "rag-ground.ts",
       "_origin": "ast",
@@ -5995,7 +6433,7 @@
       "file_type": "code",
       "norm_label": "free_model_cycle",
       "source_file": "src/lib/openrouter.ts",
-      "source_location": "L23"
+      "source_location": "L35"
     },
     {
       "id": "src_lib_openrouter_free_router_fallback",
@@ -6006,7 +6444,7 @@
       "file_type": "code",
       "norm_label": "free_router_fallback",
       "source_file": "src/lib/openrouter.ts",
-      "source_location": "L48"
+      "source_location": "L64"
     },
     {
       "id": "src_lib_openrouter_or_max_tokens",
@@ -6017,7 +6455,7 @@
       "file_type": "code",
       "norm_label": "or_max_tokens",
       "source_file": "src/lib/openrouter.ts",
-      "source_location": "L91"
+      "source_location": "L108"
     },
     {
       "id": "src_lib_service_chat",
@@ -6154,7 +6592,7 @@
       "node_kind": "heading",
       "norm_label": "reference: verified prompt order (bookchin, low, critique turn)",
       "source_file": "docs/language-levels.md",
-      "source_location": "L231"
+      "source_location": "L237"
     },
     {
       "id": "docs_language_levels_rollback_points_read_before_changing_anything_below",
@@ -6178,51 +6616,7 @@
       "node_kind": "heading",
       "norm_label": "trio-creation instructions that did not work",
       "source_file": "docs/language-levels.md",
-      "source_location": "L178"
-    },
-    {
-      "id": "scripts_rag_chunk",
-      "label": "rag-chunk.mjs",
-      "_origin": "ast",
-      "community": 53,
-      "community_name": "rag-ingest.mjs",
-      "file_type": "code",
-      "norm_label": "rag-chunk.mjs",
-      "source_file": "scripts/rag-chunk.mjs",
-      "source_location": "L1"
-    },
-    {
-      "id": "scripts_rag_chunk_chunk_soft_max",
-      "label": "CHUNK_SOFT_MAX",
-      "_origin": "ast",
-      "community": 53,
-      "community_name": "rag-ingest.mjs",
-      "file_type": "code",
-      "norm_label": "chunk_soft_max",
-      "source_file": "scripts/rag-chunk.mjs",
-      "source_location": "L12"
-    },
-    {
-      "id": "scripts_rag_chunk_chunk_soft_min",
-      "label": "CHUNK_SOFT_MIN",
-      "_origin": "ast",
-      "community": 53,
-      "community_name": "rag-ingest.mjs",
-      "file_type": "code",
-      "norm_label": "chunk_soft_min",
-      "source_file": "scripts/rag-chunk.mjs",
-      "source_location": "L11"
-    },
-    {
-      "id": "scripts_rag_chunk_chunk_target_words",
-      "label": "CHUNK_TARGET_WORDS",
-      "_origin": "ast",
-      "community": 53,
-      "community_name": "rag-ingest.mjs",
-      "file_type": "code",
-      "norm_label": "chunk_target_words",
-      "source_file": "scripts/rag-chunk.mjs",
-      "source_location": "L10"
+      "source_location": "L184"
     },
     {
       "id": "scripts_rag_ingest",
@@ -6289,17 +6683,6 @@
       "norm_label": "root",
       "source_file": "scripts/rag-ingest.mjs",
       "source_location": "L20"
-    },
-    {
-      "id": "scripts_rag_text",
-      "label": "rag-text.mjs",
-      "_origin": "ast",
-      "community": 53,
-      "community_name": "rag-ingest.mjs",
-      "file_type": "code",
-      "norm_label": "rag-text.mjs",
-      "source_file": "scripts/rag-text.mjs",
-      "source_location": "L1"
     },
     {
       "id": "scripts_rag_inspect",
@@ -6555,11 +6938,220 @@
       "source_location": "L1"
     },
     {
+      "id": "scripts_check_diagram_geometry",
+      "label": "check-diagram-geometry.mjs",
+      "_origin": "ast",
+      "community": 57,
+      "community_name": "genealogy-layout.ts",
+      "file_type": "code",
+      "norm_label": "check-diagram-geometry.mjs",
+      "source_file": "scripts/check-diagram-geometry.mjs",
+      "source_location": "L1"
+    },
+    {
+      "id": "scripts_check_diagram_geometry_edges",
+      "label": "edges",
+      "_origin": "ast",
+      "community": 57,
+      "community_name": "genealogy-layout.ts",
+      "file_type": "code",
+      "norm_label": "edges",
+      "source_file": "scripts/check-diagram-geometry.mjs",
+      "source_location": "L28"
+    },
+    {
+      "id": "scripts_check_diagram_geometry_paths",
+      "label": "paths",
+      "_origin": "ast",
+      "community": 57,
+      "community_name": "genealogy-layout.ts",
+      "file_type": "code",
+      "norm_label": "paths",
+      "source_file": "scripts/check-diagram-geometry.mjs",
+      "source_location": "L55"
+    },
+    {
+      "id": "scripts_influence_grid",
+      "label": "influence-grid.mjs",
+      "_origin": "ast",
+      "community": 57,
+      "community_name": "genealogy-layout.ts",
+      "file_type": "code",
+      "norm_label": "influence-grid.mjs",
+      "source_file": "scripts/influence-grid.mjs",
+      "source_location": "L1"
+    },
+    {
+      "id": "scripts_influence_grid_counts",
+      "label": "counts",
+      "_origin": "ast",
+      "community": 57,
+      "community_name": "genealogy-layout.ts",
+      "file_type": "code",
+      "norm_label": "counts",
+      "source_file": "scripts/influence-grid.mjs",
+      "source_location": "L58"
+    },
+    {
+      "id": "scripts_influence_grid_known",
+      "label": "known",
+      "_origin": "ast",
+      "community": 57,
+      "community_name": "genealogy-layout.ts",
+      "file_type": "code",
+      "norm_label": "known",
+      "source_file": "scripts/influence-grid.mjs",
+      "source_location": "L25"
+    },
+    {
+      "id": "scripts_influence_grid_name",
+      "label": "NAME",
+      "_origin": "ast",
+      "community": 57,
+      "community_name": "genealogy-layout.ts",
+      "file_type": "code",
+      "norm_label": "name",
+      "source_file": "scripts/influence-grid.mjs",
+      "source_location": "L19"
+    },
+    {
+      "id": "scripts_influence_grid_order",
+      "label": "ORDER",
+      "_origin": "ast",
+      "community": 57,
+      "community_name": "genealogy-layout.ts",
+      "file_type": "code",
+      "norm_label": "order",
+      "source_file": "scripts/influence-grid.mjs",
+      "source_location": "L15"
+    },
+    {
+      "id": "scripts_influence_grid_rows",
+      "label": "rows",
+      "_origin": "ast",
+      "community": 57,
+      "community_name": "genealogy-layout.ts",
+      "file_type": "code",
+      "norm_label": "rows",
+      "source_file": "scripts/influence-grid.mjs",
+      "source_location": "L54"
+    },
+    {
+      "id": "src_lib_genealogy_layout",
+      "label": "genealogy-layout.ts",
+      "_origin": "ast",
+      "community": 57,
+      "community_name": "genealogy-layout.ts",
+      "file_type": "code",
+      "norm_label": "genealogy-layout.ts",
+      "source_file": "src/lib/genealogy-layout.ts",
+      "source_location": "L1"
+    },
+    {
+      "id": "src_lib_genealogy_layout_gen_bow_extra",
+      "label": "GEN_BOW_EXTRA",
+      "_origin": "ast",
+      "community": 57,
+      "community_name": "genealogy-layout.ts",
+      "file_type": "code",
+      "norm_label": "gen_bow_extra",
+      "source_file": "src/lib/genealogy-layout.ts",
+      "source_location": "L164"
+    },
+    {
+      "id": "src_lib_genealogy_layout_gen_node_r",
+      "label": "GEN_NODE_R",
+      "_origin": "ast",
+      "community": 57,
+      "community_name": "genealogy-layout.ts",
+      "file_type": "code",
+      "norm_label": "gen_node_r",
+      "source_file": "src/lib/genealogy-layout.ts",
+      "source_location": "L15"
+    },
+    {
+      "id": "src_lib_genealogy_layout_gen_pos",
+      "label": "GEN_POS",
+      "_origin": "ast",
+      "community": 57,
+      "community_name": "genealogy-layout.ts",
+      "file_type": "code",
+      "norm_label": "gen_pos",
+      "source_file": "src/lib/genealogy-layout.ts",
+      "source_location": "L22"
+    },
+    {
+      "id": "src_lib_genealogy_layout_gen_rim",
+      "label": "GEN_RIM",
+      "_origin": "ast",
+      "community": 57,
+      "community_name": "genealogy-layout.ts",
+      "file_type": "code",
+      "norm_label": "gen_rim",
+      "source_file": "src/lib/genealogy-layout.ts",
+      "source_location": "L20"
+    },
+    {
+      "id": "src_lib_genealogy_layout_gen_rim_points",
+      "label": "GEN_RIM_POINTS",
+      "_origin": "ast",
+      "community": 57,
+      "community_name": "genealogy-layout.ts",
+      "file_type": "code",
+      "norm_label": "gen_rim_points",
+      "source_file": "src/lib/genealogy-layout.ts",
+      "source_location": "L138"
+    },
+    {
+      "id": "src_lib_genealogy_layout_gen_spine_x",
+      "label": "GEN_SPINE_X",
+      "_origin": "ast",
+      "community": 57,
+      "community_name": "genealogy-layout.ts",
+      "file_type": "code",
+      "norm_label": "gen_spine_x",
+      "source_file": "src/lib/genealogy-layout.ts",
+      "source_location": "L16"
+    },
+    {
+      "id": "src_lib_genealogy_layout_gen_w",
+      "label": "GEN_W",
+      "_origin": "ast",
+      "community": 57,
+      "community_name": "genealogy-layout.ts",
+      "file_type": "code",
+      "norm_label": "gen_w",
+      "source_file": "src/lib/genealogy-layout.ts",
+      "source_location": "L14"
+    },
+    {
+      "id": "src_lib_genealogy_layout_left_corridor_proto",
+      "label": "LEFT_CORRIDOR_PROTO",
+      "_origin": "ast",
+      "community": 57,
+      "community_name": "genealogy-layout.ts",
+      "file_type": "code",
+      "norm_label": "left_corridor_proto",
+      "source_file": "src/lib/genealogy-layout.ts",
+      "source_location": "L115"
+    },
+    {
+      "id": "src_lib_genealogy_layout_straight_spines",
+      "label": "STRAIGHT_SPINES",
+      "_origin": "ast",
+      "community": 57,
+      "community_name": "genealogy-layout.ts",
+      "file_type": "code",
+      "norm_label": "straight_spines",
+      "source_file": "src/lib/genealogy-layout.ts",
+      "source_location": "L89"
+    },
+    {
       "id": "src_philosophers_influences",
       "label": "influences.ts",
       "_origin": "ast",
       "community": 57,
-      "community_name": "influences.ts",
+      "community_name": "genealogy-layout.ts",
       "file_type": "code",
       "norm_label": "influences.ts",
       "source_file": "src/philosophers/influences.ts",
@@ -6570,11 +7162,11 @@
       "label": "CABINET_DEBTS",
       "_origin": "ast",
       "community": 57,
-      "community_name": "influences.ts",
+      "community_name": "genealogy-layout.ts",
       "file_type": "code",
       "norm_label": "cabinet_debts",
       "source_file": "src/philosophers/influences.ts",
-      "source_location": "L41"
+      "source_location": "L66"
     },
     {
       "id": "docs_new_philosopher_brief",
@@ -6625,92 +7217,148 @@
       "source_location": "L53"
     },
     {
-      "id": "src_components_genealogymap",
-      "label": "GenealogyMap.tsx",
+      "id": "docs_diagram_style",
+      "label": "diagram-style.md",
       "_origin": "ast",
       "community": 59,
-      "community_name": "GenealogyMap.tsx",
-      "file_type": "code",
-      "norm_label": "genealogymap.tsx",
-      "source_file": "src/components/GenealogyMap.tsx",
+      "community_name": "Node-and-debt diagram \u2014 style, preferences, and quick-start",
+      "file_type": "document",
+      "node_kind": "page",
+      "norm_label": "diagram-style.md",
+      "source_file": "docs/diagram-style.md",
       "source_location": "L1"
     },
     {
-      "id": "src_components_genealogymap_all_edges",
-      "label": "ALL_EDGES",
+      "id": "docs_diagram_style_access_and_review",
+      "label": "Access and review",
       "_origin": "ast",
       "community": 59,
-      "community_name": "GenealogyMap.tsx",
-      "file_type": "code",
-      "norm_label": "all_edges",
-      "source_file": "src/components/GenealogyMap.tsx",
+      "community_name": "Node-and-debt diagram \u2014 style, preferences, and quick-start",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "access and review",
+      "source_file": "docs/diagram-style.md",
+      "source_location": "L133"
+    },
+    {
+      "id": "docs_diagram_style_data_contract_repo",
+      "label": "Data contract [repo]",
+      "_origin": "ast",
+      "community": 59,
+      "community_name": "Node-and-debt diagram \u2014 style, preferences, and quick-start",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "data contract [repo]",
+      "source_file": "docs/diagram-style.md",
+      "source_location": "L126"
+    },
+    {
+      "id": "docs_diagram_style_fixed_dark_cabinet_hard_rule",
+      "label": "Fixed dark cabinet (hard rule)",
+      "_origin": "ast",
+      "community": 59,
+      "community_name": "Node-and-debt diagram \u2014 style, preferences, and quick-start",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "fixed dark cabinet (hard rule)",
+      "source_file": "docs/diagram-style.md",
       "source_location": "L12"
     },
     {
-      "id": "src_components_genealogymap_degree",
-      "label": "DEGREE",
+      "id": "docs_diagram_style_geometry_specification_what_the_code_may_do",
+      "label": "Geometry specification (what the code may do)",
       "_origin": "ast",
       "community": 59,
-      "community_name": "GenealogyMap.tsx",
-      "file_type": "code",
-      "norm_label": "degree",
-      "source_file": "src/components/GenealogyMap.tsx",
-      "source_location": "L46"
+      "community_name": "Node-and-debt diagram \u2014 style, preferences, and quick-start",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "geometry specification (what the code may do)",
+      "source_file": "docs/diagram-style.md",
+      "source_location": "L115"
     },
     {
-      "id": "src_components_genealogymap_left_seats",
-      "label": "LEFT_SEATS",
+      "id": "docs_diagram_style_layout_current_instantiation_repo_roles_are_the_spec",
+      "label": "Layout (current instantiation [repo]; roles are the spec)",
       "_origin": "ast",
       "community": 59,
-      "community_name": "GenealogyMap.tsx",
-      "file_type": "code",
-      "norm_label": "left_seats",
-      "source_file": "src/components/GenealogyMap.tsx",
-      "source_location": "L42"
+      "community_name": "Node-and-debt diagram \u2014 style, preferences, and quick-start",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "layout (current instantiation [repo]; roles are the spec)",
+      "source_file": "docs/diagram-style.md",
+      "source_location": "L39"
     },
     {
-      "id": "src_components_genealogymap_min_degree",
-      "label": "MIN_DEGREE",
+      "id": "docs_diagram_style_lines_s_curve_variant_simple_diagrams_only",
+      "label": "Lines (S-curve variant \u2014 simple diagrams only)",
       "_origin": "ast",
       "community": 59,
-      "community_name": "GenealogyMap.tsx",
-      "file_type": "code",
-      "norm_label": "min_degree",
-      "source_file": "src/components/GenealogyMap.tsx",
-      "source_location": "L52"
+      "community_name": "Node-and-debt diagram \u2014 style, preferences, and quick-start",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "lines (s-curve variant \u2014 simple diagrams only)",
+      "source_file": "docs/diagram-style.md",
+      "source_location": "L78"
     },
     {
-      "id": "src_components_genealogymap_pos",
-      "label": "POS",
+      "id": "docs_diagram_style_lines_straight_spine_design_the_default",
+      "label": "Lines (straight-spine design \u2014 the default)",
       "_origin": "ast",
       "community": 59,
-      "community_name": "GenealogyMap.tsx",
-      "file_type": "code",
-      "norm_label": "pos",
-      "source_file": "src/components/GenealogyMap.tsx",
-      "source_location": "L24"
+      "community_name": "Node-and-debt diagram \u2014 style, preferences, and quick-start",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "lines (straight-spine design \u2014 the default)",
+      "source_file": "docs/diagram-style.md",
+      "source_location": "L55"
     },
     {
-      "id": "src_components_genealogymap_row_y",
-      "label": "ROW_Y",
+      "id": "docs_diagram_style_node_and_debt_diagram_style_preferences_and_quick_start",
+      "label": "Node-and-debt diagram \u2014 style, preferences, and quick-start",
       "_origin": "ast",
       "community": 59,
-      "community_name": "GenealogyMap.tsx",
-      "file_type": "code",
-      "norm_label": "row_y",
-      "source_file": "src/components/GenealogyMap.tsx",
-      "source_location": "L38"
+      "community_name": "Node-and-debt diagram \u2014 style, preferences, and quick-start",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "node-and-debt diagram \u2014 style, preferences, and quick-start",
+      "source_file": "docs/diagram-style.md",
+      "source_location": "L1"
     },
     {
-      "id": "src_components_genealogymap_spine_seats",
-      "label": "SPINE_SEATS",
+      "id": "docs_diagram_style_palette_roles_never_hex",
+      "label": "Palette (roles, never hex)",
       "_origin": "ast",
       "community": 59,
-      "community_name": "GenealogyMap.tsx",
-      "file_type": "code",
-      "norm_label": "spine_seats",
-      "source_file": "src/components/GenealogyMap.tsx",
-      "source_location": "L41"
+      "community_name": "Node-and-debt diagram \u2014 style, preferences, and quick-start",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "palette (roles, never hex)",
+      "source_file": "docs/diagram-style.md",
+      "source_location": "L22"
+    },
+    {
+      "id": "docs_diagram_style_priority_order_never_sacrifice_a_higher_rule_for_a_lower_one",
+      "label": "Priority order (never sacrifice a higher rule for a lower one)",
+      "_origin": "ast",
+      "community": 59,
+      "community_name": "Node-and-debt diagram \u2014 style, preferences, and quick-start",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "priority order (never sacrifice a higher rule for a lower one)",
+      "source_file": "docs/diagram-style.md",
+      "source_location": "L91"
+    },
+    {
+      "id": "docs_diagram_style_visual_specification_what_the_human_sees",
+      "label": "Visual specification (what the human sees)",
+      "_origin": "ast",
+      "community": 59,
+      "community_name": "Node-and-debt diagram \u2014 style, preferences, and quick-start",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "visual specification (what the human sees)",
+      "source_file": "docs/diagram-style.md",
+      "source_location": "L107"
     },
     {
       "id": "tsconfig_node",
@@ -6889,6 +7537,212 @@
       "source_location": "L21"
     },
     {
+      "id": "docs_family_eval",
+      "label": "family-eval.md",
+      "_origin": "ast",
+      "community": 60,
+      "community_name": "Family A/B eval \u2014 Qwen-first or DeepSeek-first (Phase 7)",
+      "file_type": "document",
+      "node_kind": "page",
+      "norm_label": "family-eval.md",
+      "source_file": "docs/family-eval.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "docs_family_eval_auto_metrics_assistants_not_judges_human_grades_rule",
+      "label": "Auto-metrics (assistants, not judges \u2014 human grades rule)",
+      "_origin": "ast",
+      "community": 60,
+      "community_name": "Family A/B eval \u2014 Qwen-first or DeepSeek-first (Phase 7)",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "auto-metrics (assistants, not judges \u2014 human grades rule)",
+      "source_file": "docs/family-eval.md",
+      "source_location": "L47"
+    },
+    {
+      "id": "docs_family_eval_family_a_b_eval_qwen_first_or_deepseek_first_phase_7",
+      "label": "Family A/B eval \u2014 Qwen-first or DeepSeek-first (Phase 7)",
+      "_origin": "ast",
+      "community": 60,
+      "community_name": "Family A/B eval \u2014 Qwen-first or DeepSeek-first (Phase 7)",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "family a/b eval \u2014 qwen-first or deepseek-first (phase 7)",
+      "source_file": "docs/family-eval.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "docs_family_eval_grade_each_run_from_language_levels_md_trio_rubric",
+      "label": "Grade each run (from `language-levels.md` trio rubric)",
+      "_origin": "ast",
+      "community": 60,
+      "community_name": "Family A/B eval \u2014 Qwen-first or DeepSeek-first (Phase 7)",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "grade each run (from `language-levels.md` trio rubric)",
+      "source_file": "docs/family-eval.md",
+      "source_location": "L25"
+    },
+    {
+      "id": "docs_family_eval_report_back_per_run",
+      "label": "Report back per run",
+      "_origin": "ast",
+      "community": 60,
+      "community_name": "Family A/B eval \u2014 Qwen-first or DeepSeek-first (Phase 7)",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "report back per run",
+      "source_file": "docs/family-eval.md",
+      "source_location": "L41"
+    },
+    {
+      "id": "docs_family_eval_round_1_low_one_run_per_pipe",
+      "label": "Round 1 \u2014 Low, one run per pipe",
+      "_origin": "ast",
+      "community": 60,
+      "community_name": "Family A/B eval \u2014 Qwen-first or DeepSeek-first (Phase 7)",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "round 1 \u2014 low, one run per pipe",
+      "source_file": "docs/family-eval.md",
+      "source_location": "L18"
+    },
+    {
+      "id": "docs_family_eval_round_2_winner_takes_medium_high",
+      "label": "Round 2 \u2014 winner takes Medium + High",
+      "_origin": "ast",
+      "community": 60,
+      "community_name": "Family A/B eval \u2014 Qwen-first or DeepSeek-first (Phase 7)",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "round 2 \u2014 winner takes medium + high",
+      "source_file": "docs/family-eval.md",
+      "source_location": "L35"
+    },
+    {
+      "id": "docs_family_eval_the_question_reuse_verbatim_for_every_run",
+      "label": "The question (reuse verbatim for every run)",
+      "_origin": "ast",
+      "community": 60,
+      "community_name": "Family A/B eval \u2014 Qwen-first or DeepSeek-first (Phase 7)",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "the question (reuse verbatim for every run)",
+      "source_file": "docs/family-eval.md",
+      "source_location": "L7"
+    },
+    {
+      "id": "scripts_check_diagram_contrast",
+      "label": "check-diagram-contrast.mjs",
+      "_origin": "ast",
+      "community": 61,
+      "community_name": "check-diagram-contrast.mjs",
+      "file_type": "code",
+      "norm_label": "check-diagram-contrast.mjs",
+      "source_file": "scripts/check-diagram-contrast.mjs",
+      "source_location": "L1"
+    },
+    {
+      "id": "scripts_check_diagram_contrast_pairs",
+      "label": "pairs",
+      "_origin": "ast",
+      "community": 61,
+      "community_name": "check-diagram-contrast.mjs",
+      "file_type": "code",
+      "norm_label": "pairs",
+      "source_file": "scripts/check-diagram-contrast.mjs",
+      "source_location": "L10"
+    },
+    {
+      "id": "scripts_check_diagram_contrast_rationale_32",
+      "label": "NOTE: muted rgba() entries above are pre-blended approximations on #221910.",
+      "_origin": "ast",
+      "community": 61,
+      "community_name": "check-diagram-contrast.mjs",
+      "file_type": "rationale",
+      "norm_label": "note: muted rgba() entries above are pre-blended approximations on #221910.",
+      "source_file": "scripts/check-diagram-contrast.mjs",
+      "source_location": "L32"
+    },
+    {
+      "id": "src_philosophers_rose",
+      "label": "rose.ts",
+      "_origin": "ast",
+      "community": 62,
+      "community_name": "rose.ts",
+      "file_type": "code",
+      "norm_label": "rose.ts",
+      "source_file": "src/philosophers/rose.ts",
+      "source_location": "L1"
+    },
+    {
+      "id": "src_philosophers_rose_rose",
+      "label": "ROSE",
+      "_origin": "ast",
+      "community": 62,
+      "community_name": "rose.ts",
+      "file_type": "code",
+      "norm_label": "rose",
+      "source_file": "src/philosophers/rose.ts",
+      "source_location": "L4"
+    },
+    {
+      "id": "src_philosophers_rose_style",
+      "label": "rose.style.ts",
+      "_origin": "ast",
+      "community": 62,
+      "community_name": "rose.ts",
+      "file_type": "code",
+      "norm_label": "rose.style.ts",
+      "source_file": "src/philosophers/rose.style.ts",
+      "source_location": "L1"
+    },
+    {
+      "id": "src_philosophers_rose_style_rose_style",
+      "label": "ROSE_STYLE",
+      "_origin": "ast",
+      "community": 62,
+      "community_name": "rose.ts",
+      "file_type": "code",
+      "norm_label": "rose_style",
+      "source_file": "src/philosophers/rose.style.ts",
+      "source_location": "L6"
+    },
+    {
+      "id": "src_philosophers_trios",
+      "label": "trios.ts",
+      "_origin": "ast",
+      "community": 63,
+      "community_name": "trios.ts",
+      "file_type": "code",
+      "norm_label": "trios.ts",
+      "source_file": "src/philosophers/trios.ts",
+      "source_location": "L1"
+    },
+    {
+      "id": "src_philosophers_trios_fallback_medium_example",
+      "label": "FALLBACK_MEDIUM_EXAMPLE",
+      "_origin": "ast",
+      "community": 63,
+      "community_name": "trios.ts",
+      "file_type": "code",
+      "norm_label": "fallback_medium_example",
+      "source_file": "src/philosophers/trios.ts",
+      "source_location": "L67"
+    },
+    {
+      "id": "src_philosophers_trios_seat_trios",
+      "label": "SEAT_TRIOS",
+      "_origin": "ast",
+      "community": 63,
+      "community_name": "trios.ts",
+      "file_type": "code",
+      "norm_label": "seat_trios",
+      "source_file": "src/philosophers/trios.ts",
+      "source_location": "L15"
+    },
+    {
       "id": "src_philosophers_shared_universal_mechanisms",
       "label": "universal-mechanisms.ts",
       "_origin": "ast",
@@ -6953,6 +7807,58 @@
       "norm_label": "universal_supporting_mechanisms",
       "source_file": "src/philosophers/shared/universal-mechanisms.ts",
       "source_location": "L8"
+    },
+    {
+      "id": "docs_influence_grid",
+      "label": "influence-grid.md",
+      "_origin": "ast",
+      "community": 65,
+      "community_name": "Influence grid (generated)",
+      "file_type": "document",
+      "node_kind": "page",
+      "norm_label": "influence-grid.md",
+      "source_file": "docs/influence-grid.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "docs_influence_grid_degree_debts_out_heirs_in_total",
+      "label": "Degree (debts out / heirs in / total)",
+      "_origin": "ast",
+      "community": 65,
+      "community_name": "Influence grid (generated)",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "degree (debts out / heirs in / total)",
+      "source_file": "docs/influence-grid.md",
+      "source_location": "L28"
+    },
+    {
+      "id": "docs_influence_grid_influence_grid_generated",
+      "label": "Influence grid (generated)",
+      "_origin": "ast",
+      "community": 65,
+      "community_name": "Influence grid (generated)",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "influence grid (generated)",
+      "source_file": "docs/influence-grid.md",
+      "source_location": "L1"
+    },
+    {
+      "id": "opencode_commands_gh",
+      "label": "gh.md",
+      "_origin": "ast",
+      "community": 66,
+      "community_name": "gh.md",
+      "file_type": "document",
+      "frontmatter": {
+        "description": "Commit + push current branch and post a paste-ready description",
+        "agent": "general"
+      },
+      "node_kind": "page",
+      "norm_label": "gh.md",
+      "source_file": ".opencode/commands/gh.md",
+      "source_location": "L1"
     },
     {
       "id": "package_devdependencies",
@@ -7164,6 +8070,17 @@
       "source_location": "L1"
     },
     {
+      "id": "src_lib_settings_deepinfra_primaries",
+      "label": "DEEPINFRA_PRIMARIES",
+      "_origin": "ast",
+      "community": 9,
+      "community_name": "settings.ts",
+      "file_type": "code",
+      "norm_label": "deepinfra_primaries",
+      "source_file": "src/lib/settings.ts",
+      "source_location": "L15"
+    },
+    {
       "id": "src_lib_settings_default_settings",
       "label": "DEFAULT_SETTINGS",
       "_origin": "ast",
@@ -7172,7 +8089,7 @@
       "file_type": "code",
       "norm_label": "default_settings",
       "source_file": "src/lib/settings.ts",
-      "source_location": "L36"
+      "source_location": "L45"
     },
     {
       "id": "src_lib_settings_groq_models",
@@ -7356,6 +8273,42 @@
       "weight": 1.0
     },
     {
+      "source": "scripts_check_diagram_contrast_ratio",
+      "target": "scripts_check_diagram_contrast_luminance",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "scripts/check-diagram-contrast.mjs",
+      "source_location": "L34",
+      "weight": 1.0
+    },
+    {
+      "source": "scripts_check_diagram_geometry_paths",
+      "target": "src_lib_genealogy_layout_genedgepath",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "scripts/check-diagram-geometry.mjs",
+      "source_location": "L57",
+      "weight": 1.0
+    },
+    {
+      "source": "scripts_check_diagram_geometry_paths",
+      "target": "src_lib_genealogy_layout_genlateralshift",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "scripts/check-diagram-geometry.mjs",
+      "source_location": "L57",
+      "weight": 1.0
+    },
+    {
       "source": "scripts_check_links_note",
       "target": "scripts_check_links_stamp",
       "relation": "calls",
@@ -7377,6 +8330,30 @@
       "context": "call",
       "source_file": "scripts/dev-keepalive.sh",
       "source_location": "L15",
+      "weight": 1.0
+    },
+    {
+      "source": "scripts_influence_grid_cell",
+      "target": "scripts_influence_grid_code",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "scripts/influence-grid.mjs",
+      "source_location": "L49",
+      "weight": 1.0
+    },
+    {
+      "source": "scripts_influence_grid_rows",
+      "target": "scripts_influence_grid_cell",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "scripts/influence-grid.mjs",
+      "source_location": "L55",
       "weight": 1.0
     },
     {
@@ -7700,7 +8677,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "src/App.tsx",
-      "source_location": "L717",
+      "source_location": "L733",
       "weight": 1.0
     },
     {
@@ -7716,39 +8693,15 @@
       "weight": 1.0
     },
     {
-      "source": "src_components_genealogymap_edgepath",
-      "target": "src_components_genealogymap_nodepos",
-      "relation": "calls",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "context": "call",
-      "source_file": "src/components/GenealogyMap.tsx",
-      "source_location": "L64",
-      "weight": 1.0
-    },
-    {
       "source": "src_components_genealogymap_genealogymap",
-      "target": "src_components_genealogymap_edgepath",
+      "target": "src_components_genealogymap_edgestyle",
       "relation": "calls",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "src/components/GenealogyMap.tsx",
-      "source_location": "L152",
-      "weight": 1.0
-    },
-    {
-      "source": "src_components_genealogymap_genealogymap",
-      "target": "src_components_genealogymap_nodepos",
-      "relation": "calls",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "context": "call",
-      "source_file": "src/components/GenealogyMap.tsx",
-      "source_location": "L168",
+      "source_location": "L128",
       "weight": 1.0
     },
     {
@@ -7760,7 +8713,19 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "src/components/GenealogyMap.tsx",
-      "source_location": "L172",
+      "source_location": "L171",
+      "weight": 1.0
+    },
+    {
+      "source": "src_lib_deepinfra_generatetextdeepinfra",
+      "target": "src_lib_deepinfra_resolvedeepinfraprimary",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "src/lib/deepinfra.ts",
+      "source_location": "L206",
       "weight": 1.0
     },
     {
@@ -7772,7 +8737,19 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "src/lib/deepinfra.ts",
-      "source_location": "L196",
+      "source_location": "L207",
+      "weight": 1.0
+    },
+    {
+      "source": "src_lib_deepinfra_generateturndeepinfra",
+      "target": "src_lib_deepinfra_resolvedeepinfraprimary",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "src/lib/deepinfra.ts",
+      "source_location": "L170",
       "weight": 1.0
     },
     {
@@ -7784,7 +8761,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "src/lib/deepinfra.ts",
-      "source_location": "L163",
+      "source_location": "L173",
       "weight": 1.0
     },
     {
@@ -7796,7 +8773,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "src/lib/deepinfra.ts",
-      "source_location": "L166",
+      "source_location": "L176",
       "weight": 1.0
     },
     {
@@ -7808,7 +8785,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "src/lib/deepinfra.ts",
-      "source_location": "L128",
+      "source_location": "L137",
       "weight": 1.0
     },
     {
@@ -7820,7 +8797,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "src/lib/deepinfra.ts",
-      "source_location": "L133",
+      "source_location": "L142",
       "weight": 1.0
     },
     {
@@ -7832,7 +8809,19 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "src/lib/deepinfra.ts",
-      "source_location": "L137",
+      "source_location": "L146",
+      "weight": 1.0
+    },
+    {
+      "source": "src_lib_deepinfra_testdeepinfrakey",
+      "target": "src_lib_deepinfra_resolvedeepinfraprimary",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "src/lib/deepinfra.ts",
+      "source_location": "L226",
       "weight": 1.0
     },
     {
@@ -7844,7 +8833,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "src/lib/deepinfra.ts",
-      "source_location": "L222",
+      "source_location": "L233",
       "weight": 1.0
     },
     {
@@ -7856,7 +8845,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "src/lib/deepinfra.ts",
-      "source_location": "L222",
+      "source_location": "L233",
       "weight": 1.0
     },
     {
@@ -7917,6 +8906,126 @@
       "context": "call",
       "source_file": "src/lib/footnotes.ts",
       "source_location": "L69",
+      "weight": 1.0
+    },
+    {
+      "source": "src_lib_genealogy_layout_braidlane",
+      "target": "src_lib_genealogy_layout_gennodepos",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "src/lib/genealogy-layout.ts",
+      "source_location": "L96",
+      "weight": 1.0
+    },
+    {
+      "source": "src_lib_genealogy_layout_genedgepath",
+      "target": "src_lib_genealogy_layout_gennodepos",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "src/lib/genealogy-layout.ts",
+      "source_location": "L177",
+      "weight": 1.0
+    },
+    {
+      "source": "src_lib_genealogy_layout_genedgepath",
+      "target": "src_lib_genealogy_layout_leftcorridorrank",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "src/lib/genealogy-layout.ts",
+      "source_location": "L237",
+      "weight": 1.0
+    },
+    {
+      "source": "src_lib_genealogy_layout_genedgepath",
+      "target": "src_lib_genealogy_layout_gentrackrank",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "src/lib/genealogy-layout.ts",
+      "source_location": "L278",
+      "weight": 1.0
+    },
+    {
+      "source": "src_lib_genealogy_layout_genedgepath",
+      "target": "src_lib_genealogy_layout_braidphase",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "src/lib/genealogy-layout.ts",
+      "source_location": "L317",
+      "weight": 1.0
+    },
+    {
+      "source": "src_lib_genealogy_layout_genedgepath",
+      "target": "src_lib_genealogy_layout_braidlane",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "src/lib/genealogy-layout.ts",
+      "source_location": "L318",
+      "weight": 1.0
+    },
+    {
+      "source": "src_lib_genealogy_layout_genlateralshift",
+      "target": "src_lib_genealogy_layout_gennodepos",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "src/lib/genealogy-layout.ts",
+      "source_location": "L47",
+      "weight": 1.0
+    },
+    {
+      "source": "src_lib_genealogy_layout_gentrackrank",
+      "target": "src_lib_genealogy_layout_gennodepos",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "src/lib/genealogy-layout.ts",
+      "source_location": "L72",
+      "weight": 1.0
+    },
+    {
+      "source": "src_lib_genealogy_layout_gentrackrank",
+      "target": "src_lib_genealogy_layout_genlateralshift",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "src/lib/genealogy-layout.ts",
+      "source_location": "L76",
+      "weight": 1.0
+    },
+    {
+      "source": "src_lib_genealogy_layout_leftcorridorrank",
+      "target": "src_lib_genealogy_layout_gennodepos",
+      "relation": "calls",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "call",
+      "source_file": "src/lib/genealogy-layout.ts",
+      "source_location": "L125",
       "weight": 1.0
     },
     {
@@ -8048,7 +9157,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "src/lib/openrouter.ts",
-      "source_location": "L284",
+      "source_location": "L301",
       "weight": 1.0
     },
     {
@@ -8060,7 +9169,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "src/lib/openrouter.ts",
-      "source_location": "L286",
+      "source_location": "L303",
       "weight": 1.0
     },
     {
@@ -8072,7 +9181,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "src/lib/openrouter.ts",
-      "source_location": "L233",
+      "source_location": "L250",
       "weight": 1.0
     },
     {
@@ -8084,7 +9193,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "src/lib/openrouter.ts",
-      "source_location": "L236",
+      "source_location": "L253",
       "weight": 1.0
     },
     {
@@ -8096,7 +9205,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "src/lib/openrouter.ts",
-      "source_location": "L237",
+      "source_location": "L254",
       "weight": 1.0
     },
     {
@@ -8108,7 +9217,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "src/lib/openrouter.ts",
-      "source_location": "L241",
+      "source_location": "L258",
       "weight": 1.0
     },
     {
@@ -8120,7 +9229,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "src/lib/openrouter.ts",
-      "source_location": "L422",
+      "source_location": "L439",
       "weight": 1.0
     },
     {
@@ -8132,7 +9241,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "src/lib/openrouter.ts",
-      "source_location": "L436",
+      "source_location": "L453",
       "weight": 1.0
     },
     {
@@ -8144,7 +9253,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "src/lib/openrouter.ts",
-      "source_location": "L440",
+      "source_location": "L457",
       "weight": 1.0
     },
     {
@@ -8156,7 +9265,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "src/lib/openrouter.ts",
-      "source_location": "L443",
+      "source_location": "L460",
       "weight": 1.0
     },
     {
@@ -8168,7 +9277,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "src/lib/openrouter.ts",
-      "source_location": "L328",
+      "source_location": "L345",
       "weight": 1.0
     },
     {
@@ -8180,7 +9289,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "src/lib/openrouter.ts",
-      "source_location": "L330",
+      "source_location": "L347",
       "weight": 1.0
     },
     {
@@ -8192,7 +9301,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "src/lib/openrouter.ts",
-      "source_location": "L367",
+      "source_location": "L384",
       "weight": 1.0
     },
     {
@@ -8204,7 +9313,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "src/lib/openrouter.ts",
-      "source_location": "L371",
+      "source_location": "L388",
       "weight": 1.0
     },
     {
@@ -8216,7 +9325,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "src/lib/openrouter.ts",
-      "source_location": "L120",
+      "source_location": "L137",
       "weight": 1.0
     },
     {
@@ -8228,7 +9337,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "src/lib/openrouter.ts",
-      "source_location": "L71",
+      "source_location": "L87",
       "weight": 1.0
     },
     {
@@ -8240,7 +9349,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "src/lib/openrouter.ts",
-      "source_location": "L477",
+      "source_location": "L494",
       "weight": 1.0
     },
     {
@@ -8252,7 +9361,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "src/lib/openrouter.ts",
-      "source_location": "L477",
+      "source_location": "L494",
       "weight": 1.0
     },
     {
@@ -8264,7 +9373,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "src/lib/openrouter.ts",
-      "source_location": "L486",
+      "source_location": "L503",
       "weight": 1.0
     },
     {
@@ -8276,7 +9385,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "src/lib/openrouter.ts",
-      "source_location": "L511",
+      "source_location": "L528",
       "weight": 1.0
     },
     {
@@ -8708,7 +9817,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "src/lib/settings.ts",
-      "source_location": "L90",
+      "source_location": "L101",
       "weight": 1.0
     },
     {
@@ -8720,7 +9829,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "src/lib/settings.ts",
-      "source_location": "L91",
+      "source_location": "L102",
       "weight": 1.0
     },
     {
@@ -8996,7 +10105,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "src/philosophers/index.ts",
-      "source_location": "L100",
+      "source_location": "L101",
       "weight": 1.0
     },
     {
@@ -9008,7 +10117,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "src/philosophers/index.ts",
-      "source_location": "L106",
+      "source_location": "L107",
       "weight": 1.0
     },
     {
@@ -9020,7 +10129,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "src/philosophers/index.ts",
-      "source_location": "L61",
+      "source_location": "L62",
       "weight": 1.0
     },
     {
@@ -9032,7 +10141,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "src/philosophers/index.ts",
-      "source_location": "L98",
+      "source_location": "L99",
       "weight": 1.0
     },
     {
@@ -9297,6 +10406,78 @@
       "context": "import",
       "source_file": "package.json",
       "source_location": "L40",
+      "weight": 1.0
+    },
+    {
+      "source": "scripts_check_diagram_geometry",
+      "target": "src_philosophers_influences_cabinet_debts",
+      "relation": "imports",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "scripts/check-diagram-geometry.mjs",
+      "source_location": "L12",
+      "weight": 1.0
+    },
+    {
+      "source": "scripts_check_diagram_geometry",
+      "target": "src_lib_genealogy_layout_gen_node_r",
+      "relation": "imports",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "scripts/check-diagram-geometry.mjs",
+      "source_location": "L13",
+      "weight": 1.0
+    },
+    {
+      "source": "scripts_check_diagram_geometry",
+      "target": "src_lib_genealogy_layout_gen_pos",
+      "relation": "imports",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "scripts/check-diagram-geometry.mjs",
+      "source_location": "L13",
+      "weight": 1.0
+    },
+    {
+      "source": "scripts_check_diagram_geometry",
+      "target": "src_lib_genealogy_layout_genedgepath",
+      "relation": "imports",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "scripts/check-diagram-geometry.mjs",
+      "source_location": "L13",
+      "weight": 1.0
+    },
+    {
+      "source": "scripts_check_diagram_geometry",
+      "target": "src_lib_genealogy_layout_genlateralshift",
+      "relation": "imports",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "scripts/check-diagram-geometry.mjs",
+      "source_location": "L13",
+      "weight": 1.0
+    },
+    {
+      "source": "scripts_influence_grid",
+      "target": "src_philosophers_influences_cabinet_debts",
+      "relation": "imports",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "scripts/influence-grid.mjs",
+      "source_location": "L12",
       "weight": 1.0
     },
     {
@@ -9709,7 +10890,7 @@
     },
     {
       "source": "src_philosophers_index",
-      "target": "src_philosophers_fisher_fisher",
+      "target": "src_philosophers_rose_rose",
       "relation": "imports",
       "_origin": "ast",
       "confidence": "EXTRACTED",
@@ -9721,7 +10902,7 @@
     },
     {
       "source": "src_philosophers_index",
-      "target": "src_philosophers_shared_universal_mechanisms_renderuniversalmechanisms",
+      "target": "src_philosophers_fisher_fisher",
       "relation": "imports",
       "_origin": "ast",
       "confidence": "EXTRACTED",
@@ -9733,7 +10914,7 @@
     },
     {
       "source": "src_philosophers_index",
-      "target": "src_philosophers_shared_anti_waffle_renderantiwaffle",
+      "target": "src_philosophers_shared_universal_mechanisms_renderuniversalmechanisms",
       "relation": "imports",
       "_origin": "ast",
       "confidence": "EXTRACTED",
@@ -9745,7 +10926,7 @@
     },
     {
       "source": "src_philosophers_index",
-      "target": "src_philosophers_shared_low_style_low_concept_rules",
+      "target": "src_philosophers_shared_anti_waffle_renderantiwaffle",
       "relation": "imports",
       "_origin": "ast",
       "confidence": "EXTRACTED",
@@ -9753,6 +10934,18 @@
       "context": "import",
       "source_file": "src/philosophers/index.ts",
       "source_location": "L15",
+      "weight": 1.0
+    },
+    {
+      "source": "src_philosophers_index",
+      "target": "src_philosophers_shared_low_style_low_concept_rules",
+      "relation": "imports",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "src/philosophers/index.ts",
+      "source_location": "L16",
       "weight": 1.0
     },
     {
@@ -9764,7 +10957,7 @@
       "confidence_score": 1.0,
       "context": "import",
       "source_file": "src/philosophers/index.ts",
-      "source_location": "L15",
+      "source_location": "L16",
       "weight": 1.0
     },
     {
@@ -9776,7 +10969,7 @@
       "confidence_score": 1.0,
       "context": "import",
       "source_file": "src/philosophers/index.ts",
-      "source_location": "L15",
+      "source_location": "L16",
       "weight": 1.0
     },
     {
@@ -9788,7 +10981,7 @@
       "confidence_score": 1.0,
       "context": "import",
       "source_file": "src/philosophers/index.ts",
-      "source_location": "L15",
+      "source_location": "L16",
       "weight": 1.0
     },
     {
@@ -9800,7 +10993,7 @@
       "confidence_score": 1.0,
       "context": "import",
       "source_file": "src/philosophers/index.ts",
-      "source_location": "L15",
+      "source_location": "L16",
       "weight": 1.0
     },
     {
@@ -9812,7 +11005,7 @@
       "confidence_score": 1.0,
       "context": "import",
       "source_file": "src/philosophers/index.ts",
-      "source_location": "L16",
+      "source_location": "L17",
       "weight": 1.0
     },
     {
@@ -9824,7 +11017,7 @@
       "confidence_score": 1.0,
       "context": "import",
       "source_file": "src/philosophers/index.ts",
-      "source_location": "L16",
+      "source_location": "L17",
       "weight": 1.0
     },
     {
@@ -9960,6 +11153,18 @@
       "weight": 1.0
     },
     {
+      "source": "src_philosophers_rose",
+      "target": "src_philosophers_rose_style_rose_style",
+      "relation": "imports",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "src/philosophers/rose.ts",
+      "source_location": "L2",
+      "weight": 1.0
+    },
+    {
       "source": "src_philosophers_spinoza",
       "target": "src_philosophers_spinoza_style_spinoza_style",
       "relation": "imports",
@@ -10041,6 +11246,42 @@
       "context": "import",
       "source_file": "eslint.config.js",
       "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "scripts_check_diagram_geometry",
+      "target": "src_philosophers_influences",
+      "relation": "imports_from",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "scripts/check-diagram-geometry.mjs",
+      "source_location": "L12",
+      "weight": 1.0
+    },
+    {
+      "source": "scripts_check_diagram_geometry",
+      "target": "src_lib_genealogy_layout",
+      "relation": "imports_from",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "scripts/check-diagram-geometry.mjs",
+      "source_location": "L13",
+      "weight": 1.0
+    },
+    {
+      "source": "scripts_influence_grid",
+      "target": "src_philosophers_influences",
+      "relation": "imports_from",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "scripts/influence-grid.mjs",
+      "source_location": "L12",
       "weight": 1.0
     },
     {
@@ -10161,6 +11402,18 @@
       "context": "import",
       "source_file": "src/App.tsx",
       "source_location": "L2",
+      "weight": 1.0
+    },
+    {
+      "source": "src_components_genealogymap",
+      "target": "ref_react",
+      "relation": "imports_from",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "src/components/GenealogyMap.tsx",
+      "source_location": "L1",
       "weight": 1.0
     },
     {
@@ -10382,7 +11635,7 @@
     },
     {
       "source": "src_philosophers_index",
-      "target": "src_philosophers_fisher",
+      "target": "src_philosophers_rose",
       "relation": "imports_from",
       "_origin": "ast",
       "confidence": "EXTRACTED",
@@ -10394,7 +11647,7 @@
     },
     {
       "source": "src_philosophers_index",
-      "target": "src_philosophers_shared_universal_mechanisms",
+      "target": "src_philosophers_fisher",
       "relation": "imports_from",
       "_origin": "ast",
       "confidence": "EXTRACTED",
@@ -10406,7 +11659,7 @@
     },
     {
       "source": "src_philosophers_index",
-      "target": "src_philosophers_shared_anti_waffle",
+      "target": "src_philosophers_shared_universal_mechanisms",
       "relation": "imports_from",
       "_origin": "ast",
       "confidence": "EXTRACTED",
@@ -10418,7 +11671,7 @@
     },
     {
       "source": "src_philosophers_index",
-      "target": "src_philosophers_shared_low_style",
+      "target": "src_philosophers_shared_anti_waffle",
       "relation": "imports_from",
       "_origin": "ast",
       "confidence": "EXTRACTED",
@@ -10430,7 +11683,7 @@
     },
     {
       "source": "src_philosophers_index",
-      "target": "src_philosophers_trios",
+      "target": "src_philosophers_shared_low_style",
       "relation": "imports_from",
       "_origin": "ast",
       "confidence": "EXTRACTED",
@@ -10438,6 +11691,18 @@
       "context": "import",
       "source_file": "src/philosophers/index.ts",
       "source_location": "L16",
+      "weight": 1.0
+    },
+    {
+      "source": "src_philosophers_index",
+      "target": "src_philosophers_trios",
+      "relation": "imports_from",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "src/philosophers/index.ts",
+      "source_location": "L17",
       "weight": 1.0
     },
     {
@@ -10569,6 +11834,18 @@
       "confidence_score": 1.0,
       "context": "import",
       "source_file": "src/philosophers/marx.ts",
+      "source_location": "L2",
+      "weight": 1.0
+    },
+    {
+      "source": "src_philosophers_rose",
+      "target": "src_philosophers_rose_style",
+      "relation": "imports_from",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "context": "import",
+      "source_file": "src/philosophers/rose.ts",
       "source_location": "L2",
       "weight": 1.0
     },
@@ -10716,6 +11993,237 @@
       "weight": 1.0
     },
     {
+      "source": "agents",
+      "target": "agents_genealogy_diagram",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "AGENTS.md",
+      "source_location": "L14",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_diagram_style",
+      "target": "docs_diagram_style_node_and_debt_diagram_style_preferences_and_quick_start",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/diagram-style.md",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_diagram_style_node_and_debt_diagram_style_preferences_and_quick_start",
+      "target": "docs_diagram_style_visual_specification_what_the_human_sees",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/diagram-style.md",
+      "source_location": "L107",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_diagram_style_node_and_debt_diagram_style_preferences_and_quick_start",
+      "target": "docs_diagram_style_geometry_specification_what_the_code_may_do",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/diagram-style.md",
+      "source_location": "L115",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_diagram_style_node_and_debt_diagram_style_preferences_and_quick_start",
+      "target": "docs_diagram_style_fixed_dark_cabinet_hard_rule",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/diagram-style.md",
+      "source_location": "L12",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_diagram_style_node_and_debt_diagram_style_preferences_and_quick_start",
+      "target": "docs_diagram_style_data_contract_repo",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/diagram-style.md",
+      "source_location": "L126",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_diagram_style_node_and_debt_diagram_style_preferences_and_quick_start",
+      "target": "docs_diagram_style_access_and_review",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/diagram-style.md",
+      "source_location": "L133",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_diagram_style_node_and_debt_diagram_style_preferences_and_quick_start",
+      "target": "docs_diagram_style_palette_roles_never_hex",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/diagram-style.md",
+      "source_location": "L22",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_diagram_style_node_and_debt_diagram_style_preferences_and_quick_start",
+      "target": "docs_diagram_style_layout_current_instantiation_repo_roles_are_the_spec",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/diagram-style.md",
+      "source_location": "L39",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_diagram_style_node_and_debt_diagram_style_preferences_and_quick_start",
+      "target": "docs_diagram_style_lines_straight_spine_design_the_default",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/diagram-style.md",
+      "source_location": "L55",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_diagram_style_node_and_debt_diagram_style_preferences_and_quick_start",
+      "target": "docs_diagram_style_lines_s_curve_variant_simple_diagrams_only",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/diagram-style.md",
+      "source_location": "L78",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_diagram_style_node_and_debt_diagram_style_preferences_and_quick_start",
+      "target": "docs_diagram_style_priority_order_never_sacrifice_a_higher_rule_for_a_lower_one",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/diagram-style.md",
+      "source_location": "L91",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_family_eval",
+      "target": "docs_family_eval_family_a_b_eval_qwen_first_or_deepseek_first_phase_7",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/family-eval.md",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_family_eval_family_a_b_eval_qwen_first_or_deepseek_first_phase_7",
+      "target": "docs_family_eval_round_1_low_one_run_per_pipe",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/family-eval.md",
+      "source_location": "L18",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_family_eval_family_a_b_eval_qwen_first_or_deepseek_first_phase_7",
+      "target": "docs_family_eval_grade_each_run_from_language_levels_md_trio_rubric",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/family-eval.md",
+      "source_location": "L25",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_family_eval_family_a_b_eval_qwen_first_or_deepseek_first_phase_7",
+      "target": "docs_family_eval_round_2_winner_takes_medium_high",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/family-eval.md",
+      "source_location": "L35",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_family_eval_family_a_b_eval_qwen_first_or_deepseek_first_phase_7",
+      "target": "docs_family_eval_report_back_per_run",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/family-eval.md",
+      "source_location": "L41",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_family_eval_family_a_b_eval_qwen_first_or_deepseek_first_phase_7",
+      "target": "docs_family_eval_auto_metrics_assistants_not_judges_human_grades_rule",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/family-eval.md",
+      "source_location": "L47",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_family_eval_family_a_b_eval_qwen_first_or_deepseek_first_phase_7",
+      "target": "docs_family_eval_the_question_reuse_verbatim_for_every_run",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/family-eval.md",
+      "source_location": "L7",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_influence_grid",
+      "target": "docs_influence_grid_influence_grid_generated",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/influence-grid.md",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_influence_grid_influence_grid_generated",
+      "target": "docs_influence_grid_degree_debts_out_heirs_in_total",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/influence-grid.md",
+      "source_location": "L28",
+      "weight": 1.0
+    },
+    {
       "source": "docs_language_levels",
       "target": "docs_language_levels_language_levels_low_medium_high",
       "relation": "contains",
@@ -10745,7 +12253,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/language-levels.md",
-      "source_location": "L178",
+      "source_location": "L184",
       "weight": 1.0
     },
     {
@@ -10767,7 +12275,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/language-levels.md",
-      "source_location": "L231",
+      "source_location": "L237",
       "weight": 1.0
     },
     {
@@ -10800,7 +12308,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/models-tried.md",
-      "source_location": "L24",
+      "source_location": "L25",
       "weight": 1.0
     },
     {
@@ -11498,13 +13006,13 @@
     },
     {
       "source": "plan_decisions",
-      "target": "plan_api_keys_shared_default_byok_fallback",
+      "target": "plan_length_short_and_punchy",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "PLAN.md",
-      "source_location": "L10",
+      "source_location": "L118",
       "weight": 1.0
     },
     {
@@ -11515,7 +13023,18 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "PLAN.md",
-      "source_location": "L110",
+      "source_location": "L139",
+      "weight": 1.0
+    },
+    {
+      "source": "plan_decisions",
+      "target": "plan_api_keys_shared_default_byok_fallback",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "PLAN.md",
+      "source_location": "L25",
       "weight": 1.0
     },
     {
@@ -11526,7 +13045,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "PLAN.md",
-      "source_location": "L37",
+      "source_location": "L55",
       "weight": 1.0
     },
     {
@@ -11537,7 +13056,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "PLAN.md",
-      "source_location": "L49",
+      "source_location": "L69",
       "weight": 1.0
     },
     {
@@ -11548,7 +13067,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "PLAN.md",
-      "source_location": "L55",
+      "source_location": "L77",
       "weight": 1.0
     },
     {
@@ -11559,18 +13078,29 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "PLAN.md",
-      "source_location": "L60",
+      "source_location": "L84",
       "weight": 1.0
     },
     {
-      "source": "plan_decisions",
-      "target": "plan_length_short_and_punchy",
+      "source": "plan_phase_8_content_agnostic_template_repo_planned_not_yet_scaffolded",
+      "target": "plan_record_keeping_kit_copy_this_whole_block_into_the_template",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "PLAN.md",
-      "source_location": "L91",
+      "source_location": "L622",
+      "weight": 1.0
+    },
+    {
+      "source": "plan_phase_9_rose_seat_in_progress_sep_2026",
+      "target": "plan_style_essence_extraction_prompt_paste_to_research_llm_with_the_texts",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "PLAN.md",
+      "source_location": "L587",
       "weight": 1.0
     },
     {
@@ -11581,7 +13111,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "PLAN.md",
-      "source_location": "L119",
+      "source_location": "L150",
       "weight": 1.0
     },
     {
@@ -11592,62 +13122,18 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "PLAN.md",
-      "source_location": "L132",
+      "source_location": "L163",
       "weight": 1.0
     },
     {
       "source": "plan_the_dialectical_cabinet_implementation_plan",
-      "target": "plan_phase_2_gemini_dialectical_engine_replaces_makemockintervention",
+      "target": "plan_phase_2_gemini_dialectical_engine_replaces_makemockintervention_shipped_live",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "PLAN.md",
-      "source_location": "L147",
-      "weight": 1.0
-    },
-    {
-      "source": "plan_the_dialectical_cabinet_implementation_plan",
-      "target": "plan_phase_3_export_rewrite",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "PLAN.md",
-      "source_location": "L329",
-      "weight": 1.0
-    },
-    {
-      "source": "plan_the_dialectical_cabinet_implementation_plan",
-      "target": "plan_phase_4_accessibility_display",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "PLAN.md",
-      "source_location": "L337",
-      "weight": 1.0
-    },
-    {
-      "source": "plan_the_dialectical_cabinet_implementation_plan",
-      "target": "plan_phase_5_rag_v1_lexical_live_vectors_deferred",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "PLAN.md",
-      "source_location": "L349",
-      "weight": 1.0
-    },
-    {
-      "source": "plan_the_dialectical_cabinet_implementation_plan",
-      "target": "plan_phase_6_richer_philosopher_information_shipped_sep_2026",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "PLAN.md",
-      "source_location": "L419",
+      "source_location": "L179",
       "weight": 1.0
     },
     {
@@ -11658,7 +13144,117 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "PLAN.md",
-      "source_location": "L8",
+      "source_location": "L23",
+      "weight": 1.0
+    },
+    {
+      "source": "plan_the_dialectical_cabinet_implementation_plan",
+      "target": "plan_phase_3_export_rewrite_shipped",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "PLAN.md",
+      "source_location": "L391",
+      "weight": 1.0
+    },
+    {
+      "source": "plan_the_dialectical_cabinet_implementation_plan",
+      "target": "plan_phase_4_accessibility_display_shipped_layer_on_top_holds",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "PLAN.md",
+      "source_location": "L401",
+      "weight": 1.0
+    },
+    {
+      "source": "plan_the_dialectical_cabinet_implementation_plan",
+      "target": "plan_phase_5_rag_v1_lexical_live_vectors_deferred_shipped_eval_12_12",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "PLAN.md",
+      "source_location": "L415",
+      "weight": 1.0
+    },
+    {
+      "source": "plan_the_dialectical_cabinet_implementation_plan",
+      "target": "plan_phase_6_richer_philosopher_information_shipped_sep_2026",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "PLAN.md",
+      "source_location": "L485",
+      "weight": 1.0
+    },
+    {
+      "source": "plan_the_dialectical_cabinet_implementation_plan",
+      "target": "plan_phase_7_model_family_a_b_qwen_first_or_deepseek_first_open_sep_2026",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "PLAN.md",
+      "source_location": "L496",
+      "weight": 1.0
+    },
+    {
+      "source": "plan_the_dialectical_cabinet_implementation_plan",
+      "target": "plan_phase_7b_auto_metrics_for_low_med_high_read_all_three_repos_sep_2026",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "PLAN.md",
+      "source_location": "L530",
+      "weight": 1.0
+    },
+    {
+      "source": "plan_the_dialectical_cabinet_implementation_plan",
+      "target": "plan_phase_9_rose_seat_in_progress_sep_2026",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "PLAN.md",
+      "source_location": "L552",
+      "weight": 1.0
+    },
+    {
+      "source": "plan_the_dialectical_cabinet_implementation_plan",
+      "target": "plan_checklist",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "PLAN.md",
+      "source_location": "L6",
+      "weight": 1.0
+    },
+    {
+      "source": "plan_the_dialectical_cabinet_implementation_plan",
+      "target": "plan_phase_8_content_agnostic_template_repo_planned_not_yet_scaffolded",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "PLAN.md",
+      "source_location": "L606",
+      "weight": 1.0
+    },
+    {
+      "source": "plan_the_dialectical_cabinet_implementation_plan",
+      "target": "plan_missing_features_backlog_considered_not_yet_scheduled",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "PLAN.md",
+      "source_location": "L653",
       "weight": 1.0
     },
     {
@@ -11751,13 +13347,13 @@
     },
     {
       "source": "readme_the_dialectical_cabinet",
-      "target": "readme_quotas_the_honest_version",
+      "target": "readme_quotas",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "README.md",
-      "source_location": "L33",
+      "source_location": "L34",
       "weight": 1.0
     },
     {
@@ -11768,18 +13364,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "README.md",
-      "source_location": "L42",
-      "weight": 1.0
-    },
-    {
-      "source": "readme_the_dialectical_cabinet",
-      "target": "readme_run_it_yourself_developers",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "README.md",
-      "source_location": "L49",
+      "source_location": "L43",
       "weight": 1.0
     },
     {
@@ -11791,6 +13376,105 @@
       "confidence_score": 1.0,
       "source_file": "README.md",
       "source_location": "L5",
+      "weight": 1.0
+    },
+    {
+      "source": "readme_the_dialectical_cabinet",
+      "target": "readme_run_it_yourself_developers",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "README.md",
+      "source_location": "L50",
+      "weight": 1.0
+    },
+    {
+      "source": "scripts_check_diagram_contrast",
+      "target": "scripts_check_diagram_contrast_pairs",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "scripts/check-diagram-contrast.mjs",
+      "source_location": "L10",
+      "weight": 1.0
+    },
+    {
+      "source": "scripts_check_diagram_contrast",
+      "target": "scripts_check_diagram_contrast_luminance",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "scripts/check-diagram-contrast.mjs",
+      "source_location": "L23",
+      "weight": 1.0
+    },
+    {
+      "source": "scripts_check_diagram_contrast",
+      "target": "scripts_check_diagram_contrast_ratio",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "scripts/check-diagram-contrast.mjs",
+      "source_location": "L33",
+      "weight": 1.0
+    },
+    {
+      "source": "scripts_check_diagram_geometry",
+      "target": "scripts_check_diagram_geometry_overlapfrac",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "scripts/check-diagram-geometry.mjs",
+      "source_location": "L107",
+      "weight": 1.0
+    },
+    {
+      "source": "scripts_check_diagram_geometry",
+      "target": "scripts_check_diagram_geometry_edges",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "scripts/check-diagram-geometry.mjs",
+      "source_location": "L28",
+      "weight": 1.0
+    },
+    {
+      "source": "scripts_check_diagram_geometry",
+      "target": "scripts_check_diagram_geometry_samplepath",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "scripts/check-diagram-geometry.mjs",
+      "source_location": "L34",
+      "weight": 1.0
+    },
+    {
+      "source": "scripts_check_diagram_geometry",
+      "target": "scripts_check_diagram_geometry_paths",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "scripts/check-diagram-geometry.mjs",
+      "source_location": "L55",
+      "weight": 1.0
+    },
+    {
+      "source": "scripts_check_diagram_geometry",
+      "target": "scripts_check_diagram_geometry_fail",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "scripts/check-diagram-geometry.mjs",
+      "source_location": "L63",
       "weight": 1.0
     },
     {
@@ -11912,6 +13596,83 @@
       "confidence_score": 1.0,
       "source_file": "scripts/dev-keepalive.sh",
       "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "scripts_influence_grid",
+      "target": "scripts_influence_grid_order",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "scripts/influence-grid.mjs",
+      "source_location": "L15",
+      "weight": 1.0
+    },
+    {
+      "source": "scripts_influence_grid",
+      "target": "scripts_influence_grid_name",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "scripts/influence-grid.mjs",
+      "source_location": "L19",
+      "weight": 1.0
+    },
+    {
+      "source": "scripts_influence_grid",
+      "target": "scripts_influence_grid_known",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "scripts/influence-grid.mjs",
+      "source_location": "L25",
+      "weight": 1.0
+    },
+    {
+      "source": "scripts_influence_grid",
+      "target": "scripts_influence_grid_code",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "scripts/influence-grid.mjs",
+      "source_location": "L37",
+      "weight": 1.0
+    },
+    {
+      "source": "scripts_influence_grid",
+      "target": "scripts_influence_grid_cell",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "scripts/influence-grid.mjs",
+      "source_location": "L43",
+      "weight": 1.0
+    },
+    {
+      "source": "scripts_influence_grid",
+      "target": "scripts_influence_grid_rows",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "scripts/influence-grid.mjs",
+      "source_location": "L54",
+      "weight": 1.0
+    },
+    {
+      "source": "scripts_influence_grid",
+      "target": "scripts_influence_grid_counts",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "scripts/influence-grid.mjs",
+      "source_location": "L58",
       "weight": 1.0
     },
     {
@@ -12604,7 +14365,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/App.tsx",
-      "source_location": "L1178",
+      "source_location": "L1194",
       "weight": 1.0
     },
     {
@@ -12615,7 +14376,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/App.tsx",
-      "source_location": "L1308",
+      "source_location": "L1324",
       "weight": 1.0
     },
     {
@@ -12626,7 +14387,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/App.tsx",
-      "source_location": "L1312",
+      "source_location": "L1328",
       "weight": 1.0
     },
     {
@@ -12637,7 +14398,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/App.tsx",
-      "source_location": "L1314",
+      "source_location": "L1330",
       "weight": 1.0
     },
     {
@@ -12648,7 +14409,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/App.tsx",
-      "source_location": "L1316",
+      "source_location": "L1332",
       "weight": 1.0
     },
     {
@@ -12659,7 +14420,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/App.tsx",
-      "source_location": "L1340",
+      "source_location": "L1356",
       "weight": 1.0
     },
     {
@@ -12670,18 +14431,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/App.tsx",
-      "source_location": "L1357",
-      "weight": 1.0
-    },
-    {
-      "source": "src_app",
-      "target": "src_app_displaytab",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "src/App.tsx",
-      "source_location": "L1570",
+      "source_location": "L1373",
       "weight": 1.0
     },
     {
@@ -12693,6 +14443,17 @@
       "confidence_score": 1.0,
       "source_file": "src/App.tsx",
       "source_location": "L158",
+      "weight": 1.0
+    },
+    {
+      "source": "src_app",
+      "target": "src_app_displaytab",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/App.tsx",
+      "source_location": "L1592",
       "weight": 1.0
     },
     {
@@ -12714,7 +14475,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/App.tsx",
-      "source_location": "L1694",
+      "source_location": "L1716",
       "weight": 1.0
     },
     {
@@ -12725,7 +14486,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/App.tsx",
-      "source_location": "L1704",
+      "source_location": "L1726",
       "weight": 1.0
     },
     {
@@ -12736,7 +14497,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/App.tsx",
-      "source_location": "L1709",
+      "source_location": "L1731",
       "weight": 1.0
     },
     {
@@ -12747,7 +14508,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/App.tsx",
-      "source_location": "L1711",
+      "source_location": "L1733",
       "weight": 1.0
     },
     {
@@ -12758,7 +14519,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/App.tsx",
-      "source_location": "L1712",
+      "source_location": "L1734",
       "weight": 1.0
     },
     {
@@ -12796,35 +14557,35 @@
     },
     {
       "source": "src_components_genealogymap",
+      "target": "src_components_genealogymap_edge",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/components/GenealogyMap.tsx",
+      "source_location": "L15",
+      "weight": 1.0
+    },
+    {
+      "source": "src_components_genealogymap",
       "target": "src_components_genealogymap_all_edges",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/components/GenealogyMap.tsx",
-      "source_location": "L12",
+      "source_location": "L20",
       "weight": 1.0
     },
     {
       "source": "src_components_genealogymap",
-      "target": "src_components_genealogymap_pos",
+      "target": "src_components_genealogymap_edgestyle",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/components/GenealogyMap.tsx",
-      "source_location": "L24",
-      "weight": 1.0
-    },
-    {
-      "source": "src_components_genealogymap",
-      "target": "src_components_genealogymap_row_y",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "src/components/GenealogyMap.tsx",
-      "source_location": "L38",
+      "source_location": "L30",
       "weight": 1.0
     },
     {
@@ -12835,7 +14596,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/components/GenealogyMap.tsx",
-      "source_location": "L41",
+      "source_location": "L47",
       "weight": 1.0
     },
     {
@@ -12846,7 +14607,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/components/GenealogyMap.tsx",
-      "source_location": "L42",
+      "source_location": "L48",
       "weight": 1.0
     },
     {
@@ -12857,18 +14618,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/components/GenealogyMap.tsx",
-      "source_location": "L46",
-      "weight": 1.0
-    },
-    {
-      "source": "src_components_genealogymap",
-      "target": "src_components_genealogymap_edge",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "src/components/GenealogyMap.tsx",
-      "source_location": "L5",
+      "source_location": "L52",
       "weight": 1.0
     },
     {
@@ -12879,7 +14629,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/components/GenealogyMap.tsx",
-      "source_location": "L52",
+      "source_location": "L58",
       "weight": 1.0
     },
     {
@@ -12890,29 +14640,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/components/GenealogyMap.tsx",
-      "source_location": "L55",
-      "weight": 1.0
-    },
-    {
-      "source": "src_components_genealogymap",
-      "target": "src_components_genealogymap_nodepos",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "src/components/GenealogyMap.tsx",
-      "source_location": "L59",
-      "weight": 1.0
-    },
-    {
-      "source": "src_components_genealogymap",
-      "target": "src_components_genealogymap_edgepath",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "src/components/GenealogyMap.tsx",
-      "source_location": "L63",
+      "source_location": "L61",
       "weight": 1.0
     },
     {
@@ -12923,7 +14651,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/components/GenealogyMap.tsx",
-      "source_location": "L78",
+      "source_location": "L65",
       "weight": 1.0
     },
     {
@@ -12983,24 +14711,13 @@
     },
     {
       "source": "src_lib_deepinfra",
-      "target": "src_lib_deepinfra_deepinfra_model",
+      "target": "src_lib_deepinfra_postdeepinfra",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/lib/deepinfra.ts",
-      "source_location": "L15",
-      "weight": 1.0
-    },
-    {
-      "source": "src_lib_deepinfra",
-      "target": "src_lib_deepinfra_deepinfra_model_backup",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "src/lib/deepinfra.ts",
-      "source_location": "L16",
+      "source_location": "L104",
       "weight": 1.0
     },
     {
@@ -13011,12 +14728,34 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/lib/deepinfra.ts",
-      "source_location": "L160",
+      "source_location": "L169",
       "weight": 1.0
     },
     {
       "source": "src_lib_deepinfra",
-      "target": "src_lib_deepinfra_lastdeepinframodel",
+      "target": "src_lib_deepinfra_deepinfra_model",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/lib/deepinfra.ts",
+      "source_location": "L17",
+      "weight": 1.0
+    },
+    {
+      "source": "src_lib_deepinfra",
+      "target": "src_lib_deepinfra_deepinfra_model_qwen",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/lib/deepinfra.ts",
+      "source_location": "L18",
+      "weight": 1.0
+    },
+    {
+      "source": "src_lib_deepinfra",
+      "target": "src_lib_deepinfra_deepinfra_model_backup",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
@@ -13033,34 +14772,12 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/lib/deepinfra.ts",
-      "source_location": "L195",
+      "source_location": "L205",
       "weight": 1.0
     },
     {
       "source": "src_lib_deepinfra",
-      "target": "src_lib_deepinfra_deepinfra_max_tokens",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "src/lib/deepinfra.ts",
-      "source_location": "L20",
-      "weight": 1.0
-    },
-    {
-      "source": "src_lib_deepinfra",
-      "target": "src_lib_deepinfra_testdeepinfrakey",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "src/lib/deepinfra.ts",
-      "source_location": "L210",
-      "weight": 1.0
-    },
-    {
-      "source": "src_lib_deepinfra",
-      "target": "src_lib_deepinfra_deepinfraturnargs",
+      "target": "src_lib_deepinfra_resolvedeepinfraprimary",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
@@ -13071,13 +14788,57 @@
     },
     {
       "source": "src_lib_deepinfra",
+      "target": "src_lib_deepinfra_testdeepinfrakey",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/lib/deepinfra.ts",
+      "source_location": "L221",
+      "weight": 1.0
+    },
+    {
+      "source": "src_lib_deepinfra",
+      "target": "src_lib_deepinfra_lastdeepinframodel",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/lib/deepinfra.ts",
+      "source_location": "L27",
+      "weight": 1.0
+    },
+    {
+      "source": "src_lib_deepinfra",
+      "target": "src_lib_deepinfra_deepinfra_max_tokens",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/lib/deepinfra.ts",
+      "source_location": "L28",
+      "weight": 1.0
+    },
+    {
+      "source": "src_lib_deepinfra",
+      "target": "src_lib_deepinfra_deepinfraturnargs",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/lib/deepinfra.ts",
+      "source_location": "L30",
+      "weight": 1.0
+    },
+    {
+      "source": "src_lib_deepinfra",
       "target": "src_lib_deepinfra_deepinfraerror",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/lib/deepinfra.ts",
-      "source_location": "L29",
+      "source_location": "L38",
       "weight": 1.0
     },
     {
@@ -13088,7 +14849,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/lib/deepinfra.ts",
-      "source_location": "L67",
+      "source_location": "L76",
       "weight": 1.0
     },
     {
@@ -13099,7 +14860,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/lib/deepinfra.ts",
-      "source_location": "L80",
+      "source_location": "L89",
       "weight": 1.0
     },
     {
@@ -13110,7 +14871,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/lib/deepinfra.ts",
-      "source_location": "L85",
+      "source_location": "L94",
       "weight": 1.0
     },
     {
@@ -13121,18 +14882,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/lib/deepinfra.ts",
-      "source_location": "L87",
-      "weight": 1.0
-    },
-    {
-      "source": "src_lib_deepinfra",
-      "target": "src_lib_deepinfra_postdeepinfra",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "src/lib/deepinfra.ts",
-      "source_location": "L95",
+      "source_location": "L96",
       "weight": 1.0
     },
     {
@@ -13143,7 +14893,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/lib/dialectic/prompts.ts",
-      "source_location": "L156",
+      "source_location": "L159",
       "weight": 1.0
     },
     {
@@ -13154,7 +14904,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/lib/dialectic/prompts.ts",
-      "source_location": "L174",
+      "source_location": "L179",
       "weight": 1.0
     },
     {
@@ -13165,7 +14915,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/lib/dialectic/prompts.ts",
-      "source_location": "L221",
+      "source_location": "L230",
       "weight": 1.0
     },
     {
@@ -13176,7 +14926,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/lib/dialectic/prompts.ts",
-      "source_location": "L224",
+      "source_location": "L233",
       "weight": 1.0
     },
     {
@@ -13187,7 +14937,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/lib/dialectic/prompts.ts",
-      "source_location": "L238",
+      "source_location": "L247",
       "weight": 1.0
     },
     {
@@ -13198,7 +14948,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/lib/dialectic/prompts.ts",
-      "source_location": "L244",
+      "source_location": "L253",
       "weight": 1.0
     },
     {
@@ -13209,7 +14959,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/lib/dialectic/prompts.ts",
-      "source_location": "L25",
+      "source_location": "L27",
       "weight": 1.0
     },
     {
@@ -13220,18 +14970,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/lib/dialectic/prompts.ts",
-      "source_location": "L262",
-      "weight": 1.0
-    },
-    {
-      "source": "src_lib_dialectic_prompts",
-      "target": "src_lib_dialectic_prompts_word_budgets",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "src/lib/dialectic/prompts.ts",
-      "source_location": "L27",
+      "source_location": "L271",
       "weight": 1.0
     },
     {
@@ -13242,7 +14981,18 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/lib/dialectic/prompts.ts",
-      "source_location": "L273",
+      "source_location": "L282",
+      "weight": 1.0
+    },
+    {
+      "source": "src_lib_dialectic_prompts",
+      "target": "src_lib_dialectic_prompts_word_budgets",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/lib/dialectic/prompts.ts",
+      "source_location": "L29",
       "weight": 1.0
     },
     {
@@ -13253,7 +15003,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/lib/dialectic/prompts.ts",
-      "source_location": "L32",
+      "source_location": "L34",
       "weight": 1.0
     },
     {
@@ -13264,7 +15014,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/lib/dialectic/prompts.ts",
-      "source_location": "L35",
+      "source_location": "L37",
       "weight": 1.0
     },
     {
@@ -13275,7 +15025,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/lib/dialectic/prompts.ts",
-      "source_location": "L41",
+      "source_location": "L43",
       "weight": 1.0
     },
     {
@@ -13286,7 +15036,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/lib/dialectic/prompts.ts",
-      "source_location": "L70",
+      "source_location": "L72",
       "weight": 1.0
     },
     {
@@ -13441,6 +15191,193 @@
       "confidence_score": 1.0,
       "source_file": "src/lib/footnotes.ts",
       "source_location": "L52",
+      "weight": 1.0
+    },
+    {
+      "source": "src_lib_genealogy_layout",
+      "target": "src_lib_genealogy_layout_braidphase",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/lib/genealogy-layout.ts",
+      "source_location": "L105",
+      "weight": 1.0
+    },
+    {
+      "source": "src_lib_genealogy_layout",
+      "target": "src_lib_genealogy_layout_left_corridor_proto",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/lib/genealogy-layout.ts",
+      "source_location": "L115",
+      "weight": 1.0
+    },
+    {
+      "source": "src_lib_genealogy_layout",
+      "target": "src_lib_genealogy_layout_leftcorridorrank",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/lib/genealogy-layout.ts",
+      "source_location": "L121",
+      "weight": 1.0
+    },
+    {
+      "source": "src_lib_genealogy_layout",
+      "target": "src_lib_genealogy_layout_gen_rim_points",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/lib/genealogy-layout.ts",
+      "source_location": "L138",
+      "weight": 1.0
+    },
+    {
+      "source": "src_lib_genealogy_layout",
+      "target": "src_lib_genealogy_layout_gen_w",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/lib/genealogy-layout.ts",
+      "source_location": "L14",
+      "weight": 1.0
+    },
+    {
+      "source": "src_lib_genealogy_layout",
+      "target": "src_lib_genealogy_layout_gen_node_r",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/lib/genealogy-layout.ts",
+      "source_location": "L15",
+      "weight": 1.0
+    },
+    {
+      "source": "src_lib_genealogy_layout",
+      "target": "src_lib_genealogy_layout_gen_spine_x",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/lib/genealogy-layout.ts",
+      "source_location": "L16",
+      "weight": 1.0
+    },
+    {
+      "source": "src_lib_genealogy_layout",
+      "target": "src_lib_genealogy_layout_gen_bow_extra",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/lib/genealogy-layout.ts",
+      "source_location": "L164",
+      "weight": 1.0
+    },
+    {
+      "source": "src_lib_genealogy_layout",
+      "target": "src_lib_genealogy_layout_genedgepath",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/lib/genealogy-layout.ts",
+      "source_location": "L176",
+      "weight": 1.0
+    },
+    {
+      "source": "src_lib_genealogy_layout",
+      "target": "src_lib_genealogy_layout_gen_rim",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/lib/genealogy-layout.ts",
+      "source_location": "L20",
+      "weight": 1.0
+    },
+    {
+      "source": "src_lib_genealogy_layout",
+      "target": "src_lib_genealogy_layout_gen_pos",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/lib/genealogy-layout.ts",
+      "source_location": "L22",
+      "weight": 1.0
+    },
+    {
+      "source": "src_lib_genealogy_layout",
+      "target": "src_lib_genealogy_layout_gennodepos",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/lib/genealogy-layout.ts",
+      "source_location": "L37",
+      "weight": 1.0
+    },
+    {
+      "source": "src_lib_genealogy_layout",
+      "target": "src_lib_genealogy_layout_genlateralshift",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/lib/genealogy-layout.ts",
+      "source_location": "L45",
+      "weight": 1.0
+    },
+    {
+      "source": "src_lib_genealogy_layout",
+      "target": "src_lib_genealogy_layout_gentrackrank",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/lib/genealogy-layout.ts",
+      "source_location": "L70",
+      "weight": 1.0
+    },
+    {
+      "source": "src_lib_genealogy_layout",
+      "target": "src_lib_genealogy_layout_geomedge",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/lib/genealogy-layout.ts",
+      "source_location": "L8",
+      "weight": 1.0
+    },
+    {
+      "source": "src_lib_genealogy_layout",
+      "target": "src_lib_genealogy_layout_straight_spines",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/lib/genealogy-layout.ts",
+      "source_location": "L89",
+      "weight": 1.0
+    },
+    {
+      "source": "src_lib_genealogy_layout",
+      "target": "src_lib_genealogy_layout_braidlane",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/lib/genealogy-layout.ts",
+      "source_location": "L94",
       "weight": 1.0
     },
     {
@@ -13654,189 +15591,13 @@
     },
     {
       "source": "src_lib_openrouter",
-      "target": "src_lib_openrouter_extractdetail",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "src/lib/openrouter.ts",
-      "source_location": "L171",
-      "weight": 1.0
-    },
-    {
-      "source": "src_lib_openrouter",
-      "target": "src_lib_openrouter_sleep",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "src/lib/openrouter.ts",
-      "source_location": "L188",
-      "weight": 1.0
-    },
-    {
-      "source": "src_lib_openrouter",
-      "target": "src_lib_openrouter_stripfences",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "src/lib/openrouter.ts",
-      "source_location": "L190",
-      "weight": 1.0
-    },
-    {
-      "source": "src_lib_openrouter",
-      "target": "src_lib_openrouter_fetchmodeltext",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "src/lib/openrouter.ts",
-      "source_location": "L195",
-      "weight": 1.0
-    },
-    {
-      "source": "src_lib_openrouter",
-      "target": "src_lib_openrouter_free_model_cycle",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "src/lib/openrouter.ts",
-      "source_location": "L23",
-      "weight": 1.0
-    },
-    {
-      "source": "src_lib_openrouter",
-      "target": "src_lib_openrouter_attemptmodel",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "src/lib/openrouter.ts",
-      "source_location": "L277",
-      "weight": 1.0
-    },
-    {
-      "source": "src_lib_openrouter",
-      "target": "src_lib_openrouter_statusisretryablemodel",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "src/lib/openrouter.ts",
-      "source_location": "L294",
-      "weight": 1.0
-    },
-    {
-      "source": "src_lib_openrouter",
-      "target": "src_lib_openrouter_isfailfast",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "src/lib/openrouter.ts",
-      "source_location": "L298",
-      "weight": 1.0
-    },
-    {
-      "source": "src_lib_openrouter",
-      "target": "src_lib_openrouter_generateturnopenrouter",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "src/lib/openrouter.ts",
-      "source_location": "L302",
-      "weight": 1.0
-    },
-    {
-      "source": "src_lib_openrouter",
-      "target": "src_lib_openrouter_generatetextopenrouter",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "src/lib/openrouter.ts",
-      "source_location": "L408",
-      "weight": 1.0
-    },
-    {
-      "source": "src_lib_openrouter",
-      "target": "src_lib_openrouter_testopenrouterkey",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "src/lib/openrouter.ts",
-      "source_location": "L459",
-      "weight": 1.0
-    },
-    {
-      "source": "src_lib_openrouter",
-      "target": "src_lib_openrouter_free_router_fallback",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "src/lib/openrouter.ts",
-      "source_location": "L48",
-      "weight": 1.0
-    },
-    {
-      "source": "src_lib_openrouter",
-      "target": "src_lib_openrouter_loadlastgood",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "src/lib/openrouter.ts",
-      "source_location": "L50",
-      "weight": 1.0
-    },
-    {
-      "source": "src_lib_openrouter",
-      "target": "src_lib_openrouter_savelastgood",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "src/lib/openrouter.ts",
-      "source_location": "L60",
-      "weight": 1.0
-    },
-    {
-      "source": "src_lib_openrouter",
-      "target": "src_lib_openrouter_orderedcycle",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "src/lib/openrouter.ts",
-      "source_location": "L70",
-      "weight": 1.0
-    },
-    {
-      "source": "src_lib_openrouter",
-      "target": "src_lib_openrouter_openrouterturnargs",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "src/lib/openrouter.ts",
-      "source_location": "L78",
-      "weight": 1.0
-    },
-    {
-      "source": "src_lib_openrouter",
       "target": "src_lib_openrouter_or_max_tokens",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/lib/openrouter.ts",
-      "source_location": "L91",
+      "source_location": "L108",
       "weight": 1.0
     },
     {
@@ -13847,7 +15608,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/lib/openrouter.ts",
-      "source_location": "L93",
+      "source_location": "L110",
       "weight": 1.0
     },
     {
@@ -13858,7 +15619,183 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/lib/openrouter.ts",
-      "source_location": "L97",
+      "source_location": "L114",
+      "weight": 1.0
+    },
+    {
+      "source": "src_lib_openrouter",
+      "target": "src_lib_openrouter_extractdetail",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/lib/openrouter.ts",
+      "source_location": "L188",
+      "weight": 1.0
+    },
+    {
+      "source": "src_lib_openrouter",
+      "target": "src_lib_openrouter_sleep",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/lib/openrouter.ts",
+      "source_location": "L205",
+      "weight": 1.0
+    },
+    {
+      "source": "src_lib_openrouter",
+      "target": "src_lib_openrouter_stripfences",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/lib/openrouter.ts",
+      "source_location": "L207",
+      "weight": 1.0
+    },
+    {
+      "source": "src_lib_openrouter",
+      "target": "src_lib_openrouter_fetchmodeltext",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/lib/openrouter.ts",
+      "source_location": "L212",
+      "weight": 1.0
+    },
+    {
+      "source": "src_lib_openrouter",
+      "target": "src_lib_openrouter_attemptmodel",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/lib/openrouter.ts",
+      "source_location": "L294",
+      "weight": 1.0
+    },
+    {
+      "source": "src_lib_openrouter",
+      "target": "src_lib_openrouter_statusisretryablemodel",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/lib/openrouter.ts",
+      "source_location": "L311",
+      "weight": 1.0
+    },
+    {
+      "source": "src_lib_openrouter",
+      "target": "src_lib_openrouter_isfailfast",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/lib/openrouter.ts",
+      "source_location": "L315",
+      "weight": 1.0
+    },
+    {
+      "source": "src_lib_openrouter",
+      "target": "src_lib_openrouter_generateturnopenrouter",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/lib/openrouter.ts",
+      "source_location": "L319",
+      "weight": 1.0
+    },
+    {
+      "source": "src_lib_openrouter",
+      "target": "src_lib_openrouter_free_model_cycle",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/lib/openrouter.ts",
+      "source_location": "L35",
+      "weight": 1.0
+    },
+    {
+      "source": "src_lib_openrouter",
+      "target": "src_lib_openrouter_generatetextopenrouter",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/lib/openrouter.ts",
+      "source_location": "L425",
+      "weight": 1.0
+    },
+    {
+      "source": "src_lib_openrouter",
+      "target": "src_lib_openrouter_testopenrouterkey",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/lib/openrouter.ts",
+      "source_location": "L476",
+      "weight": 1.0
+    },
+    {
+      "source": "src_lib_openrouter",
+      "target": "src_lib_openrouter_free_router_fallback",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/lib/openrouter.ts",
+      "source_location": "L64",
+      "weight": 1.0
+    },
+    {
+      "source": "src_lib_openrouter",
+      "target": "src_lib_openrouter_loadlastgood",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/lib/openrouter.ts",
+      "source_location": "L66",
+      "weight": 1.0
+    },
+    {
+      "source": "src_lib_openrouter",
+      "target": "src_lib_openrouter_savelastgood",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/lib/openrouter.ts",
+      "source_location": "L76",
+      "weight": 1.0
+    },
+    {
+      "source": "src_lib_openrouter",
+      "target": "src_lib_openrouter_orderedcycle",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/lib/openrouter.ts",
+      "source_location": "L86",
+      "weight": 1.0
+    },
+    {
+      "source": "src_lib_openrouter",
+      "target": "src_lib_openrouter_openrouterturnargs",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/lib/openrouter.ts",
+      "source_location": "L95",
       "weight": 1.0
     },
     {
@@ -14457,6 +16394,17 @@
     },
     {
       "source": "src_lib_service_chat",
+      "target": "src_lib_service_chat_generateservicetext",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/lib/service-chat.ts",
+      "source_location": "L106",
+      "weight": 1.0
+    },
+    {
+      "source": "src_lib_service_chat",
       "target": "src_lib_service_chat_service_max_questions",
       "relation": "contains",
       "_origin": "ast",
@@ -14518,18 +16466,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/lib/service-chat.ts",
-      "source_location": "L75",
-      "weight": 1.0
-    },
-    {
-      "source": "src_lib_service_chat",
-      "target": "src_lib_service_chat_generateservicetext",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "src/lib/service-chat.ts",
-      "source_location": "L98",
+      "source_location": "L82",
       "weight": 1.0
     },
     {
@@ -14545,13 +16482,46 @@
     },
     {
       "source": "src_lib_settings",
+      "target": "src_lib_settings_clearapikey",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/lib/settings.ts",
+      "source_location": "L100",
+      "weight": 1.0
+    },
+    {
+      "source": "src_lib_settings",
+      "target": "src_lib_settings_deepinfraprimary",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/lib/settings.ts",
+      "source_location": "L13",
+      "weight": 1.0
+    },
+    {
+      "source": "src_lib_settings",
+      "target": "src_lib_settings_deepinfra_primaries",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/lib/settings.ts",
+      "source_location": "L15",
+      "weight": 1.0
+    },
+    {
+      "source": "src_lib_settings",
       "target": "src_lib_settings_turneconomy",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/lib/settings.ts",
-      "source_location": "L12",
+      "source_location": "L20",
       "weight": 1.0
     },
     {
@@ -14562,7 +16532,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/lib/settings.ts",
-      "source_location": "L14",
+      "source_location": "L22",
       "weight": 1.0
     },
     {
@@ -14573,7 +16543,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/lib/settings.ts",
-      "source_location": "L16",
+      "source_location": "L24",
       "weight": 1.0
     },
     {
@@ -14595,7 +16565,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/lib/settings.ts",
-      "source_location": "L36",
+      "source_location": "L45",
       "weight": 1.0
     },
     {
@@ -14617,7 +16587,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/lib/settings.ts",
-      "source_location": "L51",
+      "source_location": "L61",
       "weight": 1.0
     },
     {
@@ -14628,18 +16598,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/lib/settings.ts",
-      "source_location": "L81",
-      "weight": 1.0
-    },
-    {
-      "source": "src_lib_settings",
-      "target": "src_lib_settings_clearapikey",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "src/lib/settings.ts",
-      "source_location": "L89",
+      "source_location": "L92",
       "weight": 1.0
     },
     {
@@ -15200,7 +17159,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/philosophers/index.ts",
-      "source_location": "L18",
+      "source_location": "L19",
       "weight": 1.0
     },
     {
@@ -15211,7 +17170,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/philosophers/index.ts",
-      "source_location": "L24",
+      "source_location": "L25",
       "weight": 1.0
     },
     {
@@ -15222,7 +17181,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/philosophers/index.ts",
-      "source_location": "L28",
+      "source_location": "L29",
       "weight": 1.0
     },
     {
@@ -15233,7 +17192,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/philosophers/index.ts",
-      "source_location": "L30",
+      "source_location": "L31",
       "weight": 1.0
     },
     {
@@ -15244,40 +17203,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/philosophers/index.ts",
-      "source_location": "L39",
-      "weight": 1.0
-    },
-    {
-      "source": "src_philosophers_influences",
-      "target": "src_philosophers_influences_cabinetheirs",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "src/philosophers/influences.ts",
-      "source_location": "L103",
-      "weight": 1.0
-    },
-    {
-      "source": "src_philosophers_influences",
-      "target": "src_philosophers_influences_cabinetdebt",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "src/philosophers/influences.ts",
-      "source_location": "L34",
-      "weight": 1.0
-    },
-    {
-      "source": "src_philosophers_influences",
-      "target": "src_philosophers_influences_cabinet_debts",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "src/philosophers/influences.ts",
-      "source_location": "L41",
+      "source_location": "L40",
       "weight": 1.0
     },
     {
@@ -15288,7 +17214,73 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/philosophers/influences.ts",
-      "source_location": "L95",
+      "source_location": "L150",
+      "weight": 1.0
+    },
+    {
+      "source": "src_philosophers_influences",
+      "target": "src_philosophers_influences_cabinetheirs",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/philosophers/influences.ts",
+      "source_location": "L159",
+      "weight": 1.0
+    },
+    {
+      "source": "src_philosophers_influences",
+      "target": "src_philosophers_influences_relationshipline",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/philosophers/influences.ts",
+      "source_location": "L177",
+      "weight": 1.0
+    },
+    {
+      "source": "src_philosophers_influences",
+      "target": "src_philosophers_influences_tablestancesline",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/philosophers/influences.ts",
+      "source_location": "L204",
+      "weight": 1.0
+    },
+    {
+      "source": "src_philosophers_influences",
+      "target": "src_philosophers_influences_debtstance",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/philosophers/influences.ts",
+      "source_location": "L51",
+      "weight": 1.0
+    },
+    {
+      "source": "src_philosophers_influences",
+      "target": "src_philosophers_influences_cabinetdebt",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/philosophers/influences.ts",
+      "source_location": "L53",
+      "weight": 1.0
+    },
+    {
+      "source": "src_philosophers_influences",
+      "target": "src_philosophers_influences_cabinet_debts",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/philosophers/influences.ts",
+      "source_location": "L66",
       "weight": 1.0
     },
     {
@@ -15358,6 +17350,28 @@
       "weight": 1.0
     },
     {
+      "source": "src_philosophers_rose",
+      "target": "src_philosophers_rose_rose",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/philosophers/rose.ts",
+      "source_location": "L4",
+      "weight": 1.0
+    },
+    {
+      "source": "src_philosophers_rose_style",
+      "target": "src_philosophers_rose_style_rose_style",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/philosophers/rose.style.ts",
+      "source_location": "L6",
+      "weight": 1.0
+    },
+    {
       "source": "src_philosophers_shared_anti_waffle",
       "target": "src_philosophers_shared_anti_waffle_anti_waffle_rules",
       "relation": "contains",
@@ -15365,18 +17379,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/philosophers/shared/anti-waffle.ts",
-      "source_location": "L55",
-      "weight": 1.0
-    },
-    {
-      "source": "src_philosophers_shared_anti_waffle",
-      "target": "src_philosophers_shared_anti_waffle_dialectical_materialism_frame",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "src/philosophers/shared/anti-waffle.ts",
-      "source_location": "L68",
+      "source_location": "L58",
       "weight": 1.0
     },
     {
@@ -15392,13 +17395,24 @@
     },
     {
       "source": "src_philosophers_shared_anti_waffle",
+      "target": "src_philosophers_shared_anti_waffle_dialectical_materialism_frame",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/philosophers/shared/anti-waffle.ts",
+      "source_location": "L72",
+      "weight": 1.0
+    },
+    {
+      "source": "src_philosophers_shared_anti_waffle",
       "target": "src_philosophers_shared_anti_waffle_renderantiwaffle",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/philosophers/shared/anti-waffle.ts",
-      "source_location": "L70",
+      "source_location": "L74",
       "weight": 1.0
     },
     {
@@ -15607,7 +17621,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/philosophers/trios.ts",
-      "source_location": "L63",
+      "source_location": "L67",
       "weight": 1.0
     },
     {
@@ -16355,6 +18369,17 @@
       "weight": 1.0
     },
     {
+      "source": "scripts_check_diagram_contrast_rationale_32",
+      "target": "scripts_check_diagram_contrast",
+      "relation": "rationale_for",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "scripts/check-diagram-contrast.mjs",
+      "source_location": "L32",
+      "weight": 1.0
+    },
+    {
       "source": "scripts_split_philosophers_rationale_1",
       "target": "scripts_split_philosophers",
       "relation": "rationale_for",
@@ -16403,5 +18428,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "84cadf098905efae5de09549838edb04e053c903"
+  "built_at_commit": "827d73c9b754995e7f40854e57a37965fd0fa8c3"
 }

@@ -57,6 +57,10 @@ export const SEAT_TRIOS: Record<string, SeatTrio> = {
     medium: 'What we encounter in modern classrooms is not merely traditional student laziness, but the clash between young people shaped by digital screens who cannot focus for long and the strict, attention-demanding rules of old schooling institutions that are falling apart.',
     low: 'Young people today are not just lazy. The real problem is that teenagers raised on digital screens struggle to focus, while old school rules try to force them to sit quietly in ways that no longer work.',
   },
+  rose: {
+    medium: 'There is a split in our shared life, in what we do and in the groups we run, which every call for an ethics beyond nature only deepens by lifting it into make-believe.',
+    low: 'People try to be good. The groups they live in still do harm. Calls to be purely good make this worse, not better. Stay with the trouble instead.',
+  },
 };
 
 /** Shared fallback while a seat has no wired trio (currently none missing). */

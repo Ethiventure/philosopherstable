@@ -112,6 +112,7 @@ export const CABINET_DEBTS: Record<string, CabinetDebt[]> = {
     { to: 'deleuze', kind: 'direct', stance: 'critical', confidence: 'high', note: 'named D&G’s “desiring-machines” in SALA (1995) as the lifestyle mood made flesh' },
     { to: 'kant', kind: 'direct', stance: 'ambivalent', confidence: 'high', note: 'named Kant across EoF — neo-Kantian dualism refused, the moral imperative kept' },
     { to: 'bloch', kind: 'direct', stance: 'positive', confidence: 'high', note: 'cited the Principle of Hope in The Ecology of Freedom — alliance technology, co-productivity, hope as foundation' },
+    { to: 'rose', kind: 'direct', stance: 'positive', confidence: 'high', note: 'owner dossier: quotes The Melancholy Science in Finding the Subject to strike at Habermas — Rose on Adorno used as a philosophical weapon' },
     { to: 'weil', kind: 'indirect', stance: 'positive', confidence: 'low', hops: ['macdonald'], note: 'owner route: Macdonald first American publisher of Weil (Politics Nov 1945, Iliad via McCarthy — SEP/NYT verified); Bookchin in the shared post-Trotskyist milieu — permeation assumed on owner say-so, Bookchin uptake receipt still wanted (EoF full text: 0 Weil, 0 Macdonald)' },
     { to: 'bogdanov', kind: 'indirect', stance: 'ambivalent', confidence: 'low', hops: ['bertalanffy', 'ashby'], note: 'owner route via Bertalanffy/Ashby: Bookchin builds the non-hierarchical self-organising model citing mid-century systems theory and cybernetics, and Bertalanffy acknowledged Bogdanov anticipated open systems, homeostasis and structural organisational laws decades before GST. Owner searches; our EoF full text shows one Bertalanffy name-drop, recorded honestly.' },
   ],
@@ -132,6 +133,17 @@ export const CABINET_DEBTS: Record<string, CabinetDebt[]> = {
     { to: 'marx', kind: 'direct', stance: 'positive', confidence: 'high', note: 'read through critical theory: commodity, spectacle, realism' },
     { to: 'bookchin', kind: 'indirect', stance: 'ambivalent', confidence: 'low', hops: ['marcuse'], note: 'owner route: Marcuse read Bookchin (Post-Scarcity Anarchism, public debates); Fisher read Marcuse (Eros/Civilization, One-Dimensional Man into Acid Communism) — Fisher never cited Bookchin directly' },
     { to: 'bogdanov', kind: 'indirect', stance: 'ambivalent', confidence: 'low', hops: ['wark'], note: 'owner route via Wark: Fisher moved in the circle around Wark, whose Molecular Red (2015) devotes its first half to reclaiming Tektology and Proletkult — Fisher promoted and discussed the Promethean socio-technical tradition Wark retrieved. Owner searches; no Fisher→Wark receipt in our files, recorded honestly.' },
+    { to: 'rose', kind: 'indirect', stance: 'positive', confidence: 'medium', hops: ['zizek'], note: 'owner route via Žižek: Žižek read Rose, Fisher read Žižek — political melancholy carried into hauntology; Rose and Fisher never cited each other directly' },
+  ],
+  rose: [
+    { to: 'spinoza', kind: 'indirect', stance: 'positive', confidence: 'medium', hops: ['hegel', 'deleuze'], note: 'named across the early books, carried by the wider Spinozist tradition rather than answered head-on' },
+    { to: 'kant', kind: 'direct', stance: 'critical', confidence: 'high', note: 'antinomies exposed as rooted in bourgeois social relations — read closely in order to refuse' },
+    { to: 'hegel', kind: 'direct', stance: 'positive', confidence: 'high', note: 'speculative logic rehabilitated as the method: Hegel Contra Sociology is the foundation' },
+    { to: 'marx', kind: 'direct', stance: 'ambivalent', confidence: 'high', note: 'commodity fetishism and reification taken up directly; scientistic Marxism refused' },
+    { to: 'lenin', kind: 'direct', stance: 'critical', confidence: 'medium', note: 'owner dossier: Marxist Modernism lectures engage Lenin on vanguard organisation as social-democratic domination, with Lukács carrying the Lenin–Bogdanov controversy alongside' },
+    { to: 'bogdanov', kind: 'indirect', stance: 'ambivalent', confidence: 'medium', hops: ['lukacs', 'lenin'], note: 'owner route: answered the Lenin–Bogdanov split through Lukács (Melancholy Science: Lukács 174×, Bogdanov 0×) — Lukács’s resolution charged with swapping social reality for style' },
+    { to: 'weil', kind: 'direct', stance: 'ambivalent', confidence: 'high', note: 'Angry Angels essay: attention, affliction and dispossession taken up comparatively, never devotionally' },
+    { to: 'deleuze', kind: 'direct', stance: 'critical', confidence: 'high', note: 'The New Bergsonism chapter answers the refusal of dialectic head-on' },
   ],
 };
 

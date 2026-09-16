@@ -174,6 +174,12 @@ burn fast on 70B), so sequential calls are fine but retry bursts bite.
    toolkit or spent list (calm entry ordered in own words instead); school
    labels ("libertarian municipalism", "social ecology") added to the
    describe-never-name seeds.
+   Rose trio (Sep 2026, wired in code): High verified verbatim from
+   owner-held text (Judaism and Modernity, 'The Future of Auschwitz',
+   27 words, graded 5/5: complex, specific, 2 signature terms, typical,
+   self-contained). Medium/Low drafted owner-side to the fail rules
+   (F1/F2 checked); live-sitting eval pending — first Rose sitting grades
+   it like the rest.
 
 ## Trio-creation instructions that did NOT work
 
