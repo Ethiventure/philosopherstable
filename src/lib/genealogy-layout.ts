@@ -133,11 +133,13 @@ export function genEdgePath(_edges: GeomEdge[], fromSlug: string, toSlug: string
   const fanEy = heirSibs.length > 1 ? (heirIdx - (heirSibs.length - 1) / 2) * 7 : 0;
   const ex = b.x + bDir * GEN_RIM;
   const ey = b.y + fanEy;
-  // Gentle uniform belly: channel runs bow 8px east so no thread reads
-  // as a ruled line. Same degree everywhere, clearances hold.
-  const c1x = channel + 8;
+  // Gentle belly so no thread reads as a ruled line: left and centre
+  // channels bow 20px east; the right channel holds 8px because arrival
+  // heads sit close beside it. Same family of curve everywhere.
+  const belly = channel >= GEN_CH_RIGHT ? 8 : 20;
+  const c1x = channel + belly;
   const c1y = sy + (ey - sy) * 0.05;
-  const c2x = channel + 8;
+  const c2x = channel + belly;
   const c2y = sy + (ey - sy) * 0.95;
   const f = (n: number) => (Math.round(n * 10) / 10).toFixed(1);
   return `M ${f(sx)} ${f(sy)} C ${f(c1x)} ${f(c1y)}, ${f(c2x)} ${f(c2y)}, ${f(ex)} ${f(ey)}`;
