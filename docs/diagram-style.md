@@ -41,7 +41,8 @@ Monochrome nodes always: one ring metal, one ink — never per-entity colours.
 - Time runs top to bottom: one opening seat on the central axis, paired
   seats alternating left / right down the rows, closing seats back on the
   axis — both ends mirror. ([repo]: canvas 704×738; axis x=352; sides
-  x=210 / x=494; rows y = 60–630.) Arrows run creditor → heir and may
+  x=210 / x=494; rows y = 78–612; channels x=262 / x=404 / x=442.)
+  Arrows run creditor → heir and may
   point back up the years — direction shows debt, position shows time,
   never the reverse.
 - Node radius 34; threads trim to rims along perpendiculars and arrowheads

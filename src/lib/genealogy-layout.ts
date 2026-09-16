@@ -42,7 +42,7 @@ export const GEN_RIM = GEN_NODE_R + 5;
  */
 const GEN_CH_LEFT = 262;
 const GEN_CH_CENTRE = 404;
-const GEN_CH_RIGHT = 546;
+const GEN_CH_RIGHT = 442;
 
 /** Chronological seat order — rendered top to bottom. */
 export const GEN_ORDER = [
@@ -51,7 +51,7 @@ export const GEN_ORDER = [
 ];
 
 export const GEN_POS: Record<string, { x: number; y: number }> = {
-  spinoza: { x: GEN_SPINE_X, y: 60 },
+  spinoza: { x: GEN_SPINE_X, y: 78 },
   kant: { x: GEN_LEFT_X, y: 155 },
   hegel: { x: GEN_RIGHT_X, y: 155 },
   marx: { x: GEN_LEFT_X, y: 250 },
@@ -62,7 +62,7 @@ export const GEN_POS: Record<string, { x: number; y: number }> = {
   bookchin: { x: GEN_RIGHT_X, y: 440 },
   rose: { x: GEN_LEFT_X, y: 535 },
   deleuze: { x: GEN_RIGHT_X, y: 535 },
-  fisher: { x: GEN_SPINE_X, y: 630 },
+  fisher: { x: GEN_SPINE_X, y: 612 },
 };
 
 export function genNodePos(slug: string): { x: number; y: number } {

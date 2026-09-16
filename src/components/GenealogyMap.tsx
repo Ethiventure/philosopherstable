@@ -130,7 +130,7 @@ export default function GenealogyMap({
         strength down through thinner claims. Select a line to read it. Select a seat to open its profile.
       </p>
 
-      <div className="flex flex-wrap gap-x-5 gap-y-1 mt-3 text-sm text-[#465f75]/80" aria-label="Legend">
+      <div className="flex flex-wrap gap-x-5 gap-y-1 mt-3 text-base text-[#465f75]/80" aria-label="Legend">
         <span className="inline-flex items-center gap-2">
           <svg width="34" height="8" aria-hidden="true">
             <line x1="0" y1="4" x2="28" y2="4" className="gen-edge-direct" strokeWidth="2" />
