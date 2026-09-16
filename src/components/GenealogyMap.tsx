@@ -23,6 +23,7 @@ import type { Philosopher } from '@/types';
 
 interface Edge extends GeomEdge {
   stance: 'positive' | 'critical' | 'ambivalent';
+  confidence: 'high' | 'medium' | 'low';
   note: string;
   hops?: string[];
 }
@@ -36,16 +37,19 @@ interface Edge extends GeomEdge {
 const ALL_EDGES: Edge[] = Object.entries(CABINET_DEBTS).flatMap(([debtor, debts]) =>
   debts
     .filter((d) => d.kind === 'direct' || !debts.some((o) => o.to === d.to && o.kind === 'direct'))
-    .map((d) => ({ from: d.to, to: debtor, kind: d.kind, stance: d.stance, note: d.note, hops: d.hops })),
+    .map((d) => ({ from: d.to, to: debtor, kind: d.kind, stance: d.stance, confidence: d.confidence, note: d.note, hops: d.hops })),
 );
 
-/** Line treatment per edge: kind sets solid/dashed. Stance lives in the data
- *  and the text, never in the rendering — one calm monochrome canvas. */
+/** Line treatment: kind sets solid/dashed; opacity sets strength of
+ *  evidence (high 100% / medium 90% / low 80%). Stance lives in the data
+ *  and the text, never in the rendering. Element opacity covers markers
+ *  too, so heads fade with their thread. */
 function edgeStyle(e: Edge): { w: number; o: number; cls: string; dash?: string; marker: string } {
+  const o = e.confidence === 'high' ? 1 : e.confidence === 'medium' ? 0.9 : 0.8;
   if (e.kind === 'indirect') {
-    return { w: 2, o: 0.75, cls: 'gen-edge gen-edge-indirect', dash: '8 7', marker: 'url(#gen-arrow-indirect)' };
+    return { w: 2, o, cls: 'gen-edge gen-edge-indirect', dash: '8 7', marker: 'url(#gen-arrow-indirect)' };
   }
-  return { w: 2.4, o: 0.9, cls: 'gen-edge gen-edge-direct', marker: 'url(#gen-arrow-direct)' };
+  return { w: 2.4, o, cls: 'gen-edge gen-edge-direct', marker: 'url(#gen-arrow-direct)' };
 }
 
 function stanceWord(stance: Edge['stance']): string {
@@ -125,7 +129,8 @@ export default function GenealogyMap({
         Time runs left to right; arrows run creditor to heir, so a debt may
         point back across the timeline. Solid is direct (read closely, even
         to break); dashed is indirect. A line with heads at both ends is a
-        two-way debt. Select a line to read it. Select a seat to open its profile.
+        two-way debt. Line strength shows strength of evidence, from full
+        strength down through thinner claims. Select a line to read it. Select a seat to open its profile.
       </p>
 
       <div className="flex flex-wrap gap-x-5 gap-y-1 mt-3 text-sm text-[#465f75]/80" aria-label="Legend">
@@ -153,11 +158,11 @@ export default function GenealogyMap({
           aria-label={`Genealogy of influence across ${order.length} thinkers, Spinoza at the left to Fisher at the right. ${ALL_EDGES.length} debts shown. Name size grows with connections: smallest names at body size, 2 points larger per extra connection.`}
         >
           <defs>
-            <marker id="gen-arrow-direct" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
-              <path d="M 0 1 L 9 5 L 0 9 z" />
+            <marker id="gen-arrow-direct" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+              <path d="M 0 0.5 L 9 5 L 0 9.5 z" />
             </marker>
-            <marker id="gen-arrow-indirect" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
-              <path d="M 0 1 L 9 5 L 0 9 z" />
+            <marker id="gen-arrow-indirect" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+              <path d="M 0 0.5 L 9 5 L 0 9.5 z" />
             </marker>
           </defs>
 
