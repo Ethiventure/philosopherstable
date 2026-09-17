@@ -136,7 +136,7 @@ export function buildTurnInstruction({ kind, prevName, isFinalSeat, longForm, re
       ? []
       : ['STOCK PHRASES below address PREV as YOU — at most one per turn, often none; never open two of your turns the same way; SPENT variants are used up, never reuse them.']),
     ...(low
-      ? ['LOW ORDERS: never lift a stock phrase. Plain everyday words throughout; translate or describe every hard term, keeping one essential term only with its plain meaning beside it at once. Short sentences, one idea per paragraph. The persona LANGUAGE LEVEL outranks everything above on WORDS; on force, feeling, argument your persona wins.']
+      ? ['LOW ORDERS: never lift a stock phrase. Plain everyday words throughout; translate or describe every hard term, keeping one essential term only with its plain meaning beside it at once. One idea per paragraph, followed through in 2–4 sentences — never a single slogan sentence standing alone (placards fail the turn). The persona LANGUAGE LEVEL outranks everything above on WORDS; on force, feeling, argument your persona wins.']
       : []),
     'VOICE: continuous prose in your diction, syntax and rhythm within your LANGUAGE LEVEL — no headings or labels. '
     + (heat
@@ -230,7 +230,7 @@ export function buildUserMessage({ question, prevText, relationshipLine = null, 
 export const LOW_CLOSING_REMINDER =
   'FINAL CHECK before answering, Low only: reread your draft and circle every word AND every idea a school-leaver would not know — rewrite both in plain words and concrete scenes. Every abstraction must have its everyday 21st-century example attached; an unexamined abstraction fails the turn. Say everything once: the second half must advance the thought, never restate the first. Your LANGUAGE LEVEL above governs.';
 
-export const STRUCTURED_OUTPUT_HINT = [  'Respond with JSON only, matching this shape exactly (all four keys always present):',
+export const STRUCTURED_OUTPUT_HINT = [  'Respond with JSON only, matching this shape exactly (all four keys always present, in any order):',
   '{ negation, reformulation, new_contribution, works_referenced: string[] }',
   'The JSON envelope is mandatory — but every text value holds continuous label-free prose: no headings, no Negation-dash labels, no numbered parts inside the values. Inside values, use only single or smart quotes — never bare double quotes, which corrupt the envelope.',
   'The two text sections together must stay under the total word budget above; brevity within it is good. Per-section counts are guidance.',

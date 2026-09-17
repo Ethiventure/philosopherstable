@@ -48,6 +48,9 @@ export const BANNED_PHRASES = [
   'delve',
   'tapestry',
   'sheds light',
+  // Word-sense blurs caught live in evals (owner-graded): ban with the fix,
+  // so the model names the thing instead of blurring it.
+  'arm (for a machine, tool, limb, or weapon — name the thing: tool, machine, limb, weapon)',
   'plays a key role',
   'multifaceted',
   'navigates the',

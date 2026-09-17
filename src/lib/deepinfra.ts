@@ -1,4 +1,4 @@
-import { LlmError, REPAIR_SUFFIX, parseTurnOutput, retryAfterMs, type TurnOutput } from '@/lib/llm';
+import { LlmError, REPAIR_SUFFIX, incrementRepair, parseTurnOutput, recordUsage, retryAfterMs, type TurnOutput } from '@/lib/llm';
 
 /**
  * DeepInfra direct provider (visitor's own key).
@@ -151,12 +151,13 @@ const postDeepInfra = async ({ apiKey, model, systemPrompt, maxTokens, useJsonMo
         }
         throw error;
       }
-      let data: { choices?: { message?: { content?: string } }[] };
+      let data: { choices?: { message?: { content?: string } }[]; usage?: unknown };
       try {
         data = (await response.json()) as typeof data;
       } catch {
         throw new LlmError('DeepInfra returned non-JSON. Resume the cabinet to retry the turn.', true, 'server');
       }
+      recordUsage('deepinfra', model, data.usage);
       const text = data.choices?.[0]?.message?.content ?? '';
       if (!text.trim()) {
         throw new LlmError('DeepInfra returned an empty response. Resume the cabinet to retry the turn.', true, 'server');
@@ -178,6 +179,7 @@ export async function generateTurnDeepInfra({ apiKey, primary, systemPrompt, use
       return out;
     } catch (error) {
       if (!(error instanceof LlmError) || error.code !== 'parse') throw error;
+      incrementRepair();
       const repaired = parseTurnOutput(stripFences(await post(userMessage + REPAIR_SUFFIX)), 'DeepInfra');
       lastDeepInfraModel = model;
       return repaired;

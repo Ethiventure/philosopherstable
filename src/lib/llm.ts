@@ -15,6 +15,92 @@ export interface TurnOutput {
 
 export type LlmErrorCode = 'quota' | 'auth' | 'model' | 'network' | 'server' | 'parse' | 'unknown';
 
+/** Provider-reported token usage, one entry per API call (retries included —
+ *  true cost, not estimates). Recorded by every provider client from the
+ *  response `usage` block; read out in the export provenance trail. */
+export interface UsageEntry {
+  provider: string;
+  model: string;
+  inTokens: number;
+  outTokens: number;
+  cachedTokens?: number;
+}
+
+const usageLog: UsageEntry[] = [];
+
+export function recordUsage(provider: string, model: string, usage: unknown): void {
+  if (typeof usage !== 'object' || usage === null) return;
+  const u = usage as Record<string, unknown>;
+  const inTokens = typeof u.prompt_tokens === 'number' ? u.prompt_tokens : 0;
+  const outTokens = typeof u.completion_tokens === 'number' ? u.completion_tokens : 0;
+  if (!inTokens && !outTokens) return;
+  // Prompt-cache hits (OpenRouter reports prompt_tokens_details.cached_tokens):
+  // the system prompt is persona-first and byte-stable per speaker, so repeat
+  // turns should increasingly ride cache. Tracked to prove it.
+  const details = u.prompt_tokens_details as Record<string, unknown> | undefined;
+  const cached = details && typeof details.cached_tokens === 'number' ? details.cached_tokens : 0;
+  usageLog.push({ provider, model, inTokens, outTokens, cachedTokens: cached });
+  if (typeof console !== 'undefined') console.info(`[usage] ${provider} ${model}: ${inTokens} in / ${outTokens} out${cached ? ` (${cached} cached)` : ''}`);
+}
+
+/** Session totals, per model. Resets with the sitting. */
+export function usageTotals(): { entries: UsageEntry[]; inTokens: number; outTokens: number } {
+  const inTokens = usageLog.reduce((a, e) => a + e.inTokens, 0);
+  const outTokens = usageLog.reduce((a, e) => a + e.outTokens, 0);
+  return { entries: [...usageLog], inTokens, outTokens };
+}
+
+export function resetUsage(): void {
+  usageLog.length = 0;
+  repairCount = 0;
+}
+
+/** Repair turns (malformed JSON → REPAIR_SUFFIX retry), counted OUTSIDE the
+ *  turn total so evals see them cleanly instead of silently inflated voice
+ *  numbers. Every provider client increments before its repair parse. */
+let repairCount = 0;
+
+export function incrementRepair(): void {
+  repairCount += 1;
+}
+
+export function repairTotals(): number {
+  return repairCount;
+}
+
+/**
+ * What a token cost when last checked — NOT live prices. Providers reprice
+ * without notice, so every figure the export prints carries RATES_AS_OF and
+ * the word "about". To refresh: verify against the provider's pricing page
+ * and bump the date; never silently edit a number.
+ */
+export const RATES_AS_OF = 'Sep 17 2026';
+
+interface RateRow { match: (provider: string, model: string) => boolean; perIn: number; perOut: number }
+
+const RATE_TABLE: RateRow[] = [
+  { match: (_p, m) => m.includes('deepseek-v4.1-flash'), perIn: 0.15, perOut: 0.60 },
+  { match: (_p, m) => m.includes('deepseek') && m.includes('flash'), perIn: 0.09, perOut: 0.18 },
+  { match: (p, m) => p.includes('groq') && m.includes('qwen3.8-27b'), perIn: 0.80, perOut: 4.00 },
+  { match: (p, m) => p.includes('openrouter') && m.includes('qwen3.8-27b'), perIn: 0.30, perOut: 2.00 },
+  { match: (_p, m) => m.includes('qwen3.8-27b'), perIn: 0.40, perOut: 3.00 },
+  { match: (_p, m) => m.includes('qwen3.8-flash'), perIn: 0.15, perOut: 0.47 },
+  { match: (_p, m) => m.includes('qwen3.5-9b'), perIn: 0.10, perOut: 0.15 },
+  { match: (_p, m) => m.includes('qwen3.6-35b'), perIn: 0.10, perOut: 0.95 },
+  { match: (_p, m) => m.includes('llama-3.3-70b'), perIn: 0.10, perOut: 0.32 },
+];
+
+/** Estimated session cost in USD, or null when any model has no known rate. */
+export function estimateCost(entries: UsageEntry[]): number | null {
+  let total = 0;
+  for (const e of entries) {
+    const row = RATE_TABLE.find((r) => r.match(e.provider.toLowerCase(), e.model.toLowerCase()));
+    if (!row) return null;
+    total += (e.inTokens / 1e6) * row.perIn + (e.outTokens / 1e6) * row.perOut;
+  }
+  return total;
+}
+
 export class LlmError extends Error {
   readonly retryable: boolean;
   readonly code: LlmErrorCode;

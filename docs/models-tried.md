@@ -3,6 +3,41 @@
 Living log of every model/provider combination tested for the cabinet, newest
 first. Check here before (re)trying anything — corpses stay buried.
 
+## Current standing (Sep 17 2026, owner-graded, Low, AGI-jobs question)
+
+- **DeepSeek v4.1-flash (OpenRouter paid) — the engine.** Strengths: holds
+  the JSON contract every turn, quick start, full session ~6 min, plainness
+  mostly holds (Hegel P1 succinct, Bookchin P1 plain, Rose P1+P3 genuinely
+  Rosean). Weaknesses: voice at ~85% — "arm" limb/tool/weapon blur across
+  turns, occasional staccato AI compressions (P2 Hegel), plain words combined
+  into harder phrases. Gap is prompt-fixable surface, not model nature.
+- **Qwen3.8-27B (Groq free) — the voice reference.** Strengths: best
+  voice+plainness together (Bloch P1 exemplar), developed turns, better
+  margins voice, ideas + emotional tone held. Weaknesses: 14+ min + 3 resumes
+  per session free; quota walls (429s in pass 1); odd metaphors, mixed
+  metaphors, wrong-continent examples. Unusable free; ~$0.20+/session paid.
+- **Desk (all providers) reads easier than turns** — concrete examples land —
+  but at medium difficulty while set to Low. Desk level calibration is open.
+- **Every Qwen under 27B failed the same way** (3.6-35B, 3.8-flash, 3.5-9B):
+  reasoning burn — thinks about the contract/persona until cutoff, answers
+  nothing. The contract needs a model that answers instead of thinking.
+
+## New candidates (Perplexity round 2, Sep 17 — UNTESTED, prices not
+independently verified, do not quote)
+- `mistral-small-3.2-24b` (OpenRouter/DeepInfra, ~$0.075/$0.20 claimed):
+  24B open-weight, structured-output reputation. Testable today via the
+  OpenRouter paid box (free-text ID). One live session, same question, Low.
+- `glm-5.3-flash` (~$0.075/$0.25 promo, $0.15/$0.50 list claimed): MIT-licensed
+  open weights. Promoted from parked-fallback to test candidate on price/perf
+  reports. Same test. (Zhipu-owned; allowed — ban is OpenAI-only.)
+- `qwen3-14b` / `qwen3-30b-a3b` (DeepInfra, ~$0.10–0.12/$0.24–0.30 claimed):
+  different architectures from the burned small Qwens; may dodge the burn.
+  Needs DeepInfra primary code to test there, or OpenRouter paid box if listed.
+- Rejected from the same report: Llama-3.1-8B (Llama-family verdict stands);
+  Groq paid 3.8 (our verdict stands); free-tier-as-production (stands).
+  Corrected: report's Groq 3.8 rates ($0.59/$0.79) look guessed — our observed
+  free-tier behavior (429s mid-session) overrules its "3–4 sessions/day" math.
+
 ## Verdicts
 
 | Date | Provider | Model | Verdict |
@@ -11,7 +46,14 @@ first. Check here before (re)trying anything — corpses stay buried.
 | Sep 2026 | OpenRouter free cycle | Router-first + 19-model named bench = full live coverage (all 20 free minus the content-safety filter, verified via `/models` API Sep 15 2026), ordered by context desc (1M inkling ×2 / Nemotron ultra+lightning → 512k dots-3 → 262k Gemma/Ling/Nex/super/Laguna → 256k nano-omni-reasoning + north → 65k liquid → 32k glm-5.2 relisted). Removed: `qwen3-coder:free` (coder-tuned), `deepseek-v4-flash:free` (404 since Jun), `qwen3-next:free` (gone). Owner: gpt-oss via router accepted, never pinned. Voice-shift across turns accepted as entertaining; last-good still holds a named model once one succeeds. | More models = more per-model quota. New arrivals (inkling, dots-3, ling-vl, nano-omni) untested against the JSON contract — watch the salvage logs. Paid pin `deepseek/deepseek-v4.1-flash` verified LIVE same day. |
 | Sep 2026 | Groq direct (visitor key) | `qwen/qwen3.6-27b` | DEAD for visitor keys (404: no such model or no access) despite the live docs page. Pinned dropdown removed same day — Groq model is now a free-text ID field, Test key verifies immediately. Llama-as-primary also rejected same day: weak prompt adherence per owner — Llama stays rescue backup only. |
 | Sep 2026 | DeepInfra | `Qwen/Qwen3.6-35B-A3B` as primary | FAILED live (owner session): 2.5 min to first card, still on pass 1 at 11.5 min — session abandoned (thinking-burn confirmed) + ignores Low — Pass 1 reads as school-terms with citations, no plain words. Voice good, obedience bad. Not the quick Qwen. |
-| Sep 2026 | Groq free (visitor key) | `qwen/qwen3.8-27b` | VOICE VERIFIED, QUOTA-WALLED: immediate first card, output genuinely good — but 429s inside pass 1, slow resumes, 11 min to pass 2 seat 4. Free tier can't carry a session. Second full eval Sep 17 (owner, Low, AGI-jobs question): 14.24 min + 3 resumes — too slow, but best quality so far: ideas + emotional tone held at plain level (Bloch P1 exemplar), margins voice better than DeepSeek's. AI-isms: odd metaphors ("crisis of stealing", "locking the door while inside"), mixed metaphors (Bloch), far-flung geography for German thinkers. Paid same-ID is the obvious next test. |
+| Sep 2026 | Groq free (visitor key) | `qwen/qwen3.8-27b` | VOICE VERIFIED, QUOTA-WALLED: immediate first card, output genuinely good — but 429s inside pass 1, slow resumes, 11 min to pass 2 seat 4. Free tier can't carry a session. Second full eval Sep 17 (owner, Low, AGI-jobs question): 14.24 min + 3 resumes — too slow, but best quality so far: ideas + emotional tone held at plain level (Bloch P1 exemplar), margins voice better than DeepSeek's. AI-isms: odd metaphors ("crisis of stealing", "locking the door while inside"), mixed metaphors (Bloch), far-flung geography for German thinkers. Second full eval Sep 17 (owner, Low, new 2030 question, Groq free): pass 2
+seat 4 in 7.5 min with one quota resume — fastest Qwen session yet, voice
+holds (developed turns, Bookchin/Rose determinations strong, margins voice
+good). New RAG visible live: [54] Social Ecology and Communalism cited.
+"Robots" in the old question triggered no arm-blur this time.
+Measured Groq free walls Sep 17: input TPM limit ~7K/req wall (413 at 7271;
+5640 used + 5818 requested vs 7000 ITPM limit); owner day-total 66K in /
+3.8K out ≈ $0.07 paid-equivalent. Paid same-ID is the obvious next test. |
 | Sep 2026 | OpenRouter paid | `qwen/qwen3.8-flash` | FAILED live (owner session): reasoning burn — content null, finish `length`, reasoning trace shows it thinking about the JSON contract until cutoff; `reasoning.effort:low` ignored. 3.5 min stuck on seat 1. Same failure shape DeepSeek had pre-mitigation, unmitigable from here. Paid-pin error copy fixed same day (no more "trying the next one" on a pin). |
 | Sep 2026 | Perplexity review | GPT-OSS 20B/120B on Groq | REJECTED without test: OpenAI-owned, standing rule bans OpenAI models ever (app migrates `openai/*` IDs out). GLM-5.3 Flash noted only as later non-Qwen fallback — voice unproven, not this round. Free-tier-as-production (ling, union-alpha) rejected: daily caps can't carry sessions. Perplexity's load math (7 turns/min) doesn't match us — single visitor, ~15–30 turns/session, so per-session cost rules: DeepSeek ~$0.01, Flash ~$0.02, paid 3.8-27B ~$0.20+. |
 | Sep 2026 | DeepInfra | `deepseek-ai/DeepSeek-V4.1-Flash` ($0.20/$0.60) | Deliberately NOT pinned on DeepInfra — stays the OpenRouter paid default; one winner per pipe, less confusion. |

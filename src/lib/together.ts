@@ -1,4 +1,4 @@
-import { LlmError, REPAIR_SUFFIX, parseTurnOutput, retryAfterMs, type TurnOutput } from '@/lib/llm';
+import { LlmError, REPAIR_SUFFIX, incrementRepair, parseTurnOutput, recordUsage, retryAfterMs, type TurnOutput } from '@/lib/llm';
 
 /**
  * Together direct provider (visitor's own key).
@@ -117,12 +117,13 @@ const postTogether = async (apiKey: string, systemPrompt: string, maxTokens: num
         }
         throw error;
       }
-      let data: { choices?: { message?: { content?: string } }[] };
+      let data: { choices?: { message?: { content?: string } }[]; usage?: unknown };
       try {
         data = (await response.json()) as typeof data;
       } catch {
         throw new LlmError('Together returned non-JSON. Resume the cabinet to retry the turn.', true, 'server');
       }
+      recordUsage('together', TOGETHER_MODEL, data.usage);
       const text = data.choices?.[0]?.message?.content ?? '';
       if (!text.trim()) {
         throw new LlmError('Together returned an empty response. Resume the cabinet to retry the turn.', true, 'server');
@@ -139,6 +140,7 @@ export async function generateTurnTogether({ apiKey, systemPrompt, userMessage, 
     return parseTurnOutput(stripFences(text), 'Together');
   } catch (error) {
     if (!(error instanceof LlmError) || error.code !== 'parse') throw error;
+    incrementRepair();
     return parseTurnOutput(stripFences(await postTogether(apiKey, systemPrompt, maxTokens, userMessage + REPAIR_SUFFIX)), 'Together');
   }
 }

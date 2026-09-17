@@ -1,4 +1,4 @@
-import { LlmError, REPAIR_SUFFIX, parseTurnOutput, retryAfterMs, type TurnOutput } from '@/lib/llm';
+import { LlmError, REPAIR_SUFFIX, incrementRepair, parseTurnOutput, recordUsage, retryAfterMs, type TurnOutput } from '@/lib/llm';
 
 /**
  * OpenRouter provider (Phase 2b-ii). Same cabinet contract as the Gemini
@@ -268,6 +268,7 @@ async function fetchModelText(
         text?: string;
       }[];
       error?: { message?: string };
+      usage?: unknown;
     };
     let rawBody = '';
     try {
@@ -283,6 +284,7 @@ async function fetchModelText(
     if (data.error?.message) {
       throw openRouterError(400, data.error.message, model, tag);
     }
+    recordUsage('openrouter', model, data.usage);
     const choice = data.choices?.[0];
     // OpenRouter may put reasoning in separate fields; content is still the answer.
     const raw = choice?.message?.content ?? choice?.text ?? '';
@@ -357,6 +359,7 @@ export async function generateTurnOpenRouter({ apiKey, systemPrompt, userMessage
       } catch (error) {
         if (isFailFast(error)) throw error;
         if (error instanceof LlmError && error.code === 'parse') {
+          incrementRepair();
           return attemptModel(paidId, apiKey, {
             ...body,
             messages: [
@@ -409,6 +412,7 @@ export async function generateTurnOpenRouter({ apiKey, systemPrompt, userMessage
   // the first model before giving up, so a single bad turn doesn't halt.
   if (lastError?.code === 'parse' && tried.length > 0) {
     try {
+      incrementRepair();
       const repaired = await attemptModel(tried[0], apiKey, {
         ...body,
         messages: [

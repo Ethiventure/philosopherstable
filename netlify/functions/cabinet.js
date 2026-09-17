@@ -86,7 +86,14 @@ async function tryModel(model, apiKey, messages, maxTokens) {
     if (typeof text !== 'string' || !text.trim()) {
       return { retryNext: true, status: 502, detail: 'empty response' };
     }
-    return { text: text.trim(), model };
+    const usage = data?.usage;
+    return {
+      text: text.trim(),
+      model,
+      usage: usage && (usage.prompt_tokens || usage.completion_tokens)
+        ? { prompt_tokens: usage.prompt_tokens ?? 0, completion_tokens: usage.completion_tokens ?? 0 }
+        : undefined,
+    };
   } catch (error) {
     const timedOut = error && (error.name === 'AbortError' || error.name === 'TimeoutError');
     return { retryNext: true, status: timedOut ? 504 : 502, detail: timedOut ? 'timeout' : 'network error' };
@@ -188,7 +195,7 @@ export async function handler(event) {
     globalCount += 1;
     const result = await tryModel(model, apiKey, messages, tokens);
     if (result.text) {
-      return json(200, { text: result.text, model });
+      return json(200, { text: result.text, model, ...(result.usage ? { usage: result.usage } : {}) });
     }
     // 401 means the server key itself is bad — every model will fail identically.
     if (result.status === 401) {

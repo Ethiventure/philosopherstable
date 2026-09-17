@@ -1,4 +1,4 @@
-import { LlmError, REPAIR_SUFFIX, parseTurnOutput, retryAfterMs, type TurnOutput } from '@/lib/llm';
+import { LlmError, REPAIR_SUFFIX, incrementRepair, parseTurnOutput, recordUsage, retryAfterMs, type TurnOutput } from '@/lib/llm';
 
 // Generous but under Groq's 1000-output-tokens-per-minute wall: the gate
 // counts REQUESTED max_tokens, not used tokens, so anything above 1000 is an
@@ -63,12 +63,13 @@ const postShared = async (systemPrompt: string, maxTokens: number, msg: string):
         );
       }
 
-      let data: { text?: string; model?: string; error?: { message?: string; code?: string } };
+      let data: { text?: string; model?: string; usage?: unknown; error?: { message?: string; code?: string } };
       try {
         data = (await response.json()) as typeof data;
       } catch {
         throw new LlmError('Shared provider returned a broken response. Resume the cabinet to retry the turn.', true, 'server');
       }
+      recordUsage('shared', data.model ?? 'shared-proxy', data.usage);
 
       if (!response.ok || !data.text) {
         const code = data.error?.code;
@@ -95,6 +96,7 @@ export async function generateTurnShared({ systemPrompt, userMessage, longForm }
     return parseTurnOutput(stripFences(text), 'Shared provider');
   } catch (error) {
     if (!(error instanceof LlmError) || error.code !== 'parse') throw error;
+    incrementRepair();
     return parseTurnOutput(stripFences(await postShared(systemPrompt, maxTokens, userMessage + REPAIR_SUFFIX)), 'Shared provider');
   }
 }

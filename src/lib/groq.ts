@@ -1,4 +1,4 @@
-import { LlmError, REPAIR_SUFFIX, parseTurnOutput, retryAfterMs, type TurnOutput } from '@/lib/llm';
+import { LlmError, REPAIR_SUFFIX, incrementRepair, parseTurnOutput, recordUsage, retryAfterMs, type TurnOutput } from '@/lib/llm';
 import type { GroqModel } from '@/lib/settings';
 
 /**
@@ -116,12 +116,13 @@ const postGroq = async (apiKey: string, model: GroqModel, maxTokens: number, sys
         }
         throw error;
       }
-      let data: { choices?: { message?: { content?: string } }[] };
+      let data: { choices?: { message?: { content?: string } }[]; usage?: unknown };
       try {
         data = (await response.json()) as typeof data;
       } catch {
         throw new LlmError(`Groq returned non-JSON on ${model}. Resume the cabinet to retry the turn.`, true, 'server');
       }
+      recordUsage('groq', model, data.usage);
       const text = data.choices?.[0]?.message?.content ?? '';
       if (!text.trim()) {
         throw new LlmError(`Groq returned an empty response on ${model}. Resume the cabinet to retry the turn.`, true, 'server');
@@ -138,6 +139,7 @@ export async function generateTurnGroq({ apiKey, model, systemPrompt, userMessag
     return parseTurnOutput(stripFences(text), 'Groq');
   } catch (error) {
     if (!(error instanceof LlmError) || error.code !== 'parse') throw error;
+    incrementRepair();
     return parseTurnOutput(stripFences(await postGroq(apiKey, model, maxTokens, systemPrompt, userMessage + REPAIR_SUFFIX)), 'Groq');
   }
 }

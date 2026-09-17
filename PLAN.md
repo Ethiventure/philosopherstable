@@ -541,6 +541,15 @@ gloss hygiene, example-first, loans, heat). Log both runs in
 `docs/models-tried.md`, then pin winner-first / runner-up-second on every pipe.
 No model IDs change until that eval lands. Human grades stay the verdict —
 auto-metrics below are assistants, never judges.
+Default eval question Sep 17 2026 (future-set, equal footing, no AI traps —
+no "robots"/"AGI"/"economy", no "who eats"): 'It's 2030 and intelligent
+machines can now do most necessary work cheaper than people — but some say
+humans need jobs to have purpose. Is that really a problem? What will humans
+do, who decides and what are the repercussions for society?'
+Prompt upgrades Sep 17 (grade against these from here on): Low shape rule
+(2–4 sentences per idea, placards fail), "arm" word-sense ban, keys-in-any-order,
+repair turns counted outside the turn total (export shows the count), cached
+prompt tokens tracked (persona-first system prompt is byte-stable by design).
 
 ## Phase 7b — Auto-metrics for Low/Med/High (read all three repos Sep 2026)
 - **AlignScore** (MIT, clean; `yuh-zha/AlignScore`, RoBERTa-base 125M / large

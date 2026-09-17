@@ -34,7 +34,7 @@ import {
   type StyleEssence,
 } from '@/types';
 import { buildCodaEarlyPrompt, buildCodaPrompt, buildTurnInstruction, buildUserMessage, CODA_REPAIR_SUFFIX, CODA_SYSTEM, getTurnKind, LOW_CLOSING_REMINDER, STRUCTURED_OUTPUT_HINT } from '@/lib/dialectic/prompts';
-import { LlmError, type LlmErrorCode, type TurnOutput } from '@/lib/llm';
+import { LlmError, RATES_AS_OF, estimateCost, repairTotals, resetUsage, usageTotals, type LlmErrorCode, type TurnOutput } from '@/lib/llm';
 import { loadSettings, saveSettings, type CabinetSettings, type DeepInfraPrimary } from '@/lib/settings';
 import { applyDisplay, loadDisplay, saveDisplay } from '@/lib/preferences';
 import { generateTurnGroq, testGroqKey } from '@/lib/groq';
@@ -161,7 +161,7 @@ export type DeckEntry =
 
 function App() {
   const [philosophers, setPhilosophers] = useState<Philosopher[]>([]);
-  const [question, setQuestion] = useState('AGI can now do most paid work cheaper than people, and some say humans need jobs to have purpose. So who works, who eats, who decides — and does the system that paid for the machines survive them?');
+  const [question, setQuestion] = useState('It’s 2030 and intelligent machines can now do most necessary work cheaper than people — but some say humans need jobs to have purpose. Is that really a problem? What will humans do, who decides and what are the repercussions for society?');
   const [activePass, setActivePass] = useState(0);
   const [activeAgent, setActiveAgent] = useState(-1);
   const [isRunning, setIsRunning] = useState(false);
@@ -878,6 +878,7 @@ function App() {
     setGroundMap({});
     setNoteMap({});
     provRef.current = [];
+    resetUsage();
     spentRef.current = [];
     setRunError(null);
     setActivePass(0);
@@ -958,6 +959,7 @@ function App() {
     setGroundMap({});
     setNoteMap({});
     provRef.current = [];
+    resetUsage();
     spentRef.current = [];
     setSelectedIntervention(null);
   };
@@ -1007,9 +1009,26 @@ function App() {
     // Sitting settings at export (diagnostic: proves which level produced
     // these turns — intensity can change between runs of one sitting).
     const settingsText = `\nSITTING\n— Level: ${settings.intensity} · Long form: ${settings.longForm ? 'on' : 'off'} · Grounding: ${settings.grounding ? 'on' : 'off'} · Economy: ${settings.economy} (at export)\n`;
+    // Provider-reported tokens (retries included): measured cost, not estimates.
+    const usage = usageTotals();
+    const byModel = [...new Set(usage.entries.map((e) => `${e.provider} ${e.model}`))]
+      .map((m) => {
+        const rows = usage.entries.filter((e) => `${e.provider} ${e.model}` === m);
+        const calls = rows.length;
+        const tin = rows.reduce((a, e) => a + e.inTokens, 0);
+        const tout = rows.reduce((a, e) => a + e.outTokens, 0);
+        return `— ${m}: ${calls} calls, ${tin.toLocaleString('en-US')} in / ${tout.toLocaleString('en-US')} out`;
+      })
+      .join('\n');
+    const usageText = `\nTOKENS (provider-reported)\n${byModel || '— no usage reported'}\n— Session total: ${usage.inTokens.toLocaleString('en-US')} in / ${usage.outTokens.toLocaleString('en-US')} out\n— Repair turns (malformed JSON retried, outside the turn count): ${repairTotals()}\n${(() => {
+      const cost = estimateCost(usage.entries);
+      return cost === null
+        ? `— Cost: unknown (a model has no rate on file)`
+        : `— About $${cost.toFixed(cost < 0.1 ? 3 : 2)} at ${RATES_AS_OF} rates (estimates drift — re-verify before quoting)`;
+    })()}\n`;
     // BOM + explicit charset: without them some viewers (notably Windows
     // Notepad) decode UTF-8 smart quotes/dashes as Latin-1 mojibake (â€…).
-    const text = `\uFEFF${body}${trailingCoda}${serviceText}${readingList}${provenanceText}${settingsText}`;
+    const text = `\uFEFF${body}${trailingCoda}${serviceText}${readingList}${provenanceText}${settingsText}${usageText}`;
     const blob = new Blob([text], { type: 'text/plain;charset=utf-8' });
     const url = URL.createObjectURL(blob);
     const anchor = document.createElement('a');
