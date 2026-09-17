@@ -105,6 +105,11 @@ const postAlibaba = async (apiKey: string, model: AlibabaModel, maxTokens: numbe
             { role: 'user', content: msg },
           ],
           max_tokens: maxTokens,
+          // Qwen thinks by default and bills it as output (~3.5k hidden tokens
+          // behind a 130-token turn, Sep 2026 measurement) — the 5-minute
+          // starts. Off per request; owner call is that unthinking answers
+          // also read truer to voice.
+          enable_thinking: false,
         }),
         signal: AbortSignal.timeout(90000),
       });

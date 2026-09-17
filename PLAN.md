@@ -706,3 +706,8 @@ the GitHub repo. Public provenance, not a dev dump.
 Provider picker explanations (after models settle): one honest line per
 route — free ones marked free (no card), paid ones with voice/speed/cost,
 DeepSeek default rationale, where the Qwen voice lives.
+Provider picker redesign (later, owner request Sep 2026): dropdown flow —
+pick provider first, then a model from a short recommended list with a
+one-line note each (speed, cost, style adherence). Keep the free-text ID
+box alongside for flexibility (churn survival, unlisted IDs).
+Replaces the current radios-only layout once the graded order is final.
