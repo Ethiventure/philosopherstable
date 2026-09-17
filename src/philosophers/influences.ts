@@ -180,11 +180,23 @@ export function relationshipLine(
   const plain = low ? ' Render any hard terms here into plain everyday words.' : '';
   const owed = (CABINET_DEBTS[speakerSlug] ?? []).find((d) => d.to === prevSlug);
   if (owed) {
-    return `YOUR DEBT — you owe ${prevName} this: ${owed.note}. Let that history colour this meeting: honour it, rupture it, or steal from it, in your own terms.${plain}`;
+    const heat =
+      owed.stance === 'critical'
+        ? `You have broken with ${prevName} — say so to their face, in your own terms, and say what of theirs you still use.`
+        : owed.stance === 'positive'
+          ? `You stand on ${prevName}'s shoulders — say so openly, then show where you go further.`
+          : `You owe ${prevName} and you fight them too — hold both in the open.`;
+    return `YOUR HISTORY WITH ${prevName} — you owe them this: ${owed.note}. ${heat}${plain}`;
   }
   const owing = (CABINET_DEBTS[prevSlug] ?? []).find((d) => d.to === speakerSlug);
   if (owing) {
-    return `${prevName} OWES YOU this: ${owing.note}. They come to you already shaped by it — answer them in light of that, in your own terms.${plain}`;
+    const heat =
+      owing.stance === 'critical'
+        ? `They came at you — answer them as someone who has heard the attack before.`
+        : owing.stance === 'positive'
+          ? `They carry your work forward — greet that, then test what they did with it.`
+          : `They took from you and twisted it — name the twist.`;
+    return `${prevName} OWES YOU this: ${owing.note}. ${heat}${plain}`;
   }
   return null;
 }
@@ -221,12 +233,12 @@ export function tableStancesLine(
     if (held) (held.stance === 'positive' ? fans : held.stance === 'critical' ? critics : tangled).push(other.name);
   }
   const bits: string[] = [];
-  if (fans.length > 0) bits.push(`your fans here: ${fans.join(', ')}`);
-  if (critics.length > 0) bits.push(`your critics here: ${critics.join(', ')}`);
-  if (rated.length > 0) bits.push(`you rate: ${rated.join(', ')}`);
-  if (doneWith.length > 0) bits.push(`you're done with: ${doneWith.join(', ')}`);
-  if (tangled.length > 0) bits.push(`tangled with: ${tangled.join(', ')}`);
+  if (fans.length > 0) bits.push(`allies in the room: ${fans.join(', ')} — back them when they are attacked`);
+  if (critics.length > 0) bits.push(`enemies in the room: ${critics.join(', ')} — go at them, don't be polite about it`);
+  if (rated.length > 0) bits.push(`you champion: ${rated.join(', ')}`);
+  if (doneWith.length > 0) bits.push(`you have written off: ${doneWith.join(', ')} — say so if they speak`);
+  if (tangled.length > 0) bits.push(`unfinished business: ${tangled.join(', ')}`);
   if (bits.length === 0) return null;
   const plain = low ? ' Render any hard terms here into plain everyday words.' : '';
-  return `YOUR PEOPLE — other thinkers you've read may be sitting with you: ${bits.join('; ')}. Feel all of it in your own terms — never list it back, never announce it.${plain}`;
+  return `YOUR PEOPLE — the room is not neutral, and neither are you: ${bits.join('; ')}. Let it show in your own voice — never list it back, never announce it.${plain}`;
 }

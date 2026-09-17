@@ -550,6 +550,11 @@ Prompt upgrades Sep 17 (grade against these from here on): Low shape rule
 (2–4 sentences per idea, placards fail), "arm" word-sense ban, keys-in-any-order,
 repair turns counted outside the turn total (export shows the count), cached
 prompt tokens tracked (persona-first system prompt is byte-stable by design).
+Thinking-throttle rollout Sep 17 (Alibaba `enable_thinking:false` proven:
+5min→sec, voice held): `reasoning_effort:low` added to Groq, DeepInfra,
+Together bodies (server support unverified — live retest decides; revisit on
+400s). OpenRouter already sends effort:low. TODO: retest DeepInfra-Qwen,
+Groq-Qwen, Together once each with the output-token line as judge.
 
 ## Phase 7b — Auto-metrics for Low/Med/High (read all three repos Sep 2026)
 - **AlignScore** (MIT, clean; `yuh-zha/AlignScore`, RoBERTa-base 125M / large
@@ -711,3 +716,9 @@ pick provider first, then a model from a short recommended list with a
 one-line note each (speed, cost, style adherence). Keep the free-text ID
 box alongside for flexibility (churn survival, unlisted IDs).
 Replaces the current radios-only layout once the graded order is final.
+Settings cabinet tab split (later): "How it speaks" into its own tab,
+separate from philosopher selection — newcomers can't find the seat picker.
+RAG shard latency (later): per-turn grounding downloads the thinker's whole
+shard first touch (Marx 6.6MB, Hegel 5.6MB — owners feel it as stuck seats).
+Options: slimmer shards, server-side search, or pre-warm all sitting shards
+at session start. Revisit when sessions feel slow.

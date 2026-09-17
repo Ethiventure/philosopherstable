@@ -96,6 +96,11 @@ const postGroq = async (apiKey: string, model: GroqModel, maxTokens: number, sys
               { role: 'user', content: msg },
             ],
             max_tokens: maxTokens,
+            // Experimental Sep 2026: thinking burns output budget (proven on
+            // Alibaba/Qwen where enable_thinking:false fixed pace 5min→sec).
+            // Groq documents reasoning_effort on some models; harmless if a
+            // host ignores it, live test decides. Revisit on 400s.
+            reasoning_effort: 'low',
           }),
           signal: AbortSignal.timeout(60000),
         });

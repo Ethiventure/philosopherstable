@@ -97,6 +97,9 @@ const postTogether = async (apiKey: string, systemPrompt: string, maxTokens: num
               { role: 'user', content: msg },
             ],
             max_tokens: maxTokens,
+            // Experimental Sep 2026, as Groq/DeepInfra: throttle hidden
+            // thinking if the host honours it; live test decides.
+            reasoning_effort: 'low',
           }),
           signal: AbortSignal.timeout(60000),
         });

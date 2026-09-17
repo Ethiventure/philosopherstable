@@ -26,15 +26,23 @@ first. Check here before (re)trying anything — corpses stay buried.
 
 ## New candidates (Perplexity round 2, Sep 17 — UNTESTED, prices not
 independently verified, do not quote)
-- `mistral-small-3.2-24b` (OpenRouter/DeepInfra, ~$0.075/$0.20 claimed):
-  24B open-weight, structured-output reputation. Testable today via the
-  OpenRouter paid box (free-text ID). One live session, same question, Low.
+- `mistral-small-3.2-24b` (OpenRouter paid `mistralai/mistral-small-3.2-24b-instruct`):
+  FAILED live Sep 17 (owner): 50s to start, 2+ min stuck on seat 1, then
+  empty body (200, nothing in it). Non-reasoning by construction did not
+  save it. Retry produced a turn: catastrophic loop — "The issue/problem/
+  contradiction/danger is not X but Y" repeated ~30 times in one Hegel turn
+  (a scaffold family our ban list only half-covered; extended same day + new
+  NO LOOPS rule). Voice verdict: dead. Desk Spinoza on the same model read
+  plain and decent — turns unusable, desk tolerable. Out.
 - `glm-5.3-flash` (~$0.075/$0.25 promo, $0.15/$0.50 list claimed): MIT-licensed
   open weights. Promoted from parked-fallback to test candidate on price/perf
   reports. Same test. (Zhipu-owned; allowed — ban is OpenAI-only.)
 - `qwen3-14b` / `qwen3-30b-a3b` (DeepInfra, ~$0.10–0.12/$0.24–0.30 claimed):
   different architectures from the burned small Qwens; may dodge the burn.
   Needs DeepInfra primary code to test there, or OpenRouter paid box if listed.
+- Non-thinking models (owner question Sep 17): Mistral-Small is non-reasoning
+  by construction — top of the queue doubles as this test. DeepSeek v4.1-flash
+  is already effectively non-thinking (obedient, no burn observed).
 - Rejected from the same report: Llama-3.1-8B (Llama-family verdict stands);
   Groq paid 3.8 (our verdict stands); free-tier-as-production (stands).
   Corrected: report's Groq 3.8 rates ($0.59/$0.79) look guessed — our observed
@@ -108,8 +116,15 @@ Each needs a new provider pipe (code) unless reachable via OpenRouter paid.
   good (plain, concrete Berlin-coder opening) — but 5+ min on the opening
   turn. VERDICT: too slow for sessions. Follow-up: full 90s client timeout
   on a later turn (quota is per-model, so budget remains for other codes).
-  Keep the pipe for reference/spot checks on the free quota, never the
-  session engine.
+  FIX Sep 17: `enable_thinking: false` per request — full sitting + 6 desk
+  answers in under 3.5 min, 0 repairs. Measured: 23 calls, 168.6k in /
+  5.3k out (~$0.08 paid-equivalent, $0 on trial quota). Output line proves
+  the flag held (5.3k total vs 3.6k for ONE thinking turn). Quality (owner):
+  best session yet — developed Low turns, Rose/Weil/Bookchin determinations
+  strong, margins voice good, desk answers strong (Lenin/Kant desk openings
+  too similar — scaffold variety open). PROMOTED: default while Alibaba
+  trial quota lasts; DeepSeek stays fallback. Input measured far above
+  estimate (168k vs ~50k guess) — desk + grounding carry full history.
 - OpenRouter `meta-llama/llama-3.3-70b-instruct:free` — does NOT exist as `:free` (re-verified Sep 2026 via `/models` API, 445 models; only paid `meta-llama/llama-3.3-70b-instruct` listed). Do not add unless it appears. User reports seeing it on the website — website listing ≠ API availability.
 - DeepInfra `meta-llama/Llama-3.3-70B-Instruct-Turbo` — VERIFIED WORKING end-to-end by user (test 9, Sep 2026). ID re-verified against the DeepInfra catalog Sep 2026 (public model page, JSON mode supported). Needs a card on file despite earlier no-card assumption. Full cabinet completes on it.
 - DeepInfra coda/turns: unquoted-value JSON slips observed; parser salvages + repair retries cover most. Constrained decoding (`response_format: json_object` first, plain fallback on 400) added to force valid syntax — catalog confirms JSON mode support; live verdict on whether slips stop is the owner's next DeepInfra session.

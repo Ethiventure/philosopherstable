@@ -41,6 +41,11 @@ export const BANNED_PHRASES = [
   'the real question is not',
   'the real issue is not',
   'the question is not',
+  'the issue is not',
+  'the problem is not',
+  'the contradiction is not',
+  'the danger is not',
+  'the real problem is',
   'boils down to',
   'at the end of the day',
   'it is important to note',
@@ -66,6 +71,7 @@ export const ANTI_WAFFLE_RULES = [
   'ANTI-SUMMARY: do not summarise the previous speaker or the discussion sequentially. Analyse and debate. Name the specific source or work you are drawing on when you use one.',
 
   'SELF-REPETITION: do not restate your own earlier position. Name it in one clause and show how it has shifted under pressure.',
+  'NO LOOPS: never restate a sentence you already wrote in this turn. Each sentence must advance the thought — a turn that says the same thing twice has failed, however true.',
 
   'NO GENERIC VERDICT VERBS: never "errs", "fails to see", "is mistaken", "overlooks", "makes the mistake of" or their kin. Every author has their own critical machinery in their style essence — sublation, forensic specimen-analysis, rhizome against arborescence, cancelled futures, tectological organisation — use yours.',
   'VARY YOUR ENTRY: do not open every turn by naming PREV in the first clause. Enter through your concrete starting point (the commodity, the apparatus, the refrain, the institution at issue) and let the negation emerge from the analysis. No two of your turns should share an opening move.',

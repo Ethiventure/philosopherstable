@@ -113,6 +113,10 @@ const postDeepInfra = async ({ apiKey, model, systemPrompt, maxTokens, useJsonMo
         { role: 'user', content: m },
       ],
       max_tokens: maxTokens,
+      // Experimental Sep 2026: Qwen primaries think by default and burn the
+      // budget (the 35B failure). Server support for this flag is unverified —
+      // harmless if ignored, live retest decides. Revisit on 400s.
+      reasoning_effort: 'low',
       ...(jsonMode.current ? { response_format: { type: 'json_object' } } : {}),
     });
 
