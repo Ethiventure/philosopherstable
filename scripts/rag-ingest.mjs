@@ -334,10 +334,25 @@ async function ingestOne(db, entry) {
   const t0 = Date.now();
   const fetchUrl = resolveFetchUrl(entry);
   let html;
-  try {
-    html = await fetchText(fetchUrl);
-  } catch (error) {
-    return { id: entry.id, status: 'fetch-failed', detail: `${fetchUrl}: ${String(error.message ?? error)}` };
+  // LOCAL_TEXT mode: committed OCR/converted text for sources whose canonical
+  // URL serves no fetchable text (e.g. image-scan PDFs). source_url stays the
+  // canonical page for provenance; local_path is the ingested text. The text
+  // rides in <pre> so the OCR-text expansion below chunks it on real
+  // paragraph boundaries.
+  if (entry.local_path) {
+    try {
+      const txt = readFileSync(new URL(entry.local_path, ROOT), 'utf8')
+        .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+      html = `<html><body><pre>${txt}</pre></body></html>`;
+    } catch (error) {
+      return { id: entry.id, status: 'fetch-failed', detail: `${entry.local_path}: ${String(error.message ?? error)}` };
+    }
+  } else {
+    try {
+      html = await fetchText(fetchUrl);
+    } catch (error) {
+      return { id: entry.id, status: 'fetch-failed', detail: `${fetchUrl}: ${String(error.message ?? error)}` };
+    }
   }
   const { paragraphs: firstPass, linkRatio } = extractReadable(html);
   let paragraphs = firstPass;

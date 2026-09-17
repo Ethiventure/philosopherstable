@@ -1185,6 +1185,32 @@
       "rights_decision_at": null,
       "rights_note": "Auto-imported from the app corpus manifest; awaiting explicit owner approval.",
       "enabled": true
+    },
+    {
+      "id": "gillian-rose-italian-journey",
+      "author": "Gillian Rose",
+      "title": "Italian Journey",
+      "source_mode": "REMOTE_IMPORT",
+      "source_url": "https://gillianrose.org/wp-content/uploads/2026/05/Gillian-Rose-Italian-Journey-CC-4.0.pdf",
+      "rights_status": "approved",
+      "rights_decision_by": "project_owner",
+      "rights_decision_at": "2026-09-17",
+      "rights_note": "Owner-approved 2026-09-17 (chat): executor-shared CC BY-NC-ND 4.0 texts from gillianrose.org. Non-commercial verbatim use with attribution.",
+      "enabled": true,
+      "local_path": "data/local-text-rose-italian.txt"
+    },
+    {
+      "id": "gillian-rose-your-visit-to-auschwitz",
+      "author": "Gillian Rose",
+      "title": "Your Visit to Auschwitz",
+      "source_mode": "REMOTE_IMPORT",
+      "source_url": "https://gillianrose.org/wp-content/uploads/2026/05/Gillian-Rose-Your-Visit-to-Auschwitz-CC-4.0.pdf",
+      "rights_status": "approved",
+      "rights_decision_by": "project_owner",
+      "rights_decision_at": "2026-09-17",
+      "rights_note": "Owner-approved 2026-09-17 (chat): executor-shared CC BY-NC-ND 4.0 texts from gillianrose.org. Non-commercial verbatim use with attribution.",
+      "enabled": true,
+      "local_path": "data/local-text-rose-auschwitz.txt"
     }
   ]
 }
