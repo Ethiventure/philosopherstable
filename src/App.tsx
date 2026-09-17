@@ -968,13 +968,21 @@ function App() {
     const turnText = (item: Intervention) => {
       const philosopher = philosophers.find((p) => p.id === item.philosopher_id);
       const name = philosopher?.name ?? 'Unknown';
-      for (const n of splitLabels(name, item.citations.map((c) => c.label)).numbers) {
+      const numbers = splitLabels(name, item.citations.map((c) => c.label)).numbers;
+      for (const n of numbers) {
         if (!seenNumbers.has(n)) {
           seenNumbers.add(n);
           citedNumbers.push(n);
         }
       }
-      return `PASS ${item.pass_number} — ${philosopher?.full_name ?? 'Unknown'}\n\n${item.response_text}\n`;
+      // Footnotes sit under their own answer, not inside sentences: bracket
+      // numbers break spoken meaning in read-aloud apps, so the text goes out
+      // clean and each turn carries its own Sources lines.
+      const clean = item.response_text.replace(/\[\d+\]/g, '').replace(/[ \t]+/g, ' ');
+      const sources = numbers.length
+        ? `\nSources: ${entriesForNumbers(numbers).map(({ number, source }) => `[${number}] ${source.title} — ${source.author}`).join('; ')}\n`
+        : '';
+      return `PASS ${item.pass_number} — ${name}\n\n${clean}\n${sources}`;
     };
     // Each note sits where it spoke: the early note between pass 1 and pass 2,
     // the late note between the pass-2 close and pass-3 open.

@@ -256,8 +256,10 @@ async function tryMarxChapters(html, baseUrl) {
     const href = m[1];
     const base = href.split('/').pop()?.split(/[?#]/)[0] ?? '';
     // Numbered chapters (ch01.htm), Roman chapters (Lenin's i.htm…v.htm),
-    // prefaces/appendices/conclusions — but never bare index pages.
-    if (!/^(ch\d+|chap\d+|.*chapter.*|preface|appendix|conc?l.*|[ivxl]+)\.html?$/i.test(base)) continue;
+    // prefaces/appendices/conclusions, Hegel PR section files (prabstra.htm,
+    // printrod.htm…), Lenin M&EC section files (one5.htm, two4.htm…) — but
+    // never bare index pages.
+    if (!/^(ch\d+|chap\d+|.*chapter.*|preface|appendix|conc?l.*|[ivxl]+|printrod|pr[a-z]+|(one|two|three|four|five|six)\d+[a-z]*)\.html?$/i.test(base)) continue;
     let absolute;
     try {
       absolute = new URL(href, baseUrl).toString();

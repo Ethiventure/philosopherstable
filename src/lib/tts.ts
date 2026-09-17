@@ -91,7 +91,9 @@ export function ensureVoices(): Promise<void> {
 }
 /** Split long text at sentence boundaries — browsers truncate single long utterances. */
 export function chunkText(text: string, maxLen = 200): string[] {
-  const sentences = text.replace(/\s+/g, ' ').match(/[^.!?…]+[.!?…]+["”']?\s*|[^.!?…]+$/g) ?? [text];
+  // Bracketed footnote numbers ([32]) read aloud as "thirty-two" and wreck the
+  // flow — the reading list carries citations, so speech drops them.
+  const sentences = text.replace(/\[\d+\]/g, '').replace(/\s+/g, ' ').match(/[^.!?…]+[.!?…]+["”']?\s*|[^.!?…]+$/g) ?? [text];
   const chunks: string[] = [];
   let current = '';
   for (const sentence of sentences) {
