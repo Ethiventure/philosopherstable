@@ -472,7 +472,11 @@ nothing new). Wired behind the existing grounding toggle: desk + turns search
 the thinker's own shard first (`rag-ground.ts`), live extract.js stays as
 fallback; desk answers carry clickable source chunks, export lists source
 titles. MIA index pages are re-attempted via chapter links (generic
-chapter-following fallback); PDFs stay reading-links only. Eval traps assert
+chapter-following fallback); remote PDFs stay reading-links only — scanned
+PDFs become ingestible via the OCR + `local_path` runbook (standing
+instructions, Backend-free RAG pattern; first built for the Rose estate
+scans Sep 2026: PyMuPDF render → tesseract-stdin OCR → committed text
+under `data/local-text-*`). Eval traps assert
 author scoping where the corpus legitimately contains the terms, abstention
 only where stems are truly absent. Passage IDs are positional: chunker
 changes shift ordinals, so eval records its validated chunker version and
@@ -594,6 +598,15 @@ full text. Only route: owner converts copies as before (same local-index
 path). No secondary sources — dossier and voice come from Rose's texts only. Style essence: built from the texts by the
 builder (fields per `fisher.style.ts`), or via the extraction prompt below.
 *Eval: waiting on dossier + text files.*
+RAG landed Sep 17 2026 (owner-approved, dated act): `Italian Journey`
+(~8.1k words, 46 passages) + `Your Visit to Auschwitz` (~2.0k words,
+14 passages) from gillianrose.org — executor-shared CC BY-NC-ND 4.0.
+Image-scan PDFs OCR’d locally (tesseract via stdin; the brew build cannot
+open image files directly); OCR text committed under `data/local-text-*`
+and ingested via the new `local_path` manifest mode (canonical PDF stays
+`source_url` for provenance). Eval still 12/12 after. Mislabeled
+archive.org "Public Domain Mark" Melancholy Science scan stays OUT
+(uploader error — copyright page says All rights reserved).
 
 ### Style-essence extraction prompt (paste to research LLM with the texts)
 > Write a style essence for [THINKER] grounded ONLY in the attached texts.
