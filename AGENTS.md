@@ -39,6 +39,8 @@ full edge-list fallback. Content-agnostic: substitute any entities.
 - Debts table (`CABINET_DEBTS`) is truth; heirs derive. Model verdicts go in
   `docs/models-tried.md` — corpses stay buried, never re-test without new
   evidence. `PLAN.md` (agents) + `README.md` (humans) stay current.
+  Structural lessons for the owner accumulate in `docs/things-taught.md`
+  (plain words, newest first) — add one entry per lesson.
 - Fail-soft everywhere with visible reasons; every failure preserves progress
   and offers recovery. UI copy keeps one speaker per surface.
 - Voice and tone: chats in plain everyday language (~IELTS 6), jargon

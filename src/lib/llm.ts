@@ -86,6 +86,7 @@ const RATE_TABLE: RateRow[] = [
   { match: (_p, m) => m.includes('qwen3.8-27b'), perIn: 0.40, perOut: 3.00 },
   { match: (_p, m) => m.includes('qwen3.8-flash'), perIn: 0.15, perOut: 0.47 },
   { match: (_p, m) => m.includes('qwen3.5-9b'), perIn: 0.10, perOut: 0.15 },
+  { match: (_p, m) => m.includes('glm-5.3-flash') || m.includes('glm-5-flash'), perIn: 0.075, perOut: 0.25 },
   { match: (_p, m) => m.includes('qwen3.6-35b'), perIn: 0.10, perOut: 0.95 },
   { match: (_p, m) => m.includes('llama-3.3-70b'), perIn: 0.10, perOut: 0.32 },
 ];

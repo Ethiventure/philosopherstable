@@ -178,6 +178,12 @@ export function relationshipLine(
   low: boolean,
 ): string | null {
   const plain = low ? ' Render any hard terms here into plain everyday words.' : '';
+  // Heat follows evidence: a medium-confidence debt is acknowledged in one
+  // clause, never declaimed; a low one is a faint trace. Only high-confidence
+  // debts get the full face-to-face treatment (owner eval: Bookchin played a
+  // medium indirect debt to Weil too strongly).
+  const strengthOrder =
+    ' Evidence strength sets the volume — HIGH: full face-to-face heat. MEDIUM: one plain clause of acknowledgment, then move on. LOW: a faint trace, almost nothing.';
   const owed = (CABINET_DEBTS[speakerSlug] ?? []).find((d) => d.to === prevSlug);
   if (owed) {
     const heat =
@@ -186,7 +192,7 @@ export function relationshipLine(
         : owed.stance === 'positive'
           ? `You stand on ${prevName}'s shoulders — say so openly, then show where you go further.`
           : `You owe ${prevName} and you fight them too — hold both in the open.`;
-    return `YOUR HISTORY WITH ${prevName} — you owe them this: ${owed.note}. ${heat}${plain}`;
+    return `YOUR HISTORY WITH ${prevName} (confidence ${owed.confidence}) — you owe them this: ${owed.note}. ${heat}${strengthOrder}${plain}`;
   }
   const owing = (CABINET_DEBTS[prevSlug] ?? []).find((d) => d.to === speakerSlug);
   if (owing) {
@@ -196,7 +202,7 @@ export function relationshipLine(
         : owing.stance === 'positive'
           ? `They carry your work forward — greet that, then test what they did with it.`
           : `They took from you and twisted it — name the twist.`;
-    return `${prevName} OWES YOU this: ${owing.note}. ${heat}${plain}`;
+    return `${prevName} OWES YOU this (confidence ${owing.confidence}): ${owing.note}. ${heat}${strengthOrder}${plain}`;
   }
   return null;
 }
@@ -226,11 +232,16 @@ export function tableStancesLine(
   for (const other of others) {
     const debt = (CABINET_DEBTS[speakerSlug] ?? []).find((d) => d.to === other.slug);
     if (debt) {
-      (debt.stance === 'positive' ? rated : debt.stance === 'critical' ? doneWith : tangled).push(other.name);
+      // Medium/low debts ride along marked, so the speaker plays them quietly.
+      const soft = debt.confidence === 'high' ? other.name : `${other.name} (lightly held)`;
+      (debt.stance === 'positive' ? rated : debt.stance === 'critical' ? doneWith : tangled).push(soft);
       continue;
     }
     const held = (CABINET_DEBTS[other.slug] ?? []).find((d) => d.to === speakerSlug);
-    if (held) (held.stance === 'positive' ? fans : held.stance === 'critical' ? critics : tangled).push(other.name);
+    if (held) {
+      const soft = held.confidence === 'high' ? other.name : `${other.name} (lightly held)`;
+      (held.stance === 'positive' ? fans : held.stance === 'critical' ? critics : tangled).push(soft);
+    }
   }
   const bits: string[] = [];
   if (fans.length > 0) bits.push(`allies in the room: ${fans.join(', ')} — back them when they are attacked`);

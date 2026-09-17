@@ -3,24 +3,53 @@
 Living log of every model/provider combination tested for the cabinet, newest
 first. Check here before (re)trying anything — corpses stay buried.
 
-## Current standing (Sep 17 2026, owner-graded, Low, AGI-jobs question)
+## Current ranks (Sep 17 2026, owner-graded live sessions only)
 
-- **DeepSeek v4.1-flash (OpenRouter paid) — the engine.** Strengths: holds
-  the JSON contract every turn, quick start, full session ~6 min, plainness
-  mostly holds (Hegel P1 succinct, Bookchin P1 plain, Rose P1+P3 genuinely
-  Rosean). Weaknesses: voice at ~85% — "arm" limb/tool/weapon blur across
-  turns, occasional staccato AI compressions (P2 Hegel), plain words combined
-  into harder phrases. Gap is prompt-fixable surface, not model nature.
-- **Qwen3.8-27B (Groq free) — the voice reference.** Strengths: best
-  voice+plainness together (Bloch P1 exemplar), developed turns, better
-  margins voice, ideas + emotional tone held. Weaknesses: 14+ min + 3 resumes
-  per session free; quota walls (429s in pass 1); odd metaphors, mixed
-  metaphors, wrong-continent examples. Unusable free; ~$0.20+/session paid.
+- Style (voice + temperature): Qwen3.8-27B (Alibaba, unthinking) > GLM-5.3-flash > DeepSeek v4.1-flash > Qwen3.6-35B (voice good, obedience bad) > Mistral (loop) > Llama (weak).
+- Prompt adherence (contract + Low): DeepSeek (0 repairs) > GLM (3 repairs) > Qwen27B (obeys; quota is the fault, not obedience) > Llama > Mistral > burn models (no answer to grade).
+- Speed (full sitting pace): Alibaba-unthinking (<3.5 min incl. desk) > DeepSeek (~6 min) > GLM (~7 min) > Groq free Qwen (7.5–14 min, walls) > everything else (failed).
+- Reliability (finishes sessions cleanly): DeepSeek > Alibaba-unthinking (one session) > GLM > Groq free > rest (out).
+- Overall: Alibaba Qwen27B-unthinking (default while trial lasts) > DeepSeek (fallback engine) > GLM (best backup) > Groq free Qwen (voice reference) > dead (all small Qwens, Mistral, Llama-as-primary, distill, 3.6-27B).
+
+## Current standing (Sep 17 2026, owner-graded, Low, 2030 question)
+- **Qwen3.8-27B (Alibaba, unthinking) — the default while trial quota lasts.**
+  Strengths: best voice measured (felt, not admired — Hegel's "mind with
+  nothing to fight against," Rose's law-vs-love held open); sub-3.5-min full
+  sitting + desk; 0 repairs; 23 calls, 168.6k/5.3k (~$0.08 paid-equiv, $0 on
+  quota). Weaknesses: trial ends Dec 16 2026; needs `enable_thinking:false`
+  or pace collapses (5-min turns). Watch the quota wall coming.
+- **DeepSeek v4.1-flash (OpenRouter paid) — the fallback engine.** Strengths:
+  holds the JSON contract every turn, quick start, full session ~6 min,
+  plainness mostly holds (Hegel P1 succinct, Bookchin P1 plain, Rose P1+P3
+  genuinely Rosean). Weaknesses: voice at ~85% — "arm" limb/tool/weapon blur
+  across turns, occasional staccato AI compressions (P2 Hegel), plain words
+  combined into harder phrases. Gap is prompt-fixable surface, not model nature.
+- **GLM-5.3-flash (OpenRouter paid) — runner-up, best backup.** Cooler and
+  more even than Qwen; developed turns, widest desk round. 3 repairs, ~7 min.
+- **Qwen3.8-27B (Groq free) — retired voice reference.** Superseded by the
+  Alibaba route (same weights, seconds not minutes). Free tier walls stand.
 - **Desk (all providers) reads easier than turns** — concrete examples land —
   but at medium difficulty while set to Low. Desk level calibration is open.
 - **Every Qwen under 27B failed the same way** (3.6-35B, 3.8-flash, 3.5-9B):
   reasoning burn — thinks about the contract/persona until cutoff, answers
   nothing. The contract needs a model that answers instead of thinking.
+
+## Session log (one row per graded run; token columns filled only where the
+usage instrument ran — earlier sessions predate it)
+
+| Model | Provider | Time | Tokens (in/out, calls) | Errors | Quality notes | Interim verdict | Next step | Final verdict |
+| glm-5.3-flash | OpenRouter paid | Full sitting + 7 desk, pace OK | 196.8K/9.1K, 27 calls, 3 repairs | Strong second (owner verdict Sep 17: Qwen27B better on emotional temperature — felt, not just admired; GLM cooler/even). Developed Low turns, stances lived, margins strong, widest desk round (Rose desk cites Italian Journey). Debt-strength proportion fault found (Bookchin→Weil medium-indirect played too strong — fixed same day) | **Runner-up; best backup** | Retest post-fix | Open |
+|---|---|---|---|---|---|---|---|---|
+| deepseek-v4.1-flash | OpenRouter paid | ~6 min full session | n/a (pre-instrument) | 1 transient desk empty-body | Hegel/Bookchin P1 good; Rose excellent; "arm" blur; P2 Hegel staccato | Engine candidate | Trio grade | **Engine default** |
+| qwen3.8-27b | Groq free | 11 min (pass 2 seat 4); 14.24 min + 3 resumes | Day total 66K/3.8K ≈ $0.07 | 429s mid-session, slow resumes | Best voice+plainness (Bloch P1); odd metaphors; wrong-continent examples | Voice reference | Paid retest | **Voice ref; free walled** |
+| Qwen3.6-35B-A3B | DeepInfra | 2.5 min first card; stuck pass 1 at 11.5 min | n/a | Thinking burn | Ignores Low (school-terms + citations) | Fail | — | **Out** |
+| qwen3.8-flash | OpenRouter paid | 3.5 min stuck seat 1 | n/a | Burn (content null, length) | None (no answer) | Fail | — | **Out** |
+| qwen3.5-9b | OpenRouter paid | 2+ min silence | n/a | Burn (content null, length) | None (no answer) | Fail | — | **Out** |
+| mistral-small-3.2-24b | OpenRouter paid | 50s start; 2+ min stuck seat 1 | 13.2K/1.3K, 2 calls | Empty body, then ~30× scaffold loop | No voice (loop); desk Spinoza decent | Fail | — | **Out** |
+| glm-5.3-flash | OpenRouter paid | ~7 min | n/a | None reported | Grade pending (owner reading) | Testing | Grade it | Open |
+| qwen3.8-27b (thinking) | Alibaba | 5+ min seat 1; 90s timeout later | 6.8K/3.6K first turn (3.5K hidden thinking) | Timeout | Plain, concrete opening | Slow | Disable thinking | Superseded |
+| qwen3.8-27b (unthinking) | Alibaba | <3.5 min full sitting + 6 desk | 168.6K/5.3K, 23 calls, 0 repairs | None | Best session yet (owner) | **Default** | Watch Dec quota | **Default (trial)** |
+| deepseek-r1-distill-qwen-32b | Groq free | — (instant fail) | — | 400 decommissioned | — | Dead | — | **Out** |
 - `deepseek-r1-distill-qwen-32b` (Groq free): DEAD on arrival Sep 17 —
   decommissioned (400), never tested. Groq ID churn claims another one.
 

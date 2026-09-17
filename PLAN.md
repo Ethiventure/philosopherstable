@@ -722,3 +722,7 @@ RAG shard latency (later): per-turn grounding downloads the thinker's whole
 shard first touch (Marx 6.6MB, Hegel 5.6MB — owners feel it as stuck seats).
 Options: slimmer shards, server-side search, or pre-warm all sitting shards
 at session start. Revisit when sessions feel slow.
+Genealogy touch behaviour (later, owner-reported on iPad): tap selects the
+philosopher immediately, so the hover-isolate (lit debts) never shows.
+Fix: first tap isolates, second tap opens, with an explicit close/dismiss —
+touch-first design, not hover ported over.

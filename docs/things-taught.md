@@ -1,0 +1,58 @@
+# Things taught (owner's notebook)
+Plain-words record of technical lessons from building this cabinet.
+Low intensity, nothing dumbed down: every entry keeps the full fact,
+only the words stay simple. Newest first. The owner asked for this
+Sep 17 2026 — keep writing here, one entry per lesson.
+
+## Unthinking models answer faster — sometimes (Sep 17 2026)
+Many models "think" (private draft reasoning) before answering, and some
+bill that thinking as output tokens: one turn showed 3,500 thinking tokens
+behind 130 words of answer — and took 5 minutes. Switching thinking off
+per request cut the same model to seconds with the voice intact (even
+truer, the owner judged: less scaffolding, more person). But the switch
+is different on every provider, some models ignore it, and some (like
+GLM) cannot fully switch off — so "turn thinking off" is not one fix but
+one verification per pipe: send the flag, then check the output-token
+line. Small totals mean it held.
+
+## Pass-3 architecture (Sep 17 2026)
+Final-round turns do three jobs at once: answer the previous speaker,
+weave in one idea from another seat (the survey), and obey the margins
+note's demands. Done well, the round braids the whole sitting into one
+chain (e.g. a levy idea passing Marx → Hegel → Bookchin, each adding a
+link). Done badly, every seat chants the same slogan with different
+nouns. If P3 sounds samey, the braid has slipped into chant — the fix
+is in the survey instruction, not the models.
+
+## Input tokens run the show (Sep 17 2026)
+Each turn sends ~7,000 input tokens and gets ~230 back. Cost, speed,
+and quota walls almost all come from the input side: what rides along
+(past turns, retrieved passages, persona). Output price differences
+between providers sound dramatic and matter in cents. To make sessions
+cheaper or faster, slim the input or cache it — never chase output price.
+
+## Reasoning burn (Sep 17 2026)
+Some models think out loud before answering and spend the whole output
+budget doing it — the reply arrives empty. Fixes: a per-request "don't
+think" flag where the provider honours it (Alibaba: proven, 5 minutes
+to seconds); exclude models that ignore the flag. A model that burns
+twice is out, not coaxed.
+
+## Free tiers wall mid-session (Sep 17 2026)
+Free quotas are per-minute or per-request caps (~7K input tokens per
+request on Groq free), not daily buckets. A session grows past the wall
+halfway through — fast starts, stuck middles. Free is for trials;
+sessions need paid or trial-quota pipes.
+
+## Model IDs rot (Sep 17 2026)
+Providers retire model names without warning (days, not years). Never
+pin a single ID in a dropdown: free-text field, live key check, stored
+dead IDs fall back to default. When a call 404s, read the current name
+off the provider's list letter-for-letter.
+
+## Copyright has two clocks (Sep 17 2026)
+An old book is not automatically free: the translator's copyright runs
+separately from the author's (both life-plus-70 in the UK). Check both
+clocks. A translation you commission is yours; a translation of a book
+still in copyright needs permission first. Short quoted excerpts with
+credit sit in the safest zone; full public copies need clean rights.

@@ -114,6 +114,7 @@ export function buildTurnInstruction({ kind, prevName, isFinalSeat, longForm, re
     'QUESTION RULE: paraphrase the question through your framework — never repeat any multi-word clause of it verbatim.',
     'ECHO RULE: answer PREV — never restate PREV. No sentence of yours may be a rewording of a sentence of theirs; a turn that could pass as PREV rewritten has failed, even if every word differs.',
     'PLACES: set every example where the question lives, never your birthplace by default — and never reuse PREV’s city or country. Each turn moves somewhere new; a sitting that never leaves one country has failed.',
+    'TIME RULE: never blur what is with what you want. Mark present-day facts as facts and demands as demands: say what changes now (the minimum) and what the horizon holds (the maximum) — never present the horizon as already here, and never mistake a demand for a description.',
     closingLine,
     ...(isFinalSeat
       ? ['FINAL SEAT: return the question, changed, to the user — no new claims after it.']
