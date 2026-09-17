@@ -41,6 +41,7 @@ import { generateTurnGroq, testGroqKey } from '@/lib/groq';
 import { generateTurnShared } from '@/lib/shared';
 import { generateTurnOpenRouter, testOpenRouterKey } from '@/lib/openrouter';
 import { generateTurnDeepInfra, testDeepInfraKey, lastDeepInfraModel } from '@/lib/deepinfra';
+import { generateTurnAlibaba, testAlibabaKey } from '@/lib/alibaba';
 import { generateTurnTogether, testTogetherKey, TOGETHER_MODEL } from '@/lib/together';
 import { entriesForNumbers, splitLabels } from '@/lib/footnotes';
 import { extractPassages, formatGroundedBlock, groundableSource } from '@/lib/extract';
@@ -243,6 +244,8 @@ function App() {
         return `DeepInfra ${lastDeepInfraModel} (visitor key)`;
       case 'together':
         return `Together ${TOGETHER_MODEL} (visitor key)`;
+      case 'alibaba':
+        return `Alibaba ${snap.alibabaModel} (visitor key)`;
       default:
         return 'Unknown provider';
     }
@@ -385,6 +388,7 @@ function App() {
     : s.provider === 'groq' ? s.groqApiKey
     : s.provider === 'deepinfra' ? s.deepInfraApiKey
     : s.provider === 'together' ? s.togetherApiKey
+    : s.provider === 'alibaba' ? s.alibabaApiKey
     : '';
   const hasKey = settings.provider === 'shared' ? true : providerKey(settings).trim().length > 0;
   // Groq's free tier walls single requests at ~7k input tokens: Medium/High
@@ -502,6 +506,14 @@ function App() {
       case 'together':
         return generateTurnTogether({
           apiKey: snap.togetherApiKey,
+          systemPrompt,
+          userMessage,
+          longForm,
+        });
+      case 'alibaba':
+        return generateTurnAlibaba({
+          apiKey: snap.alibabaApiKey,
+          model: snap.alibabaModel,
           systemPrompt,
           userMessage,
           longForm,
@@ -1109,7 +1121,7 @@ function App() {
               </div>
               {sharedNeedsLow && !isRunning && <p className="text-sm italic text-[#8b5254] mt-3">The shared key speaks Low only — its free tier cannot fit Medium or High prompts (they halt mid-sitting). <button className="underline" onClick={() => updateSettings({ ...settings, intensity: 'low' })}>Continue at Low</button> or <button className="underline" onClick={() => openSettings('key')}>add your own key</button> for the full voice.</p>}
               {!hasKey && <p className="text-sm italic text-[#8b5254] mt-3">Add your {activeKeyLabel} in <button className="underline" onClick={() => setShowSettings(true)}>Settings</button> to begin — it stays in this browser and goes straight to the provider alone; we never see it{settings.provider === 'openrouter' ? ', and goes straight to OpenRouter.' : settings.provider === 'groq' ? ', and goes straight to Groq.' : settings.provider === 'deepinfra' ? ', and goes straight to DeepInfra.' : settings.provider === 'together' ? ', and goes straight to Together.' : '.'}</p>}
-              {runError && (runError.code === 'quota' ? <div role="alert" className="mt-3 p-5 bg-[#8b5254]/10 border-l-2 border-[#8b5254]"><p className="text-xs uppercase tracking-widest text-[#8b5254]">Paused — free-tier quota reached</p><p className="text-sm mt-2 text-[#465f75]">{runError.message}</p><p className="text-sm mt-2 text-[#465f75]">Nothing is lost: {interventions.length} of {orderedPhilosophers.length * 3} interventions are kept, and read-aloud plus export keep working. Quotas reset with time — per-minute caps within minutes, daily caps the next day.</p><div className="flex flex-wrap gap-2 mt-3"><button className="btn-secondary" onClick={() => resumeMeeting()} disabled={!hasKey}>Try resume</button>{settings.provider === 'shared' && <button className="btn-secondary" onClick={() => { setRunError(null); setShowSettings(true); }}>Use my own key instead</button>}{settings.provider === 'openrouter' && settings.openRouterMode === 'paid' && <button className="btn-secondary" onClick={switchToFreeCycleAndResume}>Back to free cycle & resume</button>}{(settings.provider === 'groq' || settings.provider === 'deepinfra' || settings.provider === 'together') && <button className="btn-secondary" onClick={() => switchProviderAndResume('shared')}>Fall back to shared</button>}<button className="btn-secondary" onClick={() => setShowSettings(true)}>Open settings</button>{settings.provider === 'openrouter' ? <a className="btn-secondary" href="https://openrouter.ai/activity" target="_blank" rel="noreferrer">Check usage</a> : settings.provider === 'groq' ? <a className="btn-secondary" href="https://console.groq.com" target="_blank" rel="noreferrer">Check usage</a> : settings.provider === 'deepinfra' ? <a className="btn-secondary" href="https://deepinfra.com/dash" target="_blank" rel="noreferrer">Check usage</a> : settings.provider === 'together' ? <a className="btn-secondary" href="https://api.together.xyz/settings/api-keys" target="_blank" rel="noreferrer">Check usage</a> : null}<button className="btn-secondary" onClick={() => setRunError(null)}>Dismiss</button></div></div> : <div className="mt-3 p-4 bg-[#8b5254]/8 border-l-2 border-[#8b5254]"><p className="text-xs uppercase tracking-widest text-[#8b5254]">Philosopher Strike Demand</p><p className="text-sm mt-1 text-[#465f75]">{runError.message}</p><div className="flex flex-wrap gap-2 mt-3"><button className="btn-secondary" onClick={resumeMeeting} disabled={!hasKey}>Resume cabinet</button><button className="btn-secondary" onClick={() => setShowSettings(true)}>Open settings</button><button className="btn-secondary" onClick={() => setRunError(null)}>Dismiss</button></div></div>)}
+              {runError && (runError.code === 'quota' ? <div role="alert" className="mt-3 p-5 bg-[#8b5254]/10 border-l-2 border-[#8b5254]"><p className="text-xs uppercase tracking-widest text-[#8b5254]">Paused — free-tier quota reached</p><p className="text-sm mt-2 text-[#465f75]">{runError.message}</p><p className="text-sm mt-2 text-[#465f75]">Nothing is lost: {interventions.length} of {orderedPhilosophers.length * 3} interventions are kept, and read-aloud plus export keep working. Quotas reset with time — per-minute caps within minutes, daily caps the next day.</p><div className="flex flex-wrap gap-2 mt-3"><button className="btn-secondary" onClick={() => resumeMeeting()} disabled={!hasKey}>Try resume</button>{settings.provider === 'shared' && <button className="btn-secondary" onClick={() => { setRunError(null); setShowSettings(true); }}>Use my own key instead</button>}{settings.provider === 'openrouter' && settings.openRouterMode === 'paid' && <button className="btn-secondary" onClick={switchToFreeCycleAndResume}>Back to free cycle & resume</button>}{(settings.provider === 'groq' || settings.provider === 'deepinfra' || settings.provider === 'together' || settings.provider === 'alibaba') && <button className="btn-secondary" onClick={() => switchProviderAndResume('shared')}>Fall back to shared</button>}<button className="btn-secondary" onClick={() => setShowSettings(true)}>Open settings</button>{settings.provider === 'openrouter' ? <a className="btn-secondary" href="https://openrouter.ai/activity" target="_blank" rel="noreferrer">Check usage</a> : settings.provider === 'groq' ? <a className="btn-secondary" href="https://console.groq.com" target="_blank" rel="noreferrer">Check usage</a> : settings.provider === 'deepinfra' ? <a className="btn-secondary" href="https://deepinfra.com/dash" target="_blank" rel="noreferrer">Check usage</a> : settings.provider === 'together' ? <a className="btn-secondary" href="https://api.together.xyz/settings/api-keys" target="_blank" rel="noreferrer">Check usage</a> : settings.provider === 'alibaba' ? <a className="btn-secondary" href="https://bailian.console.aliyun.com/" target="_blank" rel="noreferrer">Check usage</a> : null}<button className="btn-secondary" onClick={() => setRunError(null)}>Dismiss</button></div></div> : <div className="mt-3 p-4 bg-[#8b5254]/8 border-l-2 border-[#8b5254]"><p className="text-xs uppercase tracking-widest text-[#8b5254]">Philosopher Strike Demand</p><p className="text-sm mt-1 text-[#465f75]">{runError.message}</p><div className="flex flex-wrap gap-2 mt-3"><button className="btn-secondary" onClick={resumeMeeting} disabled={!hasKey}>Resume cabinet</button><button className="btn-secondary" onClick={() => setShowSettings(true)}>Open settings</button><button className="btn-secondary" onClick={() => setRunError(null)}>Dismiss</button></div></div>)}
             </div>
 
             <div className="dark-academia-card p-4 md:p-5">
@@ -1357,7 +1369,7 @@ function SpiralView({ interventions, question, activePass, numPhilosophers }: { 
 function PositionComparison({ philosophers, interventions, onOpenSources }: { philosophers: Philosopher[]; interventions: Intervention[]; onOpenSources: (n: number) => void }) { return <section className="mt-12"><div className="ornament-divider mb-6"><span className="text-xl">✦</span></div><p className="pass-indicator text-[#8b5254]">Memory across passes</p><h2 className="text-3xl mb-5">Position changes</h2><div className="grid lg:grid-cols-3 gap-4">{philosophers.map((philosopher) => <div key={philosopher.id} className="dark-academia-card p-5"><h3 className="text-xl mb-3">{philosopher.name}</h3>{[1, 2, 3].map((pass) => { const item = interventions.find((entry) => entry.philosopher_id === philosopher.id && entry.pass_number === pass); return <div key={pass} className="border-t border-[#4a392d]/15 pt-3 mt-3"><p className="text-[10px] uppercase tracking-widest text-[#8b5254]">Pass {pass} · {PASS_NAMES[pass - 1]}</p><p className="text-sm mt-1 line-clamp-6 text-[#465f75]/80">{item?.response_text ?? 'Awaiting intervention.'}</p>{item && <ReadSimilar philosopherName={philosopher.name} labels={item.citations.map((c) => c.label)} onOpenSources={onOpenSources} />}</div>; })}</div>)}</div></section>; }
 
 function WelcomeModal({ onClose, onOpenSettings, ttsSupported, listening, onListen }: { onClose: (remember: boolean) => void; onOpenSettings: () => void; ttsSupported: boolean; listening: boolean; onListen: () => void }) {
-  const [remember, setRemember] = useState(true);
+  const [remember, setRemember] = useState(false);
   return (
     <div className="fixed inset-0 z-50 bg-[#4a392d]/35 backdrop-blur-sm flex items-center justify-center p-4" onClick={() => onClose(remember)}>
       <div role="dialog" aria-modal="true" aria-label="About the Dialectical Cabinet" className="dark-academia-card max-w-2xl max-h-[90vh] overflow-y-auto custom-scroll p-6 md:p-8" onClick={(event) => event.stopPropagation()}>
@@ -1402,6 +1414,7 @@ function SettingsDrawer({ philosophers, activeSlugs, togglePhilosopher, settings
   const [groqKeyInput, setGroqKeyInput] = useState(settings.groqApiKey);
   const [deepInfraKeyInput, setDeepInfraKeyInput] = useState(settings.deepInfraApiKey);
   const [togetherKeyInput, setTogetherKeyInput] = useState(settings.togetherApiKey);
+  const [alibabaKeyInput, setAlibabaKeyInput] = useState(settings.alibabaApiKey);
   const [testState, setTestState] = useState<'idle' | 'testing' | 'ok' | 'error'>('idle');
   const [testMessage, setTestMessage] = useState('');
   const [tab, setTab] = useState<'key' | 'cabinet' | 'display'>(initialTab);
@@ -1409,8 +1422,9 @@ function SettingsDrawer({ philosophers, activeSlugs, togglePhilosopher, settings
   const usingGroq = settings.provider === 'groq';
   const usingDeepInfra = settings.provider === 'deepinfra';
   const usingTogether = settings.provider === 'together';
-  const activeKeyInput = usingGroq ? groqKeyInput : usingOpenRouter ? orKeyInput : usingDeepInfra ? deepInfraKeyInput : usingTogether ? togetherKeyInput : '';
-  const activeStoredKey = usingGroq ? settings.groqApiKey : usingOpenRouter ? settings.openRouterApiKey : usingDeepInfra ? settings.deepInfraApiKey : usingTogether ? settings.togetherApiKey : '';
+  const usingAlibaba = settings.provider === 'alibaba';
+  const activeKeyInput = usingGroq ? groqKeyInput : usingOpenRouter ? orKeyInput : usingDeepInfra ? deepInfraKeyInput : usingTogether ? togetherKeyInput : usingAlibaba ? alibabaKeyInput : '';
+  const activeStoredKey = usingGroq ? settings.groqApiKey : usingOpenRouter ? settings.openRouterApiKey : usingDeepInfra ? settings.deepInfraApiKey : usingTogether ? settings.togetherApiKey : usingAlibaba ? settings.alibabaApiKey : '';
   const keySaved = activeKeyInput === activeStoredKey && activeStoredKey.length > 0;
   const runTest = async () => {
     const key = activeKeyInput.trim();
@@ -1438,6 +1452,11 @@ function SettingsDrawer({ philosophers, activeSlugs, togglePhilosopher, settings
         setTestState('ok');
         setTestMessage(`Key works on ${TOGETHER_MODEL}. Saved for this browser.`);
         onSettingsChange({ ...settings, togetherApiKey: key });
+      } else if (usingAlibaba) {
+        await testAlibabaKey(key, settings.alibabaModel);
+        setTestState('ok');
+        setTestMessage(`Key works on ${settings.alibabaModel}. Saved for this browser.`);
+        onSettingsChange({ ...settings, alibabaApiKey: key });
       }
     } catch (error) {
       setTestState('error');
@@ -1459,6 +1478,9 @@ function SettingsDrawer({ philosophers, activeSlugs, togglePhilosopher, settings
     } else if (usingTogether) {
       setTogetherKeyInput('');
       onSettingsChange({ ...settings, togetherApiKey: '' });
+    } else if (usingAlibaba) {
+      setAlibabaKeyInput('');
+      onSettingsChange({ ...settings, alibabaApiKey: '' });
     }
   };
   const updateDisplay = (partial: Partial<AccessibilitySettings>) => {
@@ -1487,7 +1509,7 @@ function SettingsDrawer({ philosophers, activeSlugs, togglePhilosopher, settings
         </div>
         {tab === 'key' && (
           <div className="space-y-3 border-b border-[#4a392d]/15 pb-6 mb-6">
-            <p className="italic text-sm text-[#465f75]/70">Your own keys stay in this browser and go only to the named provider (OpenRouter → OpenRouter, whose free models may log prompts for training; Groq → Groq; DeepInfra → DeepInfra; Together → Together). Naturally each provider also holds your key on their servers — that is how API keys work. What we never do: see them, store them, or ask for any login. The shared cabinet key never leaves the server. Nothing identifying is collected here.</p>
+            <p className="italic text-sm text-[#465f75]/70">Your own keys stay in this browser and go only to the named provider (OpenRouter → OpenRouter, whose free models may log prompts for training; Groq → Groq; DeepInfra → DeepInfra; Together → Together; Alibaba → Alibaba Model Studio). Naturally each provider also holds your key on their servers — that is how API keys work. What we never do: see them, store them, or ask for any login. The shared cabinet key never leaves the server. Nothing identifying is collected here.</p>
             <span className="font-heading text-sm uppercase tracking-[0.16em] text-[#4a392d] block">Provider</span>
             <div className="flex flex-wrap gap-2" role="radiogroup" aria-label="AI provider">
               <button role="radio" aria-checked={settings.provider === 'shared'} title="No key needed — shared Groq-backed key, a few sittings a day each." onClick={() => { setTestState('idle'); setTestMessage(''); onSettingsChange({ ...settings, provider: 'shared' }); }} className={`btn-secondary ${settings.provider === 'shared' ? '!border-[#8b5254] !text-[#8b5254]' : ''}`}>Cabinet shared</button>
@@ -1495,6 +1517,7 @@ function SettingsDrawer({ philosophers, activeSlugs, togglePhilosopher, settings
               <button role="radio" aria-checked={usingGroq} title="Your Groq key — free tier, no card." onClick={() => { setTestState('idle'); setTestMessage(''); onSettingsChange({ ...settings, provider: 'groq' }); }} className={`btn-secondary ${usingGroq ? '!border-[#8b5254] !text-[#8b5254]' : ''}`}>Groq free</button>
               <button role="radio" aria-checked={usingDeepInfra} title="Your DeepInfra key — DeepSeek or Qwen first, Llama 70B backup, card on file." onClick={() => { setTestState('idle'); setTestMessage(''); onSettingsChange({ ...settings, provider: 'deepinfra' }); }} className={`btn-secondary ${usingDeepInfra ? '!border-[#8b5254] !text-[#8b5254]' : ''}`}>DeepInfra</button>
               <button role="radio" aria-checked={usingTogether} title="Your Together key — pinned Qwen 30B, card required." onClick={() => { setTestState('idle'); setTestMessage(''); onSettingsChange({ ...settings, provider: 'together' }); }} className={`btn-secondary ${usingTogether ? '!border-[#8b5254] !text-[#8b5254]' : ''}`}>Together</button>
+              <button role="radio" aria-checked={usingAlibaba} title="Your Alibaba key — Model Studio codes, free trial quota." onClick={() => { setTestState('idle'); setTestMessage(''); onSettingsChange({ ...settings, provider: 'alibaba' }); }} className={`btn-secondary ${usingAlibaba ? '!border-[#8b5254] !text-[#8b5254]' : ''}`}>Alibaba</button>
             </div>
             {settings.provider === 'shared' ? (
               <p className="text-xs text-[#465f75]/70">No key needed — the cabinet runs on its own Groq-backed key, held server-side and shared across visitors (about two full sessions a day each). If the shared quota runs dry, add your own OpenRouter, Groq, DeepInfra or Together key below by switching provider.</p>
@@ -1567,6 +1590,20 @@ function SettingsDrawer({ philosophers, activeSlugs, togglePhilosopher, settings
                 </div>
                 {testMessage && <p className={`text-sm italic ${testState === 'ok' ? 'text-[#4a6b3f]' : 'text-[#8b5254]'}`}>{testMessage}</p>}
                 <p className="text-xs text-[#465f75]/70">Pinned model <span className="font-heading">Qwen/Qwen3-30B-A3B</span>. Get a key at <a className="underline" href="https://api.together.ai/settings/api-keys" target="_blank" rel="noreferrer">api.together.ai</a> (requires a card upfront).</p>
+              </>
+            ) : usingAlibaba ? (
+              <>
+                <label htmlFor="ali-key" className="font-heading text-sm uppercase tracking-[0.16em] text-[#4a392d]">Alibaba API key</label>
+                <input id="ali-key" type="password" autoComplete="off" value={alibabaKeyInput} onChange={(event) => { setAlibabaKeyInput(event.target.value); setTestState('idle'); setTestMessage(''); }} placeholder="Paste key from Model Studio" className="w-full bg-[#eae1ca]/60 border border-[#4a392d]/25 rounded-sm p-3 text-[15px] text-[#465f75] placeholder:text-[#465f75]/45 focus:outline-none focus:ring-2 focus:ring-[#8b5254]/30" />
+                <div className="flex flex-wrap gap-2">
+                  <button className="btn-secondary" onClick={runTest} disabled={!alibabaKeyInput.trim() || testState === 'testing'}>{testState === 'testing' ? 'Testing…' : 'Test key'}</button>
+                  <button className="btn-secondary" onClick={clearKey} disabled={!alibabaKeyInput && !settings.alibabaApiKey}>Clear</button>
+                  {keySaved && <span className="text-xs italic self-center text-[#4a6b3f]">Saved in this browser.</span>}
+                </div>
+                {testMessage && <p className={`text-sm italic ${testState === 'ok' ? 'text-[#4a6b3f]' : 'text-[#8b5254]'}`}>{testMessage}</p>}
+                <label htmlFor="ali-model" className="font-heading text-sm uppercase tracking-[0.16em] text-[#4a392d] pt-2 block">Model code</label>
+                <input id="ali-model" type="text" autoComplete="off" spellCheck={false} value={settings.alibabaModel} onChange={(event) => { onSettingsChange({ ...settings, alibabaModel: event.target.value }); setTestState('idle'); setTestMessage(''); }} placeholder="qwen3.8-27b" className="w-full bg-[#eae1ca]/60 border border-[#4a392d]/25 rounded-sm p-3 text-[15px] text-[#465f75] placeholder:text-[#465f75]/45 focus:outline-none focus:ring-2 focus:ring-[#8b5254]/30" />
+                <p className="text-xs text-[#465f75]/70">Model Studio codes vary by region — type the exact code and press Test key. Free quota pools in Singapore; enable Stop-on-Exhaust so overruns stop instead of billing.</p>
               </>
             ) : (
               <>

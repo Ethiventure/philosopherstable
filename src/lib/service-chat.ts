@@ -16,6 +16,7 @@ import { generateTextDeepInfra } from '@/lib/deepinfra';
 import { generateTextGroq } from '@/lib/groq';
 import { generateTextOpenRouter } from '@/lib/openrouter';
 import { generateTextShared } from '@/lib/shared';
+import { generateTextAlibaba } from '@/lib/alibaba';
 import { generateTextTogether } from '@/lib/together';
 import type { CabinetSettings } from '@/lib/settings';
 import { LlmError } from '@/lib/llm';
@@ -137,6 +138,13 @@ export function generateServiceText(
     case 'together':
       return generateTextTogether({
         apiKey: snap.togetherApiKey,
+        systemPrompt,
+        userMessage,
+      });
+    case 'alibaba':
+      return generateTextAlibaba({
+        apiKey: snap.alibabaApiKey,
+        model: snap.alibabaModel,
         systemPrompt,
         userMessage,
       });

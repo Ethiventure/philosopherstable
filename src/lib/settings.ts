@@ -21,7 +21,12 @@ export const DEEPINFRA_PRIMARIES: { id: DeepInfraPrimary; label: string; hint: s
 
 export type TurnEconomy = 'full' | 'efficient';
 
-export type LlmProvider = 'shared' | 'openrouter' | 'groq' | 'deepinfra' | 'together';
+export type LlmProvider = 'shared' | 'openrouter' | 'groq' | 'deepinfra' | 'together' | 'alibaba';
+
+/** Free text (Model Studio codes vary by region): Test key verifies live. */
+export type AlibabaModel = string;
+
+export const DEFAULT_ALIBABA_MODEL = 'qwen3.8-27b';
 
 export interface CabinetSettings {
   intensity: StyleIntensity;
@@ -35,6 +40,8 @@ export interface CabinetSettings {
   deepInfraApiKey: string;
   deepInfraPrimary: DeepInfraPrimary;
   togetherApiKey: string;
+  alibabaApiKey: string;
+  alibabaModel: AlibabaModel;
   economy: TurnEconomy;
   /** Experimental source grounding (Phase 2, item ii): fetch + keyword-extract
    * HTML source pages server-side and inject top passages. Default off;
@@ -56,6 +63,8 @@ export const DEFAULT_SETTINGS: CabinetSettings = {
   deepInfraApiKey: '',
   deepInfraPrimary: 'deepseek',
   togetherApiKey: '',
+  alibabaApiKey: '',
+  alibabaModel: DEFAULT_ALIBABA_MODEL,
   economy: 'full',
   grounding: true,
 };
@@ -69,7 +78,7 @@ export function loadSettings(): CabinetSettings {
       intensity: parsed.intensity === 'low' || parsed.intensity === 'high' ? parsed.intensity : 'medium',
       longForm: parsed.longForm === true,
       // Gemini removed (retired for new keys, 404): stored 'gemini' migrates to shared.
-      provider: parsed.provider === 'openrouter' || parsed.provider === 'groq' || parsed.provider === 'deepinfra' || parsed.provider === 'together'
+      provider: parsed.provider === 'openrouter' || parsed.provider === 'groq' || parsed.provider === 'deepinfra' || parsed.provider === 'together' || parsed.provider === 'alibaba'
         ? parsed.provider
         : 'shared',
       openRouterApiKey: typeof parsed.openRouterApiKey === 'string' ? parsed.openRouterApiKey : '',
@@ -83,6 +92,11 @@ export function loadSettings(): CabinetSettings {
       deepInfraApiKey: typeof parsed.deepInfraApiKey === 'string' ? parsed.deepInfraApiKey : '',
       deepInfraPrimary: parsed.deepInfraPrimary === 'qwen' ? 'qwen' : 'deepseek',
       togetherApiKey: typeof parsed.togetherApiKey === 'string' ? parsed.togetherApiKey : '',
+      alibabaApiKey: typeof parsed.alibabaApiKey === 'string' ? parsed.alibabaApiKey : '',
+      // Free-text Model Studio code (never openai/*); dead IDs fall back.
+      alibabaModel: typeof parsed.alibabaModel === 'string' && parsed.alibabaModel.trim() && !parsed.alibabaModel.trim().startsWith('openai/')
+        ? parsed.alibabaModel.trim().slice(0, 120)
+        : DEFAULT_ALIBABA_MODEL,
       // No OpenAI models, ever: stored openai/* IDs migrate to the default.
       openRouterModel: typeof parsed.openRouterModel === 'string' && parsed.openRouterModel.trim() && !parsed.openRouterModel.trim().startsWith('openai/')
         ? parsed.openRouterModel.trim().slice(0, 120)
@@ -104,7 +118,7 @@ export function saveSettings(settings: CabinetSettings): void {
 }
 
 export function clearApiKey(): CabinetSettings {
-  const next = { ...loadSettings(), openRouterApiKey: '', groqApiKey: '', deepInfraApiKey: '', togetherApiKey: '' };
+  const next = { ...loadSettings(), openRouterApiKey: '', groqApiKey: '', deepInfraApiKey: '', togetherApiKey: '', alibabaApiKey: '' };
   saveSettings(next);
   return next;
 }

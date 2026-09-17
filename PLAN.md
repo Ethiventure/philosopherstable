@@ -700,3 +700,9 @@ resume + shareable URL hash; transcript search; per-seat mute; live cost
 estimator per sitting; level A/B eval harness wiring (§Phase 7); provider-health
 indicator; keyboard shortcuts + shortcuts list; mobile 390×844 verification log;
 README demo clip. Pick by need, not all at once.
+"How this was built" page/section (owner request Sep 2026): the making-of —
+debts table, diagram road system, RAG pipeline, model trials — pointing at
+the GitHub repo. Public provenance, not a dev dump.
+Provider picker explanations (after models settle): one honest line per
+route — free ones marked free (no card), paid ones with voice/speed/cost,
+DeepSeek default rationale, where the Qwen voice lives.

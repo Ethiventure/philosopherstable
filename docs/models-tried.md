@@ -21,6 +21,8 @@ first. Check here before (re)trying anything — corpses stay buried.
 - **Every Qwen under 27B failed the same way** (3.6-35B, 3.8-flash, 3.5-9B):
   reasoning burn — thinks about the contract/persona until cutoff, answers
   nothing. The contract needs a model that answers instead of thinking.
+- `deepseek-r1-distill-qwen-32b` (Groq free): DEAD on arrival Sep 17 —
+  decommissioned (400), never tested. Groq ID churn claims another one.
 
 ## New candidates (Perplexity round 2, Sep 17 — UNTESTED, prices not
 independently verified, do not quote)
@@ -67,9 +69,42 @@ Measured Groq free walls Sep 17: input TPM limit ~7K/req wall (413 at 7271;
 | Sep 2026 | Gemini direct | `gemini-3.6-flash`, `gemini-3.5-flash-lite` | Worked with `thinkingLevel:low`. Provider removed Sep 2026: 2.5 retired (404 for new keys), consolidating on fewer providers. |
 | Sep 2026 | Gemini direct | `gemini-2.5-flash` | Retired by Google (404 for new keys). Never re-add. |
 
+## Free-provider shelf (awesome-free-llm-apis, evaluated Sep 17 2026 — NOT tested)
+Rule: these are BYOK-only candidates. Per-user/per-IP free quotas can't ride
+the shared server key (one global quota = one visitor eats everyone's share).
+Each needs a new provider pipe (code) unless reachable via OpenRouter paid.
+- Mistral AI direct (free mode, no card, $10/mo credits): Medium 3.5 / Small 4 /
+  Large 3. Real candidate — own key, generous. Caveat: prompts may train
+  models unless opted out (same warning our OpenRouter copy already carries).
+- Z.ai GLM-4.7-Flash (permanent free, no card, api.z.ai endpoint): free test
+  of the GLM candidate. Caveats: reasoning model (burn risk); 1 concurrent
+  request (slow sessions).
+- Ollama Cloud free tier (ollama.com/v1, OpenAI-compatible): serves
+  deepseek-v4-flash — a free backup route for our engine. Session/weekly
+  limits unpublished; verify live.
+- NVIDIA NIM (dev-program membership, 40 RPM/10k RPD): mistral-large-2,
+  gemma-4-31b, nemotron. Generous; membership is the price.
+- Cloudflare Workers AI (10k neurons/day, no card): mistral-small-3.1,
+  r1-distill-qwen-32b. Non-OpenAI API shape (`/ai/run`) — moderate pipe work.
+- OVHcloud anonymous (no signup, 2 RPM/IP): Qwen3.6-27B, Mistral-3.2-24B.
+  Too slow for sessions (one request per 30s); curiosity only.
+- Rejected from the list: gpt-oss rows (OpenAI ban); Gemini (dead for new
+  keys); Kilo/LLM7 anonymous routers (random routing breaks voice continuity
+  — same objection as `openrouter/free`); Cohere trial (non-commercial clause
+  + 1000 calls/mo); SiliconFlow/ModelScope (ID verification); Aion (roleplay-
+  tuned, wrong shape for the contract).
+
 ## Pending verification (user fetching keys)
 
 - Together `Qwen/Qwen3-30B-A3B` — ID supplied by user, unverified against the catalog (no key yet; skip until the owner adds one).
+- Alibaba Cloud Model Studio (owner account Sep 17 2026): 233 models × 1M
+  free tokens each, expiring 2026-12-16. Trial goldmine, not a long-term
+  dependency. Enable Stop-on-Exhaust (auto-403 instead of charges); free
+  quota shared across Singapore-region workspaces only. Provider pipe built
+  same day (`src/lib/alibaba.ts`, DashScope Singapore endpoint, free-text
+  model code default `qwen3.8-27b`, Test-key check, usage + repair counting);
+  qwen3.8-27b + qwen3.8-flash confirmed in quota, qwen3.5-9b absent. Owner to
+  Test-key live (agent network can't reach api.groq.com or verify DashScope).
 - OpenRouter `meta-llama/llama-3.3-70b-instruct:free` — does NOT exist as `:free` (re-verified Sep 2026 via `/models` API, 445 models; only paid `meta-llama/llama-3.3-70b-instruct` listed). Do not add unless it appears. User reports seeing it on the website — website listing ≠ API availability.
 - DeepInfra `meta-llama/Llama-3.3-70B-Instruct-Turbo` — VERIFIED WORKING end-to-end by user (test 9, Sep 2026). ID re-verified against the DeepInfra catalog Sep 2026 (public model page, JSON mode supported). Needs a card on file despite earlier no-card assumption. Full cabinet completes on it.
 - DeepInfra coda/turns: unquoted-value JSON slips observed; parser salvages + repair retries cover most. Constrained decoding (`response_format: json_object` first, plain fallback on 400) added to force valid syntax — catalog confirms JSON mode support; live verdict on whether slips stop is the owner's next DeepInfra session.
