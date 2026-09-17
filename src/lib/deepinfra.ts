@@ -117,6 +117,10 @@ const postDeepInfra = async ({ apiKey, model, systemPrompt, maxTokens, useJsonMo
       // budget (the 35B failure). Server support for this flag is unverified —
       // harmless if ignored, live retest decides. Revisit on 400s.
       reasoning_effort: 'low',
+      // vLLM/SGLang pass-through for Qwen3-family thinking switch (Claude
+      // research Sep 2026): silent no-op if the host drops unknown fields —
+      // the output-token line is the only tell. Same revisit rule.
+      extra_body: { chat_template_kwargs: { enable_thinking: false } },
       ...(jsonMode.current ? { response_format: { type: 'json_object' } } : {}),
     });
 

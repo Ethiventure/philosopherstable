@@ -341,10 +341,12 @@ export async function generateTurnOpenRouter({ apiKey, systemPrompt, userMessage
     max_tokens: longForm ? OR_MAX_TOKENS.long : OR_MAX_TOKENS.normal,
     // Reasoning models otherwise burn the whole output budget thinking about
     // the JSON contract (observed: content null, finish_reason length) and
-    // ramble past the word budgets. Low effort keeps thinking small; the
-    // overall max_tokens above still caps the turn. NOTE: OpenRouter rejects
-    // reasoning.effort + reasoning.max_tokens together (400) — effort only.
-    reasoning: { effort: 'low' },
+    // ramble past the word budgets. `effort: 'none'` disables reasoning
+    // entirely (stronger than 'low'; OpenRouter docs, Sep 2026) — models that
+    // mandate reasoning reject it, in which case the 400 surfaces and we
+    // revisit. Never `exclude: true` here: that hides reasoning but still
+    // bills it.
+    reasoning: { effort: 'none' },
   };
   const paidId = mode === 'paid' ? modelId.trim() : '';
   if (paidId) {
@@ -444,9 +446,8 @@ export async function generateTextOpenRouter({ apiKey, systemPrompt, userMessage
       { role: 'user', content: userMessage },
     ],
     max_tokens: OR_MAX_TOKENS.normal,
-    // Same low reasoning effort as turns: free reasoning models otherwise burn
-    // the budget thinking instead of answering.
-    reasoning: { effort: 'low' },
+    // Same as turns: reasoning off entirely, not merely low.
+    reasoning: { effort: 'none' },
   };
   const paidId = mode === 'paid' ? modelId.trim() : '';
   if (paidId) {

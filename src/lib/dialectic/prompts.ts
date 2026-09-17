@@ -67,9 +67,30 @@ interface TurnInstructionArgs {
    * When provided it replaces the generic HEAT line at every intensity —
    * temper is per-seat, not per-level. */
   heat?: string;
+  /** Sitting thread city, drawn by the app (Math.random per session) — the
+   * model cannot rotate across sittings, so the dice live here. */
+  threadCity?: string | null;
 }
 
-export function buildTurnInstruction({ kind, prevName, isFinalSeat, longForm, reversed = false, marginsNote = false, marginsEarly = false, marginsFirst = false, lowRegister = false, intensity, heat }: TurnInstructionArgs): string {
+/**
+ * Thread-city pool: one sitting, one city. Weighted wide so no country
+ * dominates across sessions; Germany appears once in twenty-four. The app
+ * draws per session and the PLACES rule below holds every turn to it.
+ */
+const THREAD_CITIES = [
+  'Lagos', 'Nairobi', 'Accra', 'Dakar', 'Johannesburg', 'Cairo',
+  'Mumbai', 'Dhaka', 'Jakarta', 'Manila', 'Bangkok', 'Seoul',
+  'Mexico City', 'São Paulo', 'Buenos Aires', 'Lima', 'Bogotá',
+  'Istanbul', 'Warsaw', 'Belgrade', 'Athens', 'Lisbon',
+  'Detroit', 'New Orleans', 'Glasgow', 'Marseille', 'Naples',
+  'Berlin',
+];
+
+export function drawThreadCity(random: () => number = Math.random): string {
+  return THREAD_CITIES[Math.floor(random() * THREAD_CITIES.length)];
+}
+
+export function buildTurnInstruction({ kind, prevName, isFinalSeat, longForm, reversed = false, marginsNote = false, marginsEarly = false, marginsFirst = false, lowRegister = false, intensity, heat, threadCity = null }: TurnInstructionArgs): string {
   const b = longForm ? WORD_BUDGETS.long : WORD_BUDGETS.normal;
   const level: StyleIntensity = intensity ?? (lowRegister ? 'low' : 'medium');
   const low = level === 'low';
@@ -113,7 +134,10 @@ export function buildTurnInstruction({ kind, prevName, isFinalSeat, longForm, re
     reformulationLine,
     'QUESTION RULE: paraphrase the question through your framework — never repeat any multi-word clause of it verbatim.',
     'ECHO RULE: answer PREV — never restate PREV. No sentence of yours may be a rewording of a sentence of theirs; a turn that could pass as PREV rewritten has failed, even if every word differs.',
-    'PLACES: set every example where the question lives, never your birthplace by default — and never reuse PREV’s city or country. Each turn moves somewhere new; a sitting that never leaves one country has failed.',
+    'PLACES: one sitting, one thread city — the opening turn names a city in the question’s world and every later turn stays there unless the argument itself travels. Never default to Germany or Berlin; never the speaker’s birthplace; rotate the part of the world sitting to sitting. A thread city keeps the sitting rooted; a single country every sitting means the root never moves.',
+    ...(threadCity
+      ? [`THREAD CITY: this sitting lives in ${threadCity}. Set every example there — streets, workplaces, councils. Leave it only if the argument itself travels, and say why.`]
+      : []),
     'TIME RULE: never blur what is with what you want. Mark present-day facts as facts and demands as demands: say what changes now (the minimum) and what the horizon holds (the maximum) — never present the horizon as already here, and never mistake a demand for a description.',
     closingLine,
     ...(isFinalSeat

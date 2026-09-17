@@ -98,8 +98,11 @@ const postTogether = async (apiKey: string, systemPrompt: string, maxTokens: num
             ],
             max_tokens: maxTokens,
             // Experimental Sep 2026, as Groq/DeepInfra: throttle hidden
-            // thinking if the host honours it; live test decides.
+            // thinking if the host honours it; live test decides. Plus the
+            // vLLM/SGLang thinking-switch pass-through (silent no-op if
+            // dropped — token line is the tell).
             reasoning_effort: 'low',
+            extra_body: { chat_template_kwargs: { enable_thinking: false } },
           }),
           signal: AbortSignal.timeout(60000),
         });

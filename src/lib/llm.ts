@@ -24,6 +24,7 @@ export interface UsageEntry {
   inTokens: number;
   outTokens: number;
   cachedTokens?: number;
+  reasoningTokens?: number;
 }
 
 const usageLog: UsageEntry[] = [];
@@ -39,8 +40,13 @@ export function recordUsage(provider: string, model: string, usage: unknown): vo
   // turns should increasingly ride cache. Tracked to prove it.
   const details = u.prompt_tokens_details as Record<string, unknown> | undefined;
   const cached = details && typeof details.cached_tokens === 'number' ? details.cached_tokens : 0;
-  usageLog.push({ provider, model, inTokens, outTokens, cachedTokens: cached });
-  if (typeof console !== 'undefined') console.info(`[usage] ${provider} ${model}: ${inTokens} in / ${outTokens} out${cached ? ` (${cached} cached)` : ''}`);
+  // Authoritative thinking signal where hosts report it (OpenRouter always;
+  // Groq classic Chat Completions; Reader unknown elsewhere — absence proves
+  // nothing, presence proves thinking happened).
+  const compDetails = u.completion_tokens_details as Record<string, unknown> | undefined;
+  const reasoning = compDetails && typeof compDetails.reasoning_tokens === 'number' ? compDetails.reasoning_tokens : 0;
+  usageLog.push({ provider, model, inTokens, outTokens, cachedTokens: cached, reasoningTokens: reasoning });
+  if (typeof console !== 'undefined') console.info(`[usage] ${provider} ${model}: ${inTokens} in / ${outTokens} out${cached ? ` (${cached} cached)` : ''}${reasoning ? ` [${reasoning} reasoning]` : ''}`);
 }
 
 /** Session totals, per model. Resets with the sitting. */

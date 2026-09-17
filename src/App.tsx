@@ -33,7 +33,7 @@ import {
   type Philosopher,
   type StyleEssence,
 } from '@/types';
-import { buildCodaEarlyPrompt, buildCodaPrompt, buildTurnInstruction, buildUserMessage, CODA_REPAIR_SUFFIX, CODA_SYSTEM, getTurnKind, LOW_CLOSING_REMINDER, STRUCTURED_OUTPUT_HINT } from '@/lib/dialectic/prompts';
+import { buildCodaEarlyPrompt, buildCodaPrompt, buildTurnInstruction, buildUserMessage, CODA_REPAIR_SUFFIX, CODA_SYSTEM, drawThreadCity, getTurnKind, LOW_CLOSING_REMINDER, STRUCTURED_OUTPUT_HINT } from '@/lib/dialectic/prompts';
 import { LlmError, RATES_AS_OF, estimateCost, repairTotals, resetUsage, usageTotals, type LlmErrorCode, type TurnOutput } from '@/lib/llm';
 import { loadSettings, saveSettings, type CabinetSettings, type DeepInfraPrimary } from '@/lib/settings';
 import { applyDisplay, loadDisplay, saveDisplay } from '@/lib/preferences';
@@ -192,6 +192,10 @@ function App() {
   // Per-turn provenance for the export footer (provider switches mid-session
   // stay honest). Consecutive duplicates collapse at render time.
   const provRef = useRef<string[]>([]);
+  // Thread city: drawn per sitting (not per turn, never by the model — it has
+  // no memory of last time). Resume keeps the sitting's city.
+  const threadCityRef = useRef<string>('');
+  const [threadCity, setThreadCity] = useState<string>('');
   // Stock variants already spent this session (any seat). Each of the 90 may
   // be used once across the whole table; the spent list rides in each prompt.
   const spentRef = useRef<string[]>([]);
@@ -612,6 +616,7 @@ function App() {
         marginsFirst: pass === 2 && index === 0 && !!codaRef.current,
         intensity: snap.intensity,
         heat: typeof speaker.profile['emotional_tone'] === 'string' ? speaker.profile['emotional_tone'] : undefined,
+        threadCity: threadCityRef.current || null,
       });
       const systemPrompt = renderPersona(speaker, snap.intensity);
       // Efficient economy trims the fed-back predecessor text (the displayed
@@ -891,6 +896,8 @@ function App() {
     setNoteMap({});
     provRef.current = [];
     resetUsage();
+    threadCityRef.current = drawThreadCity();
+    setThreadCity(threadCityRef.current);
     spentRef.current = [];
     setRunError(null);
     setActivePass(0);
@@ -1009,7 +1016,7 @@ function App() {
     // Notes written but their next round never ran (paused session) still export.
     const trailingCoda = `${codaEarly && !pass2.length ? earlyText : ''}${coda && !late.length ? codaText : ''}`;
     const serviceText = serviceLog.length
-      ? `\nPHILOSOPHERS' SERVICE\n${serviceLog.map((entry) => `— ${entry.thinker} was asked:\n${entry.question}\n— ${entry.thinker} answered:\n${entry.answer}\n${entry.sources.length ? `— Sources shown: ${entry.sources.join('; ')}\n` : ''}`).join('\n')}`
+      ? `\nPHILOSOPHERS' SERVICE\n${serviceLog.map((entry) => `— ${entry.thinker} was asked:\n${entry.question}\n— ${entry.thinker} answered:\n${entry.answer.replace(/\[\d+\]/g, '').replace(/[ \t]+/g, ' ')}\n${entry.sources.length ? `— Sources shown: ${entry.sources.join('; ')}\n` : ''}`).join('\n')}`
       : '';
     const readingList = citedNumbers.length
       ? `\nREADING LIST\n${entriesForNumbers(citedNumbers).map(({ number, source }) => `[${number}] ${source.title} — ${source.author}${source.source_url ? ` — ${source.source_url}` : ''}`).join('\n')}\n`
@@ -1020,7 +1027,7 @@ function App() {
       : '';
     // Sitting settings at export (diagnostic: proves which level produced
     // these turns — intensity can change between runs of one sitting).
-    const settingsText = `\nSITTING\n— Level: ${settings.intensity} · Long form: ${settings.longForm ? 'on' : 'off'} · Grounding: ${settings.grounding ? 'on' : 'off'} · Economy: ${settings.economy} (at export)\n`;
+    const settingsText = `\nSITTING\n— Level: ${settings.intensity} · Long form: ${settings.longForm ? 'on' : 'off'} · Grounding: ${settings.grounding ? 'on' : 'off'} · Economy: ${settings.economy} (at export)${threadCityRef.current ? ` · Thread city: ${threadCityRef.current}` : ''}\n`;
     // Provider-reported tokens (retries included): measured cost, not estimates.
     const usage = usageTotals();
     const byModel = [...new Set(usage.entries.map((e) => `${e.provider} ${e.model}`))]
@@ -1032,7 +1039,12 @@ function App() {
         return `— ${m}: ${calls} calls, ${tin.toLocaleString('en-US')} in / ${tout.toLocaleString('en-US')} out`;
       })
       .join('\n');
-    const usageText = `\nTOKENS (provider-reported)\n${byModel || '— no usage reported'}\n— Session total: ${usage.inTokens.toLocaleString('en-US')} in / ${usage.outTokens.toLocaleString('en-US')} out\n— Repair turns (malformed JSON retried, outside the turn count): ${repairTotals()}\n${(() => {
+    const usageText = `\nTOKENS (provider-reported)\n${byModel || '— no usage reported'}\n— Session total: ${usage.inTokens.toLocaleString('en-US')} in / ${usage.outTokens.toLocaleString('en-US')} out${(() => {
+      const r = usage.entries.reduce((a, e) => a + (e.reasoningTokens ?? 0), 0);
+      const c = usage.entries.reduce((a, e) => a + (e.cachedTokens ?? 0), 0);
+      const bits = [`${r.toLocaleString('en-US')} reasoning`, `${c.toLocaleString('en-US')} cached`].filter((_, i) => (i === 0 ? r : c) > 0);
+      return bits.length ? ` (${bits.join(', ')})` : '';
+    })()}\n— Repair turns (malformed JSON retried, outside the turn count): ${repairTotals()}\n${(() => {
       const cost = estimateCost(usage.entries);
       return cost === null
         ? `— Cost: unknown (a model has no rate on file)`
@@ -1138,7 +1150,7 @@ function App() {
 
               <CabinetTable philosophers={orderedPhilosophers} activeAgent={activeAgent} activePass={activePass} interventions={interventions} onSelect={(philosopher) => setSelectedPhilosopher(philosopher)} latest={latestForTable} onJumpToLatest={jumpToLatest} />
 
-              {currentSpeaker && (isRunning || thinkingName) && <div className="mt-6 p-4 bg-[#8b5254]/8 border-l-2 border-[#8b5254] slide-in-right"><p className="text-xs uppercase tracking-widest text-[#8b5254]">{thinkingName ? `${thinkingName} is thinking…` : 'Currently speaking'}</p><p className="font-heading text-xl text-[#4a392d]">{currentSpeaker.full_name}</p><p className="text-sm italic text-[#465f75]/70 mt-1">The intervention will pass clockwise to {orderedPhilosophers[(activeAgent + 1) % orderedPhilosophers.length]?.name}.</p></div>}
+              {currentSpeaker && (isRunning || thinkingName) && <div className="mt-6 p-4 bg-[#8b5254]/8 border-l-2 border-[#8b5254] slide-in-right"><p className="text-xs uppercase tracking-widest text-[#8b5254]">{thinkingName ? `${thinkingName} is thinking…` : 'Currently speaking'}</p><p className="font-heading text-xl text-[#4a392d]">{currentSpeaker.full_name}</p><p className="text-sm italic text-[#465f75]/70 mt-1">The intervention will pass clockwise to {orderedPhilosophers[(activeAgent + 1) % orderedPhilosophers.length]?.name}.{threadCity ? ` This sitting lives in ${threadCity}.` : ''}</p></div>}
             </div>
           </div>
 

@@ -49,6 +49,7 @@ usage instrument ran — earlier sessions predate it)
 | glm-5.3-flash | OpenRouter paid | ~7 min | n/a | None reported | Grade pending (owner reading) | Testing | Grade it | Open |
 | qwen3.8-27b (thinking) | Alibaba | 5+ min seat 1; 90s timeout later | 6.8K/3.6K first turn (3.5K hidden thinking) | Timeout | Plain, concrete opening | Slow | Disable thinking | Superseded |
 | qwen3.8-27b (unthinking) | Alibaba | <3.5 min full sitting + 6 desk | 168.6K/5.3K, 23 calls, 0 repairs | None | Best session yet (owner) | **Default** | Watch Dec quota | **Default (trial)** |
+| qwen3.8-27b (unthinking) | Alibaba | 2:45 full sitting + 9 desk | 195.5K/5.9K, 26 calls, 0 repairs | Pace record. New-prompt faults: PLACES ignored wholesale (Berlin ×15); desk openings formula-shared; Lenin desk in Kant's vocabulary; margins still numbered (bundle-version suspect) | Default holds | Fix PLACES, desk variety, margins check | **Default (trial)** |
 | deepseek-r1-distill-qwen-32b | Groq free | — (instant fail) | — | 400 decommissioned | — | Dead | — | **Out** |
 - `deepseek-r1-distill-qwen-32b` (Groq free): DEAD on arrival Sep 17 —
   decommissioned (400), never tested. Groq ID churn claims another one.

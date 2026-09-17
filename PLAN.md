@@ -553,7 +553,20 @@ prompt tokens tracked (persona-first system prompt is byte-stable by design).
 Thinking-throttle rollout Sep 17 (Alibaba `enable_thinking:false` proven:
 5min→sec, voice held): `reasoning_effort:low` added to Groq, DeepInfra,
 Together bodies (server support unverified — live retest decides; revisit on
-400s). OpenRouter already sends effort:low. TODO: retest DeepInfra-Qwen,
+400s). OpenRouter moved effort:low → effort:none Sep 17 (docs: `none`
+disables, `low` only shrinks ~20%; `exclude` hides but bills — never use).
+vLLM pass-through (`extra_body.chat_template_kwargs.enable_thinking:false`)
+added to DeepInfra/Together (silent no-op if dropped). Reasoning-token +
+cache-token capture added to usage instrument + export. TODO: retest DeepInfra-Qwen,
+Advisor roundup Sep 17 (Perplexity + Claude + ChatGPT briefs): adopted —
+effort:none, vLLM pass-through, reasoning/cache capture, countable Low
+shape, repair counting, promotion bar (≤8min/≤1 repair). Declined with
+reasons: full template rewrite (our prompts already carry budgets, bans,
+repairs — no live evidence a rewrite beats them); persona-as-data refactor
+(same reason); versioned config table (tried-log + free-text fields already
+cover it); Groq reasoning_format:hidden (display-only); Mistral-as-default
+uncrowned (untested models never default — our own rule). Full briefs kept
+outside the repo; verdicts above are the record.
 Groq-Qwen, Together once each with the output-token line as judge.
 
 ## Phase 7b — Auto-metrics for Low/Med/High (read all three repos Sep 2026)
