@@ -2,9 +2,11 @@
  * Blunt (baton) rotation prompt builders — Phase 2c.
  *
  * Only pass 1 seat 1 opens. Every other turn determinately negates its
- * immediate predecessor (PREV) using PREV's own premises, preserves what
- * holds, reformulates from its own framework, and hands a contradiction to
- * the next seat (NEXT) by name. PREV crosses pass boundaries.
+ * immediate predecessor (PREV) using PREV's own premises, says aloud what it
+ * KEEPs / BREAKs / REJECTs / INJECTs, and hands a contradiction on.
+ * PREV crosses pass boundaries. Each pass has its own job: 1 diagnosis,
+ * 2 pressure (margins lens + own flaw), 3 reconstruction (new idea + slogan
+ * + precise better-than claim).
  *
  * Word budgets are tight on purpose: each turn does less so the rotation
  * stays readable. Normal ≈150 words/turn, long-form ≈400. Totals are the
@@ -31,7 +33,7 @@ export type TurnKind = 'opening' | 'critique' | 'reconstruction';
  * text change so grades stay comparable: a verdict on version C never
  * transfers silently to version D.
  */
-export const PROMPT_VERSION = '2026-09-18a';
+export const PROMPT_VERSION = '2026-09-18d';
 
 export const WORD_BUDGETS = {
   normal: { negation: 40, reformulation: 60, total: 100, opening: 60 },
@@ -77,6 +79,9 @@ interface TurnInstructionArgs {
   /** Sitting thread city, drawn by the app (Math.random per session) — the
    * model cannot rotate across sittings, so the dice live here. */
   threadCity?: string | null;
+  /** Sitting pass, 1-indexed (1 diagnosis, 2 pressure, 3 reconstruction).
+   * Drives the PASS JOB line — each round does different work. */
+  pass?: number;
 }
 
 /**
@@ -85,19 +90,19 @@ interface TurnInstructionArgs {
  * draws per session and the PLACES rule below holds every turn to it.
  */
 const THREAD_CITIES = [
-  'Lagos', 'Nairobi', 'Accra', 'Dakar', 'Johannesburg', 'Cairo',
-  'Mumbai', 'Dhaka', 'Jakarta', 'Manila', 'Bangkok', 'Seoul',
+  'Lagos', 'Nairobi', 'Accra', 'Dhaka', 'Johannesburg', 'Cairo',
+  'Mumbai', 'Dundee', 'Jakarta', 'Manila', 'Bangkok', 'Seoul',
   'Mexico City', 'São Paulo', 'Buenos Aires', 'Lima', 'Bogotá',
   'Istanbul', 'Warsaw', 'Belgrade', 'Athens', 'Lisbon',
-  'Detroit', 'New Orleans', 'Glasgow', 'Marseille', 'Naples',
-  'Berlin',
+  'Bristol', 'New Orleans', 'Glasgow', 'Marseille', 'Naples',
+  'Prague',
 ];
 
 export function drawThreadCity(random: () => number = Math.random): string {
   return THREAD_CITIES[Math.floor(random() * THREAD_CITIES.length)];
 }
 
-export function buildTurnInstruction({ kind, prevName, isFinalSeat, longForm, reversed = false, marginsNote = false, marginsEarly = false, marginsFirst = false, lowRegister = false, intensity, heat, threadCity = null }: TurnInstructionArgs): string {
+export function buildTurnInstruction({ kind, prevName, isFinalSeat, longForm, reversed = false, marginsNote = false, marginsEarly = false, marginsFirst = false, lowRegister = false, intensity, heat, threadCity = null, pass }: TurnInstructionArgs): string {
   const b = longForm ? WORD_BUDGETS.long : WORD_BUDGETS.normal;
   const level: StyleIntensity = intensity ?? (lowRegister ? 'low' : 'medium');
   const low = level === 'low';
@@ -114,10 +119,19 @@ export function buildTurnInstruction({ kind, prevName, isFinalSeat, longForm, re
 
   const prev = prevName ?? 'PREV';
 
+  const passJob =
+    pass === 1
+      ? 'PASS JOB (diagnosis): judge PREV on the question, then add your own framework diagnosis — name the central contradiction as you see it.'
+      : pass === 2
+        ? 'PASS JOB (pressure): break PREV twice over — once from its own flaw, once through one margins perspective as a lens. The break must still run on PREV\'s own premises; the margins voice aims the blow, never replaces it.'
+        : kind === 'reconstruction'
+          ? 'PASS JOB (reconstruction): move the sitting forward — one new idea not yet said here, one slogan ordinary people could carry, and one precise sentence on what yours keeps that rival ideas drop.'
+          : 'PASS JOB (critique): judge PREV, then move the question up a level in your own terms.';
+
   const reformulationLine =
     kind === 'reconstruction'
-      ? `2. REFORMULATION (roughly ${b.reformulation} words): what institutions, practices, or forms of collective power follow now the contradictions are visible. Land one concrete present-tense consequence — and then go one step further into practice: name one specific decision, campaign, or slogan that follows, with who decides and where the fight happens. Write the demand so ordinary people could carry it. Abstractions without a campaign, a decision, or a slogan are unfinished. Phrase every consequence as a commitment (must, shall, will, let us) — never a possibility (may, might, could, would). Hedged reformulations fail the turn.`
-      : `2. REFORMULATION (roughly ${b.reformulation} words): restate the problem from your framework at a higher level of determination. Land one concrete present-tense consequence — an institution, a choice, a cost — so the abstraction touches 21st-century material reality. Name who must act and where; a demand the masses could carry beats a correct analysis nobody can use. Phrase it as a commitment (must, shall, will), never a possibility (may, might, could).`;
+      ? `2. REFORMULATION (roughly ${b.reformulation} words): say aloud what you REJECT (what you drop from PREV and the survey) then what you INJECT (one new idea, not yet said in this sitting). Land one concrete present-tense consequence — and then go one step further into practice: name one specific decision, campaign, or slogan that follows, with who decides and where the fight happens. Write the demand so ordinary people could carry it. Close the inject with one precise sentence: whose rival idea yours beats and on what exact point — vague ‘goes further’ claims fail. Abstractions without a campaign, a decision, or a slogan are unfinished. Phrase every consequence as a commitment (must, shall, will, let us) — never a possibility (may, might, could, would). Hedged reformulations fail the turn.`
+      : `2. REFORMULATION (roughly ${b.reformulation} words): say aloud what you REJECT (what you drop from PREV) then what you INJECT (one new idea from your framework at a higher level of determination). Land one concrete present-tense consequence — an institution, a choice, a cost — so the abstraction touches 21st-century material reality. Name who must act and where; a demand the masses could carry beats a correct analysis nobody can use. Phrase it as a commitment (must, shall, will), never a possibility (may, might, could).`;
 
   const closingLine = isFinalSeat
     ? 'End by returning the question, as it now stands, to the user.'
@@ -128,7 +142,8 @@ export function buildTurnInstruction({ kind, prevName, isFinalSeat, longForm, re
     // wall ~7k input tokens/turn) follow short instructions better than long
     // ones restating the same rule three ways. Every rule below fires — each
     // exactly once.
-    `${kind === 'reconstruction' ? 'RECONSTRUCTION' : 'IMMANENT CRITIQUE'} TURN (HARD ceiling: ${b.total} words total — shorter welcome; finish the current sentence, then stop). A spoken intervention, not an essay. Respond ONLY to your immediate predecessor ${prev}.`,
+    `${kind === 'reconstruction' ? 'RECONSTRUCTION' : 'IMMANENT CRITIQUE'} TURN (HARD ceiling: ${b.total} words total — shorter welcome; finish the current sentence, then stop). A spoken intervention, not an essay. Respond ONLY to your immediate predecessor ${prev}. Short, punchy sentences welcome — cut filler, never pad to the budget.`,
+    passJob,
     ...(reversed
       ? [`REVERSED ROTATION: ${prev} sits to your left and just spoke — address only that answer.`]
       : []),
@@ -137,25 +152,25 @@ export function buildTurnInstruction({ kind, prevName, isFinalSeat, longForm, re
       : (!reversed
         ? [`CUT IN, don't hand over: seize the weakest point in ${prev}'s closing lines. No preamble, no greeting, no naming ceremony — interrupt. Never open with "[Name]'s claim that…", "X argues that…" or any naming-first formula; enter through the concrete object.`]
         : [])),
-    `1. DETERMINATE NEGATION (roughly ${b.negation} words): steelman ${prev}'s claim at its strongest — then break its genuine fault line — but as TRANSLATION: restate it wholly in your framework's own vocabulary, no clause over five words matching ${prev} verbatim.${low ? ' At Low there are no shared specialist terms: restate everything, including school-terms, in plain everyday words.' : ' Single shared terms (class struggle, decreation) may repeat; multi-word clauses may not.'} Name ${prev} once, inside the argument — everywhere else address them as YOU, a live opponent, not a specimen. Never open with a summarising You-verb (think, focus, see, suggest, argue, claim, believe) or a naming-first formula; You-verbs are welcome when they are your toolkit verbs (you distinguish, expose, trace, rescue, sublate). If you agree with them you have misread them.`,
+    `1. DETERMINATE NEGATION (roughly ${b.negation} words): steelman ${prev}'s claim at its strongest — then say aloud what you KEEP (one clause they got right) and where you BREAK (the genuine fault line, in their own terms) — but as TRANSLATION: restate it wholly in your framework's own vocabulary, no clause over five words matching ${prev} verbatim.${low ? ' At Low there are no shared specialist terms: restate everything, including school-terms, in plain everyday words.' : ' Single shared terms (class struggle, decreation) may repeat; multi-word clauses may not.'} Name ${prev} once, inside the argument — everywhere else address them as YOU, a live opponent, not a specimen. Never open with a summarising You-verb (think, focus, see, suggest, argue, claim, believe) or a naming-first formula; You-verbs are welcome when they are your toolkit verbs (you distinguish, expose, trace, rescue, sublate). If you agree with them you have misread them.`,
     reformulationLine,
     'QUESTION RULE: paraphrase the question through your framework — never repeat any multi-word clause of it verbatim.',
-    'ECHO RULE: answer PREV — never restate PREV. No sentence of yours may be a rewording of a sentence of theirs; a turn that could pass as PREV rewritten has failed, even if every word differs.',
-    'HISTORY ALOUD: your prompt names a real debt between you and PREV (YOUR HISTORY). Speak it aloud once, in your own words — honour it, rupture it, or steal from it, on the record. A turn that leaves the debt as silent colouring has failed; polite debate that never names what stands between you has failed.',
+    'ECHO RULE: answer PREV — never restate PREV, yourself, or the question. No sentence may reword an earlier sentence of theirs or yours; avoid even repeating ideas — each sentence must push the debate in a new direction. A turn that circles has failed, even if every word differs.',
+    'HISTORY TONE: below PREV’s text, find the lines headed YOUR HISTORY WITH / OWES YOU plus YOUR PEOPLE — that is your relationship to PREV and the room. Let it set your tone — grateful where you learned from them, sharp where you broke with them, proud where they carry your work. Say the debt out loud once, in your own words, then argue from inside it. If no such lines appear, argue from the live claims alone.',
     'SCENARIO THREAD: the opening turn’s concrete scene (named person, place, predicament) carries the whole sitting — reuse its people, never invent new ones each turn. The scene illustrates the philosophy; it never becomes the debate. A turn that argues about the scenario instead of through it has mistaken the example for the point.',
     'SPEAK TO, NOT ABOUT: PREV is YOU throughout — a live opponent across the table, never a specimen described in third person.',
-    'TEMPER, OUT LOUD: let the feeling show in your own diction — blunt words, swears, exclamations, interjections where your voice would use them; mourning, fury, tenderness where it would feel them. Polite evenness fails the turn; cruelty still fails it.',
-    'RHYTHM BREAKS: never three long sentences running without a short punch after. Even cadence lulls; the reader should feel the gear change.',
+    'MOOD, OUT LOUD: let the feeling show strongly in your own diction — blunt words, swears, exclamations, sorrow, fear, joy, interjections where your voice would use them; mourning, fury, tenderness where it would feel them. Polite evenness fails the turn.',
+    'RHYTHM BREAKS: vary sentence structure and never three long sentences running without a short punch after. Even cadence lulls; the reader should feel the gear change.',
     'FELT VERBS: attach one feeling verb in your own diction — fear, mourn, love, hate — to the argument. Display verbs alone (shows, reveals, demonstrates) fail the turn.',
     'TWO MASTERS: every turn answers the original question fresh AND advances the PREV debate. A turn that only answers PREV has drifted; a turn that only answers the question has stalled.',
     'PLACES: one sitting, one thread city — the opening turn names a city in the question’s world and every later turn stays there unless the argument itself travels. Never default to Germany or Berlin; never the speaker’s birthplace; rotate the part of the world sitting to sitting. A thread city keeps the sitting rooted; a single country every sitting means the root never moves.',
     ...(threadCity
       ? [`THREAD CITY: this sitting lives in ${threadCity}. Set every example there — streets, workplaces, councils. Leave it only if the argument itself travels, and say why.`]
       : []),
-    'TIME RULE: never blur what is with what you want. Mark present-day facts as facts and demands as demands: say what changes now (the minimum) and what the horizon holds (the maximum) — never present the horizon as already here, and never mistake a demand for a description.',
+    'TIME RULE: Mark present-day facts as facts and demands as demands: say what changes now (the minimum) and what the horizon holds (the maximum) — never present the horizon as already here, and never mistake a demand for a description.',
     closingLine,
     ...(isFinalSeat
-      ? ['FINAL SEAT: return the question, changed, to the user — no new claims after it.']
+      ? ['FINAL SEAT: return the question, changed, to the user — no new claims after it. Name one point of agreement, if any — no summary.']
       : []),
     ...(kind === 'reconstruction' && !isFinalSeat
       ? ['Invoke at least one surveyed idea from another seat by name (STRIKING IDEAS), transformed into your terms, never quoted; a pass-3 turn answering only PREV has failed.']
@@ -169,7 +184,7 @@ export function buildTurnInstruction({ kind, prevName, isFinalSeat, longForm, re
     ...(kind === 'reconstruction' && marginsFirst
       ? ['You speak first after the note: open by naming its writer and one question it asked — answer it directly, say plainly whether your framework takes it up or breaks it.']
       : []),
-    'Negation must be determinate (preserve-and-elevate), never dismissal; weave the concession inside the prose — no separate incorporation section.',
+    'Negation stays determinate (preserve-and-elevate), never dismissal; the keep lives inside the prose — no separate incorporation section.',
     // No toolkit rides at Low (own-words concession instead), so the
     // stock-phrase line would point at nothing — gate it out.
     ...(low
@@ -192,7 +207,7 @@ export function buildTurnInstruction({ kind, prevName, isFinalSeat, longForm, re
       : level === 'high'
         ? 'SOURCE passages below: quote generously (at least four distinctive words/phrases, ≤6 words each, single quotes only) and echo their tics and rhythms; none shown: carry colour from persona and voice anchor. '
         : 'SOURCE passages below: borrow visibly (at least two distinctive words/phrases, ≤6 words each, single quotes only); none shown: carry colour from your persona. ')
-    + 'FIVE-WORD RULE on everything — question, PREV, survey, margins, priors: never lift a multi-word clause; paraphrase always, agreements and self-repeats phrased afresh; every sentence moves thought forward. Standard grammar: complete sentences, terminal punctuation. The dialectical movement stays audible in the argument, never announced. Never open with a generic verdict (errs, fails to see, overlooks) — begin from the concrete object with your own verbs.',
+    + 'FIVE-WORD RULE on everything — question, PREV, survey, margins, priors: never lift a multi-word clause; paraphrase always, agreements and self-repeats phrased afresh. Standard grammar: complete sentences, terminal punctuation. The dialectical movement stays audible in the argument, never announced. Never open with a generic verdict (errs, fails to see, overlooks) — begin from the concrete object with your own verbs.',
   ].join(' ');
 }
 

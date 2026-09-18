@@ -624,6 +624,7 @@ function App() {
         intensity: snap.intensity,
         heat: typeof speaker.profile['emotional_tone'] === 'string' ? speaker.profile['emotional_tone'] : undefined,
         threadCity: threadCityRef.current || null,
+        pass: pass + 1,
       });
       const systemPrompt = renderPersona(speaker, snap.intensity);
       // Efficient economy trims the fed-back predecessor text (the displayed
