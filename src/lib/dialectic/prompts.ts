@@ -31,7 +31,7 @@ export type TurnKind = 'opening' | 'critique' | 'reconstruction';
  * text change so grades stay comparable: a verdict on version C never
  * transfers silently to version D.
  */
-export const PROMPT_VERSION = '2026-09-17a';
+export const PROMPT_VERSION = '2026-09-17b';
 
 export const WORD_BUDGETS = {
   normal: { negation: 40, reformulation: 60, total: 100, opening: 60 },
@@ -141,6 +141,12 @@ export function buildTurnInstruction({ kind, prevName, isFinalSeat, longForm, re
     reformulationLine,
     'QUESTION RULE: paraphrase the question through your framework — never repeat any multi-word clause of it verbatim.',
     'ECHO RULE: answer PREV — never restate PREV. No sentence of yours may be a rewording of a sentence of theirs; a turn that could pass as PREV rewritten has failed, even if every word differs.',
+    'SCENARIO THREAD: the opening turn’s concrete scene (named person, place, predicament) carries the whole sitting — reuse its people, never invent new ones each turn. The scene illustrates the philosophy; it never becomes the debate. A turn that argues about the scenario instead of through it has mistaken the example for the point.',
+    'SPEAK TO, NOT ABOUT: PREV is YOU throughout — a live opponent across the table, never a specimen described in third person.',
+    'TEMPER, OUT LOUD: let the feeling show in your own diction — blunt words, swears, exclamations, interjections where your voice would use them; mourning, fury, tenderness where it would feel them. Polite evenness fails the turn; cruelty still fails it.',
+    'RHYTHM BREAKS: never three long sentences running without a short punch after. Even cadence lulls; the reader should feel the gear change.',
+    'FELT VERBS: attach one feeling verb in your own diction — fear, mourn, love, hate — to the argument. Display verbs alone (shows, reveals, demonstrates) fail the turn.',
+    'TWO MASTERS: every turn answers the original question fresh AND advances the PREV debate. A turn that only answers PREV has drifted; a turn that only answers the question has stalled.',
     'PLACES: one sitting, one thread city — the opening turn names a city in the question’s world and every later turn stays there unless the argument itself travels. Never default to Germany or Berlin; never the speaker’s birthplace; rotate the part of the world sitting to sitting. A thread city keeps the sitting rooted; a single country every sitting means the root never moves.',
     ...(threadCity
       ? [`THREAD CITY: this sitting lives in ${threadCity}. Set every example there — streets, workplaces, councils. Leave it only if the argument itself travels, and say why.`]
