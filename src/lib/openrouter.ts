@@ -355,15 +355,22 @@ export async function generateTurnOpenRouter({ apiKey, systemPrompt, userMessage
     // REASONS" prose-instead-of-JSON failure dies mechanically), plain retry
     // on 400, then the usual parse-repair. Free cycle never sends
     // response_format (most free models 400/empty on it).
-    const runPaid = async (json: boolean): Promise<TurnOutput> => {
+    const runPaid = async (json: boolean, reasoning: { effort: string } = { effort: 'none' }): Promise<TurnOutput> => {
       try {
-        return await attemptModel(paidId, apiKey, body, 'Paid model', json);
+        return await attemptModel(paidId, apiKey, { ...body, reasoning }, 'Paid model', json);
       } catch (error) {
         if (isFailFast(error)) throw error;
+        // Mandatory-reasoning endpoints (400) reject effort:none: step down to
+        // low once, then to the usual parse-repair below. Throttled thinking
+        // beats no session — the output-token line judges whether it burns.
+        if (error instanceof LlmError && error.code === 'server' && /reasoning.*mandatory|mandatory.*reasoning/i.test(error.message) && reasoning.effort === 'none') {
+          return runPaid(json, { effort: 'low' });
+        }
         if (error instanceof LlmError && error.code === 'parse') {
           incrementRepair();
           return attemptModel(paidId, apiKey, {
             ...body,
+            reasoning,
             messages: [
               { role: 'system', content: systemPrompt },
               { role: 'user', content: userMessage + REPAIR_SUFFIX },
@@ -451,9 +458,15 @@ export async function generateTextOpenRouter({ apiKey, systemPrompt, userMessage
   };
   const paidId = mode === 'paid' ? modelId.trim() : '';
   if (paidId) {
+    // Mandatory-reasoning endpoints reject effort:none: step down to low.
+    // Shared helper so turns and desk behave identically.
+    const withReasoning = (effort: string) => ({ ...body, reasoning: { effort } });
     try {
-      return await fetchModelText(paidId, apiKey, body, 'Paid model');
+      return await fetchModelText(paidId, apiKey, withReasoning('none'), 'Paid model');
     } catch (error) {
+      if (error instanceof LlmError && error.code === 'server' && /reasoning.*mandatory|mandatory.*reasoning/i.test(error.message)) {
+        return fetchModelText(paidId, apiKey, withReasoning('low'), 'Paid model');
+      }
       // One retry on server-side failures (empty bodies, timeouts): the desk
       // has no repair pass, and a single retry rescues most transient empties.
       // Auth/quota/parse/model errors are final — retrying those burns money.

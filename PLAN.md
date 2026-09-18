@@ -739,3 +739,8 @@ Genealogy touch behaviour (later, owner-reported on iPad): tap selects the
 philosopher immediately, so the hover-isolate (lit debts) never shows.
 Fix: first tap isolates, second tap opens, with an explicit close/dismiss —
 touch-first design, not hover ported over.
+Podcast mode (later, owner request Sep 2026): NotebookLM-style read-aloud of
+sittings with a distinct voice per thinker. Must be free or near-free:
+Web Speech per-voice mapping first (device voices differ — no guarantees),
+paid TTS only as an opt-in BYOK route. Per-seat voice assignment needs the
+same persistence as display settings.
