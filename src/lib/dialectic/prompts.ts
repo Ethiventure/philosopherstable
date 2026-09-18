@@ -31,7 +31,7 @@ export type TurnKind = 'opening' | 'critique' | 'reconstruction';
  * text change so grades stay comparable: a verdict on version C never
  * transfers silently to version D.
  */
-export const PROMPT_VERSION = '2026-09-17b';
+export const PROMPT_VERSION = '2026-09-18a';
 
 export const WORD_BUDGETS = {
   normal: { negation: 40, reformulation: 60, total: 100, opening: 60 },
@@ -141,6 +141,7 @@ export function buildTurnInstruction({ kind, prevName, isFinalSeat, longForm, re
     reformulationLine,
     'QUESTION RULE: paraphrase the question through your framework — never repeat any multi-word clause of it verbatim.',
     'ECHO RULE: answer PREV — never restate PREV. No sentence of yours may be a rewording of a sentence of theirs; a turn that could pass as PREV rewritten has failed, even if every word differs.',
+    'HISTORY ALOUD: your prompt names a real debt between you and PREV (YOUR HISTORY). Speak it aloud once, in your own words — honour it, rupture it, or steal from it, on the record. A turn that leaves the debt as silent colouring has failed; polite debate that never names what stands between you has failed.',
     'SCENARIO THREAD: the opening turn’s concrete scene (named person, place, predicament) carries the whole sitting — reuse its people, never invent new ones each turn. The scene illustrates the philosophy; it never becomes the debate. A turn that argues about the scenario instead of through it has mistaken the example for the point.',
     'SPEAK TO, NOT ABOUT: PREV is YOU throughout — a live opponent across the table, never a specimen described in third person.',
     'TEMPER, OUT LOUD: let the feeling show in your own diction — blunt words, swears, exclamations, interjections where your voice would use them; mourning, fury, tenderness where it would feel them. Polite evenness fails the turn; cruelty still fails it.',

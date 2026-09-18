@@ -38,6 +38,7 @@ first. Check here before (re)trying anything — corpses stay buried.
 usage instrument ran — earlier sessions predate it)
 
 | Model | Provider | Time | Tokens (in/out, calls) | Errors | Quality notes | Interim verdict | Next step | Final verdict |
+| qwen3.8-27b | OpenRouter paid | ~5 min debate (+desk/reading to 11:46 wall) | 199.5K/5.9K, 26 calls, 0 repairs | New prompts v2026-09-17b, Naples thread held; heat lived (P2 Marx "trash", P3 Spinoza "toy"); Rose superb; desk skipped (forgotten) | Matches Alibaba voice; route viable | Cheaper route? | Open |
 | glm-5.3-flash | OpenRouter paid | Retest Sep 18 (new prompts v2026-09-17b): 5:43 wall, 24 calls 182.8K/7K (1.8K reasoning — throttle holds), 0 repairs, 896 cached | Cleared decisively: thread city Dhaka held all sitting; TIME RULE minimum/horizon named; debt heat lived (Bloch/Marx shoulders lines, Bookchin-on-Bloch); desk individuated (Rose/Fisher superb); margins strong | **Best backup; engine challenger** | Paid Qwen27B route next | Open |
 |---|---|---|---|---|---|---|---|---|
 | deepseek-v4.1-flash | OpenRouter paid | ~6 min full session | n/a (pre-instrument) | 1 transient desk empty-body | Hegel/Bookchin P1 good; Rose excellent; "arm" blur; P2 Hegel staccato | Engine candidate | Trio grade | **Engine default** |

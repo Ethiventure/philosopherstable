@@ -199,6 +199,10 @@ function App() {
   // Sitting stopwatch: started on Begin, read at export. The owner grades
   // pace but is bad at the stopclock — the export keeps time instead.
   const sittingStartedAt = useRef<number | null>(null);
+  // Debate clock stops when the last turn lands; the export clock runs to
+  // export (desk + reading included). Two clocks because they answer
+  // different questions: engine pace vs session cost.
+  const debateEndedAt = useRef<number | null>(null);
   // Stock variants already spent this session (any seat). Each of the 90 may
   // be used once across the whole table; the spent list rides in each prompt.
   const spentRef = useRef<string[]>([]);
@@ -771,6 +775,9 @@ function App() {
       }
       provRef.current.push(provenanceLabel(snap));
       setInterventions([...collected]);
+      if (collected.length >= seats.length * 3 && debateEndedAt.current === null) {
+        debateEndedAt.current = Date.now();
+      }
     }
     setThinkingName(null);
     setIsRunning(false);
@@ -902,6 +909,7 @@ function App() {
     threadCityRef.current = drawThreadCity();
     setThreadCity(threadCityRef.current);
     sittingStartedAt.current = Date.now();
+    debateEndedAt.current = null;
     spentRef.current = [];
     setRunError(null);
     setActivePass(0);
@@ -1034,10 +1042,12 @@ function App() {
     const settingsText = `\nSITTING\n— Level: ${settings.intensity} · Long form: ${settings.longForm ? 'on' : 'off'} · Grounding: ${settings.grounding ? 'on' : 'off'} · Economy: ${settings.economy} (at export)${threadCityRef.current ? ` · Thread city: ${threadCityRef.current}` : ''} · Prompt v${PROMPT_VERSION}\n${(() => {
       if (!sittingStartedAt.current) return '— Tested: time not recorded (sitting predates the stopwatch)\n';
       const started = new Date(sittingStartedAt.current);
-      const secs = Math.max(0, Math.round((Date.now() - sittingStartedAt.current) / 1000));
-      const mm = Math.floor(secs / 60);
-      const ss = String(secs % 60).padStart(2, '0');
-      return `— Tested: ${started.toISOString()} · Wall time Begin→export: ${mm}:${ss}\n`;
+      const fmt = (ms: number) => {
+        const secs = Math.max(0, Math.round(ms / 1000));
+        return `${Math.floor(secs / 60)}:${String(secs % 60).padStart(2, '0')}`;
+      };
+      const debate = debateEndedAt.current ? ` · Debate: ${fmt(debateEndedAt.current - sittingStartedAt.current)}` : '';
+      return `— Tested: ${started.toISOString()} · Wall time Begin→export: ${fmt(Date.now() - sittingStartedAt.current)}${debate} (debate clock stops at the last turn; wall includes desk + reading)\n`;
     })()}`;
     // Provider-reported tokens (retries included): measured cost, not estimates.
     const usage = usageTotals();
