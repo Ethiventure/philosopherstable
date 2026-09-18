@@ -33,7 +33,7 @@ import {
   type Philosopher,
   type StyleEssence,
 } from '@/types';
-import { buildCodaEarlyPrompt, buildCodaPrompt, buildTurnInstruction, buildUserMessage, CODA_REPAIR_SUFFIX, CODA_SYSTEM, drawThreadCity, getTurnKind, LOW_CLOSING_REMINDER, STRUCTURED_OUTPUT_HINT } from '@/lib/dialectic/prompts';
+import { buildCodaEarlyPrompt, buildCodaPrompt, buildTurnInstruction, buildUserMessage, CODA_REPAIR_SUFFIX, CODA_SYSTEM, drawThreadCity, getTurnKind, LOW_CLOSING_REMINDER, PROMPT_VERSION, STRUCTURED_OUTPUT_HINT } from '@/lib/dialectic/prompts';
 import { LlmError, RATES_AS_OF, estimateCost, repairTotals, resetUsage, usageTotals, type LlmErrorCode, type TurnOutput } from '@/lib/llm';
 import { loadSettings, saveSettings, type CabinetSettings, type DeepInfraPrimary } from '@/lib/settings';
 import { applyDisplay, loadDisplay, saveDisplay } from '@/lib/preferences';
@@ -196,6 +196,9 @@ function App() {
   // no memory of last time). Resume keeps the sitting's city.
   const threadCityRef = useRef<string>('');
   const [threadCity, setThreadCity] = useState<string>('');
+  // Sitting stopwatch: started on Begin, read at export. The owner grades
+  // pace but is bad at the stopclock — the export keeps time instead.
+  const sittingStartedAt = useRef<number | null>(null);
   // Stock variants already spent this session (any seat). Each of the 90 may
   // be used once across the whole table; the spent list rides in each prompt.
   const spentRef = useRef<string[]>([]);
@@ -898,6 +901,7 @@ function App() {
     resetUsage();
     threadCityRef.current = drawThreadCity();
     setThreadCity(threadCityRef.current);
+    sittingStartedAt.current = Date.now();
     spentRef.current = [];
     setRunError(null);
     setActivePass(0);
@@ -1027,7 +1031,14 @@ function App() {
       : '';
     // Sitting settings at export (diagnostic: proves which level produced
     // these turns — intensity can change between runs of one sitting).
-    const settingsText = `\nSITTING\n— Level: ${settings.intensity} · Long form: ${settings.longForm ? 'on' : 'off'} · Grounding: ${settings.grounding ? 'on' : 'off'} · Economy: ${settings.economy} (at export)${threadCityRef.current ? ` · Thread city: ${threadCityRef.current}` : ''}\n`;
+    const settingsText = `\nSITTING\n— Level: ${settings.intensity} · Long form: ${settings.longForm ? 'on' : 'off'} · Grounding: ${settings.grounding ? 'on' : 'off'} · Economy: ${settings.economy} (at export)${threadCityRef.current ? ` · Thread city: ${threadCityRef.current}` : ''} · Prompt v${PROMPT_VERSION}\n${(() => {
+      if (!sittingStartedAt.current) return '— Tested: time not recorded (sitting predates the stopwatch)\n';
+      const started = new Date(sittingStartedAt.current);
+      const secs = Math.max(0, Math.round((Date.now() - sittingStartedAt.current) / 1000));
+      const mm = Math.floor(secs / 60);
+      const ss = String(secs % 60).padStart(2, '0');
+      return `— Tested: ${started.toISOString()} · Wall time Begin→export: ${mm}:${ss}\n`;
+    })()}`;
     // Provider-reported tokens (retries included): measured cost, not estimates.
     const usage = usageTotals();
     const byModel = [...new Set(usage.entries.map((e) => `${e.provider} ${e.model}`))]

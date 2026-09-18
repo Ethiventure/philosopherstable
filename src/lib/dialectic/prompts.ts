@@ -26,6 +26,13 @@ import type { StyleIntensity } from '@/types';
 
 export type TurnKind = 'opening' | 'critique' | 'reconstruction';
 
+/**
+ * Prompt contract version, printed in exports. Bump the letter on ANY prompt
+ * text change so grades stay comparable: a verdict on version C never
+ * transfers silently to version D.
+ */
+export const PROMPT_VERSION = '2026-09-17a';
+
 export const WORD_BUDGETS = {
   normal: { negation: 40, reformulation: 60, total: 100, opening: 60 },
   long: { negation: 100, reformulation: 180, total: 280, opening: 160 },
