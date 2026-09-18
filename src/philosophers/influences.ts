@@ -190,7 +190,7 @@ export function relationshipLine(
       owed.stance === 'critical'
         ? `You have broken with ${prevName} — say so to their face, in your own terms, and say what of theirs you still use.`
         : owed.stance === 'positive'
-          ? `You stand on ${prevName}'s shoulders — say so openly, then show where you go further.`
+          ? `You learned this move from ${prevName} — name what you took, then show where you break away from them.`
           : `You owe ${prevName} and you fight them too — hold both in the open.`;
     return `YOUR HISTORY WITH ${prevName} (confidence ${owed.confidence}) — you owe them this: ${owed.note}. ${heat}${strengthOrder}${plain}`;
   }
