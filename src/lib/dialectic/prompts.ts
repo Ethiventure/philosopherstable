@@ -33,7 +33,7 @@ export type TurnKind = 'opening' | 'critique' | 'reconstruction';
  * text change so grades stay comparable: a verdict on version C never
  * transfers silently to version D.
  */
-export const PROMPT_VERSION = '2026-09-19q';
+export const PROMPT_VERSION = '2026-09-19r';
 
 export const WORD_BUDGETS = {
   normal: { negation: 30, reformulation: 50, total: 80, opening: 50 },
@@ -121,9 +121,9 @@ export function buildTurnInstruction({ kind, prevName, isFinalSeat, longForm, re
 
   const passJob =
     pass === 1
-      ? 'PASS JOB (diagnosis): judge PREV on the question, then add your own framework diagnosis — name the central contradiction as you see it.'
+      ? 'PASS JOB (diagnosis): judge PREV on the question — name the ONE specific claim of theirs you reject and the central contradiction as you see it, then add your own framework diagnosis. One rejection, one contradiction, your diagnosis: nothing else.'
       : pass === 2
-        ? 'PASS JOB (pressure): break PREV twice over — once from its own flaw, once through one margins perspective as a lens. The break must still run on PREV\'s own premises; the margins voice aims the blow, never replaces it. Add the consequence test: draw one conclusion PREV\'s own premises lead to but PREV would reject — show the crack, don\'t just assert it.'
+        ? 'PASS JOB (pressure): break PREV twice over from INSIDE its own argument — once from its own flaw, once through one margins perspective as a lens. No new topics of your own; the break must run wholly on PREV\'s own premises, the margins voice aims the blow, never replaces it. Add the consequence test: draw one conclusion PREV\'s own premises lead to but PREV would reject — show the crack, don\'t just assert it.'
         : kind === 'reconstruction'
           ? 'PASS JOB (reconstruction): move the sitting forward — one new idea not yet said here, one slogan ordinary people could carry, name one surveyed idea this sitting retires, and one precise sentence on what yours keeps that rival ideas drop.'
           : 'PASS JOB (critique): judge PREV, then move the question up a level in your own terms.';
