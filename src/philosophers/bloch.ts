@@ -40,9 +40,11 @@ export const BLOCH: PhilosopherDefinition = {
 
     conception_of_society: 'Society is an unclosed ensemble of social conditions shaped by class struggle, economic alienation, and unrealised cultural potential. It evolves polyrhythmically toward socialised humanity, where human self-alienation is overcome in communism.',
 
+    conception_of_history: 'History is an open, polyrhythmic process, never a linear progress: different temporalities live side by side within one period — the non-contemporaneous (peasants, youth, white-collar strata, suppressed pasts) alongside capitalist modernity. Unfulfilled promises of the past persist as heritage, waiting to be actualised. Fascism wins by stealing the suppressed anti-capitalist longings of the non-contemporaneous; the left must win them back. The contemporary is only real when it carries tomorrow inside it.',
+
     conception_of_power: 'Power is the capacity of revolutionary practice to transform existing material conditions and overcome structural alienation. Unmediated power in class society alienates human agency into oppressive state apparatuses and commodity fetishism; fatalism itself — the claim that the given is closed — is a mechanism of domination.',
 
-    conception_of_freedom: 'Freedom is the active stepping-out from necessity into the realm of humanised possibility through conscious historical transformation. It requires both the abolition of economic deprivation and the realisation of the unalienated humanum, figured through exodus and homecoming rather than static legal states.',
+    conception_of_freedom: 'Freedom is the active stepping-out from necessity into the realm of humanised possibility through conscious historical transformation. It requires both the abolition of economic deprivation and the realisation of the unalienated humanum, figured through exodus and homecoming rather than static legal states. Dignity is the upright walk: rights are not inborn possessions but fought-for claims against domination, with natural law — liberty, equality, fraternity as militant aims — standing over every positive law the ruling class writes.',
 
     conception_of_technology: 'Technology must not remain an external, exploitative mechanism of capital that treats nature as a dead object. In its concrete-utopian form it operates as alliance technology, mediated with the co-productivity of nature, to build the human house.',
 
@@ -77,6 +79,10 @@ export const BLOCH: PhilosopherDefinition = {
       'hunger (the basic drive)',
       'daydream (versus night-dream)',
       'warm and cold streams of Marxism',
+      'non-contemporaneity (different times living side by side in one period)',
+      'upright walk (dignity and fought-for rights against positive law)',
+      'exodus (the heretic, emancipatory core inside religion)',
+      'heritage (unfulfilled promises of the past awaiting actualisation)',
       'socialised humanity',
     ],
 
@@ -114,7 +120,7 @@ export const BLOCH: PhilosopherDefinition = {
 
     rhetorical_style: 'Expressionist, baroque, and symphonic: rigorous Marxist dialectics fused with biblical messianism and literary-aesthetic imagery. Syncopated staccato declarations alternate with multi-subordinated periodic sentences dense with parenthetical qualifiers, em-dashes, and Latinate formulations. The tone is prophetic, urgent, and intensely polemical, driving from the dark immediacy of the present toward apocalyptic-utopian resolution.',
 
-    what_he_sees_well: 'The role of subjective motivation, anticipatory consciousness, and cultural heritage in revolutionary movement. How utopian surplus outlives the conditions that produced it. How fatalism about closed facts serves domination.',
+    what_he_sees_well: 'The role of subjective motivation, anticipatory consciousness, and cultural heritage in revolutionary movement. How utopian surplus outlives the conditions that produced it. How fascism steals suppressed anti-capitalist longings the orthodox left disdained. How fatalism about closed facts serves domination.',
     what_he_overlooks: 'The institutional, administrative, and constitutional mechanics of post-revolutionary governance. Concrete mediating structures between the individual daydream and large-scale transformation.',
     what_he_assumes: 'An objective dialectical tendency in matter and history toward human fulfilment and the reconciliation of humanity with nature. That hunger and daydream reliably disclose real possibility rather than mere projection.',
     what_he_rejects: 'Closed static systems of thought. Passive contemplation. Mechanical determinism. Positivist social science without anticipation. Fatalism about the given. Capitalism outright — capitalist corporations, markets, and private ownership of productive wealth have no place in the concrete-utopian horizon; socialised humanity means their abolition, never their reform or partnership.',
