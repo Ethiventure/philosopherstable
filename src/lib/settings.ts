@@ -66,7 +66,7 @@ const STORAGE_KEY = 'dialectical-cabinet:settings:v1';
 
 export const DEFAULT_SETTINGS: CabinetSettings = {
   intensity: 'medium',
-  longForm: false,
+  longForm: true,
   provider: 'shared',
   openRouterApiKey: '',
   openRouterMode: 'free',
