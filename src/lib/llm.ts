@@ -66,6 +66,7 @@ export function resetUsage(): void {
   usageLog.length = 0;
   parseRepairs = 0;
   glossBounces = 0;
+  echoRetries = 0;
 }
 
 /** Repair turns, split by cause so evals can tell malformed JSON apart from
@@ -75,19 +76,45 @@ export function resetUsage(): void {
  *  its repair parse. */
 let parseRepairs = 0;
 let glossBounces = 0;
+let echoRetries = 0;
 
-export function incrementRepair(kind: 'parse' | 'gloss' = 'parse'): void {
+export function incrementRepair(kind: 'parse' | 'gloss' | 'echo' = 'parse'): void {
   if (kind === 'gloss') glossBounces += 1;
+  else if (kind === 'echo') echoRetries += 1;
   else parseRepairs += 1;
 }
 
 export function repairTotals(): number {
-  return parseRepairs + glossBounces;
+  return parseRepairs + glossBounces + echoRetries;
 }
 
-/** Split counts for the export trail: malformed-JSON repairs vs gloss bounces. */
-export function repairBreakdown(): { parse: number; gloss: number } {
-  return { parse: parseRepairs, gloss: glossBounces };
+/** Split counts for the export trail: malformed-JSON repairs, gloss bounces,
+ * echo rewrites. */
+export function repairBreakdown(): { parse: number; gloss: number; echo: number } {
+  return { parse: parseRepairs, gloss: glossBounces, echo: echoRetries };
+}
+
+/**
+ * Shared-passage detector (structural echo guard): true when `text` shares
+ * any run of 8+ words with any prior text. Normalised (case, punctuation)
+ * so reworded-twice still counts as shared. 8 words sits above the
+ * five-word quotation allowance and below any honest coincidence — thread
+ * cities, stock terms, and short grounding loans never trip it.
+ */
+export function sharesPassage(text: string, priors: string[], run = 8): boolean {
+  const wordsOf = (s: string): string[] =>
+    s.toLowerCase().replace(/[^a-z0-9\s]/g, ' ').split(/\s+/).filter(Boolean);
+  const grams = new Set<string>();
+  for (const prior of priors) {
+    const w = wordsOf(prior);
+    for (let i = 0; i + run <= w.length; i += 1) grams.add(w.slice(i, i + run).join(' '));
+  }
+  if (!grams.size) return false;
+  const w = wordsOf(text);
+  for (let i = 0; i + run <= w.length; i += 1) {
+    if (grams.has(w.slice(i, i + run).join(' '))) return true;
+  }
+  return false;
 }
 
 /**
@@ -268,3 +295,8 @@ export const REPAIR_SUFFIX =
  * One retry, same shape plus the fifth key. */
 export const GLOSS_REPAIR_SUFFIX =
   ' Your turn used hard philosophical terms but the glossary key was missing or empty. Reply again with JSON only: the same turn, plus a fifth key "glossary" listing each hard term you used, one line each as term — plain meaning in your own words. Keep every other key.';
+
+/** Echo repair: the turn shares whole passages with earlier sitting text.
+ * One retry, rewritten wholly — not patched. */
+export const ECHO_REPAIR_SUFFIX =
+  ' Your turn shares whole passages with an earlier turn in this sitting. Reply again with JSON only: the same argument rewritten wholly in your own words — new example, new images, new slogans, no clause over five words carried across. Keep every other key.';

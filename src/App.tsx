@@ -34,7 +34,7 @@ import {
   type StyleEssence,
 } from '@/types';
 import { buildCodaEarlyPrompt, buildCodaEndPrompt, buildCodaPrompt, buildClosingScan, buildTurnInstruction, buildUserMessage, CODA_REPAIR_SUFFIX, CODA_SYSTEM, drawThreadCity, getTurnKind, GLOSSARY_SHAPE, LOW_CLOSING_REMINDER, PROMPT_VERSION, STRUCTURED_OUTPUT_HINT } from '@/lib/dialectic/prompts';
-import { LlmError, RATES_AS_OF, estimateCost, repairBreakdown, repairTotals, resetUsage, usageTotals, type LlmErrorCode, type TurnOutput } from '@/lib/llm';
+import { LlmError, ECHO_REPAIR_SUFFIX, incrementRepair, RATES_AS_OF, estimateCost, repairBreakdown, repairTotals, resetUsage, sharesPassage, usageTotals, type LlmErrorCode, type TurnOutput } from '@/lib/llm';
 import { DEEPINFRA_BACKUP_LABEL, DEEPINFRA_PRIMARIES, loadSettings, saveSettings, type CabinetSettings, type DeepInfraPrimary } from '@/lib/settings';
 import { applyDisplay, loadDisplay, saveDisplay } from '@/lib/preferences';
 import { generateTurnGroq, testGroqKey } from '@/lib/groq';
@@ -789,6 +789,32 @@ function App() {
       // Gloss audit hook (Sep 2026): the auto-retry was rolled back as
       // spend-without-gain — the fifth key stays as a cheap nudge, but no
       // turn is ever re-sent for it. Bare-term counts, if ever needed, go here.
+      // Structural echo guard: shared paragraphs fail mechanically. Compare
+      // the new turn against every earlier turn plus both margins notes; any
+      // shared 8-word run earns one rewrite retry. Fail-soft — the retry
+      // stands even if it still overlaps (logged), so a sitting never blocks.
+      // Revert: delete this block (prompt ECHO line stays harmless).
+      {
+        const priors = [
+          ...collected.map((item) => item.response_text),
+          ...(codaEarlyRef.current ? [codaEarlyRef.current] : []),
+          ...(codaRef.current ? [codaRef.current] : []),
+        ];
+        const draft = `${output.negation} ${output.reformulation}`;
+        if (sharesPassage(draft, priors)) {
+          try {
+            incrementRepair('echo');
+            const rewritten = await generateWithProvider(snap, systemPrompt, `${userMessage} ${ECHO_REPAIR_SUFFIX}`, snap.longForm);
+            if (runRef.current !== runId) return;
+            if (sharesPassage(`${rewritten.negation} ${rewritten.reformulation}`, priors)) {
+              if (typeof console !== 'undefined') console.warn(`[Echo] rewrite still overlaps for ${speaker.full_name}; keeping retry.`);
+            }
+            output = rewritten;
+          } catch (echoError) {
+            if (typeof console !== 'undefined') console.warn(`[Echo] rewrite failed for ${speaker.full_name}, original stands:`, echoError);
+          }
+        }
+      }
       const item = toIntervention(speaker, pass + 1, seatPos, output, previousSpeaker);
       collected.push(item);
       markSpentVariants(item.response_text);
@@ -1130,7 +1156,7 @@ function App() {
       const c = usage.entries.reduce((a, e) => a + (e.cachedTokens ?? 0), 0);
       const bits = [`${r.toLocaleString('en-US')} reasoning`, `${c.toLocaleString('en-US')} cached`].filter((_, i) => (i === 0 ? r : c) > 0);
       return bits.length ? ` (${bits.join(', ')})` : '';
-    })()}\n— Repair turns (malformed JSON retried, outside the turn count): ${repairTotals()} (JSON ${repairBreakdown().parse} · gloss ${repairBreakdown().gloss})\n${(() => {
+    })()}\n— Repair turns (outside the turn count): ${repairTotals()} (JSON ${repairBreakdown().parse} · gloss ${repairBreakdown().gloss} · echo ${repairBreakdown().echo})\n${(() => {
       const cost = estimateCost(usage.entries);
       return cost === null
         ? `— Cost: unknown (a model has no rate on file)`
