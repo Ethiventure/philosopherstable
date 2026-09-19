@@ -54,3 +54,13 @@ export function wordCount(s: string): number {
   const m = s.match(/\S+/g);
   return m ? m.length : 0;
 }
+
+/** Trim to maxChars without cutting mid-word: breaks at the last whitespace
+ * inside the limit (falls back to a hard cut for unbroken runs). */
+export function smartCut(s: string, maxChars: number): string {
+  if (s.length <= maxChars) return s;
+  const head = s.slice(0, maxChars);
+  const at = head.lastIndexOf(' ');
+  if (at < maxChars * 0.5) return `${head}…`;
+  return `${head.slice(0, at)}…`;
+}

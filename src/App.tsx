@@ -45,6 +45,7 @@ import { generateTurnAlibaba, testAlibabaKey } from '@/lib/alibaba';
 import { generateTurnTogether, testTogetherKey, TOGETHER_MODEL } from '@/lib/together';
 import { generateTurnZai, testZaiKey } from '@/lib/zai';
 import { entriesForNumbers, splitLabels } from '@/lib/footnotes';
+import { smartCut } from '@/lib/rag-text';
 import { extractPassages, formatGroundedBlock, groundableSource } from '@/lib/extract';
 import { searchThinkerPassages } from '@/lib/rag-ground';
 import { verifyQuotes } from '@/lib/verify';
@@ -92,7 +93,9 @@ function ReadMore({ philosopherName, onNavigate }: { philosopherName: string; on
  * as plain unverified text — never numbered, never dropped.
  */
 function ReadSimilar({ philosopherName, labels, onOpenSources }: { philosopherName: string; labels: string[]; onOpenSources: (n: number) => void }) {
-  const { numbers, unmatched } = splitLabels(philosopherName, labels);
+  // Bare URLs are never work claims (usually the model echoing a shown link)
+  // — drop them instead of printing them as "claimed".
+  const { numbers, unmatched } = splitLabels(philosopherName, labels.filter((l) => !/^https?:\/\//i.test(l.trim())));
   if (!numbers.length && !unmatched.length) return null;
   return (
     <p className="text-sm italic text-[#465f75]/75 mt-3">
@@ -113,9 +116,9 @@ function ReadSimilar({ philosopherName, labels, onOpenSources }: { philosopherNa
     </p>
   );
 }
-// Shapes a live Gemini turn into an Intervention. Citations stay unverified
-// until the Phase 5 corpus retrieval lands; works_referenced is the model's
-// own claim about which works it drew on.
+// Shapes a live turn into an Intervention. Citations are the model's own
+// claims (verified: false); RAG grounding receipts record what it was
+// actually shown, checkable in the inspector.
 function toIntervention(
   philosopher: Philosopher,
   pass: number,
@@ -704,7 +707,7 @@ function App() {
             if (runRef.current !== runId) return;
             // Same lean ration for the live fallback on shared/Groq.
             const rationed = leanRation
-              ? passages.slice(0, 2).map((p) => ({ text: p.text.length > 650 ? `${p.text.slice(0, 650)}…` : p.text }))
+              ? passages.slice(0, 2).map((p) => ({ text: smartCut(p.text, 650) }))
               : passages;
             groundingBlock = formatGroundedBlock(g.source.title, g.number, rationed, snap.intensity);
             groundingReceipt = {
@@ -1953,7 +1956,7 @@ function DisplayToggle({ label, hint, checked, onChange }: { label: string; hint
 
 function GroundingReceipt({ grounding, responseText }: { grounding: { title: string; number: number; passages: string[]; reason: string | null }; responseText: string }) {
   const checks = verifyQuotes(responseText, grounding.passages);
-  return <div className="mt-5 border-t border-[#4a392d]/20 pt-5"><p className="font-heading text-xl text-[#4a392d] mb-1">What the speaker was shown</p><p className="text-xs italic text-[#465f75]/65 mb-3">Passages fetched from “{grounding.title}” [{grounding.number}] before this turn — quotes below are checked against them, client-side. Paraphrase can fail the check; failure means “check by hand”, not “false”.</p>{grounding.passages.map((text, i) => <p key={i} className="text-[13px] leading-relaxed p-3 mb-2 bg-[#eae1ca]/60 border border-[#4a392d]/15 text-[#465f75]">“{text.length > 400 ? `${text.slice(0, 400)}…` : text}”</p>)}<div className="mt-3 space-y-2">{checks.length === 0 ? <p className="text-xs italic text-[#465f75]/65">No verifiable quotes in this turn — nothing to check against.</p> : checks.map((check, i) => <div key={i} className="flex items-start gap-2 text-[13px]"><span aria-hidden="true">{check.verified ? '✓' : '✗'}</span><p className="text-[#465f75]"><span className={`font-heading text-xs uppercase tracking-wider ${check.verified ? 'text-[#4a6b3f]' : 'text-[#8b5254]'}`}>{check.verified ? 'Verified' : 'Unverified'}: </span>“{check.quote.length > 160 ? `${check.quote.slice(0, 160)}…` : check.quote}”</p></div>)}</div></div>;
+  return <div className="mt-5 border-t border-[#4a392d]/20 pt-5"><p className="font-heading text-xl text-[#4a392d] mb-1">What the speaker was shown</p><p className="text-xs italic text-[#465f75]/65 mb-3">Passages the speaker was actually shown before this turn, searched from their own works (“{grounding.title}” [{grounding.number}]) — single-quoted loans below are checked against them in your browser. Paraphrase fails the check; failure means “check by hand”, not “false”.</p>{grounding.passages.map((text, i) => <p key={i} className="text-[13px] leading-relaxed p-3 mb-2 bg-[#eae1ca]/60 border border-[#4a392d]/15 text-[#465f75]">“{smartCut(text, 400)}”</p>)}<div className="mt-3 space-y-2">{checks.length === 0 ? <p className="text-xs italic text-[#465f75]/65">No verifiable quotes in this turn — nothing to check against.</p> : checks.map((check, i) => <div key={i} className="flex items-start gap-2 text-[13px]"><span aria-hidden="true">{check.verified ? '✓' : '✗'}</span><p className="text-[#465f75]"><span className={`font-heading text-xs uppercase tracking-wider ${check.verified ? 'text-[#4a6b3f]' : 'text-[#8b5254]'}`}>{check.verified ? 'Verified' : 'Unverified'}: </span>“{smartCut(check.quote, 160)}”</p></div>)}</div></div>;
 }
 
 function InterventionModal({ intervention, philosopher, onClose, ttsSupported, speaking, onToggleSpeech, onOpenSources, grounding, groundingOn }: { intervention: Intervention; philosopher?: Philosopher; onClose: () => void; ttsSupported?: boolean; speaking?: boolean; onToggleSpeech?: () => void; onOpenSources: (n: number) => void; grounding?: { title: string; number: number; passages: string[]; reason: string | null } | null; groundingOn: boolean }) { return <div className="fixed inset-0 z-50 bg-[#4a392d]/35 backdrop-blur-sm flex items-center justify-center p-4" onClick={onClose}><div role="dialog" aria-modal="true" aria-label={`Intervention by ${philosopher?.full_name ?? 'unknown thinker'}`} className="dark-academia-card max-w-3xl max-h-[90vh] overflow-y-auto custom-scroll p-6 md:p-8" onClick={(event) => event.stopPropagation()}><div className="flex justify-between gap-4"><div><p className="pass-indicator text-[#8b5254]">Pass {intervention.pass_number} · {PASS_NAMES[intervention.pass_number - 1]}</p><h2 className="text-3xl">{philosopher?.full_name}</h2><p className="italic text-[#465f75]/65">{intervention.position_label}</p></div><div className="flex flex-col items-end gap-2"><button className="btn-secondary !px-3 h-fit" onClick={onClose} aria-label="Close intervention"><X size={17} /></button>{ttsSupported && <button className="btn-secondary !text-xs flex items-center gap-2" onClick={onToggleSpeech} aria-label={speaking ? 'Stop reading this intervention' : 'Listen to this intervention'}>{speaking ? <><Square size={13} /> Stop</> : <><Volume2 size={13} /> Listen</>}</button>}</div></div><p className="drop-cap text-[17px] leading-relaxed mt-6 whitespace-pre-line text-[#465f75]">{intervention.response_text}</p>{philosopher && <div className="mt-4"><ReadMore philosopherName={philosopher.name} /></div>}<div className="mt-7 border-t border-[#4a392d]/20 pt-5"><p className="font-heading text-xl text-[#4a392d] mb-3">References</p>{philosopher && <ReadSimilar philosopherName={philosopher.name} labels={intervention.citations.map((c) => c.label)} onOpenSources={onOpenSources} />}{grounding && grounding.passages.length ? <GroundingReceipt grounding={grounding} responseText={intervention.response_text} /> : groundingOn ? <div className="mt-5 border-t border-[#4a392d]/20 pt-5"><p className="text-xs italic text-[#465f75]/65">{grounding && grounding.reason === 'unsupported-source' ? 'Grounding skipped this source (a scan or binary with nothing fetchable as text) — the speaker answered from profile alone.' : grounding && grounding.reason === 'fetch-failed' ? 'Grounding tried, but the source page could not be fetched — the speaker answered from profile alone.' : 'Grounding found no passages about this question on that page — the speaker answered from profile alone.'}</p></div> : null}</div></div></div>; }

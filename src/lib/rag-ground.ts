@@ -9,6 +9,7 @@
 import { CORPUS_SOURCES_DATA } from '@/data/corpus-sources';
 import type { StyleIntensity } from '@/types';
 import { prepareIndex, searchIndex, type PreparedIndex } from './rag-search';
+import { smartCut } from './rag-text';
 import { joinShard, type AuthorShard } from './rag-shard';
 
 interface ShardHit {
@@ -121,7 +122,7 @@ export async function searchThinkerPassages(
   // URL may be an OCR dump with no manifest entry of its own).
   const number = manifestNumberForUrl(work.corpus_source_url ?? work.source_url) ?? manifestNumberForUrl(first.passage.source_url);
   if (number === null) return null;
-  const cut = (t: string) => (maxChars > 0 && t.length > maxChars ? `${t.slice(0, maxChars)}…` : t);
+  const cut = (t: string) => (maxChars > 0 ? smartCut(t, maxChars) : t);
   const quoted = merged.map((s) => `> ${cut(s.passage.text)}`).join('\n');
   const header = intensity === 'low'
     ? `INDEXED PASSAGES from '${work.title}' [${number}] — searched from this thinker's own indexed works for this question. Read these for ideas, then PARAPHRASE: describe what they say in your own plain everyday words and cite the use [${number}]. Never lift rare, distinctive, archaic, or specialist words verbatim — not even in single quotes (bare double quotes corrupt your reply). Plain description beats the passage's own terms; closely paraphrase everything, always citing [${number}]:`
