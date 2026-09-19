@@ -33,14 +33,14 @@ export type TurnKind = 'opening' | 'critique' | 'reconstruction';
  * text change so grades stay comparable: a verdict on version C never
  * transfers silently to version D.
  */
-export const PROMPT_VERSION = '2026-09-19p';
+export const PROMPT_VERSION = '2026-09-19q';
 
 export const WORD_BUDGETS = {
-  normal: { negation: 40, reformulation: 60, total: 100, opening: 60 },
+  normal: { negation: 30, reformulation: 50, total: 80, opening: 50 },
   long: { negation: 70, reformulation: 100, total: 180, opening: 100 },
 } as const;
 
-export const MAX_OUTPUT_TOKENS = { normal: 300, long: 450 } as const;
+export const MAX_OUTPUT_TOKENS = { normal: 250, long: 450 } as const;
 
 /** Pass and seat are 1-indexed to match the UI (`pass_number`, `seat_position + 1`). */
 export function getTurnKind(pass: number, seatPosition1Indexed: number): TurnKind {
@@ -293,7 +293,7 @@ export const LOW_CLOSING_REMINDER =
  * this is the last gate: reread the draft, delete the weaker twin.
  */
 export const CLOSING_SCAN =
-  'FINAL SCAN before answering, every level: reread your draft and delete before sending. Cut any sentence that repeats an earlier sentence\'s words or idea — saying the same thing twice fails the turn, however true. Cut any clause over five words shared with PREV, the survey, the margins, or the question — paraphrase it afresh. PRONOUNS: I means you, the speaker — YOU means PREV, your live opponent. Never describe PREV in third person (no "he claims", "she argues", "they think" about PREV); never call yourself YOU. What survives must each push the debate somewhere new.';
+  'FINAL SCAN before answering, every level: reread your draft and delete before sending. Cut any sentence that repeats an earlier sentence\'s words or idea — saying the same thing twice fails the turn, however true. Cut any clause over five words shared with PREV, the survey, the margins, or the question — paraphrase it afresh. Prefer the shorter draft: if two sentences do one sentence\'s work, keep one and cut the other. PRONOUNS: I means you, the speaker — YOU means PREV, your live opponent. Never describe PREV in third person (no "he claims", "she argues", "they think" about PREV); never call yourself YOU. What survives must each push the debate somewhere new.';
 
 /** Medium-only tail of the closing scan: the gloss rule sits far above
  * generation and dies there, so it is re-ordered last at Medium. */

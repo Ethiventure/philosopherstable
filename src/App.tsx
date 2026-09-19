@@ -34,7 +34,7 @@ import {
   type StyleEssence,
 } from '@/types';
 import { buildCodaEarlyPrompt, buildCodaEndPrompt, buildCodaPrompt, buildClosingScan, buildTurnInstruction, buildUserMessage, CODA_REPAIR_SUFFIX, CODA_SYSTEM, drawThreadCity, getTurnKind, GLOSSARY_SHAPE, LOW_CLOSING_REMINDER, PROMPT_VERSION, STRUCTURED_OUTPUT_HINT } from '@/lib/dialectic/prompts';
-import { LlmError, GLOSS_REPAIR_SUFFIX, incrementRepair, RATES_AS_OF, estimateCost, repairTotals, resetUsage, usageTotals, type LlmErrorCode, type TurnOutput } from '@/lib/llm';
+import { LlmError, RATES_AS_OF, estimateCost, repairBreakdown, repairTotals, resetUsage, usageTotals, type LlmErrorCode, type TurnOutput } from '@/lib/llm';
 import { DEEPINFRA_BACKUP_LABEL, DEEPINFRA_PRIMARIES, loadSettings, saveSettings, type CabinetSettings, type DeepInfraPrimary } from '@/lib/settings';
 import { applyDisplay, loadDisplay, saveDisplay } from '@/lib/preferences';
 import { generateTurnGroq, testGroqKey } from '@/lib/groq';
@@ -786,24 +786,9 @@ function App() {
         return;
       }
       if (runRef.current !== runId) return;
-      // Medium gloss enforcement (structural): if the turn uses any of the
-      // speaker's hard terms but sent no glossary, bounce it once with the
-      // gloss suffix. Fail-soft — the original stands if the retry fails.
-      // Revert: delete this block (prompt tails stay harmless).
-      if (snap.intensity === 'medium' && !output.glossary.trim()) {
-        const haystack = `${output.negation} ${output.reformulation}`.toLowerCase();
-        const bare = (speaker.analytical_center ?? []).some((t) => haystack.includes(String(t).toLowerCase()));
-        if (bare) {
-          try {
-            incrementRepair();
-            const fixed = await generateWithProvider(snap, systemPrompt, `${userMessage} ${GLOSS_REPAIR_SUFFIX}`, snap.longForm);
-            if (runRef.current !== runId) return;
-            if (fixed.glossary.trim()) output = fixed;
-          } catch (glossError) {
-            if (typeof console !== 'undefined') console.warn(`[Gloss] repair failed for ${speaker.full_name}, original stands:`, glossError);
-          }
-        }
-      }
+      // Gloss audit hook (Sep 2026): the auto-retry was rolled back as
+      // spend-without-gain — the fifth key stays as a cheap nudge, but no
+      // turn is ever re-sent for it. Bare-term counts, if ever needed, go here.
       const item = toIntervention(speaker, pass + 1, seatPos, output, previousSpeaker);
       collected.push(item);
       markSpentVariants(item.response_text);
@@ -1145,7 +1130,7 @@ function App() {
       const c = usage.entries.reduce((a, e) => a + (e.cachedTokens ?? 0), 0);
       const bits = [`${r.toLocaleString('en-US')} reasoning`, `${c.toLocaleString('en-US')} cached`].filter((_, i) => (i === 0 ? r : c) > 0);
       return bits.length ? ` (${bits.join(', ')})` : '';
-    })()}\n— Repair turns (malformed JSON retried, outside the turn count): ${repairTotals()}\n${(() => {
+    })()}\n— Repair turns (malformed JSON retried, outside the turn count): ${repairTotals()} (JSON ${repairBreakdown().parse} · gloss ${repairBreakdown().gloss})\n${(() => {
       const cost = estimateCost(usage.entries);
       return cost === null
         ? `— Cost: unknown (a model has no rate on file)`

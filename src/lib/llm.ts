@@ -64,20 +64,30 @@ export function usageTotals(): { entries: UsageEntry[]; inTokens: number; outTok
 
 export function resetUsage(): void {
   usageLog.length = 0;
-  repairCount = 0;
+  parseRepairs = 0;
+  glossBounces = 0;
 }
 
-/** Repair turns (malformed JSON → REPAIR_SUFFIX retry), counted OUTSIDE the
- *  turn total so evals see them cleanly instead of silently inflated voice
- *  numbers. Every provider client increments before its repair parse. */
-let repairCount = 0;
+/** Repair turns, split by cause so evals can tell malformed JSON apart from
+ *  gloss bounces (Sep 2026: 12 silent gloss retries nearly doubled a session).
+ *  Counted OUTSIDE the turn total so evals see them cleanly instead of
+ *  silently inflated voice numbers. Every provider client increments before
+ *  its repair parse. */
+let parseRepairs = 0;
+let glossBounces = 0;
 
-export function incrementRepair(): void {
-  repairCount += 1;
+export function incrementRepair(kind: 'parse' | 'gloss' = 'parse'): void {
+  if (kind === 'gloss') glossBounces += 1;
+  else parseRepairs += 1;
 }
 
 export function repairTotals(): number {
-  return repairCount;
+  return parseRepairs + glossBounces;
+}
+
+/** Split counts for the export trail: malformed-JSON repairs vs gloss bounces. */
+export function repairBreakdown(): { parse: number; gloss: number } {
+  return { parse: parseRepairs, gloss: glossBounces };
 }
 
 /**
