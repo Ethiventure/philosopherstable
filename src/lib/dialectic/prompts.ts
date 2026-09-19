@@ -33,14 +33,14 @@ export type TurnKind = 'opening' | 'critique' | 'reconstruction';
  * text change so grades stay comparable: a verdict on version C never
  * transfers silently to version D.
  */
-export const PROMPT_VERSION = '2026-09-19x';
+export const PROMPT_VERSION = '2026-09-19y';
 
 export const WORD_BUDGETS = {
-  normal: { negation: 30, reformulation: 50, total: 80, opening: 50 },
-  long: { negation: 70, reformulation: 100, total: 180, opening: 100 },
+  normal: { negation: 25, reformulation: 40, total: 60, opening: 40 },
+  long: { negation: 55, reformulation: 85, total: 140, opening: 80 },
 } as const;
 
-export const MAX_OUTPUT_TOKENS = { normal: 200, long: 350 } as const;
+export const MAX_OUTPUT_TOKENS = { normal: 160, long: 300 } as const;
 
 /** Pass and seat are 1-indexed to match the UI (`pass_number`, `seat_position + 1`). */
 export function getTurnKind(pass: number, seatPosition1Indexed: number): TurnKind {
@@ -142,7 +142,7 @@ export function buildTurnInstruction({ kind, prevName, isFinalSeat, longForm, re
     // wall ~7k input tokens/turn) follow short instructions better than long
     // ones restating the same rule three ways. Every rule below fires — each
     // exactly once.
-    `${kind === 'reconstruction' ? 'RECONSTRUCTION' : 'IMMANENT CRITIQUE'} TURN (HARD ceiling: ${b.total} words total — shorter welcome; finish the current sentence, then stop). A quick spoken thrust, not a lecture: land the blow and stop talking — motion forward beats completeness, and a turn that explains everything has stalled the debate. Respond ONLY to your immediate predecessor ${prev}. Short, punchy sentences welcome — cut filler, never pad to the budget.`,
+    `${kind === 'reconstruction' ? 'RECONSTRUCTION' : 'IMMANENT CRITIQUE'} TURN (HARD ceiling: ${b.total} words total — shorter is always better; a 40-word turn that lands beats an 80-word turn that explains. Finish the current sentence, then stop). A quick spoken thrust, not a lecture: land the blow and stop talking — motion forward beats completeness, and a turn that explains everything has stalled the debate. Respond ONLY to your immediate predecessor ${prev}. Short, punchy sentences welcome — cut filler, never pad to the budget.`,
     passJob,
     ...(reversed
       ? [`REVERSED ROTATION: ${prev} sits to your left and just spoke — address only that answer.`]
