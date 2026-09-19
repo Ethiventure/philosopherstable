@@ -1097,7 +1097,7 @@ function App() {
     const late = interventions.filter((item) => item.pass_number >= 3).map(turnText);
     const earlyText = codaEarly ? `\nNOTES FROM THE MARGINS (after pass 1)\n${codaEarly.text}\n` : '';
     const codaText = coda ? `\nNOTES FROM THE MARGINS (before pass 3)\n${coda.text}\n` : '';
-    const endText = codaEnd ? `\nNOTES FROM THE MARGINS (closing summary)\n${codaEnd.text}\n` : '';
+    const endText = codaEnd ? `\nNOTES FROM THE MARGINS (closing summary)\n${codaEnd.text}\n` : codaEndState === 'failed' ? `\nNOTES FROM THE MARGINS (closing summary)\n[The closing summary failed to arrive${codaEndError ? ` — ${codaEndError}` : ''} — the sitting stands without it.]\n` : '';
     const body = [`THE DIALECTICAL CABINET\n\nQUESTION\n${question}\n`, ...pass1, ...(codaEarly ? [earlyText] : []), ...pass2, ...(coda && late.length ? [codaText] : []), ...late, ...(codaEnd ? [endText] : [])].join('\n');
     // Notes written but their next round never ran (paused session) still export.
     const trailingCoda = `${codaEarly && !pass2.length ? earlyText : ''}${coda && !late.length ? codaText : ''}${codaEnd && !late.length ? endText : ''}`;
