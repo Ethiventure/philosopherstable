@@ -35,7 +35,7 @@ import {
 } from '@/types';
 import { buildCodaEarlyPrompt, buildCodaPrompt, buildTurnInstruction, buildUserMessage, CODA_REPAIR_SUFFIX, CODA_SYSTEM, drawThreadCity, getTurnKind, LOW_CLOSING_REMINDER, PROMPT_VERSION, STRUCTURED_OUTPUT_HINT } from '@/lib/dialectic/prompts';
 import { LlmError, RATES_AS_OF, estimateCost, repairTotals, resetUsage, usageTotals, type LlmErrorCode, type TurnOutput } from '@/lib/llm';
-import { loadSettings, saveSettings, type CabinetSettings, type DeepInfraPrimary } from '@/lib/settings';
+import { DEEPINFRA_BACKUP_LABEL, DEEPINFRA_PRIMARIES, loadSettings, saveSettings, type CabinetSettings, type DeepInfraPrimary } from '@/lib/settings';
 import { applyDisplay, loadDisplay, saveDisplay } from '@/lib/preferences';
 import { generateTurnGroq, testGroqKey } from '@/lib/groq';
 import { generateTurnShared } from '@/lib/shared';
@@ -1510,7 +1510,7 @@ function SettingsDrawer({ philosophers, activeSlugs, togglePhilosopher, settings
       } else if (usingDeepInfra) {
         await testDeepInfraKey(key, settings.deepInfraPrimary);
         setTestState('ok');
-        setTestMessage(`Key works (${settings.deepInfraPrimary === 'qwen' ? 'Qwen3.6-35B first' : 'DeepSeek V4 Flash first'}, Llama 3.3 70B backup). Saved for this browser.`);
+        setTestMessage(`Key works (${DEEPINFRA_PRIMARIES.find((p) => p.id === settings.deepInfraPrimary)?.label ?? settings.deepInfraPrimary} first, Llama 3.3 70B backup). Saved for this browser.`);
         onSettingsChange({ ...settings, deepInfraApiKey: key });
       } else if (usingTogether) {
         await testTogetherKey(key);
@@ -1594,7 +1594,7 @@ function SettingsDrawer({ philosophers, activeSlugs, togglePhilosopher, settings
               <button role="radio" aria-checked={usingZai} title="Your Z.ai key — GLM-4.7-Flash, free tier, no card." onClick={() => { setTestState('idle'); setTestMessage(''); onSettingsChange({ ...settings, provider: 'zai' }); }} className={`btn-secondary ${usingZai ? '!border-[#8b5254] !text-[#8b5254]' : ''}`}>Z.ai</button>
             </div>
             {settings.provider === 'shared' ? (
-              <p className="text-xs text-[#465f75]/70">No key needed — the cabinet runs on its own Groq-backed key, held server-side and shared across visitors (about two full sessions a day each). If the shared quota runs dry, add your own OpenRouter, Groq, DeepInfra, Together, Alibaba or Z.ai key below by switching provider.</p>
+              <p className="text-xs text-[#465f75]/70">No key needed — the cabinet runs on its own Groq-backed key, held server-side and shared across visitors (about two full sessions a day each). The export names the model behind each turn, so you can always see who spoke. If the shared quota runs dry, add your own OpenRouter, Groq, DeepInfra, Together, Alibaba or Z.ai key below by switching provider.</p>
             ) : usingGroq ? (
               <>
                 <label htmlFor="groq-key" className="font-heading text-sm uppercase tracking-[0.16em] text-[#4a392d]">Groq API key (free)</label>
@@ -1646,12 +1646,19 @@ function SettingsDrawer({ philosophers, activeSlugs, togglePhilosopher, settings
                   {keySaved && <span className="text-xs italic self-center text-[#4a6b3f]">Saved in this browser.</span>}
                 </div>
                 {testMessage && <p className={`text-sm italic ${testState === 'ok' ? 'text-[#4a6b3f]' : 'text-[#8b5254]'}`}>{testMessage}</p>}
-                <p className="text-xs text-[#465f75]/70">Your chosen primary speaks first; Llama 3.3 70B takes over automatically if it fails — the export says who spoke. Needs a card on file — get a key at <a className="underline" href="https://deepinfra.com/dash/api_keys" target="_blank" rel="noreferrer">deepinfra.com</a>.</p>
+                <p className="text-xs text-[#465f75]/70">Your chosen primary speaks first; Llama 3.3 70B takes over automatically if it fails (never on key/quota errors — a backup cannot fix those) — the export says who spoke. Needs a card on file — get a key at <a className="underline" href="https://deepinfra.com/dash/api_keys" target="_blank" rel="noreferrer">deepinfra.com</a>.</p>
                 <label htmlFor="di-primary" className="font-heading text-sm uppercase tracking-[0.16em] text-[#4a392d] pt-2 block">First voice</label>
                 <select id="di-primary" value={settings.deepInfraPrimary} onChange={(event) => onSettingsChange({ ...settings, deepInfraPrimary: event.target.value as DeepInfraPrimary })} className="w-full bg-[#eae1ca]/60 border border-[#4a392d]/25 rounded-sm p-3 text-[15px] text-[#465f75] focus:outline-none focus:ring-2 focus:ring-[#8b5254]/30">
-                  <option value="deepseek">DeepSeek V4 Flash 0731 (fast, obedient JSON)</option>
-                  <option value="qwen">Qwen3.6-35B-A3B (cheap Qwen voice — thinking now throttled, retest pending)</option>
+                  {DEEPINFRA_PRIMARIES.map((p) => (
+                    <option key={p.id} value={p.id}>{p.label} ({p.model})</option>
+                  ))}
                 </select>
+                {(() => {
+                  const picked = DEEPINFRA_PRIMARIES.find((p) => p.id === settings.deepInfraPrimary);
+                  return picked ? (
+                    <p className="text-xs text-[#465f75]/70">Speaks first: <span className="font-heading">{picked.model}</span> — {picked.why} Backup: {DEEPINFRA_BACKUP_LABEL}</p>
+                  ) : null;
+                })()}
               </>
             ) : usingTogether ? (
               <>
@@ -1663,7 +1670,7 @@ function SettingsDrawer({ philosophers, activeSlugs, togglePhilosopher, settings
                   {keySaved && <span className="text-xs italic self-center text-[#4a6b3f]">Saved in this browser.</span>}
                 </div>
                 {testMessage && <p className={`text-sm italic ${testState === 'ok' ? 'text-[#4a6b3f]' : 'text-[#8b5254]'}`}>{testMessage}</p>}
-                <p className="text-xs text-[#465f75]/70">Pinned model <span className="font-heading">Qwen/Qwen3-30B-A3B</span>. Get a key at <a className="underline" href="https://api.together.ai/settings/api-keys" target="_blank" rel="noreferrer">api.together.ai</a> (requires a card upfront).</p>
+                <p className="text-xs text-[#465f75]/70">Pinned model <span className="font-heading">Qwen/Qwen3-30B-A3B</span> — fixed because it was the owner-supplied ID; verify it at <a className="underline" href="https://api.together.ai/models" target="_blank" rel="noreferrer">api.together.ai/models</a> if calls 404. About $0.03 per 5-seat sitting — the priciest route here. Get a key at <a className="underline" href="https://api.together.ai/settings/api-keys" target="_blank" rel="noreferrer">api.together.ai</a> (requires a card upfront).</p>
               </>
             ) : usingAlibaba ? (
               <>

@@ -53,6 +53,11 @@ full edge-list fallback. Content-agnostic: substitute any entities.
   font/button/accent pairs — never a lone text-colour toggle.
 - Quota-honest UX: per-user caps stated up front, visible halt states with
   recovery paths, provider/model switches that preserve progress.
+- Model transparency in plain text: every provider and model option in Settings
+  names its exact model ID and why it is picked (price, speed, voice, licence
+  — one plain line each), rendered as visible text, never tooltip-only. The
+  export names the model behind each turn. Source of truth lives in
+  `DEEPINFRA_PRIMARIES`-style structures so UI copy and code cannot drift.
 - Difficulty levels that hold (Low/Medium/High): define ALL levels, govern
   the simple one by removing difficulty machinery (not adding rules), every
   level gets a reader test + worked example + failure condition.

@@ -189,7 +189,7 @@ migrate on load — pinned dropdown removed Sep 2026 after 3.6 rotted), `economy
 (`full` / `efficient` — efficient caps fed-back PREV text at ~1200 chars;
 personas are never trimmed), `grounding` (default on — experimental source
 passages, undo by deleting `lib/extract.ts` + `functions/extract.js` + flag),
-`intensity` (default low), `longForm`. No Gemini anywhere (retired for new keys; stored
+`intensity` (default medium — owner order Sep 19 2026, the working grade level), `longForm`. No Gemini anywhere (retired for new keys; stored
 'gemini' migrates to shared). No OpenAI models, ever. Default seats: Hegel,
 Marx, Bloch, Bookchin, Deleuze.
 Settings drawer: provider radio, key input (password-style) per provider, Test
@@ -231,8 +231,8 @@ covers it, but watch this if shared sessions stall live.
 prompt-instructed JSON plus salvage, same lesson as OpenRouter).
 `src/lib/deepinfra.ts` / `src/lib/together.ts`: same OpenAI-compatible shape.
 DeepInfra runs a visitor-chosen primary (DeepSeek V4 Flash 0731 default, or
-Qwen3.6-35B-A3B — FAILED live Sep 2026: 2.5 min to first card, still pass 1 at
-11.5 min, Low ignored) with Llama 3.3 70B
+Qwen3-30B-A3B — re-pinned Sep 19 2026 after Qwen3.6-35B-A3B FAILED live:
+2.5 min to first card, still pass 1 at 11.5 min, Low ignored) with Llama 3.3 70B
 backup on non-auth/quota failures; provenance records who spoke). Together pins
 `TOGETHER_MODEL` (user-supplied ID, verify on 404). `src/lib/zai.ts`: Z.ai
 direct, visitor key, free-text model default `glm-4.7-flash` ($0/$0 free tier,
@@ -527,8 +527,9 @@ Low/Medium/High prompt behaviour stays in one failure shape. Research Sep 2026
   Low-only lean ration). Together Qwen3-30B-A3B unverified + priciest
   (~$0.03/5-seat) — drop candidate once the A/B settles.
 - Reliability: both families rotate IDs fast; OpenRouter free IDs rot in days.
-  DeepInfra fixed pair currently mixes families (DeepSeek first, Llama backup)
-  — proposal is a second DeepSeek as backup so the pipe stays one family.
+  DeepInfra fixed pair currently mixes families (DeepSeek or Qwen first, Llama
+  backup) — second-DeepSeek-as-backup proposal parked while the 30B-A3B re-pin
+  gets its live grade.
 - Checking order Sep 16 2026 (live verdicts in `docs/models-tried.md`):
   1. `qwen/qwen3.8-flash` via the OpenRouter paid box (same family as the 27B
   voice reference, ~$0.02/session; p50 TTFT ~4.6s watch item) → grade Low
@@ -726,9 +727,12 @@ README demo clip. Pick by need, not all at once.
 "How this was built" page/section (owner request Sep 2026): the making-of —
 debts table, diagram road system, RAG pipeline, model trials — pointing at
 the GitHub repo. Public provenance, not a dev dump.
-Provider picker explanations (after models settle): one honest line per
-route — free ones marked free (no card), paid ones with voice/speed/cost,
-DeepSeek default rationale, where the Qwen voice lives.
+Provider picker explanations (shipped as a standing rule Sep 19 2026, see
+AGENTS.md "Model transparency in plain text"): every provider and model option
+in Settings names its exact model ID and why it is picked (price, speed,
+voice, licence — one plain line each) as visible text, never tooltip-only;
+the export names the model behind each turn. Source of truth lives in
+`DEEPINFRA_PRIMARIES`-style structures so UI copy and code cannot drift.
 Level guidance (later, once models are pinned down): say Medium is a good
 starting point — drop to Low if too hard, up to High for the full voice.
 Provider picker redesign (later, owner request Sep 2026): dropdown flow —

@@ -9,15 +9,21 @@ export const DEFAULT_GROQ_MODEL = 'qwen/qwen3.8-27b';
 /** IDs that 404 for visitor keys — stored picks migrate to the default. */
 const DEAD_GROQ_IDS = new Set(['qwen/qwen3.6-27b']);
 
-export type DeepInfraModel = 'deepseek-ai/DeepSeek-V4-Flash-0731' | 'Qwen/Qwen3.6-35B-A3B' | 'meta-llama/Llama-3.3-70B-Instruct-Turbo';
+export type DeepInfraModel = 'deepseek-ai/DeepSeek-V4-Flash-0731' | 'Qwen/Qwen3-30B-A3B' | 'meta-llama/Llama-3.3-70B-Instruct-Turbo';
 
 /** Who speaks first on DeepInfra (backup Llama rescues either). */
 export type DeepInfraPrimary = 'deepseek' | 'qwen';
 
-export const DEEPINFRA_PRIMARIES: { id: DeepInfraPrimary; label: string; hint: string }[] = [
-  { id: 'deepseek', label: 'DeepSeek V4 Flash 0731', hint: 'Fast, obedient JSON (~$0.10/$0.30 per 1M)' },
-  { id: 'qwen', label: 'Qwen3.6-35B-A3B', hint: 'Cheap Qwen voice (~$0.10/$0.95 per 1M); thinking-burn watch item' },
+/** Transparency rule: every option names its exact model ID and why it is
+ *  picked. The Settings UI renders these verbatim, so keep each `why` to one
+ *  plain line (model, price, reason). */
+export const DEEPINFRA_PRIMARIES: { id: DeepInfraPrimary; label: string; model: DeepInfraModel; why: string }[] = [
+  { id: 'deepseek', label: 'DeepSeek V4 Flash 0731', model: 'deepseek-ai/DeepSeek-V4-Flash-0731', why: 'Obedient JSON, ~$0.10/$0.30 per 1M — the fallback engine, fastest reliable pick.' },
+  { id: 'qwen', label: 'Qwen3-30B-A3B', model: 'Qwen/Qwen3-30B-A3B', why: 'Cheap Qwen voice, $0.12/$0.50 per 1M, with a documented thinking off-switch — retest pending (replaces 3.6-35B, which burned live Sep 2026).' },
 ];
+
+/** Llama rescue model, named in the UI beside the primary. */
+export const DEEPINFRA_BACKUP_LABEL = 'Llama 3.3 70B (meta-llama/Llama-3.3-70B-Instruct-Turbo) — rescue only, never first choice (weak prompt adherence).';
 
 export type TurnEconomy = 'full' | 'efficient';
 
@@ -59,7 +65,7 @@ export interface CabinetSettings {
 const STORAGE_KEY = 'dialectical-cabinet:settings:v1';
 
 export const DEFAULT_SETTINGS: CabinetSettings = {
-  intensity: 'low',
+  intensity: 'medium',
   longForm: false,
   provider: 'shared',
   openRouterApiKey: '',

@@ -3,19 +3,21 @@ import { LlmError, REPAIR_SUFFIX, incrementRepair, parseTurnOutput, recordUsage,
 /**
  * DeepInfra direct provider (visitor's own key).
  * OpenAI-compatible `chat/completions` at api.deepinfra.com/v1/openai.
- * Visitor's chosen primary (DeepSeek V4 Flash 0731 or Qwen3.6-35B-A3B) speaks
+ * Visitor's chosen primary (DeepSeek V4 Flash 0731 or Qwen3-30B-A3B) speaks
  * first; if it fails on anything but auth/quota (same key, same credits — a
  * backup can't help those), Llama 3.3 70B Turbo takes the turn so the sitting
  * survives. `lastDeepInfraModel` records who
  * actually spoke for the export provenance trail. Turns try
- * `response_format: json_object` first, plain fallback on 400. NOTE: the Qwen
- * primary thinks by default — no thinking-dampening param is sent (unverified
- * server support); if Qwen turns arrive truncated, revisit.
+ * `response_format: json_object` first, plain fallback on 400. The Qwen
+ * primary is a hybrid thinker with a documented enable_thinking switch, and
+ * the dampening params below are sent on every call; the output-token line
+ * is the tell on whether thinking stayed off. (Prior pin Qwen3.6-35B-A3B was
+ * removed Sep 2026 after it burned live: 2.5 min to first card, Low ignored.)
  */
 import type { DeepInfraModel, DeepInfraPrimary } from '@/lib/settings';
 
 export const DEEPINFRA_MODEL: DeepInfraModel = 'deepseek-ai/DeepSeek-V4-Flash-0731';
-export const DEEPINFRA_MODEL_QWEN: DeepInfraModel = 'Qwen/Qwen3.6-35B-A3B';
+export const DEEPINFRA_MODEL_QWEN: DeepInfraModel = 'Qwen/Qwen3-30B-A3B';
 export const DEEPINFRA_MODEL_BACKUP: DeepInfraModel = 'meta-llama/Llama-3.3-70B-Instruct-Turbo';
 
 /** Visitor's chosen first voice; the Llama backup rescues either. */
@@ -113,9 +115,11 @@ const postDeepInfra = async ({ apiKey, model, systemPrompt, maxTokens, useJsonMo
         { role: 'user', content: m },
       ],
       max_tokens: maxTokens,
-      // Experimental Sep 2026: Qwen primaries think by default and burn the
-      // budget (the 35B failure). Server support for this flag is unverified —
-      // harmless if ignored, live retest decides. Revisit on 400s.
+      // Qwen primaries are hybrid thinkers: keep reasoning throttled and the
+      // documented thinking switch off (silent no-op if the host drops
+      // unknown fields — the output-token line is the only tell). The 3.6-35B
+      // pin burned through this exact setup, so the 30B-A3B re-pin (Sep 2026)
+      // gets one live session before trust. Revisit on 400s.
       reasoning_effort: 'low',
       // vLLM/SGLang pass-through for Qwen3-family thinking switch (Claude
       // research Sep 2026): silent no-op if the host drops unknown fields —
