@@ -197,6 +197,14 @@ function App() {
   // no memory of last time). Resume keeps the sitting's city.
   const threadCityRef = useRef<string>('');
   const [threadCity, setThreadCity] = useState<string>('');
+  // Levels actually generated at: the export used to print the picker's live
+  // value, so a sitting run at Medium exported as "low" if the picker moved
+  // before export (Sep 19 2026). Begin records, resumes append on change, the
+  // export prints this trail instead of the picker.
+  const runLevelsRef = useRef<string[]>([]);
+  const pushRunLevel = (level: string) => {
+    if (runLevelsRef.current[runLevelsRef.current.length - 1] !== level) runLevelsRef.current.push(level);
+  };
   // Sitting stopwatch: started on Begin, read at export. The owner grades
   // pace but is bad at the stopclock — the export keeps time instead.
   const sittingStartedAt = useRef<number | null>(null);
@@ -923,6 +931,7 @@ function App() {
     resetUsage();
     threadCityRef.current = drawThreadCity();
     setThreadCity(threadCityRef.current);
+    runLevelsRef.current = [settings.intensity];
     sittingStartedAt.current = Date.now();
     debateEndedAt.current = null;
     spentRef.current = [];
@@ -939,6 +948,7 @@ function App() {
     if (interventions.length >= orderedPhilosophers.length * 3) return;
     const runId = runRef.current + 1;
     runRef.current = runId;
+    pushRunLevel(settings.intensity);
     setRunError(null);
     setIsRunning(true);
     void runLoop(runId, [...orderedPhilosophers], interventions.length, [...interventions], settings);
@@ -949,6 +959,7 @@ function App() {
     if (interventions.length >= orderedPhilosophers.length * 3) return;
     const next = { ...settings, provider: 'openrouter' as const, openRouterMode: 'free' as const };
     updateSettings(next);
+    pushRunLevel(next.intensity);
     const runId = runRef.current + 1;
     runRef.current = runId;
     setRunError(null);
@@ -973,6 +984,7 @@ function App() {
     updateSettings(next);
     const runId = runRef.current + 1;
     runRef.current = runId;
+    pushRunLevel(next.intensity);
     setRunError(null);
     setIsRunning(true);
     void runLoop(runId, [...orderedPhilosophers], interventions.length, [...interventions], next);
@@ -1006,6 +1018,7 @@ function App() {
     setNoteMap({});
     provRef.current = [];
     resetUsage();
+    runLevelsRef.current = [];
     spentRef.current = [];
     setSelectedIntervention(null);
   };
@@ -1052,9 +1065,14 @@ function App() {
     const provenanceText = trail.length
       ? `\nMODELS USED\n${trail.map((t) => `— ${t}`).join('\n')}\n`
       : '';
-    // Sitting settings at export (diagnostic: proves which level produced
-    // these turns — intensity can change between runs of one sitting).
-    const settingsText = `\nSITTING\n— Level: ${settings.intensity} · Long form: ${settings.longForm ? 'on' : 'off'} · Grounding: ${settings.grounding ? 'on' : 'off'} · Economy: ${settings.economy} (at export)${threadCityRef.current ? ` · Thread city: ${threadCityRef.current}` : ''} · Prompt v${PROMPT_VERSION}\n${(() => {
+    // Levels actually generated at (Begin records, resumes append on change) —
+    // the picker value at export time is NOT truth (Sep 19 2026: a Medium run
+    // exported as "low" after the picker moved). Mid-sitting changes print all.
+    const runLevels = [...new Set(runLevelsRef.current)];
+    const levelText = runLevels.length > 1
+      ? `${runLevels.join(' → ')} (level changed mid-sitting)`
+      : (runLevels[0] ?? settings.intensity);
+    const settingsText = `\nSITTING\n— Level: ${levelText} · Long form: ${settings.longForm ? 'on' : 'off'} · Grounding: ${settings.grounding ? 'on' : 'off'} · Economy: ${settings.economy} (at export)${threadCityRef.current ? ` · Thread city: ${threadCityRef.current}` : ''} · Prompt v${PROMPT_VERSION}\n${(() => {
       if (!sittingStartedAt.current) return '— Tested: time not recorded (sitting predates the stopwatch)\n';
       const started = new Date(sittingStartedAt.current);
       const fmt = (ms: number) => {

@@ -24,6 +24,8 @@ first. Check here before (re)trying anything — corpses stay buried.
   genuinely Rosean). Weaknesses: voice at ~85% — "arm" limb/tool/weapon blur
   across turns, occasional staccato AI compressions (P2 Hegel), plain words
   combined into harder phrases. Gap is prompt-fixable surface, not model nature.
+  First Medium grade Sep 19 (education question, prompt-c): rules firing, no
+  arm-blur, 2 strict gloss fails ("praxis", "dialectic" unglossed) — engine holds.
 - **GLM-5.3-flash (OpenRouter paid) — runner-up, best backup.** Cooler and
   more even than Qwen; developed turns, widest desk round. 3 repairs, ~7 min.
 - **Qwen3.8-27B (Groq free) — retired voice reference.** Superseded by the
@@ -38,6 +40,7 @@ first. Check here before (re)trying anything — corpses stay buried.
 usage instrument ran — earlier sessions predate it)
 
 | Model | Provider | Time | Tokens (in/out, calls) | Errors | Quality notes | Interim verdict | Next step | Final verdict |
+| deepseek-v4.1-flash | OpenRouter paid | Sep 19, Medium, 8:31 wall (debate 8:29) | 212.4K/7.5K, 26 calls (15 turns + 2 codas + 8 desk + 1 repair), 11.5K cached | 1 repair | First Medium grade + first education-question grade (prompt v2026-09-19c). Prompt-c rules firing: drop/reject/inject in all five P3 turns; margins toilet-cleaner question answered by every P3 seat; consequences drawn in P2s; contradiction-first openings. No arm-blur. Medium lens: turns execute plain — few kept terms, but "praxis" (Bloch P1) + "dialectic" (Deleuze P3) stand unglossed (2 strict fails); no announced definitions (good). Faults: thread-city break (Hegel P1 opens Berlin, city Belgrade); "You hand the child a key" ×3 consecutive P3 openings + "I mourn that" ×2 P1 closings — pure model echo (neither is a stock variant, verified). Desk mixed levels, several read Medium+. ~$0.036 (8 desk calls + grounding beat the $0.015 no-desk budget). PROVENANCE BUG: export printed "Level: low" — the SITTING line read the picker at export time, not the run snap. Fixed same day (Begin records, resumes append, export prints the trail). | **Fallback engine, Medium holds** | GLM Medium rematch | Open |
 | qwen3.8-27b | OpenRouter paid | ~5 min debate (+desk/reading to 11:46 wall) | 199.5K/5.9K, 26 calls, 0 repairs | New prompts v2026-09-17b, Naples thread held; heat lived (P2 Marx "trash", P3 Spinoza "toy"); Rose superb; desk skipped (forgotten) | Matches Alibaba voice; route viable | Cheaper route? | Open |
 | glm-5.3-flash | OpenRouter paid | Retest Sep 18 (new prompts v2026-09-17b): 5:43 wall, 24 calls 182.8K/7K (1.8K reasoning — throttle holds), 0 repairs, 896 cached | Cleared decisively: thread city Dhaka held all sitting; TIME RULE minimum/horizon named; debt heat lived (Bloch/Marx shoulders lines, Bookchin-on-Bloch); desk individuated (Rose/Fisher superb); margins strong | **Best backup; engine challenger** | Paid Qwen27B route next | Open |
 |---|---|---|---|---|---|---|---|---|
