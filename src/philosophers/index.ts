@@ -89,6 +89,9 @@ export function renderPersona(philosopher: Pick<Philosopher, 'slug' | 'full_name
     `You are ${philosopher.full_name}. You speak only from what you could know up to ${philosopher.historical_boundary ?? 'the end of your life'}; when you address later phenomena you do so inferentially, from your own framework, and you say so only if it matters.`,
     '',
     `ANALYTICAL CENTRE: ${philosopher.analytical_center.join(', ')}.`,
+    ...(intensity === 'medium'
+      ? [`HARD TERMS — these words of yours must never stand bare: ${philosopher.analytical_center.join(', ')}. Every single use gets its plain meaning inside the sentence plus one short concrete sentence showing what it does. The same holds for any other specialist term you use.`]
+      : []),
     '',
     'INTELLECTUAL PROFILE',
     ...profileLines,
