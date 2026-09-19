@@ -247,6 +247,22 @@ export function parseTurnOutput(rawText: string, label = 'LLM'): TurnOutput {
     throw new LlmError(`${label} returned unparseable output. Resume the cabinet to retry the turn. Got: ${snippet(rawText)}`, true, 'parse');
   }
   const record = parsed as Record<string, unknown>;
+  // Forgiving aliases: close-miss key names get mapped to canonical keys
+  // before the mandatory-key check (observed live: "reformation" for
+  // "reformulation" — a halted sitting over one letter is the worse outcome).
+  const KEY_ALIASES: Record<string, string> = {
+    reformation: 'reformulation',
+    reformuation: 'reformulation',
+    refromulation: 'reformulation',
+    reformulaton: 'reformulation',
+    negotation: 'negation',
+    negatiation: 'negation',
+    newContribution: 'new_contribution',
+    newcontribution: 'new_contribution',
+  };
+  for (const [alias, canon] of Object.entries(KEY_ALIASES)) {
+    if (typeof record[canon] !== 'string' && typeof record[alias] === 'string') record[canon] = record[alias];
+  };
   for (const key of TURN_KEYS) {
     if (typeof record[key] !== 'string' || !(record[key] as string).trim()) {
       if (typeof console !== 'undefined') console.warn(`[${label}] turn missing key "${key}":`, rawText.slice(0, 2000));
@@ -256,6 +272,12 @@ export function parseTurnOutput(rawText: string, label = 'LLM'): TurnOutput {
   // Incorporation is optional (folded into the other prose since the
   // incorporation-fold); everything else is mandatory.
   const incorporation = typeof record.incorporation === 'string' ? record.incorporation.trim() : '';
+  const glossaryRaw = record.glossary;
+  const glossary = typeof glossaryRaw === 'string'
+    ? glossaryRaw.trim()
+    : Array.isArray(glossaryRaw)
+      ? glossaryRaw.filter((g): g is string => typeof g === 'string').join('\n')
+      : '';
   const works = Array.isArray(record.works_referenced)
     ? (record.works_referenced as unknown[]).filter((w): w is string => typeof w === 'string')
     : [];
@@ -271,7 +293,7 @@ export function parseTurnOutput(rawText: string, label = 'LLM'): TurnOutput {
     reformulation: terminate(record.reformulation as string),
     new_contribution: terminate(record.new_contribution as string),
     works_referenced: works,
-    glossary: typeof record.glossary === 'string' ? record.glossary.trim() : '',
+    glossary,
   };
 }
 
