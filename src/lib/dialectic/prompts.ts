@@ -1,15 +1,16 @@
 /**
  * Blunt (baton) rotation prompt builders — Phase 2c.
  *
- * Only pass 1 seat 1 opens. Every other turn determinately negates its
- * immediate predecessor (PREV) using PREV's own premises, says aloud what it
- * KEEPs / BREAKs / REJECTs / INJECTs, and hands a contradiction on.
- * PREV crosses pass boundaries. Each pass has its own job: 1 diagnosis,
- * 2 pressure (margins lens + own flaw), 3 reconstruction (new idea + slogan
- * + precise better-than claim).
+ * Only pass 1 seat 1 opens. Every other turn answers its immediate
+ * predecessor (PREV) and hands a contradiction on. PREV crosses pass
+ * boundaries. Each pass has its own shape, deliberately light: 1 diagnosis
+ * (one specific rejection + contradiction + own diagnosis), 2 pressure (ONE
+ * break from inside PREV's argument + one-sentence handoff, nothing built),
+ * 3 reconstruction (one rejection + the new idea Z with slogan + why-better).
+ * Z appears first in pass 3 — never earlier.
  *
  * Word budgets are tight on purpose: each turn does less so the rotation
- * stays readable. Normal ≈150 words/turn, long-form ≈400. Totals are the
+ * stays readable. Normal ≈60 words/turn. Totals are the
  * cap; per-section counts below are guidance for shaping the answer, not
  * hard limits — both parts must be present and the total must hold.
  *
@@ -17,7 +18,8 @@
  * a) the original question, b) the immediate predecessor's full text,
  * c) the speaker's own prior turns (one line each, anti-self-repetition).
  * d) the speaker's relationship to PREV, where the map holds one
- * (influences.ts `relationshipLine` — honour, rupture, or theft).
+ * (influences.ts `relationshipLine` — honour, rupture, or theft; spoken
+ * aloud in pass 1 only, carried silently in tone thereafter).
  * Pass 3 additionally sees e) every other seat's one-line determinations,
  * so the final rotation can invoke the most striking ideas by name.
  * The global ledger is NOT fed back. `new_contribution` is still stored per

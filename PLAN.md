@@ -117,24 +117,56 @@ verified prompt order, token math, and eval protocol: `docs/language-levels.md`.
 
 ### Length: short and punchy
 Word budgets per section (normal / long-form). Each turn does less, so the
-rotation stays tight:
+rotation stays tight. Pass-differentiated since v2026-09-19ad (Sep 19 2026):
+P1 = one rejection + contradiction + diagnosis; P2 = ONE break from inside
+PREV + one-sentence handoff (nothing built, Z waits); P3 = one rejection +
+the new idea Z with slogan + why-better. No steelman, no keep/break ceremony.
 
 | Section | Normal | Long form |
 |---|---|---|
-| Determinate negation | 40 | 100 |
-| Reformulation | 60 | 180 |
-| **Total per turn (the cap)** | **~100** | **~280** |
-| Opening turn (seat 1, pass 1) | 60 | 160 |
+| P1 rejection / P2 break / P3 rejection | 25–30 | 55–70 |
+| P1 diagnosis / P2 handoff / P3 build | 40–50 | 85–100 |
+| **Total per turn (the cap)** | **60** | **140** |
+| Opening turn (seat 1, pass 1) | 40 | 80 |
 
 Per-section counts are guidance for shaping the answer; the total is what
 is enforced. Both parts must be present; the concession hides inside them
 (no separate incorporation section since the fold). A turn is a spoken
 intervention, not an essay.
 
-`maxOutputTokens: 300` normal / `600` long form (JSON wrapper needs headroom).
+`maxOutputTokens: 160` normal / `300` long form (JSON wrapper needs headroom).
 A full 12 × 3 session ≈ 3.6k words normal — roughly a 14-minute read.
 - *Eval: half-holding — models routinely overshoot (~150–200 words); owner
   accepts it as the cost of complete thoughts unless turns pass ~250/400.*
+- *Sep 19 2026: caps tightened repeatedly (600 → 160); jobs cut instead —
+  see pass shapes above. Punch over completeness is the standing order.*
+
+### Prompt lineage & rollback log (Sep 19 2026, newest last)
+One-line per change so any of them can be reverted alone (`git revert <hash>`).
+Prompt version rides in the export SITTING line, so grades never transfer
+silently across versions.
+- Turn-economy full + long-form defaults on (owner: sittings felt quick).
+- Bloch/Bookchin anti-capitalist stances made explicit in profiles +
+  cross-seat glosses corrected (Fisher→Bloch via Jameson; Bookchin as
+  abolitionist everywhere) — misperceptions came from other seats, fixed there.
+- Medium elaboration rule (gloss + one concrete sentence); Medium gloss tails
+  embedded in each section task (desk lesson); per-seat HARD TERMS lists.
+- Medium gloss auto-retry built, then ROLLED BACK as spend-without-gain
+  (12 silent retries ≈ doubled a session; terms still bare). Fifth `glossary`
+  key kept as cheap nudge. Counter split: JSON / gloss / echo buckets.
+- Echo: sampling penalties on OpenRouter turns (1.2 / 0.6); rewrite retry
+  built, then ROLLED BACK the same way (10 retries, echo persisted) —
+  `sharesPassage` stays as cost-free logger. Transform-not-parrot kept
+  (proven: differentiated P3s).
+- Formula rollback: mandatory YOU–I grammar + name-first opening + label-word
+  ban made turns MORE formulaic, all three reverted together (`b0238c4`).
+  Pronoun assignment (I = speaker, YOU = PREV) kept as guidance, no shape.
+- Pass-differentiated rewrite (`ad`): P1 reject+diagnose, P2 one break +
+  handoff, P3 reject + Z + why-better; history debt aloud P1 only.
+  Revert whole shape with the `ad` commit if free-form tests better.
+- Three margins notes: after pass 1, before pass 3, closing summary after the
+  final seat (`buildCodaEndPrompt`). Reading list marks unlinkable works
+  honestly ("no free online text"). Long-form turns default on.
 
 ### Embeddings (Phase 5)
 `test_embeddings.py` uses local Ollama `nomic-embed-text` (768 dims); the schema is
