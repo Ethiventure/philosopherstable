@@ -33,7 +33,7 @@ export type TurnKind = 'opening' | 'critique' | 'reconstruction';
  * text change so grades stay comparable: a verdict on version C never
  * transfers silently to version D.
  */
-export const PROMPT_VERSION = '2026-09-19w';
+export const PROMPT_VERSION = '2026-09-19x';
 
 export const WORD_BUDGETS = {
   normal: { negation: 30, reformulation: 50, total: 80, opening: 50 },
@@ -194,7 +194,7 @@ export function buildTurnInstruction({ kind, prevName, isFinalSeat, longForm, re
     ...(low
       ? ['LOW ORDERS: never lift a stock phrase. Plain everyday words throughout; translate or describe every hard term, keeping one essential term only with its plain meaning beside it at once. Weave the keep/break/reject/inject moves inside the prose — never use keep, break, reject, or inject as label words. One idea per paragraph, followed through in 2–4 sentences — never a single slogan sentence standing alone (placards fail the turn). The persona LANGUAGE LEVEL outranks everything above on WORDS; on force, feeling, argument your persona wins.']
       : []),
-    'VOICE: continuous prose in your diction, syntax and rhythm within your LANGUAGE LEVEL — no headings or labels. '
+    'VOICE: continuous prose in your diction, syntax and rhythm within your LANGUAGE LEVEL — no headings or labels. Never use reject, inject, keep, or break as label words for your own moves (“what I reject is…”, “what I inject is…”) — vary the verbs every turn: drop, shed, refuse, leave behind, break with / carry forward, press, advance, bring, insist on. The moves stay audible in the argument, never announced. '
     + (heat
       ? `HEAT: ${heat} Fight in that register — passion and wit, never cruelty; person to person, let the reader hear it matters. `
       : 'HEAT: enjoy this fight — passion and a flash of wit, never cruelty; person to person. ')
