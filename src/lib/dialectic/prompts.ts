@@ -35,7 +35,7 @@ export type TurnKind = 'opening' | 'critique' | 'reconstruction';
  * text change so grades stay comparable: a verdict on version C never
  * transfers silently to version D.
  */
-export const PROMPT_VERSION = '2026-09-19af';
+export const PROMPT_VERSION = '2026-09-19ag';
 
 export const WORD_BUDGETS = {
   normal: { negation: 25, reformulation: 40, total: 60, opening: 40 },
@@ -133,7 +133,7 @@ export function buildTurnInstruction({ kind, prevName, isFinalSeat, longForm, re
   const negationLine = pass === 2
     ? `1. THE BREAK (roughly ${b.negation} words, ONE paragraph): one break from inside ${prev}'s own argument, shaped like this — you are right that X, which is exactly why Y fails. X is the clause they got right, Y the fault line their own premises open. No steelman, no keep/break ceremony, no new topics: the single break is the whole turn.`
     : pass === 1
-      ? `1. REJECTION (roughly ${b.negation} words, ONE paragraph): name the ONE specific claim of ${prev} you reject and the contradiction it carries — in your framework's own vocabulary, no clause over five words matching ${prev} verbatim. No steelman, no keep/break ceremony: one rejection, one contradiction. If history lines about ${prev} appear below, open by relating what they just said to your relationship with them — honour what you took, pride where they carry you, ambivalence where both live — then reject one aspect of it on their own argument's terms.`
+      ? `1. REJECTION (roughly ${b.negation} words, ONE paragraph): name the ONE specific claim of ${prev} you reject and the contradiction it carries — in your framework's own vocabulary, no clause over five words matching ${prev} verbatim. No steelman, no keep/break ceremony: one rejection, one contradiction. If history lines about ${prev} appear below, open by relating what they just said to your past relationship with them — then move on to the rejection.`
       : `1. REJECTION (roughly ${b.negation} words, ONE paragraph): reject one specific thing — from PREV or the survey — in a clause, in your framework's own vocabulary, no clause over five words matching ${prev} verbatim. No steelman, no keep/break ceremony.`;
 
   const reformulationLine =
@@ -171,7 +171,7 @@ export function buildTurnInstruction({ kind, prevName, isFinalSeat, longForm, re
     'QUESTION RULE: paraphrase the question through your framework — never repeat any multi-word clause of it verbatim.',
     'ECHO RULE: answer PREV — never restate PREV, yourself, or the question. No sentence may reword an earlier sentence of theirs or yours; avoid even repeating ideas — each sentence must push the debate in a new direction. Shared paragraphs fail outright: never reuse PREV’s example, image, slogan, or scene — bring your own concrete object. SAY EVERY MOVE ONCE: the reformulation advances from the negation’s keep/break — it never restates them (“what I reject” may not repeat what the negation already broke). A turn that circles has failed, even if every word differs.',
     ...(pass === 1
-      ? ['HISTORY TONE: below PREV’s text, find the lines headed YOUR HISTORY WITH / OWES YOU plus YOUR PEOPLE — that is your real relationship to PREV and the room, and it must be heard. Your negation’s opening relates what PREV just said to that relationship — honour, pride, rupture, or ambivalence, whichever the lines carry — then rejects one aspect of it on PREV’s own argument’s terms. A turn that never touches its history lines has failed. If no such lines appear, argue from the live claims alone.']
+      ? ['HISTORY TONE: below PREV’s text, find the lines headed YOUR HISTORY WITH / OWES YOU plus YOUR PEOPLE — relate what PREV just said to your past relationship with them, then move on to the rejection. If no such lines appear, argue from the live claims alone.']
       : []),
     'SCENARIO THREAD: the opening turn’s concrete scene (named person, place, predicament) carries the whole sitting — reuse its people, never invent new ones each turn. Every turn routes at least one sentence through that scene: the argument must touch the named person or place, not hover above them. Hold every stated premise of the scenario as a fixed constraint for all turns (if necessary work is done by robots, no humans do cleaning — never reintroduce what the scenario removed). The scene illustrates the philosophy; it never becomes the debate. A turn that argues about the scenario instead of through it has mistaken the example for the point. A turn that breaks a stated premise has failed.',
     'MOOD, OUT LOUD: let the feeling show strongly in your own diction — blunt words, swears, exclamations, sorrow, fear, joy, interjections where your voice would use them; mourning, fury, tenderness where it would feel them. Polite evenness fails the turn.',
