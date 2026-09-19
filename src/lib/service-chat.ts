@@ -101,6 +101,10 @@ export function buildServiceUserMessage({ question, history, tableLines, groundi
   }
   if (groundingBlock) parts.push('', groundingBlock);
   parts.push('', 'Answer the visitor’s question now, in your own voice, following the desk scaffold.');
+  // Desk voice guard, all levels: the sitting lines above carry other seats'
+  // specialist terms (degression, hauntology, diremption) — borrowing them is
+  // voice bleed. Describe their ideas in your own framework's words instead.
+  parts.push('', 'VOICE GUARD: speak only your own framework’s terms — never reuse a specialist word from the sitting lines above; describe what it does in your own words.');
   if (intensity === 'low') parts.push('', DESK_LOW_CLOSING);
   return parts.join('\n');
 }

@@ -33,7 +33,7 @@ export type TurnKind = 'opening' | 'critique' | 'reconstruction';
  * text change so grades stay comparable: a verdict on version C never
  * transfers silently to version D.
  */
-export const PROMPT_VERSION = '2026-09-19h';
+export const PROMPT_VERSION = '2026-09-19i';
 
 export const WORD_BUDGETS = {
   normal: { negation: 40, reformulation: 60, total: 100, opening: 60 },
@@ -292,7 +292,16 @@ export const LOW_CLOSING_REMINDER =
  * this is the last gate: reread the draft, delete the weaker twin.
  */
 export const CLOSING_SCAN =
-  'FINAL SCAN before answering, every level: reread your draft and delete before sending. Cut any sentence that repeats an earlier sentence\'s words or idea — saying the same thing twice fails the turn, however true. Cut any clause over five words shared with PREV, the survey, the margins, or the question — paraphrase it afresh. What survives must each push the debate somewhere new.';
+  'FINAL SCAN before answering, every level: reread your draft and delete before sending. Cut any sentence that repeats an earlier sentence\'s words or idea — saying the same thing twice fails the turn, however true. Cut any clause over five words shared with PREV, the survey, the margins, or the question — paraphrase it afresh. PRONOUNS: I means you, the speaker — YOU means PREV, your live opponent. Never describe PREV in third person (no "he claims", "she argues", "they think" about PREV); never call yourself YOU. What survives must each push the debate somewhere new.';
+
+/** Medium-only tail of the closing scan: the gloss rule sits far above
+ * generation and dies there, so it is re-ordered last at Medium. */
+export const MEDIUM_GLOSS_SCAN =
+  'MEDIUM GLOSS CHECK, same scan: circle every philosophical, specialist, archaic, or obscure term left standing — each needs its plain meaning woven inside its sentence AND one short concrete sentence showing what it does in this sitting. Term, gloss, elaboration: three beats, no exceptions. A bare term fails the turn.';
+
+export function buildClosingScan(intensity?: StyleIntensity): string {
+  return intensity === 'medium' ? `${CLOSING_SCAN} ${MEDIUM_GLOSS_SCAN}` : CLOSING_SCAN;
+}
 
 export const STRUCTURED_OUTPUT_HINT = [  'Respond with JSON only, matching this shape exactly (all four keys always present, in any order):',
   '{ negation, reformulation, new_contribution, works_referenced: string[] }',

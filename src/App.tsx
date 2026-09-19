@@ -33,7 +33,7 @@ import {
   type Philosopher,
   type StyleEssence,
 } from '@/types';
-import { buildCodaEarlyPrompt, buildCodaPrompt, buildTurnInstruction, buildUserMessage, CLOSING_SCAN, CODA_REPAIR_SUFFIX, CODA_SYSTEM, drawThreadCity, getTurnKind, LOW_CLOSING_REMINDER, PROMPT_VERSION, STRUCTURED_OUTPUT_HINT } from '@/lib/dialectic/prompts';
+import { buildCodaEarlyPrompt, buildCodaPrompt, buildClosingScan, buildTurnInstruction, buildUserMessage, CODA_REPAIR_SUFFIX, CODA_SYSTEM, drawThreadCity, getTurnKind, LOW_CLOSING_REMINDER, PROMPT_VERSION, STRUCTURED_OUTPUT_HINT } from '@/lib/dialectic/prompts';
 import { LlmError, RATES_AS_OF, estimateCost, repairTotals, resetUsage, usageTotals, type LlmErrorCode, type TurnOutput } from '@/lib/llm';
 import { DEEPINFRA_BACKUP_LABEL, DEEPINFRA_PRIMARIES, loadSettings, saveSettings, type CabinetSettings, type DeepInfraPrimary } from '@/lib/settings';
 import { applyDisplay, loadDisplay, saveDisplay } from '@/lib/preferences';
@@ -758,7 +758,7 @@ function App() {
       // instruction to generation; the hint itself stays final). Low keeps
       // its own language check on top.
       if (snap.intensity === 'low') messageParts.push('', LOW_CLOSING_REMINDER);
-      messageParts.push('', CLOSING_SCAN);
+      messageParts.push('', buildClosingScan(snap.intensity));
       const userMessage = [...messageParts, '', STRUCTURED_OUTPUT_HINT].join('\n');
       setActivePass(pass);
       setActiveAgent(seatPos);
