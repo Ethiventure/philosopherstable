@@ -33,14 +33,14 @@ export type TurnKind = 'opening' | 'critique' | 'reconstruction';
  * text change so grades stay comparable: a verdict on version C never
  * transfers silently to version D.
  */
-export const PROMPT_VERSION = '2026-09-19u';
+export const PROMPT_VERSION = '2026-09-19v';
 
 export const WORD_BUDGETS = {
   normal: { negation: 30, reformulation: 50, total: 80, opening: 50 },
   long: { negation: 70, reformulation: 100, total: 180, opening: 100 },
 } as const;
 
-export const MAX_OUTPUT_TOKENS = { normal: 250, long: 450 } as const;
+export const MAX_OUTPUT_TOKENS = { normal: 200, long: 350 } as const;
 
 /** Pass and seat are 1-indexed to match the UI (`pass_number`, `seat_position + 1`). */
 export function getTurnKind(pass: number, seatPosition1Indexed: number): TurnKind {
