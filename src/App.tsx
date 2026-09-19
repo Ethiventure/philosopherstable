@@ -836,6 +836,7 @@ function App() {
     setActivePass(2);
     // The ending summary barges in once, after the final seat, reading only
     // the final round. A failed note never breaks the sitting.
+    if (typeof console !== 'undefined') console.info('[Margins-end] trigger reached.');
     if (!codaEndRef.current) {
       await runCoda(runId, collected, snap, 'end');
       if (runRef.current !== runId) return;
@@ -869,7 +870,16 @@ function App() {
         name: philosophers.find((p) => p.id === item.philosopher_id)?.full_name ?? 'A seat',
         line: String(item.sections?.new_contribution),
       }));
-    if (!lines.length) return null;
+    if (!lines.length) {
+      // Silent nulls hid two missing end-notes (Sep 2026): every empty read
+      // now reports visibly instead.
+      if (typeof console !== 'undefined') console.warn(`[Margins-${which}] no lines to read, note skipped.`);
+      if (which === 'end') {
+        setCodaEndState('failed');
+        setCodaEndError('No final-round lines found to summarize.');
+      }
+      return null;
+    }
     const setText = early ? setCodaEarly : end ? setCodaEnd : setCoda;
     const setState = early ? setCodaEarlyState : end ? setCodaEndState : setCodaState;
     const setErr = early ? setCodaEarlyError : end ? setCodaEndError : setCodaError;
