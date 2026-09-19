@@ -291,11 +291,11 @@ function App() {
     setShowSources(true);
   };
   const [showSettings, setShowSettings] = useState(false);
-  const [settingsTab, setSettingsTab] = useState<'key' | 'cabinet' | 'display'>('cabinet');
+  const [settingsTab, setSettingsTab] = useState<'key' | 'seats' | 'voice' | 'display'>('seats');
   // Philosophers' Service desk: floating tutor window + its export log.
   const [showService, setShowService] = useState(false);
   const [serviceLog, setServiceLog] = useState<ServiceLogEntry[]>([]);
-  const openSettings = (tab: 'key' | 'cabinet' | 'display' = 'cabinet') => {
+  const openSettings = (tab: 'key' | 'seats' | 'voice' | 'display' = 'seats') => {
     setSettingsTab(tab);
     setShowSettings(true);
   };
@@ -1336,7 +1336,7 @@ function App() {
         onExchange={(entry) => setServiceLog((log) => [...log, entry])}
         onOpenSettings={() => openSettings('key')}
       />
-      {showWelcome && <WelcomeModal onClose={dismissWelcome} onOpenSettings={() => { dismissWelcome(false); openSettings('cabinet'); }} ttsSupported={ttsSupported} listening={ttsStatus.state !== 'idle' && ttsStatus.currentId === 'welcome'} onListen={toggleWelcomeSpeech} />}      {showSettings && <SettingsDrawer key={settingsTab} philosophers={philosophers} activeSlugs={activeSlugs} togglePhilosopher={togglePhilosopher} settings={settings} onSettingsChange={updateSettings} display={display} onDisplayChange={updateDisplay} initialTab={settingsTab} onClose={() => setShowSettings(false)} />}
+      {showWelcome && <WelcomeModal onClose={dismissWelcome} onOpenSettings={() => { dismissWelcome(false); openSettings('seats'); }} ttsSupported={ttsSupported} listening={ttsStatus.state !== 'idle' && ttsStatus.currentId === 'welcome'} onListen={toggleWelcomeSpeech} />}      {showSettings && <SettingsDrawer key={settingsTab} philosophers={philosophers} activeSlugs={activeSlugs} togglePhilosopher={togglePhilosopher} settings={settings} onSettingsChange={updateSettings} display={display} onDisplayChange={updateDisplay} initialTab={settingsTab} onClose={() => setShowSettings(false)} />}
       {selectedIntervention && <InterventionModal intervention={selectedIntervention} philosopher={philosophers.find((p) => p.id === selectedIntervention.philosopher_id)} onClose={() => { ttsRef.current?.stop(); setSelectedIntervention(null); }} ttsSupported={ttsSupported} speaking={ttsStatus.state !== 'idle' && ttsStatus.currentId === selectedIntervention.id} onToggleSpeech={() => toggleTurnSpeech(selectedIntervention)} onOpenSources={(n) => { ttsRef.current?.stop(); setSelectedIntervention(null); openSourcesAt(n); }} grounding={selectedIntervention ? groundMap[selectedIntervention.id] ?? null : null} groundingOn={settings.grounding} />}
       {selectedPhilosopher && <ProfileModal philosopher={selectedPhilosopher} onClose={() => setSelectedPhilosopher(null)} />}
     </div>
@@ -1523,7 +1523,7 @@ function SourceDrawer({ target, onClose }: { target: number | null; onClose: () 
   return <div className="fixed inset-0 z-50 bg-[#4a392d]/30 backdrop-blur-sm" onClick={onClose}><aside className="absolute right-0 top-0 bottom-0 w-full max-w-xl parchment-bg p-6 md:p-8 overflow-y-auto custom-scroll" onClick={(event) => event.stopPropagation()} role="dialog" aria-modal="true" aria-label="Corpus manifest"><div className="flex items-start justify-between mb-2"><div><p className="pass-indicator text-[#8b5254]">Corpus manifest</p><h2 className="text-3xl">Further reading</h2><p className="italic text-[#465f75]/65 mt-1">The works behind the cabinet — full-text badges mean indexed and searchable when Grounding is on.</p></div><button className="btn-secondary !px-3" onClick={onClose} aria-label="Close corpus manifest"><X size={17} /></button></div><p className="text-xs uppercase tracking-widest text-[#465f75]/60 mb-5">{sorted.length} works · newest first · numbers are stable file order</p><div className="space-y-3">{sorted.map((source) => { const number = CORPUS_SOURCES_DATA.indexOf(source) + 1; return <div key={`${source.author}-${source.title}`} id={`ref-${number}`} className={`border-b border-[#4a392d]/15 pb-3 ${target === number ? 'ref-flash' : ''}`}><div className="flex justify-between gap-3"><p className="font-heading text-base text-[#4a392d]"><span className="text-xs text-[#8b5254] mr-2" aria-label={`Reference ${number}`}>[{number}]</span>{source.source_url ? <a href={source.source_url} target="_blank" rel="noreferrer" className="underline underline-offset-2 decoration-[#8b5254]/40 hover:decoration-[#8b5254]">{source.title}</a> : source.title}</p><span className={`text-[9px] whitespace-nowrap uppercase tracking-wider ${source.full_text_ingested ? 'text-[#4a6b3f]' : 'text-[#8b5254]'}`}>{source.full_text_ingested ? 'Full text' : 'Metadata'}</span></div><p className="text-sm text-[#465f75]/70">{source.author} · {source.publication_date ?? 'undated'}</p><p className="text-[10px] uppercase tracking-widest text-[#8b5254]/80 mt-1">{source.licence_status}</p>{source.link_note && <p className="text-xs italic mt-1 text-[#8b5254]">⚠ {source.link_note}</p>}</div>; })}</div></aside></div>;
 }
 
-function SettingsDrawer({ philosophers, activeSlugs, togglePhilosopher, settings, onSettingsChange, display, onDisplayChange, initialTab, onClose }: { philosophers: Philosopher[]; activeSlugs: string[]; togglePhilosopher: (slug: string) => void; settings: CabinetSettings; onSettingsChange: (next: CabinetSettings) => void; display: AccessibilitySettings; onDisplayChange: (next: AccessibilitySettings) => void; initialTab: 'key' | 'cabinet' | 'display'; onClose: () => void }) {
+function SettingsDrawer({ philosophers, activeSlugs, togglePhilosopher, settings, onSettingsChange, display, onDisplayChange, initialTab, onClose }: { philosophers: Philosopher[]; activeSlugs: string[]; togglePhilosopher: (slug: string) => void; settings: CabinetSettings; onSettingsChange: (next: CabinetSettings) => void; display: AccessibilitySettings; onDisplayChange: (next: AccessibilitySettings) => void; initialTab: 'key' | 'seats' | 'voice' | 'display'; onClose: () => void }) {
   const [orKeyInput, setOrKeyInput] = useState(settings.openRouterApiKey);
   const [groqKeyInput, setGroqKeyInput] = useState(settings.groqApiKey);
   const [deepInfraKeyInput, setDeepInfraKeyInput] = useState(settings.deepInfraApiKey);
@@ -1547,7 +1547,7 @@ function SettingsDrawer({ philosophers, activeSlugs, togglePhilosopher, settings
   }, [providerNow]);
   const [testState, setTestState] = useState<'idle' | 'testing' | 'ok' | 'error'>('idle');
   const [testMessage, setTestMessage] = useState('');
-  const [tab, setTab] = useState<'key' | 'cabinet' | 'display'>(initialTab);
+  const [tab, setTab] = useState<'key' | 'seats' | 'voice' | 'display'>(initialTab);
   const usingOpenRouter = settings.provider === 'openrouter';
   const usingGroq = settings.provider === 'groq';
   const usingDeepInfra = settings.provider === 'deepinfra';
@@ -1640,9 +1640,9 @@ function SettingsDrawer({ philosophers, activeSlugs, togglePhilosopher, settings
           <button className="btn-secondary !px-3" onClick={onClose} aria-label="Close settings"><X size={17} /></button>
         </div>
         <div className="flex gap-2 mb-6" role="tablist" aria-label="Settings sections">
-          {(['cabinet', 'display', 'key'] as const).map((t) => (
+          {(['seats', 'voice', 'display', 'key'] as const).map((t) => (
             <button key={t} role="tab" aria-selected={tab === t} onClick={() => setTab(t)} className={`btn-secondary capitalize ${tab === t ? '!border-[#8b5254] !text-[#8b5254]' : ''}`}>
-              {t === 'key' ? 'Key' : t === 'cabinet' ? 'Cabinet' : 'Display'}
+              {t === 'key' ? 'Key' : t === 'seats' ? 'Seats' : t === 'voice' ? 'Voice' : 'Display'}
             </button>
           ))}
         </div>
@@ -1773,10 +1773,23 @@ function SettingsDrawer({ philosophers, activeSlugs, togglePhilosopher, settings
             )}
           </div>
         )}
-        {tab === 'cabinet' && (
+        {tab === 'seats' && (
           <div>
-            <div className="flex items-start justify-between mb-4"><div><p className="pass-indicator text-[#8b5254]">Experimental variable</p><h2 className="text-2xl">Cabinet selection</h2></div></div>
-            <div className="space-y-3 border-b border-[#4a392d]/15 pb-6 mb-6">
+            <div className="flex items-start justify-between mb-4"><div><p className="pass-indicator text-[#8b5254]">Who sits at the table</p><h2 className="text-2xl">Cabinet selection</h2></div></div>
+            <div className="space-y-2">{DEFAULT_SEATING_ORDER.map((slug) => {
+              const philosopher = philosophers.find((item) => item.slug === slug);
+              const isActive = activeSlugs.includes(slug);
+              if (!philosopher) return null;
+              return <button key={slug} onClick={() => togglePhilosopher(slug)} aria-pressed={isActive} title={philosopher.biography} className={`w-full flex items-center gap-3 p-3 border transition-all ${isActive ? 'bg-[#f2ebd9]/65 border-[#4a392d]/40' : 'bg-transparent border-[#4a392d]/10 opacity-50 hover:opacity-80'}`}><div className={`w-5 h-5 rounded-sm border flex items-center justify-center ${isActive ? 'bg-[#8b5254] border-[#8b5254]' : 'border-[#4a392d]/30'}`}>{isActive && <X size={12} className="text-white" />}</div><span className="w-8 h-8 rounded-full border flex items-center justify-center font-heading" style={{ borderColor: philosopher.accent_color, color: philosopher.accent_color }}>{philosopher.name.charAt(0)}</span><span className="font-heading text-lg text-[#4a392d]">{philosopher.full_name}</span></button>;
+            })}</div>
+            <p className="text-xs italic text-[#465f75]/60 mt-5">The baton passes only to active thinkers, always to the immediate next seat. The dialectical order remains fixed to preserve the historical-conceptual movement.</p>
+            <p className="text-xs text-[#465f75]/70 mt-2">{activeSlugs.length} thinkers × 3 passes = {activeSlugs.length * 3} turns{activeSlugs.length > 5 ? ' — five seats (≈15 turns) is the recommended session; it halves token use with the arc intact.' : ' — a lean session.'}</p>
+          </div>
+        )}
+        {tab === 'voice' && (
+          <div>
+            <div className="flex items-start justify-between mb-4"><div><p className="pass-indicator text-[#8b5254]">How the table talks</p><h2 className="text-2xl">Voice</h2></div></div>
+            <div className="space-y-3">
               <span className="font-heading text-sm uppercase tracking-[0.16em] text-[#4a392d] block" title="How hard the language hits. Ideas stay the same at every level — only the words change.">How it speaks (all seats)</span>
               <p className="text-xs italic text-[#465f75]/70">Low speaks plainly · Medium explains its terms · High runs at full difficulty — the ideas stay the same.</p>
               <div className="flex gap-2" role="radiogroup" aria-label="Style intensity">
@@ -1794,14 +1807,6 @@ function SettingsDrawer({ philosophers, activeSlugs, togglePhilosopher, settings
               <p className="text-xs text-[#465f75]/70">Efficient trims the predecessor text fed back each turn (shown and exported in full regardless). Voices are untouched — personas are never trimmed. Roughly a third fewer input tokens.</p>
               <label className="flex items-start gap-3 text-xs text-[#465f75]/70 pt-1" title="Fetch each speaker's key work and inject the most relevant passages. Slower, more tokens, better grounded. On by default."><input type="checkbox" checked={settings.grounding} onChange={(event) => onSettingsChange({ ...settings, grounding: event.target.checked })} className="w-4 h-4 mt-0.5 accent-[#8b5254]" /> Ground turns in source texts (experimental): fetches each speaker's key work and injects the most relevant passages. Slower, more tokens, better grounded. On by default.</label>
             </div>
-            <div className="space-y-2">{DEFAULT_SEATING_ORDER.map((slug) => {
-              const philosopher = philosophers.find((item) => item.slug === slug);
-              const isActive = activeSlugs.includes(slug);
-              if (!philosopher) return null;
-              return <button key={slug} onClick={() => togglePhilosopher(slug)} aria-pressed={isActive} title={philosopher.biography} className={`w-full flex items-center gap-3 p-3 border transition-all ${isActive ? 'bg-[#f2ebd9]/65 border-[#4a392d]/40' : 'bg-transparent border-[#4a392d]/10 opacity-50 hover:opacity-80'}`}><div className={`w-5 h-5 rounded-sm border flex items-center justify-center ${isActive ? 'bg-[#8b5254] border-[#8b5254]' : 'border-[#4a392d]/30'}`}>{isActive && <X size={12} className="text-white" />}</div><span className="w-8 h-8 rounded-full border flex items-center justify-center font-heading" style={{ borderColor: philosopher.accent_color, color: philosopher.accent_color }}>{philosopher.name.charAt(0)}</span><span className="font-heading text-lg text-[#4a392d]">{philosopher.full_name}</span></button>;
-            })}</div>
-            <p className="text-xs italic text-[#465f75]/60 mt-5">The baton passes only to active thinkers, always to the immediate next seat. The dialectical order remains fixed to preserve the historical-conceptual movement.</p>
-            <p className="text-xs text-[#465f75]/70 mt-2">{activeSlugs.length} thinkers × 3 passes = {activeSlugs.length * 3} turns{activeSlugs.length > 5 ? ' — five seats (≈15 turns) is the recommended session; it halves token use with the arc intact.' : ' — a lean session.'}</p>
           </div>
         )}
         {tab === 'display' && (
