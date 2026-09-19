@@ -1061,7 +1061,7 @@ function App() {
       ? `\nPHILOSOPHERS' SERVICE\n${serviceLog.map((entry) => `— ${entry.thinker} was asked:\n${entry.question}\n— ${entry.thinker} answered:\n${entry.answer.replace(/\[\d+\]/g, '').replace(/[ \t]+/g, ' ')}\n${entry.sources.length ? `— Sources shown: ${entry.sources.join('; ')}\n` : ''}`).join('\n')}`
       : '';
     const readingList = `\nREADING LIST\n${citedNumbers.length
-      ? entriesForNumbers(citedNumbers).map(({ number, source }) => `[${number}] ${source.title} — ${source.author}${source.source_url ? ` — ${source.source_url}` : ''}`).join('\n')
+      ? entriesForNumbers(citedNumbers).map(({ number, source }) => `[${number}] ${source.title} — ${source.author}${source.source_url ? ` — ${source.source_url}` : ' — no free online text (model-claimed, not shown in-session)'}`).join('\n')
       : '— none cited this sitting'}\n`;
     const trail = [...new Set(provRef.current)];
     const provenanceText = trail.length
