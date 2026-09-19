@@ -33,14 +33,14 @@ export type TurnKind = 'opening' | 'critique' | 'reconstruction';
  * text change so grades stay comparable: a verdict on version C never
  * transfers silently to version D.
  */
-export const PROMPT_VERSION = '2026-09-19g';
+export const PROMPT_VERSION = '2026-09-19h';
 
 export const WORD_BUDGETS = {
   normal: { negation: 40, reformulation: 60, total: 100, opening: 60 },
-  long: { negation: 100, reformulation: 180, total: 280, opening: 160 },
+  long: { negation: 70, reformulation: 100, total: 180, opening: 100 },
 } as const;
 
-export const MAX_OUTPUT_TOKENS = { normal: 300, long: 600 } as const;
+export const MAX_OUTPUT_TOKENS = { normal: 300, long: 450 } as const;
 
 /** Pass and seat are 1-indexed to match the UI (`pass_number`, `seat_position + 1`). */
 export function getTurnKind(pass: number, seatPosition1Indexed: number): TurnKind {
@@ -142,7 +142,7 @@ export function buildTurnInstruction({ kind, prevName, isFinalSeat, longForm, re
     // wall ~7k input tokens/turn) follow short instructions better than long
     // ones restating the same rule three ways. Every rule below fires — each
     // exactly once.
-    `${kind === 'reconstruction' ? 'RECONSTRUCTION' : 'IMMANENT CRITIQUE'} TURN (HARD ceiling: ${b.total} words total — shorter welcome; finish the current sentence, then stop). A spoken intervention, not an essay. Respond ONLY to your immediate predecessor ${prev}. Short, punchy sentences welcome — cut filler, never pad to the budget.`,
+    `${kind === 'reconstruction' ? 'RECONSTRUCTION' : 'IMMANENT CRITIQUE'} TURN (HARD ceiling: ${b.total} words total — shorter welcome; finish the current sentence, then stop). A quick spoken thrust, not a lecture: land the blow and stop talking — motion forward beats completeness, and a turn that explains everything has stalled the debate. Respond ONLY to your immediate predecessor ${prev}. Short, punchy sentences welcome — cut filler, never pad to the budget.`,
     passJob,
     ...(reversed
       ? [`REVERSED ROTATION: ${prev} sits to your left and just spoke — address only that answer.`]
