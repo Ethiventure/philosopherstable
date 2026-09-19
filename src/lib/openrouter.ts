@@ -339,6 +339,13 @@ export async function generateTurnOpenRouter({ apiKey, systemPrompt, userMessage
       { role: 'user', content: userMessage },
     ],
     max_tokens: longForm ? OR_MAX_TOKENS.long : OR_MAX_TOKENS.normal,
+    // Loop guard (mechanical, Sep 19 2026): small Qwen-class models repeat
+    // sentences and converge across seats on shared phrasing. A mild
+    // repetition penalty + frequency penalty breaks verbatim loops without
+    // flattening voice (temperature untouched). Standard OpenAI params —
+    // honoured across the OpenRouter bench.
+    repetition_penalty: 1.15,
+    frequency_penalty: 0.4,
     // Reasoning models otherwise burn the whole output budget thinking about
     // the JSON contract (observed: content null, finish_reason length) and
     // ramble past the word budgets. `effort: 'none'` disables reasoning

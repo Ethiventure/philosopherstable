@@ -33,7 +33,7 @@ export type TurnKind = 'opening' | 'critique' | 'reconstruction';
  * text change so grades stay comparable: a verdict on version C never
  * transfers silently to version D.
  */
-export const PROMPT_VERSION = '2026-09-19f';
+export const PROMPT_VERSION = '2026-09-19g';
 
 export const WORD_BUDGETS = {
   normal: { negation: 40, reformulation: 60, total: 100, opening: 60 },
@@ -130,7 +130,7 @@ export function buildTurnInstruction({ kind, prevName, isFinalSeat, longForm, re
 
   const reformulationLine =
     kind === 'reconstruction'
-      ? `2. REFORMULATION (roughly ${b.reformulation} words): say aloud what you REJECT (what you drop from PREV and the survey) then what you INJECT (one new idea, not yet said in this sitting). Land one concrete present-tense consequence — and then go one step further into practice: name one specific decision, campaign, or slogan that follows, with who decides and where the fight happens. Write the demand so ordinary people could carry it. Close the inject with one precise sentence: whose rival idea yours beats and on what exact point — vague ‘goes further’ claims fail. Abstractions without a campaign, a decision, or a slogan are unfinished. Phrase every consequence as a commitment (must, shall, will, let us) — never a possibility (may, might, could, would). Hedged reformulations fail the turn.`
+      ? `2. REFORMULATION (roughly ${b.reformulation} words): say aloud what you REJECT (what you drop from PREV and the survey) then what you INJECT (one new idea, not yet said in this sitting). TRANSFORM, never parrot: the margins demand and every survey line must be rebuilt in your framework's own vocabulary — repeating any of their slogans or clauses word-for-word fails the turn, even with a citation. Land one concrete present-tense consequence — and then go one step further into practice: name one specific decision, campaign, or slogan that follows, with who decides and where the fight happens. Write the demand so ordinary people could carry it. Close the inject with one precise sentence: whose rival idea yours beats and on what exact point — vague ‘goes further’ claims fail. Abstractions without a campaign, a decision, or a slogan are unfinished. Phrase every consequence as a commitment (must, shall, will, let us) — never a possibility (may, might, could, would). Hedged reformulations fail the turn.`
       : `2. REFORMULATION (roughly ${b.reformulation} words): say aloud what you REJECT (what you drop from PREV) then what you INJECT (one new idea from your framework at a higher level of determination). Land one concrete present-tense consequence — an institution, a choice, a cost — so the abstraction touches 21st-century material reality. Name who must act and where; a demand the masses could carry beats a correct analysis nobody can use. Phrase it as a commitment (must, shall, will), never a possibility (may, might, could).`;
 
   const closingLine = isFinalSeat
