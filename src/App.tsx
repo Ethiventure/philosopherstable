@@ -33,7 +33,7 @@ import {
   type Philosopher,
   type StyleEssence,
 } from '@/types';
-import { buildCodaBankPrompt, buildCodaEarlyPrompt, buildCodaPrompt, buildClosingScan, buildTurnInstruction, buildUserMessage, CODA_REPAIR_SUFFIX, CODA_SYSTEM, drawThreadCity, getTurnKind, GLOSSARY_SHAPE, LOW_CLOSING_REMINDER, PROMPT_VERSION, STRUCTURED_OUTPUT_HINT } from '@/lib/dialectic/prompts';
+import { buildCodaEarlyPrompt, buildCodaEndPrompt, buildCodaPrompt, buildClosingScan, buildTurnInstruction, buildUserMessage, CODA_REPAIR_SUFFIX, CODA_SYSTEM, drawThreadCity, getTurnKind, GLOSSARY_SHAPE, LOW_CLOSING_REMINDER, PROMPT_VERSION, STRUCTURED_OUTPUT_HINT } from '@/lib/dialectic/prompts';
 import { LlmError, GLOSS_REPAIR_SUFFIX, incrementRepair, RATES_AS_OF, estimateCost, repairTotals, resetUsage, usageTotals, type LlmErrorCode, type TurnOutput } from '@/lib/llm';
 import { DEEPINFRA_BACKUP_LABEL, DEEPINFRA_PRIMARIES, loadSettings, saveSettings, type CabinetSettings, type DeepInfraPrimary } from '@/lib/settings';
 import { applyDisplay, loadDisplay, saveDisplay } from '@/lib/preferences';
@@ -159,7 +159,7 @@ function toIntervention(
 /** One card in the reading deck: a turn, or a margins note where it spoke. */
 export type DeckEntry =
   | { kind: 'turn'; intervention: Intervention }
-  | { kind: 'margins'; which: 'early' | 'late' };
+  | { kind: 'margins'; which: 'early' | 'late' | 'end' };
 
 function App() {
   const [philosophers, setPhilosophers] = useState<Philosopher[]>([]);
@@ -184,6 +184,12 @@ function App() {
   const [codaEarlyError, setCodaEarlyError] = useState<string | null>(null);
   const [codaEarlyState, setCodaEarlyState] = useState<'idle' | 'writing' | 'failed'>('idle');
   const codaEarlyRef = useRef<string | null>(null);
+  // Ending summary: the third margins note, running once after the final
+  // seat of pass 3. Own status + ref, same contract as the other two.
+  const [codaEnd, setCodaEnd] = useState<{ text: string } | null>(null);
+  const [codaEndError, setCodaEndError] = useState<string | null>(null);
+  const [codaEndState, setCodaEndState] = useState<'idle' | 'writing' | 'failed'>('idle');
+  const codaEndRef = useRef<string | null>(null);
   // Per-turn grounding receipts: what each speaker was actually shown, so its
   // quotes stay checkable after the fact. Keyed by intervention id.
   const [groundMap, setGroundMap] = useState<Record<string, { title: string; number: number; passages: string[]; reason: string | null }>>({});
@@ -458,8 +464,8 @@ function App() {
   }, [freshId]);
 
   // Deck order is chronological: pass 1, the early note where it spoke,
-  // pass 2, the late note where it spoke, then pass 3. Notes are cards in the
-  // flow, not appendices.
+  // pass 2, the late note where it spoke, then pass 3, then the closing
+  // summary. Notes are cards in the flow, not appendices.
   const deckEntries: DeckEntry[] = useMemo(() => {
     const list: DeckEntry[] = interventions
       .filter((item) => item.pass_number <= 1)
@@ -472,8 +478,9 @@ function App() {
     for (const intervention of interventions.filter((item) => item.pass_number >= 3)) {
       list.push({ kind: 'turn', intervention });
     }
+    if (codaEnd || codaEndState !== 'idle') list.push({ kind: 'margins', which: 'end' });
     return list;
-  }, [interventions, coda, codaState, codaEarly, codaEarlyState]);
+  }, [interventions, coda, codaState, codaEarly, codaEarlyState, codaEnd, codaEndState]);
 
   const jumpToLatest = () => {
     if (!deckEntries.length) return;
@@ -825,6 +832,13 @@ function App() {
     setThinkingName(null);
     setIsRunning(false);
     setActivePass(2);
+    // The ending summary barges in once, after the final seat, reading only
+    // the final round. A failed note never breaks the sitting.
+    if (!codaEndRef.current) {
+      await runCoda(runId, collected, snap, 'end');
+      if (runRef.current !== runId) return;
+    }
+    setActivePass(2);
     // Pass 3 runs backwards but the just-spoken seat closes it, so the final
     // speaker holds the last seat as usual. The margin note already ran
     // before pass 3 — nothing fires after the final seat.
@@ -844,40 +858,29 @@ function App() {
    * re-runs it. Same visible-status contract: writing / failed + reason +
    * retry + console diagnostics, never a silent catch.
    */
-  const runCoda = async (runId: number, collected: Intervention[], snap: CabinetSettings, which: 'early' | 'late' = 'late'): Promise<string | null> => {
+  const runCoda = async (runId: number, collected: Intervention[], snap: CabinetSettings, which: 'early' | 'late' | 'end' = 'late'): Promise<string | null> => {
     const early = which === 'early';
+    const end = which === 'end';
     const lines = collected
-      .filter((item) => (early ? item.pass_number <= 1 : item.pass_number <= 2) && item.sections?.new_contribution)
+      .filter((item) => (early ? item.pass_number <= 1 : end ? item.pass_number >= 3 : item.pass_number <= 2) && item.sections?.new_contribution)
       .map((item) => ({
         name: philosophers.find((p) => p.id === item.philosopher_id)?.full_name ?? 'A seat',
         line: String(item.sections?.new_contribution),
       }));
     if (!lines.length) return null;
-    const setText = early ? setCodaEarly : setCoda;
-    const setState = early ? setCodaEarlyState : setCodaState;
-    const setErr = early ? setCodaEarlyError : setCodaError;
-    const ref = early ? codaEarlyRef : codaRef;
-    const tag = early ? '[Margins-early]' : '[Margins]';
-    setThinkingName('Notes from the margins');
+    const setText = early ? setCodaEarly : end ? setCodaEnd : setCoda;
+    const setState = early ? setCodaEarlyState : end ? setCodaEndState : setCodaState;
+    const setErr = early ? setCodaEarlyError : end ? setCodaEndError : setCodaError;
+    const ref = early ? codaEarlyRef : end ? codaEndRef : codaRef;
+    const tag = early ? '[Margins-early]' : end ? '[Margins-end]' : '[Margins]';
+    setThinkingName(end ? 'Notes from the margins (closing)' : 'Notes from the margins');
     setState('writing');
     setErr(null);
-    const codaUser = early ? buildCodaEarlyPrompt(question, lines) : buildCodaPrompt(question, lines);
+    const codaUser = early ? buildCodaEarlyPrompt(question, lines) : end ? buildCodaEndPrompt(question, lines) : buildCodaPrompt(question, lines);
     const attempt = async (repair = false): Promise<string> => {
       const output = await generateWithProvider(snap, CODA_SYSTEM, repair ? codaUser + CODA_REPAIR_SUFFIX : codaUser, false);
       if (runRef.current !== runId) throw new LlmError('Superseded.', false, 'unknown');
-      let text = [output.negation, output.incorporation, output.reformulation].filter((s) => s && s.trim()).join('\n\n');
-      // Structural bank (late note only): its own call, fail-soft — the note
-      // stands without it. Revert: delete this block + buildCodaBankPrompt.
-      if (!early) {
-        try {
-          const bank = await generateWithProvider(snap, CODA_SYSTEM, buildCodaBankPrompt(question, text), false);
-          if (runRef.current !== runId) throw new LlmError('Superseded.', false, 'unknown');
-          const bankText = [bank.negation, bank.reformulation].filter((s) => s && s.trim()).join('\n\n');
-          if (bankText.trim()) text = `${text}\n\n${bankText}`;
-        } catch (bankError) {
-          if (typeof console !== 'undefined') console.warn('[Margins] bank call failed, note stands:', bankError);
-        }
-      }
+      const text = [output.negation, output.incorporation, output.reformulation].filter((s) => s && s.trim()).join('\n\n');
       setText({ text });
       ref.current = text;
       setState('idle');
@@ -918,12 +921,15 @@ function App() {
     }
   };
 
-  const runCodaNow = (which: 'early' | 'late' = 'late') => {
+  const runCodaNow = (which: 'early' | 'late' | 'end' = 'late') => {
     if (!interventions.length || isRunning) return;
     setRunError(null);
     if (which === 'early') {
       setCodaEarlyState('idle');
       setCodaEarlyError(null);
+    } else if (which === 'end') {
+      setCodaEndState('idle');
+      setCodaEndError(null);
     } else {
       setCodaState('idle');
       setCodaError(null);
@@ -931,16 +937,16 @@ function App() {
     void runCoda(runRef.current, [...interventions], settings, which);
   };
 
-  const toggleCodaSpeech = (which: 'early' | 'late' = 'late') => {
+  const toggleCodaSpeech = (which: 'early' | 'late' | 'end' = 'late') => {
     if (!ttsSupported) return;
-    const note = which === 'early' ? codaEarly : coda;
-    const id = which === 'early' ? 'coda-early' : 'coda';
+    const note = which === 'early' ? codaEarly : which === 'end' ? codaEnd : coda;
+    const id = which === 'early' ? 'coda-early' : which === 'end' ? 'coda-end' : 'coda';
     if (!note) return;
     if (ttsStatus.state !== 'idle' && ttsStatus.currentId === id) {
       ttsRef.current?.stop();
       return;
     }
-    ttsRef.current?.speak([{ id, heading: which === 'early' ? 'Notes from the margins, after pass 1' : 'Notes from the margins', text: note.text }]);
+    ttsRef.current?.speak([{ id, heading: which === 'early' ? 'Notes from the margins, after pass 1' : which === 'end' ? 'Notes from the margins, closing' : 'Notes from the margins', text: note.text }]);
   };
 
   const startMeeting = () => {
@@ -957,6 +963,10 @@ function App() {
     setCodaEarlyState('idle');
     setCodaEarlyError(null);
     codaEarlyRef.current = null;
+    setCodaEnd(null);
+    setCodaEndState('idle');
+    setCodaEndError(null);
+    codaEndRef.current = null;
     setGroundMap({});
     setNoteMap({});
     provRef.current = [];
@@ -1045,6 +1055,10 @@ function App() {
     setCodaEarlyState('idle');
     setCodaEarlyError(null);
     codaEarlyRef.current = null;
+    setCodaEnd(null);
+    setCodaEndState('idle');
+    setCodaEndError(null);
+    codaEndRef.current = null;
     setServiceLog([]);
     setGroundMap({});
     setNoteMap({});
@@ -1084,9 +1098,10 @@ function App() {
     const late = interventions.filter((item) => item.pass_number >= 3).map(turnText);
     const earlyText = codaEarly ? `\nNOTES FROM THE MARGINS (after pass 1)\n${codaEarly.text}\n` : '';
     const codaText = coda ? `\nNOTES FROM THE MARGINS (before pass 3)\n${coda.text}\n` : '';
-    const body = [`THE DIALECTICAL CABINET\n\nQUESTION\n${question}\n`, ...pass1, ...(codaEarly ? [earlyText] : []), ...pass2, ...(coda && late.length ? [codaText] : []), ...late].join('\n');
+    const endText = codaEnd ? `\nNOTES FROM THE MARGINS (closing summary)\n${codaEnd.text}\n` : '';
+    const body = [`THE DIALECTICAL CABINET\n\nQUESTION\n${question}\n`, ...pass1, ...(codaEarly ? [earlyText] : []), ...pass2, ...(coda && late.length ? [codaText] : []), ...late, ...(codaEnd ? [endText] : [])].join('\n');
     // Notes written but their next round never ran (paused session) still export.
-    const trailingCoda = `${codaEarly && !pass2.length ? earlyText : ''}${coda && !late.length ? codaText : ''}`;
+    const trailingCoda = `${codaEarly && !pass2.length ? earlyText : ''}${coda && !late.length ? codaText : ''}${codaEnd && !late.length ? endText : ''}`;
     const serviceText = serviceLog.length
       ? `\nPHILOSOPHERS' SERVICE\n${serviceLog.map((entry) => `— ${entry.thinker} was asked:\n${entry.question}\n— ${entry.thinker} answered:\n${entry.answer.replace(/\[\d+\]/g, '').replace(/[ \t]+/g, ' ')}\n${entry.sources.length ? `— Sources shown: ${entry.sources.join('; ')}\n` : ''}`).join('\n')}`
       : '';
@@ -1286,6 +1301,7 @@ function App() {
               notes={{
                 early: { text: codaEarly?.text ?? null, state: codaEarlyState, error: codaEarlyError },
                 late: { text: coda?.text ?? null, state: codaState, error: codaError },
+                end: { text: codaEnd?.text ?? null, state: codaEndState, error: codaEndError },
               }}
               onRetryNote={runCodaNow}
               noteSeenFor={noteMap}
@@ -1337,28 +1353,29 @@ function ReadingDeck({ entries, philosophers, readIdx, onNav, freshId, ttsSuppor
   ttsSupported: boolean;
   ttsStatus: TtsStatus;
   onToggleSpeech: (item: Intervention) => void;
-  onToggleNoteSpeech: (which: 'early' | 'late') => void;
+  onToggleNoteSpeech: (which: 'early' | 'late' | 'end') => void;
   onInspect: (item: Intervention) => void;
   onOpenSources: (n: number) => void;
   notes: {
     early: { text: string | null; state: 'idle' | 'writing' | 'failed'; error: string | null };
     late: { text: string | null; state: 'idle' | 'writing' | 'failed'; error: string | null };
+    end: { text: string | null; state: 'idle' | 'writing' | 'failed'; error: string | null };
   };
-  onRetryNote: (which: 'early' | 'late') => void;
+  onRetryNote: (which: 'early' | 'late' | 'end') => void;
   noteSeenFor: Record<string, true>;
 }) {
   const entry = entries[readIdx];
   if (!entry) return null;
   const upcoming = entries.slice(readIdx + 1, readIdx + 4);
   const behind = entries.length - 1 - readIdx;
-  const noteName = (which: 'early' | 'late') => which === 'early' ? 'Notes from the margins (after pass 1)' : 'Notes from the margins (before pass 3)';
+  const noteName = (which: 'early' | 'late' | 'end') => which === 'early' ? 'Notes from the margins (after pass 1)' : which === 'end' ? 'Notes from the margins (closing summary)' : 'Notes from the margins (before pass 3)';
   const entryLabel = (e: DeckEntry): string => {
     if (e.kind === 'margins') return noteName(e.which);
     const p = philosophers.find((x) => x.id === e.intervention.philosopher_id);
     return `${p?.full_name ?? 'Unknown'}, pass ${e.intervention.pass_number}`;
   };
   const label = `Now reading ${readIdx + 1} of ${entries.length}: ${entryLabel(entry)}`;
-  const noteSpeaking = (which: 'early' | 'late') => ttsStatus.state !== 'idle' && ttsStatus.currentId === (which === 'early' ? 'coda-early' : 'coda');
+  const noteSpeaking = (which: 'early' | 'late' | 'end') => ttsStatus.state !== 'idle' && ttsStatus.currentId === (which === 'early' ? 'coda-early' : which === 'end' ? 'coda-end' : 'coda');
   return (
     <div role="region" aria-roledescription="carousel" aria-label="Reading deck: move through the sitting with the arrow buttons">
       <p className="sr-only" aria-live="polite">{label}</p>
@@ -1368,7 +1385,7 @@ function ReadingDeck({ entries, philosophers, readIdx, onNav, freshId, ttsSuppor
         const speaking = noteSpeaking(which);
         return (
         <article aria-label={noteName(which)} className="dark-academia-card p-5 md:p-8 max-w-3xl">
-          <p className="pass-indicator text-[#8b5254]">☞ {which === 'early' ? 'Notes from the margins · after pass 1' : 'Notes from the margins'}</p>
+          <p className="pass-indicator text-[#8b5254]">☞ {which === 'early' ? 'Notes from the margins · after pass 1' : which === 'end' ? 'Notes from the margins · closing summary' : 'Notes from the margins'}</p>
           {note.text ? (
             <>
               <p className="whitespace-pre-line text-[15px] leading-relaxed text-[#465f75] mt-3">{note.text}</p>
@@ -1380,7 +1397,7 @@ function ReadingDeck({ entries, philosophers, readIdx, onNav, freshId, ttsSuppor
             <p className="text-sm italic text-[#465f75]/70 mt-3" aria-live="polite">Notes from the margins are interrupting…</p>
           ) : (
             <>
-              <p className="text-sm italic text-[#465f75]/70 mt-3">{which === 'early' ? 'The note failed to arrive — pass 2 carries on without it.' : 'The note failed to arrive — the final round carries on without it.'}</p>
+              <p className="text-sm italic text-[#465f75]/70 mt-3">{which === 'early' ? 'The note failed to arrive — pass 2 carries on without it.' : which === 'end' ? 'The closing summary failed to arrive — the sitting stands without it.' : 'The note failed to arrive — the final round carries on without it.'}</p>
               {note.state === 'failed' && note.error && (
                 <p className="text-xs mt-2 text-[#8b5254]">Reason: {note.error.length > 220 ? `${note.error.slice(0, 220)}…` : note.error}</p>
               )}
@@ -1437,7 +1454,7 @@ function ReadingDeck({ entries, philosophers, readIdx, onNav, freshId, ttsSuppor
                   <button key={`margins-${next.which}`} onClick={() => onNav(readIdx + 1 + offset)} className="w-full text-left dark-academia-card px-4 py-3 flex items-center gap-3" aria-label={`Skip ahead to ${noteName(next.which)}`}>
                     <span className="w-7 h-7 rounded-full border border-[#8b5254] flex items-center justify-center font-heading text-sm shrink-0 text-[#8b5254]" aria-hidden="true">☞</span>
                     <span className="font-heading text-base text-[#4a392d]">Notes from the margins</span>
-                    <span className="text-[10px] uppercase tracking-wider text-[#465f75]/60 ml-auto shrink-0">{next.which === 'early' ? 'After pass 1' : 'Before pass 3'}</span>
+                    <span className="text-[10px] uppercase tracking-wider text-[#465f75]/60 ml-auto shrink-0">{next.which === 'early' ? 'After pass 1' : next.which === 'end' ? 'Closing summary' : 'Before pass 3'}</span>
                   </button>
                 );
               }
