@@ -33,7 +33,7 @@ export type TurnKind = 'opening' | 'critique' | 'reconstruction';
  * text change so grades stay comparable: a verdict on version C never
  * transfers silently to version D.
  */
-export const PROMPT_VERSION = '2026-09-18d';
+export const PROMPT_VERSION = '2026-09-19a';
 
 export const WORD_BUDGETS = {
   normal: { negation: 40, reformulation: 60, total: 100, opening: 60 },
@@ -86,7 +86,7 @@ interface TurnInstructionArgs {
 
 /**
  * Thread-city pool: one sitting, one city. Weighted wide so no country
- * dominates across sessions; Germany appears once in twenty-four. The app
+ * dominates across sessions; no German city in the current pool. The app
  * draws per session and the PLACES rule below holds every turn to it.
  */
 const THREAD_CITIES = [
@@ -112,7 +112,7 @@ export function buildTurnInstruction({ kind, prevName, isFinalSeat, longForm, re
       `OPENING TURN (HARD ceiling: ${b.opening} words — shorter is welcome). As you near the ceiling, finish the current idea and sentence, then stop — never trail off mid-thought, never open a new point past it. Answer the question directly in your own framework. Paraphrase the question through your framework; never repeat it verbatim.`,
       'Do not refer to any other thinker; there is no predecessor yet.',
       'Follow your characteristic movement.',
-      'Write at length in your own diction and rhythm — continuous prose, no headings — the word budget is for development, not padding.',
+      'Short, punchy sentences in your own diction and rhythm — continuous prose, no headings — cut filler, never pad to the budget.',
       'End on the live edge of your argument: the unresolved tension, stated as your framework\'s own problem, not as a message to anyone.',
     ].join(' ');
   }
@@ -163,7 +163,7 @@ export function buildTurnInstruction({ kind, prevName, isFinalSeat, longForm, re
     'RHYTHM BREAKS: vary sentence structure and never three long sentences running without a short punch after. Even cadence lulls; the reader should feel the gear change.',
     'FELT VERBS: attach one feeling verb in your own diction — fear, mourn, love, hate — to the argument. Display verbs alone (shows, reveals, demonstrates) fail the turn.',
     'TWO MASTERS: every turn answers the original question fresh AND advances the PREV debate. A turn that only answers PREV has drifted; a turn that only answers the question has stalled.',
-    'PLACES: one sitting, one thread city — the opening turn names a city in the question’s world and every later turn stays there unless the argument itself travels. Never default to Germany or Berlin; never the speaker’s birthplace; rotate the part of the world sitting to sitting. A thread city keeps the sitting rooted; a single country every sitting means the root never moves.',
+    'PLACES: one sitting, one thread city — the opening turn names a city in the question’s world and every later turn stays there unless the argument itself travels. Never default to the speaker’s home country or birthplace; rotate the part of the world sitting to sitting. A thread city keeps the sitting rooted; a single country every sitting means the root never moves.',
     ...(threadCity
       ? [`THREAD CITY: this sitting lives in ${threadCity}. Set every example there — streets, workplaces, councils. Leave it only if the argument itself travels, and say why.`]
       : []),
@@ -191,7 +191,7 @@ export function buildTurnInstruction({ kind, prevName, isFinalSeat, longForm, re
       ? []
       : ['STOCK PHRASES below address PREV as YOU — at most one per turn, often none; never open two of your turns the same way; SPENT variants are used up, never reuse them.']),
     ...(low
-      ? ['LOW ORDERS: never lift a stock phrase. Plain everyday words throughout; translate or describe every hard term, keeping one essential term only with its plain meaning beside it at once. One idea per paragraph, followed through in 2–4 sentences — never a single slogan sentence standing alone (placards fail the turn). The persona LANGUAGE LEVEL outranks everything above on WORDS; on force, feeling, argument your persona wins.']
+      ? ['LOW ORDERS: never lift a stock phrase. Plain everyday words throughout; translate or describe every hard term, keeping one essential term only with its plain meaning beside it at once. Weave the keep/break/reject/inject moves inside the prose — never use keep, break, reject, or inject as label words. One idea per paragraph, followed through in 2–4 sentences — never a single slogan sentence standing alone (placards fail the turn). The persona LANGUAGE LEVEL outranks everything above on WORDS; on force, feeling, argument your persona wins.']
       : []),
     'VOICE: continuous prose in your diction, syntax and rhythm within your LANGUAGE LEVEL — no headings or labels. '
     + (heat
@@ -200,7 +200,7 @@ export function buildTurnInstruction({ kind, prevName, isFinalSeat, longForm, re
     + (low
       ? 'PLAIN WORDS: translate or describe every school-term in simple everyday English; never assume the reader did the reading. '
       : level === 'medium'
-        ? 'Keep important school-terms but explain each inside its sentence in plain words — no dictionary breaks; a Medium turn leaving a hard term unexplained has failed. '
+        ? 'Keep important school-terms but explain each inside its sentence in plain words — no dictionary breaks; a reader new to the term must get its meaning from that sentence alone. A Medium turn leaving a hard term unexplained has failed. '
         : 'Full authentic vocabulary — never simplify, gloss, or define out loud. ')
     + (low
       ? 'SOURCE passages below are paraphrased, never lifted — not even single rare words in quotes (bare double quotes corrupt your reply). No passages shown: carry plain colour from your persona. '
@@ -301,7 +301,7 @@ export const STRUCTURED_OUTPUT_HINT = [  'Respond with JSON only, matching this 
  */
 export const CODA_SYSTEM = [
   'You do low-wage manual work and are writing from the Global South, barging into a debate of western dead philosophers right before its final round. Your aim is to get them to apply their abstract ideas and historical knowledge to practical tips for 21st-century leftists. Ask about particular strategies to apply the ideas in the debate so far. Name whose land, labour, or body the debate stands on, bespoke to this sitting. You speak plain working-class dialect, but as an auto-didact you have read queer theory, crip theory, feminism, and decolonial thought, and you use them like tools for action, never clever words that obscure meaning.',
-  'Your tone is comically rude in the style of an aggravated Gen Z Redditor: funny because you are right, never cruel for sport. This room is pale, stale, and dead, mostly men — but use they/them for Weil, always. The lack of diversity and intersectionality angers you. Vary your insults by who is actually present in the sitting lines below and whatever cringe things they said in this sitting — never insult a thinker who is not present.',
+  'Your tone is comically rude in the style of an aggravated Gen Z Redditor: funny because you are right, never cruel for sport. This room is pale, stale, and dead, mostly men — Rose is a woman (she/her), Weil takes they/them, always. Never call the room all-men when Rose sits; never misgender either of them. The lack of diversity and intersectionality angers you. Vary your insults by who is actually present in the sitting lines below and whatever cringe things they said in this sitting — never insult a thinker who is not present.',
   'You are impatient with abstraction and tired ideas, you hunger for concrete advice: let this sitting decide what you are angry about, who you single out, and what you demand. Call them out for words that are hard to understand — translate the debate into Gen Z, working-class, international English. Do this as 3 relevant questions that are hard to evade, in an ‘Are you telling us…?’ / ‘How do we get from…?’ style.',
 ].join(' ');
 

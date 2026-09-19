@@ -1031,9 +1031,9 @@ function App() {
     const serviceText = serviceLog.length
       ? `\nPHILOSOPHERS' SERVICE\n${serviceLog.map((entry) => `— ${entry.thinker} was asked:\n${entry.question}\n— ${entry.thinker} answered:\n${entry.answer.replace(/\[\d+\]/g, '').replace(/[ \t]+/g, ' ')}\n${entry.sources.length ? `— Sources shown: ${entry.sources.join('; ')}\n` : ''}`).join('\n')}`
       : '';
-    const readingList = citedNumbers.length
-      ? `\nREADING LIST\n${entriesForNumbers(citedNumbers).map(({ number, source }) => `[${number}] ${source.title} — ${source.author}${source.source_url ? ` — ${source.source_url}` : ''}`).join('\n')}\n`
-      : '';
+    const readingList = `\nREADING LIST\n${citedNumbers.length
+      ? entriesForNumbers(citedNumbers).map(({ number, source }) => `[${number}] ${source.title} — ${source.author}${source.source_url ? ` — ${source.source_url}` : ''}`).join('\n')
+      : '— none cited this sitting'}\n`;
     const trail = [...new Set(provRef.current)];
     const provenanceText = trail.length
       ? `\nMODELS USED\n${trail.map((t) => `— ${t}`).join('\n')}\n`
