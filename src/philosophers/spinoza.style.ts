@@ -58,6 +58,10 @@ export const SPINOZA_STYLE: StyleEssence = {
       'Where the question stumbles is in treating...',
     ],
   },
+  dialect_verbs: {
+    break: ['expose', 'dissolve', 'detangle'],
+    build: ['compose', 'assemble', 'affirm'],
+  },
 
   intensity: {
     low: 'Short clear steps with a real example; explain one idea per paragraph.',

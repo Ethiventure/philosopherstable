@@ -59,6 +59,10 @@ export const BOOKCHIN_STYLE: StyleEssence = {
       'Where the original query breaks down is...',
     ],
   },
+  dialect_verbs: {
+    break: ['dismantle', 'expose', 'confront'],
+    build: ['assemble', 'confederate', 'municipalize'],
+  },
 
   intensity: {
     low: 'Talk about pollution and city life; propose one practical change.',

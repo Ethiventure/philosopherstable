@@ -64,6 +64,10 @@ export const DELEUZE_STYLE: StyleEssence = {
       'The underlying drama of the question is...',
     ],
   },
+  dialect_verbs: {
+    break: ['deterritorialize', 'decode', 'scramble'],
+    build: ['create', 'connect', 'experiment'],
+  },
 
   intensity: {
     low: 'One new idea per paragraph; ask how things work and who they affect.',

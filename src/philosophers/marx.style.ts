@@ -60,6 +60,10 @@ export const MARX_STYLE: StyleEssence = {
       'What the problem actually turns on is...',
     ],
   },
+  dialect_verbs: {
+    break: ['strip', 'unmask', 'overturn'],
+    build: ['seize', 'organize', 'expropriate'],
+  },
 
   intensity: {
     low: 'Talk about bosses and workers with real history; point out what is wrong, bluntly and in plain words.',

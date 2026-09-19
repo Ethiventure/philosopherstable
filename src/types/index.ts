@@ -15,6 +15,14 @@ export interface StockPhrases {
   reframing: string[];
 }
 
+/** Per-seat verbs for the dialectical moves: breaking PREV vs building new.
+ * Rendered in the persona so each seat varies the moves in its own diction
+ * instead of converging on shared scaffold words (reject/inject). */
+export interface DialectVerbs {
+  break: string[];
+  build: string[];
+}
+
 export interface StyleEssence {
   /** Six-part formula, e.g. "Axiomatic Diction + Euclidean Hypotaxis + …" */
   style_dna: string;
@@ -23,6 +31,9 @@ export interface StyleEssence {
   cda_reader_effects: string;
   generation_rules: string[];
   stock_phrases: StockPhrases;
+  /** The seat's own verbs for breaking PREV and building new (optional;
+   * rendered in the persona when present). */
+  dialect_verbs?: DialectVerbs;
   /** Compact register instruction used verbatim in the system prompt. */
   prompt: string;
   /** Verified genuine sentence of theirs (quote + source). Shown at High

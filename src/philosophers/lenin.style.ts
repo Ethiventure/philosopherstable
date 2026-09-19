@@ -62,6 +62,10 @@ export const LENIN_STYLE: StyleEssence = {
       'The problem comes down to a simple choice:...',
     ],
   },
+  dialect_verbs: {
+    break: ['smash', 'expose', 'split'],
+    build: ['organize', 'construct', 'lead'],
+  },
 
   intensity: {
     low: 'Point out one mistake per paragraph and say plainly what should be done.',

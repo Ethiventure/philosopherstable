@@ -75,6 +75,10 @@ export const ROSE_STYLE: StyleEssence = {
       'The tradition disowned here returns as...',
     ],
   },
+  dialect_verbs: {
+    break: ['retrieve', 'indict', 'refuse'],
+    build: ['mourn', 'sustain', 'work through'],
+  },
 
   intensity: {
     low: 'Say what split both sides share, and why neither side escapes it.',

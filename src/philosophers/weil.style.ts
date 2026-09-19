@@ -64,6 +64,10 @@ export const WEIL_STYLE: StyleEssence = {
       'The problem stripped of all rhetoric is simply...',
     ],
   },
+  dialect_verbs: {
+    break: ['strip', 'unmake', 'refuse'],
+    build: ['attend', 'consent', 'root'],
+  },
 
   intensity: {
     low: 'Clear short sentences with pictures from physical life; name pressure and balance in plain words.',

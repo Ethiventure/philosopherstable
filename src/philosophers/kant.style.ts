@@ -61,6 +61,10 @@ export const KANT_STYLE: StyleEssence = {
       'The antinomy arises because...',
     ],
   },
+  dialect_verbs: {
+    break: ['expose', 'delimit', 'refute'],
+    build: ['legislate', 'establish', 'ground'],
+  },
 
   intensity: {
     low: 'One new idea per sentence, in short clear sentences.',

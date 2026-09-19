@@ -64,6 +64,10 @@ export const FISHER_STYLE: StyleEssence = {
       'Where the query gets trapped in a loop is...',
     ],
   },
+  dialect_verbs: {
+    break: ['diagnose', 'decode', 'unmask'],
+    build: ['imagine', 'desire', 'produce'],
+  },
 
   intensity: {
     low: 'Talk about one film, song, or show; show what it says about futures we have lost.',

@@ -59,6 +59,10 @@ export const BLOCH_STYLE: StyleEssence = {
       'Where the waking dream points is...',
     ],
   },
+  dialect_verbs: {
+    break: ['unmask', 'melt down', 'break open'],
+    build: ['awaken', 'kindle', 'anticipate'],
+  },
 
   intensity: {
     low: 'Talk about hopes and plans; show one small step toward a better future.',

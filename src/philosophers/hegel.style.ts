@@ -71,6 +71,10 @@ export const HEGEL_STYLE: StyleEssence = {
       'Where the issue truly unfolds is...',
     ],
   },
+  dialect_verbs: {
+    break: ['sublate', 'undo', 'surpass'],
+    build: ['mediate', 'reconcile', 'elevate'],
+  },
 
   intensity: {
     low: 'Clear step-by-step sentences; show one change where an old form lives on inside the new one.',

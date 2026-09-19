@@ -72,6 +72,9 @@ export function renderPersona(philosopher: Pick<Philosopher, 'slug' | 'full_name
         ...(essence.special_modes ? Object.entries(essence.special_modes).map(([key, value]) => `${key.toUpperCase().replace(/_/g, ' ')}: ${value}`) : []),
         '',
         `REGISTER: ${essence.prompt}`,
+        ...(essence.dialect_verbs
+          ? [`YOUR MOVE VERBS — break PREV with these, build new with these, in your own sentences; never the bare shared words reject/inject: BREAK: ${essence.dialect_verbs.break.join(' / ')}. BUILD: ${essence.dialect_verbs.build.join(' / ')}.`]
+          : []),
         `INTENSITY (${intensity.toUpperCase()}): ${essence.intensity[intensity]}`,
         ...(intensity === 'medium'
           ? [

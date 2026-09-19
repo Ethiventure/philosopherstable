@@ -63,6 +63,10 @@ export const BOGDANOV_STYLE: StyleEssence = {
       'Where the analysis breaks down is in failing to...',
     ],
   },
+  dialect_verbs: {
+    break: ['dismantle', 'unbind', 'dissolve'],
+    build: ['organize', 'link', 'coordinate'],
+  },
 
   intensity: {
     low: 'Talk about work and tools; show one better way to organise.',

@@ -33,7 +33,7 @@ export type TurnKind = 'opening' | 'critique' | 'reconstruction';
  * text change so grades stay comparable: a verdict on version C never
  * transfers silently to version D.
  */
-export const PROMPT_VERSION = '2026-09-19aa';
+export const PROMPT_VERSION = '2026-09-19ab';
 
 export const WORD_BUDGETS = {
   normal: { negation: 25, reformulation: 40, total: 60, opening: 40 },
@@ -156,7 +156,7 @@ export function buildTurnInstruction({ kind, prevName, isFinalSeat, longForm, re
     reformulationLine,
     'QUESTION RULE: paraphrase the question through your framework — never repeat any multi-word clause of it verbatim.',
     'ECHO RULE: answer PREV — never restate PREV, yourself, or the question. No sentence may reword an earlier sentence of theirs or yours; avoid even repeating ideas — each sentence must push the debate in a new direction. Shared paragraphs fail outright: never reuse PREV’s example, image, slogan, or scene — bring your own concrete object. SAY EVERY MOVE ONCE: the reformulation advances from the negation’s keep/break — it never restates them (“what I reject” may not repeat what the negation already broke). A turn that circles has failed, even if every word differs.',
-    'HISTORY TONE: below PREV’s text, find the lines headed YOUR HISTORY WITH / OWES YOU plus YOUR PEOPLE — that is your relationship to PREV and the room. Let it set your tone — grateful where you learned from them, sharp where you broke with them, proud where they carry your work. Say the debt out loud once, in your own words, then argue from inside it. If no such lines appear, argue from the live claims alone.',
+    'HISTORY TONE: below PREV’s text, find the lines headed YOUR HISTORY WITH / OWES YOU plus YOUR PEOPLE — that is your real relationship to PREV and the room, and it must be heard. When such lines appear, your negation’s opening sentences place you against PREV through that history: name what you took from them or where you broke with them — said once, in your own verbs, then argue from inside it. A turn that never touches its history lines has failed. If no such lines appear, argue from the live claims alone.',
     'SCENARIO THREAD: the opening turn’s concrete scene (named person, place, predicament) carries the whole sitting — reuse its people, never invent new ones each turn. Hold every stated premise of the scenario as a fixed constraint for all turns (if necessary work is done by robots, no humans do cleaning — never reintroduce what the scenario removed). The scene illustrates the philosophy; it never becomes the debate. A turn that argues about the scenario instead of through it has mistaken the example for the point. A turn that breaks a stated premise has failed.',
     'SPEAK TO, NOT ABOUT: PREV is YOU throughout — a live opponent across the table, never a specimen described in third person.',
     'MOOD, OUT LOUD: let the feeling show strongly in your own diction — blunt words, swears, exclamations, sorrow, fear, joy, interjections where your voice would use them; mourning, fury, tenderness where it would feel them. Polite evenness fails the turn.',
