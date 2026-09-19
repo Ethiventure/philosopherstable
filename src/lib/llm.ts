@@ -11,6 +11,12 @@ export interface TurnOutput {
   reformulation: string;
   new_contribution: string;
   works_referenced: string[];
+  /** Medium-only enforcement field: hard terms used + plain meanings.
+   * Optional everywhere (old prompts never send it); required at Medium by
+   * the App-level check, which retries once when hard terms stand without it.
+   * Displayed nowhere — its job is forcing the definitions into existence so
+   * the inline gloss follows (desk-scaffold evidence). */
+  glossary: string;
 }
 
 export type LlmErrorCode = 'quota' | 'auth' | 'model' | 'network' | 'server' | 'parse' | 'unknown';
@@ -228,6 +234,8 @@ export function parseTurnOutput(rawText: string, label = 'LLM'): TurnOutput {
     reformulation: terminate(record.reformulation as string),
     new_contribution: terminate(record.new_contribution as string),
     works_referenced: works,
+    glossary: typeof record.glossary === 'string' ? record.glossary.trim() : '',
+  };
   };
 }
 
@@ -246,3 +254,8 @@ export function retryAfterMs(detail: string, fallbackMs: number, capMs = 90000):
 /** Appended to the user message for a single repair attempt after malformed JSON. */
 export const REPAIR_SUFFIX =
   ' Your previous reply was not valid JSON. Reply again with JSON only: the complete four-key object, no prose outside it.';
+
+/** Medium-only gloss repair: the turn used hard terms but sent no glossary.
+ * One retry, same shape plus the fifth key. */
+export const GLOSS_REPAIR_SUFFIX =
+  ' Your turn used hard philosophical terms but the glossary key was missing or empty. Reply again with JSON only: the same turn, plus a fifth key "glossary" listing each hard term you used, one line each as term — plain meaning in your own words. Keep every other key.';
