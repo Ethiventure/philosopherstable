@@ -236,7 +236,6 @@ export function parseTurnOutput(rawText: string, label = 'LLM'): TurnOutput {
     works_referenced: works,
     glossary: typeof record.glossary === 'string' ? record.glossary.trim() : '',
   };
-  };
 }
 
 /**
