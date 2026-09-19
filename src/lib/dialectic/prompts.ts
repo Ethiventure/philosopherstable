@@ -35,7 +35,7 @@ export type TurnKind = 'opening' | 'critique' | 'reconstruction';
  * text change so grades stay comparable: a verdict on version C never
  * transfers silently to version D.
  */
-export const PROMPT_VERSION = '2026-09-19ak';
+export const PROMPT_VERSION = '2026-09-19al';
 
 export const WORD_BUDGETS = {
   normal: { negation: 25, reformulation: 40, total: 60, opening: 40 },
@@ -251,15 +251,15 @@ export function buildUserMessage({ question, prevText, relationshipLine = null, 
   const parts = [
     `QUESTION (verbatim): ${question}`,
     '',
+    // The addressee context rides FIRST (Sep 2026): buried at position 20 it
+    // was never touched; as the second thing read it sets the frame.
+    ...(relationshipLine ? [`${relationshipLine}`] : []),
+    '',
     turnInstruction,
   ];
 
   if (prevText) {
     parts.push('', `IMMEDIATE PREDECESSOR'S FULL TEXT:\n${prevText}`);
-  }
-
-  if (relationshipLine) {
-    parts.push('', relationshipLine);
   }
 
   if (ownPriorLines.length > 0) {

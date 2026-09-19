@@ -131,17 +131,24 @@ function toIntervention(
   const citations = output.works_referenced.length > 0
     ? output.works_referenced.map((work) => ({ label: work, verified: false }))
     : [{ label: `[${philosopher.name.toUpperCase()}, SOURCE-GROUNDED PROFILE]`, verified: false }];
+  // Mechanical address prefix (Sep 2026): the turn opens with PREV's name
+  // because the app puts it there, not because the model remembered to.
+  // Three rounds of wording failed; framing metadata can't be forgotten.
+  const bodyParts = [
+    output.negation,
+    output.incorporation,
+    output.reformulation,
+  ].filter((s) => s && s.trim());
+  const body = previousSpeaker && bodyParts.length
+    ? [`${previousSpeaker.name}, ${bodyParts[0]}`, ...bodyParts.slice(1)].join('\n\n')
+    : bodyParts.join('\n\n');
   return {
     id: `live-${pass}-${index}`,
     meeting_id: 'live',
     philosopher_id: philosopher.id,
     pass_number: pass,
     seat_position: index,
-    response_text: [
-      output.negation,
-      output.incorporation,
-      output.reformulation,
-    ].filter((s) => s && s.trim()).join('\n\n'),
+    response_text: body,
     sections: {
       negation: output.negation,
       incorporation: output.incorporation,
