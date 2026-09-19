@@ -772,8 +772,9 @@ pick provider first, then a model from a short recommended list with a
 one-line note each (speed, cost, style adherence). Keep the free-text ID
 box alongside for flexibility (churn survival, unlisted IDs).
 Replaces the current radios-only layout once the graded order is final.
-Settings cabinet tab split (later): "How it speaks" into its own tab,
-separate from philosopher selection — newcomers can't find the seat picker.
+Settings cabinet tab split (shipped Sep 19 2026): Settings now has Seats
+(who sits — the picker newcomers couldn't find) and Voice (intensity, long
+form, economy, grounding) as separate tabs alongside Key and Display.
 RAG shard latency (later): per-turn grounding downloads the thinker's whole
 shard first touch (Marx 6.6MB, Hegel 5.6MB — owners feel it as stuck seats).
 Options: slimmer shards, server-side search, or pre-warm all sitting shards
