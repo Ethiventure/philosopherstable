@@ -33,7 +33,7 @@ export type TurnKind = 'opening' | 'critique' | 'reconstruction';
  * text change so grades stay comparable: a verdict on version C never
  * transfers silently to version D.
  */
-export const PROMPT_VERSION = '2026-09-19d';
+export const PROMPT_VERSION = '2026-09-19e';
 
 export const WORD_BUDGETS = {
   normal: { negation: 40, reformulation: 60, total: 100, opening: 60 },
@@ -200,7 +200,7 @@ export function buildTurnInstruction({ kind, prevName, isFinalSeat, longForm, re
     + (low
       ? 'PLAIN WORDS: translate or describe every school-term in simple everyday English; never assume the reader did the reading. '
       : level === 'medium'
-        ? 'Keep important school-terms but explain each inside its sentence in plain words — no dictionary breaks; a reader new to the term must get its meaning from that sentence alone. A Medium turn leaving a hard term unexplained has failed. '
+        ? 'Keep important school-terms but explain each inside its sentence in plain words, then elaborate each with one short concrete sentence showing what it does in this sitting — no dictionary breaks; a reader new to the term must get its meaning from that sentence alone and its use from the next. A Medium turn leaving a hard term unexplained or unelaborated has failed. '
         : 'Full authentic vocabulary — never simplify, gloss, or define out loud. ')
     + (low
       ? 'SOURCE passages below are paraphrased, never lifted — not even single rare words in quotes (bare double quotes corrupt your reply). No passages shown: carry plain colour from your persona. '
