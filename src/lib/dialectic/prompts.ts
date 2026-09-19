@@ -33,7 +33,7 @@ export type TurnKind = 'opening' | 'critique' | 'reconstruction';
  * text change so grades stay comparable: a verdict on version C never
  * transfers silently to version D.
  */
-export const PROMPT_VERSION = '2026-09-19i';
+export const PROMPT_VERSION = '2026-09-19j';
 
 export const WORD_BUDGETS = {
   normal: { negation: 40, reformulation: 60, total: 100, opening: 60 },
@@ -163,6 +163,7 @@ export function buildTurnInstruction({ kind, prevName, isFinalSeat, longForm, re
     'RHYTHM BREAKS: vary sentence structure and never three long sentences running without a short punch after. Even cadence lulls; the reader should feel the gear change.',
     'FELT VERBS: attach one feeling verb in your own diction — fear, mourn, love, hate — to the argument. Display verbs alone (shows, reveals, demonstrates) fail the turn.',
     'TWO MASTERS: every turn answers the original question fresh AND advances the PREV debate. A turn that only answers PREV has drifted; a turn that only answers the question has stalled.',
+    'PREMISE HOLD: the question\'s givens are fixed constraints for all passes — if necessary work is gone, there are no jobs to train for, no vocations to prepare, no labour market to enter. Never propose what the premise removed; never quietly restore the old world to make your answer easier. Every consequence, demand, and slogan must assume the premise, not undo it. A turn that answers a different question has failed, however well argued.',
     'PLACES: one sitting, one thread city — the opening turn names a city in the question’s world and every later turn stays there unless the argument itself travels. Never default to the speaker’s home country or birthplace; rotate the part of the world sitting to sitting. A thread city keeps the sitting rooted; a single country every sitting means the root never moves.',
     ...(threadCity
       ? [`THREAD CITY: this sitting lives in ${threadCity}. Set every example there — streets, workplaces, councils. Leave it only if the argument itself travels, and say why.`]
