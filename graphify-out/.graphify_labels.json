@@ -6,7 +6,7 @@
   "4": "compilerOptions",
   "5": "openrouter.ts",
   "6": "compilerOptions",
-  "7": "devDependencies",
+  "7": "alibaba.ts",
   "8": "llm.ts",
   "9": "settings.ts",
   "10": "tts.ts",
@@ -66,6 +66,7 @@
   "64": "universal-mechanisms.ts",
   "65": "Influence grid (generated)",
   "66": "gh.md",
-  "67": "GenealogyMap.tsx",
-  "68": "porter.ts"
+  "67": "Things taught (owner's notebook)",
+  "68": "rag-translate-once.mjs",
+  "69": "model-brief.md"
 }

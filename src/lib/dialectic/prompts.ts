@@ -33,7 +33,7 @@ export type TurnKind = 'opening' | 'critique' | 'reconstruction';
  * text change so grades stay comparable: a verdict on version C never
  * transfers silently to version D.
  */
-export const PROMPT_VERSION = '2026-09-19a';
+export const PROMPT_VERSION = '2026-09-19c';
 
 export const WORD_BUDGETS = {
   normal: { negation: 40, reformulation: 60, total: 100, opening: 60 },
@@ -123,9 +123,9 @@ export function buildTurnInstruction({ kind, prevName, isFinalSeat, longForm, re
     pass === 1
       ? 'PASS JOB (diagnosis): judge PREV on the question, then add your own framework diagnosis — name the central contradiction as you see it.'
       : pass === 2
-        ? 'PASS JOB (pressure): break PREV twice over — once from its own flaw, once through one margins perspective as a lens. The break must still run on PREV\'s own premises; the margins voice aims the blow, never replaces it.'
+        ? 'PASS JOB (pressure): break PREV twice over — once from its own flaw, once through one margins perspective as a lens. The break must still run on PREV\'s own premises; the margins voice aims the blow, never replaces it. Add the consequence test: draw one conclusion PREV\'s own premises lead to but PREV would reject — show the crack, don\'t just assert it.'
         : kind === 'reconstruction'
-          ? 'PASS JOB (reconstruction): move the sitting forward — one new idea not yet said here, one slogan ordinary people could carry, and one precise sentence on what yours keeps that rival ideas drop.'
+          ? 'PASS JOB (reconstruction): move the sitting forward — one new idea not yet said here, one slogan ordinary people could carry, name one surveyed idea this sitting retires, and one precise sentence on what yours keeps that rival ideas drop.'
           : 'PASS JOB (critique): judge PREV, then move the question up a level in your own terms.';
 
   const reformulationLine =
@@ -152,7 +152,7 @@ export function buildTurnInstruction({ kind, prevName, isFinalSeat, longForm, re
       : (!reversed
         ? [`CUT IN, don't hand over: seize the weakest point in ${prev}'s closing lines. No preamble, no greeting, no naming ceremony — interrupt. Never open with "[Name]'s claim that…", "X argues that…" or any naming-first formula; enter through the concrete object.`]
         : [])),
-    `1. DETERMINATE NEGATION (roughly ${b.negation} words): steelman ${prev}'s claim at its strongest — then say aloud what you KEEP (one clause they got right) and where you BREAK (the genuine fault line, in their own terms) — but as TRANSLATION: restate it wholly in your framework's own vocabulary, no clause over five words matching ${prev} verbatim.${low ? ' At Low there are no shared specialist terms: restate everything, including school-terms, in plain everyday words.' : ' Single shared terms (class struggle, decreation) may repeat; multi-word clauses may not.'} Name ${prev} once, inside the argument — everywhere else address them as YOU, a live opponent, not a specimen. Never open with a summarising You-verb (think, focus, see, suggest, argue, claim, believe) or a naming-first formula; You-verbs are welcome when they are your toolkit verbs (you distinguish, expose, trace, rescue, sublate). If you agree with them you have misread them.`,
+    `1. DETERMINATE NEGATION (roughly ${b.negation} words): steelman ${prev}'s claim at its strongest — then expose its internal contradiction: where ${prev}'s own claims, premises, or tensions collide with each other — then say aloud what you KEEP (one clause they got right) and where you BREAK (that fault line, in their own terms) — but as TRANSLATION: restate it wholly in your framework's own vocabulary, no clause over five words matching ${prev} verbatim.${low ? ' At Low there are no shared specialist terms: restate everything, including school-terms, in plain everyday words.' : ' Single shared terms (class struggle, decreation) may repeat; multi-word clauses may not.'} Name ${prev} once, inside the argument — everywhere else address them as YOU, a live opponent, not a specimen. Never open with a summarising You-verb (think, focus, see, suggest, argue, claim, believe) or a naming-first formula; You-verbs are welcome when they are your toolkit verbs (you distinguish, expose, trace, rescue, sublate). If you agree with them you have misread them.`,
     reformulationLine,
     'QUESTION RULE: paraphrase the question through your framework — never repeat any multi-word clause of it verbatim.',
     'ECHO RULE: answer PREV — never restate PREV, yourself, or the question. No sentence may reword an earlier sentence of theirs or yours; avoid even repeating ideas — each sentence must push the debate in a new direction. A turn that circles has failed, even if every word differs.',
@@ -170,7 +170,7 @@ export function buildTurnInstruction({ kind, prevName, isFinalSeat, longForm, re
     'TIME RULE: Mark present-day facts as facts and demands as demands: say what changes now (the minimum) and what the horizon holds (the maximum) — never present the horizon as already here, and never mistake a demand for a description.',
     closingLine,
     ...(isFinalSeat
-      ? ['FINAL SEAT: return the question, changed, to the user — no new claims after it. Name one point of agreement, if any — no summary.']
+      ? ['FINAL SEAT: return the question, changed, to the user — no new claims after it. Name one point of agreement, if any, and which ideas the sitting has rejected — no summary.']
       : []),
     ...(kind === 'reconstruction' && !isFinalSeat
       ? ['Invoke at least one surveyed idea from another seat by name (STRIKING IDEAS), transformed into your terms, never quoted; a pass-3 turn answering only PREV has failed.']
