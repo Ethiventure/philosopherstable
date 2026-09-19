@@ -18,6 +18,7 @@ import { generateTextOpenRouter } from '@/lib/openrouter';
 import { generateTextShared } from '@/lib/shared';
 import { generateTextAlibaba } from '@/lib/alibaba';
 import { generateTextTogether } from '@/lib/together';
+import { generateTextZai } from '@/lib/zai';
 import type { CabinetSettings } from '@/lib/settings';
 import { LlmError } from '@/lib/llm';
 import type { Philosopher, StyleIntensity } from '@/types';
@@ -146,6 +147,13 @@ export function generateServiceText(
       return generateTextAlibaba({
         apiKey: snap.alibabaApiKey,
         model: snap.alibabaModel,
+        systemPrompt,
+        userMessage,
+      });
+    case 'zai':
+      return generateTextZai({
+        apiKey: snap.zaiApiKey,
+        model: snap.zaiModel,
         systemPrompt,
         userMessage,
       });

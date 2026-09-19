@@ -80,7 +80,7 @@ export function repairTotals(): number {
  * the word "about". To refresh: verify against the provider's pricing page
  * and bump the date; never silently edit a number.
  */
-export const RATES_AS_OF = 'Sep 17 2026';
+export const RATES_AS_OF = 'Sep 19 2026';
 
 interface RateRow { match: (provider: string, model: string) => boolean; perIn: number; perOut: number }
 
@@ -93,6 +93,10 @@ const RATE_TABLE: RateRow[] = [
   { match: (_p, m) => m.includes('qwen3.8-flash'), perIn: 0.15, perOut: 0.47 },
   { match: (_p, m) => m.includes('qwen3.5-9b'), perIn: 0.10, perOut: 0.15 },
   { match: (_p, m) => m.includes('glm-5.3-flash') || m.includes('glm-5-flash'), perIn: 0.075, perOut: 0.25 },
+  { match: (_p, m) => m.includes('glm-4.7-flash') || m.includes('glm-4.5-flash'), perIn: 0, perOut: 0 },
+  { match: (_p, m) => m.includes('qwen3-30b-a3b-instruct-2507'), perIn: 0.048, perOut: 0.19 },
+  { match: (_p, m) => m.includes('qwen3-30b-a3b'), perIn: 0.12, perOut: 0.50 },
+  { match: (_p, m) => m.includes('qwen3-14b'), perIn: 0.12, perOut: 0.24 },
   { match: (_p, m) => m.includes('qwen3.6-35b'), perIn: 0.10, perOut: 0.95 },
   { match: (_p, m) => m.includes('llama-3.3-70b'), perIn: 0.10, perOut: 0.32 },
 ];

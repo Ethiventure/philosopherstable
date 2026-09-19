@@ -1,16 +1,16 @@
-# Graph Report - philosopherstable  (2026-09-18)
+# Graph Report - philosopherstable  (2026-09-19)
 
 ## Corpus Check
-- 117 files · ~4,730,281 words
+- 118 files · ~4,731,995 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 754 nodes · 963 edges · 70 communities (46 shown, 20 thin omitted)
+- 768 nodes · 984 edges · 72 communities (48 shown, 20 thin omitted)
 - Extraction: 100% EXTRACTED · 0% INFERRED · 0% AMBIGUOUS · INFERRED: 3 edges (avg confidence: 0.85)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `44c80433`
+- Built from commit: `07664b18`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -81,6 +81,8 @@
 - Things taught (owner's notebook)
 - rag-translate-once.mjs
 - model-brief.md
+- porter.ts
+- zai.ts
 
 ## God Nodes (most connected - your core abstractions)
 1. `compilerOptions` - 18 edges
@@ -95,21 +97,21 @@
 10. `prepareIndex()` - 8 edges
 
 ## Surprising Connections (you probably didn't know these)
+- `extractReadable()` --calls--> `wordCount()`  [EXTRACTED]
+  scripts/rag-ingest.mjs → src/lib/rag-text.ts
+- `ingestOne()` --calls--> `wordCount()`  [EXTRACTED]
+  scripts/rag-ingest.mjs → src/lib/rag-text.ts
 - `loadIndex()` --calls--> `joinShard()`  [EXTRACTED]
   scripts/rag-search.mjs → src/lib/rag-shard.ts
 - `paths` --calls--> `genEdgePath()`  [EXTRACTED]
   scripts/check-diagram-geometry.mjs → src/lib/genealogy-layout.ts
 - `paths` --calls--> `genLateralShift()`  [EXTRACTED]
   scripts/check-diagram-geometry.mjs → src/lib/genealogy-layout.ts
-- `splitLongParagraph()` --calls--> `wordCount()`  [EXTRACTED]
-  scripts/rag-chunk.mjs → src/lib/rag-text.ts
-- `chunkParagraphs()` --calls--> `wordCount()`  [EXTRACTED]
-  scripts/rag-chunk.mjs → src/lib/rag-text.ts
 
 ## Import Cycles
 - None detected.
 
-## Communities (70 total, 20 thin omitted)
+## Communities (72 total, 20 thin omitted)
 
 ### Community 0 - "package.json"
 Cohesion: 0.05
@@ -148,8 +150,8 @@ Cohesion: 0.10
 Nodes (12): LlmError, LlmErrorCode, parseTurnOutput(), RATE_TABLE, RateRow, RATES_AS_OF, REPAIR_SUFFIX, requoteBareValues() (+4 more)
 
 ### Community 9 - "settings.ts"
-Cohesion: 0.14
-Nodes (15): AlibabaModel, CabinetSettings, clearApiKey(), DEAD_GROQ_IDS, DEEPINFRA_PRIMARIES, DeepInfraModel, DeepInfraPrimary, DEFAULT_ALIBABA_MODEL (+7 more)
+Cohesion: 0.12
+Nodes (17): AlibabaModel, CabinetSettings, clearApiKey(), DEAD_GROQ_IDS, DEEPINFRA_PRIMARIES, DeepInfraModel, DeepInfraPrimary, DEFAULT_ALIBABA_MODEL (+9 more)
 
 ### Community 10 - "tts.ts"
 Cohesion: 0.22
@@ -229,7 +231,7 @@ Nodes (4): extractQuotes(), normalise(), QuoteCheck, verifyQuotes()
 
 ### Community 49 - "rag-search.ts"
 Cohesion: 0.06
-Nodes (55): byCategory, failures, index, lat, latencies, passages, pos, prepared (+47 more)
+Nodes (47): CHUNK_SOFT_MAX, CHUNK_SOFT_MIN, CHUNK_TARGET_WORDS, chunkParagraphs(), splitLongParagraph(), byCategory, failures, index (+39 more)
 
 ### Community 50 - "service-chat.ts"
 Cohesion: 0.25
@@ -244,8 +246,8 @@ Cohesion: 0.29
 Nodes (6): How to make trios (worked procedure), How to set difficulty levels, Language levels (Low / Medium / High), Reference: verified prompt order (Bookchin, Low, critique turn), Rollback points (read before changing anything below), Trio-creation instructions that did NOT work
 
 ### Community 53 - "rag-ingest.mjs"
-Cohesion: 0.14
-Nodes (28): CHUNK_SOFT_MAX, CHUNK_SOFT_MIN, CHUNK_TARGET_WORDS, chunkParagraphs(), splitLongParagraph(), authorSlug(), DB_PATH, exportJson() (+20 more)
+Cohesion: 0.16
+Nodes (22): authorSlug(), DB_PATH, exportJson(), extractReadable(), fail(), fetchText(), ingestOne(), leadingCapsRun() (+14 more)
 
 ### Community 54 - "rag-inspect.mjs"
 Cohesion: 0.22
@@ -295,9 +297,17 @@ Nodes (8): Copyright has two clocks (Sep 17 2026), Free tiers wall mid-session (
 Cohesion: 0.29
 Nodes (6): DB, JOBS, out, sleep(), translateBatch(), USE_OR
 
+### Community 70 - "porter.ts"
+Cohesion: 0.30
+Nodes (14): endsCvc(), endsDouble(), hasVowel(), isConsonant(), measure(), stem(), step1(), step1b() (+6 more)
+
+### Community 71 - "zai.ts"
+Cohesion: 0.29
+Nodes (11): extractDetail(), generateTextZai(), generateTurnZai(), postZai(), sleep(), stripFences(), testZaiKey(), ZAI_MAX_TOKENS (+3 more)
+
 ## Knowledge Gaps
-- **364 isolated node(s):** `$schema`, `plugin`, `DEFAULT_MODELS`, `usageDay`, `perIp` (+359 more)
-  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 438 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
+- **369 isolated node(s):** `$schema`, `plugin`, `DEFAULT_MODELS`, `usageDay`, `perIp` (+364 more)
+  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 443 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
 - **20 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
@@ -308,7 +318,7 @@ _Questions this graph is uniquely positioned to answer:_
 - **Why does `scripts` connect `scripts` to `package.json`?**
   _High betweenness centrality (0.004) - this node is a cross-community bridge._
 - **What connects `$schema`, `plugin`, `DEFAULT_MODELS` to the rest of the system?**
-  _364 weakly-connected nodes found - possible documentation gaps or missing edges._
+  _369 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `package.json` be split into smaller, more focused modules?**
   _Cohesion score 0.04717853839037928 - nodes in this community are weakly interconnected._
 - **Should `types/index.ts` be split into smaller, more focused modules?**

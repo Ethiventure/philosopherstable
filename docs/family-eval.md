@@ -6,14 +6,15 @@ test). Winner takes Medium + High.
 
 ## The question (reuse verbatim for every run)
 
-> AGI can now do most paid work cheaper than people, and some say humans need
-> jobs to have purpose. So who works, who eats, who decides — and does the
-> system that paid for the machines survive them?
+> Automation and robotics have replaced almost all human necessary work.
+> How does this change the education system? What do we teach children?
 
-Post-2020 for all eleven seats (fair — none saw it), earthed in wages and
-dinners rather than essences, and it splits the table: property and ownership
-one way, recognition and meaning another, organization a third. Concrete
-answers (pay, kitchens, rotas) and abstract ones (what work is for) both count.
+Future-set for all seats (fair — none saw it), earthed in children and
+classrooms rather than essences, and it splits the table: purpose and
+formation one way, power over what gets taught another, organization a
+third. Concrete answers (lessons, teachers, schools) and abstract ones
+(what childhood is for) both count. Prior 2030 purpose-question retired
+Sep 19 2026; old grades stay tied to it.
 
 ## Round 1 — Low, one run per pipe
 

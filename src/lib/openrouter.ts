@@ -437,7 +437,7 @@ export async function generateTurnOpenRouter({ apiKey, systemPrompt, userMessage
     }
   }
   throw new LlmError(
-    `All ${tried.length} free models failed (${tried.join(', ')}). Free IDs rotate — check openrouter.ai/models?max_price=0, or switch back to Gemini direct in Settings → Key. Last error: ${lastError?.message ?? 'unknown'}`,
+    `All ${tried.length} free models failed (${tried.join(', ')}). Free IDs rotate — check openrouter.ai/models?max_price=0, or switch provider in Settings → Key. Last error: ${lastError?.message ?? 'unknown'}`,
     true,
     lastError?.code === 'quota' ? 'quota' : 'server',
   );
@@ -510,7 +510,7 @@ export async function generateTextOpenRouter({ apiKey, systemPrompt, userMessage
     }
   }
   throw new LlmError(
-    `All ${tried.length} free models failed (${tried.join(', ')}). Free IDs rotate — check openrouter.ai/models?max_price=0, or switch back to Gemini direct in Settings → Key. Last error: ${lastError?.message ?? 'unknown'}`,
+    `All ${tried.length} free models failed (${tried.join(', ')}). Free IDs rotate — check openrouter.ai/models?max_price=0, or switch provider in Settings → Key. Last error: ${lastError?.message ?? 'unknown'}`,
     true,
     lastError?.code === 'quota' ? 'quota' : 'server',
   );
@@ -580,7 +580,7 @@ export async function testOpenRouterKey(apiKey: string, mode: 'free' | 'paid' = 
   }
   if (saw403 === tried.length && tried.length > 0) {
     throw new LlmError(
-      'Every free model refused this key (403). The key works but nothing free is accessible to it — check openrouter.ai/activity, or use Gemini direct instead.',
+      'Every free model refused this key (403). The key works but nothing free is accessible to it — check openrouter.ai/activity, or switch provider in Settings → Key.',
       false,
       'auth',
     );

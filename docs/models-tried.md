@@ -72,6 +72,14 @@ independently verified, do not quote)
 - `qwen3-14b` / `qwen3-30b-a3b` (DeepInfra, ~$0.10–0.12/$0.24–0.30 claimed):
   different architectures from the burned small Qwens; may dodge the burn.
   Needs DeepInfra primary code to test there, or OpenRouter paid box if listed.
+  VERIFIED on OpenRouter `/models` API Sep 19 2026: both live —
+  `qwen/qwen3-30b-a3b` 131k ctx $0.12/$0.50, `qwen/qwen3-14b` 131k ctx
+  $0.12/$0.24 (owner reports Test key passes on both). Both undercut
+  `qwen/qwen3.8-27b` ($0.214/$2.55 same API): ~5× cheaper output on 30b,
+  ~10× on 14b; ~$0.011–0.012 per 5-seat session vs ~$0.027 for 27B
+  (85.3k in / 3.5k out budget). Cheaper still: `qwen/qwen3-30b-a3b-instruct-2507`
+  262k ctx $0.048/$0.19 (~$0.005/session). Caution: Qwen3 hybrid thinking —
+  same burn family as the failed 9B/Flash; grade live before trusting.
 - Non-thinking models (owner question Sep 17): Mistral-Small is non-reasoning
   by construction — top of the queue doubles as this test. DeepSeek v4.1-flash
   is already effectively non-thinking (obedient, no burn observed).
@@ -104,7 +112,7 @@ Measured Groq free walls Sep 17: input TPM limit ~7K/req wall (413 at 7271;
 | Sep 2026 | Together | `Qwen/Qwen3-30B-A3B` ($0.30/$1.20 — priciest in the cabinet) | Still unverified AND most expensive per debate (~$0.03/5-seat). Drop candidate once the A/B settles. |
 | Sep 2026 | OpenRouter | `qwen/qwen3.8-27b` (paid, ~$0.15–0.35 in / ~$2–3 out) | Exists but rejected on output price vs DeepSeek. |
 | Sep 2026 | Shared/desk | Groq free-tier input wall (~7k/req, observed 413 at 7271) | Shared turns take the lean ration (2×650-char passages, trimmed PREV, note+5 survey) and run Low only; desk takes the same ration on shared/groq (history + full table lines untouched). |
-| Sep 2026 | OpenRouter | `z-ai/glm-5.2:free`, `minimax/minimax-m3:free` | Retired (404). Never re-add without re-verifying. |
+| Sep 2026 | OpenRouter | `z-ai/glm-5.2:free` | Earlier verdict was retired (404) — but re-listed on the live `/models` API Sep 15 2026 (back in the free cycle) and still listed Sep 19 2026 (447 models). Cycle covers it; watch the salvage logs. `minimax/minimax-m3:free` stays out (not listed Sep 19 2026). |
 | Sep 2026 | OpenRouter | `openai/gpt-oss-120b` (paid) | Worked, then daily key cap hit. Removed: no OpenAI models, ever (standing rule). |
 | Sep 2026 | Gemini direct | `gemini-3.6-flash`, `gemini-3.5-flash-lite` | Worked with `thinkingLevel:low`. Provider removed Sep 2026: 2.5 retired (404 for new keys), consolidating on fewer providers. |
 | Sep 2026 | Gemini direct | `gemini-2.5-flash` | Retired by Google (404 for new keys). Never re-add. |
@@ -116,9 +124,11 @@ Each needs a new provider pipe (code) unless reachable via OpenRouter paid.
 - Mistral AI direct (free mode, no card, $10/mo credits): Medium 3.5 / Small 4 /
   Large 3. Real candidate — own key, generous. Caveat: prompts may train
   models unless opted out (same warning our OpenRouter copy already carries).
-- Z.ai GLM-4.7-Flash (permanent free, no card, api.z.ai endpoint): free test
-  of the GLM candidate. Caveats: reasoning model (burn risk); 1 concurrent
-  request (slow sessions).
+- Z.ai GLM-4.7-Flash (permanent free, no card, api.z.ai endpoint): pipe BUILT
+  Sep 19 2026 (`src/lib/zai.ts` + Settings + desk, default `glm-4.7-flash`,
+  base `https://api.z.ai/api/paas/v4`, $0/$0) — live session pending.
+  Caveats stand: reasoning always-on (burn risk, no disable flag); 1 concurrent
+  request (slow sessions); ~1 req/sec, ~1K req/day reported.
 - Ollama Cloud free tier (ollama.com/v1, OpenAI-compatible): serves
   deepseek-v4-flash — a free backup route for our engine. Session/weekly
   limits unpublished; verify live.
@@ -132,7 +142,8 @@ Each needs a new provider pipe (code) unless reachable via OpenRouter paid.
   keys); Kilo/LLM7 anonymous routers (random routing breaks voice continuity
   — same objection as `openrouter/free`); Cohere trial (non-commercial clause
   + 1000 calls/mo); SiliconFlow/ModelScope (ID verification); Aion (roleplay-
-  tuned, wrong shape for the contract).
+  tuned, wrong shape for the contract). Mistral direct pipe declined by owner
+  Sep 19 (Small 3.2 already dead live — a new route can't fix the model).
 
 ## Pending verification (user fetching keys)
 

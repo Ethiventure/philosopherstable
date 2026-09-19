@@ -21,7 +21,12 @@ export const DEEPINFRA_PRIMARIES: { id: DeepInfraPrimary; label: string; hint: s
 
 export type TurnEconomy = 'full' | 'efficient';
 
-export type LlmProvider = 'shared' | 'openrouter' | 'groq' | 'deepinfra' | 'together' | 'alibaba';
+export type LlmProvider = 'shared' | 'openrouter' | 'groq' | 'deepinfra' | 'together' | 'alibaba' | 'zai';
+
+/** Free text (Z.ai model codes): Test key verifies live. */
+export type ZaiModel = string;
+
+export const DEFAULT_ZAI_MODEL = 'glm-4.7-flash';
 
 /** Free text (Model Studio codes vary by region): Test key verifies live. */
 export type AlibabaModel = string;
@@ -42,6 +47,8 @@ export interface CabinetSettings {
   togetherApiKey: string;
   alibabaApiKey: string;
   alibabaModel: AlibabaModel;
+  zaiApiKey: string;
+  zaiModel: ZaiModel;
   economy: TurnEconomy;
   /** Experimental source grounding (Phase 2, item ii): fetch + keyword-extract
    * HTML source pages server-side and inject top passages. Default off;
@@ -65,6 +72,8 @@ export const DEFAULT_SETTINGS: CabinetSettings = {
   togetherApiKey: '',
   alibabaApiKey: '',
   alibabaModel: DEFAULT_ALIBABA_MODEL,
+  zaiApiKey: '',
+  zaiModel: DEFAULT_ZAI_MODEL,
   economy: 'full',
   grounding: true,
 };
@@ -78,7 +87,7 @@ export function loadSettings(): CabinetSettings {
       intensity: parsed.intensity === 'low' || parsed.intensity === 'high' ? parsed.intensity : 'medium',
       longForm: parsed.longForm === true,
       // Gemini removed (retired for new keys, 404): stored 'gemini' migrates to shared.
-      provider: parsed.provider === 'openrouter' || parsed.provider === 'groq' || parsed.provider === 'deepinfra' || parsed.provider === 'together' || parsed.provider === 'alibaba'
+      provider: parsed.provider === 'openrouter' || parsed.provider === 'groq' || parsed.provider === 'deepinfra' || parsed.provider === 'together' || parsed.provider === 'alibaba' || parsed.provider === 'zai'
         ? parsed.provider
         : 'shared',
       openRouterApiKey: typeof parsed.openRouterApiKey === 'string' ? parsed.openRouterApiKey : '',
@@ -97,6 +106,12 @@ export function loadSettings(): CabinetSettings {
       alibabaModel: typeof parsed.alibabaModel === 'string' && parsed.alibabaModel.trim() && !parsed.alibabaModel.trim().startsWith('openai/')
         ? parsed.alibabaModel.trim().slice(0, 120)
         : DEFAULT_ALIBABA_MODEL,
+      // Free-text Z.ai model code (never openai/*); anything else passes
+      // through — Test key is the live check.
+      zaiApiKey: typeof parsed.zaiApiKey === 'string' ? parsed.zaiApiKey : '',
+      zaiModel: typeof parsed.zaiModel === 'string' && parsed.zaiModel.trim() && !parsed.zaiModel.trim().startsWith('openai/')
+        ? parsed.zaiModel.trim().slice(0, 120)
+        : DEFAULT_ZAI_MODEL,
       // No OpenAI models, ever: stored openai/* IDs migrate to the default.
       openRouterModel: typeof parsed.openRouterModel === 'string' && parsed.openRouterModel.trim() && !parsed.openRouterModel.trim().startsWith('openai/')
         ? parsed.openRouterModel.trim().slice(0, 120)
@@ -118,7 +133,7 @@ export function saveSettings(settings: CabinetSettings): void {
 }
 
 export function clearApiKey(): CabinetSettings {
-  const next = { ...loadSettings(), openRouterApiKey: '', groqApiKey: '', deepInfraApiKey: '', togetherApiKey: '', alibabaApiKey: '' };
+  const next = { ...loadSettings(), openRouterApiKey: '', groqApiKey: '', deepInfraApiKey: '', togetherApiKey: '', alibabaApiKey: '', zaiApiKey: '' };
   saveSettings(next);
   return next;
 }

@@ -25,7 +25,7 @@ Phases are ordered by dependency; each should leave the app building.
 ### API keys: shared default, BYOK fallback
 Three providers (`CabinetSettings.provider` in `src/lib/settings.ts`):
 `shared` (default, no key needed) / `openrouter` (free cycle or paid pinned
-model) / `groq`, `deepinfra`, `together` (visitor BYOK keys). No Gemini
+model) / `groq`, `deepinfra`, `together`, `alibaba`, `zai` (visitor BYOK keys). No Gemini
 anywhere (retired for new keys); no OpenAI models, ever.
 
 - **Shared** = the cabinet's own Groq key, held ONLY in `netlify/functions/cabinet.js`
@@ -234,7 +234,10 @@ DeepInfra runs a visitor-chosen primary (DeepSeek V4 Flash 0731 default, or
 Qwen3.6-35B-A3B — FAILED live Sep 2026: 2.5 min to first card, still pass 1 at
 11.5 min, Low ignored) with Llama 3.3 70B
 backup on non-auth/quota failures; provenance records who spoke). Together pins
-`TOGETHER_MODEL` (user-supplied ID, verify on 404). Single-model retry + repair.
+`TOGETHER_MODEL` (user-supplied ID, verify on 404). `src/lib/zai.ts`: Z.ai
+direct, visitor key, free-text model default `glm-4.7-flash` ($0/$0 free tier,
+1 concurrent request — slow sittings; reasoning always-on, no disable flag).
+Single-model retry + repair.
 Full history in `docs/models-tried.md`.
 
 Token discipline (voices never trimmed): only the active speaker's persona is sent
@@ -541,11 +544,13 @@ gloss hygiene, example-first, loans, heat). Log both runs in
 `docs/models-tried.md`, then pin winner-first / runner-up-second on every pipe.
 No model IDs change until that eval lands. Human grades stay the verdict —
 auto-metrics below are assistants, never judges.
-Default eval question Sep 17 2026 (future-set, equal footing, no AI traps —
-no "robots"/"AGI"/"economy", no "who eats"): 'It's 2030 and intelligent
-machines can now do most necessary work cheaper than people — but some say
-humans need jobs to have purpose. Is that really a problem? What will humans
-do, who decides and what are the repercussions for society?'
+Default eval question Sep 19 2026 (future-set, equal footing, concrete
+bearers in children; watch-items: "robotics" is robot-family wording with
+past arm-blur history, "education system" can invite bearer-less systems
+talk — grade both): 'Automation and robotics have replaced almost all human
+necessary work. How does this change the education system? What do we teach
+children?' Prior 2030 purpose-question retired as control (grades stay tied
+to the question asked).
 Prompt upgrades Sep 17 (grade against these from here on): Low shape rule
 (2–4 sentences per idea, placards fail), "arm" word-sense ban, keys-in-any-order,
 repair turns counted outside the turn total (export shows the count), cached
