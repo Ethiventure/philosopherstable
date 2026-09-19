@@ -53,15 +53,15 @@ export const GEN_ORDER = [
 export const GEN_POS: Record<string, { x: number; y: number }> = {
   spinoza: { x: GEN_SPINE_X, y: 90 },
   kant: { x: GEN_LEFT_X, y: 155 },
-  hegel: { x: GEN_RIGHT_X, y: 155 },
-  marx: { x: GEN_LEFT_X, y: 250 },
-  lenin: { x: GEN_RIGHT_X, y: 250 },
+  hegel: { x: 483, y: 155 },
+  marx: { x: GEN_LEFT_X, y: 239 },
+  lenin: { x: 490, y: 251 },
   bogdanov: { x: GEN_LEFT_X, y: 345 },
   bloch: { x: GEN_RIGHT_X, y: 345 },
   weil: { x: GEN_LEFT_X, y: 440 },
-  bookchin: { x: GEN_RIGHT_X, y: 440 },
-  rose: { x: GEN_LEFT_X, y: 535 },
-  deleuze: { x: GEN_RIGHT_X, y: 535 },
+  bookchin: { x: 490, y: 440 },
+  rose: { x: 221, y: 541 },
+  deleuze: { x: 483, y: 541 },
   fisher: { x: GEN_SPINE_X, y: 600 },
 };
 
