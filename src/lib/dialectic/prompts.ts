@@ -35,7 +35,7 @@ export type TurnKind = 'opening' | 'critique' | 'reconstruction';
  * text change so grades stay comparable: a verdict on version C never
  * transfers silently to version D.
  */
-export const PROMPT_VERSION = '2026-09-19ai';
+export const PROMPT_VERSION = '2026-09-19aj';
 
 export const WORD_BUDGETS = {
   normal: { negation: 25, reformulation: 40, total: 60, opening: 40 },
@@ -160,7 +160,7 @@ export function buildTurnInstruction({ kind, prevName, isFinalSeat, longForm, re
     ...(low
       ? ['Open mid-argument through the concrete object, in your own words — concession or attack as temper dictates. No preamble, no greeting, no naming ceremony.']
       : (!reversed
-        ? [`CUT IN, don't hand over: seize the weakest point in ${prev}'s closing lines. No preamble, no greeting, no naming ceremony — interrupt. Never open with "[Name]'s claim that…", "X argues that…" or any naming-first formula; enter through the concrete object.`]
+        ? [`CUT IN, don't hand over: seize the weakest point in ${prev}'s closing lines. Open by naming ${prev} — then your own words, your own verbs. No preamble, no greeting beyond the name.`]
         : [])),
     negationLine,
     reformulationLine,
