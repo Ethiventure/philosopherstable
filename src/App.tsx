@@ -33,7 +33,7 @@ import {
   type Philosopher,
   type StyleEssence,
 } from '@/types';
-import { buildCodaEarlyPrompt, buildCodaPrompt, buildClosingScan, buildTurnInstruction, buildUserMessage, CODA_REPAIR_SUFFIX, CODA_SYSTEM, drawThreadCity, getTurnKind, LOW_CLOSING_REMINDER, PROMPT_VERSION, STRUCTURED_OUTPUT_HINT } from '@/lib/dialectic/prompts';
+import { buildCodaBankPrompt, buildCodaEarlyPrompt, buildCodaPrompt, buildClosingScan, buildTurnInstruction, buildUserMessage, CODA_REPAIR_SUFFIX, CODA_SYSTEM, drawThreadCity, getTurnKind, LOW_CLOSING_REMINDER, PROMPT_VERSION, STRUCTURED_OUTPUT_HINT } from '@/lib/dialectic/prompts';
 import { LlmError, RATES_AS_OF, estimateCost, repairTotals, resetUsage, usageTotals, type LlmErrorCode, type TurnOutput } from '@/lib/llm';
 import { DEEPINFRA_BACKUP_LABEL, DEEPINFRA_PRIMARIES, loadSettings, saveSettings, type CabinetSettings, type DeepInfraPrimary } from '@/lib/settings';
 import { applyDisplay, loadDisplay, saveDisplay } from '@/lib/preferences';
@@ -847,7 +847,19 @@ function App() {
     const attempt = async (repair = false): Promise<string> => {
       const output = await generateWithProvider(snap, CODA_SYSTEM, repair ? codaUser + CODA_REPAIR_SUFFIX : codaUser, false);
       if (runRef.current !== runId) throw new LlmError('Superseded.', false, 'unknown');
-      const text = [output.negation, output.incorporation, output.reformulation].filter((s) => s && s.trim()).join('\n\n');
+      let text = [output.negation, output.incorporation, output.reformulation].filter((s) => s && s.trim()).join('\n\n');
+      // Structural bank (late note only): its own call, fail-soft — the note
+      // stands without it. Revert: delete this block + buildCodaBankPrompt.
+      if (!early) {
+        try {
+          const bank = await generateWithProvider(snap, CODA_SYSTEM, buildCodaBankPrompt(question, text), false);
+          if (runRef.current !== runId) throw new LlmError('Superseded.', false, 'unknown');
+          const bankText = [bank.negation, bank.reformulation].filter((s) => s && s.trim()).join('\n\n');
+          if (bankText.trim()) text = `${text}\n\n${bankText}`;
+        } catch (bankError) {
+          if (typeof console !== 'undefined') console.warn('[Margins] bank call failed, note stands:', bankError);
+        }
+      }
       setText({ text });
       ref.current = text;
       setState('idle');

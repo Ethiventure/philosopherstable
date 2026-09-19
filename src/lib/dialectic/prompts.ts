@@ -33,7 +33,7 @@ export type TurnKind = 'opening' | 'critique' | 'reconstruction';
  * text change so grades stay comparable: a verdict on version C never
  * transfers silently to version D.
  */
-export const PROMPT_VERSION = '2026-09-19m';
+export const PROMPT_VERSION = '2026-09-19n';
 
 export const WORD_BUDGETS = {
   normal: { negation: 40, reformulation: 60, total: 100, opening: 60 },
@@ -337,7 +337,26 @@ export function buildCodaPrompt(
     'BELOW ARE THE FIRST TWO PASSES, ONE LINE PER THINKER PER TURN. This is everything you saw — translate it, do not invent beyond it. Never quote seat wording or specialist terms verbatim: render every hard idea in your own plain working-class English, describing what it does rather than naming it. Paraphrase the question above in your own voice too — never repeat it verbatim.',
     ...lines.map(({ name, line }) => `- ${name}: ${line}`),
     '',
-    'Write the notes from the margins in three moves, HARD ceiling 240 words total: (negation) open with a paraphrase, in your own words, of Marx saying the philosophers have only interpreted the world, in various ways, and the point is to change it — never quote it the same way twice — then say something rude about one point in these lines, then pick the ONE absence that stings most in this sitting; (reformulation) order pass 3 toward practical 21st-century action as flowing paragraphs of concrete demands for this user question, each with its first step woven into the sentence, plus your own Gen Z suggestion for action — never numbered lists, never bracketed names (both are unreadable aloud; this note is spoken); (bank) close with three sentences in this exact shape — (1) ‘What I would actually use is…’ (the most practical suggestions, restated in your own words), (2) ‘The genuinely new move was…’ (name who made it, praise it like you mean it, no backhand), (3) ‘And the weakest move was…’ (one amusing rude passing shot, funny because it is true). These three closing sentences are mandatory — a note ending on questions has failed. The bank praises moves, never repeats slogans: pass 3 must transform your words, not quote them. Name no real person, group, or place unless it appeared in the sitting lines above. Vague verbs fail the note: never have conversations, raise awareness, prioritise or push for anything without saying who does what first. Inside values, use only single or smart quotes — never bare double quotes, which corrupt the envelope. Respond with JSON only, matching this shape exactly (all four keys always present): { negation, reformulation, new_contribution, works_referenced: string[] }. Put the critique in negation, the demand-questions in reformulation, the bank as the closing paragraph of reformulation, and your own action suggestion as the one-line new_contribution. Set works_referenced to [].',
+    'Write the notes from the margins in two moves, HARD ceiling 200 words total: (negation) open with a paraphrase, in your own words, of Marx saying the philosophers have only interpreted the world, in various ways, and the point is to change it — never quote it the same way twice — then say something rude about one point in these lines, then pick the ONE absence that stings most in this sitting; (reformulation) order pass 3 toward practical 21st-century action as flowing paragraphs of concrete demands for this user question, each with its first step woven into the sentence, plus your own Gen Z suggestion for action — never numbered lists, never bracketed names (both are unreadable aloud; this note is spoken). A separate closing bank follows this note, so end on the demands — no summary here. Name no real person, group, or place unless it appeared in the sitting lines above. Vague verbs fail the note: never have conversations, raise awareness, prioritise or push for anything without saying who does what first. Inside values, use only single or smart quotes — never bare double quotes, which corrupt the envelope. Respond with JSON only, matching this shape exactly (all four keys always present): { negation, reformulation, new_contribution, works_referenced: string[] }. Put the critique in negation, the demand-questions in reformulation, and your own action suggestion as the one-line new_contribution. Set works_referenced to [].',
+  ].join('\n');
+}
+
+/**
+ * Closing bank: a SEPARATE call after the late margins note (structural —
+ * the three-sentence close kept dying inside the note's own generation, so
+ * it moved to a call whose only job is the close). Reads the finished note,
+ * not the sitting lines. One extra request per sitting; fail-soft (the note
+ * stands without it).
+ */
+export function buildCodaBankPrompt(question: string, noteText: string): string {
+  return [
+    `QUESTION (verbatim): ${question}`,
+    '',
+    'BELOW IS YOUR FINISHED NOTE FROM THE MARGINS. Close it with three sentences in this exact shape — (1) ‘What I would actually use is…’ (the most practical suggestions in the note, restated in your own words), (2) ‘The genuinely new move was…’ (name who made it, praise it like you mean it, no backhand), (3) ‘And the weakest move was…’ (one amusing rude passing shot, funny because it is true). Plain working-class English throughout, never numbered lists, never bracketed names. Inside values, use only single or smart quotes — never bare double quotes, which corrupt the envelope.',
+    '',
+    noteText,
+    '',
+    'Respond with JSON only, matching this shape exactly (all four keys always present): { negation, reformulation, new_contribution, works_referenced: string[] }. Put the three closing sentences in reformulation, set negation to one short rude bridge sentence, new_contribution to the praised move in one line, works_referenced to [].',
   ].join('\n');
 }
 
