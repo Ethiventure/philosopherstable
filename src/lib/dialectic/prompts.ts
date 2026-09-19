@@ -35,7 +35,7 @@ export type TurnKind = 'opening' | 'critique' | 'reconstruction';
  * text change so grades stay comparable: a verdict on version C never
  * transfers silently to version D.
  */
-export const PROMPT_VERSION = '2026-09-19ad';
+export const PROMPT_VERSION = '2026-09-19ae';
 
 export const WORD_BUDGETS = {
   normal: { negation: 25, reformulation: 40, total: 60, opening: 40 },
@@ -111,7 +111,7 @@ export function buildTurnInstruction({ kind, prevName, isFinalSeat, longForm, re
 
   if (kind === 'opening') {
     return [
-      `OPENING TURN (HARD ceiling: ${b.opening} words — shorter is welcome). As you near the ceiling, finish the current idea and sentence, then stop — never trail off mid-thought, never open a new point past it. Answer the question directly in your own framework. Paraphrase the question through your framework; never repeat it verbatim.`,
+      `OPENING TURN (HARD ceiling: ${b.opening} words — shorter is welcome). As you near the ceiling, finish the current idea and sentence, then stop — never trail off mid-thought, never open a new point past it. Answer the question directly in your own framework. Paraphrase the question through your framework; never repeat it verbatim. Ground it: name the thread city, one named person there, and their predicament — this scene carries the whole sitting.`,
       'Do not refer to any other thinker; there is no predecessor yet.',
       'Follow your characteristic movement.',
       'Short, punchy sentences in your own diction and rhythm — continuous prose, no headings — cut filler, never pad to the budget.',
@@ -133,7 +133,7 @@ export function buildTurnInstruction({ kind, prevName, isFinalSeat, longForm, re
   const negationLine = pass === 2
     ? `1. THE BREAK (roughly ${b.negation} words, ONE paragraph): one break from inside ${prev}'s own argument, shaped like this — you are right that X, which is exactly why Y fails. X is the clause they got right, Y the fault line their own premises open. No steelman, no keep/break ceremony, no new topics: the single break is the whole turn.`
     : pass === 1
-      ? `1. REJECTION (roughly ${b.negation} words, ONE paragraph): name the ONE specific claim of ${prev} you reject and the contradiction it carries — in your framework's own vocabulary, no clause over five words matching ${prev} verbatim. No steelman, no keep/break ceremony: one rejection, one contradiction.`
+      ? `1. REJECTION (roughly ${b.negation} words, ONE paragraph): name the ONE specific claim of ${prev} you reject and the contradiction it carries — in your framework's own vocabulary, no clause over five words matching ${prev} verbatim. No steelman, no keep/break ceremony: one rejection, one contradiction. If history lines about ${prev} appear below, open with one clause placing yourself against them through that history — what you took or where you broke — then argue.`
       : `1. REJECTION (roughly ${b.negation} words, ONE paragraph): reject one specific thing — from PREV or the survey — in a clause, in your framework's own vocabulary, no clause over five words matching ${prev} verbatim. No steelman, no keep/break ceremony.`;
 
   const reformulationLine =
@@ -173,10 +173,10 @@ export function buildTurnInstruction({ kind, prevName, isFinalSeat, longForm, re
     ...(pass === 1
       ? ['HISTORY TONE: below PREV’s text, find the lines headed YOUR HISTORY WITH / OWES YOU plus YOUR PEOPLE — that is your real relationship to PREV and the room, and it must be heard. Your negation’s opening sentences place you against PREV through that history: name what you took from them or where you broke with them — said once, in your own verbs, then argue from inside it. A turn that never touches its history lines has failed. If no such lines appear, argue from the live claims alone.']
       : []),
-    'SCENARIO THREAD: the opening turn’s concrete scene (named person, place, predicament) carries the whole sitting — reuse its people, never invent new ones each turn. Hold every stated premise of the scenario as a fixed constraint for all turns (if necessary work is done by robots, no humans do cleaning — never reintroduce what the scenario removed). The scene illustrates the philosophy; it never becomes the debate. A turn that argues about the scenario instead of through it has mistaken the example for the point. A turn that breaks a stated premise has failed.',
+    'SCENARIO THREAD: the opening turn’s concrete scene (named person, place, predicament) carries the whole sitting — reuse its people, never invent new ones each turn. Every turn routes at least one sentence through that scene: the argument must touch the named person or place, not hover above them. Hold every stated premise of the scenario as a fixed constraint for all turns (if necessary work is done by robots, no humans do cleaning — never reintroduce what the scenario removed). The scene illustrates the philosophy; it never becomes the debate. A turn that argues about the scenario instead of through it has mistaken the example for the point. A turn that breaks a stated premise has failed.',
     'MOOD, OUT LOUD: let the feeling show strongly in your own diction — blunt words, swears, exclamations, sorrow, fear, joy, interjections where your voice would use them; mourning, fury, tenderness where it would feel them. Polite evenness fails the turn.',
     'RHYTHM BREAKS: vary sentence structure and never three long sentences running without a short punch after. Even cadence lulls; the reader should feel the gear change.',
-    'FELT VERBS: attach one feeling verb in your own diction — fear, mourn, love, hate — to the argument. Display verbs alone (shows, reveals, demonstrates) fail the turn.',
+    'FELT VERBS: the feeling lives inside the move, not beside it — the rejection, the break, the build each carries one feeling verb in your own diction (fear, mourn, love, hate). A move performed coolly fails the turn; display verbs alone (shows, reveals, demonstrates) fail it twice.',
     'TWO MASTERS: every turn answers the original question fresh AND advances the PREV debate. A turn that only answers PREV has drifted; a turn that only answers the question has stalled.',
     'PREMISE HOLD: the question\'s givens are fixed constraints for all passes — if necessary work is gone, there are no jobs to train for, no vocations to prepare, no labour market to enter. Never propose what the premise removed; never quietly restore the old world to make your answer easier. Every consequence, demand, and slogan must assume the premise, not undo it. A turn that answers a different question has failed, however well argued.',
     'PLACES: one sitting, one thread city — the opening turn names a city in the question’s world and every later turn stays there unless the argument itself travels. Never default to the speaker’s home country or birthplace; rotate the part of the world sitting to sitting. A thread city keeps the sitting rooted; a single country every sitting means the root never moves.',
