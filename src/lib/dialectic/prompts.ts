@@ -33,7 +33,7 @@ export type TurnKind = 'opening' | 'critique' | 'reconstruction';
  * text change so grades stay comparable: a verdict on version C never
  * transfers silently to version D.
  */
-export const PROMPT_VERSION = '2026-09-19e';
+export const PROMPT_VERSION = '2026-09-19f';
 
 export const WORD_BUDGETS = {
   normal: { negation: 40, reformulation: 60, total: 100, opening: 60 },
@@ -284,6 +284,15 @@ export function buildUserMessage({ question, prevText, relationshipLine = null, 
  */
 export const LOW_CLOSING_REMINDER =
   'FINAL CHECK before answering, Low only: reread your draft and circle every word AND every idea a school-leaver would not know — rewrite both in plain words and concrete scenes. Every abstraction must have its everyday 21st-century example attached; an unexamined abstraction fails the turn. Say everything once: the second half must advance the thought, never restate the first. Your LANGUAGE LEVEL above governs.';
+
+/**
+ * Universal closing scan, all levels, placed just before the JSON hint
+ * (closest instruction to generation). The persona's NO LOOPS and the
+ * turn's ECHO/FIVE-WORD rules fire early and get ignored mid-draft —
+ * this is the last gate: reread the draft, delete the weaker twin.
+ */
+export const CLOSING_SCAN =
+  'FINAL SCAN before answering, every level: reread your draft and delete before sending. Cut any sentence that repeats an earlier sentence\'s words or idea — saying the same thing twice fails the turn, however true. Cut any clause over five words shared with PREV, the survey, the margins, or the question — paraphrase it afresh. What survives must each push the debate somewhere new.';
 
 export const STRUCTURED_OUTPUT_HINT = [  'Respond with JSON only, matching this shape exactly (all four keys always present, in any order):',
   '{ negation, reformulation, new_contribution, works_referenced: string[] }',
