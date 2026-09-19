@@ -34,7 +34,7 @@ import {
   type StyleEssence,
 } from '@/types';
 import { buildCodaEarlyPrompt, buildCodaEndPrompt, buildCodaPrompt, buildClosingScan, buildTurnInstruction, buildUserMessage, CODA_REPAIR_SUFFIX, CODA_SYSTEM, drawThreadCity, getTurnKind, GLOSSARY_SHAPE, LOW_CLOSING_REMINDER, PROMPT_VERSION, STRUCTURED_OUTPUT_HINT } from '@/lib/dialectic/prompts';
-import { LlmError, ECHO_REPAIR_SUFFIX, incrementRepair, RATES_AS_OF, estimateCost, repairBreakdown, repairTotals, resetUsage, sharesPassage, usageTotals, type LlmErrorCode, type TurnOutput } from '@/lib/llm';
+import { LlmError, RATES_AS_OF, estimateCost, repairBreakdown, repairTotals, resetUsage, sharesPassage, usageTotals, type LlmErrorCode, type TurnOutput } from '@/lib/llm';
 import { DEEPINFRA_BACKUP_LABEL, DEEPINFRA_PRIMARIES, loadSettings, saveSettings, type CabinetSettings, type DeepInfraPrimary } from '@/lib/settings';
 import { applyDisplay, loadDisplay, saveDisplay } from '@/lib/preferences';
 import { generateTurnGroq, testGroqKey } from '@/lib/groq';
@@ -789,11 +789,9 @@ function App() {
       // Gloss audit hook (Sep 2026): the auto-retry was rolled back as
       // spend-without-gain — the fifth key stays as a cheap nudge, but no
       // turn is ever re-sent for it. Bare-term counts, if ever needed, go here.
-      // Structural echo guard: shared paragraphs fail mechanically. Compare
-      // the new turn against every earlier turn plus both margins notes; any
-      // shared 8-word run earns one rewrite retry. Fail-soft — the retry
-      // stands even if it still overlaps (logged), so a sitting never blocks.
-      // Revert: delete this block (prompt ECHO line stays harmless).
+      // Echo watch (Sep 2026): the rewrite retry was rolled back as
+      // spend-without-gain (10 retries, echo persisted) — the detector stays
+      // as a cost-free logger so evals keep measuring. Revert: delete block.
       {
         const priors = [
           ...collected.map((item) => item.response_text),
@@ -801,18 +799,8 @@ function App() {
           ...(codaRef.current ? [codaRef.current] : []),
         ];
         const draft = `${output.negation} ${output.reformulation}`;
-        if (sharesPassage(draft, priors)) {
-          try {
-            incrementRepair('echo');
-            const rewritten = await generateWithProvider(snap, systemPrompt, `${userMessage} ${ECHO_REPAIR_SUFFIX}`, snap.longForm);
-            if (runRef.current !== runId) return;
-            if (sharesPassage(`${rewritten.negation} ${rewritten.reformulation}`, priors)) {
-              if (typeof console !== 'undefined') console.warn(`[Echo] rewrite still overlaps for ${speaker.full_name}; keeping retry.`);
-            }
-            output = rewritten;
-          } catch (echoError) {
-            if (typeof console !== 'undefined') console.warn(`[Echo] rewrite failed for ${speaker.full_name}, original stands:`, echoError);
-          }
+        if (sharesPassage(draft, priors) && typeof console !== 'undefined') {
+          console.warn(`[Echo] overlap kept (logger only) for ${speaker.full_name}.`);
         }
       }
       const item = toIntervention(speaker, pass + 1, seatPos, output, previousSpeaker);
