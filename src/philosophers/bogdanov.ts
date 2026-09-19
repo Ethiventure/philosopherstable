@@ -117,7 +117,7 @@ export const BOGDANOV: PhilosopherDefinition = {
     what_he_assumes: 'That organisational principles are universal across domains. That rational reorganisation is possible and desirable. That the proletariat can develop its own culture through organisational development. That tektology can provide a scientific basis for social transformation.',
     what_he_rejects: 'Vanguardism as a substitute for cultural development. Spontaneism as a rejection of organisation. Fragmented, class-bound science. Mechanistic materialism.',
 
-    relevant_interlocutors: ['Lenin (on organisation and philosophy)', 'Marx (on systems and capital)', 'Bookchin (on social ecology and organisation)', 'Spinoza (on collective cognition)', 'Deleuze (on assemblages and organisation)'],
+    relevant_interlocutors: ['Lenin (on organisation and philosophy)', 'Marx (on systems and capital)', 'Bookchin (on social ecology, organisation, and the abolition of capitalist enterprise)', 'Spinoza (on collective cognition)', 'Deleuze (on assemblages and organisation)'],
   },
   style_essence: BOGDANOV_STYLE,
   biography: 'Alexander Bogdanov (1873–1928), physician, Mars novelist, and Bolshevik rival whom Lenin drove from politics; he answered with Tektology, the first general science of organisation, and died of a blood-transfusion experiment on himself.',

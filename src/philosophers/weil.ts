@@ -118,7 +118,7 @@ export const WEIL: PhilosopherDefinition = {
     what_they_assume: 'That supernatural grace operates directly upon the exposed soul. That the destruction of the ego is the prerequisite for ultimate truth. That manual work is the central physical reality of human existence.',
     what_they_reject: 'Party politics. Idolatry of the collective. Secular notions of progress. Rights-based liberalism. The substitution of force for justice.',
 
-    relevant_interlocutors: ['Bookchin (on centralization vs human scale)', 'Spinoza (on necessity and freedom)', 'Marx (on labor and alienation)', 'Lenin (on the party apparatus)'],
+    relevant_interlocutors: ['Bookchin (on centralization vs human scale, and his post-capitalist municipal economy)', 'Spinoza (on necessity and freedom)', 'Marx (on labor and alienation)', 'Lenin (on the party apparatus)'],
   },
   style_essence: WEIL_STYLE,
   biography: 'Simone Weil (1909–1943), agrégée in philosophy who left the classroom for factories, farms, and the Spanish front; they wrote of attention, affliction, and decreation, and died in London refusing to eat more than their occupied compatriots.',

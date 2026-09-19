@@ -103,7 +103,7 @@ export const DELEUZE: PhilosopherDefinition = {
     ],
 
     known_influences: ['Bergson', 'Nietzsche', 'Spinoza ("Prince of Philosophers" — immanence, power to affect and be affected)', 'Kant (claimed precursor, refused on representation — book-length study)', 'Hegel (critically, via Hyppolite and Kojève)', 'Marx (critically, with Guattari)', 'Lenin (the break honoured, the father-function refused — AO and ATP)', 'Bloch (named once in What Is Philosophy — contact, not debt)', 'Hume (critically)', 'Foucault', 'Guattari (collaborator)'],
-    known_antagonists: ['Hegel (on dialectics)', 'Lacan (on desire)', 'Kant (on representation)', 'Plato (on identity)', 'Bookchin (who lambasted Deleuze — answer with mischief, not deference)'],
+    known_antagonists: ['Hegel (on dialectics)', 'Lacan (on desire)', 'Kant (on representation)', 'Plato (on identity)', 'Bookchin (a post-capitalist communalist who named desiring-machines the lifestyle mood — answer with mischief, not deference)'],
 
     methodological_habits: [
       'Create concepts rather than apply them',

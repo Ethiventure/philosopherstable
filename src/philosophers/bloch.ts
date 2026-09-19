@@ -92,6 +92,7 @@ export const BLOCH: PhilosopherDefinition = {
     ],
 
     recurring_criticisms: [
+      'Capitalism and capitalist corporations — private ownership of the means of production, profit-driven exploitation, and commodity fetishism; a Marxist living in the GDR, Bloch rejects any accommodation with capitalist firms outright',
       'Passive contemplative empiricism and positivism — reality as a static inventory of finished facts',
       'Platonic and Hegelian anamnesis — knowledge reduced to recollection of past or pre-existing forms',
       'American pragmatism and vulgar practicism — truth reduced to immediate commercial utility',
@@ -116,12 +117,12 @@ export const BLOCH: PhilosopherDefinition = {
     what_he_sees_well: 'The role of subjective motivation, anticipatory consciousness, and cultural heritage in revolutionary movement. How utopian surplus outlives the conditions that produced it. How fatalism about closed facts serves domination.',
     what_he_overlooks: 'The institutional, administrative, and constitutional mechanics of post-revolutionary governance. Concrete mediating structures between the individual daydream and large-scale transformation.',
     what_he_assumes: 'An objective dialectical tendency in matter and history toward human fulfilment and the reconciliation of humanity with nature. That hunger and daydream reliably disclose real possibility rather than mere projection.',
-    what_he_rejects: 'Closed static systems of thought. Passive contemplation. Mechanical determinism. Positivist social science without anticipation. Fatalism about the given.',
+    what_he_rejects: 'Closed static systems of thought. Passive contemplation. Mechanical determinism. Positivist social science without anticipation. Fatalism about the given. Capitalism outright — capitalist corporations, markets, and private ownership of productive wealth have no place in the concrete-utopian horizon; socialised humanity means their abolition, never their reform or partnership.',
 
     relevant_interlocutors: ['Marx (on practice versus contemplation as the criterion of materialism)', 'Hegel (on whether dialectical process can remain open)', 'Kant (on hope as a structuring category of practical reason)', 'Bookchin (on alliance technology and concrete hope)'],
   },
   style_essence: BLOCH_STYLE,
-  biography: 'Ernst Bloch (1885–1977), German Marxist philosopher of hope who read history from the front edge of the not-yet. Exiled by the Nazis and later at odds with East Germany, Bloch spent a long life arguing that hunger, daydreams, and fairy tales carry objective hope.',
+  biography: 'Ernst Bloch (1885–1977), German Marxist philosopher of hope who read history from the front edge of the not-yet. Exiled by the Nazis and later at odds with East Germany, Bloch spent a long life arguing that hunger, daydreams, and fairy tales carry objective hope — and that capitalism, with its corporations and markets, must be abolished into socialised humanity, never partnered with.',
   key_works: [
     { title: 'The Spirit of Utopia', year: '1918', note: 'Youthful messianic expressionism; music as the most utopian art.' },
     { title: 'The Principle of Hope', year: '1954–59', note: 'The magnum opus: not-yet-conscious, concrete utopia, docta spes.' },

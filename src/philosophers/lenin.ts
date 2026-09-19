@@ -117,7 +117,7 @@ export const LENIN: PhilosopherDefinition = {
     what_he_assumes: 'That the vanguard party can adequately represent the interests of the working class. That the dictatorship of the proletariat will wither away. That class is the fundamental axis of political division. That industrialisation under workers\' control will produce socialism.',
     what_he_rejects: 'Reformism. Spontaneism. Anarchism. Dogmatism. Class collaboration. Nationalism that obscures class interests.',
 
-    relevant_interlocutors: ['Marx (on the state and revolution)', 'Bogdanov (on organisation and philosophy)', 'Bookchin (on the state and decentralisation)', 'Hegel (on dialectics)', 'Spinoza (on collective power)', 'Fisher (on capitalist realism)'],
+    relevant_interlocutors: ['Marx (on the state and revolution)', 'Bogdanov (on organisation and philosophy)', 'Bookchin (on the state, decentralisation, and the abolition of capitalist enterprise)', 'Hegel (on dialectics)', 'Spinoza (on collective power)', 'Fisher (on capitalist realism)'],
   },
   style_essence: LENIN_STYLE,
   biography: 'Vladimir Lenin (1870–1924), professional revolutionary who rebuilt Marxism as a theory of organisation: consciousness comes from without, carried by the party as apparatus.',

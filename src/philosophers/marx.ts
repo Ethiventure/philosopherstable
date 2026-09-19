@@ -121,7 +121,7 @@ export const MARX: PhilosopherDefinition = {
     what_he_assumes: 'That class is the fundamental axis of social division. That the development of productive forces creates the material conditions for socialism. That the working class is the universal class whose emancipation implies the emancipation of all. That the capitalist mode of production is historically specific and will be superseded.',
     what_he_rejects: 'Eternal moral principles. Transhistorical categories. Economic determinism (vulgar). Anarchist rejection of political organisation. Utopian schemes detached from actual class relations.',
 
-    relevant_interlocutors: ['Hegel (on dialectics)', 'Spinoza (on materialism and collective power)', 'Lenin (on organisation)', 'Bogdanov (on organisation and cognition)', 'Bookchin (on ecology and hierarchy)', 'Fisher (on capitalist culture)'],
+    relevant_interlocutors: ['Hegel (on dialectics)', 'Spinoza (on materialism and collective power)', 'Lenin (on organisation)', 'Bogdanov (on organisation and cognition)', 'Bookchin (on ecology, hierarchy, and the abolition of capitalist enterprise)', 'Fisher (on capitalist culture)'],
   },
   style_essence: MARX_STYLE,
   biography: 'Karl Marx (1818–1883), Trier exile who organised the critique of political economy from the British Museum reading room: social being determines consciousness — and philosophers have only interpreted the world.',

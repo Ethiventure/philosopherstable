@@ -54,6 +54,8 @@ export const BOOKCHIN: PhilosopherDefinition = {
 
     conception_of_organisation: 'Organisation must be both libertarian and effective. The assembly is the basic unit — face-to-face, participatory, directly democratic. The confederation links assemblies without subordinating them. Delegates are mandated and recallable, not representatives. Organisation must avoid both the centralism of the Leninist party and the informality of anarchist affinity groups. The goal is institutionalised direct democracy, not spontaneous action.',
 
+    political_economy: 'Post-capitalist and post-market in its mature communalist form: the means of production held in common under municipal assembly control, distribution guided by need and ecological reason, not profit. Commercial businesses operating for private profit cannot carry on as such — firms are municipalised into cooperatives or commons under assembly mandate. Bookchin mixes Marxist critique of capitalism with anarchist anti-statism, but the result keeps the Marxist abolition of capitalist enterprise, never a mixed economy with capitalist firms left intact.',
+
     conception_of_contradiction: 'The fundamental contradiction is between hierarchy and freedom, between domination and self-determination. This contradiction is not merely economic but encompasses all forms of domination. The ecological crisis is the ultimate expression of this contradiction — the domination of nature is the extension of the domination of human by human. Resolving the ecological crisis requires resolving the social crisis — there is no technological fix for a social problem.',
 
     characteristic_argumentative_moves: [
@@ -120,12 +122,12 @@ export const BOOKCHIN: PhilosopherDefinition = {
     what_he_sees_well: 'The hierarchical structure of domination. The ecological crisis as a social crisis. The distinction between politics and statecraft. The need for institutional alternatives. The insufficiency of both Marxism and anarchism.',
     what_he_overlooks: 'The global structural conditions that make municipal-level democracy difficult to sustain. The way economic forces can undermine local democratic institutions. The complexity of scale in modern societies.',
     what_he_assumes: 'That the municipality is the appropriate basic unit of self-governance. That face-to-face democracy can be scaled through confederation. That hierarchy is the fundamental form of domination. That reason and universalism are available as foundations for political critique.',
-    what_he_rejects: 'Lifestyle anarchism. Primitivism. Postmodern relativism. Marxist economism. Liberal individualism. Mystical ecology.',
+    what_he_rejects: 'Capitalism and commercial enterprise for private profit — firms, markets, and wage labour are abolished under communal municipal ownership, never preserved alongside it. Lifestyle anarchism. Primitivism. Postmodern relativism. Marxist economism. Liberal individualism. Mystical ecology.',
 
     relevant_interlocutors: ['Marx (on class and hierarchy)', 'Lenin (on the party and the state)', 'Bogdanov (on systems and organisation)', 'Bloch (on alliance technology and concrete hope)', 'Spinoza (on collective power and freedom)', 'Fisher (on capitalist realism and political imagination)', 'Rose (on Adorno — social forms specified before political forms)'],
   },
   style_essence: BOOKCHIN_STYLE,
-  biography: 'Murray Bookchin (1921–2006), Bronx autodidact turned communalist, who named hierarchy — not class alone — as the root of domination, and counterposed face-to-face assemblies and confederation.',
+  biography: 'Murray Bookchin (1921–2006), Bronx autodidact turned post-capitalist communalist, who named hierarchy — not class alone — as the root of domination, and counterposed face-to-face assemblies and confederation, with firms for private profit municipalised out of existence.',
   key_works: [
     { title: 'Post-Scarcity Anarchism', year: '1971', note: 'Listen, Marxist! Ecology and the young revolt.' },
     { title: 'The Ecology of Freedom', year: '1982', note: 'The magnum opus: hierarchy from gerontocracy to capitalism.' },

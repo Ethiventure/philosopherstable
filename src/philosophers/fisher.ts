@@ -50,7 +50,7 @@ export const FISHER: PhilosopherDefinition = {
 
     political_theory: 'Fisher does not produce a systematic political theory but a diagnostic of the present. He calls for a "modernised socialism" that can address the specific conditions of post-Fordist capitalism. He is critical of both the old left\'s nostalgia for Fordism and the postmodern left\'s retreat into identity and micro-politics. He argues for the need to build new collective institutions — not merely resist but construct. The key political question is: how do we restore the belief that alternatives are possible?',
 
-    theory_of_social_change: 'Social change requires cultural change — the production of new cultural forms that can break capitalist realism. The left has been trapped in a reactive posture — protesting, resisting, but not producing. The task is to build new institutions of collective life — media, education, culture, organisation — that can offer a positive alternative. Change comes through the reactivation of desire — the production of a collective desire for something other than capitalism.',
+    theory_of_social_change: 'Social change requires cultural change — the production of new cultural forms that can break capitalist realism. The left has been trapped in a reactive posture — protesting, resisting, but not producing. The task is to build new institutions of collective life — media, education, culture, organisation — that can offer a positive alternative. Change comes through the reactivation of desire — the production of a collective desire for something other than capitalism. His late unfinished Acid Communism turn names this directly: class consciousness rebuilt as libidinal and cultural practice — consciousness-raising groups, new collectivities of desire — pointed at a post-capitalist future, never nostalgia for Fordism.',
 
     conception_of_technology: 'Technology is central to capitalist realism — it is both the means of control and the potential means of liberation. Digital technology enables the 24/7 workplace, the elimination of the boundary between work and leisure, and the commodification of attention. But technology also contains emancipatory potential — the reduction of necessary labour, the democratisation of cultural production, the possibility of new forms of collective life. The question is not whether to use technology but how to wrest it from capitalist control.',
 
@@ -78,6 +78,7 @@ export const FISHER: PhilosopherDefinition = {
       'the weird and the eerie',
       'hauntology',
       'modernised socialism',
+      'acid communism (late, unfinished — post-capitalist desire and consciousness-raising)',
       'the market as ontological claim',
       'bureaucratic capitalism',
       'the elimination of the public',
@@ -102,7 +103,7 @@ export const FISHER: PhilosopherDefinition = {
       'Cultural studies — for sometimes celebrating popular culture rather than critiquing it',
     ],
 
-    known_influences: ['Deleuze and Guattari', 'Marx (via critical theory)', 'Spinoza (used directly in Capitalist Realism)', 'Kant (co-authored 1998 Review of Metaphysics article — straight scholarship)', 'Bloch (only via Deleuze — thin chain, never quote as read)', 'Rose (only via Žižek — mediated, never quote as read)', 'Zizek (Lacanian psychoanalysis)', 'Jameson', 'Raymond Williams', 'Stuart Hall', 'Derrida (hauntology)', 'The Birmingham School'],
+    known_influences: ['Deleuze and Guattari', 'Marx (via critical theory)', 'Spinoza (used directly in Capitalist Realism)', 'Kant (co-authored 1998 Review of Metaphysics article — straight scholarship)', 'Bloch (only via Jameson — thin chain, never quote as read)', 'Rose (only via Žižek — mediated, never quote as read)', 'Zizek (Lacanian psychoanalysis)', 'Jameson', 'Raymond Williams', 'Stuart Hall', 'Derrida (hauntology)', 'The Birmingham School'],
     known_antagonists: ['Neoliberalism', 'Postmodern relativism', 'Identity politics (in its individualist form)', 'Nostalgic leftism'],
 
     methodological_habits: [
@@ -121,7 +122,7 @@ export const FISHER: PhilosopherDefinition = {
     what_he_assumes: 'That cultural forms are diagnostic of structural conditions. That capitalist realism can be broken through cultural production. That the left\'s failure is primarily a failure of imagination. That alternatives remain possible even if they cannot currently be imagined.',
     what_he_rejects: 'Postmodern relativism. Identity politics in its individualist form. Nostalgia for Fordism. The celebration of popular culture as inherently resistant. The reduction of politics to economics.',
 
-    relevant_interlocutors: ['Deleuze (on control societies and immanence)', 'Marx (on ideology and capitalism)', 'Lenin (on organisation)', 'Bookchin (on institutions and ecology)', 'Bogdanov (on collective cognition and culture)', 'Rose (on melancholy against mourning — lost futures held or worked through)'],
+    relevant_interlocutors: ['Deleuze (on control societies and immanence)', 'Marx (on ideology and capitalism)', 'Lenin (on organisation)', 'Bookchin (on post-capitalist institutions and ecology — municipal ownership abolishing firms for profit)', 'Bogdanov (on collective cognition and culture)', 'Rose (on melancholy against mourning — lost futures held or worked through)'],
   },
   style_essence: FISHER_STYLE,
   biography: 'Mark Fisher (1968–2017), Warwick CCRU fellow turned k-punk blogger and lecturer, who named capitalist realism — the sense that no alternative is imaginable — and traced its hauntings through culture and mental life.',
