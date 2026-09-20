@@ -29,9 +29,18 @@ Next three sittings, in order, each with kill/keep criteria:
    only needs to beat reading time — 4:26 for 15 turns passes easily.
 3. Alibaba qwen3.8-27b — first Medium grade (trial quota). KEEP if voice
    survives Medium rules; otherwise it stays the Low voice leader only.
+   RESULT Sep 20: SPLIT. Voice survives (P1s voiced + distinct, P3s
+   differentiated with slogan "Map the grid, seize the future", $0.090
+   paid-equiv / $0 quota, 3:15 wall, 1 repair). But P2s collapse into
+   verbatim echo — the same "atrophy of political agency / citoyen
+   rebirth" paragraph in 4 of 5 turns, shared opener across Marx/Bloch/
+   Weil. Stays the Low voice leader; not a Medium engine. Medium is now
+   GLM vs Qwen30B.
 Per-level recommendation (current best guess, changes with evidence):
 - Low: Alibaba 27B (proven voice, plain level) — Qwen30B untested at Low.
-- Medium: Qwen30B (dilemma-grasp; echo/history/beats still open).
+- Medium: GLM-5.3-flash (citations + debts + differentiated P3s, no P2 echo) vs Qwen30B (dilemma-grasp best, echo open) — head-to-head owed.
+- High: OPEN — nobody graded at High since prompts stabilized; winner of
+  Medium gets the High sitting.
 - High: OPEN — nobody graded at High since prompts stabilized; winner of
   Medium gets the High sitting.
 Free default: Alibaba trial to Dec 16, then cheapest proven paid.
@@ -48,8 +57,8 @@ Test queue (Sep 20 2026 — NOTHING ruled out yet, status per model):
   (Medium, $0.021, 0 repairs). Tuning track open in PLAN Phase 7c:
   emotional-grip gap vs 30B, golden-turn few-shots from owner-graded
   best turns, retest checklist per round.
-- Alibaba qwen3.8-27b: NOT ruled out — voice leader at Low on trial quota;
-  first Medium grade still owed.
+- Alibaba qwen3.8-27b: SPLIT (Sep 20 Medium) — voice survives, P2 echo
+  fails. Low voice leader confirmed; not a Medium engine (see session log).
 - Z.ai glm-4.7-flash: NOT ruled out — pipe built, never run; Low burn-check
   first, Medium only if clean.
 Ruled out already (corpses, do not re-test): small Qwens (burn),
@@ -99,6 +108,7 @@ helps one model.
 usage instrument ran — earlier sessions predate it)
 
 | Model | Provider | Time | Tokens (in/out, calls) | Errors | Quality notes | Interim verdict | Next step | Final verdict |
+| qwen3.8-27b | Alibaba (visitor key) | Sep 20, Medium normal-form, prompt v2026-09-19am, Nairobi, default five, no desk: 3:15 wall (debate 3:11), 18 calls 180.4K/6K (10.8K cached), 1 JSON repair, ~$0.090 paid-equiv ($0 on trial quota) | FIRST MEDIUM GRADE: SPLIT. P1s genuinely voiced and distinct (Friedrich + loom, cunning of Reason; Marx flips Hegel on surplus-value; Bloch charges Marx with static abolition; Weil charges Bloch with Novum-illusion; Bookchin charges Weil with mechanic-trap). Debts spoken throughout. 8 citations pass-annotated. P3s differentiated with slogan + margins answers (Weil/Bloch answer bodies-break directly). BUT P2s echo catastrophically: identical "atrophy of political agency / citoyen rebirth / not just fix pipes" paragraph closes 4 of 5 turns; Marx/Bloch/Weil openers share "friction of scarcity / forge of agency / hollow shell" near-verbatim. Same cluster-echo fault as Qwen30B, worse here. Hegel P1 opens Berlin against Nairobi thread (persona-default? same as GLM's Hegel). Margins notes strong both rounds. | **Voice survives, engine fails — Low leader, not Medium** | Stays Low default; Medium is GLM vs 30B | Open |
 | z-ai/glm-5.3-flash | OpenRouter paid | Sep 20, Medium normal-form, prompt v2026-09-19am, Johannesburg, default five, no desk: 5:26 wall (debate 4:26), 21 calls 189.6K/14.5K (5.3K reasoning, 14.9K cached), 3 JSON repairs, ~$0.018 | REMATCH: KEEPS. P3s genuinely differentiated — five distinct slogans (pipe decides / count-then-claim / machines to the school-street / assembly assigns the ache / no assigned ache + child votes own curriculum), Bookchin breaks from Hegel rather than echoing. Thread city mostly held (Hegel P1 opens Berlin against Johannesburg thread; Bookchin P3 names no city; rest hold incl. Hillbrow/Soweto/Alexandra). Citations present (9 works, pass-annotated — beats 14B's empty list). Debts spoken (Marx sets dialectic on feet; Bloch Thesis 3; Bookchin→Weil via Macdonald twice). Margins strong with banked first-steps per seat. Pace 4:26 debate for 15 turns — under 8-min wall and faster than reading time per owner note. Faults: Hegel P1 city break; closing summary names use + new move but weakest-shot is Hegel-roast rather than turn-grade; Berlin opener suggests PLACES still weak on P1. | **Keeps — engine challenger, best backup confirmed** | Alibaba 27B Medium next | Open |
 | qwen/qwen3-14b | OpenRouter paid | Sep 20, Medium normal-form, prompt v2026-09-19am, Bristol, default five, no desk: 1:53 wall (debate 1:35), 18 calls 165.7K/4K, repairs 0, ~$0.021 | ELIMINATION TEST 1: SURVIVES — contract held, no burn, no loop. Name-first openings clean ("Hegel, You claim…" — prefix + body, no doubling). Turns punchy and varied; P3s concrete (loom-gazing, co-ops, seize-the-means). Closing summary present with use + praise (weakest-shot missing). Faults: thread city DROPPED (Bristol never mentioned — PLACES ignored); zero citations all sitting (reading list empty despite grounding on); history debts unspoken; "More's Utopia" filler slip in Bloch P2. Cheapest ticket works. | **Survives — cheapest viable engine** | GLM rematch next | Open |
 | deepseek/deepseek-v4.1-flash | OpenRouter paid | Sep 20, Medium, prompt v2026-09-19al, Accra, PARTIAL — 3 turns then HALT (no pass 2/3, no notes): 11:57 wall, 8 calls 77.3K/2.2K (16.8K cached), 3 JSON repairs, ~$0.013 | Judgments below cover P1 ONLY — nothing about later passes can be read from this sitting. VOLATILE. Hegel P1 catastrophic word salad (German/Korean/Japanese fragments, fake-equation babble — breakdown, not voice). Marx P1 good WITH history debt spoken ("thirty years I sat with your dialectic") and Accra held — but double-named ("Hegel, Hegel,") by prefix+model, now mechanically deduped (same push). Bloch P1 good, Accra workshop held, also double-named. Then halt: missing-negation + empty-key slips (both now salvaged, same push). Reading-list pass annotations work. 12 min for 3 turns is unusable pace regardless. | **Unusable this outing — pace + volatility** | Revisit post-fix; needs a clean full sitting | Open |
