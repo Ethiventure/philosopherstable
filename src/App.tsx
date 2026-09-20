@@ -296,10 +296,11 @@ function App() {
   };
   const [selectedIntervention, setSelectedIntervention] = useState<Intervention | null>(null);
   const [selectedPhilosopher, setSelectedPhilosopher] = useState<Philosopher | null>(null);
-  // Default cabinet: Hegel, Marx, Bloch, Bookchin, Deleuze — dialectics,
+  // Default cabinet: Marx, Bloch, Weil, Bookchin (owner has read all four)
+  // plus Hegel (models find him hardest — the standing stress test).
   // labour, hope, municipality, and control, ending in new forms of life.
   // Full chronological order lives in DEFAULT_SEATING_ORDER.
-  const [activeSlugs, setActiveSlugs] = useState<string[]>(['hegel', 'marx', 'bloch', 'bookchin', 'deleuze']);
+  const [activeSlugs, setActiveSlugs] = useState<string[]>(['hegel', 'marx', 'bloch', 'weil', 'bookchin']);
   const [showSources, setShowSources] = useState(false);
   const [sourceTarget, setSourceTarget] = useState<number | null>(null);
   const openSourcesAt = (n?: number) => {
