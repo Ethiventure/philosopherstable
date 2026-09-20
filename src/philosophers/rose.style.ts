@@ -2,7 +2,7 @@ import type { StyleEssence } from '@/types';
 
 // Extracted Sep 2026 from owner-indexed local texts: Hegel Contra Sociology
 // (1981), Dialectic of Nihilism (1984), Judaism and Modernity (1993).
-// Unwired until the Rose dossier build.
+// Wired since the Rose dossier build (debts, diagram, trio, copy sweep).
 export const ROSE_STYLE: StyleEssence = {
   style_dna: 'Speculative Retrieval + Severe Hypotaxis + Antinomial Diagnosis + Diremption Diction + Prosecutorial Patience + Mourning Cadence',
 

@@ -15,7 +15,7 @@ Phases are ordered by dependency; each should leave the app building.
 - [ ] Phase 7 — Model-family A/B (Medium held by GLM, High open, 14B tuning track 7c, fix-triage ledger 7e)
 - [ ] Phase 7b — Auto-metrics (AlignScore guardrail, LENS-SALSA calibration, ASSET-method optional)
 - [ ] Phase 8 — `webapp-commons-template` (not scaffolded)
-- [ ] Phase 9 — Rose seat (dossier pending; debts + diagram staged, RAG files awaited)
+- [ ] Phase 9 — Rose seat (dossier landed + wired; live-sitting voice grade + remaining texts awaited)
 - [ ] Backlog — favicon, og recompose, rotation/recovery doc, LICENSE, +9 more
 
 ---
@@ -760,9 +760,10 @@ before the trial expires Dec 16 2026. Watch-out: one shared quota means
 one visitor can drink the well — caps stay, and owner testing moves to a
 visitor key meanwhile.
 
-## Phase 9 — Rose seat (in progress, Sep 2026)
-Gillian Rose (1947–1995) dossier requested per `docs/new-philosopher-brief.md`
-Phase 1; seat + debts + diagram land together once it returns (grid exporter
+## Phase 9 — Rose seat (dossier landed, voice grade pending, Sep 2026)
+Gillian Rose (1947–1995) dossier built per `docs/new-philosopher-brief.md`
+Phase 1 (seat + debts + diagram + trio + copy sweep, with
+`low_translations`); seat + debts + diagram land together once it returns (grid exporter
 fails loudly on debts pointing at an unregistered seat).
 Staged: diagram move (Rose left-spine, Deleuze right-spine, Fisher stays
 centre) + debt grid (Hegel/Marx D+, Kant/Deleuze D-, Weil/Bloch D+,
@@ -793,7 +794,9 @@ refuses as stub; do not re-hunt): `melancholyscienc0000rose`,
 full text. Only route: owner converts copies as before (same local-index
 path). No secondary sources — dossier and voice come from Rose's texts only. Style essence: built from the texts by the
 builder (fields per `fisher.style.ts`), or via the extraction prompt below.
-*Eval: waiting on dossier + text files.*
+*Eval: dossier landed and wired (trio + low_translations + debts + RAG
+excerpts live); still awaited: a live-sitting voice grade for Rose, plus
+the missing local texts (see below).*
 RAG landed Sep 17 2026 (owner-approved, dated act): `Italian Journey`
 (~8.1k words, 46 passages) + `Your Visit to Auschwitz` (~2.0k words,
 14 passages) from gillianrose.org — executor-shared CC BY-NC-ND 4.0.
