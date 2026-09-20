@@ -133,15 +133,21 @@ function toIntervention(
     : [{ label: `[${philosopher.name.toUpperCase()}, SOURCE-GROUNDED PROFILE]`, verified: false }];
   // Mechanical address prefix (Sep 2026): the turn opens with PREV's name
   // because the app puts it there, not because the model remembered to.
-  // Three rounds of wording failed; framing metadata can't be forgotten.
+  // Models that name PREV themselves get deduped first ("Hegel, Hegel, …"
+  // observed live) — strip any leading self-naming before prefixing.
   const bodyParts = [
     output.negation,
     output.incorporation,
     output.reformulation,
   ].filter((s) => s && s.trim());
-  const body = previousSpeaker && bodyParts.length
-    ? [`${previousSpeaker.name}, ${bodyParts[0]}`, ...bodyParts.slice(1)].join('\n\n')
-    : bodyParts.join('\n\n');
+  const deduped = previousSpeaker
+    ? bodyParts.map((s, i) => i === 0
+      ? s.replace(new RegExp(`^${previousSpeaker.name.split(' ')[0]}[,\\s]+(${previousSpeaker.name}[,\\s]+)?`, 'i'), '')
+      : s)
+    : bodyParts;
+  const body = previousSpeaker && deduped.length
+    ? [`${previousSpeaker.name}, ${deduped[0]}`, ...deduped.slice(1)].join('\n\n')
+    : deduped.join('\n\n');
   return {
     id: `live-${pass}-${index}`,
     meeting_id: 'live',

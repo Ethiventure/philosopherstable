@@ -164,6 +164,10 @@ silently across versions.
 - Pass-differentiated rewrite (`ad`): P1 reject+diagnose, P2 one break +
   handoff, P3 reject + Z + why-better; history debt aloud P1 only.
   Revert whole shape with the `ad` commit if free-form tests better.
+- Parser live-fire record (Sep 20 2026): key misspellings (`reformation`),
+  glossary arrays, empty-key filings (`{"": …}`), truncated-turn
+  `new_contribution` fallback (from reformulation's first sentence), and
+  mechanical PREV prefix with self-naming dedupe ("Hegel, Hegel, …").
 - Three margins notes: after pass 1, before pass 3, closing summary after the
   final seat (`buildCodaEndPrompt`). Reading list marks unlinkable works
   honestly ("no free online text"). Long-form turns default on.
