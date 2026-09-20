@@ -102,19 +102,28 @@ export function repairBreakdown(): { parse: number; gloss: number; echo: number 
  * cities, stock terms, and short grounding loans never trip it.
  */
 export function sharesPassage(text: string, priors: string[], run = 8): boolean {
+  return findSharedPassage(text, priors, run) !== null;
+}
+
+/**
+ * First shared word-run between `text` and any prior, for grading display.
+ * Same normalization as sharesPassage above; null when nothing shared.
+ */
+export function findSharedPassage(text: string, priors: string[], run = 8): string | null {
   const wordsOf = (s: string): string[] =>
     s.toLowerCase().replace(/[^a-z0-9\s]/g, ' ').split(/\s+/).filter(Boolean);
-  const grams = new Set<string>();
+  const grams = new Map<string, boolean>();
   for (const prior of priors) {
     const w = wordsOf(prior);
-    for (let i = 0; i + run <= w.length; i += 1) grams.add(w.slice(i, i + run).join(' '));
+    for (let i = 0; i + run <= w.length; i += 1) grams.set(w.slice(i, i + run).join(' '), true);
   }
-  if (!grams.size) return false;
+  if (!grams.size) return null;
   const w = wordsOf(text);
   for (let i = 0; i + run <= w.length; i += 1) {
-    if (grams.has(w.slice(i, i + run).join(' '))) return true;
+    const g = w.slice(i, i + run).join(' ');
+    if (grams.has(g)) return g;
   }
-  return false;
+  return null;
 }
 
 /**
