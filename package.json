@@ -15,7 +15,8 @@
     "rag:inspect": "node scripts/rag-inspect.mjs",
     "rag:search": "node scripts/rag-search.mjs",
     "rag:eval": "node scripts/rag-eval.mjs",
-    "test:rag": "node --test scripts/rag-selftest.mjs"
+    "test:rag": "node --test scripts/rag-selftest.mjs",
+    "test:keys": "node scripts/test-keys.mjs"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.57.4",
