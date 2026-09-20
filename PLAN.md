@@ -171,6 +171,12 @@ silently across versions.
 - Three margins notes: after pass 1, before pass 3, closing summary after the
   final seat (`buildCodaEndPrompt`). Reading list marks unlinkable works
   honestly ("no free online text"). Long-form turns default on.
+- Prompt v2026-09-20a (Sep 20 2026, owner order): slogans dropped as naff —
+  P3 lands Z as one specific applied move (named body, named thing, thread
+  city, first step in-sentence); HEAT gains a cost line (what the framework
+  gives up); margins writer named Genzie in prompts only (display stays
+  "Notes from the margins"); `detectVolatility` gate in `llm.ts` (no prompt
+  change, no version cost). Old grades stay on v2026-09-19am.
 
 ### Embeddings (Phase 5)
 `test_embeddings.py` uses local Ollama `nomic-embed-text` (768 dims); the schema is
@@ -682,8 +688,11 @@ evidence, unbalance risk, retest matrix.
    cure unknown; repair restate didn't. Triage after one more data point
    (fails on a second model = coda-prompt job).
 5. Volatility handling (word salad, key-salad, 4000-token cutoff) —
-   evidence GLM High ×4, DeepSeek halt ×1. Mechanical detect + visible
-   retry; hypothesis only: shorter High contracts. No wording fix known.
+   evidence GLM High ×4, DeepSeek halt ×1. SHIPPED Sep 20 2026
+   (`detectVolatility` in `src/lib/llm.ts`: key-salad / word-repeat /
+   sentence-repeat / low-diversity gate on parsed prose, retryable parse
+   error, snippet in panel + full text in console). Retest: any High
+   sitting — watch the false-positive line on long term-heavy turns.
 6. Provenance check (`[UN143]` invented tag, 30B High) — evidence ×1.
    Mechanical citation validation before export.
 7. Shared free path (Groq walls + dead fallback) — see Phase 7d.
@@ -691,8 +700,11 @@ evidence, unbalance risk, retest matrix.
 ### B. Style, NOT model-specific (do second)
 8. Debts unspoken in P1 (5 rounds, all models) — universal prompt fix.
    Retest: 14B + 30B Medium.
-9. P3s beat-less (no slogans/why-better on 30B/GLM/Alibaba) — universal.
-   Retest: GLM Medium first (closest).
+9. P3s beat-less (no slogans/why-better on 30B/GLM/Alibaba) — owner
+   verdict Sep 20 2026: slogans read naff, instruction DROPPED. Replaced
+   with one specific applied move (prompt v2026-09-20a: named body doing
+   a named thing in the thread city, first step inside the sentence).
+   Retest: GLM Medium first (closest) — grade specificity, not slogans.
 10. Thread-city drops (Berlin-default Hegel P1s on GLM + Alibaba;
     Bangkok ×1/15 on 30B High) — persona-default, universal. Retest:
     any sitting.
@@ -707,8 +719,9 @@ evidence, unbalance risk, retest matrix.
 
 Queued (Sep 20, owner): move the OpenRouter paid default pin off
 parked `deepseek/deepseek-v4.1-flash` to Medium-holder
-`z-ai/glm-5.3-flash` (code `settings.ts` + README agree with each
-other, both disagree with the verdicts) — not DeepSeek, ever back.
+`z-ai/glm-5.3-flash` (README now states the fallback + queued move; code
+`settings.ts` still pins `qwen/qwen3-30b-a3b` with a `deepseek-v4.1-flash`
+fallback) — not DeepSeek, ever back.
 
 ## Phase 7d — Shared free default → Alibaba until Dec 2026 (TODO, not started)
 Groq free can't carry a full sitting (429 walls + 404-dead fallback,

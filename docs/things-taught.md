@@ -4,6 +4,29 @@ Low intensity, nothing dumbed down: every entry keeps the full fact,
 only the words stay simple. Newest first. The owner asked for this
 Sep 17 2026 — keep writing here, one entry per lesson.
 
+## Slogans feel cheap, applied moves feel real (Sep 20 2026)
+The owner judged it plainly: pass-3 slogans always read naff. A slogan
+is a line to chant; an applied move is a body doing a thing somewhere.
+So the prompt no longer asks for anything "ordinary people could carry"
+— it asks for a named body (a tenants' group, a union branch, pupils)
+doing a named thing in the sitting's city, with the first step inside
+the sentence, plus what changes in the first week. Vague verbs (raise
+awareness, push for, prioritise) fail the turn. The lesson travels: when
+the reader calls the output cheap, the fix is rarely a better slogan —
+it is a smaller, more checkable claim about who does what first.
+
+## Garbled turns get caught by shape, not by reading (Sep 20 2026)
+When a model melts down it leaves shapes, not arguments: `word:word`
+salads like `greek:negation`, one word six times running, the same
+sentence twice in one turn, or seventy words built from three. None of
+that needs a judge — a small checker (`detectVolatility` in
+`src/lib/llm.ts`) spots the shape on the parsed prose and throws a
+retryable error, so the sitting retries visibly instead of printing the
+mush. It runs on parsed values only, never raw JSON, or web addresses
+and `"key":` shapes would trip it. The limit to watch: very long turns
+that repeat key terms honestly could look like soup — if good turns
+start bouncing, the 0.35 diversity line moves, not the idea.
+
 ## When every model makes the same mistake, the fault is in our instructions (Sep 20 2026)
 Five sittings in a row, across four model families, all repeated whole
 paragraphs across seats in pass 2. No single model is copying — they
