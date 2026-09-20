@@ -10,6 +10,25 @@ Pinpoint, don't sprawl: three ticks, and no single model needs all three.
    turns, OpenRouter :free has no Qwen). 2) A quick model (paid Qwen30B:
    ~1–2 min debates). 3) A model meeting all quality requirements (open —
    Qwen30B leads on dilemma-grasp, DeepSeek on obedience).
+## Elimination plan (Sep 20 2026 — owner: start cutting, different models per level allowed)
+Parked, not buried: DeepSeek v4.1-flash. Two bad outings (halt, partial)
+plus 12-min pace — no more sittings spent on it until a contender fails
+cleaner. Revisit conditions: Qwen echo unfixable, or a calm full sitting
+owed. The old fallback-engine verdict is suspended, not erased.
+Next three sittings, in order, each with kill/keep criteria:
+1. qwen/qwen3-14b (OpenRouter paid, ~$0.011) — Medium, education question.
+   KEEP if it holds the JSON contract with ≤2 repairs; KILL (corpse) on
+   any reasoning burn or loop.
+2. z-ai/glm-5.3-flash (rematch) — Medium, same question. KEEP if P3s
+   differentiate and thread city holds; PARK if slower than 8 min wall.
+3. Alibaba qwen3.8-27b — first Medium grade (trial quota). KEEP if voice
+   survives Medium rules; otherwise it stays the Low voice leader only.
+Per-level recommendation (current best guess, changes with evidence):
+- Low: Alibaba 27B (proven voice, plain level) — Qwen30B untested at Low.
+- Medium: Qwen30B (dilemma-grasp; echo/history/beats still open).
+- High: OPEN — nobody graded at High since prompts stabilized; winner of
+  Medium gets the High sitting.
+Free default: Alibaba trial to Dec 16, then cheapest proven paid.
 Test queue (Sep 20 2026 — NOTHING ruled out yet, status per model):
 - deepseek/deepseek-v4.1-flash (control): still standing — fallback engine,
   but Sep 20 outings were a halt (word-salad P1, 12 min/3 turns) and a
