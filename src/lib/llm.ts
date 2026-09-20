@@ -118,6 +118,42 @@ export function sharesPassage(text: string, priors: string[], run = 8): boolean 
 }
 
 /**
+ * Volatility detector (mechanical word-salad / key-salad guard, Sep 2026).
+ * Runs on parsed prose values only (never raw JSON — URLs and `"key":`
+ * shapes would false-positive). Cheap checks, no deps:
+ *  - key-salad: `word:word` runs like `greek:negation` (GLM High, Sep 20)
+ *  - word-repeat: same word 6+ times running, or same sentence twice in-turn
+ *  - low-diversity: unique/total words < 0.35 on 60+ word turns (salad/loop)
+ * Returns the first reason found, else null. Callers throw a retryable
+ * `parse` LlmError so every existing repair/retry path retries visibly
+ * (snippet in panel, full text in console) with zero UI changes.
+ */
+export function detectVolatility(negation: string, reformulation: string): string | null {
+  const prose = `${negation} ${reformulation}`;
+  const words = prose.toLowerCase().replace(/[^a-z0-9\s']/g, ' ').split(/\s+/).filter(Boolean);
+  // Key-salad first (most specific): letter-runs joined by a colon, e.g.
+  // `greek:negation`. URLs never reach here (parsed prose, not raw JSON).
+  const salad = prose.match(/\b[a-z]{3,}:[a-z][a-z_-]{2,}\b/);
+  if (salad) return `key-salad "${salad[0]}"`;
+  // Same word 6+ times in a row ("the the the …" meltdowns).
+  const run = prose.match(/\b(\w+)(?:\s+\1){5,}\b/i);
+  if (run) return `word-repeat "${run[0].slice(0, 60)}"`;
+  // Same sentence twice inside one turn (within-turn loop the closing scan missed).
+  const sentences = prose.split(/(?<=[.?!])\s+/).map((s) => s.trim().toLowerCase()).filter((s) => s.length > 20);
+  if (new Set(sentences).size < sentences.length && sentences.length > 1) {
+    const dup = sentences.find((s, i) => sentences.indexOf(s) !== i);
+    if (dup) return `sentence-repeat "${dup.slice(0, 80)}"`;
+  }
+  // Salad/loop soup: vocabulary collapses on longer turns.
+  if (words.length >= 60) {
+    const unique = new Set(words).size;
+    const ratio = unique / words.length;
+    if (ratio < 0.35) return `low-diversity ${ratio.toFixed(2)} (${unique}/${words.length} unique)`;
+  }
+  return null;
+}
+
+/**
  * What a token cost when last checked — NOT live prices. Providers reprice
  * without notice, so every figure the export prints carries RATES_AS_OF and
  * the word "about". To refresh: verify against the provider's pricing page
@@ -304,7 +340,7 @@ export function parseTurnOutput(rawText: string, label = 'LLM'): TurnOutput {
     const t = s.trim();
     return /[.?!…:;]$/.test(t) ? t : `${t}.`;
   };
-  return {
+  const out: TurnOutput = {
     negation: terminate(record.negation as string),
     incorporation: incorporation ? terminate(incorporation) : '',
     reformulation: terminate(record.reformulation as string),
@@ -312,6 +348,21 @@ export function parseTurnOutput(rawText: string, label = 'LLM'): TurnOutput {
     works_referenced: works,
     glossary,
   };
+  // Volatility gate (mechanical, counted as a parse repair so the export
+  // trail needs no shape change): salad turns retry visibly instead of
+  // entering the transcript. Snippet in the panel, full text in console.
+  const volatileReason = detectVolatility(out.negation, out.reformulation);
+  if (volatileReason) {
+    if (typeof console !== 'undefined') {
+      console.warn(`[${label}] volatile turn (${volatileReason}):`, rawText.slice(0, 2000));
+    }
+    throw new LlmError(
+      `${label} returned a garbled turn (${volatileReason}). Resume the cabinet to retry the turn. Got: ${snippet(rawText)}`,
+      true,
+      'parse',
+    );
+  }
+  return out;
 }
 
 /**
