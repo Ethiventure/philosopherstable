@@ -46,8 +46,13 @@ Per-level recommendation (current best guess, changes with evidence):
 - High: OPEN — nobody graded at High since prompts stabilized; winner of
   Medium gets the High sitting.
 Next test (owner, Sep 20): High still open — 30B parked (thin),
-GLM parked (gibberish). Both return only via ledger fixes (7e-A5),
-not raw retests. Meanwhile: 14B tuning + Low probes.
+GLM parked (gibberish). 14B High probed same day (filed
+`docs/eval-sittings/qwen3-14b-high-v1-buenosaires.md`): echo-heavy
+(P1 ×4 shared phrase, P3 pairwise clones), city never named, Lenin-only
+reading list — tuning (7c) before any High return. Paired long-form
+test queued (same model/level/question, long-form on) to isolate the
+length effect. All High returns go via ledger fixes (7e-A5), not raw
+retests. Meanwhile: 14B Medium tuning + Low probes.
 - High: OPEN — nobody graded at High since prompts stabilized; winner of
   Medium gets the High sitting.
 Free default: Alibaba trial to Dec 16, then cheapest proven paid.
