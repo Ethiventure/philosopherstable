@@ -44,7 +44,7 @@ import { generateTurnDeepInfra, testDeepInfraKey, lastDeepInfraModel } from '@/l
 import { generateTurnAlibaba, testAlibabaKey } from '@/lib/alibaba';
 import { generateTurnTogether, testTogetherKey, TOGETHER_MODEL } from '@/lib/together';
 import { generateTurnZai, testZaiKey } from '@/lib/zai';
-import { entriesForNumbers, splitLabels } from '@/lib/footnotes';
+import { entriesForNumbers, findInventedTags, splitLabels } from '@/lib/footnotes';
 import { smartCut } from '@/lib/rag-text';
 import { extractPassages, formatGroundedBlock, groundableSource } from '@/lib/extract';
 import { searchThinkerPassages } from '@/lib/rag-ground';
@@ -946,7 +946,7 @@ function App() {
           codaFailure = retryError;
         }
       }
-      if (typeof console !== 'undefined') console.error(`${tag} note failed:`, codaFailure);
+      if (typeof console !== 'undefined') console.error(`${tag} note failed:`, codaFailure, { which, linesRead: lines.length, promptVersion: PROMPT_VERSION, provider: provenanceLabel(snap) });
       setText(null);
       ref.current = null;
       setState('failed');
@@ -1111,6 +1111,9 @@ function App() {
     const citedNumbers: number[] = [];
     const seenNumbers = new Set<number>();
     const usedInPass: Map<number, Set<number>> = new Map();
+    // Invented citation tags (e.g. [UN143]): kept in the prose as evidence,
+    // flagged in the footer so no fake authority passes unmarked.
+    const inventedTags: { pass: number; name: string; tags: string[] }[] = [];
     const turnText = (item: Intervention) => {
       const philosopher = philosophers.find((p) => p.id === item.philosopher_id);
       const name = philosopher?.name ?? 'Unknown';
@@ -1128,6 +1131,11 @@ function App() {
       // clean. Source usage is tallied into the end READING LIST instead of
       // per-turn Sources lines, annotated with the passes that used each work.
       const clean = item.response_text.replace(/\[\d+\]/g, '').replace(/[ \t]+/g, ' ');
+      const invented = findInventedTags(item.response_text);
+      if (invented.length) {
+        inventedTags.push({ pass: item.pass_number, name, tags: invented });
+        if (typeof console !== 'undefined') console.warn(`[Provenance] invented tags in pass ${item.pass_number} ${name}:`, invented.join(' '));
+      }
       return `PASS ${item.pass_number} — ${name}\n\n${clean}\n`;
     };
     // Each note sits where it spoke: the early note between pass 1 and pass 2,
@@ -1153,6 +1161,12 @@ function App() {
     const trail = [...new Set(provRef.current)];
     const provenanceText = trail.length
       ? `\nMODELS USED\n${trail.map((t) => `— ${t}`).join('\n')}\n`
+      : '';
+    // Invented tags match no manifest entry: listed, never numbered, so the
+    // export can't launder a hallucinated citation into authority. Absent
+    // when the sitting is clean (no empty section).
+    const inventedText = inventedTags.length
+      ? `\nUNVERIFIED TAGS (model-invented, match no manifest entry)\n${inventedTags.map((t) => `— pass ${t.pass} ${t.name}: ${t.tags.join(' ')}`).join('\n')}\n`
       : '';
     // Levels actually generated at (Begin records, resumes append on change) —
     // the picker value at export time is NOT truth (Sep 19 2026: a Medium run
@@ -1195,7 +1209,7 @@ function App() {
     })()}\n`;
     // BOM + explicit charset: without them some viewers (notably Windows
     // Notepad) decode UTF-8 smart quotes/dashes as Latin-1 mojibake (â€…).
-    const text = `\uFEFF${body}${trailingCoda}${serviceText}${readingList}${provenanceText}${settingsText}${usageText}`;
+    const text = `\uFEFF${body}${trailingCoda}${serviceText}${readingList}${provenanceText}${inventedText}${settingsText}${usageText}`;
     const blob = new Blob([text], { type: 'text/plain;charset=utf-8' });
     const url = URL.createObjectURL(blob);
     const anchor = document.createElement('a');

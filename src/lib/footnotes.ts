@@ -100,8 +100,19 @@ export function splitLabels(philosopherName: string, labels: string[]): { number
   return { numbers: out, unmatched };
 }
 
-/** Manifest entries for a set of footnote numbers (export Reading List). */
-export function entriesForNumbers(numbers: number[]) {
+/**
+ * Invented-tag detector (mechanical provenance guard, Sep 2026): bracketed
+ * letter-digit tags like `[UN143]` (observed live, 30B High) match no
+ * manifest entry and no footnote shape — plain `[12]` numbers are stripped
+ * at export and may be honest refs, so only the lettered shape trips.
+ * Runs on prose (export + console), never fed back into prompts.
+ */
+export function findInventedTags(text: string): string[] {
+  const hits = text.match(/\[[A-Za-z]{2,}\d+[^\]]*\]/g) ?? [];
+  return [...new Set(hits)];
+}
+
+/** Manifest entries for a set of footnote numbers (export Reading List). */export function entriesForNumbers(numbers: number[]) {
   return numbers
     .map((n) => ({ number: n, source: CORPUS_SOURCES_DATA[n - 1] }))
     .filter((entry): entry is { number: number; source: (typeof CORPUS_SOURCES_DATA)[number] } =>
