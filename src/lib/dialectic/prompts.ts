@@ -6,7 +6,9 @@
  * boundaries. Each pass has its own shape, deliberately light: 1 diagnosis
  * (one specific rejection + contradiction + own diagnosis), 2 pressure (ONE
  * break from inside PREV's argument + one-sentence handoff, nothing built),
- * 3 reconstruction (one rejection + the new idea Z with slogan + why-better).
+ * 3 reconstruction (one rejection + the new idea Z landed as a specific
+ * applied move: a named body doing a named thing in the thread city, first
+ * step inside the sentence).
  * Z appears first in pass 3 — never earlier.
  *
  * Word budgets are tight on purpose: each turn does less so the rotation
@@ -35,7 +37,7 @@ export type TurnKind = 'opening' | 'critique' | 'reconstruction';
  * text change so grades stay comparable: a verdict on version C never
  * transfers silently to version D.
  */
-export const PROMPT_VERSION = '2026-09-19am';
+export const PROMPT_VERSION = '2026-09-20a';
 
 export const WORD_BUDGETS = {
   normal: { negation: 25, reformulation: 40, total: 60, opening: 40 },
@@ -127,7 +129,7 @@ export function buildTurnInstruction({ kind, prevName, isFinalSeat, longForm, re
       : pass === 2
         ? 'PASS JOB (pressure): land ONE break from inside PREV\'s own argument — no new topics of your own, nothing built here. The new idea (Z) waits for pass 3.'
         : kind === 'reconstruction'
-          ? 'PASS JOB (reconstruction): reject something specific, then add the new idea (Z) with one slogan ordinary people could carry — and one precise sentence on why yours beats the rival idea on that exact point.'
+          ? 'PASS JOB (reconstruction): reject something specific, then add the new idea (Z) as one specific applied move — a named body (council, union branch, tenants, pupils) doing a named thing in the thread city, with its first step inside the sentence. Name who decides, where the fight happens, and what changes in the first week. Vague verbs (converse, raise awareness, prioritise, push for) fail the turn.'
           : 'PASS JOB (critique): judge PREV, then move the question up a level in your own terms.';
 
   const negationLine = pass === 2
@@ -138,7 +140,7 @@ export function buildTurnInstruction({ kind, prevName, isFinalSeat, longForm, re
 
   const reformulationLine =
     kind === 'reconstruction'
-      ? `2. THE BUILD (roughly ${b.reformulation} words, ONE paragraph): add the new idea (Z), not yet said in this sitting — then land it with one slogan ordinary people could carry (who decides, where the fight happens) and one precise sentence on why Z beats the rival idea on that exact point. TRANSFORM, never parrot: the margins demand and every survey line must be rebuilt in your framework's own vocabulary — repeating any of their slogans or clauses word-for-word fails the turn, even with a citation. Phrase every consequence as a commitment (must, shall, will, let us) — never a possibility (may, might, could, would). Hedged builds fail the turn.${level === 'medium' ? ' DICTION IN THIS SECTION: every school-term kept here carries its plain meaning inside its sentence plus one short concrete sentence showing what it does — term, gloss, elaboration, no bare terms. Append a fifth JSON key "glossary": each hard term you used, one line each as term — plain meaning.' : ''}`
+      ? `2. THE BUILD (roughly ${b.reformulation} words, ONE paragraph): add the new idea (Z), not yet said in this sitting — then land it as one specific applied move: a named body doing a named thing in the thread city, first step inside the sentence (who decides, where the fight happens, what changes in the first week). TRANSFORM, never parrot: the margins demand and every survey line must be rebuilt in your framework's own vocabulary — repeating any of their demands or clauses word-for-word fails the turn, even with a citation. Phrase every consequence as a commitment (must, shall, will, let us) — never a possibility (may, might, could, would). Hedged builds fail the turn.${level === 'medium' ? ' DICTION IN THIS SECTION: every school-term kept here carries its plain meaning inside its sentence plus one short concrete sentence showing what it does — term, gloss, elaboration, no bare terms. Append a fifth JSON key "glossary": each hard term you used, one line each as term — plain meaning.' : ''}`
       : pass === 2
         ? `2. HANDOFF (one sentence): hand the contradiction on — the unresolved tension, stated as your framework's own problem. No new idea here; Z waits for pass 3.`
         : `2. DIAGNOSIS (roughly ${b.reformulation} words, ONE paragraph): your framework's own diagnosis of the question — one idea, one concrete consequence (an institution, a choice, a cost; who acts, where). No inject, no building: Z waits for pass 3. Phrase it as a commitment (must, shall, will), never a possibility (may, might, could).${level === 'medium' ? ' DICTION IN THIS SECTION: every school-term kept here carries its plain meaning inside its sentence plus one short concrete sentence showing what it does — term, gloss, elaboration, no bare terms. Append a fifth JSON key "glossary": each hard term you used, one line each as term — plain meaning.' : ''}`;
@@ -169,16 +171,16 @@ export function buildTurnInstruction({ kind, prevName, isFinalSeat, longForm, re
       ? ['At Low there are no shared specialist terms: restate everything, including school-terms, in plain everyday words.']
       : []),
     'QUESTION RULE: paraphrase the question through your framework — never repeat any multi-word clause of it verbatim.',
-    'ECHO RULE: answer PREV — never restate PREV, yourself, or the question. No sentence may reword an earlier sentence of theirs or yours; avoid even repeating ideas — each sentence must push the debate in a new direction. Shared paragraphs fail outright: never reuse PREV’s example, image, slogan, or scene — bring your own concrete object. SAY EVERY MOVE ONCE: the reformulation advances from the negation’s keep/break — it never restates them (“what I reject” may not repeat what the negation already broke). A turn that circles has failed, even if every word differs.',
+    'ECHO RULE: answer PREV — never restate PREV, yourself, or the question. No sentence may reword an earlier sentence of theirs or yours; avoid even repeating ideas — each sentence must push the debate in a new direction. Shared paragraphs fail outright: never reuse PREV’s example, image, demand, or scene — bring your own concrete object. SAY EVERY MOVE ONCE: the reformulation advances from the negation’s keep/break — it never restates them (“what I reject” may not repeat what the negation already broke). A turn that circles has failed, even if every word differs.',
     ...(pass === 1
       ? ['HISTORY TONE: below PREV’s text, find the lines headed YOUR HISTORY WITH / OWES YOU plus YOUR PEOPLE — relate what PREV just said to your past relationship with them, then move on to the rejection. Never quote these history lines verbatim — the five-word rule holds on them like everything else; a turn reciting its debt note has mistaken the prompt for the argument. If no such lines appear, argue from the live claims alone.']
       : []),
     'SCENARIO THREAD: the opening turn’s concrete scene (named person, place, predicament) carries the whole sitting — reuse its people, never invent new ones each turn. Every turn routes at least one sentence through that scene: the argument must touch the named person or place, not hover above them. Hold every stated premise of the scenario as a fixed constraint for all turns (if necessary work is done by robots, no humans do cleaning — never reintroduce what the scenario removed). The scene illustrates the philosophy; it never becomes the debate. A turn that argues about the scenario instead of through it has mistaken the example for the point. A turn that breaks a stated premise has failed.',
-    'MOOD, OUT LOUD: let the feeling show strongly in your own diction — blunt words, swears, exclamations, sorrow, fear, joy, interjections where your voice would use them; mourning, fury, tenderness where it would feel them. Polite evenness fails the turn.',
+    'MOOD, OUT LOUD: let the feeling show strongly in your own diction — blunt words, swears, exclamations, sorrow, fear, joy, interjections where your voice would use them; mourning, fury, tenderness where it would feel them. The reader should hear this sitting cost you something. Polite evenness fails the turn.',
     'RHYTHM BREAKS: vary sentence structure and never three long sentences running without a short punch after. Even cadence lulls; the reader should feel the gear change.',
-    'FELT VERBS: the feeling lives inside the move, not beside it — the rejection, the break, the build each carries one feeling verb in your own diction (fear, mourn, love, hate). A move performed coolly fails the turn; display verbs alone (shows, reveals, demonstrates) fail it twice.',
+    'FELT VERBS: the feeling lives inside the move, not beside it — the rejection, the break, the build each carries one feeling verb in your own diction (fear, mourn, love, hate). Name the cost inside the move: what your framework gives up to land it. A move performed coolly fails the turn; display verbs alone (shows, reveals, demonstrates) fail it twice.',
     'TWO MASTERS: every turn answers the original question fresh AND advances the PREV debate. A turn that only answers PREV has drifted; a turn that only answers the question has stalled.',
-    'PREMISE HOLD: the question\'s givens are fixed constraints for all passes — if necessary work is gone, there are no jobs to train for, no vocations to prepare, no labour market to enter. Never propose what the premise removed; never quietly restore the old world to make your answer easier. Every consequence, demand, and slogan must assume the premise, not undo it. A turn that answers a different question has failed, however well argued.',
+    'PREMISE HOLD: the question\'s givens are fixed constraints for all passes — if necessary work is gone, there are no jobs to train for, no vocations to prepare, no labour market to enter. Never propose what the premise removed; never quietly restore the old world to make your answer easier. Every consequence and demand must assume the premise, not undo it. A turn that answers a different question has failed, however well argued.',
     'PLACES: one sitting, one thread city — the opening turn names a city in the question’s world and every later turn stays there unless the argument itself travels. Never default to the speaker’s home country or birthplace; rotate the part of the world sitting to sitting. A thread city keeps the sitting rooted; a single country every sitting means the root never moves.',
     ...(threadCity
       ? [`THREAD CITY: this sitting lives in ${threadCity}. Set every example there — streets, workplaces, councils. Leave it only if the argument itself travels, and say why.`]
@@ -198,7 +200,7 @@ export function buildTurnInstruction({ kind, prevName, isFinalSeat, longForm, re
       ? ['The early NOTES FROM THE MARGINS ride in the survey: weigh which marginalised perspectives it names and let them into your critique — name the note when you take one up.']
       : []),
     ...(kind === 'reconstruction' && marginsFirst
-      ? ['You speak first after the note: open by naming its writer and one question it asked — answer it directly, say plainly whether your framework takes it up or breaks it.']
+      ? [`You speak first after the note (${MARGINS_WRITER_NAME} wrote it): open by naming ${MARGINS_WRITER_NAME} and one question from the note — answer it directly, say plainly whether your framework takes it up or breaks it.`]
       : []),
     'Negation stays determinate (preserve-and-elevate), never dismissal; the keep lives inside the prose — no separate incorporation section.',
     // No toolkit rides at Low (own-words concession instead), so the
@@ -207,7 +209,7 @@ export function buildTurnInstruction({ kind, prevName, isFinalSeat, longForm, re
       ? []
       : ['STOCK PHRASES below address PREV as YOU — at most one per turn, often none; never open two of your turns the same way; SPENT variants are used up, never reuse them.']),
     ...(low
-      ? ['LOW ORDERS: never lift a stock phrase. Plain everyday words throughout; translate or describe every hard term, keeping one essential term only with its plain meaning beside it at once. Weave the keep/break/reject/inject moves inside the prose — never use keep, break, reject, or inject as label words. One idea per paragraph, followed through in 2–4 sentences — never a single slogan sentence standing alone (placards fail the turn). The persona LANGUAGE LEVEL outranks everything above on WORDS; on force, feeling, argument your persona wins.']
+      ? ['LOW ORDERS: never lift a stock phrase. Plain everyday words throughout; translate or describe every hard term, keeping one essential term only with its plain meaning beside it at once. Weave the keep/break/reject/inject moves inside the prose — never use keep, break, reject, or inject as label words. One idea per paragraph, followed through in 2–4 sentences — never a single sentence standing alone (placards fail the turn). The persona LANGUAGE LEVEL outranks everything above on WORDS; on force, feeling, argument your persona wins.']
       : []),
     'VOICE: continuous prose in your diction, syntax and rhythm within your LANGUAGE LEVEL — no headings or labels. The moves stay audible in the argument, never announced. '
     + (heat
@@ -330,6 +332,14 @@ export const STRUCTURED_OUTPUT_HINT = [  'Respond with JSON only, matching this 
  * at Medium so the shape line stays exact everywhere else. */
 export const GLOSSARY_SHAPE =
   'At Medium, add a fifth key "glossary": each hard term you used, one line each as term — plain meaning in your own words. A Medium turn using hard terms with an empty glossary is bounced for repair.';
+
+/**
+ * The margins writer's name for prompt use only (Sep 2026): seats are
+ * ordered to name the note, and a name gives them something to name.
+ * Display stays anonymous — "Notes from the margins" in deck and export —
+ * because the point is the marginalised voice, not a character.
+ */
+export const MARGINS_WRITER_NAME = 'Genzie';
 
 /**
  * Margin note: runs once between pass 2 and pass 3, outside the rotation.

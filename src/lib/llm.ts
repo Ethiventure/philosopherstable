@@ -389,4 +389,4 @@ export const GLOSS_REPAIR_SUFFIX =
 /** Echo repair: the turn shares whole passages with earlier sitting text.
  * One retry, rewritten wholly — not patched. */
 export const ECHO_REPAIR_SUFFIX =
-  ' Your turn shares whole passages with an earlier turn in this sitting. Reply again with JSON only: the same argument rewritten wholly in your own words — new example, new images, new slogans, no clause over five words carried across. Keep every other key.';
+  ' Your turn shares whole passages with an earlier turn in this sitting. Reply again with JSON only: the same argument rewritten wholly in your own words — new example, new images, new demands, no clause over five words carried across. Keep every other key.';
