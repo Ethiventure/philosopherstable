@@ -61,4 +61,4 @@ for (const r of done) {
   if (r.skipped || r.failed || r.parseError) continue;
   console.log(`| ${r.model} | ${r.provider} (probe) | ${(r.wallMs / 1000).toFixed(0)}s wall, ${r.inTokens}/${r.outTokens} tok | ${r.volatile ? `VOLATILE ${r.volatile}` : 'contract held'} | ${r.words}w vs ${r.budget} budget, city ${r.city}, prompt ${r.promptVersion} | — | — | — |`);
 }
-console.log('');
+console.log('\nYour moves after a matrix run: 1) paste the rows above into docs/models-tried.md  2) run one live sitting on the winner  3) grade 2-3 best/worst quotes by eye — the machine never writes verdicts.\n');
