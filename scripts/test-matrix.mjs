@@ -8,6 +8,9 @@
  * Per-probe lines append to data/test-runs/probes.jsonl (gitignored).
  * Prints one paste-ready models-tried.md row per probe at the end.
  */
+import { appendFileSync, mkdirSync } from 'node:fs';
+import { join, dirname } from 'node:path';
+import { fileURLToPath } from 'node:url';
 import { loadTestEnv } from './test-env.mjs';
 import { PROVIDERS, resolvePipe } from './test-providers.mjs';
 import { runProbe } from './test-sitting.mjs';
@@ -50,6 +53,11 @@ for (const p of plan) {
   }
   const r = await runProbe({ provider: p.provider, model: '', level: p.level, city, long });
   done.push(r);
+  if (!r.skipped) {
+    const root = join(dirname(fileURLToPath(import.meta.url)), '..');
+    mkdirSync(join(root, 'data', 'test-runs'), { recursive: true });
+    appendFileSync(join(root, 'data', 'test-runs', 'probes.jsonl'), `${JSON.stringify(r)}\n`);
+  }
   if (r.skipped) console.log(`SKIP: ${p.provider} @ ${p.level} — ${r.reason}`);
   else if (r.failed) console.log(`FAIL: ${p.provider}/${r.model} @ ${p.level} — ${r.error}`);
   else if (r.parseError) console.log(`PARSE-FAIL: ${p.provider}/${r.model} @ ${p.level} — ${r.parseError}`);

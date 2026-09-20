@@ -163,7 +163,9 @@ export async function testGroqKey(apiKey: string, model: GroqModel): Promise<voi
     body: JSON.stringify({
       model,
       messages: [{ role: 'user', content: 'Reply with exactly: ok' }],
-      max_tokens: 10,
+      // 100 tokens, not 10: reasoning models burn tiny caps thinking and
+      // return empty content (Sep 2026).
+      max_tokens: 100,
     }),
     signal: AbortSignal.timeout(60000),
   });

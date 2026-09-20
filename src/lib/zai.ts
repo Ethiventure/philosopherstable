@@ -166,7 +166,9 @@ export async function testZaiKey(apiKey: string, model: ZaiModel): Promise<void>
     body: JSON.stringify({
       model,
       messages: [{ role: 'user', content: 'Reply with exactly: ok' }],
-      max_tokens: 10,
+      // 100 tokens, not 10: reasoning models (GLM always thinks) burn the
+      // whole budget thinking and return empty content on tiny caps (Sep 2026).
+      max_tokens: 100,
     }),
     signal: AbortSignal.timeout(60000),
   });

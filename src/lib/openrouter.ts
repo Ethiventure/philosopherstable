@@ -540,7 +540,9 @@ export async function testOpenRouterKey(apiKey: string, mode: 'free' | 'paid' = 
       body: JSON.stringify({
         model: paidId,
         messages: [{ role: 'user', content: 'Reply with exactly: ok' }],
-        max_tokens: 10,
+        // 100 tokens, not 10: reasoning models burn tiny caps thinking and
+      // return empty content (Sep 2026).
+      max_tokens: 100,
       }),
       signal: AbortSignal.timeout(60000),
     });
@@ -568,7 +570,9 @@ export async function testOpenRouterKey(apiKey: string, mode: 'free' | 'paid' = 
         body: JSON.stringify({
           model,
           messages: [{ role: 'user', content: 'Reply with exactly: ok' }],
-          max_tokens: 10,
+          // 100 tokens, not 10: reasoning models burn tiny caps thinking and
+      // return empty content (Sep 2026).
+      max_tokens: 100,
         }),
         signal: AbortSignal.timeout(60000),
       });

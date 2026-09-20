@@ -165,7 +165,9 @@ export async function testTogetherKey(apiKey: string): Promise<void> {
     body: JSON.stringify({
       model: TOGETHER_MODEL,
       messages: [{ role: 'user', content: 'Reply with exactly: ok' }],
-      max_tokens: 10,
+      // 100 tokens, not 10: reasoning models burn tiny caps thinking and
+      // return empty content (Sep 2026).
+      max_tokens: 100,
     }),
     signal: AbortSignal.timeout(60000),
   });

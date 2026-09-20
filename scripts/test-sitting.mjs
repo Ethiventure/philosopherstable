@@ -91,8 +91,29 @@ export async function runProbe({ provider, model, level, city, long }) {
   // level contract only, so the probe gates pipes, never voices.
   const system = `You are an opening speaker in a dialectical seminar. Answer at ${level} register: ${level === 'low' ? 'plain everyday words, no specialist terms' : level === 'medium' ? 'keep important terms but explain each inside its sentence' : 'full authentic vocabulary'}.`;
   const maxTokens = long ? MAX_OUTPUT_TOKENS.long : MAX_OUTPUT_TOKENS.normal;
+  // Attempt ladder mirrors each app client (Sep 2026): DeepInfra turns and
+  // the OpenRouter paid pin try response_format:json_object first (without
+  // it some hosts return 200 with empty content on long prompts), plain
+  // retry on 400; OpenRouter steps reasoning none→low on mandatory-reasoning
+  // 400s. First success wins; the route taken is reported.
+  const jsonFirst = provider === 'deepinfra' || provider === 'openrouter';
+  const attempts = [];
+  if (jsonFirst) attempts.push({ json: true, extra: {}, via: 'json' });
+  attempts.push({ json: false, extra: {}, via: 'plain' });
+  if (provider === 'openrouter') {
+    attempts.push({ json: true, extra: { reasoning: { effort: 'low' } }, via: 'json+thinking-low' });
+    attempts.push({ json: false, extra: { reasoning: { effort: 'low' } }, via: 'plain+thinking-low' });
+  }
   const started = Date.now();
-  const res = await postChat(pipe, system, userMessage, maxTokens);
+  let res = null;
+  let via = '';
+  for (const a of attempts) {
+    if (a.json === false && res && res.status !== 400) break; // plain is fallback for 400s only
+    if (a.via.includes('thinking-low') && !(res && /reasoning.*mandatory|mandatory.*reasoning/i.test(res.detail || ''))) break;
+    res = await postChat(pipe, system, userMessage, maxTokens, a);
+    via = a.via;
+    if (res.ok) break;
+  }
   const wallMs = Date.now() - started;
   if (!res.ok) return { skipped: false, failed: true, error: res.error, provider, model: pipe.model, level, promptVersion: PROMPT_VERSION, wallMs };
   let parsed = null;
@@ -112,7 +133,7 @@ export async function runProbe({ provider, model, level, city, long }) {
     : null;
   return {
     skipped: false, failed: false, provider, model: pipe.model, level, city,
-    promptVersion: PROMPT_VERSION, wallMs, parseError, volatile, words,
+    promptVersion: PROMPT_VERSION, wallMs, via, parseError, volatile, words,
     budget: b.opening, overBudget: words === null ? null : words > b.opening,
     inTokens, outTokens, cost, at: new Date().toISOString(),
   };

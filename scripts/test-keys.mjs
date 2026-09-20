@@ -29,8 +29,9 @@ for (const name of Object.keys(PROVIDERS)) {
     rows.push({ pipe: name, model: pipe.model, result: `SKIP (no key — set ${PROVIDERS[name].keyEnv})` });
     continue;
   }
-  // Sequential: Z.ai free allows 1 request at a time.
-  const r = await postChat(pipe, null, 'Reply with exactly: ok', 10);
+  // Sequential: Z.ai free allows 1 request at a time. 100 tokens, not 10:
+  // reasoning models burn tiny caps thinking and return empty (Sep 2026).
+  const r = await postChat(pipe, null, 'Reply with exactly: ok', 100);
   rows.push({ pipe: name, model: pipe.model, result: r.ok ? `OK (${r.ms}ms)` : `${r.error} (${r.ms}ms)` });
 }
 
