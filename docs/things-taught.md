@@ -4,6 +4,18 @@ Low intensity, nothing dumbed down: every entry keeps the full fact,
 only the words stay simple. Newest first. The owner asked for this
 Sep 17 2026 — keep writing here, one entry per lesson.
 
+## One browser, many keys, no login: localStorage (Sep 20 2026)
+The technical term is the Web Storage API — specifically `localStorage`:
+a small key-value cupboard the browser keeps per website, with no account
+and no login. Our settings (including all six provider keys, one field
+each) live there under one key, so Groq, OpenRouter, DeepInfra and the
+rest each keep their own saved key side by side. Switching provider tabs
+shows that provider's own stored key — nothing carries over, by design.
+Two catches worth knowing: clearing site data empties the cupboard
+(keys included — keep a copy elsewhere), and it never syncs between
+devices or browsers (phone keys stay on the phone). Same cupboard holds
+the welcome flag, display settings, and the last-good free model.
+
 ## Unthinking models answer faster — sometimes (Sep 17 2026)
 Many models "think" (private draft reasoning) before answering, and some
 bill that thinking as output tokens: one turn showed 3,500 thinking tokens
