@@ -406,7 +406,14 @@ Queued owner note (Sep 20, GLM sitting): seats read as ignoring the
 margins writer — P2s never name it, only some P3s answer it — which
 lands as rude. Later edit: require each pass-2 turn to name the note
 once + each P3 to answer one question, or have the closing summary
-admit what went unanswered.*
+admit what went unanswered.
+Second margins bug (Sep 20, GLM High sitting): the note ignores the
+question's premise — "workers sleeping twelve to a bunk" when all
+necessary work is automated is a contradiction of the setup, not a
+stinging absence. Later edit: the coda prompt must re-state the
+premise's settled facts as untouchable (here: no necessary human
+work remains) so its concrete demands attack the answers, never the
+question.*
 
 **Philosophers' Service desk** ✅ — floating tutor window (`ServiceChat.tsx` +
 `src/lib/service-chat.ts`): all 12 thinkers, switchable mid-chat, own Level
