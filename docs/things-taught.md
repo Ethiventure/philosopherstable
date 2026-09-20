@@ -4,6 +4,20 @@ Low intensity, nothing dumbed down: every entry keeps the full fact,
 only the words stay simple. Newest first. The owner asked for this
 Sep 17 2026 — keep writing here, one entry per lesson.
 
+## Thinking models need a bigger "are you there" (Sep 20 2026)
+The key-check call asks a model to reply "ok" with only 10 output tokens.
+Thinking models (GLM always thinks; Qwen hybrids think) spend those 10
+tokens thinking and return nothing — a 200 OK with empty content, billed.
+Three pipes looked dead until the cap moved to 100 tokens, and the app's
+own Test-key buttons had the same flaw (fixed the same way). Two companion
+findings from the same session: long prompts can come back 200-with-empty
+unless constrained decoding (`response_format: json_object`) forces
+content out — which is why the app tries JSON first on some pipes; and
+reasoning can't be switched off everywhere (one endpoint mandates it with
+a 400, and the app steps down instead of fighting). The lesson: when a
+model answers empty, check the thinking budget before blaming the key —
+an empty 200 means the key works and the shape doesn't.
+
 ## Flag the fake citation, don't delete it (Sep 20 2026)
 A model once cited `[UN143]` — a tag shaped like a reference that matches
 nothing in the manifest. The instinct is to strip it so readers never see
