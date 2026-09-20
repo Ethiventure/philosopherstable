@@ -10,6 +10,23 @@ Pinpoint, don't sprawl: three ticks, and no single model needs all three.
    turns, OpenRouter :free has no Qwen). 2) A quick model (paid Qwen30B:
    ~1–2 min debates). 3) A model meeting all quality requirements (open —
    Qwen30B leads on dilemma-grasp, DeepSeek on obedience).
+Test queue (Sep 20 2026 — NOTHING ruled out yet, status per model):
+- deepseek/deepseek-v4.1-flash (control): still standing — fallback engine,
+  but Sep 20 outings were a halt (word-salad P1, 12 min/3 turns) and a
+  2-turn partial. Needs a clean full sitting before any verdict moves.
+- z-ai/glm-5.3-flash: NOT ruled out — best backup, engine challenger on old
+  prompts; needs re-grade on current rules (single Medium data point).
+- qwen/qwen3-30b-a3b: NOT ruled out — tuning target, 6+ graded runs, echo
+  clusters + unspoken history + beat-less P3s still open.
+- qwen/qwen3-14b: NOT ruled out — entirely untested; cheapest ticket
+  (~$0.011/session) if it holds the contract.
+- Alibaba qwen3.8-27b: NOT ruled out — voice leader at Low on trial quota;
+  first Medium grade still owed.
+- Z.ai glm-4.7-flash: NOT ruled out — pipe built, never run; Low burn-check
+  first, Medium only if clean.
+Ruled out already (corpses, do not re-test): small Qwens (burn),
+Qwen3.6-35B (thinking-burn + disobedient), Mistral Small 3.2 (loop),
+Llama-as-primary (weak), R1-distill (dead), GPT-OSS (OpenAI ban).
 Anti-overfit rule: fixes must be mechanical/universal (parser forgiveness,
 sampling penalties, structural calls) — never model-specific prompt tweaks.
 Evidence: the mechanical name prefix made DeepSeek double-name (it names
