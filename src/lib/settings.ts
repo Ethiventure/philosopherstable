@@ -80,7 +80,7 @@ export const DEFAULT_SETTINGS: CabinetSettings = {
   alibabaModel: DEFAULT_ALIBABA_MODEL,
   zaiApiKey: '',
   zaiModel: DEFAULT_ZAI_MODEL,
-  economy: 'efficient',
+  economy: 'full',
   grounding: true,
 };
 
