@@ -37,7 +37,7 @@ export type TurnKind = 'opening' | 'critique' | 'reconstruction';
  * text change so grades stay comparable: a verdict on version C never
  * transfers silently to version D.
  */
-export const PROMPT_VERSION = '2026-09-20b';
+export const PROMPT_VERSION = '2026-09-20c';
 
 export const WORD_BUDGETS = {
   normal: { negation: 25, reformulation: 40, total: 60, opening: 40 },
@@ -113,7 +113,7 @@ export function buildTurnInstruction({ kind, prevName, isFinalSeat, longForm, re
 
   if (kind === 'opening') {
     return [
-      `OPENING TURN (HARD ceiling: ${b.opening} words — shorter is welcome). As you near the ceiling, finish the current idea and sentence, then stop — never trail off mid-thought, never open a new point past it. Answer the question directly in your own framework. Paraphrase the question through your framework; never repeat it verbatim. Ground it: name the thread city, one named person there, and their predicament — this scene carries the whole sitting.`,
+      `OPENING TURN (HARD ceiling: ${b.opening} words — shorter is welcome). As you near the ceiling, finish the current idea and sentence, then stop — never trail off mid-thought, never open a new point past it. Answer the question directly in your own framework. Paraphrase the question through your framework; never repeat it verbatim. Ground it: name the thread city, one named person there, and their predicament — this scene carries the whole sitting. An opening set anywhere but the thread city has failed the turn; never default to your home country or birthplace.`,
       'Do not refer to any other thinker; there is no predecessor yet.',
       'Follow your characteristic movement.',
       'Short, punchy sentences in your own diction and rhythm — continuous prose, no headings — cut filler, never pad to the budget.',
@@ -181,7 +181,7 @@ export function buildTurnInstruction({ kind, prevName, isFinalSeat, longForm, re
     'FELT VERBS: the feeling lives inside the move, not beside it — the rejection, the break, the build each carries one feeling verb in your own diction (fear, mourn, love, hate). Name the cost inside the move: what your framework gives up to land it. A move performed coolly fails the turn; display verbs alone (shows, reveals, demonstrates) fail it twice.',
     'TWO MASTERS: every turn answers the original question fresh AND advances the PREV debate. A turn that only answers PREV has drifted; a turn that only answers the question has stalled.',
     'PREMISE HOLD: the question\'s givens are fixed constraints for all passes — if necessary work is gone, there are no jobs to train for, no vocations to prepare, no labour market to enter. Never propose what the premise removed; never quietly restore the old world to make your answer easier. Every consequence and demand must assume the premise, not undo it. A turn that answers a different question has failed, however well argued.',
-    'PLACES: one sitting, one thread city — the opening turn names a city in the question’s world and every later turn stays there unless the argument itself travels. Never default to the speaker’s home country or birthplace; rotate the part of the world sitting to sitting. A thread city keeps the sitting rooted; a single country every sitting means the root never moves.',
+    'PLACES: one sitting, one thread city — the opening turn names a city in the question’s world and every later turn stays there unless the argument itself travels. Never default to the speaker’s home country or birthplace; rotate the part of the world sitting to sitting. A thread city keeps the sitting rooted; a single country every sitting means the root never moves. A turn that relocates the sitting to the speaker’s homeland has failed.',
     ...(threadCity
       ? [`THREAD CITY: this sitting lives in ${threadCity}. Set every example there — streets, workplaces, councils. Leave it only if the argument itself travels, and say why.`]
       : []),
