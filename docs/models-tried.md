@@ -21,6 +21,12 @@ Next three sittings, in order, each with kill/keep criteria:
    Cheapest viable engine. Faults: city dropped, no citations, debts unspoken.
 2. z-ai/glm-5.3-flash (rematch) — Medium, same question. KEEP if P3s
    differentiate and thread city holds; PARK if slower than 8 min wall.
+   RESULT Sep 20: KEEPS. 5:26 wall (4:26 debate), $0.018, 3 JSON repairs.
+   P3s differentiated (5 distinct slogans, Bookchin dissents from Hegel's
+   ache); city mostly held (Hegel P1 opens Berlin, Bookchin P3 names no
+   city); 9 citations with pass annotations; debts spoken (Marx→Hegel,
+   Bloch→Thesis 3, Bookchin→Weil via Macdonald). Owner speed note: pace
+   only needs to beat reading time — 4:26 for 15 turns passes easily.
 3. Alibaba qwen3.8-27b — first Medium grade (trial quota). KEEP if voice
    survives Medium rules; otherwise it stays the Low voice leader only.
 Per-level recommendation (current best guess, changes with evidence):
@@ -33,8 +39,9 @@ Test queue (Sep 20 2026 — NOTHING ruled out yet, status per model):
 - deepseek/deepseek-v4.1-flash (control): still standing — fallback engine,
   but Sep 20 outings were a halt (word-salad P1, 12 min/3 turns) and a
   2-turn partial. Needs a clean full sitting before any verdict moves.
-- z-ai/glm-5.3-flash: NOT ruled out — best backup, engine challenger on old
-  prompts; needs re-grade on current rules (single Medium data point).
+- z-ai/glm-5.3-flash: KEEPS (Sep 20 rematch) — engine challenger
+  confirmed on current rules. Next: Alibaba 27B Medium grade; then
+  Medium winner takes the High sitting.
 - qwen/qwen3-30b-a3b: NOT ruled out — tuning target, 6+ graded runs, echo
   clusters + unspoken history + beat-less P3s still open.
 - qwen/qwen3-14b: FRONTRUNNER (Sep 20) — elimination test 1 SURVIVES
@@ -60,8 +67,8 @@ helps one model.
 - Prompt adherence (contract + Low): DeepSeek (0 repairs) > GLM (3 repairs) > Qwen27B (obeys; quota is the fault, not obedience) > Qwen30B (0–1 repairs; obeys contract, drops gloss/bank rules under load) > Llama > Mistral > burn models (no answer to grade).
 - Speed (full sitting pace): Qwen30B paid (~2 min, debate ~1 min) > Alibaba-unthinking (<3.5 min incl. desk) > DeepSeek (~6 min) > GLM (~7 min) > Groq free Qwen (7.5–14 min, walls) > everything else (failed).
 - Reliability (finishes sessions cleanly): DeepSeek > Qwen30B paid (5/5 clean) > Alibaba-unthinking > GLM > Groq free > rest (out).
-- Value (cost per 5-seat session): Qwen30B ~$0.032 > DeepSeek ~$0.036 > Qwen27B paid ~$0.20+.
-- Overall: Qwen30B paid (tuning target — speed + dilemma-grasp, echo/gloss/bank open) ≈ DeepSeek (fallback engine) > Alibaba Qwen27B-unthinking (default while trial lasts) > GLM (best backup) > Groq free Qwen (voice reference) > dead (all small Qwens, Mistral, Llama-as-primary, distill, 3.6-27B).
+- Value (cost per 5-seat session): GLM-5.3-flash ~$0.018 > Qwen14B ~$0.021 > Qwen30B ~$0.032 > DeepSeek ~$0.036 > Qwen27B paid ~$0.20+.
+- Overall: GLM paid (rematch keeps — citations + debts + differentiated P3s, cheapest) ≈ Qwen14B (frontrunner cheap engine, tuning track open) ≈ Qwen30B paid (dilemma-grasp best, echo open) ≈ DeepSeek-parked > Alibaba Qwen27B-unthinking (default while trial lasts) > Groq free Qwen (voice reference) > dead (all small Qwens, Mistral, Llama-as-primary, distill, 3.6-27B).
 
 ## Current standing (Sep 17 2026, owner-graded, Low, 2030 question)
 - **Qwen3.8-27B (Alibaba, unthinking) — the default while trial quota lasts.**
@@ -92,6 +99,7 @@ helps one model.
 usage instrument ran — earlier sessions predate it)
 
 | Model | Provider | Time | Tokens (in/out, calls) | Errors | Quality notes | Interim verdict | Next step | Final verdict |
+| z-ai/glm-5.3-flash | OpenRouter paid | Sep 20, Medium normal-form, prompt v2026-09-19am, Johannesburg, default five, no desk: 5:26 wall (debate 4:26), 21 calls 189.6K/14.5K (5.3K reasoning, 14.9K cached), 3 JSON repairs, ~$0.018 | REMATCH: KEEPS. P3s genuinely differentiated — five distinct slogans (pipe decides / count-then-claim / machines to the school-street / assembly assigns the ache / no assigned ache + child votes own curriculum), Bookchin breaks from Hegel rather than echoing. Thread city mostly held (Hegel P1 opens Berlin against Johannesburg thread; Bookchin P3 names no city; rest hold incl. Hillbrow/Soweto/Alexandra). Citations present (9 works, pass-annotated — beats 14B's empty list). Debts spoken (Marx sets dialectic on feet; Bloch Thesis 3; Bookchin→Weil via Macdonald twice). Margins strong with banked first-steps per seat. Pace 4:26 debate for 15 turns — under 8-min wall and faster than reading time per owner note. Faults: Hegel P1 city break; closing summary names use + new move but weakest-shot is Hegel-roast rather than turn-grade; Berlin opener suggests PLACES still weak on P1. | **Keeps — engine challenger, best backup confirmed** | Alibaba 27B Medium next | Open |
 | qwen/qwen3-14b | OpenRouter paid | Sep 20, Medium normal-form, prompt v2026-09-19am, Bristol, default five, no desk: 1:53 wall (debate 1:35), 18 calls 165.7K/4K, repairs 0, ~$0.021 | ELIMINATION TEST 1: SURVIVES — contract held, no burn, no loop. Name-first openings clean ("Hegel, You claim…" — prefix + body, no doubling). Turns punchy and varied; P3s concrete (loom-gazing, co-ops, seize-the-means). Closing summary present with use + praise (weakest-shot missing). Faults: thread city DROPPED (Bristol never mentioned — PLACES ignored); zero citations all sitting (reading list empty despite grounding on); history debts unspoken; "More's Utopia" filler slip in Bloch P2. Cheapest ticket works. | **Survives — cheapest viable engine** | GLM rematch next | Open |
 | deepseek/deepseek-v4.1-flash | OpenRouter paid | Sep 20, Medium, prompt v2026-09-19al, Accra, PARTIAL — 3 turns then HALT (no pass 2/3, no notes): 11:57 wall, 8 calls 77.3K/2.2K (16.8K cached), 3 JSON repairs, ~$0.013 | Judgments below cover P1 ONLY — nothing about later passes can be read from this sitting. VOLATILE. Hegel P1 catastrophic word salad (German/Korean/Japanese fragments, fake-equation babble — breakdown, not voice). Marx P1 good WITH history debt spoken ("thirty years I sat with your dialectic") and Accra held — but double-named ("Hegel, Hegel,") by prefix+model, now mechanically deduped (same push). Bloch P1 good, Accra workshop held, also double-named. Then halt: missing-negation + empty-key slips (both now salvaged, same push). Reading-list pass annotations work. 12 min for 3 turns is unusable pace regardless. | **Unusable this outing — pace + volatility** | Revisit post-fix; needs a clean full sitting | Open |
 | deepseek-ai/DeepSeek-V4-Flash-0731 | DeepInfra (visitor key) | Sep 20, Medium, prompt v2026-09-19ak, PARTIAL — owner stopped after 2 turns: 7:36 wall for 3 calls | Judgments cover P1 ONLY. Slow to start; primary failed on turn 2 → Llama-3.3-70B backup rescued per pipe design (console holds reason). Hegel P1 genuinely good (owner: best style yet — "stimulus to go further", pedagogy-of-play close). BUT reads High, not Medium: terms unexplained, abstract, no gloss/elaboration firing. Owner: hold all prompt edits while testing is this slow. | **Voice best, level wrong, pipe slow** | Revisit when fast; level calibration pending | Open |
