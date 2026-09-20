@@ -63,7 +63,9 @@ Test queue (Sep 20 2026 — NOTHING ruled out yet, status per model):
   first, Medium only if clean.
 Ruled out already (corpses, do not re-test): small Qwens (burn),
 Qwen3.6-35B (thinking-burn + disobedient), Mistral Small 3.2 (loop),
-Llama-as-primary (weak), R1-distill (dead), GPT-OSS (OpenAI ban).
+Llama-as-primary (weak), R1-distill (dead), GPT-OSS (OpenAI ban),
+qwen/qwen3.6-27b on Groq (404 retired Sep 20 2026 — shared fallback
+replaced by qwen3-32b, ungraded).
 Anti-overfit rule: fixes must be mechanical/universal (parser forgiveness,
 sampling penalties, structural calls) — never model-specific prompt tweaks.
 Evidence: the mechanical name prefix made DeepSeek double-name (it names

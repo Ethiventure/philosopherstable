@@ -24,7 +24,9 @@
  * abuse ever materialises.
  */
 
-const DEFAULT_MODELS = ['qwen/qwen3.8-27b', 'qwen/qwen3.6-27b'];
+const DEFAULT_MODELS = ['qwen/qwen3.8-27b', 'qwen/qwen3-32b'];
+// qwen3.6-27b retired Sep 20 2026 (Groq 404) — corpse, do not restore.
+// qwen3-32b verified live via Groq docs Sep 2026; ungraded voice — fallback only.
 const MAX_BODY_CHARS = 60000;
 const FETCH_TIMEOUT_MS = 60000;
 
