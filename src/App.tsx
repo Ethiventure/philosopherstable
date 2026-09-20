@@ -212,6 +212,10 @@ function App() {
   // Per-turn margins receipts: which pass-3 prompts carried the note in their
   // survey. Attached ≠ answered — the badge says "saw", never "obeyed".
   const [noteMap, setNoteMap] = useState<Record<string, true>>({});
+  // Per-turn echo flags: the detector tripped on this turn's wording against
+  // earlier sitting text. Kept (no retry — the rewrite retry was rolled back
+  // Sep 19 as spend-without-gain) and badged, so grading sees every hit.
+  const [echoMap, setEchoMap] = useState<Record<string, true>>({});
   // Per-turn provenance for the export footer (provider switches mid-session
   // stay honest). Consecutive duplicates collapse at render time.
   const provRef = useRef<string[]>([]);
@@ -808,21 +812,27 @@ function App() {
       // turn is ever re-sent for it. Bare-term counts, if ever needed, go here.
       // Echo watch (Sep 2026): the rewrite retry was rolled back as
       // spend-without-gain (10 retries, echo persisted) — the detector stays
-      // as a cost-free logger so evals keep measuring. Revert: delete block.
-      {
-        const priors = [
+      // as a cost-free logger so evals keep measuring, and flags the card
+      // with a visible badge. Revert: delete block + badge + echoMap state.
+      // (Computed here against pre-turn priors; filed under the item id below.)
+      const echoHit = sharesPassage(
+        `${output.negation} ${output.reformulation}`,
+        [
           ...collected.map((item) => item.response_text),
           ...(codaEarlyRef.current ? [codaEarlyRef.current] : []),
           ...(codaRef.current ? [codaRef.current] : []),
-        ];
-        const draft = `${output.negation} ${output.reformulation}`;
-        if (sharesPassage(draft, priors) && typeof console !== 'undefined') {
-          console.warn(`[Echo] overlap kept (logger only) for ${speaker.full_name}.`);
-        }
+        ],
+      );
+      if (echoHit && typeof console !== 'undefined') {
+        console.warn(`[Echo] overlap kept (logger only) for ${speaker.full_name}.`);
       }
       const item = toIntervention(speaker, pass + 1, seatPos, output, previousSpeaker);
       collected.push(item);
       markSpentVariants(item.response_text);
+      if (echoHit) {
+        const id = item.id;
+        setEchoMap((m) => ({ ...m, [id]: true }));
+      }
       if (groundingReceipt) {
         const receipt = groundingReceipt;
         setGroundMap((m) => ({ ...m, [item.id]: receipt }));
@@ -995,6 +1005,7 @@ function App() {
     codaEndRef.current = null;
     setGroundMap({});
     setNoteMap({});
+    setEchoMap({});
     provRef.current = [];
     resetUsage();
     threadCityRef.current = drawThreadCity();
@@ -1088,6 +1099,7 @@ function App() {
     setServiceLog([]);
     setGroundMap({});
     setNoteMap({});
+    setEchoMap({});
     provRef.current = [];
     resetUsage();
     runLevelsRef.current = [];
@@ -1335,6 +1347,7 @@ function App() {
               }}
               onRetryNote={runCodaNow}
               noteSeenFor={noteMap}
+              echoSeenFor={echoMap}
             />
           ) : (
             <div className="dark-academia-card p-10 text-center"><Feather size={28} className="mx-auto text-[#b89968] mb-3" /><p className="font-heading text-2xl text-[#4a392d]">The cabinet awaits its question.</p><p className="italic text-[#465f75]/65 mt-2">Begin the circuit to watch the problem transform one intervention at a time.</p></div>
@@ -1374,7 +1387,7 @@ function App() {
   );
 }
 
-function ReadingDeck({ entries, philosophers, readIdx, onNav, freshId, ttsSupported, ttsStatus, onToggleSpeech, onToggleNoteSpeech, onInspect, onOpenSources, notes, onRetryNote, noteSeenFor }: {
+function ReadingDeck({ entries, philosophers, readIdx, onNav, freshId, ttsSupported, ttsStatus, onToggleSpeech, onToggleNoteSpeech, onInspect, onOpenSources, notes, onRetryNote, noteSeenFor, echoSeenFor }: {
   entries: DeckEntry[];
   philosophers: Philosopher[];
   readIdx: number;
@@ -1393,6 +1406,7 @@ function ReadingDeck({ entries, philosophers, readIdx, onNav, freshId, ttsSuppor
   };
   onRetryNote: (which: 'early' | 'late' | 'end') => void;
   noteSeenFor: Record<string, true>;
+  echoSeenFor: Record<string, true>;
 }) {
   const entry = entries[readIdx];
   if (!entry) return null;
@@ -1454,6 +1468,7 @@ function ReadingDeck({ entries, philosophers, readIdx, onNav, freshId, ttsSuppor
               <h3 className="font-heading text-2xl text-[#4a392d] leading-tight">{philosopher.full_name}</h3>
               <p className="text-[10px] uppercase tracking-wider text-[#8b5254]">Pass {item.pass_number} · Seat {item.seat_position + 1} · Card {readIdx + 1} of {entries.length}</p>
               {noteSeenFor[item.id] && <p className="text-[10px] uppercase tracking-wider text-[#8b5254]/80 mt-0.5">☞ saw the margins note</p>}
+              {echoSeenFor[item.id] && <p className="text-[10px] uppercase tracking-wider text-[#8b5254]/80 mt-0.5">☞ shares wording with an earlier turn</p>}
             </div>
           </div>
           <p className="drop-cap text-[15px] leading-relaxed whitespace-pre-line text-[#465f75]">{item.response_text}</p>
