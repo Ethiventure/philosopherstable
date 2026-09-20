@@ -37,8 +37,10 @@ Test queue (Sep 20 2026 — NOTHING ruled out yet, status per model):
   prompts; needs re-grade on current rules (single Medium data point).
 - qwen/qwen3-30b-a3b: NOT ruled out — tuning target, 6+ graded runs, echo
   clusters + unspoken history + beat-less P3s still open.
-- qwen/qwen3-14b: NOT ruled out — entirely untested; cheapest ticket
-  (~$0.011/session) if it holds the contract.
+- qwen/qwen3-14b: FRONTRUNNER (Sep 20) — elimination test 1 SURVIVES
+  (Medium, $0.021, 0 repairs). Tuning track open in PLAN Phase 7c:
+  emotional-grip gap vs 30B, golden-turn few-shots from owner-graded
+  best turns, retest checklist per round.
 - Alibaba qwen3.8-27b: NOT ruled out — voice leader at Low on trial quota;
   first Medium grade still owed.
 - Z.ai glm-4.7-flash: NOT ruled out — pipe built, never run; Low burn-check

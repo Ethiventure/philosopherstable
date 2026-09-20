@@ -633,6 +633,25 @@ Groq-Qwen, Together once each with the output-token line as judge.
   plain refs for ~20 sampled High sentences, SARI-score Low/Med rewrites,
   optional one-off EASSE run outside the repo.
 
+## Phase 7c — Qwen-14B tuning track (open, Sep 20 2026; frontrunner)
+Qwen-14B holds the contract at ~$0.021/sitting but reads thinner than the
+bigger Qwen: less emotional grip, dropped cities, no citations, unspoken
+debts, beat-less P3s. Tune the prompts toward it, not away from it:
+- Emotional engagement gap: find what the 30B P1s did that 14B doesn't
+  (dilemma-facing depth, felt verbs inside the move) and promote exactly
+  that — no new jobs, no extra words.
+- Golden-turn few-shots: harvest owner-graded best turns (30B/27B sessions)
+  into per-seat exemplars rendered in the persona, with provenance
+  (session, model, date). Owner picks the goldens; nothing enters the
+  prompts ungraded. Candidate mechanism: extend the SEAT_TRIOS pattern
+  (worked shape-examples already live at Medium) with a second,
+  voice-level exemplar per seat.
+- Retest checklist for every tuning round: thread city named, ≥1 citation
+  per sitting, one history debt spoken in P1, one slogan + why-better in P3.
+- Stop rule: if three tuning rounds don't move 14B, accept the split —
+  14B carries Low/cheap, 30B carries Medium/emotional — and say so in the
+  Voice tab copy.
+
 ## Phase 9 — Rose seat (in progress, Sep 2026)
 Gillian Rose (1947–1995) dossier requested per `docs/new-philosopher-brief.md`
 Phase 1; seat + debts + diagram land together once it returns (grid exporter
