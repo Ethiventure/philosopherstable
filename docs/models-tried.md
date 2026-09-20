@@ -3,13 +3,15 @@
 Living log of every model/provider combination tested for the cabinet, newest
 first. Check here before (re)trying anything — corpses stay buried.
 
-## Selection strategy (Sep 20 2026, owner order)
-Pinpoint, don't sprawl: three ticks, and no single model needs all three.
-1) A free model that works (default while it lasts: Alibaba Qwen27B trial
-   quota to Dec 16; free-tier Qwen elsewhere walls — Groq ~7K TPM vs ~8K
-   turns, OpenRouter :free has no Qwen). 2) A quick model (paid Qwen30B:
-   ~1–2 min debates). 3) A model meeting all quality requirements (open —
-   Qwen30B leads on dilemma-grasp, DeepSeek on obedience).
+## Selection strategy (Sep 20 2026, owner order — revised same day)
+Goal: one model that carries all three levels. Per-level split is the
+fallback, not the prize — and if it sticks, the Voice tab says plainly
+which engine is best for what. Until then: 1) A free model that works
+(default while it lasts: Alibaba Qwen27B trial quota to Dec 16;
+free-tier Qwen elsewhere walls — Groq ~7K TPM vs ~8K turns, OpenRouter
+:free has no Qwen). 2) A quick model (paid Qwen30B: ~1–2 min debates).
+3) A model meeting all quality requirements (open — GLM holds Medium,
+High still unclaimed).
 ## Elimination plan (Sep 20 2026 — owner: start cutting, different models per level allowed)
 Parked, not buried: DeepSeek v4.1-flash. Two bad outings (halt, partial)
 plus 12-min pace — no more sittings spent on it until a contender fails
