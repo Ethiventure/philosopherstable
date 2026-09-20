@@ -657,6 +657,16 @@ debts, beat-less P3s. Tune the prompts toward it, not away from it:
   14B carries Low/cheap, 30B carries Medium/emotional — and say so in the
   Voice tab copy.
 
+## Phase 7d — Shared free default → Alibaba until Dec 2026 (TODO, not started)
+Groq free can't carry a full sitting (429 walls + 404-dead fallback,
+Sep 20). Move the shared no-key path to the Alibaba trial quota until
+it expires Dec 16 2026: point the Netlify function (or a second
+function) at the Alibaba OpenAI-compatible endpoint with the trial key
+in host env, keep per-IP + global caps, keep Groq as fallback. Re-hunt
+the free pipe before expiry. Watch-out: one shared quota means one
+visitor can drink the well — caps stay, and owner testing moves to a
+visitor key meanwhile.
+
 ## Phase 9 — Rose seat (in progress, Sep 2026)
 Gillian Rose (1947–1995) dossier requested per `docs/new-philosopher-brief.md`
 Phase 1; seat + debts + diagram land together once it returns (grid exporter

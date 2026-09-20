@@ -41,6 +41,12 @@ Per-level recommendation (current best guess, changes with evidence):
 - Medium: GLM-5.3-flash (citations + debts + differentiated P3s, no P2 echo) vs Qwen30B (dilemma-grasp best, echo open) — head-to-head owed.
 - High: OPEN — nobody graded at High since prompts stabilized; winner of
   Medium gets the High sitting.
+Next test (owner, Sep 20): qwen/qwen3-30b-a3b at High, education
+question. KEEP (as High engine) if full voice survives High rules with
+no P2 echo clusters and P3s carry slogans + why-better; PARK if echo
+returns at High density or repairs double the cost. Note: this jumps
+the queue — the Medium head-to-head (GLM vs 30B on current prompts)
+is still owed afterwards.
 - High: OPEN — nobody graded at High since prompts stabilized; winner of
   Medium gets the High sitting.
 Free default: Alibaba trial to Dec 16, then cheapest proven paid.
