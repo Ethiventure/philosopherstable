@@ -657,6 +657,19 @@ debts, beat-less P3s. Tune the prompts toward it, not away from it:
   14B carries Low/cheap, 30B carries Medium/emotional — and say so in the
   Voice tab copy.
 
+## Phase 7e — Fix triage: weigh every fix against every intended model (TODO)
+Owner note (Sep 20): ideas leak across seats — e.g. Bookchin sounding
+like Weil (High 30B P2 repeats Weil's paragraph; GLM P2 carries her
+attention line). Before fixing, triage: some faults are shared
+prompt/pipe problems (P2 cluster-echo hit 30B, 27B, 14B families —
+mechanical fix is safe), others may be model nature (a wording tweak
+that cures Qwen echo could flatten GLM's differentiator or mute
+Alibaba's voice). Rule: list each candidate fix with (a) which models'
+graded evidence it addresses, (b) which models it could unbalance,
+(c) retest matrix before keeping. Never ship a single-model tweak as
+universal — the anti-overfit rule already bans this; this phase is its
+ledger.
+
 ## Phase 7d — Shared free default → Alibaba until Dec 2026 (TODO, not started)
 Groq free can't carry a full sitting (429 walls + 404-dead fallback,
 Sep 20). Move the shared no-key path to the Alibaba trial quota until
