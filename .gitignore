@@ -24,6 +24,9 @@ ingest_urls.py.depends
 *.sw?
 .env
 .env.*.local
+.env.test.local
+# Explicit: test-runner keys (test-keys/test-sitting/test-matrix) must never
+# reach git, even if the wildcard patterns above are ever narrowed.
 # NEVER commit a real API key. Local dev key lives in untracked .env
 # (see .env.example). Production key lives in the Netlify dashboard only.
 
