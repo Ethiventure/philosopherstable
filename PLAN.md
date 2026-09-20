@@ -676,6 +676,10 @@ graded evidence it addresses, (b) which models it could unbalance,
 (c) retest matrix before keeping. Never ship a single-model tweak as
 universal — the anti-overfit rule already bans this; this phase is its
 ledger.
+Queued (Sep 20, owner): move the OpenRouter paid default pin off
+parked `deepseek/deepseek-v4.1-flash` to Medium-holder
+`z-ai/glm-5.3-flash` (code `settings.ts` + README agree with each
+other, both disagree with the verdicts) — not DeepSeek, ever back.
 
 ## Phase 7d — Shared free default → Alibaba until Dec 2026 (TODO, not started)
 Groq free can't carry a full sitting (429 walls + 404-dead fallback,
