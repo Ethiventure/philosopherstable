@@ -48,7 +48,7 @@
   "46": "opencode.json",
   "47": "verify.ts",
   "48": "dev-keepalive.sh",
-  "49": "rag-search.ts",
+  "49": "rag-search.mjs",
   "50": "service-chat.ts",
   "51": "scripts",
   "52": "Language levels (Low / Medium / High)",
@@ -69,6 +69,16 @@
   "67": "Things taught (owner's notebook)",
   "68": "rag-translate-once.mjs",
   "69": "model-brief.md",
-  "70": "porter.ts",
-  "71": "zai.ts"
+  "70": "Alibaba 27B High, visitor key — v1 (São Paulo, education question)",
+  "71": "zai.ts",
+  "72": "GLM 5.3 High, OpenRouter paid — v2 (Seoul, education question)",
+  "73": "Qwen 14B High, OpenRouter paid — v1 (Buenos Aires, education question)",
+  "74": "Qwen 30B High, OpenRouter paid — v2 (São Paulo, education question)",
+  "75": "test-matrix.mjs",
+  "76": "porter.ts",
+  "77": "test-sitting.mjs",
+  "78": "rag-text.ts",
+  "79": "rag-eval.mjs",
+  "80": "rag-ground.ts",
+  "81": "rag-search.ts"
 }
