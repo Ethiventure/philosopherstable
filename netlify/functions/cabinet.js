@@ -12,8 +12,15 @@
  * than producing a bill. Rotate GROQ_API_KEY in console.groq.com + Netlify
  * env if it ever leaks — no code change needed.
  *
- * Env vars (all optional except GROQ_API_KEY):
+ * Env vars (all optional except one provider key):
  *   GROQ_API_KEY            Secret. Set in Netlify dashboard, never in repo.
+ *   ALIBABA_API_KEY         Secret. When set, the shared path routes to the
+ *                           Alibaba trial quota instead of Groq (trial to
+ *                           Dec 16 2026 — re-hunt the free pipe before expiry).
+ *                           LIVE TEST PENDING (Sep 20 2026): route is
+ *                           env-guarded and syntax-checked only; run one
+ *                           shared sitting on deploy before trusting it.
+ *   ALIBABA_MODELS          Comma list, tried in order. Default below.
  *   GROQ_MODELS             Comma list, tried in order. Default below.
  *   SHARED_PER_IP_PER_DAY   Default 60 (≈2 full 30-turn sessions per visitor).
  *   SHARED_GLOBAL_PER_DAY   Default 900 (just under Groq's 1K RPD on these models).
@@ -27,6 +34,11 @@
 const DEFAULT_MODELS = ['qwen/qwen3.8-27b', 'qwen/qwen3-32b'];
 // qwen3.6-27b retired Sep 20 2026 (Groq 404) — corpse, do not restore.
 // qwen3-32b verified live via Groq docs Sep 2026; ungraded voice — fallback only.
+// Alibaba route (trial quota to Dec 16 2026): OpenAI-compatible endpoint,
+// same body/response shape as Groq, so the call below is shared.
+const ALIBABA_BASE = 'https://dashscope-intl.aliyuncs.com/compatible-mode/v1/chat/completions';
+const GROQ_BASE = 'https://api.groq.com/openai/v1/chat/completions';
+const DEFAULT_ALIBABA_MODELS = ['qwen3.8-27b'];
 const MAX_BODY_CHARS = 60000;
 const FETCH_TIMEOUT_MS = 60000;
 
@@ -63,11 +75,11 @@ function json(statusCode, payload) {
   };
 }
 
-async function tryModel(model, apiKey, messages, maxTokens) {
+async function tryModel(model, apiKey, messages, maxTokens, baseUrl) {
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), FETCH_TIMEOUT_MS);
   try {
-    const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+    const response = await fetch(baseUrl, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -132,11 +144,16 @@ export async function handler(event) {
     return json(405, { error: { message: 'POST only.', code: 'method' } });
   }
 
-  const apiKey = process.env.GROQ_API_KEY;
+  // Route: Alibaba trial quota when its key is set, else Groq. Default
+  // behaviour with only GROQ_API_KEY set is byte-identical to before.
+  const alibabaKey = process.env.ALIBABA_API_KEY;
+  const groqKey = process.env.GROQ_API_KEY;
+  const apiKey = alibabaKey || groqKey;
+  const baseUrl = alibabaKey ? ALIBABA_BASE : GROQ_BASE;
   if (!apiKey) {
     return json(500, {
       error: {
-        message: 'Shared provider is not configured (no GROQ_API_KEY on the server). Add your own OpenRouter, Groq, DeepInfra or Together key in Settings → Key.',
+        message: 'Shared provider is not configured (no GROQ_API_KEY or ALIBABA_API_KEY on the server). Add your own OpenRouter, Groq, DeepInfra, Together, Alibaba or Z.ai key in Settings → Key.',
         code: 'unconfigured',
       },
     });
@@ -165,7 +182,7 @@ export async function handler(event) {
   if (ipCount >= perIpCap) {
     return json(429, {
       error: {
-        message: `Shared quota used up for your address today (${ipCount}/${perIpCap}). Caps reset at midnight UTC — or add your own OpenRouter, Groq, DeepInfra or Together key in Settings → Key for unlimited personal use.`,
+        message: `Shared quota used up for your address today (${ipCount}/${perIpCap}). Caps reset at midnight UTC — or add your own OpenRouter, Groq, DeepInfra, Together, Alibaba or Z.ai key in Settings → Key for unlimited personal use.`,
         code: 'quota',
       },
     });
@@ -173,17 +190,18 @@ export async function handler(event) {
   if (globalCount >= globalCap) {
     return json(429, {
       error: {
-        message: 'Shared quota is exhausted for everyone today. It resets at midnight UTC — or add your own OpenRouter, Groq, DeepInfra or Together key in Settings → Key.',
+        message: 'Shared quota is exhausted for everyone today. It resets at midnight UTC — or add your own OpenRouter, Groq, DeepInfra, Together, Alibaba or Z.ai key in Settings → Key.',
         code: 'quota',
       },
     });
   }
 
-  const models = (process.env.GROQ_MODELS || '')
+  const modelsEnv = alibabaKey ? process.env.ALIBABA_MODELS : process.env.GROQ_MODELS;
+  const models = (modelsEnv || '')
     .split(',')
     .map((m) => m.trim())
     .filter(Boolean);
-  if (!models.length) models.push(...DEFAULT_MODELS);
+  if (!models.length) models.push(...(alibabaKey ? DEFAULT_ALIBABA_MODELS : DEFAULT_MODELS));
 
   const messages = [
     { role: 'system', content: systemPrompt },
@@ -195,7 +213,7 @@ export async function handler(event) {
     // Count the attempt BEFORE calling: crashed instances shouldn't grant free retries.
     perIp.set(ip, (perIp.get(ip) || 0) + 1);
     globalCount += 1;
-    const result = await tryModel(model, apiKey, messages, tokens);
+    const result = await tryModel(model, apiKey, messages, tokens, baseUrl);
     if (result.text) {
       return json(200, { text: result.text, model, ...(result.usage ? { usage: result.usage } : {}) });
     }
@@ -203,7 +221,7 @@ export async function handler(event) {
     if (result.status === 401) {
       return json(500, {
         error: {
-          message: 'Shared provider key is invalid (owner must rotate GROQ_API_KEY). Meanwhile, add your own OpenRouter, Groq, DeepInfra or Together key in Settings → Key.',
+          message: 'Shared provider key is invalid (owner must rotate GROQ_API_KEY). Meanwhile, add your own OpenRouter, Groq, DeepInfra, Together, Alibaba or Z.ai key in Settings → Key.',
           code: 'auth',
         },
       });
@@ -217,14 +235,14 @@ export async function handler(event) {
   if (quotaish) {
     return json(429, {
       error: {
-        message: `Shared quota is tight right now: ${failures.join('; ')}. Wait out the named window and Resume — or add your own OpenRouter, Groq, DeepInfra or Together key in Settings → Key.`,
+        message: `Shared quota is tight right now: ${failures.join('; ')}. Wait out the named window and Resume — or add your own OpenRouter, Groq, DeepInfra, Together, Alibaba or Z.ai key in Settings → Key.`,
         code: 'quota',
       },
     });
   }
   return json(502, {
     error: {
-      message: `Shared provider failed on every model: ${failures.join('; ')}. Resume to retry, or add your own OpenRouter, Groq, DeepInfra or Together key in Settings → Key.`,
+      message: `Shared provider failed on every model: ${failures.join('; ')}. Resume to retry, or add your own OpenRouter, Groq, DeepInfra, Together, Alibaba or Z.ai key in Settings → Key.`,
       code: 'server',
     },
   });
