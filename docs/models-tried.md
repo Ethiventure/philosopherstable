@@ -3,6 +3,19 @@
 Living log of every model/provider combination tested for the cabinet, newest
 first. Check here before (re)trying anything — corpses stay buried.
 
+## Selection strategy (Sep 20 2026, owner order)
+Pinpoint, don't sprawl: three ticks, and no single model needs all three.
+1) A free model that works (default while it lasts: Alibaba Qwen27B trial
+   quota to Dec 16; free-tier Qwen elsewhere walls — Groq ~7K TPM vs ~8K
+   turns, OpenRouter :free has no Qwen). 2) A quick model (paid Qwen30B:
+   ~1–2 min debates). 3) A model meeting all quality requirements (open —
+   Qwen30B leads on dilemma-grasp, DeepSeek on obedience).
+Anti-overfit rule: fixes must be mechanical/universal (parser forgiveness,
+sampling penalties, structural calls) — never model-specific prompt tweaks.
+Evidence: the mechanical name prefix made DeepSeek double-name (it names
+AND gets named); per-model wording is a treadmill. Park anything that only
+helps one model.
+
 ## Current ranks (Sep 19 2026, owner-graded live sessions only)
 
 - Style (voice + temperature): Qwen3.8-27B (Alibaba, unthinking) > GLM-5.3-flash > DeepSeek v4.1-flash > Qwen3-30B-A3B (dilemma-grasp best, P2 echo-prone) > Qwen3.6-35B (voice good, obedience bad) > Mistral (loop) > Llama (weak).

@@ -263,6 +263,23 @@ export function parseTurnOutput(rawText: string, label = 'LLM'): TurnOutput {
   for (const [alias, canon] of Object.entries(KEY_ALIASES)) {
     if (typeof record[canon] !== 'string' && typeof record[alias] === 'string') record[canon] = record[alias];
   };
+  // Empty-key slip (observed live: {"": "I owe you this, Ernst…"}): content
+  // filed under no key at all. Deal it to the first missing required key.
+  if (typeof record[''] === 'string' && (record[''] as string).trim()) {
+    const missing = (TURN_KEYS as readonly string[]).find((k) => typeof record[k] !== 'string' || !(record[k] as string).trim());
+    if (missing) record[missing] = record[''];
+  }
+  // Truncation fallback: a turn cut off mid-JSON usually loses
+  // new_contribution while reformulation survives. Derive the one-liner from
+  // reformulation's first sentence rather than halting the sitting — the
+  // survey gets a weaker line, which beats no line. Logged so evals see it.
+  if ((typeof record.new_contribution !== 'string' || !record.new_contribution.trim()) && typeof record.reformulation === 'string' && record.reformulation.trim()) {
+    const first = (record.reformulation as string).split(/(?<=[.?!])\s+/)[0].trim();
+    if (first) {
+      record.new_contribution = first;
+      if (typeof console !== 'undefined') console.warn(`[${label}] new_contribution derived from reformulation (truncated turn?).`);
+    }
+  }
   for (const key of TURN_KEYS) {
     if (typeof record[key] !== 'string' || !(record[key] as string).trim()) {
       if (typeof console !== 'undefined') console.warn(`[${label}] turn missing key "${key}":`, rawText.slice(0, 2000));
