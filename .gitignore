@@ -38,3 +38,7 @@ graphify-out/20*/
 
 # RAG pipeline: local SQLite truth stays out; the exported static JSON ships.
 data/rag.sqlite
+
+# Local test-probe runs (test-sitting/test-matrix JSONL): machine scribble,
+# never committed. Curated transcripts live in docs/eval-sittings/ instead.
+data/test-runs/
