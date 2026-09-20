@@ -70,7 +70,7 @@ export const DEFAULT_SETTINGS: CabinetSettings = {
   provider: 'shared',
   openRouterApiKey: '',
   openRouterMode: 'free',
-  openRouterModel: 'qwen/qwen3-30b-a3b',
+  openRouterModel: 'z-ai/glm-5.3-flash',
   groqApiKey: '',
   groqModel: DEFAULT_GROQ_MODEL,
   deepInfraApiKey: '',
@@ -121,7 +121,7 @@ export function loadSettings(): CabinetSettings {
       // No OpenAI models, ever: stored openai/* IDs migrate to the default.
       openRouterModel: typeof parsed.openRouterModel === 'string' && parsed.openRouterModel.trim() && !parsed.openRouterModel.trim().startsWith('openai/')
         ? parsed.openRouterModel.trim().slice(0, 120)
-        : 'deepseek/deepseek-v4.1-flash',
+        : 'z-ai/glm-5.3-flash',
       economy: parsed.economy === 'efficient' ? 'efficient' : 'full',
       grounding: parsed.grounding === true,
     };
