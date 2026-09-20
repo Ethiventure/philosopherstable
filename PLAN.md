@@ -803,7 +803,11 @@ commons pattern — no signup, shared quota made fair, accessible, static-first)
 (prefs, themes as tested pairs, font tri-state, TTS recipe, focus/aria rules),
 theme system, Low/Med/High difficulty pattern (block-last + trios + failure
 lines), BYOK settings (shared-proxy + per-provider keys, quota-honest halt/
-resume), service-desk chat pattern, lexical RAG pattern (manifest + rights gate
+resume, `test:keys` sweep: `TEST_*` env + gitignored local file, keyless
+pipes skip with reasons, keys never printed), service-desk chat pattern
+(mechanical output-shape guards + retryable errors, short snippet in UI +
+full text in console), prompt/rules version stamp (rides in the export so
+grades never transfer silently across versions), lexical RAG pattern (manifest + rights gate
 + BM25 shards + eval + abstention traps), node-and-debt diagram
 (`docs/diagram-style.md` + layout + checker), graphify instructions
 (`graphify install/query/path/explain/update` per AGENTS.md) plus the
