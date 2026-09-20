@@ -78,6 +78,11 @@ Test queue (Sep 20 2026 — NOTHING ruled out yet, status per model):
   fails. Low voice leader confirmed; not a Medium engine (see session log).
 - Z.ai glm-4.7-flash: NOT ruled out — pipe built, never run; Low burn-check
   first, Medium only if clean.
+- New Alibaba IDs (probed Sep 20, all hold the Low contract, none graded):
+  qwen3.8-flash (reopens the OpenRouter burn verdict — Low sitting only),
+  qwen3.7-plus, qwen3.8-max (Low sittings first; High only via the queue).
+  Straight-to-High on ungraded IDs is refused: High is the hardest level
+  and echo is the cross-model High fault.
 Ruled out already (corpses, do not re-test): small Qwens (burn),
 Qwen3.6-35B (thinking-burn + disobedient), Mistral Small 3.2 (loop),
 Llama-as-primary (weak), R1-distill (dead), GPT-OSS (OpenAI ban),
@@ -127,6 +132,9 @@ helps one model.
 usage instrument ran — earlier sessions predate it)
 
 | Model | Provider | Time | Tokens (in/out, calls) | Errors | Quality notes | Interim verdict | Next step | Final verdict |
+| qwen3.8-flash | Alibaba (probe, stand-in system prompt) | Sep 20, Low opening-probe, prompt v2026-09-20c, Cairo: 2.3s wall, 660/68 tok, ~$0.0001, contract held (22w in budget), no volatility | NEW EVIDENCE vs the OpenRouter burn verdict (content null, OUT): different pipe, clean parse. Reopens as a Low-sitting candidate — not High. | **Pipe healthy, voice ungraded** | Low sitting before any Medium talk | Open |
+| qwen3.7-plus | Alibaba (probe, stand-in system prompt) | Sep 20, Low opening-probe, prompt v2026-09-20c, Cairo: 3.2s wall, 660/89 tok, contract held (36w in budget), no volatility | Brand-new ID, no history. Ungraded at every level. | **Pipe healthy, voice ungraded** | Low sitting first; High only via the queue | Open |
+| qwen3.8-max | Alibaba (probe, stand-in system prompt) | Sep 20, Low opening-probe, prompt v2026-09-20c, Cairo: 3.3s wall, 660/71 tok, contract held (34w in budget), no volatility | Brand-new ID, no history. Ungraded at every level. | **Pipe healthy, voice ungraded** | Low sitting first; High only via the queue | Open |
 | qwen/qwen3.8-27b | Groq direct (probe, stand-in system prompt) | Sep 20, Low opening-probe ×2, prompt v2026-09-20c, Cairo: 0.5–1s wall, ~660/86 tok, ~$0.0009, contract held second run (38w in budget), first run flaked (empty negation key, parse correctly rejected) | VPN 403s the whole pipe ("Access denied" — retest off-VPN before blaming the key). App fix shipped same session: reasoning_effort:'low' returned 200-with-empty on Qwen, flag dropped from groq.ts. | **Pipe healthy off-VPN, voice ungraded** | Full sitting to confirm pace claim | Open |
 | z-ai/glm-5.3-flash | OpenRouter paid (probe, stand-in system prompt — pipe gate, not voice) | Sep 20, Low opening-probe ×2, prompt v2026-09-20c, Cairo: 7–8s wall, ~708/121–159 tok, contract held both runs (47w then 73w vs 40 budget — over, stochastic), no volatility | FIRST v20c LIVE EVIDENCE: parses clean via json+thinking-low route (mandatory-reasoning 400 stepped down, mirroring the app). Key check needed the same fix: 10-token cap returned empty (thinking ate it), 100-token cap passes. | **Pipe healthy, voice ungraded** | Full Low sitting, then Medium rematch seat | Open |
 | Qwen/Qwen3-30B-A3B | DeepInfra (probe, stand-in system prompt) | Sep 20, Low opening-probe ×2, prompt v2026-09-20c, Cairo: 1–2s wall, ~657/64–93 tok, contract held (38w then 19w vs 40 — in budget), no volatility | Parses clean via json route; plain route returns 200-with-empty on long prompts (constrained decoding forces content out — mirrors why app turns try json first). | **Pipe healthy, voice ungraded** | Full sitting at the level the A/B orders | Open |
