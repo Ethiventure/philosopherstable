@@ -57,7 +57,7 @@ export interface CabinetSettings {
   zaiModel: ZaiModel;
   economy: TurnEconomy;
   /** Experimental source grounding (Phase 2, item ii): fetch + keyword-extract
-   * HTML source pages server-side and inject top passages. Default off;
+   * HTML source pages server-side and inject top passages. Default on;
    * delete lib/extract.ts + functions/extract.js + this flag to fully undo. */
   grounding: boolean;
 }

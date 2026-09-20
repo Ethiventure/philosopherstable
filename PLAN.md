@@ -230,7 +230,7 @@ passages, undo by deleting `lib/extract.ts` + `functions/extract.js` + flag),
 Marx, Bloch, Bookchin, Deleuze.
 Settings drawer: provider radio, key input (password-style) per provider, Test
 key, Clear, per-destination privacy note. No key → Begin disabled with explanation.
-*Eval: the three-tab drawer tests well; stored-`gemini` migration and the
+*Eval: the four-tab drawer tests well; stored-`gemini` migration and the
 no-OpenAI guard have both fired correctly in the wild.*
 
 **2b Clients** ✅ — `src/lib/llm.ts` is the shared error/parse hub
@@ -455,7 +455,7 @@ reading-list numbers both survived live sessions.*
 `src/lib/preferences.ts`: font scale, line height, font family (serif / sans /
 dyslexia-friendly), high contrast, reduce motion (honour `prefers-reduced-motion`),
 parchment / dim / dark theme — applied as CSS custom properties + data attributes on `<html>`.
-Settings → *Display* tab (Key / Cabinet / Display). Audit: focus rings, `aria-live` on reading
+Settings → *Display* tab (Key / Seats / Voice / Display). Audit: focus rings, `aria-live` on reading
 status + "currently speaking", `aria-expanded` on drawers, Esc on modals, `aria-label` on
 seats. Free TTS via browser SpeechSynthesis: per-turn Listen, explicit voice resolution
 (visitor pick persisted as `ttsVoiceURI`, else browser-default English, else on-device

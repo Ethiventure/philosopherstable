@@ -14,16 +14,16 @@ Try it here: https://philosopherstable.netlify.app/
 - **Notes from the margins**: between pass 2 and pass 3, one rude reader breaks in — naming what the table missed and asking hard, concrete questions. Pass 3 must answer one.
 - **Philosophers' Service** (service bell, raised bottom-right, a card beside the table, and a mention in the welcome card): ask any of the twelve thinkers one-to-one — plain definitions, an example, and a check question each time, with a Level picker (plain words / terms explained / full voice). Twenty questions per sitting; chats append to export.
 
-## Settings, explained (all three tabs)
+## Settings, explained (all four tabs)
 
 **Key** — who pays for the thinking:
 - **Shared** (default): the cabinet's own key, no action needed. One quota split across every visitor (see below).
-- **OpenRouter**: your key. *Free cycle* hops across free models each turn so limits stretch; *Paid model* pins one ID (default `deepseek/deepseek-v4.1-flash`, ~$0.15/$0.60 per 1M — about two cents a session). Test-key button included; keys live in your browser only, never touch our servers (OpenRouter's free models may log prompts for training — the panel says so).
+- **OpenRouter**: your key. *Free cycle* hops across free models each turn so limits stretch; *Paid model* pins one ID (stored fallback `deepseek/deepseek-v4.1-flash`, ~$0.15/$0.60 per 1M — about two cents a session; queued move to `z-ai/glm-5.3-flash`, never back to DeepSeek). Test-key button included; keys live in your browser only, never touch our servers (OpenRouter's free models may log prompts for training — the panel says so).
 - **Groq / DeepInfra / Together / Alibaba / Z.ai**: your key, pinned or typed models (`qwen3.8-27b`, `Llama-3.3-70B-Instruct-Turbo`, `Qwen3-30B-A3B`, Model Studio codes, `glm-4.7-flash` — free on Z.ai, one request at a time so sittings run slow). Groq's free tier and Z.ai's free tier need no card; DeepInfra and Together want one on file.
-- Below the keys, everything sits in the **Cabinet** tab so one screen shows the whole sitting: **who sits** (toggle thinkers, hover any name for the two-line life),
+- Below the keys, the **Seats** tab holds who sits (toggle thinkers, hover any name for the two-line life), and the **Voice** tab holds
 - **how it speaks** (Low = plain words, temper unchanged; Medium = the standard seminar; High = full machinery, hostile where the author warrants it), **Long form** (~280 words a turn instead of ~100 — a 12-minute read becomes a 30-minute one), and **Turn economy** (Efficient trims the predecessor text re-sent each turn — the transcript stays whole; voices are never trimmed). Hover anything for the one-line version.
 
-**Cabinet** — who sits and how deep it goes:
+**Seats** — who sits, **Voice** — how deep it goes:
 - Toggle any of the twelve in or out (minimum two — a debate needs an opponent). Five seats (≈15 turns) is the recommended sitting: the full arc at half the tokens.
 - **Ground turns in source texts** (experimental, on by default): each speaker searches its *own* indexed books first and must borrow their actual vocabulary — at least two short verbatim loans per turn (at Low, paraphrased in plain words instead of quoted), receipts inspectable under every intervention. Slower, more tokens, fewer stereotypes.
 
