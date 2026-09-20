@@ -30,6 +30,18 @@ re-decided per app:
   scaffold content stay behind. The tutor *shape* (answer → plain
   definitions → example → check question) transfers.
 
+## Aesthetic options (one fully specified, rest later)
+
+- Option A — dark academia (this project's house style, reference
+  implementation in `src/index.css`): parchment / dim / ink-dark themes as
+  tested pairs, Fell + Alegreya serif with system-sans and
+  dyslexia-friendly tri-state, brass + ink accents, drop caps, card
+  surfaces. Lift the token block + theme rules; re-decide the content
+  typefaces per app.
+- Later options (names reserved, details unwritten): add each here with
+  its token block + one screenshot + its tested theme pairs. The theme
+  *system* (Module 1) never changes — only the tokens do.
+
 ## Module 1 — Access + display layer
 
 Files: `src/lib/preferences.ts`, `src/lib/tts.ts`, theme/contrast/motion
