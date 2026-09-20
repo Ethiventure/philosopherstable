@@ -4,6 +4,18 @@ Low intensity, nothing dumbed down: every entry keeps the full fact,
 only the words stay simple. Newest first. The owner asked for this
 Sep 17 2026 — keep writing here, one entry per lesson.
 
+## Flag the fake citation, don't delete it (Sep 20 2026)
+A model once cited `[UN143]` — a tag shaped like a reference that matches
+nothing in the manifest. The instinct is to strip it so readers never see
+it, but stripping destroys the evidence that the model invents authority.
+So the export keeps the prose intact and adds a footer section listing
+every invented tag by pass and seat (absent when the sitting is clean),
+and the console logs it at export time. The detector only trips on the
+letter-digit shape (`[UN143]`); plain numbers like `[12]` may be honest
+references and stay untouched. The lesson: provenance tooling should mark
+doubt visibly, not silently clean it — the reader grades the model, the
+tool just refuses to launder the claim.
+
 ## Slogans feel cheap, applied moves feel real (Sep 20 2026)
 The owner judged it plainly: pass-3 slogans always read naff. A slogan
 is a line to chant; an applied move is a body doing a thing somewhere.

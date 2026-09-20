@@ -183,6 +183,13 @@ silently across versions.
   unanswered margins question; echo detector flags the card visibly
   (`App.tsx` badge, no retry — rollback stands). Old grades stay on
   v2026-09-20a and earlier.
+- Prompt v2026-09-20c (Sep 20 2026): thread-city binding at the opening
+  (anywhere else fails) and in PLACES (homeland relocation fails). Probe
+  automation ships alongside: `test:sitting` gates one opening turn per
+  pipe (real builders, stand-in system prompt — full persona stays
+  in-app), `test:matrix` loops keyed pipes with `--dry-run`; full-sitting
+  automation waits on extracting the App turn loop into an importable
+  module. Old grades stay on v2026-09-20b and earlier.
 
 ### Embeddings (Phase 5)
 `test_embeddings.py` uses local Ollama `nomic-embed-text` (768 dims); the schema is
@@ -697,8 +704,10 @@ evidence, unbalance risk, retest matrix.
    builders carry PREMISE HOLD: givens are settled facts, attack the
    answers never the premise). Retest: any High sitting.
 4. Coda failures recurring (missing `reformulation` ×2, GLM same day) —
-   cure unknown; repair restate didn't. Triage after one more data point
-   (fails on a second model = coda-prompt job).
+   no cure yet; needs a second-model data point. HARDENED Sep 20 2026:
+   failure console line now carries which/lines-read/prompt-version/
+   provider, so the next failure arrives triage-ready. Repair retry +
+   visible failed state already stood.
 5. Volatility handling (word salad, key-salad, 4000-token cutoff) —
    evidence GLM High ×4, DeepSeek halt ×1. SHIPPED Sep 20 2026
    (`detectVolatility` in `src/lib/llm.ts`: key-salad / word-repeat /
@@ -706,7 +715,10 @@ evidence, unbalance risk, retest matrix.
    error, snippet in panel + full text in console). Retest: any High
    sitting — watch the false-positive line on long term-heavy turns.
 6. Provenance check (`[UN143]` invented tag, 30B High) — evidence ×1.
-   Mechanical citation validation before export.
+   SHIPPED Sep 20 2026: `findInventedTags` (letter-digit bracket shape;
+   plain `[12]` numbers stay untouched) flags the card's turn in console
+   and lists hits in an export UNVERIFIED TAGS footer (absent when clean).
+   Tags stay in the prose as evidence — flagged, never laundered.
 7. Shared free path (Groq walls + dead fallback) — see Phase 7d.
 
 ### B. Style, NOT model-specific (do second)
@@ -719,8 +731,9 @@ evidence, unbalance risk, retest matrix.
    a named thing in the thread city, first step inside the sentence).
    Retest: GLM Medium first (closest) — grade specificity, not slogans.
 10. Thread-city drops (Berlin-default Hegel P1s on GLM + Alibaba;
-    Bangkok ×1/15 on 30B High) — persona-default, universal. Retest:
-    any sitting.
+    Bangkok ×1/15 on 30B High) — SHIPPED Sep 20 2026 in prompt
+    v2026-09-20c (opening anywhere but the thread city fails; relocating
+    to the homeland fails). Retest: any sitting.
 
 ### C. Style, model-specific (do last, one model at a time)
 11. 14B emotional gap (Phase 7c golden few-shots) — 14B only; risk to
@@ -732,18 +745,19 @@ evidence, unbalance risk, retest matrix.
 
 Queued (Sep 20, owner): move the OpenRouter paid default pin off
 parked `deepseek/deepseek-v4.1-flash` to Medium-holder
-`z-ai/glm-5.3-flash` (README now states the fallback + queued move; code
-`settings.ts` still pins `qwen/qwen3-30b-a3b` with a `deepseek-v4.1-flash`
-fallback) — not DeepSeek, ever back.
+`z-ai/glm-5.3-flash` — DONE Sep 20 2026 (settings default + fallback +
+probe default + README agree, ~$0.075/$0.25 rates, about a cent a
+session) — not DeepSeek, ever back.
 
-## Phase 7d — Shared free default → Alibaba until Dec 2026 (TODO, not started)
+## Phase 7d — Shared free default → Alibaba until Dec 2026 (route built, live test pending)
 Groq free can't carry a full sitting (429 walls + 404-dead fallback,
-Sep 20). Move the shared no-key path to the Alibaba trial quota until
-it expires Dec 16 2026: point the Netlify function (or a second
-function) at the Alibaba OpenAI-compatible endpoint with the trial key
-in host env, keep per-IP + global caps, keep Groq as fallback. Re-hunt
-the free pipe before expiry. Watch-out: one shared quota means one
-visitor can drink the well — caps stay, and owner testing moves to a
+Sep 20). SHIPPED Sep 20 2026 the env-guarded route: `ALIBABA_API_KEY` set
+in host env sends the shared path to the Alibaba OpenAI-compatible
+endpoint (`ALIBABA_MODELS`, default `qwen3.8-27b`); unset keeps Groq
+byte-identical. Same per-IP + global caps either way. UNTESTED LIVE: run
+one shared sitting on deploy before trusting it. Re-hunt the free pipe
+before the trial expires Dec 16 2026. Watch-out: one shared quota means
+one visitor can drink the well — caps stay, and owner testing moves to a
 visitor key meanwhile.
 
 ## Phase 9 — Rose seat (in progress, Sep 2026)
