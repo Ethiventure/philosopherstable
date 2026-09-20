@@ -66,7 +66,7 @@ const STORAGE_KEY = 'dialectical-cabinet:settings:v1';
 
 export const DEFAULT_SETTINGS: CabinetSettings = {
   intensity: 'medium',
-  longForm: true,
+  longForm: false,
   provider: 'shared',
   openRouterApiKey: '',
   openRouterMode: 'free',
@@ -80,7 +80,7 @@ export const DEFAULT_SETTINGS: CabinetSettings = {
   alibabaModel: DEFAULT_ALIBABA_MODEL,
   zaiApiKey: '',
   zaiModel: DEFAULT_ZAI_MODEL,
-  economy: 'full',
+  economy: 'efficient',
   grounding: true,
 };
 
