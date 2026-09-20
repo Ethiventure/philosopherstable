@@ -52,8 +52,8 @@ retests; next High goes to whichever retests clean first.
   Medium gets the High sitting.
 Free default: Alibaba trial to Dec 16, then cheapest proven paid.
 Test queue (Sep 20 2026 — NOTHING ruled out yet, status per model):
-- deepseek/deepseek-v4.1-flash (control): still standing — fallback engine,
-  but Sep 20 outings were a halt (word-salad P1, 12 min/3 turns) and a
+- deepseek/deepseek-v4.1-flash (control): PARKED, not standing — was the
+  fallback engine, but Sep 20 outings were a halt (word-salad P1, 12 min/3 turns) and a
   2-turn partial. Needs a clean full sitting before any verdict moves.
 - z-ai/glm-5.3-flash: KEEPS (Sep 20 rematch) — engine challenger
   confirmed on current rules. Next: Alibaba 27B Medium grade; then
@@ -95,7 +95,7 @@ helps one model.
   sitting + desk; 0 repairs; 23 calls, 168.6k/5.3k (~$0.08 paid-equiv, $0 on
   quota). Weaknesses: trial ends Dec 16 2026; needs `enable_thinking:false`
   or pace collapses (5-min turns). Watch the quota wall coming.
-- **DeepSeek v4.1-flash (OpenRouter paid) — the fallback engine.** Strengths:
+- **DeepSeek v4.1-flash (OpenRouter paid) — PARKED Sep 20 (was the fallback engine).** Strengths:
   holds the JSON contract every turn, quick start, full session ~6 min,
   plainness mostly holds (Hegel P1 succinct, Bookchin P1 plain, Rose P1+P3
   genuinely Rosean). Weaknesses: voice at ~85% — "arm" limb/tool/weapon blur
@@ -196,7 +196,7 @@ independently verified, do not quote)
 | Sep 2026 | OpenRouter free cycle | Router-first + 19-model named bench = full live coverage (all 20 free minus the content-safety filter, verified via `/models` API Sep 15 2026), ordered by context desc (1M inkling ×2 / Nemotron ultra+lightning → 512k dots-3 → 262k Gemma/Ling/Nex/super/Laguna → 256k nano-omni-reasoning + north → 65k liquid → 32k glm-5.2 relisted). Removed: `qwen3-coder:free` (coder-tuned), `deepseek-v4-flash:free` (404 since Jun), `qwen3-next:free` (gone). Owner: gpt-oss via router accepted, never pinned. Voice-shift across turns accepted as entertaining; last-good still holds a named model once one succeeds. | More models = more per-model quota. New arrivals (inkling, dots-3, ling-vl, nano-omni) untested against the JSON contract — watch the salvage logs. Paid pin `deepseek/deepseek-v4.1-flash` verified LIVE same day. |
 | Sep 2026 | Groq direct (visitor key) | `qwen/qwen3.6-27b` | DEAD for visitor keys (404: no such model or no access) despite the live docs page. Pinned dropdown removed same day — Groq model is now a free-text ID field, Test key verifies immediately. Llama-as-primary also rejected same day: weak prompt adherence per owner — Llama stays rescue backup only. |
 | Sep 2026 | DeepInfra | `Qwen/Qwen3.6-35B-A3B` as primary | FAILED live (owner session): 2.5 min to first card, still on pass 1 at 11.5 min — session abandoned (thinking-burn confirmed) + ignores Low — Pass 1 reads as school-terms with citations, no plain words. Voice good, obedience bad. Not the quick Qwen. Pin removed Sep 19 2026 (see next row) — this ID stays buried. |
-| Sep 19 2026 | OpenRouter paid | `qwen/qwen3-30b-a3b` | Five graded Medium runs same day (education question, prompts d→f→h→l→m): no thinking burn, 0–1 repairs, ~$0.032/session, debate down to ~1 min. Best dilemma-grasp of any model (P1s sit inside the question's horns); sampling penalties (v2026-09-19g) killed within-turn loops; transform rule fixed P3 parroting; thread cities held throughout. Standing faults: pairwise P2 echo, turn-level gloss ignored through three placements, margins bank absent twice, Lenin-engineers/premise residue. Prompt words judged exhausted for gloss + bank — structural fixes pending (separate bank call; gloss repair pass or desk-carries-clarity). Tuning target alongside DeepSeek fallback engine. |
+| Sep 19 2026 | OpenRouter paid | `qwen/qwen3-30b-a3b` | Five graded Medium runs same day (education question, prompts d→f→h→l→m): no thinking burn, 0–1 repairs, ~$0.032/session, debate down to ~1 min. Best dilemma-grasp of any model (P1s sit inside the question's horns); sampling penalties (v2026-09-19g) killed within-turn loops; transform rule fixed P3 parroting; thread cities held throughout. Standing faults: pairwise P2 echo, turn-level gloss ignored through three placements, margins bank absent twice, Lenin-engineers/premise residue. Prompt words judged exhausted for gloss + bank — structural fixes pending (separate bank call; gloss repair pass or desk-carries-clarity). Was the tuning target; since Sep 20 the tuning track is Qwen14B (PLAN Phase 7c) and the Medium holder is `z-ai/glm-5.3-flash`. |
 | Sep 2026 | Groq free (visitor key) | `qwen/qwen3.8-27b` | VOICE VERIFIED, QUOTA-WALLED: immediate first card, output genuinely good — but 429s inside pass 1, slow resumes, 11 min to pass 2 seat 4. Free tier can't carry a session. Second full eval Sep 17 (owner, Low, AGI-jobs question): 14.24 min + 3 resumes — too slow, but best quality so far: ideas + emotional tone held at plain level (Bloch P1 exemplar), margins voice better than DeepSeek's. AI-isms: odd metaphors ("crisis of stealing", "locking the door while inside"), mixed metaphors (Bloch), far-flung geography for German thinkers. Second full eval Sep 17 (owner, Low, new 2030 question, Groq free): pass 2
 seat 4 in 7.5 min with one quota resume — fastest Qwen session yet, voice
 holds (developed turns, Bookchin/Rose determinations strong, margins voice

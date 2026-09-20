@@ -35,7 +35,9 @@ full edge-list fallback. Content-agnostic: substitute any entities.
 - No OpenAI models for generation, ever. Prefer good-value open-weight
   models; cost paid picks per session before recommending.
 - Provider model IDs rot in days: free-text ID field + live key check, never
-  a pinned dropdown; dead IDs fall back to the default on load.
+  a pinned dropdown; dead IDs fall back to the default on load. Every test
+  queue entry, verdict, and owner-facing model mention carries the exact
+  paste-ready model ID (provider path included) — never names from memory.
 - Debts table (`CABINET_DEBTS`) is truth; heirs derive. Model verdicts go in
   `docs/models-tried.md` — corpses stay buried, never re-test without new
   evidence. `PLAN.md` (agents) + `README.md` (humans) stay current.

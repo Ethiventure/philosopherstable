@@ -12,7 +12,7 @@ Phases are ordered by dependency; each should leave the app building.
 - [x] Phase 4 — Accessibility & display
 - [x] Phase 5 — RAG v1 lexical (vectors deferred)
 - [x] Phase 6 — Richer philosopher information + influence grid
-- [ ] Phase 7 — Model-family A/B (eval sheet ready, runs pending)
+- [ ] Phase 7 — Model-family A/B (Medium held by GLM, High open, 14B tuning track 7c, fix-triage ledger 7e)
 - [ ] Phase 7b — Auto-metrics (AlignScore guardrail, LENS-SALSA calibration, ASSET-method optional)
 - [ ] Phase 8 — `webapp-commons-template` (not scaffolded)
 - [ ] Phase 9 — Rose seat (dossier pending; debts + diagram staged, RAG files awaited)

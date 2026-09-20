@@ -4,6 +4,18 @@ Low intensity, nothing dumbed down: every entry keeps the full fact,
 only the words stay simple. Newest first. The owner asked for this
 Sep 17 2026 — keep writing here, one entry per lesson.
 
+## When every model makes the same mistake, the fault is in our instructions (Sep 20 2026)
+Five sittings in a row, across four model families, all repeated whole
+paragraphs across seats in pass 2. No single model is copying — they
+each fail the same way because the instruction asks for the impossible:
+answer your predecessor, stay in voice, hold the city, keep it short,
+all at once, so they all fall back on the same safe shared wording. The
+lesson: one model's failure is about the model; every model's failure
+is about us. Fix the shared plumbing (the prompt both share), never
+tweak the words for one model — a tweak that cures one can flatten
+another. This is why the project keeps a fix-triage ledger (PLAN
+Phase 7e) before changing anything.
+
 ## One browser, many keys, no login: localStorage (Sep 20 2026)
 The technical term is the Web Storage API — specifically `localStorage`:
 a small key-value cupboard the browser keeps per website, with no account
