@@ -664,18 +664,47 @@ debts, beat-less P3s. Tune the prompts toward it, not away from it:
   14B carries Low/cheap, 30B carries Medium/emotional — and say so in the
   Voice tab copy.
 
-## Phase 7e — Fix triage: weigh every fix against every intended model (TODO)
-Owner note (Sep 20): ideas leak across seats — e.g. Bookchin sounding
-like Weil (High 30B P2 repeats Weil's paragraph; GLM P2 carries her
-attention line). Before fixing, triage: some faults are shared
-prompt/pipe problems (P2 cluster-echo hit 30B, 27B, 14B families —
-mechanical fix is safe), others may be model nature (a wording tweak
-that cures Qwen echo could flatten GLM's differentiator or mute
-Alibaba's voice). Rule: list each candidate fix with (a) which models'
-graded evidence it addresses, (b) which models it could unbalance,
-(c) retest matrix before keeping. Never ship a single-model tweak as
-universal — the anti-overfit rule already bans this; this phase is its
-ledger.
+## Phase 7e — Fix ledger (TODO; ordered by priority, Sep 20 2026)
+Rule: non-model-specific fixes outrank model-specific ones. Never ship
+a single-model tweak as universal (anti-overfit rule); each fix lists
+evidence, unbalance risk, retest matrix.
+
+### A. Not style (pipe/prompt plumbing — do first)
+1. P2 cluster-echo (verbatim shared paragraphs) — evidence 30B/27B/14B/
+   GLM-v2. Mechanical. Retest: one Medium sitting each on GLM + 30B.
+2. Seats ignore the margins note (rudeness) — evidence GLM/30B. Universal
+   prompt fix (P2 names it once, P3 answers one question, or closing
+   admits the gap). Retest: GLM Medium.
+3. Coda premise-blindness (bunks under full automation) — evidence GLM
+   High v1. Coda prompt must restate settled premise facts as
+   untouchable. Retest: any High sitting.
+4. Coda failures recurring (missing `reformulation` ×2, GLM same day) —
+   cure unknown; repair restate didn't. Triage after one more data point
+   (fails on a second model = coda-prompt job).
+5. Volatility handling (word salad, key-salad, 4000-token cutoff) —
+   evidence GLM High ×4, DeepSeek halt ×1. Mechanical detect + visible
+   retry; hypothesis only: shorter High contracts. No wording fix known.
+6. Provenance check (`[UN143]` invented tag, 30B High) — evidence ×1.
+   Mechanical citation validation before export.
+7. Shared free path (Groq walls + dead fallback) — see Phase 7d.
+
+### B. Style, NOT model-specific (do second)
+8. Debts unspoken in P1 (5 rounds, all models) — universal prompt fix.
+   Retest: 14B + 30B Medium.
+9. P3s beat-less (no slogans/why-better on 30B/GLM/Alibaba) — universal.
+   Retest: GLM Medium first (closest).
+10. Thread-city drops (Berlin-default Hegel P1s on GLM + Alibaba;
+    Bangkok ×1/15 on 30B High) — persona-default, universal. Retest:
+    any sitting.
+
+### C. Style, model-specific (do last, one model at a time)
+11. 14B emotional gap (Phase 7c golden few-shots) — 14B only; risk to
+    others: nil (additive exemplars, quarantined to 14B runs).
+12. Bookchin-Weil bleed (High 30B P2 clone; GLM P2 attention-carry) —
+    needs a third exhibit before deciding nature vs plumbing.
+13. 30B High thinness (aphoristic 2-sentence turns) — 30B only; revisit
+    only if 30B returns to High.
+
 Queued (Sep 20, owner): move the OpenRouter paid default pin off
 parked `deepseek/deepseek-v4.1-flash` to Medium-holder
 `z-ai/glm-5.3-flash` (code `settings.ts` + README agree with each
