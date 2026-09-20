@@ -177,6 +177,12 @@ silently across versions.
   gives up); margins writer named Genzie in prompts only (display stays
   "Notes from the margins"); `detectVolatility` gate in `llm.ts` (no prompt
   change, no version cost). Old grades stay on v2026-09-19am.
+- Prompt v2026-09-20b (Sep 20 2026): P2 names Genzie once when taking the
+  early note up (fail if unnamed); HISTORY TONE binding when lines appear;
+  PREMISE HOLD in all three coda builders; closing summary admits one
+  unanswered margins question; echo detector flags the card visibly
+  (`App.tsx` badge, no retry — rollback stands). Old grades stay on
+  v2026-09-20a and earlier.
 
 ### Embeddings (Phase 5)
 `test_embeddings.py` uses local Ollama `nomic-embed-text` (768 dims); the schema is
@@ -677,13 +683,19 @@ evidence, unbalance risk, retest matrix.
 
 ### A. Not style (pipe/prompt plumbing — do first)
 1. P2 cluster-echo (verbatim shared paragraphs) — evidence 30B/27B/14B/
-   GLM-v2. Mechanical. Retest: one Medium sitting each on GLM + 30B.
-2. Seats ignore the margins note (rudeness) — evidence GLM/30B. Universal
-   prompt fix (P2 names it once, P3 answers one question, or closing
-   admits the gap). Retest: GLM Medium.
+   GLM-v2. Retry stays rolled back (10 retries, echo persisted, Sep 19);
+   SHIPPED Sep 20 2026 the visible half: detector flags the card
+   ("shares wording with an earlier turn", reset per sitting) so grading
+   sees every hit at zero token cost. Retest: one Medium sitting each on
+   GLM + 30B — grade badge hits, not vibes.
+2. Seats ignore the margins note (rudeness) — evidence GLM/30B. SHIPPED
+   Sep 20 2026 in prompt v2026-09-20b (P2 names Genzie once when taking
+   the note up, closing summary admits what went unanswered). Retest:
+   GLM Medium.
 3. Coda premise-blindness (bunks under full automation) — evidence GLM
-   High v1. Coda prompt must restate settled premise facts as
-   untouchable. Retest: any High sitting.
+   High v1. SHIPPED Sep 20 2026 in prompt v2026-09-20b (all three coda
+   builders carry PREMISE HOLD: givens are settled facts, attack the
+   answers never the premise). Retest: any High sitting.
 4. Coda failures recurring (missing `reformulation` ×2, GLM same day) —
    cure unknown; repair restate didn't. Triage after one more data point
    (fails on a second model = coda-prompt job).
@@ -698,8 +710,9 @@ evidence, unbalance risk, retest matrix.
 7. Shared free path (Groq walls + dead fallback) — see Phase 7d.
 
 ### B. Style, NOT model-specific (do second)
-8. Debts unspoken in P1 (5 rounds, all models) — universal prompt fix.
-   Retest: 14B + 30B Medium.
+8. Debts unspoken in P1 (5 rounds, all models) — SHIPPED Sep 20 2026 in
+   prompt v2026-09-20b (HISTORY TONE binding: when history lines appear,
+   a P1 turn that never touches them fails). Retest: 14B + 30B Medium.
 9. P3s beat-less (no slogans/why-better on 30B/GLM/Alibaba) — owner
    verdict Sep 20 2026: slogans read naff, instruction DROPPED. Replaced
    with one specific applied move (prompt v2026-09-20a: named body doing
