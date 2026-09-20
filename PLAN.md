@@ -401,7 +401,12 @@ unset made Chrome pick a bundled voice instead of the OS default).
 `scripts/dev-keepalive.sh` guards local `:8888` (restarts netlify dev when the
 Vite child dies and the proxy has nothing to forward to).
 *Eval: the double-margin-note design works — pass 3 answers the note instead
-of performing it; failed notes degrade visibly, never silently.*
+of performing it; failed notes degrade visibly, never silently.
+Queued owner note (Sep 20, GLM sitting): seats read as ignoring the
+margins writer — P2s never name it, only some P3s answer it — which
+lands as rude. Later edit: require each pass-2 turn to name the note
+once + each P3 to answer one question, or have the closing summary
+admit what went unanswered.*
 
 **Philosophers' Service desk** ✅ — floating tutor window (`ServiceChat.tsx` +
 `src/lib/service-chat.ts`): all 12 thinkers, switchable mid-chat, own Level
