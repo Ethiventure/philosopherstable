@@ -826,7 +826,7 @@ archive.org "Public Domain Mark" Melancholy Science scan stays OUT
 > signature. British spelling; third-person description, never instructions
 > to a reader; 1–3 sentences per string.
 
-## Phase 8 — Content-agnostic template repo (planned, not yet scaffolded)
+## Phase 8 — Content-agnostic template repo (specified in `docs/webapp-commons-template.md`, not yet scaffolded)
 Not `cabinet-template`: name should carry the advantages. Owner pick —
 `webapp-commons-template` (says what it is: a web-app shell holding the
 commons pattern — no signup, shared quota made fair, accessible, static-first). Must include: accessibility layer
