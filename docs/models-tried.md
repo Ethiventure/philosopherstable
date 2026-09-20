@@ -38,15 +38,16 @@ Next three sittings, in order, each with kill/keep criteria:
    GLM vs Qwen30B.
 Per-level recommendation (current best guess, changes with evidence):
 - Low: Alibaba 27B (proven voice, plain level) — Qwen30B untested at Low.
-- Medium: GLM-5.3-flash (citations + debts + differentiated P3s, no P2 echo) vs Qwen30B (dilemma-grasp best, echo open) — head-to-head owed.
+- Medium: GLM-5.3-flash takes it (Sep 20: no P2 echo, debts spoken,
+  P3 slogans; 30B retest same day keeps pairwise echo + beat-less P3s).
+  Qwen30B stays the dilemma-grasp challenger + High probe candidate.
 - High: OPEN — nobody graded at High since prompts stabilized; winner of
   Medium gets the High sitting.
 Next test (owner, Sep 20): qwen/qwen3-30b-a3b at High, education
 question. KEEP (as High engine) if full voice survives High rules with
 no P2 echo clusters and P3s carry slogans + why-better; PARK if echo
-returns at High density or repairs double the cost. Note: this jumps
-the queue — the Medium head-to-head (GLM vs 30B on current prompts)
-is still owed afterwards.
+returns at High density or repairs double the cost. (Medium decider now
+settled — GLM holds Medium; High is a fresh probe, not a prize.)
 - High: OPEN — nobody graded at High since prompts stabilized; winner of
   Medium gets the High sitting.
 Free default: Alibaba trial to Dec 16, then cheapest proven paid.
@@ -116,6 +117,7 @@ helps one model.
 usage instrument ran — earlier sessions predate it)
 
 | Model | Provider | Time | Tokens (in/out, calls) | Errors | Quality notes | Interim verdict | Next step | Final verdict |
+| qwen/qwen3-30b-a3b | OpenRouter paid | Sep 20, Medium normal-form, prompt v2026-09-19am, Buenos Aires, default five, no desk: 1:44 wall (debate 1:25), 18 calls 167K/4K, 0 repairs, ~$0.022 | MEDIUM RETEST (owner v15): city held throughout (Buenos Aires every pass); 9 citations pass-annotated; closing summary correct shape (use + Bloch new move + Hegel weakest). BUT pairwise P2 echo persists (Marx≈Bloch share "abandon the citizen" paragraph verbatim; Weil≈Bookchin share "loss of the burden" paragraph verbatim) — and both lift margins-note phrasing wholesale ("analyse systems, dismantle hierarchies, dream beyond algorithms"): performing the note, not answering it. Debts unspoken again (4th round). P3s beat-less (no slogans, no why-better). Hegel P1 thinnest (two generic paragraphs, no people). Margins questions (repair workshops, co-op farms) unanswered in P3 — rudeness note confirmed. | **Fast + cheap, faults persist — loses Medium to GLM** | High probe still open; 14B tuning (Phase 7c) | Open |
 | qwen3.8-27b | Alibaba (visitor key) | Sep 20, Medium normal-form, prompt v2026-09-19am, Nairobi, default five, no desk: 3:15 wall (debate 3:11), 18 calls 180.4K/6K (10.8K cached), 1 JSON repair, ~$0.090 paid-equiv ($0 on trial quota) | FIRST MEDIUM GRADE: SPLIT. P1s genuinely voiced and distinct (Friedrich + loom, cunning of Reason; Marx flips Hegel on surplus-value; Bloch charges Marx with static abolition; Weil charges Bloch with Novum-illusion; Bookchin charges Weil with mechanic-trap). Debts spoken throughout. 8 citations pass-annotated. P3s differentiated with slogan + margins answers (Weil/Bloch answer bodies-break directly). BUT P2s echo catastrophically: identical "atrophy of political agency / citoyen rebirth / not just fix pipes" paragraph closes 4 of 5 turns; Marx/Bloch/Weil openers share "friction of scarcity / forge of agency / hollow shell" near-verbatim. Same cluster-echo fault as Qwen30B, worse here. Hegel P1 opens Berlin against Nairobi thread (persona-default? same as GLM's Hegel). Margins notes strong both rounds. | **Voice survives, engine fails — Low leader, not Medium** | Stays Low default; Medium is GLM vs 30B | Open |
 | z-ai/glm-5.3-flash | OpenRouter paid | Sep 20, Medium normal-form, prompt v2026-09-19am, Johannesburg, default five, no desk: 5:26 wall (debate 4:26), 21 calls 189.6K/14.5K (5.3K reasoning, 14.9K cached), 3 JSON repairs, ~$0.018 | REMATCH: KEEPS. P3s genuinely differentiated — five distinct slogans (pipe decides / count-then-claim / machines to the school-street / assembly assigns the ache / no assigned ache + child votes own curriculum), Bookchin breaks from Hegel rather than echoing. Thread city mostly held (Hegel P1 opens Berlin against Johannesburg thread; Bookchin P3 names no city; rest hold incl. Hillbrow/Soweto/Alexandra). Citations present (9 works, pass-annotated — beats 14B's empty list). Debts spoken (Marx sets dialectic on feet; Bloch Thesis 3; Bookchin→Weil via Macdonald twice). Margins strong with banked first-steps per seat. Pace 4:26 debate for 15 turns — under 8-min wall and faster than reading time per owner note. Faults: Hegel P1 city break; closing summary names use + new move but weakest-shot is Hegel-roast rather than turn-grade; Berlin opener suggests PLACES still weak on P1. | **Keeps — engine challenger, best backup confirmed** | Alibaba 27B Medium next | Open |
 | qwen/qwen3-14b | OpenRouter paid | Sep 20, Medium normal-form, prompt v2026-09-19am, Bristol, default five, no desk: 1:53 wall (debate 1:35), 18 calls 165.7K/4K, repairs 0, ~$0.021 | ELIMINATION TEST 1: SURVIVES — contract held, no burn, no loop. Name-first openings clean ("Hegel, You claim…" — prefix + body, no doubling). Turns punchy and varied; P3s concrete (loom-gazing, co-ops, seize-the-means). Closing summary present with use + praise (weakest-shot missing). Faults: thread city DROPPED (Bristol never mentioned — PLACES ignored); zero citations all sitting (reading list empty despite grounding on); history debts unspoken; "More's Utopia" filler slip in Bloch P2. Cheapest ticket works. | **Survives — cheapest viable engine** | GLM rematch next | Open |
