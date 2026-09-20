@@ -834,7 +834,9 @@ commons pattern — no signup, shared quota made fair, accessible, static-first)
 theme system, Low/Med/High difficulty pattern (block-last + trios + failure
 lines), BYOK settings (shared-proxy + per-provider keys, quota-honest halt/
 resume, `test:keys` sweep: `TEST_*` env + gitignored local file, keyless
-pipes skip with reasons, keys never printed), service-desk chat pattern
+pipes skip with reasons, keys never printed; security sweep after any
+key-handling change — explicit gitignore lines, empty examples, clean
+history, key-free exports/logs), service-desk chat pattern
 (mechanical output-shape guards + retryable errors, short snippet in UI +
 full text in console), prompt/rules version stamp (rides in the export so
 grades never transfer silently across versions), lexical RAG pattern (manifest + rights gate
