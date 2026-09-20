@@ -18,8 +18,8 @@ export type DeepInfraPrimary = 'deepseek' | 'qwen';
  *  picked. The Settings UI renders these verbatim, so keep each `why` to one
  *  plain line (model, price, reason). */
 export const DEEPINFRA_PRIMARIES: { id: DeepInfraPrimary; label: string; model: DeepInfraModel; why: string }[] = [
-  { id: 'deepseek', label: 'DeepSeek V4 Flash 0731', model: 'deepseek-ai/DeepSeek-V4-Flash-0731', why: 'Obedient JSON, ~$0.10/$0.30 per 1M — the fallback engine, fastest reliable pick.' },
-  { id: 'qwen', label: 'Qwen3-30B-A3B', model: 'Qwen/Qwen3-30B-A3B', why: 'Cheap Qwen voice, $0.12/$0.50 per 1M, with a documented thinking off-switch — retest pending (replaces 3.6-35B, which burned live Sep 2026).' },
+  { id: 'deepseek', label: 'DeepSeek V4 Flash 0731', model: 'deepseek-ai/DeepSeek-V4-Flash-0731', why: 'Parked Sep 20 2026 (halted sitting, 12-min pace) — revisit only if Qwen echo proves unfixable. Was the fallback engine.' },
+  { id: 'qwen', label: 'Qwen3-30B-A3B', model: 'Qwen/Qwen3-30B-A3B', why: 'Tuning target: best dilemma-grasp measured, ~1–2 min debates, ~$0.03/sitting. Echo clusters + unspoken history still open.' },
 ];
 
 /** Llama rescue model, named in the UI beside the primary. */
@@ -70,11 +70,11 @@ export const DEFAULT_SETTINGS: CabinetSettings = {
   provider: 'shared',
   openRouterApiKey: '',
   openRouterMode: 'free',
-  openRouterModel: 'deepseek/deepseek-v4.1-flash',
+  openRouterModel: 'qwen/qwen3-30b-a3b',
   groqApiKey: '',
   groqModel: DEFAULT_GROQ_MODEL,
   deepInfraApiKey: '',
-  deepInfraPrimary: 'deepseek',
+  deepInfraPrimary: 'qwen',
   togetherApiKey: '',
   alibabaApiKey: '',
   alibabaModel: DEFAULT_ALIBABA_MODEL,
@@ -105,7 +105,7 @@ export function loadSettings(): CabinetSettings {
         ? parsed.groqModel.trim().slice(0, 120)
         : DEFAULT_GROQ_MODEL,
       deepInfraApiKey: typeof parsed.deepInfraApiKey === 'string' ? parsed.deepInfraApiKey : '',
-      deepInfraPrimary: parsed.deepInfraPrimary === 'qwen' ? 'qwen' : 'deepseek',
+      deepInfraPrimary: parsed.deepInfraPrimary === 'deepseek' ? 'deepseek' : 'qwen',
       togetherApiKey: typeof parsed.togetherApiKey === 'string' ? parsed.togetherApiKey : '',
       alibabaApiKey: typeof parsed.alibabaApiKey === 'string' ? parsed.alibabaApiKey : '',
       // Free-text Model Studio code (never openai/*); dead IDs fall back.
