@@ -1688,7 +1688,7 @@ function SettingsDrawer({ philosophers, activeSlugs, togglePhilosopher, settings
             ) : usingGroq ? (
               <>
                 <label htmlFor="groq-key" className="font-heading text-sm uppercase tracking-[0.16em] text-[#4a392d]">Groq API key (free)</label>
-                <input id="groq-key" type="password" autoComplete="off" value={groqKeyInput} onChange={(event) => { setGroqKeyInput(event.target.value); setTestState('idle'); setTestMessage(''); }} placeholder="Paste key from console.groq.com" className="w-full bg-[#eae1ca]/60 border border-[#4a392d]/25 rounded-sm p-3 text-[15px] text-[#465f75] placeholder:text-[#465f75]/45 focus:outline-none focus:ring-2 focus:ring-[#8b5254]/30" />
+                <input id="groq-key" name="dialectical-cabinet-groq-key" type="password" autoComplete="new-password" value={groqKeyInput} onChange={(event) => { setGroqKeyInput(event.target.value); setTestState('idle'); setTestMessage(''); }} placeholder="Paste key from console.groq.com" className="w-full bg-[#eae1ca]/60 border border-[#4a392d]/25 rounded-sm p-3 text-[15px] text-[#465f75] placeholder:text-[#465f75]/45 focus:outline-none focus:ring-2 focus:ring-[#8b5254]/30" />
                 <div className="flex flex-wrap gap-2">
                   <button className="btn-secondary" onClick={runTest} disabled={!groqKeyInput.trim() || testState === 'testing'}>{testState === 'testing' ? 'Testing…' : 'Test key'}</button>
                   <button className="btn-secondary" onClick={clearKey} disabled={!groqKeyInput && !settings.groqApiKey}>Clear</button>
@@ -1703,7 +1703,7 @@ function SettingsDrawer({ philosophers, activeSlugs, togglePhilosopher, settings
             ) : usingOpenRouter ? (
               <>
                 <label htmlFor="or-key" className="font-heading text-sm uppercase tracking-[0.16em] text-[#4a392d]">OpenRouter API key</label>
-                <input id="or-key" type="password" autoComplete="off" value={orKeyInput} onChange={(event) => { setOrKeyInput(event.target.value); setTestState('idle'); setTestMessage(''); }} placeholder="Paste key from openrouter.ai/keys" className="w-full bg-[#eae1ca]/60 border border-[#4a392d]/25 rounded-sm p-3 text-[15px] text-[#465f75] placeholder:text-[#465f75]/45 focus:outline-none focus:ring-2 focus:ring-[#8b5254]/30" />
+                <input id="or-key" name="dialectical-cabinet-openrouter-key" type="password" autoComplete="new-password" value={orKeyInput} onChange={(event) => { setOrKeyInput(event.target.value); setTestState('idle'); setTestMessage(''); }} placeholder="Paste key from openrouter.ai/keys" className="w-full bg-[#eae1ca]/60 border border-[#4a392d]/25 rounded-sm p-3 text-[15px] text-[#465f75] placeholder:text-[#465f75]/45 focus:outline-none focus:ring-2 focus:ring-[#8b5254]/30" />
                 <div className="flex flex-wrap gap-2">
                   <button className="btn-secondary" onClick={runTest} disabled={!orKeyInput.trim() || testState === 'testing'}>{testState === 'testing' ? 'Testing…' : 'Test key'}</button>
                   <button className="btn-secondary" onClick={clearKey} disabled={!orKeyInput && !settings.openRouterApiKey}>Clear</button>
@@ -1729,7 +1729,7 @@ function SettingsDrawer({ philosophers, activeSlugs, togglePhilosopher, settings
             ) : usingDeepInfra ? (
               <>
                 <label htmlFor="di-key" className="font-heading text-sm uppercase tracking-[0.16em] text-[#4a392d]">DeepInfra API key</label>
-                <input id="di-key" type="password" autoComplete="off" value={deepInfraKeyInput} onChange={(event) => { setDeepInfraKeyInput(event.target.value); setTestState('idle'); setTestMessage(''); }} placeholder="Paste key from deepinfra.com/dash/api_keys" className="w-full bg-[#eae1ca]/60 border border-[#4a392d]/25 rounded-sm p-3 text-[15px] text-[#465f75] placeholder:text-[#465f75]/45 focus:outline-none focus:ring-2 focus:ring-[#8b5254]/30" />
+                <input id="di-key" name="dialectical-cabinet-deepinfra-key" type="password" autoComplete="new-password" value={deepInfraKeyInput} onChange={(event) => { setDeepInfraKeyInput(event.target.value); setTestState('idle'); setTestMessage(''); }} placeholder="Paste key from deepinfra.com/dash/api_keys" className="w-full bg-[#eae1ca]/60 border border-[#4a392d]/25 rounded-sm p-3 text-[15px] text-[#465f75] placeholder:text-[#465f75]/45 focus:outline-none focus:ring-2 focus:ring-[#8b5254]/30" />
                 <div className="flex flex-wrap gap-2">
                   <button className="btn-secondary" onClick={runTest} disabled={!deepInfraKeyInput.trim() || testState === 'testing'}>{testState === 'testing' ? 'Testing…' : 'Test key'}</button>
                   <button className="btn-secondary" onClick={clearKey} disabled={!deepInfraKeyInput && !settings.deepInfraApiKey}>Clear</button>
@@ -1753,7 +1753,7 @@ function SettingsDrawer({ philosophers, activeSlugs, togglePhilosopher, settings
             ) : usingTogether ? (
               <>
                 <label htmlFor="tog-key" className="font-heading text-sm uppercase tracking-[0.16em] text-[#4a392d]">Together API key</label>
-                <input id="tog-key" type="password" autoComplete="off" value={togetherKeyInput} onChange={(event) => { setTogetherKeyInput(event.target.value); setTestState('idle'); setTestMessage(''); }} placeholder="Paste key from api.together.ai" className="w-full bg-[#eae1ca]/60 border border-[#4a392d]/25 rounded-sm p-3 text-[15px] text-[#465f75] placeholder:text-[#465f75]/45 focus:outline-none focus:ring-2 focus:ring-[#8b5254]/30" />
+                <input id="tog-key" name="dialectical-cabinet-together-key" type="password" autoComplete="new-password" value={togetherKeyInput} onChange={(event) => { setTogetherKeyInput(event.target.value); setTestState('idle'); setTestMessage(''); }} placeholder="Paste key from api.together.ai" className="w-full bg-[#eae1ca]/60 border border-[#4a392d]/25 rounded-sm p-3 text-[15px] text-[#465f75] placeholder:text-[#465f75]/45 focus:outline-none focus:ring-2 focus:ring-[#8b5254]/30" />
                 <div className="flex flex-wrap gap-2">
                   <button className="btn-secondary" onClick={runTest} disabled={!togetherKeyInput.trim() || testState === 'testing'}>{testState === 'testing' ? 'Testing…' : 'Test key'}</button>
                   <button className="btn-secondary" onClick={clearKey} disabled={!togetherKeyInput && !settings.togetherApiKey}>Clear</button>
@@ -1765,7 +1765,7 @@ function SettingsDrawer({ philosophers, activeSlugs, togglePhilosopher, settings
             ) : usingAlibaba ? (
               <>
                 <label htmlFor="ali-key" className="font-heading text-sm uppercase tracking-[0.16em] text-[#4a392d]">Alibaba API key</label>
-                <input id="ali-key" type="password" autoComplete="off" value={alibabaKeyInput} onChange={(event) => { setAlibabaKeyInput(event.target.value); setTestState('idle'); setTestMessage(''); }} placeholder="Paste key from Model Studio" className="w-full bg-[#eae1ca]/60 border border-[#4a392d]/25 rounded-sm p-3 text-[15px] text-[#465f75] placeholder:text-[#465f75]/45 focus:outline-none focus:ring-2 focus:ring-[#8b5254]/30" />
+                <input id="ali-key" name="dialectical-cabinet-alibaba-key" type="password" autoComplete="new-password" value={alibabaKeyInput} onChange={(event) => { setAlibabaKeyInput(event.target.value); setTestState('idle'); setTestMessage(''); }} placeholder="Paste key from Model Studio" className="w-full bg-[#eae1ca]/60 border border-[#4a392d]/25 rounded-sm p-3 text-[15px] text-[#465f75] placeholder:text-[#465f75]/45 focus:outline-none focus:ring-2 focus:ring-[#8b5254]/30" />
                 <div className="flex flex-wrap gap-2">
                   <button className="btn-secondary" onClick={runTest} disabled={!alibabaKeyInput.trim() || testState === 'testing'}>{testState === 'testing' ? 'Testing…' : 'Test key'}</button>
                   <button className="btn-secondary" onClick={clearKey} disabled={!alibabaKeyInput && !settings.alibabaApiKey}>Clear</button>
@@ -1779,7 +1779,7 @@ function SettingsDrawer({ philosophers, activeSlugs, togglePhilosopher, settings
             ) : usingZai ? (
               <>
                 <label htmlFor="zai-key" className="font-heading text-sm uppercase tracking-[0.16em] text-[#4a392d]">Z.ai API key</label>
-                <input id="zai-key" type="password" autoComplete="off" value={zaiKeyInput} onChange={(event) => { setZaiKeyInput(event.target.value); setTestState('idle'); setTestMessage(''); }} placeholder="Paste key from z.ai" className="w-full bg-[#eae1ca]/60 border border-[#4a392d]/25 rounded-sm p-3 text-[15px] text-[#465f75] placeholder:text-[#465f75]/45 focus:outline-none focus:ring-2 focus:ring-[#8b5254]/30" />
+                <input id="zai-key" name="dialectical-cabinet-zai-key" type="password" autoComplete="new-password" value={zaiKeyInput} onChange={(event) => { setZaiKeyInput(event.target.value); setTestState('idle'); setTestMessage(''); }} placeholder="Paste key from z.ai" className="w-full bg-[#eae1ca]/60 border border-[#4a392d]/25 rounded-sm p-3 text-[15px] text-[#465f75] placeholder:text-[#465f75]/45 focus:outline-none focus:ring-2 focus:ring-[#8b5254]/30" />
                 <div className="flex flex-wrap gap-2">
                   <button className="btn-secondary" onClick={runTest} disabled={!zaiKeyInput.trim() || testState === 'testing'}>{testState === 'testing' ? 'Testing…' : 'Test key'}</button>
                   <button className="btn-secondary" onClick={clearKey} disabled={!zaiKeyInput && !settings.zaiApiKey}>Clear</button>
