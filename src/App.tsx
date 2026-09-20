@@ -1091,6 +1091,7 @@ function App() {
   const exportTranscript = () => {
     const citedNumbers: number[] = [];
     const seenNumbers = new Set<number>();
+    const usedInPass: Map<number, Set<number>> = new Map();
     const turnText = (item: Intervention) => {
       const philosopher = philosophers.find((p) => p.id === item.philosopher_id);
       const name = philosopher?.name ?? 'Unknown';
@@ -1100,15 +1101,15 @@ function App() {
           seenNumbers.add(n);
           citedNumbers.push(n);
         }
+        if (!usedInPass.has(n)) usedInPass.set(n, new Set());
+        usedInPass.get(n)?.add(item.pass_number);
       }
       // Footnotes sit under their own answer, not inside sentences: bracket
       // numbers break spoken meaning in read-aloud apps, so the text goes out
-      // clean and each turn carries its own Sources lines.
+      // clean. Source usage is tallied into the end READING LIST instead of
+      // per-turn Sources lines, annotated with the passes that used each work.
       const clean = item.response_text.replace(/\[\d+\]/g, '').replace(/[ \t]+/g, ' ');
-      const sources = numbers.length
-        ? `\nSources: ${entriesForNumbers(numbers).map(({ number, source }) => `[${number}] ${source.title} — ${source.author}`).join('; ')}\n`
-        : '';
-      return `PASS ${item.pass_number} — ${name}\n\n${clean}\n${sources}`;
+      return `PASS ${item.pass_number} — ${name}\n\n${clean}\n`;
     };
     // Each note sits where it spoke: the early note between pass 1 and pass 2,
     // the late note between the pass-2 close and pass-3 open.
@@ -1125,7 +1126,10 @@ function App() {
       ? `\nPHILOSOPHERS' SERVICE\n${serviceLog.map((entry) => `— ${entry.thinker} was asked:\n${entry.question}\n— ${entry.thinker} answered:\n${entry.answer.replace(/\[\d+\]/g, '').replace(/[ \t]+/g, ' ')}\n${entry.sources.length ? `— Sources shown: ${entry.sources.join('; ')}\n` : ''}`).join('\n')}`
       : '';
     const readingList = `\nREADING LIST\n${citedNumbers.length
-      ? entriesForNumbers(citedNumbers).map(({ number, source }) => `[${number}] ${source.title} — ${source.author}${source.source_url ? ` — ${source.source_url}` : ' — no free online text (model-claimed, not shown in-session)'}`).join('\n')
+      ? entriesForNumbers(citedNumbers).map(({ number, source }) => {
+        const passes = [...(usedInPass.get(number) ?? [])].sort((a, b) => a - b).map((p) => `pass ${p}`).join(', ');
+        return `[${number}] ${source.title} — ${source.author}${source.source_url ? ` — ${source.source_url}` : ' — no free online text (model-claimed, not shown in-session)'} (used in ${passes})`;
+      }).join('\n')
       : '— none cited this sitting'}\n`;
     const trail = [...new Set(provRef.current)];
     const provenanceText = trail.length
