@@ -76,8 +76,10 @@ or free — no test buys information.)
   + Medium solid + Low graded: city 14/15, 0 repairs). Cheapest crown
   that holds all levels.
 - Best free: VACANT. Groq eliminated (7k wall); OpenRouter :free
-  opportunistic (throttled, ungraded past key checks). No scheduled
-  tests — fills if/when a free sitting completes, not before.
+  opportunistic (throttled, ungraded past key checks). Trimmed-prompt
+  alternative considered and rejected Sep 21: closing ~1,400 tokens needs
+  cutting persona or grounding, which corrupts what the test measures —
+  gate stands. No scheduled tests.
 ## Next tests (FINAL FOUR — nothing else runs until crowns fill; grounding
 ON, economy full, desk off, 5 default seats, education question, normal length)
 1. `qwen3.8-max` via Alibaba (visitor key) — Low. Fills quality.
