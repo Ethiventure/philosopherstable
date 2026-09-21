@@ -602,6 +602,18 @@ Shipped same session: detector + prompt exclude shared loans from echo
 (v2026-09-20f — borrow more without badging more), `grade-sitting.mjs`
 counts loans per turn against the floor. No loan repair-retry (the gloss
 precedent: retries don't cure, they spend).
+Objective bench (`npm run bench:rag`, offline, real scorer + shipped
+shards, seeded): round-trip id-recall@5 0.90 / work-recall 0.99 / noise
+drop 0.09 / cross-author top-1 0.68 (Sep 20 2026 baseline, n=12/author).
+Read it right: id-recall is a regression tripwire, work-recall is the
+grounding-fitness number (Hegel id 0.08 yet work 1.00 — dense uniform
+works share vocabulary across neighbor chunks, any of which serves).
+Watch items: Kant noise-fragile (0.92→0.33 under distractors),
+cross-author harsh by construction (overlapping Marx shards).
+Grounded-vs-plain probe A/B (Alibaba Medium, karl-marx shard): 2 loans
+grounded (floor met) vs 0 plain — grounding works when present, so Ex2–4
+are models ignoring shown passages, not retrieval failing. Load bench
+(`--kind reconstruction`, stub PREV): heaviest contract parses clean.
 
 ## Phase 6 — Richer philosopher information  ✅ (shipped Sep 2026)
 Per file: `biography` (display only, never prompt input), `key_works[]`

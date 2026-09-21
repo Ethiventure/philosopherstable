@@ -4,6 +4,18 @@ Low intensity, nothing dumbed down: every entry keeps the full fact,
 only the words stay simple. Newest first. The owner asked for this
 Sep 17 2026 — keep writing here, one entry per lesson.
 
+## The right passage beats the exact passage (Sep 20 2026)
+A retrieval self-test asks: this chunk's own rare words, do they find
+this exact chunk again? On Hegel the answer is almost never — 8% — yet
+every miss lands inside the right book. Hegel's vocabulary repeats
+across hundreds of neighbour chunks (self-consciousness everywhere), so
+no three words can point at one chunk. That looks like failure until
+you ask what grounding actually needs: any good chunk from the right
+work, not one particular chunk. Measured that way the score is 99%.
+The lesson: grade retrieval by the job it does (right work on the
+table), never by identity (exact chunk back) — and distrust any metric
+before checking what its misses look like.
+
 ## A summary of reactions is not a summary of positions (Sep 20 2026)
 Every turn has two halves: the first half answers the previous speaker,
 the second half says what this speaker actually thinks. The margins notes

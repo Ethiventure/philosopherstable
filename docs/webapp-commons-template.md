@@ -111,7 +111,11 @@ Transfers whole. Per-app work: corpus entries, per-source rights approvals
 truth (gitignored) → static JSON shards; explicit rights gate refuses
 before fetching; chunker version recorded, eval refuses stale contracts;
 fail-soft per source with visible reasons; full text ships only with owner
-approval; no vectors until eval proves lexical fails.
+approval; no vectors until eval proves lexical fails. Objective bench
+(`bench-rag`, offline): round-trip id-recall as regression tripwire,
+work-recall as grounding-fitness, noise probe for distractor fragility,
+cross-author precision for leakage; grounded-vs-plain loan A/B proves the
+passages change the prose.
 
 ## Module 6 — Diagram + generated views
 
