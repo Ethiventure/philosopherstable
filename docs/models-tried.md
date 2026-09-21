@@ -82,29 +82,16 @@ GPT-OSS, dead IDs. Untested: Z.ai, Together.
 Three sittings fill two crowns (3.8-max Low, 3.7-plus Low); Groq's two
 are the long road. Until then, per-level fallback stands (Low: Groq-27B,
 Medium: contested, High: 3.7-plus).
-## Next tests (Sep 21 2026, exact settings — grounding ON, economy full,
-desk off, 5 default seats Hegel/Marx/Bloch/Bookchin/Deleuze unless noted)
-1. `qwen3.8-max` via Alibaba (visitor key) — Medium, LONG form, education
-   question. Tests whether room cures the essay-length without losing the
-   best-combo voice. KEEP as main option if loans hold + length lands.
-   RAN Sep 21 (owner: "a little slow but ok") — transcript pending grade.
-   NOTE: ran v20c; v20d–h fixes undeployed (push key missing), so this is a
-   pre-fix baseline by luck.
-2. `qwen3.7-plus` via Alibaba (visitor key) — High, LONG form, NEW
-   high-long question (family-eval.md). Your favourite voice with room to
-   develop; depot question suits its comprehensible-argument strength.
-3. STRUCK — was GLM High retest; GLM parked entirely Sep 21 (gibberish
-   rule). Slot goes to `qwen3.7-plus` via Alibaba (visitor key) — Medium,
-   normal, education question: does the favourite argument survive Medium
-   rules, or stay a High-only voice?
-4. `Qwen/Qwen3-30B-A3B` via DeepInfra (visitor key) — Medium, LONG form,
-   education question. Paired length test: does long form fix beat-less
-   P3s or just longer echo?
-   RESULT Sep 21 (sub question, Glasgow): LONG SCALES FAULTS. Echo 10/15
-   (worst on record), stub turns, invented works. Length holds, loans
-   11/15. No more length tests on 30B.
-5. `qwen3.8-flash` via Alibaba (visitor key) — Low, normal, education
-   question. Reopens the burn verdict properly (probe already clean).
+## Next tests (FINAL FOUR — nothing else runs until crowns fill; grounding
+ON, economy full, desk off, 5 default seats, education question, normal length)
+1. `qwen3.8-max` via Alibaba (visitor key) — Low. Fills quality.
+2. `qwen3.7-plus` via Alibaba (visitor key) — Low. Fills value.
+3. `qwen/qwen3.8-27b` via Groq free (own key, VPN off) — Medium. Expect
+   walls + resumes; lean ration applies. Fills free step 1 of 2.
+4. `qwen/qwen3.8-27b` via Groq free — High. Fills free step 2 of 2.
+PARKED QUEUE (runs only if a crown fails): 3.8-flash Low, 3.7-plus
+Medium, 14B tuning round 1, 30B presence-penalty sitting. (Supersedes the
+Sep 21 five-run queue: run 1 + run 4 done and filed, GLM run struck.)
 Next test (owner, Sep 20): High still open — 30B parked (thin),
 GLM parked (gibberish). 14B High probed same day (filed
 `docs/eval-sittings/qwen3-14b-high-v1-buenosaires.md`): echo-heavy
