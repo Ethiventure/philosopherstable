@@ -35,7 +35,7 @@ import {
 } from '@/types';
 import { buildCodaEarlyPrompt, buildCodaEndPrompt, buildCodaPrompt, buildClosingScan, buildTurnInstruction, buildUserMessage, CODA_REPAIR_SUFFIX, CODA_SYSTEM, drawThreadCity, getTurnKind, GLOSSARY_SHAPE, LOW_CLOSING_REMINDER, PROMPT_VERSION, STRUCTURED_OUTPUT_HINT } from '@/lib/dialectic/prompts';
 import { LlmError, RATES_AS_OF, estimateCost, repairBreakdown, repairTotals, resetUsage, sharesPassage, usageTotals, type LlmErrorCode, type TurnOutput } from '@/lib/llm';
-import { DEEPINFRA_BACKUP_LABEL, DEEPINFRA_PRIMARIES, ALIBABA_MODEL_OPTIONS, CUSTOM_MODEL_VALUE, GROQ_MODEL_OPTIONS, OPENROUTER_PAID_OPTIONS, loadSettings, saveSettings, type CabinetSettings } from '@/lib/settings';
+import { DEEPINFRA_BACKUP_LABEL, DEEPINFRA_PRIMARIES, ALIBABA_MODEL_OPTIONS, CUSTOM_MODEL_VALUE, GROQ_MODEL_OPTIONS, OPENROUTER_PAID_OPTIONS, loadSettings, saveSettings, type CabinetSettings, type DeepInfraPrimary } from '@/lib/settings';
 import { applyDisplay, loadDisplay, saveDisplay } from '@/lib/preferences';
 import { generateTurnGroq, testGroqKey } from '@/lib/groq';
 import { generateTurnShared } from '@/lib/shared';
@@ -559,6 +559,7 @@ function App() {
       case 'deepinfra':
         return generateTurnDeepInfra({
           apiKey: snap.deepInfraApiKey,
+          primary: snap.deepInfraPrimary,
           systemPrompt,
           userMessage,
           longForm,
@@ -1685,7 +1686,7 @@ function SettingsDrawer({ philosophers, activeSlugs, togglePhilosopher, settings
         setTestMessage(`Key works (via ${modelUsed}). Saved for this browser.`);
         onSettingsChange({ ...settings, openRouterApiKey: key });
       } else if (usingDeepInfra) {
-        await testDeepInfraKey(key);
+        await testDeepInfraKey(key, settings.deepInfraPrimary);
         setTestState('ok');
         setTestMessage(`Key works (${DEEPINFRA_PRIMARIES.find((p) => p.id === settings.deepInfraPrimary)?.label ?? settings.deepInfraPrimary} first, Llama 3.3 70B backup). Saved for this browser.`);
         onSettingsChange({ ...settings, deepInfraApiKey: key });
@@ -1817,7 +1818,12 @@ function SettingsDrawer({ philosophers, activeSlugs, togglePhilosopher, settings
                 </div>
                 {testMessage && <p className={`text-sm italic ${testState === 'ok' ? 'text-[#4a6b3f]' : 'text-[#8b5254]'}`}>{testMessage}</p>}
                 <p className="text-xs text-[#465f75]/70">Qwen3-30B-A3B speaks first; Llama 3.3 70B takes over automatically if it fails (never on key/quota errors — a backup cannot fix those) — the export says who spoke. Needs a card on file — get a key at <a className="underline" href="https://deepinfra.com/dash/api_keys" target="_blank" rel="noreferrer">deepinfra.com</a>.</p>
-                <label className="font-heading text-sm uppercase tracking-[0.16em] text-[#4a392d] pt-2 block">First voice</label>
+                <label htmlFor="di-primary" className="font-heading text-sm uppercase tracking-[0.16em] text-[#4a392d] pt-2 block">First voice</label>
+                <select id="di-primary" value={settings.deepInfraPrimary} onChange={(event) => onSettingsChange({ ...settings, deepInfraPrimary: event.target.value as DeepInfraPrimary })} className="w-full bg-[#eae1ca]/60 border border-[#4a392d]/25 rounded-sm p-3 text-[15px] text-[#465f75] focus:outline-none focus:ring-2 focus:ring-[#8b5254]/30">
+                  {DEEPINFRA_PRIMARIES.map((p) => (
+                    <option key={p.id} value={p.id}>{p.label} ({p.model})</option>
+                  ))}
+                </select>
                 {(() => {
                   const picked = DEEPINFRA_PRIMARIES.find((p) => p.id === settings.deepInfraPrimary) ?? DEEPINFRA_PRIMARIES[0];
                   return (

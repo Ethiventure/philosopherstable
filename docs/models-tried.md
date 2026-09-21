@@ -222,7 +222,10 @@ helps one model.
   endpoint — step-down stays in code for whoever needs the pattern.
 - Z.ai glm-4.7-flash: REMOVED from the app Sep 21 (GLM-only house).
   Record kept: was $0 free tier, 1-at-a-time, reasoning always-on.
-- DeepInfra Qwen3-30B-A3B: paid row on file (~$0.03/session). Needs response_format:json_object first (plain returns empty on long prompts — probed). Dilemma-grasp challenger, echo-prone.
+- DeepInfra: two primaries (Sep 21) — `Qwen/Qwen3-30B-A3B` (tuning
+  target) + `Qwen/Qwen3-14B` (cheapest proven, key-check passes, probe
+  slow 42s). Qwen3.5-27B unproven (EMPTY at turn caps, one data point —
+  needs big caps before any verdict, no role waiting).
 - OpenRouter qwen3-14b: ~$0.12/$0.24 ≈ $0.021/session. Cheapest proven paid engine. Tuning track open.
 - DeepSeek v4.1-flash: PARKED ENTIRELY (halt + partial, 12-min pace; gibberish rule).
 - Groq free qwen3.8-27b: $0 — 30 RPM / 1K RPD / 7K input wall, Low-only lean ration, NO reasoning flag (returns empty — removed Sep 20), VPNs 403 the pipe.
