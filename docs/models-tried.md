@@ -52,6 +52,9 @@ desk off, 5 default seats Hegel/Marx/Bloch/Bookchin/Deleuze unless noted)
 1. `qwen3.8-max` via Alibaba (visitor key) — Medium, LONG form, education
    question. Tests whether room cures the essay-length without losing the
    best-combo voice. KEEP as main option if loans hold + length lands.
+   RAN Sep 21 (owner: "a little slow but ok") — transcript pending grade.
+   NOTE: ran v20c; v20d–h fixes undeployed (push key missing), so this is a
+   pre-fix baseline by luck.
 2. `qwen3.7-plus` via Alibaba (visitor key) — High, LONG form, NEW
    high-long question (family-eval.md). Your favourite voice with room to
    develop; depot question suits its comprehensible-argument strength.
