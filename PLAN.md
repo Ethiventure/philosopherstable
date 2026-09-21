@@ -216,6 +216,15 @@ silently across versions.
   echo means shared invention never shared loans, grader counts loans per
   turn against the floor (Medium ≥2, High ≥4) while staying strict. Old
   grades stay on v2026-09-20e and earlier.
+- Prompt v2026-09-20h (Sep 20 2026, loan audit enforcement): VOICE source
+  sentences gain fail teeth — Medium-or-above with no visible loans fails,
+  High with fewer than four fails. Sufficiency note: bench-rag ran fresh
+  (156 passages, 13 authors, seeded — not just the 4 owner turns), and it
+  exonerates retrieval (work-recall 0.99), so enforcement sits
+  generation-side; the grounded-vs-plain A/B is n=1 (suggestive — repeat
+  via `matrix --ground`), Kant noise-fragility and cross-author harshness
+  are watch items pending bigger samples. Old grades stay on v2026-09-20g
+  and earlier.
 - Prompt v2026-09-20g (Sep 20 2026, owner: one-liners are seats commenting
   on PREV — worse than useless as note input): margins notes now read each
   seat's second-half reformulation paragraph (own diagnosis/build, one-liner
