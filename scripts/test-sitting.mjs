@@ -62,12 +62,12 @@ function args() {
     else if (a === '--kind') out.kind = raw[++i] || 'opening';
     else if (a === '--ground') out.ground = raw[++i] || '';
     else if (a === '--help' || a === '-h') {
-      console.log('usage: npm run test:sitting -- --provider <groq|openrouter|deepinfra|together|alibaba|zai> [--model ID] [--level low|medium|high] [--city NAME] [--long] [--kind opening|critique|reconstruction] [--ground author-slug]');
+      console.log('usage: npm run test:sitting -- --provider <groq|openrouter|deepinfra|together|alibaba> [--model ID] [--level low|medium|high] [--city NAME] [--long] [--kind opening|critique|reconstruction] [--ground author-slug]');
       process.exit(0);
     }
   }
   if (!out.provider) {
-    console.error('missing --provider (want: groq, openrouter, deepinfra, together, alibaba, zai)');
+    console.error('missing --provider (want: groq, openrouter, deepinfra, together, alibaba)');
     process.exit(2);
   }
   if (!['low', 'medium', 'high'].includes(out.level)) {

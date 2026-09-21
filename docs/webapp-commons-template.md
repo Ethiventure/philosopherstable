@@ -55,7 +55,7 @@ position-only, Esc dismisses, real buttons/inputs) stay untouched.
 
 Files: `src/lib/settings.ts`, Key/Seats/Voice/Display drawer shape,
 per-provider clients (`src/lib/openrouter.ts`, `groq.ts`, `deepinfra.ts`,
-`together.ts`, `alibaba.ts`, `zai.ts`, `shared.ts`), `netlify/functions/`
+`together.ts`, `alibaba.ts`, `shared.ts`), `netlify/functions/`
 proxy pattern, `scripts/test-keys.mjs` + `test-env.mjs` +
 `test-providers.mjs` + `test-keys.env.example`.
 Transfers whole minus IDs and keys. Per-app work: provider list, default
@@ -64,7 +64,12 @@ that ride along: keys in browser `localStorage` only (visitor) or host env
 (server function) only, never `VITE_*`; free-text ID field with one-tap
 live check; dead IDs migrate; quota halt shows resume / switch-provider /
 usage-link recovery with progress preserved; test scripts skip keyless
-pipes and never print keys.
+pipes and never print keys. Retired-provider notes (kept for future
+projects, never re-added without fresh evidence): Z.ai (`api.z.ai/api/
+paas/v4/chat/completions`, GLM house — free tier, 1 request at a time so
+sittings run slow, reasoning always-on with no disable flag; needs big
+output caps or small caps return 200-empty; removed here Sep 21 2026
+when its only model parked).
 
 ## Module 3 — LLM plumbing + eval discipline
 

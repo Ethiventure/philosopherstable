@@ -35,7 +35,7 @@ import {
 } from '@/types';
 import { buildCodaEarlyPrompt, buildCodaEndPrompt, buildCodaPrompt, buildClosingScan, buildTurnInstruction, buildUserMessage, CODA_REPAIR_SUFFIX, CODA_SYSTEM, drawThreadCity, getTurnKind, GLOSSARY_SHAPE, LOW_CLOSING_REMINDER, PROMPT_VERSION, STRUCTURED_OUTPUT_HINT } from '@/lib/dialectic/prompts';
 import { LlmError, RATES_AS_OF, estimateCost, repairBreakdown, repairTotals, resetUsage, sharesPassage, usageTotals, type LlmErrorCode, type TurnOutput } from '@/lib/llm';
-import { DEEPINFRA_BACKUP_LABEL, DEEPINFRA_PRIMARIES, ALIBABA_MODEL_OPTIONS, CUSTOM_MODEL_VALUE, GROQ_MODEL_OPTIONS, OPENROUTER_PAID_OPTIONS, ZAI_MODEL_OPTIONS, loadSettings, saveSettings, type CabinetSettings } from '@/lib/settings';
+import { DEEPINFRA_BACKUP_LABEL, DEEPINFRA_PRIMARIES, ALIBABA_MODEL_OPTIONS, CUSTOM_MODEL_VALUE, GROQ_MODEL_OPTIONS, OPENROUTER_PAID_OPTIONS, loadSettings, saveSettings, type CabinetSettings } from '@/lib/settings';
 import { applyDisplay, loadDisplay, saveDisplay } from '@/lib/preferences';
 import { generateTurnGroq, testGroqKey } from '@/lib/groq';
 import { generateTurnShared } from '@/lib/shared';
@@ -43,7 +43,6 @@ import { generateTurnOpenRouter, testOpenRouterKey, lastOpenRouterModel } from '
 import { generateTurnDeepInfra, testDeepInfraKey, lastDeepInfraModel } from '@/lib/deepinfra';
 import { generateTurnAlibaba, testAlibabaKey, lastAlibabaModel } from '@/lib/alibaba';
 import { generateTurnTogether, testTogetherKey, TOGETHER_MODEL } from '@/lib/together';
-import { generateTurnZai, testZaiKey } from '@/lib/zai';
 import { entriesForNumbers, findInventedTags, splitLabels } from '@/lib/footnotes';
 import { smartCut } from '@/lib/rag-text';
 import { extractPassages, formatGroundedBlock, groundableSource } from '@/lib/extract';
@@ -301,8 +300,6 @@ function App() {
         return `Together ${TOGETHER_MODEL} (visitor key)`;
       case 'alibaba':
         return `Alibaba ${lastAlibabaModel} (visitor key)`;
-      case 'zai':
-        return `Z.ai ${snap.zaiModel} (visitor key)`;
       default:
         return 'Unknown provider';
     }
@@ -449,7 +446,6 @@ function App() {
     : s.provider === 'deepinfra' ? s.deepInfraApiKey
     : s.provider === 'together' ? s.togetherApiKey
     : s.provider === 'alibaba' ? s.alibabaApiKey
-    : s.provider === 'zai' ? s.zaiApiKey
     : '';
   const hasKey = settings.provider === 'shared' ? true : providerKey(settings).trim().length > 0;
   // Groq's free tier walls single requests at ~7k input tokens: Medium/High
@@ -465,7 +461,6 @@ function App() {
     : settings.provider === 'deepinfra' ? 'DeepInfra API key'
     : settings.provider === 'together' ? 'Together API key'
     : settings.provider === 'alibaba' ? 'Alibaba API key'
-    : settings.provider === 'zai' ? 'Z.ai API key'
     : 'API key';
   const activeKeyReady = (s: CabinetSettings) =>
     s.provider === 'shared' ? true : providerKey(s).trim().length > 0;
@@ -579,14 +574,6 @@ function App() {
         return generateTurnAlibaba({
           apiKey: snap.alibabaApiKey,
           model: snap.alibabaModel,
-          systemPrompt,
-          userMessage,
-          longForm,
-        });
-      case 'zai':
-        return generateTurnZai({
-          apiKey: snap.zaiApiKey,
-          model: snap.zaiModel,
           systemPrompt,
           userMessage,
           longForm,
@@ -1321,8 +1308,8 @@ function App() {
                 <button className="btn-secondary flex items-center gap-2" onClick={exportTranscript} disabled={!interventions.length}><Download size={15} /> Export</button>
               </div>
               {freeTierNeedsLow && !isRunning && <p className="text-sm italic text-[#8b5254] mt-3">{settings.provider === 'groq' ? 'Your Groq key speaks Low only — the free tier cannot fit Medium or High prompts (they halt on the first turn; no wait fixes it). ' : 'The shared key speaks Low only — its free tier cannot fit Medium or High prompts (they halt mid-sitting). '}<button className="underline" onClick={() => updateSettings({ ...settings, intensity: 'low' })}>Continue at Low</button>{settings.provider === 'shared' ? <> or <button className="underline" onClick={() => openSettings('key')}>add your own key</button> for the full voice.</> : <> or switch provider for the full voice.</>}</p>}
-              {!hasKey && <p className="text-sm italic text-[#8b5254] mt-3">Add your {activeKeyLabel} in <button className="underline" onClick={() => setShowSettings(true)}>Settings</button> to begin — it stays in this browser and goes straight to the provider alone; we never see it{settings.provider === 'openrouter' ? ', and goes straight to OpenRouter.' : settings.provider === 'groq' ? ', and goes straight to Groq.' : settings.provider === 'deepinfra' ? ', and goes straight to DeepInfra.' : settings.provider === 'together' ? ', and goes straight to Together.' : settings.provider === 'alibaba' ? ', and goes straight to Alibaba.' : settings.provider === 'zai' ? ', and goes straight to Z.ai.' : '.'}</p>}
-              {runError && (runError.code === 'quota' ? <div role="alert" className="mt-3 p-5 bg-[#8b5254]/10 border-l-2 border-[#8b5254]"><p className="text-xs uppercase tracking-widest text-[#8b5254]">Paused — free-tier quota reached</p><p className="text-sm mt-2 text-[#465f75]">{runError.message}</p><p className="text-sm mt-2 text-[#465f75]">Nothing is lost: {interventions.length} of {orderedPhilosophers.length * 3} interventions are kept, and read-aloud plus export keep working. Quotas reset with time — per-minute caps within minutes, daily caps the next day.</p><div className="flex flex-wrap gap-2 mt-3"><button className="btn-secondary" onClick={() => resumeMeeting()} disabled={!hasKey}>Try resume</button>{settings.provider === 'shared' && <button className="btn-secondary" onClick={() => { setRunError(null); setShowSettings(true); }}>Use my own key instead</button>}{settings.provider === 'openrouter' && settings.openRouterMode === 'paid' && <button className="btn-secondary" onClick={switchToFreeCycleAndResume}>Back to free cycle & resume</button>}{(settings.provider === 'groq' || settings.provider === 'deepinfra' || settings.provider === 'together' || settings.provider === 'alibaba' || settings.provider === 'zai') && <button className="btn-secondary" onClick={() => switchProviderAndResume('shared')}>Fall back to shared</button>}<button className="btn-secondary" onClick={() => setShowSettings(true)}>Open settings</button>{settings.provider === 'openrouter' ? <a className="btn-secondary" href="https://openrouter.ai/activity" target="_blank" rel="noreferrer">Check usage</a> : settings.provider === 'groq' ? <a className="btn-secondary" href="https://console.groq.com" target="_blank" rel="noreferrer">Check usage</a> : settings.provider === 'deepinfra' ? <a className="btn-secondary" href="https://deepinfra.com/dash" target="_blank" rel="noreferrer">Check usage</a> : settings.provider === 'together' ? <a className="btn-secondary" href="https://api.together.xyz/settings/api-keys" target="_blank" rel="noreferrer">Check usage</a> : settings.provider === 'alibaba' ? <a className="btn-secondary" href="https://bailian.console.aliyun.com/" target="_blank" rel="noreferrer">Check usage</a> : settings.provider === 'zai' ? <a className="btn-secondary" href="https://z.ai/" target="_blank" rel="noreferrer">Check usage</a> : null}<button className="btn-secondary" onClick={() => setRunError(null)}>Dismiss</button></div></div> : <div className="mt-3 p-4 bg-[#8b5254]/8 border-l-2 border-[#8b5254]"><p className="text-xs uppercase tracking-widest text-[#8b5254]">Philosopher Strike Demand</p><p className="text-sm mt-1 text-[#465f75]">{runError.message}</p><div className="flex flex-wrap gap-2 mt-3"><button className="btn-secondary" onClick={resumeMeeting} disabled={!hasKey}>Resume cabinet</button><button className="btn-secondary" onClick={() => setShowSettings(true)}>Open settings</button><button className="btn-secondary" onClick={() => setRunError(null)}>Dismiss</button></div></div>)}
+              {!hasKey && <p className="text-sm italic text-[#8b5254] mt-3">Add your {activeKeyLabel} in <button className="underline" onClick={() => setShowSettings(true)}>Settings</button> to begin — it stays in this browser and goes straight to the provider alone; we never see it{settings.provider === 'openrouter' ? ', and goes straight to OpenRouter.' : settings.provider === 'groq' ? ', and goes straight to Groq.' : settings.provider === 'deepinfra' ? ', and goes straight to DeepInfra.' : settings.provider === 'together' ? ', and goes straight to Together.' : settings.provider === 'alibaba' ? ', and goes straight to Alibaba.' : '.'}</p>}
+              {runError && (runError.code === 'quota' ? <div role="alert" className="mt-3 p-5 bg-[#8b5254]/10 border-l-2 border-[#8b5254]"><p className="text-xs uppercase tracking-widest text-[#8b5254]">Paused — free-tier quota reached</p><p className="text-sm mt-2 text-[#465f75]">{runError.message}</p><p className="text-sm mt-2 text-[#465f75]">Nothing is lost: {interventions.length} of {orderedPhilosophers.length * 3} interventions are kept, and read-aloud plus export keep working. Quotas reset with time — per-minute caps within minutes, daily caps the next day.</p><div className="flex flex-wrap gap-2 mt-3"><button className="btn-secondary" onClick={() => resumeMeeting()} disabled={!hasKey}>Try resume</button>{settings.provider === 'shared' && <button className="btn-secondary" onClick={() => { setRunError(null); setShowSettings(true); }}>Use my own key instead</button>}{settings.provider === 'openrouter' && settings.openRouterMode === 'paid' && <button className="btn-secondary" onClick={switchToFreeCycleAndResume}>Back to free cycle & resume</button>}{(settings.provider === 'groq' || settings.provider === 'deepinfra' || settings.provider === 'together' || settings.provider === 'alibaba') && <button className="btn-secondary" onClick={() => switchProviderAndResume('shared')}>Fall back to shared</button>}<button className="btn-secondary" onClick={() => setShowSettings(true)}>Open settings</button>{settings.provider === 'openrouter' ? <a className="btn-secondary" href="https://openrouter.ai/activity" target="_blank" rel="noreferrer">Check usage</a> : settings.provider === 'groq' ? <a className="btn-secondary" href="https://console.groq.com" target="_blank" rel="noreferrer">Check usage</a> : settings.provider === 'deepinfra' ? <a className="btn-secondary" href="https://deepinfra.com/dash" target="_blank" rel="noreferrer">Check usage</a> : settings.provider === 'together' ? <a className="btn-secondary" href="https://api.together.xyz/settings/api-keys" target="_blank" rel="noreferrer">Check usage</a> : settings.provider === 'alibaba' ? <a className="btn-secondary" href="https://bailian.console.aliyun.com/" target="_blank" rel="noreferrer">Check usage</a> : null}<button className="btn-secondary" onClick={() => setRunError(null)}>Dismiss</button></div></div> : <div className="mt-3 p-4 bg-[#8b5254]/8 border-l-2 border-[#8b5254]"><p className="text-xs uppercase tracking-widest text-[#8b5254]">Philosopher Strike Demand</p><p className="text-sm mt-1 text-[#465f75]">{runError.message}</p><div className="flex flex-wrap gap-2 mt-3"><button className="btn-secondary" onClick={resumeMeeting} disabled={!hasKey}>Resume cabinet</button><button className="btn-secondary" onClick={() => setShowSettings(true)}>Open settings</button><button className="btn-secondary" onClick={() => setRunError(null)}>Dismiss</button></div></div>)}
             </div>
 
             <div className="dark-academia-card p-4 md:p-5">
@@ -1620,7 +1607,7 @@ function WelcomeModal({ onClose, onOpenSettings, ttsSupported, listening, onList
           <p><span className="drop-cap">A</span>sk your question of the Philosophers' Table and watch dead thinkers debate it. Convene 4–6 of us (all 12 means a slow 36 turns); each speaks 3 times across three passes. Read along below the table, or export it all as one text file.</p>
           <p>Each of us answers only our predecessor — negating on its own premises, preserving what holds, handing a contradiction clockwise. Whatever truth appears shows up <em>between</em> our seats, never handed down.</p>
           <p>Lost? Ring the Service desk bell (bottom-right): one thinker, plain definitions, an example, a check-back question — 20 per sitting, with its own voice picker. First set the table's voice in Settings → Cabinet: <strong>Low</strong> speaks plainly, <strong>Medium</strong> explains its terms, <strong>High</strong> runs at full difficulty. Ideas unchanged throughout.</p>
-          <p>Start on the shared key: no account, nothing to configure. When the commons runs dry, bring your own — OpenRouter, Groq, DeepInfra, Together, Alibaba or Z.ai; keys stay in your browser. Test the key in Settings; if we ever halt, read the notice — Resume usually fixes it.</p>
+          <p>Start on the shared key: no account, nothing to configure. When the commons runs dry, bring your own — OpenRouter, Groq, DeepInfra, Together or Alibaba; keys stay in your browser. Test the key in Settings; if we ever halt, read the notice — Resume usually fixes it.</p>
         </div>
         <label className="flex items-center gap-3 text-sm text-[#465f75] mt-6"><input type="checkbox" checked={remember} onChange={(event) => setRemember(event.target.checked)} className="w-4 h-4 accent-[#8b5254]" /> Don’t show this again</label>
         <div className="flex flex-wrap gap-2 mt-4">
@@ -1656,7 +1643,6 @@ function SettingsDrawer({ philosophers, activeSlugs, togglePhilosopher, settings
   const [deepInfraKeyInput, setDeepInfraKeyInput] = useState(settings.deepInfraApiKey);
   const [togetherKeyInput, setTogetherKeyInput] = useState(settings.togetherApiKey);
   const [alibabaKeyInput, setAlibabaKeyInput] = useState(settings.alibabaApiKey);
-  const [zaiKeyInput, setZaiKeyInput] = useState(settings.zaiApiKey);
   // Key inputs must follow stored settings when the provider changes: useState
   // initialisers run once at mount, so without this a saved key shows as an
   // empty box after switching provider and back.
@@ -1667,7 +1653,6 @@ function SettingsDrawer({ philosophers, activeSlugs, togglePhilosopher, settings
     setDeepInfraKeyInput(settings.deepInfraApiKey);
     setTogetherKeyInput(settings.togetherApiKey);
     setAlibabaKeyInput(settings.alibabaApiKey);
-    setZaiKeyInput(settings.zaiApiKey);
     setTestState('idle');
     setTestMessage('');
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -1680,9 +1665,8 @@ function SettingsDrawer({ philosophers, activeSlugs, togglePhilosopher, settings
   const usingDeepInfra = settings.provider === 'deepinfra';
   const usingTogether = settings.provider === 'together';
   const usingAlibaba = settings.provider === 'alibaba';
-  const usingZai = settings.provider === 'zai';
-  const activeKeyInput = usingGroq ? groqKeyInput : usingOpenRouter ? orKeyInput : usingDeepInfra ? deepInfraKeyInput : usingTogether ? togetherKeyInput : usingAlibaba ? alibabaKeyInput : usingZai ? zaiKeyInput : '';
-  const activeStoredKey = usingGroq ? settings.groqApiKey : usingOpenRouter ? settings.openRouterApiKey : usingDeepInfra ? settings.deepInfraApiKey : usingTogether ? settings.togetherApiKey : usingAlibaba ? settings.alibabaApiKey : usingZai ? settings.zaiApiKey : '';
+  const activeKeyInput = usingGroq ? groqKeyInput : usingOpenRouter ? orKeyInput : usingDeepInfra ? deepInfraKeyInput : usingTogether ? togetherKeyInput : usingAlibaba ? alibabaKeyInput : '';
+  const activeStoredKey = usingGroq ? settings.groqApiKey : usingOpenRouter ? settings.openRouterApiKey : usingDeepInfra ? settings.deepInfraApiKey : usingTogether ? settings.togetherApiKey : usingAlibaba ? settings.alibabaApiKey : '';
   const keySaved = activeKeyInput === activeStoredKey && activeStoredKey.length > 0;
   const runTest = async () => {
     const key = activeKeyInput.trim();
@@ -1715,11 +1699,6 @@ function SettingsDrawer({ philosophers, activeSlugs, togglePhilosopher, settings
         setTestState('ok');
         setTestMessage(`Key works on ${settings.alibabaModel}. Saved for this browser.`);
         onSettingsChange({ ...settings, alibabaApiKey: key });
-      } else if (usingZai) {
-        await testZaiKey(key, settings.zaiModel);
-        setTestState('ok');
-        setTestMessage(`Key works on ${settings.zaiModel}. Saved for this browser.`);
-        onSettingsChange({ ...settings, zaiApiKey: key });
       }
     } catch (error) {
       setTestState('error');
@@ -1744,9 +1723,6 @@ function SettingsDrawer({ philosophers, activeSlugs, togglePhilosopher, settings
     } else if (usingAlibaba) {
       setAlibabaKeyInput('');
       onSettingsChange({ ...settings, alibabaApiKey: '' });
-    } else if (usingZai) {
-      setZaiKeyInput('');
-      onSettingsChange({ ...settings, zaiApiKey: '' });
     }
   };
   const updateDisplay = (partial: Partial<AccessibilitySettings>) => {
@@ -1775,8 +1751,8 @@ function SettingsDrawer({ philosophers, activeSlugs, togglePhilosopher, settings
         </div>
         {tab === 'key' && (
           <div className="space-y-3 border-b border-[#4a392d]/15 pb-6 mb-6">
-            <p className="italic text-sm text-[#465f75]/70">Your own keys stay in this browser and go only to the named provider (OpenRouter → OpenRouter, whose free models may log prompts for training; Groq → Groq; DeepInfra → DeepInfra; Together → Together; Alibaba → Alibaba Model Studio; Z.ai → Z.ai). Naturally each provider also holds your key on their servers — that is how API keys work. What we never do: see them, store them, or ask for any login. The shared cabinet key never leaves the server. Nothing identifying is collected here.</p>
-            <p className="text-xs text-[#465f75]/70">What it costs, roughly: <span className="font-heading">free</span> — Cabinet shared (shared quota), Groq, Z.ai, OpenRouter cycle. <span className="font-heading">Pennies a sitting</span> — OpenRouter paid (~$0.01–0.06), DeepInfra (~$0.03). <span className="font-heading">Dear (~$0.40 a sitting)</span> — Alibaba max, Together. <span className="font-heading">Trial $0 to Dec</span> — Alibaba. Vague estimates from list prices; every export prints the measured cost, and the model behind each turn is named there too.</p>
+            <p className="italic text-sm text-[#465f75]/70">Your own keys stay in this browser and go only to the named provider (OpenRouter → OpenRouter, whose free models may log prompts for training; Groq → Groq; DeepInfra → DeepInfra; Together → Together; Alibaba → Alibaba Model Studio). Naturally each provider also holds your key on their servers — that is how API keys work. What we never do: see them, store them, or ask for any login. The shared cabinet key never leaves the server. Nothing identifying is collected here.</p>
+            <p className="text-xs text-[#465f75]/70">What it costs, roughly: <span className="font-heading">free</span> — Cabinet shared (shared quota), Groq, OpenRouter cycle. <span className="font-heading">Pennies a sitting</span> — OpenRouter paid (~$0.01–0.06), DeepInfra (~$0.03). <span className="font-heading">Dear (~$0.40 a sitting)</span> — Alibaba max, Together. <span className="font-heading">Trial $0 to Dec</span> — Alibaba. Vague estimates from list prices; every export prints the measured cost, and the model behind each turn is named there too.</p>
             <span className="font-heading text-sm uppercase tracking-[0.16em] text-[#4a392d] block">Provider</span>
             <div className="flex flex-wrap gap-2" role="radiogroup" aria-label="AI provider">
               <button role="radio" aria-checked={settings.provider === 'shared'} title="No key needed — the cabinet's own key, a few sittings a day each." onClick={() => { setTestState('idle'); setTestMessage(''); onSettingsChange({ ...settings, provider: 'shared' }); }} className={`btn-secondary ${settings.provider === 'shared' ? '!border-[#8b5254] !text-[#8b5254]' : ''}`}>Cabinet shared</button>
@@ -1785,10 +1761,9 @@ function SettingsDrawer({ philosophers, activeSlugs, togglePhilosopher, settings
               <button role="radio" aria-checked={usingDeepInfra} title="Your DeepInfra key — Qwen first, Llama 70B backup, card on file." onClick={() => { setTestState('idle'); setTestMessage(''); onSettingsChange({ ...settings, provider: 'deepinfra' }); }} className={`btn-secondary ${usingDeepInfra ? '!border-[#8b5254] !text-[#8b5254]' : ''}`}>DeepInfra</button>
               <button role="radio" aria-checked={usingTogether} title="Your Together key — pinned Qwen 30B, card required." onClick={() => { setTestState('idle'); setTestMessage(''); onSettingsChange({ ...settings, provider: 'together' }); }} className={`btn-secondary ${usingTogether ? '!border-[#8b5254] !text-[#8b5254]' : ''}`}>Together</button>
               <button role="radio" aria-checked={usingAlibaba} title="Your Alibaba key — Model Studio codes, free trial quota." onClick={() => { setTestState('idle'); setTestMessage(''); onSettingsChange({ ...settings, provider: 'alibaba' }); }} className={`btn-secondary ${usingAlibaba ? '!border-[#8b5254] !text-[#8b5254]' : ''}`}>Alibaba</button>
-              <button role="radio" aria-checked={usingZai} title="Your Z.ai key — GLM-4.7-Flash, free tier, no card." onClick={() => { setTestState('idle'); setTestMessage(''); onSettingsChange({ ...settings, provider: 'zai' }); }} className={`btn-secondary ${usingZai ? '!border-[#8b5254] !text-[#8b5254]' : ''}`}>Z.ai</button>
             </div>
             {settings.provider === 'shared' ? (
-              <p className="text-xs text-[#465f75]/70">No key needed — the cabinet runs on its own key, held server-side and shared across visitors (about two full sessions a day each): Alibaba's trial bench first, Groq behind it. The export names the model behind each turn, so you can always see who spoke. If the shared quota runs dry, add your own OpenRouter, Groq, DeepInfra, Together, Alibaba or Z.ai key below by switching provider.</p>
+              <p className="text-xs text-[#465f75]/70">No key needed — the cabinet runs on its own key, held server-side and shared across visitors (about two full sessions a day each): Alibaba's trial bench first, Groq behind it. The export names the model behind each turn, so you can always see who spoke. If the shared quota runs dry, add your own OpenRouter, Groq, DeepInfra, Together or Alibaba key below by switching provider.</p>
             ) : usingGroq ? (
               <>
                 <label htmlFor="groq-key" className="font-heading text-sm uppercase tracking-[0.16em] text-[#4a392d]">Groq API key (free)</label>
@@ -1875,20 +1850,6 @@ function SettingsDrawer({ philosophers, activeSlugs, togglePhilosopher, settings
                 <label htmlFor="ali-model" className="font-heading text-sm uppercase tracking-[0.16em] text-[#4a392d] pt-2 block">Model code</label>
                 <ModelIdField id="ali-model" value={settings.alibabaModel} options={ALIBABA_MODEL_OPTIONS} placeholder="qwen3.8-max" onPick={(m) => { onSettingsChange({ ...settings, alibabaModel: m }); setTestState('idle'); setTestMessage(''); }} />
                 <p className="text-xs text-[#465f75]/70">Default: <span className="font-heading">qwen3.8-max</span> — the finest voice, dearest price. If it stumbles the cabinet falls through <span className="font-heading">qwen3.7-plus</span>, then <span className="font-heading">qwen3.8-27b</span>, then <span className="font-heading">qwen3.8-flash</span>, and the export confesses who actually spoke. Free trial quota to Dec 16 2026 ($0 on quota). Model Studio codes vary by region — type the exact code and press Test key. Free quota pools in Singapore; enable Stop-on-Exhaust so overruns stop instead of billing. Check remaining quota in Model Studio before a big sitting.</p>
-              </>
-            ) : usingZai ? (
-              <>
-                <label htmlFor="zai-key" className="font-heading text-sm uppercase tracking-[0.16em] text-[#4a392d]">Z.ai API key</label>
-                <input id="zai-key" name="dialectical-cabinet-zai-key" type="password" autoComplete="new-password" value={zaiKeyInput} onChange={(event) => { setZaiKeyInput(event.target.value); setTestState('idle'); setTestMessage(''); }} placeholder="Paste key from z.ai" className="w-full bg-[#eae1ca]/60 border border-[#4a392d]/25 rounded-sm p-3 text-[15px] text-[#465f75] placeholder:text-[#465f75]/45 focus:outline-none focus:ring-2 focus:ring-[#8b5254]/30" />
-                <div className="flex flex-wrap gap-2">
-                  <button className="btn-secondary" onClick={runTest} disabled={!zaiKeyInput.trim() || testState === 'testing'}>{testState === 'testing' ? 'Testing…' : 'Test key'}</button>
-                  <button className="btn-secondary" onClick={clearKey} disabled={!zaiKeyInput && !settings.zaiApiKey}>Clear</button>
-                  {keySaved && <span className="text-xs italic self-center text-[#4a6b3f]">Saved in this browser.</span>}
-                </div>
-                {testMessage && <p className={`text-sm italic ${testState === 'ok' ? 'text-[#4a6b3f]' : 'text-[#8b5254]'}`}>{testMessage}</p>}
-                <label htmlFor="zai-model" className="font-heading text-sm uppercase tracking-[0.16em] text-[#4a392d] pt-2 block">Model code</label>
-                <ModelIdField id="zai-model" value={settings.zaiModel} options={ZAI_MODEL_OPTIONS} placeholder="glm-4.7-flash" onPick={(m) => { onSettingsChange({ ...settings, zaiModel: m }); setTestState('idle'); setTestMessage(''); }} />
-                <p className="text-xs text-[#465f75]/70">Paste: <span className="font-heading">glm-4.7-flash</span> — free tier, no card, never run here: Low burn-check first, Medium only if it answers cleanly. Free tier allows 1 request at a time, so sittings run slow. Reasoning stays on (cannot be disabled) — the output-token line is the judge on burn. Get a key at <a className="underline" href="https://z.ai/" target="_blank" rel="noreferrer">z.ai</a>.</p>
               </>
             ) : (
               <>

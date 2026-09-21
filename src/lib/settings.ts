@@ -22,7 +22,6 @@ export const GROQ_MODEL_OPTIONS = ['qwen/qwen3.8-27b'];
  *  Dead pins fall through the list mid-sitting; stored GLM migrates. */
 export const OPENROUTER_PAID_OPTIONS = ['qwen/qwen3.7-plus', 'qwen/qwen3.7-flash', 'qwen/qwen3.8-flash'];
 export const ALIBABA_MODEL_OPTIONS = ['qwen3.8-max', 'qwen3.7-plus', 'qwen3.8-27b', 'qwen3.8-flash'];
-export const ZAI_MODEL_OPTIONS = ['glm-4.7-flash'];
 
 export type DeepInfraModel = 'Qwen/Qwen3-30B-A3B' | 'meta-llama/Llama-3.3-70B-Instruct-Turbo';
 
@@ -41,12 +40,7 @@ export const DEEPINFRA_BACKUP_LABEL = 'Llama 3.3 70B (meta-llama/Llama-3.3-70B-I
 
 export type TurnEconomy = 'full' | 'efficient';
 
-export type LlmProvider = 'shared' | 'openrouter' | 'groq' | 'deepinfra' | 'together' | 'alibaba' | 'zai';
-
-/** Free text (Z.ai model codes): Test key verifies live. */
-export type ZaiModel = string;
-
-export const DEFAULT_ZAI_MODEL = 'glm-4.7-flash';
+export type LlmProvider = 'shared' | 'openrouter' | 'groq' | 'deepinfra' | 'together' | 'alibaba';
 
 /** Free text (Model Studio codes vary by region): Test key verifies live. */
 export type AlibabaModel = string;
@@ -69,8 +63,6 @@ export interface CabinetSettings {
   togetherApiKey: string;
   alibabaApiKey: string;
   alibabaModel: AlibabaModel;
-  zaiApiKey: string;
-  zaiModel: ZaiModel;
   economy: TurnEconomy;
   /** Experimental source grounding (Phase 2, item ii): fetch + keyword-extract
    * HTML source pages server-side and inject top passages. Default on;
@@ -94,8 +86,6 @@ export const DEFAULT_SETTINGS: CabinetSettings = {
   togetherApiKey: '',
   alibabaApiKey: '',
   alibabaModel: DEFAULT_ALIBABA_MODEL,
-  zaiApiKey: '',
-  zaiModel: DEFAULT_ZAI_MODEL,
   economy: 'full',
   grounding: true,
 };
@@ -109,7 +99,9 @@ export function loadSettings(): CabinetSettings {
       intensity: parsed.intensity === 'low' || parsed.intensity === 'high' ? parsed.intensity : 'medium',
       longForm: parsed.longForm === true,
       // Gemini removed (retired for new keys, 404): stored 'gemini' migrates to shared.
-      provider: parsed.provider === 'openrouter' || parsed.provider === 'groq' || parsed.provider === 'deepinfra' || parsed.provider === 'together' || parsed.provider === 'alibaba' || parsed.provider === 'zai'
+      // Z.ai removed Sep 21 2026 (GLM-only house, model parked entirely):
+      // stored 'zai' migrates to shared, same rule.
+      provider: parsed.provider === 'openrouter' || parsed.provider === 'groq' || parsed.provider === 'deepinfra' || parsed.provider === 'together' || parsed.provider === 'alibaba'
         ? parsed.provider
         : 'shared',
       openRouterApiKey: typeof parsed.openRouterApiKey === 'string' ? parsed.openRouterApiKey : '',
@@ -130,12 +122,6 @@ export function loadSettings(): CabinetSettings {
       alibabaModel: typeof parsed.alibabaModel === 'string' && parsed.alibabaModel.trim() && !parsed.alibabaModel.trim().startsWith('openai/')
         ? parsed.alibabaModel.trim().slice(0, 120)
         : DEFAULT_ALIBABA_MODEL,
-      // Free-text Z.ai model code (never openai/*); anything else passes
-      // through — Test key is the live check.
-      zaiApiKey: typeof parsed.zaiApiKey === 'string' ? parsed.zaiApiKey : '',
-      zaiModel: typeof parsed.zaiModel === 'string' && parsed.zaiModel.trim() && !parsed.zaiModel.trim().startsWith('openai/')
-        ? parsed.zaiModel.trim().slice(0, 120)
-        : DEFAULT_ZAI_MODEL,
       // No OpenAI models, ever: stored openai/* IDs migrate to the default.
       // Stored GLM pin migrates too (parked entirely Sep 21 2026).
       openRouterModel: typeof parsed.openRouterModel === 'string' && parsed.openRouterModel.trim() && !parsed.openRouterModel.trim().startsWith('openai/') && parsed.openRouterModel.trim() !== 'z-ai/glm-5.3-flash'
@@ -158,7 +144,7 @@ export function saveSettings(settings: CabinetSettings): void {
 }
 
 export function clearApiKey(): CabinetSettings {
-  const next = { ...loadSettings(), openRouterApiKey: '', groqApiKey: '', deepInfraApiKey: '', togetherApiKey: '', alibabaApiKey: '', zaiApiKey: '' };
+  const next = { ...loadSettings(), openRouterApiKey: '', groqApiKey: '', deepInfraApiKey: '', togetherApiKey: '', alibabaApiKey: '' };
   saveSettings(next);
   return next;
 }

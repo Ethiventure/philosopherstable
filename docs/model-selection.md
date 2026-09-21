@@ -11,7 +11,7 @@ transfers silently.
 
 - Re-verify live lists (IDs rot in days, never trust memory or old docs):
   OpenRouter free list + activity page, Groq docs free tier, DeepInfra /
-  Together / Alibaba / Z.ai model pages and pricing pages.
+  Together / Alibaba model pages and pricing pages.
 - Read public benchmark tables as a FILTER only (IFEval leaderboard,
   provider bench tables, community leaderboards): cut what scores badly
   at instruction-following, shortlist what scores well. Benchmarks never

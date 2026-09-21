@@ -45,7 +45,9 @@ Gibberish rule: a model that produces gibberish at ANY level is parked
 entirely, unless the fix is easy. Applied: GLM PARKED ENTIRELY (salad at
 High across three sittings + halt; no easy fix — reasoning locked on,
 guard catches shapes not prose-salad; Medium history stands frozen, no
-new sittings). DeepSeek PARKED ENTIRELY (salad + halt; was already
+new sittings). Z.ai REMOVED from the app entirely Sep 21 (GLM-only house
+— nothing left to serve; client + UI + settings gone, details kept in
+the template doc for future projects). DeepSeek PARKED ENTIRELY (salad + halt; was already
 parked). Small Qwens, Mistral, Llama, distill, GPT-OSS stay buried.
 - Best quality: `qwen3.8-max` via Alibaba (visitor key). Richest borrowing,
   explains ideas, history spoken, most adherent. Price of admission:
