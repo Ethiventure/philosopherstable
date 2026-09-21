@@ -179,7 +179,10 @@ export type DeckEntry =
 
 function App() {
   const [philosophers, setPhilosophers] = useState<Philosopher[]>([]);
-  const [question, setQuestion] = useState('Automation and robotics have replaced almost all human necessary work. How does this change the education system? What do we teach children?');
+  // TEMPORARY default (Sep 21 2026): the leftistsforAI moderation question,
+  // so test sittings start with zero setup. Revert to the education question
+  // when the test round ends (it stays the family-eval default).
+  const [question, setQuestion] = useState('leftistsforAI sub on Reddit is “A space for leftists discussing Artificial Intelligence from a labor, ownership, and political-economy perspective. Topics include worker impact, platform power, automation, regulation, and collective control of Al infrastructure”. What should we encourage posts about and what types of posts should we take down as bracketed off topics which don’t benefit us?');
   const [activePass, setActivePass] = useState(0);
   const [activeAgent, setActiveAgent] = useState(-1);
   const [isRunning, setIsRunning] = useState(false);
@@ -304,7 +307,9 @@ function App() {
   // plus Hegel (models find him hardest — the standing stress test).
   // labour, hope, municipality, and control, ending in new forms of life.
   // Full chronological order lives in DEFAULT_SEATING_ORDER.
-  const [activeSlugs, setActiveSlugs] = useState<string[]>(['hegel', 'marx', 'bloch', 'weil', 'bookchin']);
+  // Default five matches the family-eval cabinet (Hegel/Marx/Bloch/Bookchin/
+  // Deleuze) so test sittings start comparable with zero seat-toggling.
+  const [activeSlugs, setActiveSlugs] = useState<string[]>(['hegel', 'marx', 'bloch', 'bookchin', 'deleuze']);
   const [showSources, setShowSources] = useState(false);
   const [sourceTarget, setSourceTarget] = useState<number | null>(null);
   const openSourcesAt = (n?: number) => {
