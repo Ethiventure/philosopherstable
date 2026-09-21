@@ -216,6 +216,13 @@ silently across versions.
   echo means shared invention never shared loans, grader counts loans per
   turn against the floor (Medium ≥2, High ≥4) while staying strict. Old
   grades stay on v2026-09-20e and earlier.
+- Prompt v2026-09-20g (Sep 20 2026, owner: one-liners are seats commenting
+  on PREV — worse than useless as note input): margins notes now read each
+  seat's second-half reformulation paragraph (own diagnosis/build, one-liner
+  fallback on truncated turns), and all three builders say so. Input stays
+  paragraphs, never full turns (shared 7k wall arithmetic still holds:
+  ~10 reformulations ≈ 700 tokens). Old grades stay on v2026-09-20f
+  and earlier.
 
 ### Embeddings (Phase 5)
 `test_embeddings.py` uses local Ollama `nomic-embed-text` (768 dims); the schema is

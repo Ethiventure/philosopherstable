@@ -4,6 +4,17 @@ Low intensity, nothing dumbed down: every entry keeps the full fact,
 only the words stay simple. Newest first. The owner asked for this
 Sep 17 2026 — keep writing here, one entry per lesson.
 
+## A summary of reactions is not a summary of positions (Sep 20 2026)
+Every turn has two halves: the first half answers the previous speaker,
+the second half says what this speaker actually thinks. The margins notes
+were fed only the one-line takeaway — which is almost always framed as a
+reaction ("Marx's assembly fails because…") — so the note reviewed a
+room full of reactions and kept charging seats with missing what they had
+just said. The fix feeds the note the second-half paragraphs instead:
+diagnoses and builds, not replies. The lesson: whenever you summarize a
+debate for a third party, hand over what each side holds, never what each
+side answered — answers without positions read as absence.
+
 ## Borrowed words are not copying (Sep 20 2026)
 Two seats drinking from the same book will share its vocabulary — that
 is grounding working, not echo. For a while the echo detector punished
