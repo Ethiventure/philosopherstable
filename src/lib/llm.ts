@@ -206,6 +206,10 @@ const RATE_TABLE: RateRow[] = [
   // $0.03/$0.13 per 1M, 1M context. NOTE: not the same weights as
   // Alibaba qwen3.7-plus — grades never transfer across IDs.
   { match: (_p, m) => m.includes('qwen3.7-flash'), perIn: 0.03, perOut: 0.13 },
+  // Owner-supplied Sep 21 2026 (OpenRouter page): qwen3.7-plus
+  // $0.32/$1.28 per 1M, 1M context — ≈$0.06/session, same weights as
+  // the Alibaba value crown (host differs, grades ride along).
+  { match: (p, m) => p.includes('openrouter') && m.includes('qwen3.7-plus'), perIn: 0.32, perOut: 1.28 },
   { match: (_p, m) => m.includes('qwen3.5-9b'), perIn: 0.10, perOut: 0.15 },
   { match: (_p, m) => m.includes('glm-5.3-flash') || m.includes('glm-5-flash'), perIn: 0.075, perOut: 0.25 },
   { match: (_p, m) => m.includes('glm-4.7-flash') || m.includes('glm-4.5-flash'), perIn: 0, perOut: 0 },

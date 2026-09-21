@@ -17,9 +17,11 @@ export const CUSTOM_MODEL_VALUE = '__custom';
 export const GROQ_MODEL_OPTIONS = ['qwen/qwen3.8-27b'];
 /** OpenRouter paid options (Sep 21 2026, probed live): 3.7-flash default
  *  (clean probe, cheapest), 3.8-flash (burn verdict reversed on new
- *  prompts). GLM removed — parked entirely. qwen3.8-max-0902 dead on
- *  route (200-empty on every ladder rung) — Custom only, retry later. */
-export const OPENROUTER_PAID_OPTIONS = ['qwen/qwen3.7-flash', 'qwen/qwen3.8-flash'];
+ *  prompts), 3.7-plus (clean probe; same weights as the Alibaba value
+ *  crown — host differs, so grades ride along but don't transfer).
+ *  qwen3.8-max exists here only as dated -0902 (dead on route).
+ *  GLM removed — parked entirely. */
+export const OPENROUTER_PAID_OPTIONS = ['qwen/qwen3.7-flash', 'qwen/qwen3.8-flash', 'qwen/qwen3.7-plus'];
 export const ALIBABA_MODEL_OPTIONS = ['qwen3.8-max', 'qwen3.7-plus', 'qwen3.8-27b', 'qwen3.8-flash'];
 export const ZAI_MODEL_OPTIONS = ['glm-4.7-flash'];
 
