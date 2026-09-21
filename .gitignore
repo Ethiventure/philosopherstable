@@ -1,5 +1,7 @@
 logs
 *.log
+# Playwright MCP run outputs (snapshots, console logs) — local only.
+.playwright-mcp/
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
