@@ -2,6 +2,9 @@
 
 Living log of every model/provider combination tested for the cabinet, newest
 first. Check here before (re)trying anything — corpses stay buried.
+Retired entries are tombstoned, never deleted: they stay readable but
+excluded from active picks, so nobody re-tests them and nobody loses
+the reason they died.
 
 ## Selection strategy (Sep 20 2026, owner order — revised same day)
 Goal: one model that carries all three levels. Per-level split is the
