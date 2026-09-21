@@ -15,13 +15,13 @@ import { LlmError, REPAIR_SUFFIX, incrementRepair, parseTurnOutput, recordUsage,
  * is the tell on whether thinking stayed off. (Prior pin Qwen3.6-35B-A3B was
  * removed Sep 2026 after it burned live: 2.5 min to first card, Low ignored.)
  */
-import type { DeepInfraModel, DeepInfraPrimary } from '@/lib/settings';
+import type { DeepInfraModel } from '@/lib/settings';
 
 export const DEEPINFRA_MODEL_QWEN: DeepInfraModel = 'Qwen/Qwen3-30B-A3B';
 export const DEEPINFRA_MODEL_BACKUP: DeepInfraModel = 'meta-llama/Llama-3.3-70B-Instruct-Turbo';
 
-/** Visitor's first voice (Qwen-only; the parameter stays so callers don't churn). */
-export function resolveDeepInfraPrimary(_primary: DeepInfraPrimary): DeepInfraModel {
+/** First voice (Qwen-only since Sep 21 2026). */
+export function resolveDeepInfraPrimary(): DeepInfraModel {
   return DEEPINFRA_MODEL_QWEN;
 }
 
@@ -31,7 +31,6 @@ const DEEPINFRA_MAX_TOKENS = { normal: 4000, long: 8000 } as const;
 
 interface DeepInfraTurnArgs {
   apiKey: string;
-  primary: DeepInfraPrimary;
   systemPrompt: string;
   userMessage: string;
   longForm: boolean;
@@ -179,8 +178,8 @@ const postDeepInfra = async ({ apiKey, model, systemPrompt, maxTokens, useJsonMo
     throw lastError ?? new LlmError('DeepInfra request failed. Resume the cabinet to retry the turn.', true, 'unknown');
   };
 
-export async function generateTurnDeepInfra({ apiKey, primary, systemPrompt, userMessage, longForm }: DeepInfraTurnArgs): Promise<TurnOutput> {
-  const first = resolveDeepInfraPrimary(primary);
+export async function generateTurnDeepInfra({ apiKey, systemPrompt, userMessage, longForm }: DeepInfraTurnArgs): Promise<TurnOutput> {
+  const first = resolveDeepInfraPrimary();
   const maxTokens = longForm ? DEEPINFRA_MAX_TOKENS.long : DEEPINFRA_MAX_TOKENS.normal;
   const runFlow = async (model: DeepInfraModel): Promise<TurnOutput> => {
     const post = (msg: string) => postDeepInfra({ apiKey, model, systemPrompt, maxTokens, useJsonMode: true }, msg);
@@ -216,8 +215,8 @@ export async function generateTurnDeepInfra({ apiKey, primary, systemPrompt, use
 
 /** Plain-text path for the Philosophers' Service desk: same failover order,
  * no JSON contract — the reply is the answer. */
-export async function generateTextDeepInfra({ apiKey, primary, systemPrompt, userMessage }: { apiKey: string; primary: DeepInfraPrimary; systemPrompt: string; userMessage: string }): Promise<string> {
-  const first = resolveDeepInfraPrimary(primary);
+export async function generateTextDeepInfra({ apiKey, systemPrompt, userMessage }: { apiKey: string; systemPrompt: string; userMessage: string }): Promise<string> {
+  const first = resolveDeepInfraPrimary();
   const post = (model: DeepInfraModel) => postDeepInfra({ apiKey, model, systemPrompt, maxTokens: DEEPINFRA_MAX_TOKENS.normal, useJsonMode: false }, userMessage);
   try {
     const text = await post(first);
@@ -231,13 +230,13 @@ export async function generateTextDeepInfra({ apiKey, primary, systemPrompt, use
   }
 }
 
-/** Cheap key check: one tiny call against the chosen primary. */
-export async function testDeepInfraKey(apiKey: string, primary: DeepInfraPrimary = 'qwen'): Promise<void> {
+/** Cheap key check: one tiny call against the primary. */
+export async function testDeepInfraKey(apiKey: string): Promise<void> {
   const response = await fetch('https://api.deepinfra.com/v1/openai/chat/completions', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${apiKey}` },
     body: JSON.stringify({
-      model: resolveDeepInfraPrimary(primary),
+      model: resolveDeepInfraPrimary(),
       messages: [{ role: 'user', content: 'Reply with exactly: ok' }],
       // 100 tokens, not 10: reasoning models burn tiny caps thinking and
       // return empty content (Sep 2026).

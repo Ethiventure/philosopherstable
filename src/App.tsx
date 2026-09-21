@@ -35,7 +35,7 @@ import {
 } from '@/types';
 import { buildCodaEarlyPrompt, buildCodaEndPrompt, buildCodaPrompt, buildClosingScan, buildTurnInstruction, buildUserMessage, CODA_REPAIR_SUFFIX, CODA_SYSTEM, drawThreadCity, getTurnKind, GLOSSARY_SHAPE, LOW_CLOSING_REMINDER, PROMPT_VERSION, STRUCTURED_OUTPUT_HINT } from '@/lib/dialectic/prompts';
 import { LlmError, RATES_AS_OF, estimateCost, repairBreakdown, repairTotals, resetUsage, sharesPassage, usageTotals, type LlmErrorCode, type TurnOutput } from '@/lib/llm';
-import { DEEPINFRA_BACKUP_LABEL, DEEPINFRA_PRIMARIES, loadSettings, saveSettings, type CabinetSettings, type DeepInfraPrimary } from '@/lib/settings';
+import { DEEPINFRA_BACKUP_LABEL, DEEPINFRA_PRIMARIES, loadSettings, saveSettings, type CabinetSettings } from '@/lib/settings';
 import { applyDisplay, loadDisplay, saveDisplay } from '@/lib/preferences';
 import { generateTurnGroq, testGroqKey } from '@/lib/groq';
 import { generateTurnShared } from '@/lib/shared';
@@ -556,7 +556,6 @@ function App() {
       case 'deepinfra':
         return generateTurnDeepInfra({
           apiKey: snap.deepInfraApiKey,
-          primary: snap.deepInfraPrimary,
           systemPrompt,
           userMessage,
           longForm,
@@ -1656,7 +1655,7 @@ function SettingsDrawer({ philosophers, activeSlugs, togglePhilosopher, settings
         setTestMessage(`Key works (via ${modelUsed}). Saved for this browser.`);
         onSettingsChange({ ...settings, openRouterApiKey: key });
       } else if (usingDeepInfra) {
-        await testDeepInfraKey(key, settings.deepInfraPrimary);
+        await testDeepInfraKey(key);
         setTestState('ok');
         setTestMessage(`Key works (${DEEPINFRA_PRIMARIES.find((p) => p.id === settings.deepInfraPrimary)?.label ?? settings.deepInfraPrimary} first, Llama 3.3 70B backup). Saved for this browser.`);
         onSettingsChange({ ...settings, deepInfraApiKey: key });
