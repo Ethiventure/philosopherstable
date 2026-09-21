@@ -41,7 +41,7 @@ import { generateTurnGroq, testGroqKey } from '@/lib/groq';
 import { generateTurnShared } from '@/lib/shared';
 import { generateTurnOpenRouter, testOpenRouterKey } from '@/lib/openrouter';
 import { generateTurnDeepInfra, testDeepInfraKey, lastDeepInfraModel } from '@/lib/deepinfra';
-import { generateTurnAlibaba, testAlibabaKey } from '@/lib/alibaba';
+import { generateTurnAlibaba, testAlibabaKey, lastAlibabaModel } from '@/lib/alibaba';
 import { generateTurnTogether, testTogetherKey, TOGETHER_MODEL } from '@/lib/together';
 import { generateTurnZai, testZaiKey } from '@/lib/zai';
 import { entriesForNumbers, findInventedTags, splitLabels } from '@/lib/footnotes';
@@ -300,7 +300,7 @@ function App() {
       case 'together':
         return `Together ${TOGETHER_MODEL} (visitor key)`;
       case 'alibaba':
-        return `Alibaba ${snap.alibabaModel} (visitor key)`;
+        return `Alibaba ${lastAlibabaModel} (visitor key)`;
       case 'zai':
         return `Z.ai ${snap.zaiModel} (visitor key)`;
       default:

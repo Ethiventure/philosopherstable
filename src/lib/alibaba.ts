@@ -1,5 +1,5 @@
 import { LlmError, REPAIR_SUFFIX, incrementRepair, parseTurnOutput, recordUsage, retryAfterMs, type TurnOutput } from '@/lib/llm';
-import type { AlibabaModel } from '@/lib/settings';
+import { DEFAULT_ALIBABA_MODEL, type AlibabaModel } from '@/lib/settings';
 
 /**
  * Alibaba Cloud Model Studio direct provider (visitor's own key).
@@ -83,6 +83,14 @@ async function extractDetail(response: Response): Promise<string> {
 
 const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
+/** Fallback order after the requested model (Sep 21 2026, graded):
+ * proven voice, then punchy cheap. Same key + credits throughout, so
+ * auth/quota failures throw immediately — a backup can't help those. */
+const ALIBABA_FALLBACKS: AlibabaModel[] = ['qwen3.8-27b', 'qwen3.8-flash'];
+
+/** Model that spoke last on this provider (turns and desk alike). */
+export let lastAlibabaModel: AlibabaModel = DEFAULT_ALIBABA_MODEL;
+
 interface AlibabaTextArgs {
   apiKey: string;
   model: AlibabaModel;
@@ -157,20 +165,45 @@ const postAlibaba = async (apiKey: string, model: AlibabaModel, maxTokens: numbe
 
 export async function generateTurnAlibaba({ apiKey, model, systemPrompt, userMessage, longForm }: AlibabaTurnArgs): Promise<TurnOutput> {
   const maxTokens = longForm ? ALIBABA_MAX_TOKENS.long : ALIBABA_MAX_TOKENS.normal;
-  const text = await postAlibaba(apiKey, model, maxTokens, systemPrompt, userMessage);
-  try {
-    return parseTurnOutput(stripFences(text), 'Alibaba');
-  } catch (error) {
-    if (!(error instanceof LlmError) || error.code !== 'parse') throw error;
-    incrementRepair();
-    return parseTurnOutput(stripFences(await postAlibaba(apiKey, model, maxTokens, systemPrompt, userMessage + REPAIR_SUFFIX)), 'Alibaba');
+  const chain = [model, ...ALIBABA_FALLBACKS.filter((m) => m !== model)];
+  let lastError: LlmError | null = null;
+  for (const id of chain) {
+    try {
+      const text = await postAlibaba(apiKey, id, maxTokens, systemPrompt, userMessage);
+      lastAlibabaModel = id;
+      try {
+        return parseTurnOutput(stripFences(text), 'Alibaba');
+      } catch (error) {
+        if (!(error instanceof LlmError) || error.code !== 'parse') throw error;
+        incrementRepair();
+        return parseTurnOutput(stripFences(await postAlibaba(apiKey, id, maxTokens, systemPrompt, userMessage + REPAIR_SUFFIX)), 'Alibaba');
+      }
+    } catch (error) {
+      // Same key + credits throughout: auth/quota failures throw at once.
+      if (error instanceof LlmError && (error.code === 'auth' || error.code === 'quota')) throw error;
+      lastError = error instanceof LlmError ? error : new LlmError(`Alibaba request failed on ${id}. Resume the cabinet to retry the turn.`, true, 'unknown');
+      if (typeof console !== 'undefined') console.warn(`[Alibaba] ${id} failed, trying fallback:`, lastError.message);
+    }
   }
+  throw lastError ?? new LlmError('Alibaba request failed on every model. Resume the cabinet to retry the turn.', true, 'unknown');
 }
 
-/** Plain-text path for the Philosophers' Service desk: same model, retries
+/** Plain-text path for the Philosophers' Service desk: same chain, retries
  * and quota mapping, no JSON turn contract — the reply is the answer. */
 export async function generateTextAlibaba({ apiKey, model, systemPrompt, userMessage }: AlibabaTextArgs): Promise<string> {
-  return postAlibaba(apiKey, model, ALIBABA_MAX_TOKENS.normal, systemPrompt, userMessage);
+  const chain = [model, ...ALIBABA_FALLBACKS.filter((m) => m !== model)];
+  let lastError: LlmError | null = null;
+  for (const id of chain) {
+    try {
+      const text = await postAlibaba(apiKey, id, ALIBABA_MAX_TOKENS.normal, systemPrompt, userMessage);
+      lastAlibabaModel = id;
+      return text;
+    } catch (error) {
+      if (error instanceof LlmError && (error.code === 'auth' || error.code === 'quota')) throw error;
+      lastError = error instanceof LlmError ? error : new LlmError(`Alibaba request failed on ${id}.`, true, 'unknown');
+    }
+  }
+  throw lastError ?? new LlmError('Alibaba request failed on every model.', true, 'unknown');
 }
 
 /** Cheap key check: one tiny call on the given model. */

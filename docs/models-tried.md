@@ -75,6 +75,11 @@ or free — no test buys information.)
 - Best value: `qwen3.7-plus` via Alibaba (~$0.07). CROWNED (High favourite
   + Medium solid + Low graded: city 14/15, 0 repairs). Cheapest crown
   that holds all levels.
+- Alibaba default to Dec 2026: `qwen3.7-plus` first (favourite, all
+  levels graded), then `qwen3.8-27b` (proven voice), then `qwen3.8-flash`
+  (punchy cheap) — app falls through the chain (auth/quota throw at
+  once, same key), export names who actually spoke. Owner's manual pick
+  `qwen3.8-max` stays out of the default (typed in the free-text field).
 - Best free: VACANT. Groq eliminated (7k wall); OpenRouter :free
   opportunistic (throttled, ungraded past key checks). Trimmed-prompt
   alternative considered and rejected Sep 21: closing ~1,400 tokens needs

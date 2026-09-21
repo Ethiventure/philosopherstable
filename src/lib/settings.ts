@@ -36,7 +36,11 @@ export const DEFAULT_ZAI_MODEL = 'glm-4.7-flash';
 /** Free text (Model Studio codes vary by region): Test key verifies live. */
 export type AlibabaModel = string;
 
-export const DEFAULT_ALIBABA_MODEL = 'qwen3.8-27b';
+/** Trial default to Dec 2026 (Sep 21 2026, graded): qwen3.7-plus —
+ * favourite developed argument, all levels graded, ~$0.07/session.
+ * Owner's manual pick is qwen3.8-max (quality crown) — typed in the
+ * free-text field, never the default. Fallbacks live in alibaba.ts. */
+export const DEFAULT_ALIBABA_MODEL = 'qwen3.7-plus';
 
 export interface CabinetSettings {
   intensity: StyleIntensity;
