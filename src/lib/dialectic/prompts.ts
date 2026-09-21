@@ -37,7 +37,7 @@ export type TurnKind = 'opening' | 'critique' | 'reconstruction';
  * text change so grades stay comparable: a verdict on version C never
  * transfers silently to version D.
  */
-export const PROMPT_VERSION = '2026-09-20g';
+export const PROMPT_VERSION = '2026-09-20h';
 
 export const WORD_BUDGETS = {
   normal: { negation: 25, reformulation: 40, total: 60, opening: 40 },
@@ -226,8 +226,8 @@ export function buildTurnInstruction({ kind, prevName, isFinalSeat, longForm, re
     + (low
       ? 'SOURCE passages below are paraphrased, never lifted — not even single rare words in quotes (bare double quotes corrupt your reply). No passages shown: carry plain colour from your persona. '
       : level === 'high'
-        ? 'SOURCE passages below: quote generously (at least four distinctive words/phrases, ≤6 words each, single quotes only) and echo their tics and rhythms; none shown: carry colour from persona and voice anchor. '
-        : 'SOURCE passages below: borrow visibly (at least two distinctive words/phrases, ≤6 words each, single quotes only); none shown: carry colour from your persona. ')
+        ? 'SOURCE passages below: quote generously (at least four distinctive words/phrases, ≤6 words each, single quotes only) and echo their tics and rhythms; none shown: carry colour from persona and voice anchor. A High turn showing fewer than four visible loans has failed. '
+        : 'SOURCE passages below: borrow visibly (at least two distinctive words/phrases, ≤6 words each, single quotes only); none shown: carry colour from your persona. A turn at Medium or above showing no visible loans has failed. ')
     + 'FIVE-WORD RULE on everything — question, PREV, survey, margins, priors: never lift a multi-word clause; paraphrase always, agreements and self-repeats phrased afresh. Standard grammar: complete sentences, terminal punctuation. The dialectical movement stays audible in the argument, never announced. Never open with a generic verdict (errs, fails to see, overlooks) — begin from the concrete object with your own verbs.',
   ].join(' ');
 }
