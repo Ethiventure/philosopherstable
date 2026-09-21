@@ -73,8 +73,11 @@ High. Frontrunners with their owed sittings:
 - Best value (paid): `qwen3.7-plus` via Alibaba (~$0.07) — High favourite
   + Medium solid graded. OWES: one Low sitting. Runner-up: 14B ($0.021,
   owes Low + High retest).
-- Best free: `qwen/qwen3.8-27b` via Groq ($0) — Low held. OWES: Medium +
-  High sittings (painful on free walls, possible with resumes).
+- Best free: VACANT. Groq `qwen/qwen3.8-27b` ELIMINATED Sep 21 (Medium
+  prompt 7,871 tokens vs the 7,000 wall — the request itself exceeds it,
+  so resumes can never pass; app now gates Groq to Low-only like shared).
+  Vehicle moves to OpenRouter `qwen/qwen3.8-27b:free` (throttled but no 7k
+  wall). OWES: Medium + High sittings when open. Groq stays desk + Low.
 Excluded by the rule: GLM (High gibberish), DeepSeek (High salad+halt),
 30B (echo at every level tried), 14B at High (echo-heavy, pending tuning
 retest). Buried: small Qwens, Mistral, Llama-as-primary, R1-distill,
@@ -94,9 +97,10 @@ ON, economy full, desk off, 5 default seats, education question, normal length)
    (city 14/15, Genzie P3 4/5 named, loans n/a-paraphrase, 0 repairs,
    $0.065, P3 storm-the-board convergence noted). Filed
    `docs/eval-sittings/alibaba-qwen3-7-plus-low-v1-bristol.md`.
-3. `qwen/qwen3.8-27b` via Groq free (own key, VPN off) — Medium. Expect
-   walls + resumes; lean ration applies. Fills free step 1 of 2.
-4. `qwen/qwen3.8-27b` via Groq free — High. Fills free step 2 of 2.
+3. `qwen/qwen3.8-27b:free` via OpenRouter free (own key) — Medium.
+   Fills free step 1 of 2. Run when unthrottled; cycle skips 429s.
+4. `qwen/qwen3.8-27b:free` via OpenRouter free — High. Fills free step
+   2 of 2. (Was Groq Med/High — eliminated Sep 21 by the 7k wall.)
 PARKED QUEUE (runs only if a crown fails): 3.8-flash Low, 3.7-plus
 Medium, 14B tuning round 1, 30B presence-penalty sitting. (Supersedes the
 Sep 21 five-run queue: run 1 + run 4 done and filed, GLM run struck.)

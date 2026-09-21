@@ -453,9 +453,11 @@ function App() {
     : '';
   const hasKey = settings.provider === 'shared' ? true : providerKey(settings).trim().length > 0;
   // Groq's free tier walls single requests at ~7k input tokens: Medium/High
-  // personas alone (≈5.6k) plus any context exceed it, so the shared key runs
-  // Low sittings only — stated up front, with a one-click path to Low.
-  const sharedNeedsLow = settings.provider === 'shared' && settings.intensity !== 'low';
+  // prompts (≈7.9k measured Sep 21 2026 — the request itself exceeds the
+  // allowance, so waiting/resuming can never pass) exceed it, so the shared
+  // key AND visitor Groq keys run Low sittings only — stated up front, with
+  // a one-click path to Low.
+  const freeTierNeedsLow = (settings.provider === 'shared' || settings.provider === 'groq') && settings.intensity !== 'low';
   const activeKeyLabel = settings.provider === 'shared'
     ? 'Shared cabinet key'
     : settings.provider === 'openrouter' ? 'OpenRouter API key'
@@ -1014,7 +1016,7 @@ function App() {
 
   const startMeeting = () => {
     if (orderedPhilosophers.length < 2 || !activeKeyReady(settings)) return;
-    if (settings.provider === 'shared' && settings.intensity !== 'low') return;
+    if ((settings.provider === 'shared' || settings.provider === 'groq') && settings.intensity !== 'low') return;
     const runId = runRef.current + 1;
     runRef.current = runId;
     setInterventions([]);
@@ -1050,7 +1052,7 @@ function App() {
 
   const resumeMeeting = () => {
     if (orderedPhilosophers.length < 2 || !activeKeyReady(settings)) return;
-    if (settings.provider === 'shared' && settings.intensity !== 'low') return;
+    if ((settings.provider === 'shared' || settings.provider === 'groq') && settings.intensity !== 'low') return;
     if (interventions.length >= orderedPhilosophers.length * 3) return;
     const runId = runRef.current + 1;
     runRef.current = runId;
@@ -1075,12 +1077,15 @@ function App() {
 
   const switchProviderAndResume = (provider: CabinetSettings['provider']) => {
     const next = { ...settings, provider };
-    if (next.provider === 'shared' && next.intensity !== 'low') {
-      // Landing on shared at Medium/High would 413 mid-sitting: switch the
-      // provider but hold at the question card, where the Low notice waits.
-      updateSettings(next);
-      setShowSettings(false);
-      return;
+    if (next.provider === 'shared' || next.provider === 'groq') {
+      if (next.intensity !== 'low') {
+        // Landing on a 7k-walled pipe at Medium/High would 429 mid-sitting:
+        // switch the provider but hold at the question card, where the Low
+        // notice waits.
+        updateSettings(next);
+        setShowSettings(false);
+        return;
+      }
     }
     if (orderedPhilosophers.length < 2 || !activeKeyReady(next)) {
       setShowSettings(true);
@@ -1311,11 +1316,11 @@ function App() {
               </div>
               <textarea id="question" value={question} onChange={(event) => setQuestion(event.target.value)} disabled={isRunning} className="w-full min-h-[72px] resize-y bg-[#eae1ca]/60 border border-[#4a392d]/25 rounded-sm p-3 text-base leading-relaxed text-[#465f75] placeholder:text-[#465f75]/45 focus:outline-none focus:ring-2 focus:ring-[#8b5254]/30" />
               <div className="flex flex-wrap gap-3 mt-4">
-                <button className="btn-primary flex items-center gap-2" onClick={isRunning ? pauseMeeting : interventions.length ? resumeMeeting : startMeeting} disabled={!question.trim() || orderedPhilosophers.length < 2 || (!isRunning && (!hasKey || isComplete || sharedNeedsLow))}>{isRunning ? <><CirclePause size={17} /> Pause circuit</> : <><CirclePlay size={17} /> {isComplete ? 'Cabinet complete' : interventions.length ? 'Resume cabinet' : 'Begin cabinet'}</>}</button>
+                <button className="btn-primary flex items-center gap-2" onClick={isRunning ? pauseMeeting : interventions.length ? resumeMeeting : startMeeting} disabled={!question.trim() || orderedPhilosophers.length < 2 || (!isRunning && (!hasKey || isComplete || freeTierNeedsLow))}>{isRunning ? <><CirclePause size={17} /> Pause circuit</> : <><CirclePlay size={17} /> {isComplete ? 'Cabinet complete' : interventions.length ? 'Resume cabinet' : 'Begin cabinet'}</>}</button>
                 <button className="btn-secondary flex items-center gap-2" onClick={resetMeeting}><RotateCcw size={15} /> Restart</button>
                 <button className="btn-secondary flex items-center gap-2" onClick={exportTranscript} disabled={!interventions.length}><Download size={15} /> Export</button>
               </div>
-              {sharedNeedsLow && !isRunning && <p className="text-sm italic text-[#8b5254] mt-3">The shared key speaks Low only — its free tier cannot fit Medium or High prompts (they halt mid-sitting). <button className="underline" onClick={() => updateSettings({ ...settings, intensity: 'low' })}>Continue at Low</button> or <button className="underline" onClick={() => openSettings('key')}>add your own key</button> for the full voice.</p>}
+              {freeTierNeedsLow && !isRunning && <p className="text-sm italic text-[#8b5254] mt-3">{settings.provider === 'groq' ? 'Your Groq key speaks Low only — the free tier cannot fit Medium or High prompts (they halt on the first turn; no wait fixes it). ' : 'The shared key speaks Low only — its free tier cannot fit Medium or High prompts (they halt mid-sitting). '}<button className="underline" onClick={() => updateSettings({ ...settings, intensity: 'low' })}>Continue at Low</button>{settings.provider === 'shared' ? <> or <button className="underline" onClick={() => openSettings('key')}>add your own key</button> for the full voice.</> : <> or switch provider for the full voice.</>}</p>}
               {!hasKey && <p className="text-sm italic text-[#8b5254] mt-3">Add your {activeKeyLabel} in <button className="underline" onClick={() => setShowSettings(true)}>Settings</button> to begin — it stays in this browser and goes straight to the provider alone; we never see it{settings.provider === 'openrouter' ? ', and goes straight to OpenRouter.' : settings.provider === 'groq' ? ', and goes straight to Groq.' : settings.provider === 'deepinfra' ? ', and goes straight to DeepInfra.' : settings.provider === 'together' ? ', and goes straight to Together.' : settings.provider === 'alibaba' ? ', and goes straight to Alibaba.' : settings.provider === 'zai' ? ', and goes straight to Z.ai.' : '.'}</p>}
               {runError && (runError.code === 'quota' ? <div role="alert" className="mt-3 p-5 bg-[#8b5254]/10 border-l-2 border-[#8b5254]"><p className="text-xs uppercase tracking-widest text-[#8b5254]">Paused — free-tier quota reached</p><p className="text-sm mt-2 text-[#465f75]">{runError.message}</p><p className="text-sm mt-2 text-[#465f75]">Nothing is lost: {interventions.length} of {orderedPhilosophers.length * 3} interventions are kept, and read-aloud plus export keep working. Quotas reset with time — per-minute caps within minutes, daily caps the next day.</p><div className="flex flex-wrap gap-2 mt-3"><button className="btn-secondary" onClick={() => resumeMeeting()} disabled={!hasKey}>Try resume</button>{settings.provider === 'shared' && <button className="btn-secondary" onClick={() => { setRunError(null); setShowSettings(true); }}>Use my own key instead</button>}{settings.provider === 'openrouter' && settings.openRouterMode === 'paid' && <button className="btn-secondary" onClick={switchToFreeCycleAndResume}>Back to free cycle & resume</button>}{(settings.provider === 'groq' || settings.provider === 'deepinfra' || settings.provider === 'together' || settings.provider === 'alibaba' || settings.provider === 'zai') && <button className="btn-secondary" onClick={() => switchProviderAndResume('shared')}>Fall back to shared</button>}<button className="btn-secondary" onClick={() => setShowSettings(true)}>Open settings</button>{settings.provider === 'openrouter' ? <a className="btn-secondary" href="https://openrouter.ai/activity" target="_blank" rel="noreferrer">Check usage</a> : settings.provider === 'groq' ? <a className="btn-secondary" href="https://console.groq.com" target="_blank" rel="noreferrer">Check usage</a> : settings.provider === 'deepinfra' ? <a className="btn-secondary" href="https://deepinfra.com/dash" target="_blank" rel="noreferrer">Check usage</a> : settings.provider === 'together' ? <a className="btn-secondary" href="https://api.together.xyz/settings/api-keys" target="_blank" rel="noreferrer">Check usage</a> : settings.provider === 'alibaba' ? <a className="btn-secondary" href="https://bailian.console.aliyun.com/" target="_blank" rel="noreferrer">Check usage</a> : settings.provider === 'zai' ? <a className="btn-secondary" href="https://z.ai/" target="_blank" rel="noreferrer">Check usage</a> : null}<button className="btn-secondary" onClick={() => setRunError(null)}>Dismiss</button></div></div> : <div className="mt-3 p-4 bg-[#8b5254]/8 border-l-2 border-[#8b5254]"><p className="text-xs uppercase tracking-widest text-[#8b5254]">Philosopher Strike Demand</p><p className="text-sm mt-1 text-[#465f75]">{runError.message}</p><div className="flex flex-wrap gap-2 mt-3"><button className="btn-secondary" onClick={resumeMeeting} disabled={!hasKey}>Resume cabinet</button><button className="btn-secondary" onClick={() => setShowSettings(true)}>Open settings</button><button className="btn-secondary" onClick={() => setRunError(null)}>Dismiss</button></div></div>)}
             </div>
@@ -1761,7 +1766,7 @@ function SettingsDrawer({ philosophers, activeSlugs, togglePhilosopher, settings
                 <p className="text-xs text-[#465f75]/70">Free tier, no card: 30 requests/min, ~1K/day shared across your uses. Get a key at <a className="underline" href="https://console.groq.com/keys" target="_blank" rel="noreferrer">console.groq.com</a>.</p>
                 <label htmlFor="groq-model" className="font-heading text-sm uppercase tracking-[0.16em] text-[#4a392d] pt-2 block">Model ID</label>
                 <input id="groq-model" type="text" autoComplete="off" spellCheck={false} value={settings.groqModel} onChange={(event) => { onSettingsChange({ ...settings, groqModel: event.target.value }); setTestState('idle'); setTestMessage(''); }} placeholder="qwen/qwen3.8-27b" className="w-full bg-[#eae1ca]/60 border border-[#4a392d]/25 rounded-sm p-3 text-[15px] text-[#465f75] placeholder:text-[#465f75]/45 focus:outline-none focus:ring-2 focus:ring-[#8b5254]/30" />
-                <p className="text-xs text-[#465f75]/70">Paste: <span className="font-heading">qwen/qwen3.8-27b</span> — voice reference only. Groq retires IDs without notice — type a current one (see <a className="underline" href="https://console.groq.com/docs/models" target="_blank" rel="noreferrer">console.groq.com/docs/models</a>) and press Test key. Free tier starts fast but walls at ~7K input tokens per request against ~8K turns, so sessions stutter and die (measured Sep 2026). Fine for the desk, not the cabinet. <span className="font-heading">qwen/qwen3.6-27b</span> is dead for visitor keys since Sep 2026.</p>
+                <p className="text-xs text-[#465f75]/70">Paste: <span className="font-heading">qwen/qwen3.8-27b</span> — voice reference only. Groq retires IDs without notice — type a current one (see <a className="underline" href="https://console.groq.com/docs/models" target="_blank" rel="noreferrer">console.groq.com/docs/models</a>) and press Test key. Free tier walls at ~7K input tokens per request against ~8K turns: Low sittings limp through with resumes, Medium/High are blocked outright (the prompt itself exceeds the wall — measured 7,871 vs 7,000 Sep 21 2026, no wait fixes it). Fine for the desk and Low. <span className="font-heading">qwen/qwen3.6-27b</span> is dead for visitor keys since Sep 2026.</p>
               </>
             ) : usingOpenRouter ? (
               <>
