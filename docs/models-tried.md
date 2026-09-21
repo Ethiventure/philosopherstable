@@ -40,13 +40,19 @@ Next three sittings, in order, each with kill/keep criteria:
    rebirth" paragraph in 4 of 5 turns, shared opener across Marx/Bloch/
    Weil. Stays the Low voice leader; not a Medium engine. Medium is now
    GLM vs Qwen30B.
-Per-level recommendation (current best guess, changes with evidence):
-- Low: Alibaba 27B (proven voice, plain level) — Qwen30B untested at Low.
-- Medium: GLM-5.3-flash takes it (Sep 20: no P2 echo, debts spoken,
-  P3 slogans; 30B retest same day keeps pairwise echo + beat-less P3s).
-  Qwen30B stays the dilemma-grasp challenger + High probe candidate.
-- High: OPEN — nobody graded at High since prompts stabilized; winner of
-  Medium gets the High sitting.
+## The three (Sep 21 2026, owner order — tweak ONLY these from here on)
+- Best quality: `qwen3.8-max` via Alibaba (visitor key). Richest borrowing,
+  explains ideas, history spoken, most adherent. Price of admission:
+  ~$0.34–0.46/session paid ($0 trial). Normal length; long form scales
+  words without improving holds.
+- Best value: `z-ai/glm-5.3-flash` via OpenRouter paid. Medium holder
+  (debts, cites, differentiated P3s) at ~$0.018/session. High parked
+  pending one clean retest.
+- Best free: `qwen/qwen3.8-27b` via Groq free tier ($0). Voice reference,
+  Low-only lean ration, 7k wall; VPNs 403 it; no reasoning flag.
+  OpenRouter `qwen/qwen3.8-27b:free` serves opportunistically when unthrottled.
+Tweak rule: prompt/pipe changes are graded against these three first;
+nothing else gets tuned unless all three fail the same test.
 ## Next tests (Sep 21 2026, exact settings — grounding ON, economy full,
 desk off, 5 default seats Hegel/Marx/Bloch/Bookchin/Deleuze unless noted)
 1. `qwen3.8-max` via Alibaba (visitor key) — Medium, LONG form, education
