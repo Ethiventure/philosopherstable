@@ -90,6 +90,10 @@ ON, economy full, desk off, 5 default seats, education question, normal length)
    5/5+5/5 named, loans n/a-paraphrase, 2 JSON repairs, $0.36, 12/15 over
    long budget). Filed `docs/eval-sittings/alibaba-qwen3-8-max-low-long-v1-marseille.md`.
 2. `qwen3.7-plus` via Alibaba (visitor key) — Low. Fills value.
+   RAN Sep 21 (Low Bristol, v20h): value crown FILLS on owner verdict
+   (city 14/15, Genzie P3 4/5 named, loans n/a-paraphrase, 0 repairs,
+   $0.065, P3 storm-the-board convergence noted). Filed
+   `docs/eval-sittings/alibaba-qwen3-7-plus-low-v1-bristol.md`.
 3. `qwen/qwen3.8-27b` via Groq free (own key, VPN off) — Medium. Expect
    walls + resumes; lean ration applies. Fills free step 1 of 2.
 4. `qwen/qwen3.8-27b` via Groq free — High. Fills free step 2 of 2.
