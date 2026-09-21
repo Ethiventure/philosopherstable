@@ -806,8 +806,16 @@ evidence, unbalance risk, retest matrix.
    GLM-v2. Retry stays rolled back (10 retries, echo persisted, Sep 19);
    SHIPPED Sep 20 2026 the visible half: detector flags the card
    ("shares wording with an earlier turn", reset per sitting) so grading
-   sees every hit at zero token cost. Retest: one Medium sitting each on
-   GLM + 30B — grade badge hits, not vibes.
+   sees every hit at zero token cost. Sep 21: ONE UNTRIED LEVER ships —
+   presence_penalty 0.6 on OpenRouter + DeepInfra (punishes ANY repeated
+   token = the shared-attractor shape; repetition/frequency only punish
+   local loops). Grade on 30B first, watch other voices for flattening.
+   PARK CONDITION: if the next 30B sitting still clusters, 30B parks as
+   an engine (dilemma-grasp challenges only). Retest: one Medium sitting
+   each on GLM + 30B — grade badge hits, not vibes.
+   Sep 21 riders from the Glasgow run: template-slot "(X)" leaks now trip
+   the volatility guard (failed toolkit fill = garble); the margins note
+   can never enter works_referenced (filtered at toIntervention).
 2. Seats ignore the margins note (rudeness) — evidence GLM/30B. SHIPPED
    Sep 20 2026 in prompt v2026-09-20b (P2 names Genzie once when taking
    the note up, closing summary admits what went unanswered), hardened to
