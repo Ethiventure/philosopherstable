@@ -889,9 +889,12 @@ session) — not DeepSeek, ever back.
 Groq free can't carry a full sitting (429 walls + 404-dead fallback,
 Sep 20). SHIPPED Sep 20 2026 the env-guarded route: `ALIBABA_API_KEY` set
 in host env sends the shared path to the Alibaba OpenAI-compatible
-endpoint (`ALIBABA_MODELS`, default `qwen3.8-27b`); unset keeps Groq
-byte-identical. Same per-IP + global caps either way. UNTESTED LIVE: run
-one shared sitting on deploy before trusting it. Re-hunt the free pipe
+endpoint (`ALIBABA_MODELS`, default 3.7-plus → 27B → flash, max
+excluded); unset keeps Groq byte-identical. Same per-IP + global caps
+either way. UNTESTED LIVE: run one shared sitting on deploy before
+trusting it. Watch item: the Groq fallback list still names `qwen3-32b`,
+which 404s on visitor keys (Sep 21) — server-key access unverified,
+confirm or drop on first live run. Re-hunt the free pipe
 before the trial expires Dec 16 2026. Watch-out: one shared quota means
 one visitor can drink the well — caps stay, and owner testing moves to a
 visitor key meanwhile.
