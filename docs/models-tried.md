@@ -63,6 +63,23 @@ parked). Small Qwens, Mistral, Llama, distill, GPT-OSS stay buried.
   Z.ai, Together.
 Tweak rule: prompt/pipe changes are graded against these first;
 nothing else gets tuned unless all fail the same test.
+
+## DECISION (Sep 21 2026 — the board after 13 graded sittings + probes)
+- Low engine: Groq `qwen/qwen3.8-27b` free ($0; VPN-sensitive) + Alibaba
+  `qwen3.8-27b` trial ($0). 3.8-flash Low sitting outstanding (reopen burn).
+- Medium engines (contested, cheapest first): 14B tuning track ($0.021) vs
+  30B dilemma challenger ($0.03, echo experiment pending) vs 3.8-max
+  ($0.40, best combo, normal length only). 3.7-plus Medium outstanding.
+- High engines: 3.7-plus (favourite developed argument, $0.07) vs 3.8-max
+  (richest sourcing, hardest reading, $0.40) vs 3.8-flash (punchiest,
+  $0.03). 30B thin-parked, GLM gibberish-parked, DeepSeek parked.
+- PARKED: GLM entirely, DeepSeek entirely, 30B as engine (conditional —
+  presence-penalty sitting decides; dilemma challenges only meanwhile).
+- BURIED: small Qwens, Mistral, Llama-as-primary, R1-distill, GPT-OSS,
+  qwen3.6-27b, qwen3.6-plus-preview:free. UNTESTED: Z.ai, Together.
+- Cost floor of a working program: $0 free (Groq/Trial) → $0.021 (14B) →
+  $0.07 (3.7-plus) → $0.40 (3.8-max). Paid reality without trial: live
+  on 14B + 3.7-plus, spend 3.8-max where it matters.
 ## Next tests (Sep 21 2026, exact settings — grounding ON, economy full,
 desk off, 5 default seats Hegel/Marx/Bloch/Bookchin/Deleuze unless noted)
 1. `qwen3.8-max` via Alibaba (visitor key) — Medium, LONG form, education
