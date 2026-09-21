@@ -818,6 +818,13 @@ function App() {
       // as a cost-free logger so evals keep measuring, and flags the card
       // with a visible badge. Revert: delete block + badge + echoMap state.
       // (Computed here against pre-turn priors; filed under the item id below.)
+      // Loan-aware (Sep 2026): grams appearing in shown grounding passages
+      // are shared source vocabulary, not echo — excluded on both sides so
+      // borrowing more never badges more. Echo means shared invention.
+      const loanTexts = [
+        ...collected.flatMap((item) => groundMap[item.id]?.passages ?? []),
+        ...(groundingReceipt?.passages ?? []),
+      ];
       const echoHit = sharesPassage(
         `${output.negation} ${output.reformulation}`,
         [
@@ -825,6 +832,8 @@ function App() {
           ...(codaEarlyRef.current ? [codaEarlyRef.current] : []),
           ...(codaRef.current ? [codaRef.current] : []),
         ],
+        8,
+        loanTexts,
       );
       if (echoHit && typeof console !== 'undefined') {
         console.warn(`[Echo] overlap kept (logger only) for ${speaker.full_name}.`);

@@ -122,8 +122,30 @@ if (city) {
 }
 lines.push('');
 
-// 4. Citations: entries in the reading-list section (raw wraps each on its
-// own line; filed md joins them with semicolons across lines — count tags).
+// 4b. Loans per turn: single-quoted multi-word spans (verbatim loans) plus
+// [n] manifest tags. Thresholds follow the prompt contract (Medium ≥2,
+// High ≥4; Low paraphrases). The grader stays strict here on purpose: the
+// live badge excludes shared loans, so this count is the check on
+// under-borrowing, not over-sharing.
+const level = (((text.match(/Level: (\w+)/) || [])[1]
+  || (text.slice(0, 600).match(/\b(High|Medium|Low)\b/i) || [])[1]
+  || 'medium')).toLowerCase();
+const loanFloor = level.startsWith('high') ? 4 : level.startsWith('low') ? 0 : 2;
+const loansOf = (t) => {
+  const quoted = (t.match(/'[^']* [^']*'/g) || []).length;
+  const tags = (t.match(/\[\d+\]/g) || []).length;
+  return { quoted, tags, total: quoted + tags };
+};
+const loanShort = level.startsWith('low')
+  ? []
+  : turns.filter((t) => loansOf(t.text).total < loanFloor);
+lines.push(`LOANS (floor ${loanFloor} at ${level}): ${loanShort.length}/${turns.length} turns under-borrow${loanShort.length ? '' : ' — all met'}`);
+for (const t of loanShort.slice(0, 8)) {
+  const l = loansOf(t.text);
+  lines.push(`  pass ${t.pass} ${t.name}: ${l.quoted} quoted + ${l.tags} tags`);
+}
+if (loanShort.length > 8) lines.push(`  …and ${loanShort.length - 8} more`);
+lines.push('');
 const rlSection = md
   ? (text.match(/## READING LIST\n([\s\S]*?)(?=\n## |\s*$)/) || [])[1] ?? ''
   : (text.match(/READING LIST\n([\s\S]*?)(?=\n[A-Z][A-Z' ]*\n|\nSITTING|\nMODELS USED|$)/) || [])[1] ?? '';
@@ -160,6 +182,6 @@ lines.push('');
 lines.push('MANUAL (no mechanical check exists): debts spoken in P1, heat per seat, Medium gloss hygiene, High voice, best/worst quotes, THE VERDICT.');
 lines.push('');
 lines.push('| Model | Provider | Time | Tokens (in/out, calls) | Errors | Quality notes | Interim verdict | Next step | Final verdict |');
-lines.push(`| TODO-model | TODO-provider | TODO-time, prompt ${version}, ${city ?? 'TODO-city'} | TODO-tokens | TODO-errors | probe-grade: ${over.length} over budget, ${clusters.length} echo, city ${city ? `${turns.length - turns.filter((t) => !t.text.toLowerCase().includes(city.toLowerCase())).length}/${turns.length}` : '?'}, ${cites} cites, Genzie P2 ${genzie(p2)}/${p2.length} P3 ${genzie(p3)}/${p3.length}, vague-P3 ${vague.length}, volatile ${vol.length} | TODO | TODO | Open |`);
+lines.push(`| TODO-model | TODO-provider | TODO-time, prompt ${version}, ${city ?? 'TODO-city'} | TODO-tokens | TODO-errors | probe-grade: ${over.length} over budget, ${clusters.length} echo, city ${city ? `${turns.length - turns.filter((t) => !t.text.toLowerCase().includes(city.toLowerCase())).length}/${turns.length}` : '?'}, ${cites} cites, loans met ${turns.length - loanShort.length}/${turns.length}, Genzie P2 ${genzie(p2)}/${p2.length} P3 ${genzie(p3)}/${p3.length}, vague-P3 ${vague.length}, volatile ${vol.length} | TODO | TODO | Open |`);
 
 console.log(lines.join('\n'));

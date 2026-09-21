@@ -37,7 +37,7 @@ export type TurnKind = 'opening' | 'critique' | 'reconstruction';
  * text change so grades stay comparable: a verdict on version C never
  * transfers silently to version D.
  */
-export const PROMPT_VERSION = '2026-09-20e';
+export const PROMPT_VERSION = '2026-09-20f';
 
 export const WORD_BUDGETS = {
   normal: { negation: 25, reformulation: 40, total: 60, opening: 40 },
@@ -174,7 +174,7 @@ export function buildTurnInstruction({ kind, prevName, isFinalSeat, longForm, re
       ? ['At Low there are no shared specialist terms: restate everything, including school-terms, in plain everyday words.']
       : []),
     'QUESTION RULE: paraphrase the question through your framework — never repeat any multi-word clause of it verbatim.',
-    'ECHO RULE: answer PREV — never restate PREV, yourself, or the question. No sentence may reword an earlier sentence of theirs or yours; avoid even repeating ideas — each sentence must push the debate in a new direction. Shared paragraphs fail outright: never reuse PREV’s example, image, demand, or scene — bring your own concrete object. SAY EVERY MOVE ONCE: the reformulation advances from the negation’s keep/break — it never restates them (“what I reject” may not repeat what the negation already broke). A turn that circles has failed, even if every word differs.',
+    'ECHO RULE: answer PREV — never restate PREV, yourself, or the question. No sentence may reword an earlier sentence of theirs or yours; avoid even repeating ideas — each sentence must push the debate in a new direction. Shared paragraphs fail outright: never reuse PREV’s example, image, demand, or scene — bring your own concrete object. Shared source vocabulary is NOT echo: two seats drinking from the same work will share its words — echo means shared invention (examples, images, scenes you made up), never shared loans. SAY EVERY MOVE ONCE: the reformulation advances from the negation’s keep/break — it never restates them (“what I reject” may not repeat what the negation already broke). A turn that circles has failed, even if every word differs.',
     ...(pass === 1
       ? ['HISTORY TONE: below PREV’s text, find the lines headed YOUR HISTORY WITH / OWES YOU plus YOUR PEOPLE — relate what PREV just said to your past relationship with them, then move on to the rejection. Never quote these history lines verbatim — the five-word rule holds on them like everything else; a turn reciting its debt note has mistaken the prompt for the argument. When such lines appear, the relation is mandatory: a P1 turn that never touches them has failed. If no such lines appear, argue from the live claims alone.']
       : []),
