@@ -41,6 +41,10 @@ re-decided per app:
 - Later options (names reserved, details unwritten): add each here with
   its token block + one screenshot + its tested theme pairs. The theme
   *system* (Module 1) never changes — only the tokens do.
+- Aesthetic evaluation (owner direction Sep 21 2026): run candidate
+  aesthetics through `github.com/Ethiventure/UIswiper` (owner's UI
+  swiping/taste tool — unverified from here, never fetched) before
+  specifying a new option; only specified options ship.
 
 ## Module 1 — Access + display layer
 
