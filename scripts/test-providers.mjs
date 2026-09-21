@@ -12,7 +12,7 @@ export const PROVIDERS = {
   groq: { keyEnv: 'TEST_GROQ_KEY', modelEnv: 'TEST_GROQ_MODEL', defModel: 'qwen/qwen3.8-27b', url: 'https://api.groq.com/openai/v1/chat/completions', timeout: 60000, extra: {} },
   deepinfra: { keyEnv: 'TEST_DEEPINFRA_KEY', modelEnv: 'TEST_DEEPINFRA_MODEL', defModel: 'Qwen/Qwen3-30B-A3B', url: 'https://api.deepinfra.com/v1/openai/chat/completions', timeout: 60000, extra: { reasoning_effort: 'low', extra_body: { chat_template_kwargs: { enable_thinking: false } } } },
   together: { keyEnv: 'TEST_TOGETHER_KEY', modelEnv: 'TEST_TOGETHER_MODEL', defModel: 'Qwen/Qwen3-30B-A3B', url: 'https://api.together.xyz/v1/chat/completions', timeout: 60000, extra: { reasoning_effort: 'low', extra_body: { chat_template_kwargs: { enable_thinking: false } } } },
-  alibaba: { keyEnv: 'TEST_ALIBABA_KEY', modelEnv: 'TEST_ALIBABA_MODEL', defModel: 'qwen3.7-plus', url: 'https://dashscope-intl.aliyuncs.com/compatible-mode/v1/chat/completions', timeout: 90000, extra: { enable_thinking: false } },
+  alibaba: { keyEnv: 'TEST_ALIBABA_KEY', modelEnv: 'TEST_ALIBABA_MODEL', defModel: 'qwen3.8-max', url: 'https://dashscope-intl.aliyuncs.com/compatible-mode/v1/chat/completions', timeout: 90000, extra: { enable_thinking: false } },
   zai: { keyEnv: 'TEST_ZAI_KEY', modelEnv: 'TEST_ZAI_MODEL', defModel: 'glm-4.7-flash', url: 'https://api.z.ai/api/paas/v4/chat/completions', timeout: 90000, extra: {} },
 };
 

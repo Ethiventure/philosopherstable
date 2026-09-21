@@ -75,11 +75,20 @@ or free — no test buys information.)
 - Best value: `qwen3.7-plus` via Alibaba (~$0.07). CROWNED (High favourite
   + Medium solid + Low graded: city 14/15, 0 repairs). Cheapest crown
   that holds all levels.
-- Alibaba default to Dec 2026: `qwen3.7-plus` first (favourite, all
-  levels graded), then `qwen3.8-27b` (proven voice), then `qwen3.8-flash`
-  (punchy cheap) — app falls through the chain (auth/quota throw at
-  once, same key), export names who actually spoke. Owner's manual pick
-  `qwen3.8-max` stays out of the default (typed in the free-text field).
+- Alibaba default to Dec 2026: `qwen3.8-max` first (owner quality pick),
+  then `qwen3.7-plus`, `qwen3.8-27b`, `qwen3.8-flash` — app falls through
+  the chain (auth/quota throw at once, same key), export names who
+  actually spoke. Shared proxy cycles the same chain MINUS max (quota
+  can't afford it).
+- Provider model options (Sep 21, dropdown + Custom escape hatch — IDs
+  rot, so Custom + migration + Test-key stay): OpenRouter free tries
+  `qwen/qwen3.8-27b:free` first among named (alive but throttled; cycle
+  skips 429s); OpenRouter paid offers GLM pin + `qwen/qwen3.8-27b`
+  (3.7-plus/3.8-max there UNVERIFIED — Custom only); Groq offers
+  `qwen/qwen3.8-27b` (confirmed; llama-3.3-70b-versatile likely but
+  unverified — Custom only); DeepInfra is 30B-only; Together stays
+  `Qwen/Qwen3-30B-A3B` pinned, untested per owner; Z.ai offers
+  `glm-4.7-flash`.
 - Best free: VACANT. Groq eliminated (7k wall); OpenRouter :free
   opportunistic (throttled, ungraded past key checks). Trimmed-prompt
   alternative considered and rejected Sep 21: closing ~1,400 tokens needs

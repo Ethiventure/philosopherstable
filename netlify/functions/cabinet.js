@@ -38,7 +38,9 @@ const DEFAULT_MODELS = ['qwen/qwen3.8-27b', 'qwen/qwen3-32b'];
 // same body/response shape as Groq, so the call below is shared.
 const ALIBABA_BASE = 'https://dashscope-intl.aliyuncs.com/compatible-mode/v1/chat/completions';
 const GROQ_BASE = 'https://api.groq.com/openai/v1/chat/completions';
-const DEFAULT_ALIBABA_MODELS = ['qwen3.8-27b'];
+const DEFAULT_ALIBABA_MODELS = ['qwen3.7-plus', 'qwen3.8-27b', 'qwen3.8-flash'];
+// qwen3.8-max deliberately excluded: the shared quota cannot afford it
+// (~$0.40/session). It stays a visitor-key option only.
 const MAX_BODY_CHARS = 60000;
 const FETCH_TIMEOUT_MS = 60000;
 

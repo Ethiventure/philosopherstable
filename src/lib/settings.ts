@@ -9,6 +9,16 @@ export const DEFAULT_GROQ_MODEL = 'qwen/qwen3.8-27b';
 /** IDs that 404 for visitor keys — stored picks migrate to the default. */
 const DEAD_GROQ_IDS = new Set(['qwen/qwen3.6-27b']);
 
+/** Curated dropdown options per provider (Sep 21 2026, graded/probed —
+ *  IDs rot, so every field keeps a Custom escape hatch plus dead-ID
+ *  migration and the Test-key live check; see ModelIdField in App).
+ *  Only verified-live IDs are listed; anything else goes through Custom. */
+export const CUSTOM_MODEL_VALUE = '__custom';
+export const GROQ_MODEL_OPTIONS = ['qwen/qwen3.8-27b'];
+export const OPENROUTER_PAID_OPTIONS = ['z-ai/glm-5.3-flash', 'qwen/qwen3.8-27b'];
+export const ALIBABA_MODEL_OPTIONS = ['qwen3.8-max', 'qwen3.7-plus', 'qwen3.8-27b', 'qwen3.8-flash'];
+export const ZAI_MODEL_OPTIONS = ['glm-4.7-flash'];
+
 export type DeepInfraModel = 'Qwen/Qwen3-30B-A3B' | 'meta-llama/Llama-3.3-70B-Instruct-Turbo';
 
 /** Who speaks first on DeepInfra (backup Llama rescues either). */
@@ -36,11 +46,9 @@ export const DEFAULT_ZAI_MODEL = 'glm-4.7-flash';
 /** Free text (Model Studio codes vary by region): Test key verifies live. */
 export type AlibabaModel = string;
 
-/** Trial default to Dec 2026 (Sep 21 2026, graded): qwen3.7-plus —
- * favourite developed argument, all levels graded, ~$0.07/session.
- * Owner's manual pick is qwen3.8-max (quality crown) — typed in the
- * free-text field, never the default. Fallbacks live in alibaba.ts. */
-export const DEFAULT_ALIBABA_MODEL = 'qwen3.7-plus';
+/** Owner default to Dec 2026 trial (Sep 21 2026): quality crown speaks
+ *  first. Fallback chain lives in alibaba.ts (3.7-plus → 27B → flash). */
+export const DEFAULT_ALIBABA_MODEL = 'qwen3.8-max';
 
 export interface CabinetSettings {
   intensity: StyleIntensity;

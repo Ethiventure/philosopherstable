@@ -84,9 +84,10 @@ async function extractDetail(response: Response): Promise<string> {
 const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
 /** Fallback order after the requested model (Sep 21 2026, graded):
- * proven voice, then punchy cheap. Same key + credits throughout, so
- * auth/quota failures throw immediately — a backup can't help those. */
-const ALIBABA_FALLBACKS: AlibabaModel[] = ['qwen3.8-27b', 'qwen3.8-flash'];
+ * favourite, then proven voice, then punchy cheap. Same key + credits
+ * throughout, so auth/quota failures throw immediately — a backup can't
+ * help those. Owner default is qwen3.8-max (quality crown, trial $0). */
+const ALIBABA_FALLBACKS: AlibabaModel[] = ['qwen3.7-plus', 'qwen3.8-27b', 'qwen3.8-flash'];
 
 /** Model that spoke last on this provider (turns and desk alike). */
 export let lastAlibabaModel: AlibabaModel = DEFAULT_ALIBABA_MODEL;

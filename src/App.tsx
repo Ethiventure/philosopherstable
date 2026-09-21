@@ -35,7 +35,7 @@ import {
 } from '@/types';
 import { buildCodaEarlyPrompt, buildCodaEndPrompt, buildCodaPrompt, buildClosingScan, buildTurnInstruction, buildUserMessage, CODA_REPAIR_SUFFIX, CODA_SYSTEM, drawThreadCity, getTurnKind, GLOSSARY_SHAPE, LOW_CLOSING_REMINDER, PROMPT_VERSION, STRUCTURED_OUTPUT_HINT } from '@/lib/dialectic/prompts';
 import { LlmError, RATES_AS_OF, estimateCost, repairBreakdown, repairTotals, resetUsage, sharesPassage, usageTotals, type LlmErrorCode, type TurnOutput } from '@/lib/llm';
-import { DEEPINFRA_BACKUP_LABEL, DEEPINFRA_PRIMARIES, loadSettings, saveSettings, type CabinetSettings } from '@/lib/settings';
+import { DEEPINFRA_BACKUP_LABEL, DEEPINFRA_PRIMARIES, ALIBABA_MODEL_OPTIONS, CUSTOM_MODEL_VALUE, GROQ_MODEL_OPTIONS, OPENROUTER_PAID_OPTIONS, ZAI_MODEL_OPTIONS, loadSettings, saveSettings, type CabinetSettings } from '@/lib/settings';
 import { applyDisplay, loadDisplay, saveDisplay } from '@/lib/preferences';
 import { generateTurnGroq, testGroqKey } from '@/lib/groq';
 import { generateTurnShared } from '@/lib/shared';
@@ -1433,6 +1433,36 @@ function App() {
   );
 }
 
+/**
+ * Model-ID picker with a Custom escape hatch (Sep 21 2026): curated
+ * dropdown options (verified-live IDs only) plus free text, so IDs can
+ * rot without stranding anyone — dead stored IDs still migrate in
+ * settings.ts and Test key checks the typed ID live.
+ */
+function ModelIdField({ id, value, options, placeholder, onPick }: {
+  id: string;
+  value: string;
+  options: string[];
+  placeholder: string;
+  onPick: (modelId: string) => void;
+}) {
+  const listed = options.includes(value);
+  const cls = 'w-full bg-[#eae1ca]/60 border border-[#4a392d]/25 rounded-sm p-3 text-[15px] text-[#465f75] focus:outline-none focus:ring-2 focus:ring-[#8b5254]/30';
+  return (
+    <>
+      <select id={id} value={listed ? value : CUSTOM_MODEL_VALUE} onChange={(event) => { const v = event.target.value; if (v !== CUSTOM_MODEL_VALUE) onPick(v); }} className={cls}>
+        {options.map((m) => (
+          <option key={m} value={m}>{m}</option>
+        ))}
+        <option value={CUSTOM_MODEL_VALUE}>Type another ID…</option>
+      </select>
+      {!listed && (
+        <input type="text" autoComplete="off" spellCheck={false} value={value} onChange={(event) => onPick(event.target.value)} placeholder={placeholder} aria-label={`${id} custom model ID`} className={`${cls} mt-2 placeholder:text-[#465f75]/45`} />
+      )}
+    </>
+  );
+}
+
 function ReadingDeck({ entries, philosophers, readIdx, onNav, freshId, ttsSupported, ttsStatus, onToggleSpeech, onToggleNoteSpeech, onInspect, onOpenSources, notes, onRetryNote, noteSeenFor, echoSeenFor }: {
   entries: DeckEntry[];
   philosophers: Philosopher[];
@@ -1765,7 +1795,7 @@ function SettingsDrawer({ philosophers, activeSlugs, togglePhilosopher, settings
                 {testMessage && <p className={`text-sm italic ${testState === 'ok' ? 'text-[#4a6b3f]' : 'text-[#8b5254]'}`}>{testMessage}</p>}
                 <p className="text-xs text-[#465f75]/70">Free tier, no card: 30 requests/min, ~1K/day shared across your uses. Get a key at <a className="underline" href="https://console.groq.com/keys" target="_blank" rel="noreferrer">console.groq.com</a>.</p>
                 <label htmlFor="groq-model" className="font-heading text-sm uppercase tracking-[0.16em] text-[#4a392d] pt-2 block">Model ID</label>
-                <input id="groq-model" type="text" autoComplete="off" spellCheck={false} value={settings.groqModel} onChange={(event) => { onSettingsChange({ ...settings, groqModel: event.target.value }); setTestState('idle'); setTestMessage(''); }} placeholder="qwen/qwen3.8-27b" className="w-full bg-[#eae1ca]/60 border border-[#4a392d]/25 rounded-sm p-3 text-[15px] text-[#465f75] placeholder:text-[#465f75]/45 focus:outline-none focus:ring-2 focus:ring-[#8b5254]/30" />
+                <ModelIdField id="groq-model" value={settings.groqModel} options={GROQ_MODEL_OPTIONS} placeholder="qwen/qwen3.8-27b" onPick={(m) => { onSettingsChange({ ...settings, groqModel: m }); setTestState('idle'); setTestMessage(''); }} />
                 <p className="text-xs text-[#465f75]/70">Paste: <span className="font-heading">qwen/qwen3.8-27b</span> — voice reference only. Groq retires IDs without notice — type a current one (see <a className="underline" href="https://console.groq.com/docs/models" target="_blank" rel="noreferrer">console.groq.com/docs/models</a>) and press Test key. Free tier walls at ~7K input tokens per request against ~8K turns: Low sittings limp through with resumes, Medium/High are blocked outright (the prompt itself exceeds the wall — measured 7,871 vs 7,000 Sep 21 2026, no wait fixes it). Fine for the desk and Low. <span className="font-heading">qwen/qwen3.6-27b</span> is dead for visitor keys since Sep 2026.</p>
               </>
             ) : usingOpenRouter ? (
@@ -1789,7 +1819,7 @@ function SettingsDrawer({ philosophers, activeSlugs, togglePhilosopher, settings
                 ) : (
                   <>
                     <label htmlFor="or-model" className="font-heading text-sm uppercase tracking-[0.16em] text-[#4a392d] pt-1 block">Paid model ID</label>
-                    <input id="or-model" type="text" autoComplete="off" spellCheck={false} value={settings.openRouterModel} onChange={(event) => { onSettingsChange({ ...settings, openRouterModel: event.target.value }); setTestState('idle'); setTestMessage(''); }} placeholder="qwen/qwen3-30b-a3b" className="w-full bg-[#eae1ca]/60 border border-[#4a392d]/25 rounded-sm p-3 text-[15px] text-[#465f75] placeholder:text-[#465f75]/45 focus:outline-none focus:ring-2 focus:ring-[#8b5254]/30" />
+                    <ModelIdField id="or-model" value={settings.openRouterModel} options={OPENROUTER_PAID_OPTIONS} placeholder="z-ai/glm-5.3-flash" onPick={(m) => { onSettingsChange({ ...settings, openRouterModel: m }); setTestState('idle'); setTestMessage(''); }} />
                     <p className="text-xs text-[#465f75]/70">Paste: <span className="font-heading">qwen/qwen3-30b-a3b</span> — tuning target (best grasp measured, ~1–2 min debates, ~$0.03/sitting).</p>
                     <p className="text-xs text-[#465f75]/70">Higher quality with much bigger limits than free — needs credits on your key. Also live: <span className="font-heading">qwen/qwen3-14b</span> (~$0.011/sitting — cheapest ticket, untested, kill on any burn) and <span className="font-heading">deepseek/deepseek-v4.1-flash</span> ($0.15/$0.60 — parked Sep 20 after a halted sitting; revisit only if Qwen echo proves unfixable). Browse non-OpenAI IDs at <a className="underline" href="https://openrouter.ai/models" target="_blank" rel="noreferrer">openrouter.ai/models</a>. If a paid model reports a daily limit, check the key's own cap at <a className="underline" href="https://openrouter.ai/keys" target="_blank" rel="noreferrer">openrouter.ai/keys</a> — new credit can take minutes to apply.</p>
                   </>
@@ -1837,7 +1867,7 @@ function SettingsDrawer({ philosophers, activeSlugs, togglePhilosopher, settings
                 </div>
                 {testMessage && <p className={`text-sm italic ${testState === 'ok' ? 'text-[#4a6b3f]' : 'text-[#8b5254]'}`}>{testMessage}</p>}
                 <label htmlFor="ali-model" className="font-heading text-sm uppercase tracking-[0.16em] text-[#4a392d] pt-2 block">Model code</label>
-                <input id="ali-model" type="text" autoComplete="off" spellCheck={false} value={settings.alibabaModel} onChange={(event) => { onSettingsChange({ ...settings, alibabaModel: event.target.value }); setTestState('idle'); setTestMessage(''); }} placeholder="qwen3.8-27b" className="w-full bg-[#eae1ca]/60 border border-[#4a392d]/25 rounded-sm p-3 text-[15px] text-[#465f75] placeholder:text-[#465f75]/45 focus:outline-none focus:ring-2 focus:ring-[#8b5254]/30" />
+                <ModelIdField id="ali-model" value={settings.alibabaModel} options={ALIBABA_MODEL_OPTIONS} placeholder="qwen3.8-max" onPick={(m) => { onSettingsChange({ ...settings, alibabaModel: m }); setTestState('idle'); setTestMessage(''); }} />
                 <p className="text-xs text-[#465f75]/70">Paste: <span className="font-heading">qwen3.8-27b</span> — Low voice leader, free trial quota to Dec 16 2026 ($0 on quota). Model Studio codes vary by region — type the exact code and press Test key. Free quota pools in Singapore; enable Stop-on-Exhaust so overruns stop instead of billing. Check remaining quota in Model Studio before a big sitting. Medium grade still owed — until then it stays the Low pick only.</p>
               </>
             ) : usingZai ? (
@@ -1851,7 +1881,7 @@ function SettingsDrawer({ philosophers, activeSlugs, togglePhilosopher, settings
                 </div>
                 {testMessage && <p className={`text-sm italic ${testState === 'ok' ? 'text-[#4a6b3f]' : 'text-[#8b5254]'}`}>{testMessage}</p>}
                 <label htmlFor="zai-model" className="font-heading text-sm uppercase tracking-[0.16em] text-[#4a392d] pt-2 block">Model code</label>
-                <input id="zai-model" type="text" autoComplete="off" spellCheck={false} value={settings.zaiModel} onChange={(event) => { onSettingsChange({ ...settings, zaiModel: event.target.value }); setTestState('idle'); setTestMessage(''); }} placeholder="glm-4.7-flash" className="w-full bg-[#eae1ca]/60 border border-[#4a392d]/25 rounded-sm p-3 text-[15px] text-[#465f75] placeholder:text-[#465f75]/45 focus:outline-none focus:ring-2 focus:ring-[#8b5254]/30" />
+                <ModelIdField id="zai-model" value={settings.zaiModel} options={ZAI_MODEL_OPTIONS} placeholder="glm-4.7-flash" onPick={(m) => { onSettingsChange({ ...settings, zaiModel: m }); setTestState('idle'); setTestMessage(''); }} />
                 <p className="text-xs text-[#465f75]/70">Paste: <span className="font-heading">glm-4.7-flash</span> — free tier, no card, never run here: Low burn-check first, Medium only if it answers cleanly. Free tier allows 1 request at a time, so sittings run slow. Reasoning stays on (cannot be disabled) — the output-token line is the judge on burn. Get a key at <a className="underline" href="https://z.ai/" target="_blank" rel="noreferrer">z.ai</a>.</p>
               </>
             ) : (
