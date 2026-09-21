@@ -4,6 +4,17 @@ One fixed question, default 5 seats (Hegel, Marx, Bloch, Bookchin, Deleuze),
 grounding ON, normal length. Run each pipe at Low first (default level, hardest
 test). Winner takes Medium + High.
 
+## Test dimensions (Sep 21 2026 — vary ONE axis at a time, rest stay default)
+
+- Intensity: low / medium / high (default: the level under test).
+- Output: short (normal budgets) / long (long-form budgets). Default: short.
+- Re-read: full PREV / trimmed PREV — trimmed keeps the SECOND half (the
+  live edge), never the opening recap. Default: full (efficient or
+  free-tier walls trim automatically, tail-keep).
+- Grounding: grounded (own indexed works) / profile-only. Default: grounded.
+A run that moves two axes at once proves nothing — its grade cannot be
+compared. Record all four settings in every tried-log row.
+
 ## The question (reuse verbatim for every run)
 
 > Automation and robotics have replaced almost all human necessary work.
