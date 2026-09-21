@@ -150,6 +150,10 @@ export function findSharedPassage(text: string, priors: string[], run = 8, exclu
  */
 export function detectVolatility(negation: string, reformulation: string): string | null {
   const prose = `${negation} ${reformulation}`;
+  // Template-slot leak (Sep 21 2026, 30B Glasgow): the toolkit's (X) slots
+  // ride in prompts, never prose — a literal "(X)" in output is a failed
+  // fill, retry it like any other garble.
+  if (/\(X\)/.test(prose)) return 'template-slot "(X)" leaked into prose';
   const words = prose.toLowerCase().replace(/[^a-z0-9\s']/g, ' ').split(/\s+/).filter(Boolean);
   // Key-salad first (most specific): letter-runs joined by a colon, e.g.
   // `greek:negation`. URLs never reach here (parsed prose, not raw JSON).

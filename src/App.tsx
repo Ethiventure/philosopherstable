@@ -128,8 +128,14 @@ function toIntervention(
 ): Intervention {
   const kind = getTurnKind(pass, index + 1);
   const isOpening = kind === 'opening' && !previousSpeaker;
-  const citations = output.works_referenced.length > 0
-    ? output.works_referenced.map((work) => ({ label: work, verified: false }))
+  // The margins note is a prompt input, never a cited work (Sep 21 2026:
+  // 30B cited it as a source). Drop such labels before they reach the
+  // footnote matcher, which would honestly — but noisily — list them.
+  const claimedWorks = output.works_referenced.filter(
+    (work) => !/notes? from the margins/i.test(work),
+  );
+  const citations = claimedWorks.length > 0
+    ? claimedWorks.map((work) => ({ label: work, verified: false }))
     : [{ label: `[${philosopher.name.toUpperCase()}, SOURCE-GROUNDED PROFILE]`, verified: false }];
   // Mechanical address prefix (Sep 2026): the turn opens with PREV's name
   // because the app puts it there, not because the model remembered to.
