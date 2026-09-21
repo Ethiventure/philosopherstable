@@ -1446,17 +1446,22 @@ function ModelIdField({ id, value, options, placeholder, onPick }: {
   placeholder: string;
   onPick: (modelId: string) => void;
 }) {
+  // Custom mode is state, not derived: picking "Type another ID…" must
+  // reveal the box even though the stored value is still a listed ID
+  // (Sep 21 2026 — the first version fired nothing on Custom, so the box
+  // never appeared).
+  const [custom, setCustom] = useState(!options.includes(value));
   const listed = options.includes(value);
   const cls = 'w-full bg-[#eae1ca]/60 border border-[#4a392d]/25 rounded-sm p-3 text-[15px] text-[#465f75] focus:outline-none focus:ring-2 focus:ring-[#8b5254]/30';
   return (
     <>
-      <select id={id} value={listed ? value : CUSTOM_MODEL_VALUE} onChange={(event) => { const v = event.target.value; if (v !== CUSTOM_MODEL_VALUE) onPick(v); }} className={cls}>
+      <select id={id} value={!custom && listed ? value : CUSTOM_MODEL_VALUE} onChange={(event) => { const v = event.target.value; if (v === CUSTOM_MODEL_VALUE) { setCustom(true); } else { setCustom(false); onPick(v); } }} className={cls}>
         {options.map((m) => (
           <option key={m} value={m}>{m}</option>
         ))}
         <option value={CUSTOM_MODEL_VALUE}>Type another ID…</option>
       </select>
-      {!listed && (
+      {(custom || !listed) && (
         <input type="text" autoComplete="off" spellCheck={false} value={value} onChange={(event) => onPick(event.target.value)} placeholder={placeholder} aria-label={`${id} custom model ID`} className={`${cls} mt-2 placeholder:text-[#465f75]/45`} />
       )}
     </>
