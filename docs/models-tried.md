@@ -150,7 +150,13 @@ helps one model.
 - Speed (full sitting pace): Qwen30B paid (~2 min, debate ~1 min) > Alibaba-unthinking (<3.5 min incl. desk) > DeepSeek (~6 min) > GLM (~7 min) > Groq free Qwen (7.5–14 min, walls) > everything else (failed).
 - Reliability (finishes sessions cleanly): DeepSeek > Qwen30B paid (5/5 clean) > Alibaba-unthinking > GLM > Groq free > rest (out).
 - Value (cost per 5-seat session): GLM-5.3-flash ~$0.018 > Qwen14B ~$0.021 > Qwen30B ~$0.032 > DeepSeek ~$0.036 > Qwen27B paid ~$0.20+.
-- Overall: GLM paid (rematch keeps — citations + debts + differentiated P3s, cheapest) ≈ Qwen14B (frontrunner cheap engine, tuning track open) ≈ Qwen30B paid (dilemma-grasp best, echo open) ≈ DeepSeek-parked > Alibaba Qwen27B-unthinking (default while trial lasts) > Groq free Qwen (voice reference) > dead (all small Qwens, Mistral, Llama-as-primary, distill, 3.6-27B).
+- Overall (Sep 21, all evidence): 3.8-max Medium (best combo, priciest) ≈
+  3.7-plus High (favourite developed argument, value sweet spot) ≈
+  3.8-flash High (punchiest, cheapest of the new IDs) ≈ GLM paid (Medium
+  holder) ≈ Qwen14B (cheapest proven) ≈ Qwen30B paid (dilemma best, echo
+  open) ≈ DeepSeek-parked > Alibaba Qwen27B-unthinking (Low default while
+  trial lasts) > Groq free Qwen (voice reference) > dead (all small Qwens,
+  Mistral, Llama-as-primary, distill, 3.6-27B).
 
 ## Costs + restrictions (Sep 20 2026 — trial quotas bill $0 to Dec 16; paid rates re-verify at provider pages before quoting)
 

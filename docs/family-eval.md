@@ -19,6 +19,11 @@ bearers, settled premises, no bearer-less systems talk:
 > depot canteen and demands a say over the machines. Who owns the robots'
 > output, what do the technicians owe the occupiers, and what breaks first?
 
+Drawn from leftistsforAI themes (labour, ownership, platform power). The
+same bar rules future questions: concrete bearers, settled premises,
+arguable fault lines — and the sub's bracket rule: a post that could run
+unchanged on a tech-cheer sub doesn't belong on a labour sub.
+
 Future-set for all seats (fair — none saw it), earthed in children and
 classrooms rather than essences, and it splits the table: purpose and
 formation one way, power over what gets taught another, organization a
