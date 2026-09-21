@@ -81,6 +81,9 @@ desk off, 5 default seats Hegel/Marx/Bloch/Bookchin/Deleuze unless noted)
 4. `Qwen/Qwen3-30B-A3B` via DeepInfra (visitor key) — Medium, LONG form,
    education question. Paired length test: does long form fix beat-less
    P3s or just longer echo?
+   RESULT Sep 21 (sub question, Glasgow): LONG SCALES FAULTS. Echo 10/15
+   (worst on record), stub turns, invented works. Length holds, loans
+   11/15. No more length tests on 30B.
 5. `qwen3.8-flash` via Alibaba (visitor key) — Low, normal, education
    question. Reopens the burn verdict properly (probe already clean).
 Next test (owner, Sep 20): High still open — 30B parked (thin),
@@ -232,6 +235,7 @@ helps one model.
 usage instrument ran — earlier sessions predate it)
 
 | Model | Provider | Time | Tokens (in/out, calls) | Errors | Quality notes | Interim verdict | Next step | Final verdict |
+| Qwen/Qwen3-30B-A3B | DeepInfra (visitor key) | Sep 21, Medium LONG sub-question, prompt v2026-09-20h, Glasgow: 2:51 wall (debate 1:53), 18 calls 175.8K/8.7K, 0 repairs, ~$0.025 | PAIRED LENGTH TEST: long form does NOT fix 30B — echo 10/15, worst on record (P1 Marx≈Bloch≈Bookchin share whole paragraphs; P3 cascade; P3 Bookchin + Deleuze P2 degenerate "You define/inventory (X)" stubs). New faults: invented works ("The Philosophy of Music; CHRIST…", "365; 467"), margins cited as a source. Length holds (2 over long budget); loans 11/15; city 12/15; Genzie 0/10. Filed `docs/eval-sittings/deepinfra-qwen3-30b-a3b-medium-long-v1-glasgow-subquestion.md`. | **Long form scales 30B's faults, not its virtues** | Dilemma-grasp uses only; no more length tests on 30B | Open |
 | z-ai/glm-5.3-flash | OpenRouter paid (ABORTED sitting, sub question) | Sep 21, High normal-form, prompt v2026-09-20h, Bristol: 4:19 wall for 2 turns then abort, 6 calls 59.1K/2.8K (1.9K reasoning), 3 JSON repairs, ~$0.005 | LEDGER-OWED CLEAN-HIGH RETEST: FAILS. Hegel P1 full word salad (Josephine/glass-packs fragment salad); Marx P1 missing-spaces salad ("categoriesfloating", "driftsintospeculation"); then a turn missing reformulation → Strike Demand halt. RAG receipts behave correctly: Hegel's genuine loans verify ('Empty lordship', 'colourful hurly-burly' ✓), salad-words fail ('dividend disappears', 'arboreal frames', 'hoarding-settler mania' ✗); Marx turn loan-free, message correct. Slow = reasoning always-on (1.9K thinking behind 2 turns). Cost/time footer partial — aborted, do not quote. | **High PARK CONFIRMED — gibberish rule stands under v20h** | No further GLM High until volatility guard proves on cleaner pipes | Parked |
 | qwen3.8-27b | Alibaba (probe grounded:karl-marx, stand-in system prompt) | Sep 20, Medium opening-probe, prompt v2026-09-20g: 5.6s wall, 1041/189 tok, ~$0.0010, contract held, 2 loans (floor met) | GROUNDED A/B vs plain twin below: the objective grounding-effectiveness number. | **Grounding works when present** | Full sittings must show the same loan rate | Open |
 | qwen3.8-27b | Alibaba (probe plain twin) | Sep 20, Medium opening-probe, prompt v2026-09-20g: 4.7s wall, 726/152 tok, ~$0.0007, contract held, 0 loans | Same pipe/question, no passages: zero loans. Delta proves Ex2–4 are models ignoring shown text, not retrieval failing. | **—** | — | Open |
