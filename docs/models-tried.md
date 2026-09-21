@@ -40,19 +40,29 @@ Next three sittings, in order, each with kill/keep criteria:
    rebirth" paragraph in 4 of 5 turns, shared opener across Marx/Bloch/
    Weil. Stays the Low voice leader; not a Medium engine. Medium is now
    GLM vs Qwen30B.
-## The three (Sep 21 2026, owner order — tweak ONLY these from here on)
+## The remaining (Sep 21 2026, owner order — tweak ONLY these from here on)
+Gibberish rule: a model that produces gibberish at ANY level is parked
+entirely, unless the fix is easy. Applied: GLM PARKED ENTIRELY (salad at
+High across three sittings + halt; no easy fix — reasoning locked on,
+guard catches shapes not prose-salad; Medium history stands frozen, no
+new sittings). DeepSeek PARKED ENTIRELY (salad + halt; was already
+parked). Small Qwens, Mistral, Llama, distill, GPT-OSS stay buried.
 - Best quality: `qwen3.8-max` via Alibaba (visitor key). Richest borrowing,
   explains ideas, history spoken, most adherent. Price of admission:
   ~$0.34–0.46/session paid ($0 trial). Normal length; long form scales
   words without improving holds.
-- Best value: `z-ai/glm-5.3-flash` via OpenRouter paid. Medium holder
-  (debts, cites, differentiated P3s) at ~$0.018/session. High parked
-  pending one clean retest.
+- Best value: `qwen/qwen3-14b` via OpenRouter paid (~$0.021). Inherits the
+  crown from parked GLM ($0.018) — floor rises $0.003, negligible; the real
+  cost is the Medium contest now runs 3.8-max ($0.40) vs 14B-tuning vs 30B
+  ($0.03). Tuning track decides whether cheap keeps it.
 - Best free: `qwen/qwen3.8-27b` via Groq free tier ($0). Voice reference,
   Low-only lean ration, 7k wall; VPNs 403 it; no reasoning flag.
   OpenRouter `qwen/qwen3.8-27b:free` serves opportunistically when unthrottled.
-Tweak rule: prompt/pipe changes are graded against these three first;
-nothing else gets tuned unless all three fail the same test.
+- Still standing (no gibberish observed): 3.7-plus, 3.8-flash, 27B, 30B
+  (dilemma challenger, echo open), 14B. Untested (rule needs evidence):
+  Z.ai, Together.
+Tweak rule: prompt/pipe changes are graded against these first;
+nothing else gets tuned unless all fail the same test.
 ## Next tests (Sep 21 2026, exact settings — grounding ON, economy full,
 desk off, 5 default seats Hegel/Marx/Bloch/Bookchin/Deleuze unless noted)
 1. `qwen3.8-max` via Alibaba (visitor key) — Medium, LONG form, education
@@ -64,9 +74,10 @@ desk off, 5 default seats Hegel/Marx/Bloch/Bookchin/Deleuze unless noted)
 2. `qwen3.7-plus` via Alibaba (visitor key) — High, LONG form, NEW
    high-long question (family-eval.md). Your favourite voice with room to
    develop; depot question suits its comprehensible-argument strength.
-3. `z-ai/glm-5.3-flash` via OpenRouter paid — High, normal, education
-   question. Ledger-owed clean-High retest under v20d–h guards. KEEP if
-   no volatility; PARK confirms.
+3. STRUCK — was GLM High retest; GLM parked entirely Sep 21 (gibberish
+   rule). Slot goes to `qwen3.7-plus` via Alibaba (visitor key) — Medium,
+   normal, education question: does the favourite argument survive Medium
+   rules, or stay a High-only voice?
 4. `Qwen/Qwen3-30B-A3B` via DeepInfra (visitor key) — Medium, LONG form,
    education question. Paired length test: does long form fix beat-less
    P3s or just longer echo?
