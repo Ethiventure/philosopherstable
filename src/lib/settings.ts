@@ -9,17 +9,16 @@ export const DEFAULT_GROQ_MODEL = 'qwen/qwen3.8-27b';
 /** IDs that 404 for visitor keys — stored picks migrate to the default. */
 const DEAD_GROQ_IDS = new Set(['qwen/qwen3.6-27b']);
 
-export type DeepInfraModel = 'deepseek-ai/DeepSeek-V4-Flash-0731' | 'Qwen/Qwen3-30B-A3B' | 'meta-llama/Llama-3.3-70B-Instruct-Turbo';
+export type DeepInfraModel = 'Qwen/Qwen3-30B-A3B' | 'meta-llama/Llama-3.3-70B-Instruct-Turbo';
 
 /** Who speaks first on DeepInfra (backup Llama rescues either). */
-export type DeepInfraPrimary = 'deepseek' | 'qwen';
+export type DeepInfraPrimary = 'qwen';
 
 /** Transparency rule: every option names its exact model ID and why it is
  *  picked. The Settings UI renders these verbatim, so keep each `why` to one
  *  plain line (model, price, reason). */
 export const DEEPINFRA_PRIMARIES: { id: DeepInfraPrimary; label: string; model: DeepInfraModel; why: string }[] = [
-  { id: 'deepseek', label: 'DeepSeek V4 Flash 0731', model: 'deepseek-ai/DeepSeek-V4-Flash-0731', why: 'Parked Sep 20 2026 (halted sitting, 12-min pace) — revisit only if Qwen echo proves unfixable. Was the fallback engine.' },
-  { id: 'qwen', label: 'Qwen3-30B-A3B', model: 'Qwen/Qwen3-30B-A3B', why: 'Tuning target: best dilemma-grasp measured, ~1–2 min debates, ~$0.03/sitting. Echo clusters + unspoken history still open.' },
+  { id: 'qwen', label: 'Qwen3-30B-A3B', model: 'Qwen/Qwen3-30B-A3B', why: 'Sole primary since Sep 21 2026 — DeepSeek parked entirely under the gibberish rule. Tuning target: best dilemma-grasp measured, ~1–2 min debates, ~$0.03/sitting. Echo clusters + unspoken history still open.' },
 ];
 
 /** Llama rescue model, named in the UI beside the primary. */
@@ -105,7 +104,9 @@ export function loadSettings(): CabinetSettings {
         ? parsed.groqModel.trim().slice(0, 120)
         : DEFAULT_GROQ_MODEL,
       deepInfraApiKey: typeof parsed.deepInfraApiKey === 'string' ? parsed.deepInfraApiKey : '',
-      deepInfraPrimary: parsed.deepInfraPrimary === 'deepseek' ? 'deepseek' : 'qwen',
+      // Qwen-only since Sep 21 2026 (DeepSeek parked entirely): stored
+      // 'deepseek' migrates forward, same as the old stored-'gemini' rule.
+      deepInfraPrimary: 'qwen',
       togetherApiKey: typeof parsed.togetherApiKey === 'string' ? parsed.togetherApiKey : '',
       alibabaApiKey: typeof parsed.alibabaApiKey === 'string' ? parsed.alibabaApiKey : '',
       // Free-text Model Studio code (never openai/*); dead IDs fall back.

@@ -3,10 +3,11 @@ import { LlmError, REPAIR_SUFFIX, incrementRepair, parseTurnOutput, recordUsage,
 /**
  * DeepInfra direct provider (visitor's own key).
  * OpenAI-compatible `chat/completions` at api.deepinfra.com/v1/openai.
- * Visitor's chosen primary (DeepSeek V4 Flash 0731 or Qwen3-30B-A3B) speaks
- * first; if it fails on anything but auth/quota (same key, same credits — a
- * backup can't help those), Llama 3.3 70B Turbo takes the turn so the sitting
- * survives. `lastDeepInfraModel` records who
+ * Qwen3-30B-A3B speaks first (sole primary since Sep 21 2026 — DeepSeek
+ * parked entirely under the gibberish rule); if it fails on anything but
+ * auth/quota (same key, same credits — a backup can't help those),
+ * Llama 3.3 70B Turbo takes the turn so the sitting survives.
+ * `lastDeepInfraModel` records who
  * actually spoke for the export provenance trail. Turns try
  * `response_format: json_object` first, plain fallback on 400. The Qwen
  * primary is a hybrid thinker with a documented enable_thinking switch, and
@@ -16,17 +17,16 @@ import { LlmError, REPAIR_SUFFIX, incrementRepair, parseTurnOutput, recordUsage,
  */
 import type { DeepInfraModel, DeepInfraPrimary } from '@/lib/settings';
 
-export const DEEPINFRA_MODEL: DeepInfraModel = 'deepseek-ai/DeepSeek-V4-Flash-0731';
 export const DEEPINFRA_MODEL_QWEN: DeepInfraModel = 'Qwen/Qwen3-30B-A3B';
 export const DEEPINFRA_MODEL_BACKUP: DeepInfraModel = 'meta-llama/Llama-3.3-70B-Instruct-Turbo';
 
-/** Visitor's chosen first voice; the Llama backup rescues either. */
-export function resolveDeepInfraPrimary(primary: DeepInfraPrimary): DeepInfraModel {
-  return primary === 'qwen' ? DEEPINFRA_MODEL_QWEN : DEEPINFRA_MODEL;
+/** Visitor's first voice (Qwen-only; the parameter stays so callers don't churn). */
+export function resolveDeepInfraPrimary(_primary: DeepInfraPrimary): DeepInfraModel {
+  return DEEPINFRA_MODEL_QWEN;
 }
 
 /** Model that spoke last on this provider (turns and desk alike). */
-export let lastDeepInfraModel: DeepInfraModel = DEEPINFRA_MODEL;
+export let lastDeepInfraModel: DeepInfraModel = DEEPINFRA_MODEL_QWEN;
 const DEEPINFRA_MAX_TOKENS = { normal: 4000, long: 8000 } as const;
 
 interface DeepInfraTurnArgs {
@@ -232,7 +232,7 @@ export async function generateTextDeepInfra({ apiKey, primary, systemPrompt, use
 }
 
 /** Cheap key check: one tiny call against the chosen primary. */
-export async function testDeepInfraKey(apiKey: string, primary: DeepInfraPrimary = 'deepseek'): Promise<void> {
+export async function testDeepInfraKey(apiKey: string, primary: DeepInfraPrimary = 'qwen'): Promise<void> {
   const response = await fetch('https://api.deepinfra.com/v1/openai/chat/completions', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${apiKey}` },

@@ -1796,17 +1796,12 @@ function SettingsDrawer({ philosophers, activeSlugs, togglePhilosopher, settings
                 </div>
                 {testMessage && <p className={`text-sm italic ${testState === 'ok' ? 'text-[#4a6b3f]' : 'text-[#8b5254]'}`}>{testMessage}</p>}
                 <p className="text-xs text-[#465f75]/70">Your chosen primary speaks first; Llama 3.3 70B takes over automatically if it fails (never on key/quota errors — a backup cannot fix those) — the export says who spoke. Needs a card on file — get a key at <a className="underline" href="https://deepinfra.com/dash/api_keys" target="_blank" rel="noreferrer">deepinfra.com</a>.</p>
-                <label htmlFor="di-primary" className="font-heading text-sm uppercase tracking-[0.16em] text-[#4a392d] pt-2 block">First voice</label>
-                <select id="di-primary" value={settings.deepInfraPrimary} onChange={(event) => onSettingsChange({ ...settings, deepInfraPrimary: event.target.value as DeepInfraPrimary })} className="w-full bg-[#eae1ca]/60 border border-[#4a392d]/25 rounded-sm p-3 text-[15px] text-[#465f75] focus:outline-none focus:ring-2 focus:ring-[#8b5254]/30">
-                  {DEEPINFRA_PRIMARIES.map((p) => (
-                    <option key={p.id} value={p.id}>{p.label} ({p.model})</option>
-                  ))}
-                </select>
+                <label className="font-heading text-sm uppercase tracking-[0.16em] text-[#4a392d] pt-2 block">First voice</label>
                 {(() => {
-                  const picked = DEEPINFRA_PRIMARIES.find((p) => p.id === settings.deepInfraPrimary);
-                  return picked ? (
+                  const picked = DEEPINFRA_PRIMARIES.find((p) => p.id === settings.deepInfraPrimary) ?? DEEPINFRA_PRIMARIES[0];
+                  return (
                     <p className="text-xs text-[#465f75]/70">Speaks first: <span className="font-heading">{picked.model}</span> — {picked.why} Backup: {DEEPINFRA_BACKUP_LABEL}</p>
-                  ) : null;
+                  );
                 })()}
               </>
             ) : usingTogether ? (
