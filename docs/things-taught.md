@@ -4,6 +4,16 @@ Low intensity, nothing dumbed down: every entry keeps the full fact,
 only the words stay simple. Newest first. The owner asked for this
 Sep 17 2026 — keep writing here, one entry per lesson.
 
+## Thinking scales with the load (Sep 21 2026)
+Sequel to the "bigger are-you-there" lesson: thinking doesn't cost a
+flat fee per call — it grows with the prompt (120 tokens to answer "ok",
+850 for a full turn contract on the same model). A model that answers a
+tiny check can still starve on a real turn at the same output cap, and a
+200-with-empty-content reply means "give me room", never "I'm broken".
+Before ruling any thinker out, re-run once at quadruple caps: the probe
+ladder does this itself now and writes `+stepup` on the route when head
+room is what fixed it.
+
 ## Switches are per model, not per provider (Sep 20 2026)
 One request flag does not fit every model on a provider. Alibaba's
 thinking switch works for Qwen (off = fast, cheap, truer) but one model

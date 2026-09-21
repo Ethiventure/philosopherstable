@@ -85,9 +85,13 @@ or free — no test buys information.)
   (cheapest), then `qwen/qwen3.8-flash` (burn reversed). Dead pins fall
   through the list mid-sitting (400-invalid-ID classified as model fault
   Sep 21; traced, not live-fired — first dead-pin sitting proves it);
-  export names who spoke. max exists here only as dated -0902 (dead on
-  route). Per-sitting estimates at 170K/5K tokens: plus ~$0.06, flash
-  under $0.01, 3.8-flash ~$0.03 (measured cost prints in every export).
+  export names who spoke. max exists here only as dated -0902: ALIVE but
+  NOT A TURN ENGINE (Sep 21 diagnostics, ~$0.02 spent proving it —
+  mandatory reasoning, thinking scales with load: ~120 toks for "ok",
+  ~850 for a full turn prompt; turn caps starve it, 2000-cap succeeds in
+  ~21s at ~$0.007/call). Custom only; never buried, never pursued.
+  Per-sitting estimates at 170K/5K tokens: plus ~$0.06, flash under $0.01,
+  3.8-flash ~$0.03 (measured cost prints in every export).
 - Provider model options (Sep 21, dropdown + Custom escape hatch — IDs
   rot, so Custom + migration + Test-key stay): OpenRouter free tries
   `qwen/qwen3.8-27b:free` first among named (alive but throttled; cycle

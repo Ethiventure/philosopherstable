@@ -577,8 +577,8 @@ Deleuze OCR batch (Thousand Plateaus 933, Bergsonism 149, Logique du sens FR
 TAL entry), Bogdanov Religious→Scientific Monism (23) + English Tektology OCR
 (481; replaced the Russian OCR, which English queries could never match) —
 all via archive.org `/stream/…_djvu.txt` (HTML+`<pre>`, indexable; `/download/`
-raw text extracts zero paragraphs), total 11,342 passages (Sep 2026 eval),
-per-author shards
+raw text extracts zero paragraphs), total 13,418 passages (manifest,
+Sep 17 2026 export; eval re-run Sep 21), per-author shards
 under public/rag/ (lazy-fetched per thinker, cached; static, so Netlify needs
 nothing new). Wired behind the existing grounding toggle: desk + turns search
 the thinker's own shard first (`rag-ground.ts`), live extract.js stays as

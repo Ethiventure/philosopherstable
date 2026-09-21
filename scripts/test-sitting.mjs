@@ -161,12 +161,22 @@ export async function runProbe({ provider, model, level, city, long, kind = 'ope
   const started = Date.now();
   let res = null;
   let via = '';
-  for (const a of attempts) {
-    if (a.json === false && res && res.status !== 400) break; // plain is fallback for 400s only
-    if (a.via.includes('thinking-low') && !(res && /reasoning.*mandatory|mandatory.*reasoning/i.test(res.detail || ''))) break;
-    res = await postChat(pipe, system, userMessage, maxTokens, a);
-    via = a.via;
-    if (res.ok) break;
+  let cap = maxTokens;
+  // Cap step-up (Sep 21 2026): thinking models can burn the whole turn cap
+  // thinking (max-0902 needs >260, Z.ai needs ~120 for "ok") and return
+  // 200-empty. On EMPTY, the ladder re-runs once at 4× caps (2000 ceiling)
+  // before failing — a big-cap success proves the pipe, and the via trail
+  // records that it needs room to think.
+  for (let round = 0; round < 2; round += 1) {
+    for (const a of attempts) {
+      if (a.json === false && res && res.status !== 400) break; // plain is fallback for 400s only
+      if (a.via.includes('thinking-low') && !(res && /reasoning.*mandatory|mandatory.*reasoning/i.test(res.detail || ''))) break;
+      res = await postChat(pipe, system, userMessage, cap, a);
+      via = round > 0 ? `${a.via}+stepup` : a.via;
+      if (res.ok) break;
+    }
+    if (res.ok || !(res.error || '').startsWith('EMPTY')) break;
+    cap = Math.min(cap * 4, 2000);
   }
   const wallMs = Date.now() - started;
   if (!res.ok) return { skipped: false, failed: true, error: res.error, provider, model: pipe.model, level, promptVersion: PROMPT_VERSION, wallMs };
