@@ -15,7 +15,11 @@ const DEAD_GROQ_IDS = new Set(['qwen/qwen3.6-27b']);
  *  Only verified-live IDs are listed; anything else goes through Custom. */
 export const CUSTOM_MODEL_VALUE = '__custom';
 export const GROQ_MODEL_OPTIONS = ['qwen/qwen3.8-27b'];
-export const OPENROUTER_PAID_OPTIONS = ['z-ai/glm-5.3-flash', 'qwen/qwen3.8-27b'];
+/** OpenRouter paid options (Sep 21 2026, probed live): 3.7-flash default
+ *  (clean probe, cheapest), 3.8-flash (burn verdict reversed on new
+ *  prompts). GLM removed — parked entirely. qwen3.8-max-0902 dead on
+ *  route (200-empty on every ladder rung) — Custom only, retry later. */
+export const OPENROUTER_PAID_OPTIONS = ['qwen/qwen3.7-flash', 'qwen/qwen3.8-flash'];
 export const ALIBABA_MODEL_OPTIONS = ['qwen3.8-max', 'qwen3.7-plus', 'qwen3.8-27b', 'qwen3.8-flash'];
 export const ZAI_MODEL_OPTIONS = ['glm-4.7-flash'];
 
@@ -81,7 +85,7 @@ export const DEFAULT_SETTINGS: CabinetSettings = {
   provider: 'shared',
   openRouterApiKey: '',
   openRouterMode: 'free',
-  openRouterModel: 'z-ai/glm-5.3-flash',
+  openRouterModel: 'qwen/qwen3.7-flash',
   groqApiKey: '',
   groqModel: DEFAULT_GROQ_MODEL,
   deepInfraApiKey: '',
@@ -132,9 +136,10 @@ export function loadSettings(): CabinetSettings {
         ? parsed.zaiModel.trim().slice(0, 120)
         : DEFAULT_ZAI_MODEL,
       // No OpenAI models, ever: stored openai/* IDs migrate to the default.
-      openRouterModel: typeof parsed.openRouterModel === 'string' && parsed.openRouterModel.trim() && !parsed.openRouterModel.trim().startsWith('openai/')
+      // Stored GLM pin migrates too (parked entirely Sep 21 2026).
+      openRouterModel: typeof parsed.openRouterModel === 'string' && parsed.openRouterModel.trim() && !parsed.openRouterModel.trim().startsWith('openai/') && parsed.openRouterModel.trim() !== 'z-ai/glm-5.3-flash'
         ? parsed.openRouterModel.trim().slice(0, 120)
-        : 'z-ai/glm-5.3-flash',
+        : 'qwen/qwen3.7-flash',
       economy: parsed.economy === 'efficient' ? 'efficient' : 'full',
       grounding: parsed.grounding === true,
     };

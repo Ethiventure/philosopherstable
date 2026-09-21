@@ -202,6 +202,10 @@ const RATE_TABLE: RateRow[] = [
   { match: (p, m) => p.includes('openrouter') && m.includes('qwen3.8-27b'), perIn: 0.30, perOut: 2.00 },
   { match: (_p, m) => m.includes('qwen3.8-27b'), perIn: 0.40, perOut: 3.00 },
   { match: (_p, m) => m.includes('qwen3.8-flash'), perIn: 0.15, perOut: 0.47 },
+  // Owner-supplied Sep 21 2026 (OpenRouter page): Qwen3.7 Flash
+  // $0.03/$0.13 per 1M, 1M context. NOTE: not the same weights as
+  // Alibaba qwen3.7-plus — grades never transfer across IDs.
+  { match: (_p, m) => m.includes('qwen3.7-flash'), perIn: 0.03, perOut: 0.13 },
   { match: (_p, m) => m.includes('qwen3.5-9b'), perIn: 0.10, perOut: 0.15 },
   { match: (_p, m) => m.includes('glm-5.3-flash') || m.includes('glm-5-flash'), perIn: 0.075, perOut: 0.25 },
   { match: (_p, m) => m.includes('glm-4.7-flash') || m.includes('glm-4.5-flash'), perIn: 0, perOut: 0 },

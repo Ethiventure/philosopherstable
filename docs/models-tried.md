@@ -80,6 +80,14 @@ or free — no test buys information.)
   the chain (auth/quota throw at once, same key), export names who
   actually spoke. Shared proxy cycles the same chain MINUS max (quota
   can't afford it).
+- OpenRouter paid default: `qwen/qwen3.7-flash` (GLM removed — parked
+  entirely; stored GLM migrates). Probed live Sep 21: 3.7-flash clean
+  (42w), 3.8-flash clean (39w, burn verdict reversed on new prompts),
+  `qwen/qwen3.8-max-0902` dead on route (200-empty every ladder rung —
+  Custom only, retry later, never buried on one data point). NOTE:
+  Qwen3.7-Flash ≠ Alibaba qwen3.7-plus (different weights, grades never
+  transfer). DeepInfra stays 30B-only; Together stays 30B pinned,
+  untested per owner — no verified winner on either, nothing to change.
 - Provider model options (Sep 21, dropdown + Custom escape hatch — IDs
   rot, so Custom + migration + Test-key stay): OpenRouter free tries
   `qwen/qwen3.8-27b:free` first among named (alive but throttled; cycle
