@@ -4,6 +4,17 @@ Low intensity, nothing dumbed down: every entry keeps the full fact,
 only the words stay simple. Newest first. The owner asked for this
 Sep 17 2026 — keep writing here, one entry per lesson.
 
+## Switches are per model, not per provider (Sep 20 2026)
+One request flag does not fit every model on a provider. Alibaba's
+thinking switch works for Qwen (off = fast, cheap, truer) but one model
+refuses it outright with a 400 error — for that model the value may only
+ever be True. The fix sends the switch first and drops it on exactly
+that error, once, instead of failing the turn: prefer the cheap path,
+retreat to the model's terms, never argue with the endpoint. The lesson:
+capability flags live at the model level — a provider-wide setting is a
+guess that some model will eventually refuse. (Same family as the
+OpenRouter mandatory-reasoning step-down.)
+
 ## The right passage beats the exact passage (Sep 20 2026)
 A retrieval self-test asks: this chunk's own rare words, do they find
 this exact chunk again? On Hegel the answer is almost never — 8% — yet

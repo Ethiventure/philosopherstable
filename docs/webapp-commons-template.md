@@ -168,6 +168,9 @@ rate numbers as verdicts, brand copy and palette, thread cities.
 
 ## Scaffolding order (when building starts)
 
+Testing ships by default, not as a later pass: every module below lands
+with its runnable check, and the sweep assembles them —
+
 1. Vite shell + theme/display/accessibility (Module 1) — an app that reads
    well before it thinks at all.
 2. Settings + one provider + proxy + caps (Module 2) — first paid call.

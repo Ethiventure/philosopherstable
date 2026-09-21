@@ -83,6 +83,37 @@ Test queue (Sep 20 2026 — NOTHING ruled out yet, status per model):
   qwen3.7-plus, qwen3.8-max (Low sittings first; High only via the queue).
   Straight-to-High on ungraded IDs is refused: High is the hardest level
   and echo is the cross-model High fault.
+- Owner High/Medium sittings Sep 20 (pre-v20a prompts — fixes 1–7 NOT in
+  these; credit the models, not the ledger): 3.8-flash High punchy;
+  3.7-plus High favourite for developed comprehensible argument; 3.8-max
+  High quick with relationship history, authentic but harder; 3.8-max
+  Medium BEST COMBO YET (explains ideas, history, adherent, theory +
+  applied) — main-option candidate IF affordable; 3.7-plus Medium good
+  but less engaging. No loops observed — consistent with new IDs, not
+  proof of fixes (all predate them).
+- GLM via Alibaba: `glm-5.3` 400s on enable_thinking:false
+  (InvalidParameter, restricted to True) — alibaba.ts now drops the flag
+  on that exact 400 and retries with thinking on (proven live same day:
+  200 "ok"). Thinking bills as output on this route — watch the token
+  line. GLM does NOT live on Alibaba as first-class; the OpenRouter pin
+  stays the GLM route.
+- Costs (owner-supplied Sep 20, Perplexity calc, trial bills $0 to Dec 16;
+  re-verify at Model Studio pricing before quoting): 3.7-plus ~$0.40/$1.60
+  ≈ $0.07/session-equiv; 3.8-max ~$2.00/$6.00 ≈ $0.34–0.46/session-equiv
+  (~17× the 14B frontrunner — affordable means on-trial, not paid).
+  Prompt-caching 8× lead unverified. Rate rows added with source flags.
+- Availability elsewhere UNVERIFIED except: qwen3.8-flash exists on
+  OpenRouter (burned there once — different pipe, corpse stands there);
+  3.7-plus / 3.8-max on non-Alibaba pipes unknown — probe per provider,
+  never assume. GLM-5.3 route is the OpenRouter pin, graded.
+- Golden examples QUEUED on owner exports: 3.7-plus High, 3.8-max
+  High + Medium turns (Phase 7c mechanism — owner picks, nothing enters
+  prompts ungraded).
+- BRACKET OFF (parked, not benefiting us): 30B High thinness, DeepSeek
+  sittings, small Qwens, 3.6-35B, Mistral, Llama-as-primary, R1-distill,
+  GPT-OSS ban. KEPT: 3.8-max Medium candidacy, 3.7-plus both levels,
+  3.8-flash Low then High, GLM High retest, 30B long-form paired test,
+  14B tuning.
 Ruled out already (corpses, do not re-test): small Qwens (burn),
 Qwen3.6-35B (thinking-burn + disobedient), Mistral Small 3.2 (loop),
 Llama-as-primary (weak), R1-distill (dead), GPT-OSS (OpenAI ban),
