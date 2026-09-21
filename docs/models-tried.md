@@ -85,6 +85,10 @@ Medium: contested, High: 3.7-plus).
 ## Next tests (FINAL FOUR — nothing else runs until crowns fill; grounding
 ON, economy full, desk off, 5 default seats, education question, normal length)
 1. `qwen3.8-max` via Alibaba (visitor key) — Low. Fills quality.
+   RAN Sep 21 (Low LONG Marseille, v20h — first v20h sitting): quality
+   crown FILLS on owner verdict (city 14/15 best hold, debts spoken, Genzie
+   5/5+5/5 named, loans n/a-paraphrase, 2 JSON repairs, $0.36, 12/15 over
+   long budget). Filed `docs/eval-sittings/alibaba-qwen3-8-max-low-long-v1-marseille.md`.
 2. `qwen3.7-plus` via Alibaba (visitor key) — Low. Fills value.
 3. `qwen/qwen3.8-27b` via Groq free (own key, VPN off) — Medium. Expect
    walls + resumes; lean ration applies. Fills free step 1 of 2.
