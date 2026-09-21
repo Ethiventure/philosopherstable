@@ -190,6 +190,13 @@ silently across versions.
   in-app), `test:matrix` loops keyed pipes with `--dry-run`; full-sitting
   automation waits on extracting the App turn loop into an importable
   module. Old grades stay on v2026-09-20b and earlier.
+- Prompt v2026-09-20d (Sep 20 2026, owner test evidence): PREV trim keeps
+  the TAIL (the live edge; head-keep answered the recap — the PREV-confusion
+  mechanism); CUT IN answers PREV's second half; opening branch receives
+  the THREAD CITY value (seat 1 was never told the city); P3 margins
+  answer moves to the reformulation's first two sentences. No second PREV
+  added — pure-rotation discipline holds. Old grades stay on v2026-09-20c
+  and earlier.
 
 ### Embeddings (Phase 5)
 `test_embeddings.py` uses local Ollama `nomic-embed-text` (768 dims); the schema is
@@ -697,8 +704,11 @@ evidence, unbalance risk, retest matrix.
    GLM + 30B — grade badge hits, not vibes.
 2. Seats ignore the margins note (rudeness) — evidence GLM/30B. SHIPPED
    Sep 20 2026 in prompt v2026-09-20b (P2 names Genzie once when taking
-   the note up, closing summary admits what went unanswered). Retest:
-   GLM Medium.
+   the note up, closing summary admits what went unanswered), hardened to
+   v2026-09-20d: the P3 answer must land in the reformulation's FIRST TWO
+   SENTENCES naming Genzie, before touching PREV (position salience —
+   buried answers were the failure shape). Retest: GLM Medium, grade
+   answer position not just presence.
 3. Coda premise-blindness (bunks under full automation) — evidence GLM
    High v1. SHIPPED Sep 20 2026 in prompt v2026-09-20b (all three coda
    builders carry PREMISE HOLD: givens are settled facts, attack the
@@ -733,7 +743,11 @@ evidence, unbalance risk, retest matrix.
 10. Thread-city drops (Berlin-default Hegel P1s on GLM + Alibaba;
     Bangkok ×1/15 on 30B High) — SHIPPED Sep 20 2026 in prompt
     v2026-09-20c (opening anywhere but the thread city fails; relocating
-    to the homeland fails). Retest: any sitting.
+    to the homeland fails), root-caused to v2026-09-20d: the opening
+    branch never received the THREAD CITY value line (later turns did),
+    so seat 1 was ordered to ground in a city it was never told — now
+    named with birthplace explicitly exiled. Retest: any sitting, grade
+    seat 1 first.
 
 ### C. Style, model-specific (do last, one model at a time)
 11. 14B emotional gap (Phase 7c golden few-shots) — 14B only; risk to
