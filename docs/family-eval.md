@@ -9,20 +9,15 @@ test). Winner takes Medium + High.
 > Automation and robotics have replaced almost all human necessary work.
 > How does this change the education system? What do we teach children?
 
-## The high-long question (Sep 21 2026 — reuse verbatim for every High + long-form run)
+## The high-long question (TEMPORARY default, Sep 21 2026 — reuse verbatim for every High + long-form run until replaced)
 
-Same rules as above (fixed seats, grounding ON), long form on. Concrete
-bearers, settled premises, no bearer-less systems talk:
+Same rules as above (fixed seats, grounding ON), long form on. This one
+tests the cabinet on governance and strategy instead of a scenario:
 
-> A logistics company fires its warehouse crew and runs the depot with
-> robots maintained by three technicians. The fired crew occupies the
-> depot canteen and demands a say over the machines. Who owns the robots'
-> output, what do the technicians owe the occupiers, and what breaks first?
+> leftistsforAI sub on Reddit is “A space for leftists discussing Artificial Intelligence from a labor, ownership, and political-economy perspective. Topics include worker impact, platform power, automation, regulation, and collective control of Al infrastructure”. What should we encourage posts about and what types of posts should we take down as bracketed off topics which don’t benefit us?
 
-Drawn from leftistsforAI themes (labour, ownership, platform power). The
-same bar rules future questions: concrete bearers, settled premises,
-arguable fault lines — and the sub's bracket rule: a post that could run
-unchanged on a tech-cheer sub doesn't belong on a labour sub.
+The sub's bracket rule of thumb: a post that could run unchanged on a
+tech-cheer sub doesn't belong on a labour sub.
 
 Future-set for all seats (fair — none saw it), earthed in children and
 classrooms rather than essences, and it splits the table: purpose and
