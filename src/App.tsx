@@ -1882,7 +1882,7 @@ function SettingsDrawer({ philosophers, activeSlugs, togglePhilosopher, settings
             <div className="flex items-start justify-between mb-4"><div><p className="pass-indicator text-[#8b5254]">How the table talks</p><h2 className="text-2xl">Voice</h2></div></div>
             <div className="space-y-3">
               <span className="font-heading text-sm uppercase tracking-[0.16em] text-[#4a392d] block" title="How hard the language hits. Ideas stay the same at every level — only the words change.">How it speaks (all seats)</span>
-              <p className="text-xs italic text-[#465f75]/70">Low speaks plainly · Medium explains its terms · High runs at full difficulty — the ideas stay the same.</p>
+              <p className="text-xs italic text-[#465f75]/70">Low speaks plainly · Medium explains its terms · High runs at full difficulty — the ideas stay the same. Medium is a good starting point: drop to Low if too hard, up to High for the full voice.</p>
               <div className="flex gap-2" role="radiogroup" aria-label="Style intensity">
                 <button role="radio" aria-checked={settings.intensity === 'low'} title="Plain everyday words — the easiest read. Temper unchanged." onClick={() => onSettingsChange({ ...settings, intensity: 'low' })} className={`btn-secondary capitalize ${settings.intensity === 'low' ? '!border-[#8b5254] !text-[#8b5254]' : ''}`}>Low</button>
                 <button role="radio" aria-checked={settings.intensity === 'medium'} title="The standard seminar — important terms kept and explained." onClick={() => onSettingsChange({ ...settings, intensity: 'medium' })} className={`btn-secondary capitalize ${settings.intensity === 'medium' ? '!border-[#8b5254] !text-[#8b5254]' : ''}`}>Medium</button>

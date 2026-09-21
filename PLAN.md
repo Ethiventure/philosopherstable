@@ -12,7 +12,7 @@ Phases are ordered by dependency; each should leave the app building.
 - [x] Phase 4 — Accessibility & display
 - [x] Phase 5 — RAG v1 lexical (vectors deferred)
 - [x] Phase 6 — Richer philosopher information + influence grid
-- [ ] Phase 7 — Model-family A/B (Medium held by GLM, High open, 14B tuning track 7c, fix-triage ledger 7e)
+- [ ] Phase 7 — Model-family A/B (superseded by the funnel + DECISION in `docs/models-tried.md`: crowns are 3.8-max quality, 3.7-plus value, free vacant; 14B tuning track 7c and fix-triage ledger 7e stay live)
 - [ ] Phase 7b — Auto-metrics (AlignScore guardrail, LENS-SALSA calibration, ASSET-method optional)
 - [ ] Phase 8 — `webapp-commons-template` (not scaffolded)
 - [ ] Phase 9 — Rose seat (dossier landed + wired; live-sitting voice grade + remaining texts awaited)
@@ -635,10 +635,13 @@ change — the grid doc is generated, never hand-edited.
 *Eval: the richest modal in the app; biography quarantined from prompts holds —
 no profile prose has leaked into turns to date.*
 
-## Phase 7 — Model-family A/B: Qwen-first or DeepSeek-first (open, Sep 2026)
+## Phase 7 — Model-family A/B: Qwen-first or DeepSeek-first (closed Sep 21 2026 — decided, see DECISION in `docs/models-tried.md`)
 Selection now follows the funnel (`docs/model-selection.md`: research →
 keys → probes → max 4 sittings → dated crowns), which supersedes the
 open-ended A/B below — read the funnel first, this section second.
+What follows is the research record (kept for provenance, not direction):
+DeepSeek parked entirely, GLM parked entirely, paid pins moved twice
+since (now 3.7-plus via OpenRouter, 3.8-max via Alibaba).
 Goal: one family first across every pipe, the other always second, so
 Low/Medium/High prompt behaviour stays in one failure shape. Research Sep 2026
 (web, not live runs — verify before pinning):
@@ -815,7 +818,7 @@ evidence, unbalance risk, retest matrix.
    local loops). Grade on 30B first, watch other voices for flattening.
    PARK CONDITION: if the next 30B sitting still clusters, 30B parks as
    an engine (dilemma-grasp challenges only). Retest: one Medium sitting
-   each on GLM + 30B — grade badge hits, not vibes.
+   on 30B — GLM can't retest (parked entirely); grade badge hits.
    Sep 21 riders from the Glasgow run: template-slot "(X)" leaks now trip
    the volatility guard (failed toolkit fill = garble); the margins note
    can never enter works_referenced (filtered at toIntervention).
@@ -861,7 +864,7 @@ evidence, unbalance risk, retest matrix.
    verdict Sep 20 2026: slogans read naff, instruction DROPPED. Replaced
    with one specific applied move (prompt v2026-09-20a: named body doing
    a named thing in the thread city, first step inside the sentence).
-   Retest: GLM Medium first (closest) — grade specificity, not slogans.
+   Retest: 3.7-plus Medium (closest living voice) — grade specificity, not slogans.
 10. Thread-city drops (Berlin-default Hegel P1s on GLM + Alibaba;
     Bangkok ×1/15 on 30B High) — SHIPPED Sep 20 2026 in prompt
     v2026-09-20c (opening anywhere but the thread city fails; relocating
@@ -881,9 +884,9 @@ evidence, unbalance risk, retest matrix.
 
 Queued (Sep 20, owner): move the OpenRouter paid default pin off
 parked `deepseek/deepseek-v4.1-flash` to Medium-holder
-`z-ai/glm-5.3-flash` — DONE Sep 20 2026 (settings default + fallback +
-probe default + README agree, ~$0.075/$0.25 rates, about a cent a
-session) — not DeepSeek, ever back.
+`z-ai/glm-5.3-flash` — DONE Sep 20, then SUPERSEDED Sep 21 (GLM parked
+entirely): pin is now `qwen/qwen3.7-plus`, fallbacks flash twins, dead
+pins fall through mid-sitting — not DeepSeek, ever back.
 
 ## Phase 7d — Shared free default → Alibaba until Dec 2026 (route built, live test pending)
 Groq free can't carry a full sitting (429 walls + 404-dead fallback,
@@ -1049,9 +1052,10 @@ in Settings names its exact model ID and why it is picked (price, speed,
 voice, licence — one plain line each) as visible text, never tooltip-only;
 the export names the model behind each turn. Source of truth lives in
 `DEEPINFRA_PRIMARIES`-style structures so UI copy and code cannot drift.
-Level guidance (later, once models are pinned down): say Medium is a good
-starting point — drop to Low if too hard, up to High for the full voice.
-Provider picker redesign (later, owner request Sep 2026): dropdown flow —
+Level guidance (SHIPPED Sep 21 2026): Medium recommended as the starting
+point in the Voice tab — drop to Low if too hard, up to High for the
+full voice.
+Provider picker redesign (SHIPPED Sep 21 2026): dropdown flow —
 pick provider first, then a model from a short recommended list with a
 one-line note each (speed, cost, style adherence). Keep the free-text ID
 box alongside for flexibility (churn survival, unlisted IDs).
@@ -1063,10 +1067,8 @@ RAG shard latency (later): per-turn grounding downloads the thinker's whole
 shard first touch (Marx 6.6MB, Hegel 5.6MB — owners feel it as stuck seats).
 Options: slimmer shards, server-side search, or pre-warm all sitting shards
 at session start. Revisit when sessions feel slow.
-Genealogy touch behaviour (later, owner-reported on iPad): tap selects the
-philosopher immediately, so the hover-isolate (lit debts) never shows.
-Fix: first tap isolates, second tap opens, with an explicit close/dismiss —
-touch-first design, not hover ported over.
+Genealogy touch behaviour (SHIPPED Sep 21 2026): first tap isolates,
+second tap opens — touch-first design, not hover ported over.
 Podcast mode (later, owner request Sep 2026): NotebookLM-style read-aloud of
 sittings with a distinct voice per thinker. Must be free or near-free:
 Web Speech per-voice mapping first (device voices differ — no guarantees),
