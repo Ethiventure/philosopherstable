@@ -64,27 +64,20 @@ parked). Small Qwens, Mistral, Llama, distill, GPT-OSS stay buried.
 Tweak rule: prompt/pipe changes are graded against these first;
 nothing else gets tuned unless all fail the same test.
 
-## DECISION (Sep 21 2026 — one model per slot across ALL levels; a fail
-at any level excludes. Per-level splitting is the fallback, not the aim.)
-Verdict today: ALL THREE SLOTS VACANT — nobody has passed Low + Medium +
-High. Frontrunners with their owed sittings:
-- Best quality: `qwen3.8-max` via Alibaba — Med best combo + High rich
-  graded. OWES: one Low sitting. Then crowned (price no object).
-- Best value (paid): `qwen3.7-plus` via Alibaba (~$0.07) — High favourite
-  + Medium solid graded. OWES: one Low sitting. Runner-up: 14B ($0.021,
-  owes Low + High retest).
-- Best free: VACANT. Groq `qwen/qwen3.8-27b` ELIMINATED Sep 21 (Medium
-  prompt 7,871 tokens vs the 7,000 wall — the request itself exceeds it,
-  so resumes can never pass; app now gates Groq to Low-only like shared).
-  Vehicle moves to OpenRouter `qwen/qwen3.8-27b:free` (throttled but no 7k
-  wall). OWES: Medium + High sittings when open. Groq stays desk + Low.
-Excluded by the rule: GLM (High gibberish), DeepSeek (High salad+halt),
-30B (echo at every level tried), 14B at High (echo-heavy, pending tuning
-retest). Buried: small Qwens, Mistral, Llama-as-primary, R1-distill,
-GPT-OSS, dead IDs. Untested: Z.ai, Together.
-Three sittings fill two crowns (3.8-max Low, 3.7-plus Low); Groq's two
-are the long road. Until then, per-level fallback stands (Low: Groq-27B,
-Medium: contested, High: 3.7-plus).
+## DECISION (Sep 21 2026 — FINAL: testing stops here. Z.ai + Together
+SKIPPED: Z.ai houses GLM (parked — nothing for our frontrunners);
+Together would only re-host 30B (conditional challenger, DeepInfra
+already serves it). Neither offers a cheaper path for quality, value,
+or free — no test buys information.)
+- Best quality: `qwen3.8-max` via Alibaba. CROWNED (Med best combo + High
+  rich + Low long graded: city 14/15, debts spoken, Genzie 10/10 named).
+  ~$0.40/session paid ($0 trial). Normal length.
+- Best value: `qwen3.7-plus` via Alibaba (~$0.07). CROWNED (High favourite
+  + Medium solid + Low graded: city 14/15, 0 repairs). Cheapest crown
+  that holds all levels.
+- Best free: VACANT. Groq eliminated (7k wall); OpenRouter :free
+  opportunistic (throttled, ungraded past key checks). No scheduled
+  tests — fills if/when a free sitting completes, not before.
 ## Next tests (FINAL FOUR — nothing else runs until crowns fill; grounding
 ON, economy full, desk off, 5 default seats, education question, normal length)
 1. `qwen3.8-max` via Alibaba (visitor key) — Low. Fills quality.
