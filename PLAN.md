@@ -636,6 +636,9 @@ change — the grid doc is generated, never hand-edited.
 no profile prose has leaked into turns to date.*
 
 ## Phase 7 — Model-family A/B: Qwen-first or DeepSeek-first (open, Sep 2026)
+Selection now follows the funnel (`docs/model-selection.md`: research →
+keys → probes → max 4 sittings → dated crowns), which supersedes the
+open-ended A/B below — read the funnel first, this section second.
 Goal: one family first across every pipe, the other always second, so
 Low/Medium/High prompt behaviour stays in one failure shape. Research Sep 2026
 (web, not live runs — verify before pinning):
