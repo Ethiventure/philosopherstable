@@ -82,7 +82,14 @@ verbatim, human grade; verdicts never transfer across versions; mechanical
 shape guards retry visibly (snippet in UI, full text in console); auto
 checks gate pipes, humans write verdicts. Per-constraint scorecard over
 real transcripts (budgets, echo, city, loans, margins, volatility — verify,
-don't compose). Benchmark adaptations, method
+don't compose). Model-selection funnel (full version in the project's
+`docs/model-selection.md`): desk research with live lists first (IDs rot;
+benchmarks filter, never vote; corpses checked), then key checks, then
+single-call probes (contract, volatility, loans, load), then at most 4
+sittings with fixed question/seats and mechanical pre-scores, then one
+model per slot (free / value / quality) with fail-at-any-level exclusion
+and written kill rules (gibberish parks entirely, burn buries, echo gets
+one experiment). Crowns carry dates; re-confirm quarterly. Benchmark adaptations, method
 never package (no judge model, no new deps): RAGAS faithfulness ≈
 checkable-loans-or-flagged, relevancy ≈ retrieval recall, noise handling ≈
 abstention traps (`docs.ragas.io`); DeepEval-style per-constraint
