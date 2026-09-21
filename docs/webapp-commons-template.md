@@ -80,7 +80,9 @@ provider + route, prompt version, timestamp, wall time, tokens
 (in/out/cached/reasoning), repair counts, cost with rate date, errors
 verbatim, human grade; verdicts never transfer across versions; mechanical
 shape guards retry visibly (snippet in UI, full text in console); auto
-checks gate pipes, humans write verdicts. Benchmark adaptations, method
+checks gate pipes, humans write verdicts. Per-constraint scorecard over
+real transcripts (budgets, echo, city, loans, margins, volatility — verify,
+don't compose). Benchmark adaptations, method
 never package (no judge model, no new deps): RAGAS faithfulness ≈
 checkable-loans-or-flagged, relevancy ≈ retrieval recall, noise handling ≈
 abstention traps (`docs.ragas.io`); DeepEval-style per-constraint

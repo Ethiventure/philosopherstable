@@ -986,6 +986,11 @@ lives, and the one rule that keeps it alive:
 - **Eval sheets** (`docs/family-eval.md`): fixed question, fixed seats, grading
   rubric, what to report back. Rule: same question verbatim every run; human
   grades are the verdict, auto-metrics are assistants.
+- **Probe/grade automation** (`scripts/test-sitting.mjs`, `test-matrix.mjs`,
+  `grade-sitting.mjs`, `bench-rag.mjs`): pipe gates, loan A/B, load bench,
+  mechanical scorecards, offline retrieval scores. Rule: every run logs to
+  `data/test-runs/` (gitignored) with prompt version; paste-ready rows go to
+  the tried-log by hand — the machine never writes verdicts.
 - **PLAN eval lines**: one tick + one honest sentence per section, updated when
   the facts change. Rule: name weak spots plainly (unverified, unwatched,
   thinnest-tested) — a plan that only celebrates rots.
