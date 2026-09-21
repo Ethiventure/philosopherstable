@@ -47,6 +47,22 @@ Per-level recommendation (current best guess, changes with evidence):
   Qwen30B stays the dilemma-grasp challenger + High probe candidate.
 - High: OPEN — nobody graded at High since prompts stabilized; winner of
   Medium gets the High sitting.
+## Next tests (Sep 21 2026, exact settings — grounding ON, economy full,
+desk off, 5 default seats Hegel/Marx/Bloch/Bookchin/Deleuze unless noted)
+1. `qwen3.8-max` via Alibaba (visitor key) — Medium, LONG form, education
+   question. Tests whether room cures the essay-length without losing the
+   best-combo voice. KEEP as main option if loans hold + length lands.
+2. `qwen3.7-plus` via Alibaba (visitor key) — High, LONG form, NEW
+   high-long question (family-eval.md). Your favourite voice with room to
+   develop; depot question suits its comprehensible-argument strength.
+3. `z-ai/glm-5.3-flash` via OpenRouter paid — High, normal, education
+   question. Ledger-owed clean-High retest under v20d–h guards. KEEP if
+   no volatility; PARK confirms.
+4. `Qwen/Qwen3-30B-A3B` via DeepInfra (visitor key) — Medium, LONG form,
+   education question. Paired length test: does long form fix beat-less
+   P3s or just longer echo?
+5. `qwen3.8-flash` via Alibaba (visitor key) — Low, normal, education
+   question. Reopens the burn verdict properly (probe already clean).
 Next test (owner, Sep 20): High still open — 30B parked (thin),
 GLM parked (gibberish). 14B High probed same day (filed
 `docs/eval-sittings/qwen3-14b-high-v1-buenosaires.md`): echo-heavy

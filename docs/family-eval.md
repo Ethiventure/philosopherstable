@@ -9,6 +9,16 @@ test). Winner takes Medium + High.
 > Automation and robotics have replaced almost all human necessary work.
 > How does this change the education system? What do we teach children?
 
+## The high-long question (Sep 21 2026 — reuse verbatim for every High + long-form run)
+
+Same rules as above (fixed seats, grounding ON), long form on. Concrete
+bearers, settled premises, no bearer-less systems talk:
+
+> A logistics company fires its warehouse crew and runs the depot with
+> robots maintained by three technicians. The fired crew occupies the
+> depot canteen and demands a say over the machines. Who owns the robots'
+> output, what do the technicians owe the occupiers, and what breaks first?
+
 Future-set for all seats (fair — none saw it), earthed in children and
 classrooms rather than essences, and it splits the table: purpose and
 formation one way, power over what gets taught another, organization a
