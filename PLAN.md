@@ -198,8 +198,11 @@ silently across versions.
   added — pure-rotation discipline holds. Old grades stay on v2026-09-20c
   and earlier.
 - Prompt v2026-09-20e (Sep 20 2026, owner: formulaic + stereotyped + fidelity
-  questions): margins voice de-costumed (position kept, fixed manual-labour
-  job and slang inventory gone, poverty-performance banned); skeleton
+  questions, corrected same day): margins voice de-costumed (position kept,
+  fixed manual-labour job and slang inventory gone, poverty-performance
+  banned); rudeness may be personal — nobody in the room is alive so
+  ideas-not-people doesn't apply — with one ban, context (never charge a
+  seat with missing what it just covered, never import outside grievances); skeleton
   loosened (late opener is Marx-paraphrase OR cold-open, counts flexible,
   suggestion woven not appended, closing lead rotates); THIN INPUT honesty
   rule in all three builders (admit thin summaries, never invent sitting
