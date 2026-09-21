@@ -186,6 +186,12 @@ interface RateRow { match: (provider: string, model: string) => boolean; perIn: 
 const RATE_TABLE: RateRow[] = [
   { match: (_p, m) => m.includes('deepseek-v4.1-flash'), perIn: 0.15, perOut: 0.60 },
   { match: (_p, m) => m.includes('deepseek') && m.includes('flash'), perIn: 0.09, perOut: 0.18 },
+  // Owner-supplied Sep 20 2026 (Perplexity calc from Alibaba tiers; trial
+  // quota bills $0 to Dec 16): re-verify at the Model Studio pricing page
+  // before quoting. Prompt caching (~8x off cached inputs, same source)
+  // is an unverified lead, not a number.
+  { match: (p, m) => p.includes('alibaba') && m.includes('qwen3.7-plus'), perIn: 0.40, perOut: 1.60 },
+  { match: (p, m) => p.includes('alibaba') && m.includes('qwen3.8-max'), perIn: 2.00, perOut: 6.00 },
   { match: (p, m) => p.includes('groq') && m.includes('qwen3.8-27b'), perIn: 0.80, perOut: 4.00 },
   { match: (p, m) => p.includes('openrouter') && m.includes('qwen3.8-27b'), perIn: 0.30, perOut: 2.00 },
   { match: (_p, m) => m.includes('qwen3.8-27b'), perIn: 0.40, perOut: 3.00 },

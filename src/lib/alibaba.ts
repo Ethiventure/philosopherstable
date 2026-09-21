@@ -94,6 +94,11 @@ const postAlibaba = async (apiKey: string, model: AlibabaModel, maxTokens: numbe
   let lastError: LlmError | null = null;
   for (let attempt = 0; attempt < 3; attempt += 1) {
     let response: Response;
+    // Some models (observed: glm-5.3, Sep 20 2026 — InvalidParameter 400
+    // restricting enable_thinking to True) reject the thinking switch.
+    // First attempt sends it; on that exact 400 we drop the flag and retry
+    // once with thinking on (host default) rather than failing the turn.
+    const thinkingOff = !(lastError instanceof LlmError && /enable_thinking|InvalidParameter/i.test(lastError.message));
     try {
       response = await fetch(`${ALIBABA_BASE}/chat/completions`, {
         method: 'POST',
@@ -109,7 +114,7 @@ const postAlibaba = async (apiKey: string, model: AlibabaModel, maxTokens: numbe
           // behind a 130-token turn, Sep 2026 measurement) — the 5-minute
           // starts. Off per request; owner call is that unthinking answers
           // also read truer to voice.
-          enable_thinking: false,
+          ...(thinkingOff ? { enable_thinking: false } : {}),
         }),
         signal: AbortSignal.timeout(90000),
       });
@@ -123,6 +128,10 @@ const postAlibaba = async (apiKey: string, model: AlibabaModel, maxTokens: numbe
     if (!response.ok) {
       const detail = await extractDetail(response);
       const error = alibabaError(response.status, detail, model);
+      if (thinkingOff && response.status === 400 && /enable_thinking|InvalidParameter/i.test(detail) && attempt < 2) {
+        lastError = error;
+        continue;
+      }
       if ((response.status === 429 || response.status >= 500) && attempt < 2) {
         lastError = error;
         await sleep(response.status === 429 ? retryAfterMs(detail, 15000) : 2000);
