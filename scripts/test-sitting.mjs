@@ -5,6 +5,18 @@
  *
  *   npm run test:sitting -- --provider groq --level low
  *   npm run test:sitting -- --provider alibaba --model qwen3.8-27b --level medium --city Nairobi
+ *   npm run test:sitting -- --provider deepinfra --level low --kind reconstruction
+ *   npm run test:sitting -- --provider alibaba --level medium --ground karl-marx
+ *
+ * --kind critique|reconstruction reuses a fixed stub PREV to load the
+ * heavier contracts (FollowBench-style load bench: same pipe, more
+ * instructions). It gates obedience under load, never voice — no survey,
+ * no rotation, stand-in persona throughout.
+ * --ground <author-slug> searches the shipped shard with the repo's own
+ * scorer and rides the top-2 passages in a grounding block mirroring the
+ * app shape, then counts verbatim loans in the reply: the grounded-vs-
+ * plain loan delta is the objective grounding-effectiveness metric
+ * (RAGAS faithfulness proxy, no judge). Needs no key beyond the pipe's.
  *
  * What it IS: pipe health + contract adherence for one opening turn, using
  * the repo's own builders (buildTurnInstruction, closing scans, JSON hint,
@@ -19,7 +31,7 @@
  * Writes one JSON line per run to data/test-runs/probes.jsonl (gitignored);
  * nothing is committed by this script. Keys never printed.
  */
-import { appendFileSync, mkdirSync } from 'node:fs';
+import { appendFileSync, mkdirSync, readFileSync, existsSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { loadTestEnv } from './test-env.mjs';
@@ -28,6 +40,9 @@ import {
   PROMPT_VERSION, WORD_BUDGETS, MAX_OUTPUT_TOKENS, buildTurnInstruction,
   buildClosingScan, LOW_CLOSING_REMINDER, STRUCTURED_OUTPUT_HINT, GLOSSARY_SHAPE,
 } from '../src/lib/dialectic/prompts.ts';
+import { prepareIndex, searchIndex } from '../src/lib/rag-search.ts';
+import { joinShard } from '../src/lib/rag-shard.ts';
+import { smartCut } from '../src/lib/rag-text.ts';
 import { parseTurnOutput, detectVolatility, estimateCost } from '../src/lib/llm.ts';
 
 loadTestEnv();
@@ -35,7 +50,7 @@ loadTestEnv();
 const QUESTION = 'Automation and robotics have replaced almost all human necessary work. How does this change the education system? What do we teach children?';
 
 function args() {
-  const out = { provider: '', model: '', level: 'low', city: 'Cairo', long: false };
+  const out = { provider: '', model: '', level: 'low', city: 'Cairo', long: false, kind: 'opening', ground: '' };
   const raw = process.argv.slice(2);
   for (let i = 0; i < raw.length; i += 1) {
     const a = raw[i];
@@ -44,8 +59,10 @@ function args() {
     else if (a === '--level') out.level = raw[++i] || 'low';
     else if (a === '--city') out.city = raw[++i] || 'Cairo';
     else if (a === '--long') out.long = true;
+    else if (a === '--kind') out.kind = raw[++i] || 'opening';
+    else if (a === '--ground') out.ground = raw[++i] || '';
     else if (a === '--help' || a === '-h') {
-      console.log('usage: npm run test:sitting -- --provider <groq|openrouter|deepinfra|together|alibaba|zai> [--model ID] [--level low|medium|high] [--city NAME] [--long]');
+      console.log('usage: npm run test:sitting -- --provider <groq|openrouter|deepinfra|together|alibaba|zai> [--model ID] [--level low|medium|high] [--city NAME] [--long] [--kind opening|critique|reconstruction] [--ground author-slug]');
       process.exit(0);
     }
   }
@@ -55,6 +72,10 @@ function args() {
   }
   if (!['low', 'medium', 'high'].includes(out.level)) {
     console.error(`bad --level "${out.level}" (want: low, medium, high)`);
+    process.exit(2);
+  }
+  if (!['opening', 'critique', 'reconstruction'].includes(out.kind)) {
+    console.error(`bad --kind "${out.kind}" (want: opening, critique, reconstruction)`);
     process.exit(2);
   }
   return out;
@@ -71,16 +92,49 @@ function stripFences(text) {
 
 const wordCount = (s) => s.split(/\s+/).filter(Boolean).length;
 
-export async function runProbe({ provider, model, level, city, long }) {
+// Fixed stub PREV for load probes: on-question, self-contained, with a
+// closable edge — never graded as voice, only as load to answer.
+const STUB_PREV = `Marx, you say the school must forge agents of a new totality once machines do the heavy lifting. I grant the forge and deny the mold: your assembly recaptures every line of flight it claims to free. In Cairo, where silent looms run the night shift without a single hand, who decides what a child becomes when no wage waits? That is the live edge: an assembly that cannot name its decider is a school by another name.`;
+
+/** Grounding block mirroring the app shape (top-2 passages, loan order). */
+function groundAuthor(slug, level) {
+  const root = join(dirname(fileURLToPath(import.meta.url)), '..');
+  const shardPath = join(root, 'public', 'rag', `author-${slug}.json`);
+  if (!existsSync(shardPath)) return { error: `no shard public/rag/author-${slug}.json` };
+  const shard = JSON.parse(readFileSync(shardPath, 'utf8'));
+  const passages = joinShard(shard);
+  const index = prepareIndex(passages);
+  const hits = searchIndex(index, QUESTION, { limit: 2 }).selected;
+  if (!hits.length) return { error: `no passages retrieved for ${slug}` };
+  const loanRule = level === 'low'
+    ? 'Paraphrase the passages below in plain words — never lift, not even single rare words.'
+    : level === 'high'
+      ? 'Quote generously: at least four distinctive words/phrases (≤6 words each, single quotes only).'
+      : 'Borrow visibly: at least two distinctive words/phrases (≤6 words each, single quotes only).';
+  return {
+    block: `SOURCE PASSAGES (your own indexed works — ${loanRule})\n${hits.map((h, i) => `[${i + 1}] ${smartCut(h.passage.text, 650)}`).join('\n')}`,
+    works: hits.map((h) => h.passage.work_id || h.passage.id),
+  };
+}
+
+export async function runProbe({ provider, model, level, city, long, kind = 'opening', ground = '' }) {
   const pipe = resolvePipe(provider);
   if (model) pipe.model = model;
   if (!pipe.key) return { skipped: true, reason: `no key (set the key env for ${provider})`, provider, model: pipe.model, level };
   const b = long ? WORD_BUDGETS.long : WORD_BUDGETS.normal;
-  const instruction = buildTurnInstruction({ kind: 'opening', prevName: null, isFinalSeat: false, longForm: long, intensity: level, threadCity: city, pass: 1 });
+  const pass = kind === 'opening' ? 1 : kind === 'critique' ? 2 : 3;
+  const instruction = buildTurnInstruction({ kind, prevName: kind === 'opening' ? null : 'Marx', isFinalSeat: false, longForm: long, intensity: level, threadCity: city, pass });
+  let grounding = null;
+  if (ground) {
+    grounding = groundAuthor(ground, level);
+    if (grounding.error) return { skipped: true, reason: grounding.error, provider, model: pipe.model, level };
+  }
   const userMessage = [
     `QUESTION (verbatim): ${QUESTION}`,
     '',
     instruction,
+    ...(kind === 'opening' ? [] : ['', `IMMEDIATE PREDECESSOR'S FULL TEXT:\n${STUB_PREV}`]),
+    ...(grounding ? ['', grounding.block] : []),
     ...(level === 'low' ? ['', LOW_CLOSING_REMINDER] : []),
     '',
     buildClosingScan(level),
@@ -89,7 +143,7 @@ export async function runProbe({ provider, model, level, city, long }) {
   ].join('\n');
   // Stand-in system prompt (NOT the full persona — see header). Carries the
   // level contract only, so the probe gates pipes, never voices.
-  const system = `You are an opening speaker in a dialectical seminar. Answer at ${level} register: ${level === 'low' ? 'plain everyday words, no specialist terms' : level === 'medium' ? 'keep important terms but explain each inside its sentence' : 'full authentic vocabulary'}.`;
+  const system = `You are a ${kind === 'opening' ? 'opening' : 'responding'} speaker in a dialectical seminar. Answer at ${level} register: ${level === 'low' ? 'plain everyday words, no specialist terms' : level === 'medium' ? 'keep important terms but explain each inside its sentence' : 'full authentic vocabulary'}.${grounding ? ' Borrow visibly from the SOURCE PASSAGES in the user message.' : ''}`;
   const maxTokens = long ? MAX_OUTPUT_TOKENS.long : MAX_OUTPUT_TOKENS.normal;
   // Attempt ladder mirrors each app client (Sep 2026): DeepInfra turns and
   // the OpenRouter paid pin try response_format:json_object first (without
@@ -125,6 +179,9 @@ export async function runProbe({ provider, model, level, city, long }) {
   }
   const words = parsed ? wordCount(`${parsed.negation} ${parsed.reformulation}`) : null;
   const volatile = parsed ? detectVolatility(parsed.negation, parsed.reformulation) : null;
+  // Verbatim loans: single-quoted multi-word spans (same shape the grader
+  // counts). Reported always; meaningful on grounded runs (floor Medium ≥2).
+  const loans = parsed ? ((`${parsed.negation} ${parsed.reformulation}`).match(/'[^']* [^']*'/g) || []).length : null;
   const u = res.usage || {};
   const inTokens = Number(u.prompt_tokens ?? 0);
   const outTokens = Number(u.completion_tokens ?? 0);
@@ -132,9 +189,9 @@ export async function runProbe({ provider, model, level, city, long }) {
     ? estimateCost([{ provider, model: pipe.model, inTokens, outTokens }])
     : null;
   return {
-    skipped: false, failed: false, provider, model: pipe.model, level, city,
-    promptVersion: PROMPT_VERSION, wallMs, via, parseError, volatile, words,
-    budget: b.opening, overBudget: words === null ? null : words > b.opening,
+    skipped: false, failed: false, provider, model: pipe.model, level, city, kind, grounded: grounding ? ground : null,
+    promptVersion: PROMPT_VERSION, wallMs, via, parseError, volatile, words, loans,
+    budget: kind === 'opening' ? b.opening : b.total, overBudget: words === null ? null : words > (kind === 'opening' ? b.opening : b.total),
     inTokens, outTokens, cost, at: new Date().toISOString(),
   };
 }
@@ -152,7 +209,7 @@ if (cli) {
     console.log(`PARSE-FAIL: ${r.provider}/${r.model} @ ${r.level} — ${r.parseError} (${r.wallMs}ms, prompt ${r.promptVersion})`);
     process.exit(1);
   } else {
-    console.log(`OK: ${r.provider}/${r.model} @ ${r.level} — ${r.words} words (budget ${r.budget}${r.overBudget ? ', OVER' : ''})${r.volatile ? `, VOLATILE: ${r.volatile}` : ''} — ${r.wallMs}ms, ${r.inTokens} in / ${r.outTokens} out${r.cost === null || r.cost === undefined ? '' : `, ~$${r.cost.toFixed(4)}`} — prompt ${r.promptVersion}`);
+    console.log(`OK: ${r.provider}/${r.model} @ ${r.level}/${r.kind}${r.grounded ? ` grounded:${r.grounded}` : ''} — ${r.words} words (budget ${r.budget}${r.overBudget ? ', OVER' : ''})${r.loans !== null && r.loans !== undefined ? `, ${r.loans} loans` : ''}${r.volatile ? `, VOLATILE: ${r.volatile}` : ''} — ${r.wallMs}ms, ${r.inTokens} in / ${r.outTokens} out${r.cost === null || r.cost === undefined ? '' : `, ~$${r.cost.toFixed(4)}`} — prompt ${r.promptVersion}`);
     const root = join(dirname(fileURLToPath(import.meta.url)), '..');
     mkdirSync(join(root, 'data', 'test-runs'), { recursive: true });
     appendFileSync(join(root, 'data', 'test-runs', 'probes.jsonl'), `${JSON.stringify(r)}\n`);
