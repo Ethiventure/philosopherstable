@@ -1,4 +1,9 @@
 import { LlmError, REPAIR_SUFFIX, incrementRepair, parseTurnOutput, recordUsage, retryAfterMs, type TurnOutput } from '@/lib/llm';
+import { OPENROUTER_PAID_OPTIONS } from '@/lib/settings';
+
+/** Model that spoke last on the paid pin (turns only) — the export names
+ * who actually spoke when a dead pin falls through to a fallback option. */
+export let lastOpenRouterModel: string = '';
 
 /**
  * OpenRouter provider (Phase 2b-ii). Same cabinet contract as the Gemini
@@ -157,6 +162,12 @@ function openRouterError(status: number, detail: string, model: string, tag = 'F
     );
   }
   if (status === 400) {
+    // Dead-ID shape ("not a valid model ID") arrives as 400, not 404 —
+    // classify it as a model fault so paid pins fall through and the free
+    // cycle skips it (Sep 21 2026, probed live).
+    if (/not a valid model|invalid model|no such model|model .*not .*found/i.test(detail)) {
+      return new LlmError(`${tag} ${model} is not a valid model ID (400) — retired or mistyped. ${nextStep}`, true, 'model');
+    }
     // Generic provider hiccup ("Provider returned error") — retryable, not a key verdict.
     // Happens on flaky free models; the next model usually works.
     if (/provider returned error|provider error/i.test(detail) || !detail.trim()) {
@@ -371,20 +382,26 @@ export async function generateTurnOpenRouter({ apiKey, systemPrompt, userMessage
     // REASONS" prose-instead-of-JSON failure dies mechanically), plain retry
     // on 400, then the usual parse-repair. Free cycle never sends
     // response_format (most free models 400/empty on it).
-    const runPaid = async (json: boolean, reasoning: { effort: string } = { effort: 'none' }): Promise<TurnOutput> => {
+    // Dead pins fall through the paid options (Sep 21 2026 — IDs rot, and
+    // resuming should switch models on the same provider, not die): only
+    // code 'model' (dead/retired ID) advances; quota/auth/parse halt with
+    // the pin named, exactly as before.
+    const runPaid = async (id: string, json: boolean, reasoning: { effort: string } = { effort: 'none' }): Promise<TurnOutput> => {
       try {
-        return await attemptModel(paidId, apiKey, { ...body, reasoning }, 'Paid model', json);
+        const out = await attemptModel(id, apiKey, { ...body, reasoning }, 'Paid model', json);
+        lastOpenRouterModel = id;
+        return out;
       } catch (error) {
         if (isFailFast(error)) throw error;
         // Mandatory-reasoning endpoints (400) reject effort:none: step down to
         // low once, then to the usual parse-repair below. Throttled thinking
         // beats no session — the output-token line judges whether it burns.
         if (error instanceof LlmError && error.code === 'server' && /reasoning.*mandatory|mandatory.*reasoning/i.test(error.message) && reasoning.effort === 'none') {
-          return runPaid(json, { effort: 'low' });
+          return runPaid(id, json, { effort: 'low' });
         }
         if (error instanceof LlmError && error.code === 'parse') {
           incrementRepair();
-          return attemptModel(paidId, apiKey, {
+          const out = await attemptModel(id, apiKey, {
             ...body,
             reasoning,
             messages: [
@@ -392,31 +409,57 @@ export async function generateTurnOpenRouter({ apiKey, systemPrompt, userMessage
               { role: 'user', content: userMessage + REPAIR_SUFFIX },
             ],
           }, 'Paid model', json);
+          lastOpenRouterModel = id;
+          return out;
         }
         throw error;
       }
     };
-    try {
-      return await runPaid(true);
-    } catch (error) {
-      if (error instanceof LlmError && error.code === 'server' && /\(400\)/.test(error.message)) {
-        return runPaid(false);
+    const runLadder = async (id: string): Promise<TurnOutput> => {
+      try {
+        return await runPaid(id, true);
+      } catch (error) {
+        if (error instanceof LlmError && error.code === 'server' && /\(400\)/.test(error.message)) {
+          return runPaid(id, false);
+        }
+        throw error;
       }
-      if (isFailFast(error)) throw error;
-      if (error instanceof LlmError && error.code === 'server') {
-        return runPaid(true);
+    };
+    let lastError: LlmError | null = null;
+    for (const id of [paidId, ...OPENROUTER_PAID_OPTIONS.filter((m) => m !== paidId)]) {
+      try {
+        return await runLadder(id);
+      } catch (error) {
+        if (error instanceof LlmError && error.code === 'model') {
+          lastError = error;
+          if (typeof console !== 'undefined') console.warn(`[OpenRouter] paid pin ${id} dead, falling to next paid option:`, error.message);
+          continue;
+        }
+        if (isFailFast(error)) throw error;
+        if (error instanceof LlmError && error.code === 'server') {
+          try {
+            return await runPaid(id, true);
+          } catch (retryError) {
+            if (retryError instanceof LlmError && retryError.code === 'model') {
+              lastError = retryError;
+              continue;
+            }
+            throw retryError;
+          }
+        }
+        // Quota on a pinned model means the key's cap or credits, not a dead
+        // model — say so plainly instead of the cycle's "trying the next one".
+        if (error instanceof LlmError && error.code === 'quota') {
+          throw new LlmError(
+            `OpenRouter cap hit on ${id} — new credit can take minutes to apply, and keys carry their own daily cap (check it at openrouter.ai/keys). Otherwise add credits at openrouter.ai/settings/credits, wait for the reset, or switch back to Free cycle. Detail: ${error.message}`,
+            true,
+            'quota',
+          );
+        }
+        throw error;
       }
-      // Quota on a pinned model means the key's cap or credits, not a dead
-      // model — say so plainly instead of the cycle's "trying the next one".
-      if (error instanceof LlmError && error.code === 'quota') {
-        throw new LlmError(
-          `OpenRouter cap hit on ${paidId} — new credit can take minutes to apply, and keys carry their own daily cap (check it at openrouter.ai/keys). Otherwise add credits at openrouter.ai/settings/credits, wait for the reset, or switch back to Free cycle. Detail: ${error.message}`,
-          true,
-          'quota',
-        );
-      }
-      throw error;
     }
+    throw lastError ?? new LlmError(`OpenRouter paid models all dead (tried ${paidId}). Resume to retry, or pick another ID.`, true, 'model');
   }
   const tried: string[] = [];
   let lastError: LlmError | null = null;

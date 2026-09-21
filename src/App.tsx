@@ -39,7 +39,7 @@ import { DEEPINFRA_BACKUP_LABEL, DEEPINFRA_PRIMARIES, ALIBABA_MODEL_OPTIONS, CUS
 import { applyDisplay, loadDisplay, saveDisplay } from '@/lib/preferences';
 import { generateTurnGroq, testGroqKey } from '@/lib/groq';
 import { generateTurnShared } from '@/lib/shared';
-import { generateTurnOpenRouter, testOpenRouterKey } from '@/lib/openrouter';
+import { generateTurnOpenRouter, testOpenRouterKey, lastOpenRouterModel } from '@/lib/openrouter';
 import { generateTurnDeepInfra, testDeepInfraKey, lastDeepInfraModel } from '@/lib/deepinfra';
 import { generateTurnAlibaba, testAlibabaKey, lastAlibabaModel } from '@/lib/alibaba';
 import { generateTurnTogether, testTogetherKey, TOGETHER_MODEL } from '@/lib/together';
@@ -291,7 +291,7 @@ function App() {
         return 'Cabinet shared key (server-side Groq)';
       case 'openrouter':
         return snap.openRouterMode === 'paid' && snap.openRouterModel.trim()
-          ? `OpenRouter paid ${snap.openRouterModel.trim()} (visitor key)`
+          ? `OpenRouter paid ${lastOpenRouterModel || snap.openRouterModel.trim()} (visitor key)`
           : 'OpenRouter free cycle (visitor key)';
       case 'groq':
         return `Groq ${snap.groqModel} (visitor key)`;
@@ -1820,8 +1820,8 @@ function SettingsDrawer({ philosophers, activeSlugs, togglePhilosopher, settings
                 ) : (
                   <>
                     <label htmlFor="or-model" className="font-heading text-sm uppercase tracking-[0.16em] text-[#4a392d] pt-1 block">Paid model ID</label>
-                    <ModelIdField id="or-model" value={settings.openRouterModel} options={OPENROUTER_PAID_OPTIONS} placeholder="qwen/qwen3.7-flash" onPick={(m) => { onSettingsChange({ ...settings, openRouterModel: m }); setTestState('idle'); setTestMessage(''); }} />
-                    <p className="text-xs text-[#465f75]/70">Options, cheapest first: <span className="font-heading">qwen/qwen3.7-flash</span> ($0.03/$0.13 — probe-clean, least proven voice); <span className="font-heading">qwen/qwen3.8-flash</span> ($0.15/$0.47 — punchy, once burned, since clean); <span className="font-heading">qwen/qwen3.7-plus</span> ($0.32/$1.28 — same weights as our value crown elsewhere, best voice bet). A full sitting runs roughly 170K input + 5K output tokens, so about: flash under a cent, 3.8-flash ~$0.03, plus ~$0.06. Vague estimates — the export prints the measured cost.</p>
+                    <ModelIdField id="or-model" value={settings.openRouterModel} options={OPENROUTER_PAID_OPTIONS} placeholder="qwen/qwen3.7-plus" onPick={(m) => { onSettingsChange({ ...settings, openRouterModel: m }); setTestState('idle'); setTestMessage(''); }} />
+                    <p className="text-xs text-[#465f75]/70">Options, best voice first: <span className="font-heading">qwen/qwen3.7-plus</span> ($0.32/$1.28 — same weights as our value crown elsewhere); <span className="font-heading">qwen/qwen3.7-flash</span> ($0.03/$0.13 — probe-clean, least proven voice); <span className="font-heading">qwen/qwen3.8-flash</span> ($0.15/$0.47 — punchy, once burned, since clean). A dead pin falls through to the next option mid-sitting — resuming switches models on this provider. A full sitting runs roughly 170K input + 5K output tokens, so about: plus ~$0.06, flash under a cent, 3.8-flash ~$0.03. Vague estimates — the export prints the measured cost.</p>
                     <p className="text-xs text-[#465f75]/70">Higher quality with much bigger limits than free — needs credits on your key. Browse IDs at <a className="underline" href="https://openrouter.ai/models" target="_blank" rel="noreferrer">openrouter.ai/models</a> (exact ID string matters — dated suffixes retire fast). If a paid model reports a daily limit, check the key's own cap at <a className="underline" href="https://openrouter.ai/keys" target="_blank" rel="noreferrer">openrouter.ai/keys</a> — new credit can take minutes to apply.</p>
                   </>
                 )}

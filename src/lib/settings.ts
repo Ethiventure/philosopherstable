@@ -15,13 +15,12 @@ const DEAD_GROQ_IDS = new Set(['qwen/qwen3.6-27b']);
  *  Only verified-live IDs are listed; anything else goes through Custom. */
 export const CUSTOM_MODEL_VALUE = '__custom';
 export const GROQ_MODEL_OPTIONS = ['qwen/qwen3.8-27b'];
-/** OpenRouter paid options (Sep 21 2026, probed live): 3.7-flash default
- *  (clean probe, cheapest), 3.8-flash (burn verdict reversed on new
- *  prompts), 3.7-plus (clean probe; same weights as the Alibaba value
- *  crown — host differs, so grades ride along but don't transfer).
- *  qwen3.8-max exists here only as dated -0902 (dead on route).
- *  GLM removed — parked entirely. */
-export const OPENROUTER_PAID_OPTIONS = ['qwen/qwen3.7-flash', 'qwen/qwen3.8-flash', 'qwen/qwen3.7-plus'];
+/** OpenRouter paid options (Sep 21 2026, probed live — cheapest first,
+ *  best voice first among equals): 3.7-plus default (clean probe; same
+ *  weights as the Alibaba value crown — host differs), 3.7-flash (clean
+ *  probe, cheapest), 3.8-flash (burn verdict reversed on new prompts).
+ *  Dead pins fall through the list mid-sitting; stored GLM migrates. */
+export const OPENROUTER_PAID_OPTIONS = ['qwen/qwen3.7-plus', 'qwen/qwen3.7-flash', 'qwen/qwen3.8-flash'];
 export const ALIBABA_MODEL_OPTIONS = ['qwen3.8-max', 'qwen3.7-plus', 'qwen3.8-27b', 'qwen3.8-flash'];
 export const ZAI_MODEL_OPTIONS = ['glm-4.7-flash'];
 
@@ -87,7 +86,7 @@ export const DEFAULT_SETTINGS: CabinetSettings = {
   provider: 'shared',
   openRouterApiKey: '',
   openRouterMode: 'free',
-  openRouterModel: 'qwen/qwen3.7-flash',
+  openRouterModel: 'qwen/qwen3.7-plus',
   groqApiKey: '',
   groqModel: DEFAULT_GROQ_MODEL,
   deepInfraApiKey: '',
@@ -141,7 +140,7 @@ export function loadSettings(): CabinetSettings {
       // Stored GLM pin migrates too (parked entirely Sep 21 2026).
       openRouterModel: typeof parsed.openRouterModel === 'string' && parsed.openRouterModel.trim() && !parsed.openRouterModel.trim().startsWith('openai/') && parsed.openRouterModel.trim() !== 'z-ai/glm-5.3-flash'
         ? parsed.openRouterModel.trim().slice(0, 120)
-        : 'qwen/qwen3.7-flash',
+        : 'qwen/qwen3.7-plus',
       economy: parsed.economy === 'efficient' ? 'efficient' : 'full',
       grounding: parsed.grounding === true,
     };
