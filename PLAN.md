@@ -197,6 +197,16 @@ silently across versions.
   answer moves to the reformulation's first two sentences. No second PREV
   added — pure-rotation discipline holds. Old grades stay on v2026-09-20c
   and earlier.
+- Prompt v2026-09-20e (Sep 20 2026, owner: formulaic + stereotyped + fidelity
+  questions): margins voice de-costumed (position kept, fixed manual-labour
+  job and slang inventory gone, poverty-performance banned); skeleton
+  loosened (late opener is Marx-paraphrase OR cold-open, counts flexible,
+  suggestion woven not appended, closing lead rotates); THIN INPUT honesty
+  rule in all three builders (admit thin summaries, never invent sitting
+  content). Fidelity bound stays: notes read one-liners only (full turns
+  would break the shared 7k wall) — guards are translate-don't-invent,
+  name-only-if-appeared, premise-hold. Old grades stay on v2026-09-20d
+  and earlier.
 
 ### Embeddings (Phase 5)
 `test_embeddings.py` uses local Ollama `nomic-embed-text` (768 dims); the schema is
