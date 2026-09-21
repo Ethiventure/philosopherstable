@@ -900,11 +900,16 @@ function App() {
   const runCoda = async (runId: number, collected: Intervention[], snap: CabinetSettings, which: 'early' | 'late' | 'end' = 'late'): Promise<string | null> => {
     const early = which === 'early';
     const end = which === 'end';
+    // Second halves, not one-liners (Sep 2026): new_contribution comments on
+    // PREV, so notes built from it reviewed reactions, not positions. The
+    // reformulation paragraph is each seat's own diagnosis/build — that is
+    // what the note summarizes. Falls back to the one-liner on truncated
+    // turns. Still paragraphs, never full turns (shared 7k wall holds).
     const lines = collected
       .filter((item) => (early ? item.pass_number <= 1 : end ? item.pass_number >= 3 : item.pass_number <= 2) && item.sections?.new_contribution)
       .map((item) => ({
         name: philosophers.find((p) => p.id === item.philosopher_id)?.full_name ?? 'A seat',
-        line: String(item.sections?.new_contribution),
+        line: String(item.sections?.reformulation || item.sections?.new_contribution),
       }));
     if (!lines.length) {
       // Silent nulls hid two missing end-notes (Sep 2026): every empty read
