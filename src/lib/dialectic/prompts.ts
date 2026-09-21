@@ -37,7 +37,7 @@ export type TurnKind = 'opening' | 'critique' | 'reconstruction';
  * text change so grades stay comparable: a verdict on version C never
  * transfers silently to version D.
  */
-export const PROMPT_VERSION = '2026-09-20c';
+export const PROMPT_VERSION = '2026-09-20d';
 
 export const WORD_BUDGETS = {
   normal: { negation: 25, reformulation: 40, total: 60, opening: 40 },
@@ -114,6 +114,9 @@ export function buildTurnInstruction({ kind, prevName, isFinalSeat, longForm, re
   if (kind === 'opening') {
     return [
       `OPENING TURN (HARD ceiling: ${b.opening} words — shorter is welcome). As you near the ceiling, finish the current idea and sentence, then stop — never trail off mid-thought, never open a new point past it. Answer the question directly in your own framework. Paraphrase the question through your framework; never repeat it verbatim. Ground it: name the thread city, one named person there, and their predicament — this scene carries the whole sitting. An opening set anywhere but the thread city has failed the turn; never default to your home country or birthplace.`,
+      ...(threadCity
+        ? [`THREAD CITY: this sitting lives in ${threadCity} — open set there: its streets, workplaces, councils. Your birthplace and home country are irrelevant to this sitting; leave them out entirely.`]
+        : []),
       'Do not refer to any other thinker; there is no predecessor yet.',
       'Follow your characteristic movement.',
       'Short, punchy sentences in your own diction and rhythm — continuous prose, no headings — cut filler, never pad to the budget.',
@@ -162,7 +165,7 @@ export function buildTurnInstruction({ kind, prevName, isFinalSeat, longForm, re
     ...(low
       ? ['Open mid-argument through the concrete object, in your own words — concession or attack as temper dictates. No preamble, no greeting, no naming ceremony.']
       : (!reversed
-        ? [`CUT IN, don't hand over: seize the weakest point in ${prev}'s closing lines. Open by naming ${prev} — then your own words, your own verbs. No preamble, no greeting beyond the name.`]
+        ? [`CUT IN, don't hand over: seize the weakest point in ${prev}'s closing lines. Open by naming ${prev} — then your own words, your own verbs. Answer the second half of ${prev}, the live edge — never rebut its opening recap. No preamble, no greeting beyond the name.`]
         : [])),
     negationLine,
     reformulationLine,
@@ -194,7 +197,7 @@ export function buildTurnInstruction({ kind, prevName, isFinalSeat, longForm, re
       ? ['Invoke at least one surveyed idea from another seat by name (STRIKING IDEAS), transformed into your terms, never quoted; a pass-3 turn answering only PREV has failed.']
       : []),
     ...(kind === 'reconstruction' && marginsNote
-      ? ['The NOTES FROM THE MARGINS ride first in the survey: name it explicitly and answer one of its questions directly in your reformulation, in your own terms. Unnamed or unanswered has failed.']
+      ? [`The NOTES FROM THE MARGINS ride first in the survey: in your reformulation's first two sentences, name ${MARGINS_WRITER_NAME} and answer one of its questions directly, in your own terms — before you touch PREV. Buried or unnamed answers have failed.`]
       : []),
     ...(marginsEarly
       ? [`The early NOTES FROM THE MARGINS ride in the survey (${MARGINS_WRITER_NAME} wrote it): weigh which marginalised perspectives it names and let them into your critique — name ${MARGINS_WRITER_NAME} once when you take one up; a turn that takes up the note without naming it has failed.`]

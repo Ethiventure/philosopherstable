@@ -683,8 +683,11 @@ function App() {
       // walls single requests at ~7k input tokens (observed 413 at 7271).
       const rawPrev = n === 0 ? null : (collected[collected.length - 1]?.response_text ?? null);
       const trimPrev = snap.economy === 'efficient' || snap.provider === 'shared' || snap.provider === 'groq';
+      // Tail-keep (Sep 2026): the live edge the next seat must answer sits at
+      // the END of PREV (handoff/problem), while the opening paragraph is
+      // recap of older material. Keeping the head answered the recap.
       const prevText = rawPrev && trimPrev && rawPrev.length > 1200
-        ? `${rawPrev.slice(0, 1200)}\n[…earlier part trimmed for economy; the full text stands in the transcript]`
+        ? `[…opening trimmed for economy — answer the closing lines below, not the recap above; the full text stands in the transcript]\n${rawPrev.slice(-1200)}`
         : rawPrev;
       // Experimental grounding (on by default): searched passages from the
       // speaker's own indexed works first (no fetch, no quota beyond the
