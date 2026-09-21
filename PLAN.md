@@ -836,6 +836,11 @@ evidence, unbalance risk, retest matrix.
    and lists hits in an export UNVERIFIED TAGS footer (absent when clean).
    Tags stay in the prose as evidence — flagged, never laundered.
 7. Shared free path (Groq walls + dead fallback) — see Phase 7d.
+8. Quote-checker blind to single quotes — SHIPPED Sep 21 2026
+   (`extractQuotes` only matched "..." while the contract orders '...'
+   loans, so every compliant turn read "nothing to check"; now catches
+   single-quoted loans with contraction guards, and the empty message is
+   the short honest line "No quoted loans in this turn.").
 
 ### B. Style, NOT model-specific (do second)
 8. Debts unspoken in P1 (5 rounds, all models) — SHIPPED Sep 20 2026 in
