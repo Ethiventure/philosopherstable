@@ -114,6 +114,12 @@ const postDeepInfra = async ({ apiKey, model, systemPrompt, maxTokens, useJsonMo
         { role: 'user', content: m },
       ],
       max_tokens: maxTokens,
+      // Cluster-echo guard (Sep 21 2026): presence_penalty punishes ANY
+      // repeated token — the shared-attractor shape behind cross-seat
+      // paragraph clones. Untried lever; grade on 30B first, watch other
+      // voices for flattening. Standard OpenAI param, silent no-op if
+      // dropped — same revisit rule as the thinking flags.
+      presence_penalty: 0.6,
       // Qwen primaries are hybrid thinkers: keep reasoning throttled and the
       // documented thinking switch off (silent no-op if the host drops
       // unknown fields — the output-token line is the only tell). The 3.6-35B
