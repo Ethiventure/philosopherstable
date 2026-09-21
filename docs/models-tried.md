@@ -9,7 +9,9 @@ fallback, not the prize — and if it sticks, the Voice tab says plainly
 which engine is best for what. Until then: 1) A free model that works
 (default while it lasts: Alibaba Qwen27B trial quota to Dec 16;
 free-tier Qwen elsewhere walls — Groq ~7K TPM vs ~8K turns, OpenRouter
-:free has no Qwen). 2) A quick model (paid Qwen30B: ~1–2 min debates).
+:free had no Qwen until Sep 20 2026 (owner tip: qwen3.8-27b:free alive but
+upstream-throttled via ModelRun — in the free cycle, serves when open;
+qwen3.6-plus-preview:free 404s). 2) A quick model (paid Qwen30B: ~1–2 min debates).
 3) A model meeting all quality requirements (open — GLM holds Medium,
 High still unclaimed).
 ## Elimination plan (Sep 20 2026 — owner: start cutting, different models per level allowed)

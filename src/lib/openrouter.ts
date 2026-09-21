@@ -30,10 +30,14 @@ import { LlmError, REPAIR_SUFFIX, incrementRepair, parseTurnOutput, recordUsage,
 // Ordered by context window (desc) past the router: each free model carries
 // its own per-model quota, so more models = more tokens/session. Owner Sep
 // 2026: gpt-oss arriving via the router is acceptable (never pinned
-// separately). Deliberately excluded: coder-tuned qwen3-coder, dead
-// deepseek:free + gone qwen:free, and the content-safety filter model.
+// separately). qwen3.8-27b:free revived Sep 20 2026 (owner tip, verified
+// alive but upstream-throttled — the cycle skips 429s, so it serves when
+// open and costs nothing when shut). Deliberately excluded: coder-tuned
+// qwen3-coder, dead deepseek:free + 404 qwen3.6-plus-preview:free (Sep 20),
+// and the content-safety filter model.
 export const FREE_MODEL_CYCLE = [
   'openrouter/free',
+  'qwen/qwen3.8-27b:free',
   'thinkingmachines/inkling:free',
   'thinkingmachines/inkling-small:free',
   'nvidia/nemotron-3-ultra-550b-a55b:free',
