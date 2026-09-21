@@ -148,7 +148,16 @@ helps one model.
 - Groq free qwen3.8-27b: $0 — 30 RPM / 1K RPD / 8K input wall, Low-only lean ration, NO reasoning flag (returns empty — removed Sep 20), VPNs 403 the pipe.
 - OpenRouter free cycle: $0 — currently NO Qwen/DeepSeek :free IDs; router-first, voice shifts turn to turn.
 - Together Qwen3-30B-A3B: untested (no key).
-- Cheapest first: Z.ai $0 = Alibaba trial $0 > GLM $0.018 > 14B $0.021 > 30B ~$0.03 > 3.7-plus $0.07 > DeepSeek $0.036 (parked) > 27B-paid $0.20+ > 3.8-max $0.34+.
+- Alibaba qwen3.8-flash direct: $0.15/$0.47 per 1M, 1M context
+  (owner-supplied Sep 20 2026) ≈ $0.026–0.035/session-equiv. Probe-clean,
+  owner-graded punchy High. Rate row already matched (same figures).
+- Cheapest first: Z.ai $0 (free tier, ungraded, flaky) = Alibaba trial $0
+  (to Dec 16) > GLM-5.3 pin $0.018 (Medium holder, High parked) > 14B
+  $0.021 (cheapest proven paid, thin, tuning) > 3.8-flash $0.026–0.035
+  (punchy, probe-clean) > 30B ~$0.03 (dilemma best, echo-prone) >
+  DeepSeek $0.036 (parked) > 3.7-plus $0.07 (favourite developed
+  argument, value sweet spot) > 27B-paid $0.20+ > 3.8-max $0.34+
+  (best combo, priciest — trial sittings, not daily driving).
 
 ## Current standing (Sep 17 2026, owner-graded, Low, 2030 question)
 - **Qwen3.8-27B (Alibaba, unthinking) — the default while trial quota lasts.**
