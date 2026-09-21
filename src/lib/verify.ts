@@ -53,16 +53,24 @@ export function extractQuotes(text: string): string[] {
  * occurs verbatim in the shown passages. Returns one row per quote so the
  * UI can render ✓/✗ badges. Empty quote list → [] (caller shows the
  * loan-free line, which is itself enforcement evidence).
+ * `others` carries the sitting's other shown passages: canon vocabulary
+ * (Hegel's "civil society" in a Bookchin turn) verifies sitting-wide —
+ * only own-nowhere loans fail. Shared canon is not invention.
  */
-export function verifyQuotes(responseText: string, passages: string[]): QuoteCheck[] {
+export function verifyQuotes(responseText: string, passages: string[], others: string[] = []): QuoteCheck[] {
   const corpus = normalise(passages.join('\n'));
-  if (!corpus.trim()) return [];
+  const wider = others.length ? normalise(others.join('\n')) : '';
+  if (!corpus.trim() && !wider.trim()) return [];
   return extractQuotes(responseText).map((quote) => {
     const norm = normalise(quote);
     if (!norm) return { quote, verified: false };
     if (corpus.includes(norm)) return { quote, verified: true };
+    if (wider && wider.includes(norm)) return { quote, verified: true };
     // Trimmed citations: verify the core (middle 60%) instead of the edges.
     const core = norm.slice(Math.floor(norm.length * 0.2), Math.floor(norm.length * 0.8));
-    return { quote, verified: core.length > 20 && corpus.includes(core) };
+    if (core.length > 20 && (corpus.includes(core) || (wider && wider.includes(core)))) {
+      return { quote, verified: true };
+    }
+    return { quote, verified: false };
   });
 }
