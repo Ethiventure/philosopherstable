@@ -207,6 +207,12 @@ silently across versions.
   would break the shared 7k wall) — guards are translate-don't-invent,
   name-only-if-appeared, premise-hold. Old grades stay on v2026-09-20d
   and earlier.
+- Prompt v2026-09-20f (Sep 20 2026, owner RAG audit): shared source
+  vocabulary is NOT echo — detector takes an exclusion set from shown
+  grounding passages (App wires groundMap + current receipt), prompt says
+  echo means shared invention never shared loans, grader counts loans per
+  turn against the floor (Medium ≥2, High ≥4) while staying strict. Old
+  grades stay on v2026-09-20e and earlier.
 
 ### Embeddings (Phase 5)
 `test_embeddings.py` uses local Ollama `nomic-embed-text` (768 dims); the schema is
@@ -574,6 +580,18 @@ opening 60/160) live in prompts but models routinely overshoot (~150–200
 observed on DeepInfra). Owner call Sep 2026: ACCEPT overshoot as the cost of
 complete thoughts — no truncation, no repair-retry. Revisit only if turns
 routinely exceed ~250 words normal / ~400 long-form.
+Loan audit (Sep 20 2026, owner-pasted Medium turns on new Alibaba IDs —
+contract says Medium ≥2 verbatim loans, High ≥4): 1 of 4 meets the bar.
+Deleuze ATP (qwen3.8-max) GOOD — 2 verbatim [38] loans plus control-tics,
+the connecting-words ask already met. Bookchin (qwen3.8-max) FAILS — one
+[54] tag, zero quoted loans, profile knowledge doing the work ("nothing
+to check"). Marx (qwen3.8-max) FAILS — [13] twice, zero quoted loans,
+glossed definitions from profile, not passages. Marx (qwen3.7-plus)
+FAILS — zero loans, zero tags. So the gap is enforcement, not rules.
+Shipped same session: detector + prompt exclude shared loans from echo
+(v2026-09-20f — borrow more without badging more), `grade-sitting.mjs`
+counts loans per turn against the floor. No loan repair-retry (the gloss
+precedent: retries don't cure, they spend).
 
 ## Phase 6 — Richer philosopher information  ✅ (shipped Sep 2026)
 Per file: `biography` (display only, never prompt input), `key_works[]`
@@ -680,6 +698,53 @@ Groq-Qwen, Together once each with the output-token line as judge.
   external script only). Adopt the method, not the package: owner writes 3–5
   plain refs for ~20 sampled High sentences, SARI-score Low/Med rewrites,
   optional one-off EASSE run outside the repo.
+
+  Benchmark verdicts, second round (Sep 20 2026, owner-supplied links —
+  method, never package: nothing below enters `package.json`; every one
+  needs an LLM judge and/or embeddings server this static-first repo
+  refuses to require):
+- **RAGAS** (`pip install ragas` declined): faithfulness (claims grounded
+  in retrieved passages), answer relevancy, noise sensitivity
+  (`docs.ragas.io/en/stable/concepts/metrics/available_metrics/` —
+  `faithfulness`, `response_relevancy`, `answer_correctness`,
+  `answer_similarity`, `noise_sensitivity`; howtos at
+  `docs.ragas.io/en/stable/howtos/applications/evaluate-and-improve-rag/`).
+  Adopted as three bespoke node checks over our own shards, no deps:
+  faithfulness ≈ verify.ts quote check + invented-tag footer (claims carry
+  checkable loans or get flagged); relevancy ≈ rag:eval Recall/MRR;
+  noise sensitivity ≈ abstention traps (already in eval). Repo:
+  `github.com/explodinggradients/ragas`.
+- **DeepEval** (declined as framework, kept as pattern:
+  `deepeval.com`, `github.com/confident-ai/deepeval`): pytest-style
+  pass/fail thresholds per metric + CI gating so a retrieval or prompt
+  change can't silently regress. Adopted structurally: `grade-sitting.mjs`
+  prints per-constraint pass/fail (budget/echo/city/loans/margins/vague/
+  volatility) and `rag:eval` refuses stale chunker contracts — same gate,
+  no judge model, no CI keys.
+- **Inspect AI** (declined to run: `inspect.aisi.org.uk`,
+  `github.com/UKGovernmentBEIS/inspect_ai`): versioned research-style evals
+  with provider adapters. Adopted structurally: prompt version rides in
+  every export, probe reports carry it, grades never transfer silently —
+  our versioning is the poor-man's Inspect log.
+- **FollowBench** (`github.com/YJiangcm/FollowBench`, ACL 2024 long paper
+  `aclanthology.org/2024.acl-long.257`): multi-level Style / Situation /
+  Content / Format / Example constraints showing where compliance collapses
+  as instructions accumulate. Adopted as diagnosis, not data: our turn
+  contract (persona + JSON + budgets + loans + city + margins) IS a
+  FollowBench-style composed load, and past failures match its prediction
+  (gloss dies first under JSON load — 3rd-round finding). No run needed;
+  the lesson is already priced in.
+- **IFEval** (`github.com/google/instruction_following_eval`,
+  scores at `llm-stats.com/benchmarks/ifeval`): ~500 prompts × 25
+  machine-checkable constraint types (word counts, required/forbidden
+  phrases, headings, repetition). Adopted directly: `grade-sitting.mjs`
+  implements our constraint subset (budgets, label-word bans, no-headings,
+  no-repeat, JSON keys) over real transcripts. Measures obedience, never
+  voice — paired with human grades, never replacing them.
+- **ComplexBench** (`github.com/thu-coai/complexbench`): several composed
+  constraints per instruction. Same adoption as FollowBench: our
+  per-constraint scorecard decomposes the composed turn into separately
+  graded constraints instead of one holistic mark.
 
 ## Phase 7c — Qwen-14B tuning track (open, Sep 20 2026; frontrunner)
 Qwen-14B holds the contract at ~$0.021/sitting but reads thinner than the

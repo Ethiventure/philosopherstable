@@ -80,7 +80,16 @@ provider + route, prompt version, timestamp, wall time, tokens
 (in/out/cached/reasoning), repair counts, cost with rate date, errors
 verbatim, human grade; verdicts never transfer across versions; mechanical
 shape guards retry visibly (snippet in UI, full text in console); auto
-checks gate pipes, humans write verdicts.
+checks gate pipes, humans write verdicts. Benchmark adaptations, method
+never package (no judge model, no new deps): RAGAS faithfulness ≈
+checkable-loans-or-flagged, relevancy ≈ retrieval recall, noise handling ≈
+abstention traps (`docs.ragas.io`); DeepEval-style per-constraint
+pass/fail gates (`deepeval.com`); Inspect-style versioned runs
+(`inspect.aisi.org.uk`); FollowBench/IFEval/ComplexBench-style composed
+constraints decomposed into separately graded mechanical checks
+(`github.com/YJiangcm/FollowBench`,
+`github.com/google/instruction_following_eval`,
+`github.com/thu-coai/complexbench`).
 
 ## Module 4 — Service-desk chat
 

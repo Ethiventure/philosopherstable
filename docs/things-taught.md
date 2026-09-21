@@ -4,6 +4,18 @@ Low intensity, nothing dumbed down: every entry keeps the full fact,
 only the words stay simple. Newest first. The owner asked for this
 Sep 17 2026 — keep writing here, one entry per lesson.
 
+## Borrowed words are not copying (Sep 20 2026)
+Two seats drinking from the same book will share its vocabulary — that
+is grounding working, not echo. For a while the echo detector punished
+exactly that: any 8-word run appearing twice got flagged, so the more a
+sitting leaned on its sources, the guiltier it looked. The fix runs the
+same detector with an exclusion set built from the passages each seat
+was actually shown: shared source words can't trip it, shared inventions
+still do. The prompt says the same line in words. The lesson travels to
+any check you build: first ask what honest behaviour looks like under
+the detector, then teach the detector the difference — never punish the
+behaviour you ordered.
+
 ## Thinking models need a bigger "are you there" (Sep 20 2026)
 The key-check call asks a model to reply "ok" with only 10 output tokens.
 Thinking models (GLM always thinks; Qwen hybrids think) spend those 10
