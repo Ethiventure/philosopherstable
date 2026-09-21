@@ -208,8 +208,14 @@ export default function GenealogyMap({
                 className="genealogy-node"
                 style={{ cursor: live ? 'pointer' : 'default', opacity: dimmed ? 0.35 : 1 }}
                 onClick={() => {
-                  // Taps (touch) never fire mouse-leave: clear the highlight
-                  // or its heads linger on the next view.
+                  // iPad touch (Sep 21 2026): taps never fire mouse-leave,
+                  // and hover-isolate never shows — so first tap isolates,
+                  // second tap opens and dismisses. Mouse users arrive with
+                  // lit already set by hover, so their first click opens.
+                  if (lit !== slug) {
+                    setLit(slug);
+                    return;
+                  }
                   setLit(null);
                   if (live) onSelect(live);
                 }}
