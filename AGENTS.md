@@ -23,6 +23,19 @@ full edge-list fallback. Content-agnostic: substitute any entities.
 
 - Plan before building anything non-trivial. Accessibility is in the initial
   plan, never a later pass — keep the house style, layer opt-in adjustments.
+- Test commands (run before claiming behaviour changed): `npm run test:all`
+  (typecheck + lint + build + RAG tests + eval + bench + key checks + probe
+  dry-run), `npm run test:matrix` (live probes, spends ~1 call per keyed
+  pipe), `npm run grade -- <transcript>` (mechanical scorecard — verify,
+  don't compose). Keys live in `.env.test.local` (gitignored); pipes
+  without a key skip.
+- Prompt version rule: `PROMPT_VERSION` in
+  `src/lib/dialectic/prompts.ts` gains a letter on ANY prompt-text change
+  (turn instructions, coda builders, trim notes); grades never transfer
+  across versions — the lineage log in PLAN.md grows one line per bump.
+- Ignore `docs/User.md` and `docs/rose-research-chat.md`: pasted
+  outside-chat transcripts (~47k lines, untracked). Open only for Rose
+  dossier/diagram receipts, never whole, never as project direction.
 - Truthfulness: verify against live sources (API model lists, rate tables,
   link checks) before claiming. HMR/stale tabs lie — hard-refresh + fresh
   session before trusting a test. Verify in layers: lint + typecheck + build
