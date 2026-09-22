@@ -1352,6 +1352,7 @@ function App() {
           </aside>
         </section>
 
+        <LivingRoom />
         <section id="genealogy" className="mt-10" aria-label="Genealogy of influence">
           <div className="ornament-divider mb-6"><span className="text-xl">✦</span></div>
           <GenealogyMap philosophers={philosophers} onSelect={(p) => setSelectedPhilosopher(p)} />
@@ -1388,7 +1389,6 @@ function App() {
           )}
         </section>
 
-        <LivingRoom />
         {interventions.length > orderedPhilosophers.length && <PositionComparison philosophers={orderedPhilosophers} interventions={interventions} onOpenSources={openSourcesAt} />}
       </main>
 
@@ -1487,7 +1487,7 @@ function LivingRoom() {
   return (
     <section className="mt-12" aria-label="Senior common room">
       <div className="ornament-divider mb-6"><span className="text-xl">✦</span></div>
-      <p className="pass-indicator text-[#8b5254]">No question asked</p>
+      <p className="pass-indicator text-[#8b5254]">Unprompted thoughts</p>
       <h2 className="text-3xl mb-2">Senior common room</h2>
       <p className="text-xs italic text-[#465f75]/65 mb-4">
         Twelve dead philosophers, idling out loud — one short turn about every 20 minutes, lowest voice, own books at hand.
