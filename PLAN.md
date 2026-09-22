@@ -989,6 +989,9 @@ transcript file, and the site rebuilds or fetches it. Visitors only read.
 Rules that ride along: short budgets (Low, ~40 words — room chatter, not
 sittings), rotation roster in the open, fail-soft missed ticks (a skipped
 slot stays skipped, never backfilled in a burst), export names who spoke.
+Transcript bypasses deploys (jsDelivr serves the committed file seconds
+after push — rebuilding per tick would burn build minutes); tick commits
+are noisy by design (one per turn, reviewable, squashable monthly).
 Open questions: who pays if Groq free tightens (trial/paid fallback?);
 room moderation (Genzie barges in on schedule?); whether the room pauses
 when shared quota runs low (sittings first — say so up front).
