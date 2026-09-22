@@ -1389,6 +1389,7 @@ function App() {
         </section>
 
         {interventions.length > orderedPhilosophers.length && <PositionComparison philosophers={orderedPhilosophers} interventions={interventions} onOpenSources={openSourcesAt} />}
+        <LivingRoom />
       </main>
 
       {/* Halt banner: the inline error panel lives up at the question card, so
@@ -1453,6 +1454,49 @@ function ModelIdField({ id, value, options, placeholder, onPick }: {
         <input type="text" autoComplete="off" spellCheck={false} value={value} onChange={(event) => onPick(event.target.value)} placeholder={placeholder} aria-label={`${id} custom model ID`} className={`${cls} mt-2 placeholder:text-[#465f75]/45`} />
       )}
     </>
+  );
+}
+
+function LivingRoom() {
+  // Read-only transcript of the unprompted room (Phase 10): visitors read,
+  // never generate — one shared stream written by the 20-minute cron.
+  const [room, setRoom] = useState<{ roster: string[]; cursor: number; turns: { id: string; ts: string; seat: string; name: string; text: string; model: string }[]; lastTick: string | null } | null>(null);
+  const [names, setNames] = useState<Record<string, string>>({});
+  useEffect(() => {
+    fetch(`${import.meta.env.BASE_URL}room/transcript.json`).then((r) => (r.ok ? r.json() : null)).then((j) => { if (j) setRoom(j); }).catch(() => {});
+    fetch(`${import.meta.env.BASE_URL}room/personas.json`).then((r) => (r.ok ? r.json() : null)).then((j) => {
+      if (j?.seats) {
+        const m: Record<string, string> = {};
+        for (const [slug, s] of Object.entries<{ name: string }>(j.seats)) m[slug] = s.name;
+        setNames(m);
+      }
+    }).catch(() => {});
+  }, []);
+  if (!room) return null;
+  const next = room.roster.length ? room.roster[room.cursor % room.roster.length] : null;
+  const nextAt = room.lastTick ? new Date(new Date(room.lastTick).getTime() + 20 * 60 * 1000) : null;
+  return (
+    <section className="mt-12" aria-label="Living room">
+      <div className="ornament-divider mb-6"><span className="text-xl">✦</span></div>
+      <p className="pass-indicator text-[#8b5254]">No question asked</p>
+      <h2 className="text-3xl mb-2">Living room</h2>
+      <p className="text-xs italic text-[#465f75]/65 mb-4">
+        Twelve dead philosophers, idling out loud — one short turn about every 20 minutes, lowest voice, own books at hand.
+        {next ? <> Next up: <span className="font-heading not-italic">{names[next] ?? next}</span>{nextAt ? <> (around {nextAt.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })})</> : null}.</> : null}
+      </p>
+      {room.turns.length === 0 ? (
+        <div className="dark-academia-card p-8 text-center"><p className="italic text-[#465f75]/65">The room wakes at the next tick — check back in a little while.</p></div>
+      ) : (
+        <div className="dark-academia-card p-5 md:p-8 max-h-[32rem] overflow-y-auto custom-scroll">
+          {room.turns.map((t) => (
+            <article key={t.id} className="border-t border-[#4a392d]/15 pt-3 mt-3 first:border-t-0 first:pt-0 first:mt-0">
+              <p className="text-[10px] uppercase tracking-wider text-[#8b5254]">{t.name} · {new Date(t.ts).toLocaleString([], { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' })}</p>
+              <p className="text-[15px] leading-relaxed whitespace-pre-line text-[#465f75] mt-1">{t.text}</p>
+            </article>
+          ))}
+        </div>
+      )}
+    </section>
   );
 }
 

@@ -20,6 +20,8 @@
     "test:keys": "node scripts/test-keys.mjs",
     "test:sitting": "node scripts/test-sitting.mjs",
     "test:matrix": "node scripts/test-matrix.mjs",
+    "room:personas": "node scripts/export-personas.mjs",
+    "room:tick": "node scripts/room-tick.mjs",
     "grade": "node scripts/grade-sitting.mjs",
     "test:all": "npm run typecheck && npm run lint && npm run build && npm run test:rag && npm run rag:eval && npm run bench:rag && npm run test:keys && npm run test:matrix -- --dry-run && echo 'ALL GREEN — your 3 moves: 1) add any missing keys to .env.test.local  2) npm run test:matrix (spends ~1 probe call per pipe)  3) run one live sitting, paste the printed models-tried row, grade 2-3 quotes by eye'"
   },

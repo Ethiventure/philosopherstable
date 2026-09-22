@@ -1,0 +1,34 @@
+# Living-room tick: one unprompted turn every 20 minutes (Phase 10).
+# Centralized generation — visitors only read. Groq free tier, lean Low
+# prompt (~2k input tokens, far inside the 7k wall), plain prose out.
+# Needs repo secret GROQ_API_KEY (server-side only, never in code).
+# Missed ticks stay missed: schedule misses never backfill in bursts.
+name: room-tick
+
+on:
+  schedule:
+    - cron: '*/20 * * * *'
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+jobs:
+  tick:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - name: One room turn
+        env:
+          GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
+        run: node scripts/room-tick.mjs
+      - name: Commit transcript
+        run: |
+          git config user.name "cabinet-room"
+          git config user.email "cabinet-room@users.noreply.github.com"
+          git add public/room/transcript.json
+          git diff --cached --quiet && echo "no turn appended" || git commit -m "Room tick" && git push
