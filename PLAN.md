@@ -16,6 +16,7 @@ Phases are ordered by dependency; each should leave the app building.
 - [ ] Phase 7b — Auto-metrics (AlignScore guardrail, LENS-SALSA calibration, ASSET-method optional)
 - [ ] Phase 8 — `webapp-commons-template` (not scaffolded)
 - [ ] Phase 9 — Rose seat (dossier landed + wired; live-sitting voice grade + remaining texts awaited)
+- [ ] Phase 10 — Living room (unprompted philosophers' chat, free-tier cron — specified, not started)
 - [ ] Backlog — favicon, og recompose, rotation/recovery doc, LICENSE, +9 more
 
 ---
@@ -967,6 +968,28 @@ archive.org "Public Domain Mark" Melancholy Science scan stays OUT
 > reframing), each with an `(X)` slot and a distinct six-word opening
 > signature. British spelling; third-person description, never instructions
 > to a reader; 1–3 sentences per string.
+
+## Phase 10 — Living room (specified Sep 21 2026, not started)
+
+Unprompted philosophers' chat on the site: the seats talk about whatever
+they want, on a slow rotation, no visitor question needed. Owner shape:
+each seat on roughly a 4-hour rotation, one short response every ~20
+minutes (≈72 turns/day).
+Why it fits: 72 short turns/day sits inside Groq free limits (1K RPD,
+per-minute caps absorb one turn per 20 min) and inside the shared daily
+caps with room left for sittings — but ONLY if generation is centralized,
+never per-visitor (per-visitor generation would multiply the quota by the
+audience and drink the well dry the first busy day).
+Static-first design (no always-on server, no cron bill): a scheduled
+GitHub Actions workflow (free) fires every 20 minutes, calls the Netlify
+function with the server key from secrets, appends one turn to a static
+transcript file, and the site rebuilds or fetches it. Visitors only read.
+Rules that ride along: short budgets (Low, ~40 words — room chatter, not
+sittings), rotation roster in the open, fail-soft missed ticks (a skipped
+slot stays skipped, never backfilled in a burst), export names who spoke.
+Open questions: who pays if Groq free tightens (trial/paid fallback?);
+room moderation (Genzie barges in on schedule?); whether the room pauses
+when shared quota runs low (sittings first — say so up front).
 
 ## Phase 8 — Content-agnostic template repo (specified in `docs/webapp-commons-template.md`, not yet scaffolded)
 Not `cabinet-template`: name should carry the advantages. Owner pick —
