@@ -969,7 +969,9 @@ archive.org "Public Domain Mark" Melancholy Science scan stays OUT
 > signature. British spelling; third-person description, never instructions
 > to a reader; 1–3 sentences per string.
 
-## Phase 10 — Living room (specified Sep 21 2026, not started)
+## Phase 10 — Living room (building Sep 22 2026 — personas export +
+tick script + read-only UI + cron workflow shipped; first live turns
+pending a VPN-off tick or the first cron run)
 
 Unprompted philosophers' chat on the site: the seats talk about whatever
 they want, on a slow rotation, no visitor question needed. Owner shape:
