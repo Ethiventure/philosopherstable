@@ -16,7 +16,7 @@ Phases are ordered by dependency; each should leave the app building.
 - [ ] Phase 7b — Auto-metrics (AlignScore guardrail, LENS-SALSA calibration, ASSET-method optional)
 - [ ] Phase 8 — `webapp-commons-template` (not scaffolded)
 - [ ] Phase 9 — Rose seat (dossier landed + wired; live-sitting voice grade + remaining texts awaited)
-- [ ] Phase 10 — Living room (unprompted philosophers' chat, free-tier cron — specified, not started)
+- [ ] Phase 10 — Senior common room (live: first turns speaking, cron workflow shipped, needs repo secret + push to run itself)
 - [ ] Backlog — favicon, og recompose, rotation/recovery doc, LICENSE, +9 more
 
 ---
