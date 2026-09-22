@@ -1388,8 +1388,8 @@ function App() {
           )}
         </section>
 
-        {interventions.length > orderedPhilosophers.length && <PositionComparison philosophers={orderedPhilosophers} interventions={interventions} onOpenSources={openSourcesAt} />}
         <LivingRoom />
+        {interventions.length > orderedPhilosophers.length && <PositionComparison philosophers={orderedPhilosophers} interventions={interventions} onOpenSources={openSourcesAt} />}
       </main>
 
       {/* Halt banner: the inline error panel lives up at the question card, so
@@ -1462,6 +1462,8 @@ function LivingRoom() {
   // never generate — one shared stream written by the 20-minute cron.
   const [room, setRoom] = useState<{ roster: string[]; cursor: number; turns: { id: string; ts: string; seat: string; name: string; text: string; model: string }[]; lastTick: string | null } | null>(null);
   const [names, setNames] = useState<Record<string, string>>({});
+  const scrollRef = useRef<HTMLDivElement | null>(null);
+  const seenCount = useRef(0);
   useEffect(() => {
     fetch(`${import.meta.env.BASE_URL}room/transcript.json`).then((r) => (r.ok ? r.json() : null)).then((j) => { if (j) setRoom(j); }).catch(() => {});
     fetch(`${import.meta.env.BASE_URL}room/personas.json`).then((r) => (r.ok ? r.json() : null)).then((j) => {
@@ -1472,6 +1474,13 @@ function LivingRoom() {
       }
     }).catch(() => {});
   }, []);
+  // Follow new turns (arrival-only: reading earlier stays put).
+  useEffect(() => {
+    if (room && room.turns.length > seenCount.current) {
+      seenCount.current = room.turns.length;
+      if (scrollRef.current) scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
+    }
+  }, [room]);
   if (!room) return null;
   const next = room.roster.length ? room.roster[room.cursor % room.roster.length] : null;
   const nextAt = room.lastTick ? new Date(new Date(room.lastTick).getTime() + 20 * 60 * 1000) : null;
@@ -1487,7 +1496,12 @@ function LivingRoom() {
       {room.turns.length === 0 ? (
         <div className="dark-academia-card p-8 text-center"><p className="italic text-[#465f75]/65">The room wakes at the next tick — check back in a little while.</p></div>
       ) : (
-        <div className="dark-academia-card p-5 md:p-8 max-h-[32rem] overflow-y-auto custom-scroll">
+        <div
+          ref={scrollRef}
+          className="dark-academia-card p-5 md:p-8 h-[19rem] overflow-y-auto custom-scroll"
+          role="log"
+          aria-label="Living room transcript, newest at the bottom"
+        >
           {room.turns.map((t) => (
             <article key={t.id} className="border-t border-[#4a392d]/15 pt-3 mt-3 first:border-t-0 first:pt-0 first:mt-0">
               <p className="text-[10px] uppercase tracking-wider text-[#8b5254]">{t.name} · {new Date(t.ts).toLocaleString([], { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' })}</p>
