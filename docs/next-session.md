@@ -1,8 +1,8 @@
-# First thing tomorrow — Tue Sep 23 (owner-only tasks)
+# First thing tomorrow — Wed Sep 23 (owner-only tasks)
 
 In energy order. Smallest first, stop anywhere — everything keeps.
 
-## Today (Mon Sep 22): the room got built and started talking
+## Today (Tue Sep 22): the room got built and started talking
 Phase 10 shipped in one day: spec → personas export → tick script →
 read-only UI → cron → first live turns (Spinoza/Kant/Hegel, then Marx/
 Lenin/Bogdanov, then Bloch via cron). Frame settled: Senior Common Room,
@@ -47,6 +47,3 @@ Paste 2–3 best turns; wired as voice exemplars per Phase 7c.
 - GLM/DeepSeek new sittings (parked entirely under gibberish rule).
 - 30B length tests (scales faults, verdict in).
 - Template scaffold, podcast, RAG latency, 14B tuning (recorded, none urgent).
-
-## Explicitly NOT tomorrow
-Anything not listed above.
