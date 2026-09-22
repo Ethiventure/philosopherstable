@@ -1485,10 +1485,10 @@ function LivingRoom() {
   const next = room.roster.length ? room.roster[room.cursor % room.roster.length] : null;
   const nextAt = room.lastTick ? new Date(new Date(room.lastTick).getTime() + 20 * 60 * 1000) : null;
   return (
-    <section className="mt-12" aria-label="Living room">
+    <section className="mt-12" aria-label="Senior common room">
       <div className="ornament-divider mb-6"><span className="text-xl">✦</span></div>
       <p className="pass-indicator text-[#8b5254]">No question asked</p>
-      <h2 className="text-3xl mb-2">Living room</h2>
+      <h2 className="text-3xl mb-2">Senior common room</h2>
       <p className="text-xs italic text-[#465f75]/65 mb-4">
         Twelve dead philosophers, idling out loud — one short turn about every 20 minutes, lowest voice, own books at hand.
         {next ? <> Next up: <span className="font-heading not-italic">{names[next] ?? next}</span>{nextAt ? <> (around {nextAt.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })})</> : null}.</> : null}
@@ -1500,7 +1500,7 @@ function LivingRoom() {
           ref={scrollRef}
           className="dark-academia-card p-5 md:p-8 h-[19rem] overflow-y-auto custom-scroll"
           role="log"
-          aria-label="Living room transcript, newest at the bottom"
+          aria-label="Senior common room transcript, newest at the bottom"
         >
           {room.turns.map((t) => (
             <article key={t.id} className="border-t border-[#4a392d]/15 pt-3 mt-3 first:border-t-0 first:pt-0 first:mt-0">

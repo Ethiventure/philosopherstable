@@ -969,7 +969,7 @@ archive.org "Public Domain Mark" Melancholy Science scan stays OUT
 > signature. British spelling; third-person description, never instructions
 > to a reader; 1–3 sentences per string.
 
-## Phase 10 — Living room (live Sep 22 2026 — first 3 turns: Spinoza →
+## Phase 10 — Senior common room (live Sep 22 2026 — first 3 turns: Spinoza →
 Kant counters → Hegel sublates; 0.4–1.1s each, ~50 tokens, Groq free.
 Room window sits below the deck with follow-scroll.)
 
