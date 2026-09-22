@@ -1467,10 +1467,13 @@ function LivingRoom() {
   // Transcript rides the CDN, not the deploy (Phase 10): the 20-minute
   // cron commits a turn ~72×/day, and rebuilding the site per tick would
   // burn Netlify build minutes — jsDelivr serves the raw file seconds
-  // after push, same-origin is the fallback.
-  const ROOM_TRANSCRIPT_URL = 'https://cdn.jsdelivr.net/gh/Ethiventure/philosopherstable@main/public/room/transcript.json';
+  // after push, same-origin is the fallback. Cache-busted per 10-minute
+  // bucket (Sep 22 2026): browsers otherwise keep the first copy they saw
+  // and new turns never appear, no matter how often you reload. Computed
+  // inside the effect so the fetch fires once per mount, not per render.
   useEffect(() => {
-    fetch(ROOM_TRANSCRIPT_URL).then((r) => (r.ok ? r.json() : null)).then((j) => { if (j?.turns) { setRoom(j); return; } throw 0; }).catch(() => {
+    const url = `https://cdn.jsdelivr.net/gh/Ethiventure/philosopherstable@main/public/room/transcript.json?t=${Math.floor(Date.now() / 600000)}`;
+    fetch(url).then((r) => (r.ok ? r.json() : null)).then((j) => { if (j?.turns) { setRoom(j); return; } throw 0; }).catch(() => {
       fetch(`${import.meta.env.BASE_URL}room/transcript.json`).then((r) => (r.ok ? r.json() : null)).then((j) => { if (j) setRoom(j); }).catch(() => {});
     });
     fetch(`${import.meta.env.BASE_URL}room/personas.json`).then((r) => (r.ok ? r.json() : null)).then((j) => {
