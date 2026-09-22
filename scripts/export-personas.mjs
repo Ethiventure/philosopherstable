@@ -23,12 +23,25 @@ import { SEAT_TRIOS } from ${JSON.stringify(join(root, 'src/philosophers/trios.t
 import { PROMPT_VERSION } from ${JSON.stringify(join(root, 'src/lib/dialectic/prompts.ts'))};
 const seats = {};
 for (const p of PHILOSOPHER_DATA) {
+  const e = p.style_essence;
+  // Fuller voice, still lean (Sep 22 2026): the Low abridgement plus the
+  // voice engine — movement, generation rules, REGISTER prompt, dialect
+  // verbs. Profile knowledge stays out (room chatter, not sittings).
   const persona = [
     'You are ' + p.full_name + '.',
     'ANALYTICAL CENTRE: ' + p.analytical_center.join(', ') + '.',
     'EMOTIONAL TONE: ' + p.profile.emotional_tone,
     '',
-    ...renderLowStyleEssence(p.style_essence, SEAT_TRIOS[p.slug]),
+    ...renderLowStyleEssence(e, SEAT_TRIOS[p.slug]),
+    '',
+    'CHARACTERISTIC MOVEMENT: ' + e.characteristic_movement,
+    'GENERATION RULES:',
+    ...e.generation_rules.map((rule) => '- ' + rule),
+    ...(e.dialect_verbs
+      ? ['YOUR MOVE VERBS — your own verbs for breaking and building, in your own sentences: BREAK: ' + e.dialect_verbs.break.join(' / ') + '. BUILD: ' + e.dialect_verbs.build.join(' / ') + '.']
+      : []),
+    '',
+    'REGISTER: ' + e.prompt,
   ].join('\\n');
   seats[p.slug] = { name: p.full_name, short: p.name, persona };
 }
