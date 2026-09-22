@@ -20,6 +20,7 @@ import { loadTestEnv } from './test-env.mjs';
 import { prepareIndex, searchIndex } from '../src/lib/rag-search.ts';
 import { joinShard } from '../src/lib/rag-shard.ts';
 import { smartCut } from '../src/lib/rag-text.ts';
+import { relationshipLine } from '../src/philosophers/influences.ts';
 
 loadTestEnv();
 
@@ -69,6 +70,16 @@ try {
 const userMessage = [
   ...recent.map((x) => `${x.name}: ${x.text}`),
   grounding,
+  // Face-to-face history (Sep 22 2026): the room read as strangers —
+  // seats now get their debt line to whoever spoke just before, same
+  // mechanism as sittings, so connections surface in the open.
+  ...(() => {
+    const prev = recent[recent.length - 1];
+    if (!prev || prev.seat === slug) return [];
+    const prevShort = personas[prev.seat]?.short ?? prev.name;
+    const line = relationshipLine(slug, prev.seat, prevShort, true);
+    return line ? [line] : [];
+  })(),
   '',
   'Your turn — speak now.',
 ].filter((s) => s !== '').join('\n');
