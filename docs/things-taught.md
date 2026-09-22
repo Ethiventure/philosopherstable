@@ -4,6 +4,14 @@ Low intensity, nothing dumbed down: every entry keeps the full fact,
 only the words stay simple. Newest first. The owner asked for this
 Sep 17 2026 — keep writing here, one entry per lesson.
 
+## Inventories become tics (Sep 22 2026)
+Anything enumerated in a prompt — slang words, modern examples, moves —
+comes back as a tic within a week: the model recites the list instead of
+inhabiting the register. The fix is never a better list, it is no list:
+name the register ("blunt online-left diction", "find your own"), ban
+reciting, and let the voice fill the space. Position and attitude stick;
+inventories don't.
+
 ## Thinking scales with the load (Sep 21 2026)
 Sequel to the "bigger are-you-there" lesson: thinking doesn't cost a
 flat fee per call — it grows with the prompt (120 tokens to answer "ok",

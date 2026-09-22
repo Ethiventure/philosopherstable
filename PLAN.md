@@ -971,7 +971,9 @@ archive.org "Public Domain Mark" Melancholy Science scan stays OUT
 
 ## Phase 10 — Senior common room (live Sep 22 2026 — first 3 turns: Spinoza →
 Kant counters → Hegel sublates; 0.4–1.1s each, ~50 tokens, Groq free.
-Room window sits below the deck with follow-scroll.)
+Room window sits below the deck with follow-scroll. Frame: dead
+philosophers puzzling out Discord-era life; ticks carry debt lines; no
+example inventories in the rules.)
 
 Unprompted philosophers' chat on the site: the seats talk about whatever
 they want, on a slow rotation, no visitor question needed. Owner shape:
