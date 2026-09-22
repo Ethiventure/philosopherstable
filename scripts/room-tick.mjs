@@ -6,8 +6,8 @@
  *
  *   GROQ_API_KEY=... node scripts/room-tick.mjs [--dry-run]
  *
- * Budget per tick (~2k input tokens, well inside Groq's 7k wall):
- * persona ~1000 + 3 recent turns ~300 + 2 passages ~400 + rules ~250.
+ * Budget per tick (~2.5k input tokens, well inside Groq's 7k wall):
+ * persona ~1000 + 6 recent turns ~600 + 2 passages ~400 + rules ~300.
  * Groq free: 30 RPM / 1K RPD — one tick per 20 min is 72/day, and the
  * 1-at-a-time cadence never trips concurrency. RAG uses the repo's own
  * scorer over shipped shards (offline, no quota). Reasoning flags are
@@ -31,7 +31,7 @@ const DRY = process.argv.includes('--dry-run');
 const MAX_TURNS = 200;
 
 const MODEL = process.env.GROQ_ROOM_MODEL || 'qwen/qwen3.8-27b';
-const ROOM_RULES = `You are on a Discord server in the 21st century, trying to understand modern life alongside dead colleagues. React to the last message, or puzzle over something modern through your own framework, in your own voice and temper. Plain everyday words, 1–3 short sentences like chat messages, continuous prose. Carry one feeling verb inside the move (fear, mourn, love, hate), not beside it. Never reuse the previous turn's central image or example — bring your own. You may be baffled, delighted, or appalled — never lecture, never greet, never announce your moves, never use emojis or formatting. Never list examples from these rules back at the room — find your own. If the room is empty, open with the first perplexing modern thing on your mind.`;
+const ROOM_RULES = `You are on a Discord server in the 21st century, trying to understand modern life alongside dead colleagues. React to the last message, or puzzle over something modern through your own framework, in your own voice and temper. Carry one small ongoing aim of your own — converting someone, learning something, starting something — and let the others' words move it: show the shift in what you say, never announce a plan. Plain everyday words, 1–3 short sentences like chat messages, continuous prose. Carry one feeling verb inside the move (fear, mourn, love, hate), not beside it. Never reuse the previous turn's central image or example — bring your own. You may be baffled, delighted, or appalled — never lecture, never greet, never announce your moves, never use emojis or formatting. Never list examples from these rules back at the room — find your own. If the room is empty, open with the first perplexing modern thing on your mind.`;
 
 function fail(reason) {
   console.log(`SKIP: ${reason}`);
@@ -46,7 +46,7 @@ if (!t.roster?.length) fail('empty roster');
 const slug = t.roster[t.cursor % t.roster.length];
 const seat = personas[slug];
 if (!seat) fail(`no persona for ${slug}`);
-const recent = (t.turns || []).slice(-3);
+const recent = (t.turns || []).slice(-6);
 
 let grounding = '';
 try {
