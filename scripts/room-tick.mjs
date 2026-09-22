@@ -7,7 +7,7 @@
  *   GROQ_API_KEY=... node scripts/room-tick.mjs [--dry-run]
  *
  * Budget per tick (~2k input tokens, well inside Groq's 7k wall):
- * lean persona ~500 + 3 recent turns ~300 + 2 passages ~400 + rules ~250.
+ * persona ~1000 + 3 recent turns ~300 + 2 passages ~400 + rules ~250.
  * Groq free: 30 RPM / 1K RPD — one tick per 20 min is 72/day, and the
  * 1-at-a-time cadence never trips concurrency. RAG uses the repo's own
  * scorer over shipped shards (offline, no quota). Reasoning flags are
