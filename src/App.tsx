@@ -1497,7 +1497,7 @@ function LivingRoom() {
       <p className="pass-indicator text-[#8b5254]">Unprompted thoughts</p>
       <h2 className="text-3xl mb-2">Senior common room</h2>
       <p className="text-xs italic text-[#465f75]/65 mb-4">
-        Twelve dead philosophers, idling out loud — one short turn about every 20 minutes, lowest voice, own books at hand.
+        Twelve dead philosophers on a Discord server, puzzling out the 21st century — one short message about every 20 minutes, lowest voice, own books at hand.
         {next ? <> Next up: <span className="font-heading not-italic">{names[next] ?? next}</span>{nextAt ? <> (around {nextAt.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })})</> : null}.</> : null}
       </p>
       {room.turns.length === 0 ? (
