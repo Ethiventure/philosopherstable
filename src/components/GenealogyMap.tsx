@@ -52,7 +52,7 @@ function edgeStyle(e: Edge): { w: number; o: number; cls: string; dash?: string;
 
 // Seats on the spine get centred labels below; the paired rows label outward.
 const SPINE_SEATS = new Set(['spinoza', 'fisher']);
-const LEFT_SEATS = new Set(['kant', 'marx', 'bogdanov', 'weil', 'rose']);
+const LEFT_SEATS = new Set(['kant', 'marx', 'bogdanov', 'weil', 'rose', 'genzie']);
 
 // Label size: standard body (16px) for the least-connected seat, +2px per
 // extra connection. Degree counts every debt in or out. Size reflects

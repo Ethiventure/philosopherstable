@@ -10,34 +10,36 @@ I = indirect (through intermediaries or the wider tradition) ·
 N = no evidenced link (cannot currently demonstrate — not "unrelated") ·
 — = self.
 
-| debtor ↓ / creditor → | Spinoza | Kant | Hegel | Marx | Lenin | Bogdanov | Bloch | Weil | Bookchin | Deleuze | Rose | Fisher |
-| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| **Spinoza** | — | N | N | N | N | N | N | N | N | N | N | N |
-| **Kant** | D- | — | N | N | N | N | N | N | N | N | N | N |
-| **Hegel** | D+ | D- | — | N | N | N | N | N | N | N | N | N |
-| **Marx** | D+ | D | D | — | N | N | N | N | N | N | N | N |
-| **Lenin** | N | D- | D+ | D+ | — | D- | N | N | N | N | N | N |
-| **Bogdanov** | D+ | D | D+ | D+ | D- | — | N | N | N | N | N | N |
-| **Bloch** | D+ | D+ | D | D+ | D+ | N | — | N | N | N | N | N |
-| **Weil** | D | D | D- | D | D- | I | N | — | N | N | N | N |
-| **Bookchin** | D | D | D+ | D | D- | I | D+ | I+ | — | D- | D+ | N |
-| **Deleuze** | D+ | D | D- | D | D | I | D | N | N | — | N | N |
-| **Rose** | I+ | D- | D+ | D | D- | I | N | D | N | D- | — | N |
-| **Fisher** | D+ | D | N | D+ | N | I | I | N | I | D+ | I+ | — |
+| debtor ↓ / creditor → | Spinoza | Kant | Hegel | Marx | Lenin | Bogdanov | Bloch | Weil | Bookchin | Deleuze | Rose | Fisher | Genzie |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| **Spinoza** | — | N | N | N | N | N | N | N | N | N | N | N | N |
+| **Kant** | D- | — | N | N | N | N | N | N | N | N | N | N | N |
+| **Hegel** | D+ | D- | — | N | N | N | N | N | N | N | N | N | N |
+| **Marx** | D+ | D | D | — | N | N | N | N | N | N | N | N | N |
+| **Lenin** | N | D- | D+ | D+ | — | D- | N | N | N | N | N | N | N |
+| **Bogdanov** | D+ | D | D+ | D+ | D- | — | N | N | N | N | N | N | N |
+| **Bloch** | D+ | D+ | D | D+ | D+ | N | — | N | N | N | N | N | N |
+| **Weil** | D | D | D- | D | D- | I | N | — | N | N | N | N | N |
+| **Bookchin** | D | D | D+ | D | D- | I | D+ | I+ | — | D- | D+ | N | N |
+| **Deleuze** | D+ | D | D- | D | D | I | D | N | N | — | N | N | N |
+| **Rose** | I+ | D- | D+ | D | D- | I | N | D | N | D- | — | N | N |
+| **Fisher** | D+ | D | N | D+ | N | I | I | N | I | D+ | I+ | — | N |
+| **Genzie** | D | D- | D- | D+ | D | D | D+ | D | D+ | D- | D+ | D | — |
 
 ## Degree (debts out / heirs in / total)
 
 | seat | owes | owed by | total |
 | --- | --- | --- | --- |
-| **Spinoza** | 0 | 10 | 10 |
-| **Kant** | 1 | 10 | 11 |
-| **Hegel** | 2 | 8 | 10 |
-| **Marx** | 3 | 8 | 11 |
-| **Lenin** | 4 | 6 | 10 |
-| **Bogdanov** | 5 | 6 | 11 |
-| **Bloch** | 5 | 3 | 8 |
-| **Weil** | 6 | 2 | 8 |
-| **Bookchin** | 10 | 1 | 11 |
-| **Deleuze** | 7 | 3 | 10 |
-| **Rose** | 8 | 2 | 10 |
-| **Fisher** | 8 | 0 | 8 |
+| **Spinoza** | 0 | 11 | 11 |
+| **Kant** | 1 | 11 | 12 |
+| **Hegel** | 2 | 9 | 11 |
+| **Marx** | 3 | 9 | 12 |
+| **Lenin** | 4 | 7 | 11 |
+| **Bogdanov** | 5 | 7 | 12 |
+| **Bloch** | 5 | 4 | 9 |
+| **Weil** | 6 | 3 | 9 |
+| **Bookchin** | 10 | 2 | 12 |
+| **Deleuze** | 7 | 4 | 11 |
+| **Rose** | 8 | 3 | 11 |
+| **Fisher** | 8 | 1 | 9 |
+| **Genzie** | 12 | 0 | 12 |

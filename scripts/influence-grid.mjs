@@ -14,12 +14,13 @@ import { CABINET_DEBTS } from '../src/philosophers/influences.ts';
 // Chronological seat order (matches DEFAULT_SEATING_ORDER).
 const ORDER = [
   'spinoza', 'kant', 'hegel', 'marx', 'lenin', 'bogdanov',
-  'bloch', 'weil', 'bookchin', 'deleuze', 'rose', 'fisher',
+  'bloch', 'weil', 'bookchin', 'deleuze', 'rose', 'fisher', 'genzie',
 ];
 const NAME = {
   spinoza: 'Spinoza', kant: 'Kant', hegel: 'Hegel', marx: 'Marx',
   lenin: 'Lenin', bogdanov: 'Bogdanov', bloch: 'Bloch', weil: 'Weil',
   bookchin: 'Bookchin', deleuze: 'Deleuze', rose: 'Rose', fisher: 'Fisher',
+  genzie: 'Genzie',
 };
 
 const known = new Set(ORDER);

@@ -61,6 +61,10 @@ export const SEAT_TRIOS: Record<string, SeatTrio> = {
     medium: 'There is a split in our shared life, in what we do and in the groups we run, which every call for an ethics beyond nature only deepens by lifting it into make-believe.',
     low: 'People try to be good. The groups they live in still do harm. Calls to be purely good make this worse, not better. Stay with the trouble instead.',
   },
+  genzie: {
+    medium: 'You lot keep describing the cage from different angles instead of bending its bars — name who does what first, or it was just lore.',
+    low: 'Stop describing the problem. Say who does what first, starting tomorrow morning.',
+  },
 };
 
 /** Shared fallback while a seat has no wired trio (currently none missing). */

@@ -4,7 +4,7 @@
  * passages from the speaker's own shard, plain prose out (no JSON
  * contract — nothing to parse, nothing to repair).
  *
- *   GROQ_API_KEY=... node scripts/room-tick.mjs [--dry-run]
+ *   GROQ_API_KEY=... node scripts/room-tick.mjs [--dry-run] [--seat genzie]
  *
  * Budget per tick (~2.5k input tokens, well inside Groq's 7k wall):
  * persona ~1000 + 6 recent turns ~600 + 2 passages ~400 + rules ~300.
@@ -43,7 +43,12 @@ if (!existsSync(P_PATH)) fail('no personas.json (run export-personas first)');
 const t = JSON.parse(readFileSync(T_PATH, 'utf8'));
 const personas = JSON.parse(readFileSync(P_PATH, 'utf8')).seats;
 if (!t.roster?.length) fail('empty roster');
-const slug = t.roster[t.cursor % t.roster.length];
+// Manual override (one-off, rotation untouched): --seat genzie makes
+// Genzie speak next; the cursor still advances, so the cron resumes
+// its normal order on the following tick.
+let slug = t.roster[t.cursor % t.roster.length];
+const seatFlag = process.argv.indexOf('--seat');
+if (seatFlag !== -1 && process.argv[seatFlag + 1]) slug = process.argv[seatFlag + 1];
 const seat = personas[slug];
 if (!seat) fail(`no persona for ${slug}`);
 const recent = (t.turns || []).slice(-6);

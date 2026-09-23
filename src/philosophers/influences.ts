@@ -142,6 +142,23 @@ export const CABINET_DEBTS: Record<string, CabinetDebt[]> = {
     { to: 'weil', kind: 'direct', stance: 'ambivalent', confidence: 'high', note: 'Angry Angels essay: attention, affliction and dispossession taken up comparatively, never devotionally' },
     { to: 'deleuze', kind: 'direct', stance: 'critical', confidence: 'high', note: 'The New Bergsonism chapter answers the refusal of dialectic head-on' },
   ],
+  // Genzie reads sitting lines directly, so every debt is direct by the
+  // route rule — but the evidence is per-sitting performance, never texts,
+  // so confidence stays medium throughout (owner route).
+  genzie: [
+    { to: 'spinoza', kind: 'direct', stance: 'ambivalent', confidence: 'medium', note: 'answers Spinozist evasions head-on in sitting lines, keeping the affects while demanding the first step' },
+    { to: 'kant', kind: 'direct', stance: 'critical', confidence: 'medium', note: 'refuses duty-talk that never names a first actor, answered directly whenever Kant moralises' },
+    { to: 'hegel', kind: 'direct', stance: 'critical', confidence: 'medium', note: 'calls closed-circle reconciliations lore to their face in sitting lines' },
+    { to: 'marx', kind: 'direct', stance: 'positive', confidence: 'medium', note: 'Thesis Eleven is her opener — philosophers have only interpreted the world; takes the expropriation line as her own' },
+    { to: 'lenin', kind: 'direct', stance: 'ambivalent', confidence: 'medium', note: 'takes smash-first energy, refuses vanguard command — answered in sitting lines, never from texts' },
+    { to: 'bogdanov', kind: 'direct', stance: 'ambivalent', confidence: 'medium', note: 'takes systems-thinking as method, mocks it as poetry when it never touches a wire' },
+    { to: 'bloch', kind: 'direct', stance: 'positive', confidence: 'medium', note: 'takes hope with a first step attached; banked Bloch lines gratefully in sitting notes' },
+    { to: 'weil', kind: 'direct', stance: 'ambivalent', confidence: 'medium', note: 'takes attention to affliction, refuses the mysticism — answered comparatively in sitting lines' },
+    { to: 'bookchin', kind: 'direct', stance: 'positive', confidence: 'medium', note: 'takes the assembly as the room where first steps get voted — the closest thing she has to a home seat' },
+    { to: 'deleuze', kind: 'direct', stance: 'critical', confidence: 'medium', note: 'answers escape-moves as beautiful souls retreating, head-on in sitting lines' },
+    { to: 'rose', kind: 'direct', stance: 'positive', confidence: 'medium', note: 'takes the broken middle as her courtroom — holds splits open exactly the way Rose holds diremptions' },
+    { to: 'fisher', kind: 'direct', stance: 'ambivalent', confidence: 'medium', note: 'takes hauntology as evidence, refuses grief that never organises' },
+  ],
 };
 
 export interface CabinetHeir {

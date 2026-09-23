@@ -24,7 +24,7 @@ export interface GeomEdge {
 }
 
 export const GEN_W = 704;
-export const GEN_H = 738;
+export const GEN_H = 780;
 export const GEN_NODE_R = 34;
 export const GEN_SPINE_X = 352;
 const GEN_LEFT_X = 210;
@@ -47,7 +47,7 @@ const GEN_CH_RIGHT = 442;
 /** Chronological seat order — rendered top to bottom. */
 export const GEN_ORDER = [
   'spinoza', 'kant', 'hegel', 'marx', 'lenin', 'bogdanov',
-  'bloch', 'weil', 'bookchin', 'deleuze', 'rose', 'fisher',
+  'bloch', 'weil', 'bookchin', 'deleuze', 'rose', 'fisher', 'genzie',
 ];
 
 export const GEN_POS: Record<string, { x: number; y: number }> = {
@@ -63,6 +63,7 @@ export const GEN_POS: Record<string, { x: number; y: number }> = {
   rose: { x: 221, y: 541 },
   deleuze: { x: 483, y: 541 },
   fisher: { x: GEN_SPINE_X, y: 600 },
+  genzie: { x: GEN_LEFT_X, y: 688 },
 };
 
 export function genNodePos(slug: string): { x: number; y: number } {
