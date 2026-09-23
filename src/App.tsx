@@ -35,7 +35,7 @@ import {
 } from '@/types';
 import { buildCodaEarlyPrompt, buildCodaEndPrompt, buildCodaPrompt, buildClosingScan, buildTurnInstruction, buildUserMessage, CODA_REPAIR_SUFFIX, CODA_SYSTEM, drawThreadCity, getTurnKind, GLOSSARY_SHAPE, LOW_CLOSING_REMINDER, PROMPT_VERSION, STRUCTURED_OUTPUT_HINT } from '@/lib/dialectic/prompts';
 import { LlmError, RATES_AS_OF, estimateCost, repairBreakdown, repairTotals, resetUsage, sharesPassage, usageTotals, type LlmErrorCode, type TurnOutput } from '@/lib/llm';
-import { DEEPINFRA_BACKUP_LABEL, DEEPINFRA_PRIMARIES, ALIBABA_MODEL_OPTIONS, CUSTOM_MODEL_VALUE, GROQ_MODEL_OPTIONS, OPENROUTER_PAID_OPTIONS, loadSettings, saveSettings, type CabinetSettings, type DeepInfraPrimary } from '@/lib/settings';
+import { DEEPINFRA_PRIMARIES, ALIBABA_MODEL_OPTIONS, CUSTOM_MODEL_VALUE, GROQ_MODEL_OPTIONS, OPENROUTER_PAID_OPTIONS, loadSettings, saveSettings, type CabinetSettings, type DeepInfraPrimary } from '@/lib/settings';
 import { applyDisplay, loadDisplay, saveDisplay } from '@/lib/preferences';
 import { generateTurnGroq, testGroqKey } from '@/lib/groq';
 import { generateTurnShared } from '@/lib/shared';
@@ -283,7 +283,7 @@ function App() {
     }
   };
 
-  /** Human-readable "model via key" label, e.g. DeepInfra (Llama 3.3 70B, visitor key). */
+  /** Human-readable "model via key" label, e.g. DeepInfra (Qwen3-30B-A3B, visitor key). */
   const provenanceLabel = (snap: CabinetSettings): string => {
     switch (snap.provider) {
       case 'shared':
@@ -1749,7 +1749,7 @@ function SettingsDrawer({ philosophers, activeSlugs, togglePhilosopher, settings
       } else if (usingDeepInfra) {
         await testDeepInfraKey(key, settings.deepInfraPrimary);
         setTestState('ok');
-        setTestMessage(`Key works (${DEEPINFRA_PRIMARIES.find((p) => p.id === settings.deepInfraPrimary)?.label ?? settings.deepInfraPrimary} first, Llama 3.3 70B backup). Saved for this browser.`);
+        setTestMessage(`Key works (${DEEPINFRA_PRIMARIES.find((p) => p.id === settings.deepInfraPrimary)?.label ?? settings.deepInfraPrimary} first). Saved for this browser.`);
         onSettingsChange({ ...settings, deepInfraApiKey: key });
       } else if (usingTogether) {
         await testTogetherKey(key);
@@ -1820,7 +1820,7 @@ function SettingsDrawer({ philosophers, activeSlugs, togglePhilosopher, settings
               <button role="radio" aria-checked={settings.provider === 'shared'} title="No key needed — the cabinet's own key, a few sittings a day each." onClick={() => { setTestState('idle'); setTestMessage(''); onSettingsChange({ ...settings, provider: 'shared' }); }} className={`btn-secondary ${settings.provider === 'shared' ? '!border-[#8b5254] !text-[#8b5254]' : ''}`}>Cabinet shared</button>
               <button role="radio" aria-checked={usingOpenRouter} title="Your OpenRouter key — free model cycle, or a pinned paid model." onClick={() => { setTestState('idle'); setTestMessage(''); onSettingsChange({ ...settings, provider: 'openrouter' }); }} className={`btn-secondary ${usingOpenRouter ? '!border-[#8b5254] !text-[#8b5254]' : ''}`}>OpenRouter</button>
               <button role="radio" aria-checked={usingGroq} title="Your Groq key — free tier, no card." onClick={() => { setTestState('idle'); setTestMessage(''); onSettingsChange({ ...settings, provider: 'groq' }); }} className={`btn-secondary ${usingGroq ? '!border-[#8b5254] !text-[#8b5254]' : ''}`}>Groq free</button>
-              <button role="radio" aria-checked={usingDeepInfra} title="Your DeepInfra key — Qwen first, Llama 70B backup, card on file." onClick={() => { setTestState('idle'); setTestMessage(''); onSettingsChange({ ...settings, provider: 'deepinfra' }); }} className={`btn-secondary ${usingDeepInfra ? '!border-[#8b5254] !text-[#8b5254]' : ''}`}>DeepInfra</button>
+              <button role="radio" aria-checked={usingDeepInfra} title="Your DeepInfra key — Qwen first, card on file." onClick={() => { setTestState('idle'); setTestMessage(''); onSettingsChange({ ...settings, provider: 'deepinfra' }); }} className={`btn-secondary ${usingDeepInfra ? '!border-[#8b5254] !text-[#8b5254]' : ''}`}>DeepInfra</button>
               <button role="radio" aria-checked={usingTogether} title="Your Together key — pinned Qwen 30B, card required." onClick={() => { setTestState('idle'); setTestMessage(''); onSettingsChange({ ...settings, provider: 'together' }); }} className={`btn-secondary ${usingTogether ? '!border-[#8b5254] !text-[#8b5254]' : ''}`}>Together</button>
               <button role="radio" aria-checked={usingAlibaba} title="Your Alibaba key — Model Studio codes, free trial quota." onClick={() => { setTestState('idle'); setTestMessage(''); onSettingsChange({ ...settings, provider: 'alibaba' }); }} className={`btn-secondary ${usingAlibaba ? '!border-[#8b5254] !text-[#8b5254]' : ''}`}>Alibaba</button>
             </div>
@@ -1878,7 +1878,7 @@ function SettingsDrawer({ philosophers, activeSlugs, togglePhilosopher, settings
                   {keySaved && <span className="text-xs italic self-center text-[#4a6b3f]">Saved in this browser.</span>}
                 </div>
                 {testMessage && <p className={`text-sm italic ${testState === 'ok' ? 'text-[#4a6b3f]' : 'text-[#8b5254]'}`}>{testMessage}</p>}
-                <p className="text-xs text-[#465f75]/70">Qwen3-30B-A3B speaks first; Llama 3.3 70B takes over automatically if it fails (never on key/quota errors — a backup cannot fix those) — the export says who spoke. Needs a card on file — get a key at <a className="underline" href="https://deepinfra.com/dash/api_keys" target="_blank" rel="noreferrer">deepinfra.com</a>.</p>
+                <p className="text-xs text-[#465f75]/70">Qwen3-30B-A3B speaks first; failures halt visibly with resume — no weak rescue voice. The export says who spoke. Needs a card on file — get a key at <a className="underline" href="https://deepinfra.com/dash/api_keys" target="_blank" rel="noreferrer">deepinfra.com</a>.</p>
                 <label htmlFor="di-primary" className="font-heading text-sm uppercase tracking-[0.16em] text-[#4a392d] pt-2 block">First voice</label>
                 <select id="di-primary" value={settings.deepInfraPrimary} onChange={(event) => onSettingsChange({ ...settings, deepInfraPrimary: event.target.value as DeepInfraPrimary })} className="w-full bg-[#eae1ca]/60 border border-[#4a392d]/25 rounded-sm p-3 text-[15px] text-[#465f75] focus:outline-none focus:ring-2 focus:ring-[#8b5254]/30">
                   {DEEPINFRA_PRIMARIES.map((p) => (
@@ -1888,7 +1888,7 @@ function SettingsDrawer({ philosophers, activeSlugs, togglePhilosopher, settings
                 {(() => {
                   const picked = DEEPINFRA_PRIMARIES.find((p) => p.id === settings.deepInfraPrimary) ?? DEEPINFRA_PRIMARIES[0];
                   return (
-                    <p className="text-xs text-[#465f75]/70">Speaks first: <span className="font-heading">{picked.model}</span> — {picked.why} Backup: {DEEPINFRA_BACKUP_LABEL}</p>
+                    <p className="text-xs text-[#465f75]/70">Speaks first: <span className="font-heading">{picked.model}</span> — {picked.why}</p>
                   );
                 })()}
               </>

@@ -3,10 +3,9 @@ import { LlmError, REPAIR_SUFFIX, incrementRepair, parseTurnOutput, recordUsage,
 /**
  * DeepInfra direct provider (visitor's own key).
  * OpenAI-compatible `chat/completions` at api.deepinfra.com/v1/openai.
- * Qwen3-30B-A3B speaks first (sole primary since Sep 21 2026 — DeepSeek
- * parked entirely under the gibberish rule); if it fails on anything but
- * auth/quota (same key, same credits — a backup can't help those),
- * Llama 3.3 70B Turbo takes the turn so the sitting survives.
+ * The visitor's chosen primary speaks; failures halt visibly with resume —
+ * no backup model (Sep 21 2026: the Llama rescue spoke too weakly to keep;
+ * a bad turn is worse than a paused sitting).
  * `lastDeepInfraModel` records who
  * actually spoke for the export provenance trail. Turns try
  * `response_format: json_object` first, plain fallback on 400. The Qwen
@@ -19,7 +18,6 @@ import type { DeepInfraModel, DeepInfraPrimary } from '@/lib/settings';
 
 export const DEEPINFRA_MODEL_QWEN: DeepInfraModel = 'Qwen/Qwen3-30B-A3B';
 export const DEEPINFRA_MODEL_QWEN14B: DeepInfraModel = 'Qwen/Qwen3-14B';
-export const DEEPINFRA_MODEL_BACKUP: DeepInfraModel = 'meta-llama/Llama-3.3-70B-Instruct-Turbo';
 
 /** Visitor's first voice (30B default; 14B cheapest proven, probed live). */
 export function resolveDeepInfraPrimary(primary: DeepInfraPrimary): DeepInfraModel {
@@ -204,38 +202,20 @@ export async function generateTurnDeepInfra({ apiKey, primary, systemPrompt, use
       return repaired;
     }
   };
-  try {
-    return await runFlow(first);
-  } catch (error) {
-    // Auth/quota belong to the key, not the model — a backup would fail
-    // identically, so don't burn a second call. Anything else (server death,
-    // retired ID, mangled JSON) is worth one Llama rescue before halting.
-    if (error instanceof LlmError && (error.code === 'auth' || error.code === 'quota')) throw error;
-    if (typeof console !== 'undefined') console.warn(`[DeepInfra] primary ${first} failed, trying backup ${DEEPINFRA_MODEL_BACKUP}:`, error instanceof Error ? error.message : error);
-    try {
-      return await runFlow(DEEPINFRA_MODEL_BACKUP);
-    } catch (backupError) {
-      if (typeof console !== 'undefined') console.error('[DeepInfra] backup also failed:', backupError instanceof Error ? backupError.message : backupError);
-      throw backupError;
-    }
-  }
+  // No backup model: failures halt visibly with resume (Sep 21 2026 —
+  // Llama removed for weak prompt adherence; a bad turn is worse than
+  // a paused sitting).
+  return await runFlow(first);
 }
 
-/** Plain-text path for the Philosophers' Service desk: same failover order,
+/** Plain-text path for the Philosophers' Service desk: same primary,
  * no JSON contract — the reply is the answer. */
 export async function generateTextDeepInfra({ apiKey, primary, systemPrompt, userMessage }: { apiKey: string; primary: DeepInfraPrimary; systemPrompt: string; userMessage: string }): Promise<string> {
   const first = resolveDeepInfraPrimary(primary);
   const post = (model: DeepInfraModel) => postDeepInfra({ apiKey, model, systemPrompt, maxTokens: DEEPINFRA_MAX_TOKENS.normal, useJsonMode: false }, userMessage);
-  try {
-    const text = await post(first);
-    lastDeepInfraModel = first;
-    return text;
-  } catch (error) {
-    if (error instanceof LlmError && (error.code === 'auth' || error.code === 'quota')) throw error;
-    const text = await post(DEEPINFRA_MODEL_BACKUP);
-    lastDeepInfraModel = DEEPINFRA_MODEL_BACKUP;
-    return text;
-  }
+  const text = await post(first);
+  lastDeepInfraModel = first;
+  return text;
 }
 
 /** Cheap key check: one tiny call against the chosen primary. */

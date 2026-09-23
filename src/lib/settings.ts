@@ -23,9 +23,9 @@ export const GROQ_MODEL_OPTIONS = ['qwen/qwen3.8-27b'];
 export const OPENROUTER_PAID_OPTIONS = ['qwen/qwen3.7-plus', 'qwen/qwen3.7-flash', 'qwen/qwen3.8-flash'];
 export const ALIBABA_MODEL_OPTIONS = ['qwen3.8-max', 'qwen3.7-plus', 'qwen3.8-27b', 'qwen3.8-flash'];
 
-export type DeepInfraModel = 'Qwen/Qwen3-30B-A3B' | 'Qwen/Qwen3-14B' | 'meta-llama/Llama-3.3-70B-Instruct-Turbo';
+export type DeepInfraModel = 'Qwen/Qwen3-30B-A3B' | 'Qwen/Qwen3-14B';
 
-/** Who speaks first on DeepInfra (backup Llama rescues either). */
+/** Who speaks first on DeepInfra (failures halt visibly — no backup model). */
 export type DeepInfraPrimary = 'qwen30b' | 'qwen14b';
 
 /** Transparency rule: every option names its exact model ID and why it is
@@ -35,9 +35,6 @@ export const DEEPINFRA_PRIMARIES: { id: DeepInfraPrimary; label: string; model: 
   { id: 'qwen30b', label: 'Qwen3-30B-A3B', model: 'Qwen/Qwen3-30B-A3B', why: 'Default. Tuning target: best dilemma-grasp measured, ~1–2 min debates, ~$0.03/sitting. Echo clusters + unspoken history still open.' },
   { id: 'qwen14b', label: 'Qwen3-14B', model: 'Qwen/Qwen3-14B', why: 'Cheapest proven paid engine (~$0.021/sitting); tuning track. Slow pipe (42s probe), over budget — needs room, not haste.' },
 ];
-
-/** Llama rescue model, named in the UI beside the primary. */
-export const DEEPINFRA_BACKUP_LABEL = 'Llama 3.3 70B (meta-llama/Llama-3.3-70B-Instruct-Turbo) — rescue only, never first choice (weak prompt adherence).';
 
 export type TurnEconomy = 'full' | 'efficient';
 
