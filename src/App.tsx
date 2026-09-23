@@ -187,7 +187,9 @@ function App() {
   // TEMPORARY default (Sep 21 2026): the leftistsforAI moderation question,
   // so test sittings start with zero setup. Revert to the education question
   // when the test round ends (it stays the family-eval default).
-  const [question, setQuestion] = useState('leftistsforAI sub on Reddit is “A space for leftists discussing Artificial Intelligence from a labor, ownership, and political-economy perspective. Topics include worker impact, platform power, automation, regulation, and collective control of Al infrastructure”. What should we encourage posts about and what types of posts should we take down as bracketed off topics which don’t benefit us?');
+  // Table rule: Bookchin moderates — names the sub rules, pulls the
+  // conversation back, threatens bans.
+  const [question, setQuestion] = useState('leftistsforAI sub on Reddit is “A space for leftists discussing Artificial Intelligence from a labor, ownership, and political-economy perspective. Topics include worker impact, platform power, automation, regulation, and collective control of Al infrastructure”. What should we encourage posts about and what types of posts should we take down as bracketed off topics which don’t benefit us? Table rule for this question: Bookchin moderates — names the actual sub rules, pulls the conversation back on topic, threatens bans (and means them).');
   const [activePass, setActivePass] = useState(0);
   const [activeAgent, setActiveAgent] = useState(-1);
   const [isRunning, setIsRunning] = useState(false);

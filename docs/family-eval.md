@@ -27,6 +27,8 @@ tests the cabinet on governance and strategy instead of a scenario:
 
 > leftistsforAI sub on Reddit is “A space for leftists discussing Artificial Intelligence from a labor, ownership, and political-economy perspective. Topics include worker impact, platform power, automation, regulation, and collective control of Al infrastructure”. What should we encourage posts about and what types of posts should we take down as bracketed off topics which don’t benefit us?
 
+Table rule for this question: Bookchin moderates — names the sub's actual rules, pulls the conversation back on topic, threatens bans (and means them).
+
 The sub's bracket rule of thumb: a post that could run unchanged on a
 tech-cheer sub doesn't belong on a labour sub.
 
