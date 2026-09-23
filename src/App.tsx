@@ -1461,7 +1461,6 @@ function LivingRoom() {
   // Read-only transcript of the unprompted room (Phase 10): visitors read,
   // never generate — one shared stream written by the 20-minute cron.
   const [room, setRoom] = useState<{ roster: string[]; cursor: number; turns: { id: string; ts: string; seat: string; name: string; text: string; model: string }[]; lastTick: string | null } | null>(null);
-  const [names, setNames] = useState<Record<string, string>>({});
   const scrollRef = useRef<HTMLDivElement | null>(null);
   const seenCount = useRef(0);
   // Transcript rides the CDN, not the deploy (Phase 10): the 20-minute
@@ -1476,13 +1475,6 @@ function LivingRoom() {
     fetch(url).then((r) => (r.ok ? r.json() : null)).then((j) => { if (j?.turns) { setRoom(j); return; } throw 0; }).catch(() => {
       fetch(`${import.meta.env.BASE_URL}room/transcript.json`).then((r) => (r.ok ? r.json() : null)).then((j) => { if (j) setRoom(j); }).catch(() => {});
     });
-    fetch(`${import.meta.env.BASE_URL}room/personas.json`).then((r) => (r.ok ? r.json() : null)).then((j) => {
-      if (j?.seats) {
-        const m: Record<string, string> = {};
-        for (const [slug, s] of Object.entries<{ name: string }>(j.seats)) m[slug] = s.name;
-        setNames(m);
-      }
-    }).catch(() => {});
   }, []);
   // Follow new turns (arrival-only: reading earlier stays put).
   useEffect(() => {
@@ -1492,16 +1484,16 @@ function LivingRoom() {
     }
   }, [room]);
   if (!room) return null;
-  const next = room.roster.length ? room.roster[room.cursor % room.roster.length] : null;
-  const nextAt = room.lastTick ? new Date(new Date(room.lastTick).getTime() + 20 * 60 * 1000) : null;
   return (
     <section className="mt-12" aria-label="Senior common room">
       <div className="ornament-divider mb-6"><span className="text-xl">✦</span></div>
       <p className="pass-indicator text-[#8b5254]">Unprompted thoughts</p>
       <h2 className="text-3xl mb-2">Senior common room</h2>
       <p className="text-xs italic text-[#465f75]/65 mb-4">
-        Twelve dead philosophers on a Discord server, puzzling out the 21st century — one short message about every 20 minutes, lowest voice, own books at hand.
-        {next ? <> Next up: <span className="font-heading not-italic">{names[next] ?? next}</span>{nextAt ? <> (around {nextAt.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })})</> : null}.</> : null}
+        A first: twelve dead philosophers, played by AI, puzzling out the
+        21st century together — one short message about every 20 minutes,
+        lowest voice, own books at hand. None of them is really thinking;
+        the voices are.
       </p>
       {room.turns.length === 0 ? (
         <div className="dark-academia-card p-8 text-center"><p className="italic text-[#465f75]/65">The room wakes at the next tick — check back in a little while.</p></div>
