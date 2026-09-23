@@ -217,22 +217,20 @@ silently across versions.
   echo means shared invention never shared loans, grader counts loans per
   turn against the floor (Medium ≥2, High ≥4) while staying strict. Old
   grades stay on v2026-09-20e and earlier.
+- Prompt v2026-09-20g (Sep 20 2026, owner: one-liners are seats commenting
+  on PREV): margins notes read each seat's second-half reformulation
+  paragraph (own diagnosis/build, one-liner fallback), and all three
+  builders say so. Input stays paragraphs, never full turns. Old grades
+  stay on v2026-09-20f and earlier.
 - Prompt v2026-09-20h (Sep 20 2026, loan audit enforcement): VOICE source
   sentences gain fail teeth — Medium-or-above with no visible loans fails,
-  High with fewer than four fails. Sufficiency note: bench-rag ran fresh
-  (156 passages, 13 authors, seeded — not just the 4 owner turns), and it
-  exonerates retrieval (work-recall 0.99), so enforcement sits
-  generation-side; the grounded-vs-plain A/B is n=1 (suggestive — repeat
-  via `matrix --ground`), Kant noise-fragility and cross-author harshness
-  are watch items pending bigger samples. Old grades stay on v2026-09-20g
-  and earlier.
-- Prompt v2026-09-20g (Sep 20 2026, owner: one-liners are seats commenting
-  on PREV — worse than useless as note input): margins notes now read each
-  seat's second-half reformulation paragraph (own diagnosis/build, one-liner
-  fallback on truncated turns), and all three builders say so. Input stays
-  paragraphs, never full turns (shared 7k wall arithmetic still holds:
-  ~10 reformulations ≈ 700 tokens). Old grades stay on v2026-09-20f
-  and earlier.
+  High with fewer than four fails. Backed by fresh bench-rag (156 passages,
+  work-recall 0.99 exonerates retrieval — enforcement sits generation-side).
+  Old grades stay on v2026-09-20g and earlier.
+- Prompt v2026-09-20i (Sep 23 2026, owner: mourn/love/hate/fear on
+  repeat): feeling-verb palette broadened to twelve with no-repeat
+  rules, in cabinet prompts and room rules alike. Old grades stay on
+  v2026-09-20h and earlier.
 
 ### Embeddings (Phase 5)
 `test_embeddings.py` uses local Ollama `nomic-embed-text` (768 dims); the schema is
