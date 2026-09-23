@@ -999,7 +999,7 @@ function App() {
       ttsRef.current?.stop();
       return;
     }
-    ttsRef.current?.speak([{ id, heading: which === 'early' ? 'Notes from the margins, after pass 1' : which === 'end' ? 'Notes from the margins, closing' : 'Notes from the margins', text: note.text }]);
+    ttsRef.current?.speak([{ id, heading: which === 'early' ? 'Notes from the margins, Genzie, after pass 1' : which === 'end' ? 'Notes from the margins, Genzie, closing' : 'Notes from the margins, Genzie', text: note.text }]);
   };
 
   const startMeeting = () => {
@@ -1541,7 +1541,7 @@ function ReadingDeck({ entries, philosophers, readIdx, onNav, freshId, ttsSuppor
   if (!entry) return null;
   const upcoming = entries.slice(readIdx + 1, readIdx + 4);
   const behind = entries.length - 1 - readIdx;
-  const noteName = (which: 'early' | 'late' | 'end') => which === 'early' ? 'Notes from the margins (after pass 1)' : which === 'end' ? 'Notes from the margins (closing summary)' : 'Notes from the margins (before pass 3)';
+  const noteName = (which: 'early' | 'late' | 'end') => which === 'early' ? 'Notes from the margins (Genzie · after pass 1)' : which === 'end' ? 'Notes from the margins (Genzie · closing summary)' : 'Notes from the margins (Genzie · before pass 3)';
   const entryLabel = (e: DeckEntry): string => {
     if (e.kind === 'margins') return noteName(e.which);
     const p = philosophers.find((x) => x.id === e.intervention.philosopher_id);
@@ -1558,7 +1558,7 @@ function ReadingDeck({ entries, philosophers, readIdx, onNav, freshId, ttsSuppor
         const speaking = noteSpeaking(which);
         return (
         <article aria-label={noteName(which)} className="dark-academia-card p-5 md:p-8 max-w-3xl">
-          <p className="pass-indicator text-[#8b5254]">☞ {which === 'early' ? 'Notes from the margins · after pass 1' : which === 'end' ? 'Notes from the margins · closing summary' : 'Notes from the margins'}</p>
+          <p className="pass-indicator text-[#8b5254]">☞ {which === 'early' ? 'Notes from the margins (Genzie) · after pass 1' : which === 'end' ? 'Notes from the margins (Genzie) · closing summary' : 'Notes from the margins (Genzie)'}</p>
           {note.text ? (
             <>
               <p className="whitespace-pre-line text-[15px] leading-relaxed text-[#465f75] mt-3">{note.text}</p>
@@ -1627,7 +1627,7 @@ function ReadingDeck({ entries, philosophers, readIdx, onNav, freshId, ttsSuppor
                 return (
                   <button key={`margins-${next.which}`} onClick={() => onNav(readIdx + 1 + offset)} className="w-full text-left dark-academia-card px-4 py-3 flex items-center gap-3" aria-label={`Skip ahead to ${noteName(next.which)}`}>
                     <span className="w-7 h-7 rounded-full border border-[#8b5254] flex items-center justify-center font-heading text-sm shrink-0 text-[#8b5254]" aria-hidden="true">☞</span>
-                    <span className="font-heading text-base text-[#4a392d]">Notes from the margins</span>
+                    <span className="font-heading text-base text-[#4a392d]">Notes from the margins (Genzie)</span>
                     <span className="text-[10px] uppercase tracking-wider text-[#465f75]/60 ml-auto shrink-0">{next.which === 'early' ? 'After pass 1' : next.which === 'end' ? 'Closing summary' : 'Before pass 3'}</span>
                   </button>
                 );
