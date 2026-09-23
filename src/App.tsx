@@ -1491,7 +1491,7 @@ function LivingRoom() {
       <h2 className="text-3xl mb-2">Senior common room</h2>
       <p className="text-xs italic text-[#465f75]/65 mb-4">
         A first: twelve dead philosophers, played by AI, puzzling out the
-        21st century together — one short message about every 20 minutes,
+        21st century together — one short message whenever an idea appears,
         lowest voice, own books at hand. None of them is really thinking;
         the voices are.
       </p>
