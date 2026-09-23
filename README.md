@@ -20,7 +20,8 @@ Try it here: https://philosopherstable.netlify.app/
 **Key** — who pays for the thinking:
 - **Shared** (default): the cabinet's own key, no action needed. One quota split across every visitor (see below).
 - **OpenRouter**: your key. *Free cycle* hops across free models each turn so limits stretch; *Paid model* pins one ID (default `qwen/qwen3.7-plus`, $0.32/$1.28 per 1M — about six cents a session; dead pins fall through to the next option mid-sitting). Test-key button included; keys live in your browser only, never touch our servers (OpenRouter's free models may log prompts for training — the panel says so).
-- **Groq / DeepInfra / Together / Alibaba**: your key, picked or typed models (`qwen3.8-27b`, `Qwen3-30B-A3B`, Model Studio codes). Groq's free tier needs no card; DeepInfra and Together want one on file.
+- **Groq / DeepInfra / Together / Alibaba**: your key, picked or typed models (`qwen3.8-27b`, `Qwen3-30B-A3B`, Model Studio codes). Groq's free tier needs no card — but speaks Low only (its ~7k-token wall can't fit bigger prompts; Medium/High are blocked outright). DeepInfra and Together want a card on file.
+- What we'd pick (Sep 26 verdicts, prices are estimates from average tokens per sitting at Sep 26 API rates): quality `qwen3.8-max` via Alibaba (~$0.40) · value `qwen3.7-plus` via Alibaba (~$0.07) · free Groq Low or the OpenRouter free cycle ($0, when unthrottled).
 - Below the keys, the **Seats** tab holds who sits (toggle thinkers, hover any name for the two-line life), and the **Voice** tab holds
 - **how it speaks** (Low = plain words, temper unchanged; Medium = the standard seminar; High = full machinery, hostile where the author warrants it), **Long form** (~280 words a turn instead of ~100 — a 12-minute read becomes a 30-minute one), and **Turn economy** (Efficient trims the predecessor text re-sent each turn — the transcript stays whole; voices are never trimmed). Hover anything for the one-line version.
 
