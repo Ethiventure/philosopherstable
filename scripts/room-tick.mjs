@@ -3,6 +3,8 @@
  * Roster order, recent turns as context, lean Low persona, top-2 RAG
  * passages from the speaker's own shard, plain prose out (no JSON
  * contract — nothing to parse, nothing to repair).
+ * Loops forever: seat = roster[cursor % roster.length], then cursor + 1.
+ * No end state, no backfill — a missed tick is simply skipped.
  *
  *   GROQ_API_KEY=... node scripts/room-tick.mjs [--dry-run] [--seat genzie]
  *
