@@ -1,0 +1,15 @@
+# room-cron: fires the Senior Common Room tick every 45 minutes.
+# Deploy from this directory: `wrangler deploy` (after `wrangler secret put GH_PAT`).
+# Cron changes take up to ~15 min to spread across Cloudflare's network.
+name = "philosopherstable-room-cron"
+main = "worker.js"
+compatibility_date = "2026-09-01"
+
+# Public repo name — not a secret. The token (GH_PAT) is set separately
+# via `wrangler secret put` and never appears here.
+[vars]
+GH_REPO = "Ethiventure/philosopherstable"
+
+[triggers]
+# Minutes :00 and :45 of every hour, UTC = ~32 starts/day.
+crons = ["*/45 * * * *"]

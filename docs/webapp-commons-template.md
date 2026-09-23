@@ -177,6 +177,19 @@ gitignore lines, never pattern-only.
   transfer; the vocab lists don't.
 - Transitional toolkit: rationed openers with spent-tracking by opening
   signature. The rationing transfers; the phrases don't.
+- Ambient tick (unprompted room that writes itself): one central writer
+  (CI job holding the server key) appends one turn per start to a static
+  transcript file visitors only read; a `cursor % roster.length` loop with
+  no end state picks the speaker; missed ticks stay missed, never
+  backfilled. CI's own schedule throttles on quiet repos (a request, not
+  a promise — verified here: ~6 starts/day on a `*/20` line), so the
+  clock lives outside: a free-tier Cloudflare Worker calls the CI
+  dispatch address on a cron expression (`workers/room-cron/` pattern:
+  script + config + encrypted token, token scoped to start-workflows on
+  one repo, rotation = new token + same upload, no code change). Cadence
+  math rides in the open (starts/day × turns/start). Stall honesty is
+  part of the pattern: readers see why the room is quiet, never silence
+  dressed as activity. Per-app work: roster, budgets, cadence, token.
 
 ## Stays behind (content, never scaffolded)
 

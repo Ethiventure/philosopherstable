@@ -4,6 +4,24 @@ Low intensity, nothing dumbed down: every entry keeps the full fact,
 only the words stay simple. Newest first. The owner asked for this
 Sep 17 2026 — keep writing here, one entry per lesson.
 
+## A schedule is a request, not a promise (Sep 23 2026)
+A cron line says when you *want* something to run: five slots for
+minute, hour, day-of-month, month, weekday, so `*/45 * * * *` means
+"at minute 0 and 45 of every hour" — about 32 starts a day. But the
+machine that reads the line may still say "later": GitHub starts our
+every-20-minutes room schedule only ~6 times a day on a quiet repo
+(throttled, not broken — every start lands its turn, there are just
+fewer starts). The fix keeps the work where it was and moves only the
+clock: a tiny Cloudflare script (a Worker, free tier: 32 starts a day
+against 100,000 allowed) calls GitHub's "start this workflow now"
+address every 45 minutes. That call needs a token — a fine-grained one,
+this repo only, allowed to start workflows and nothing else, kept in
+the script's encrypted store and never in the repo. Tokens expire, so
+the recovery note says: new token, same upload command, no code change.
+Three clocks to keep straight: cron times are UTC, GitHub may delay any
+start during busy spells, and the file host needs minutes after each
+push before readers see the new line.
+
 ## Inventories become tics (Sep 22 2026)
 Anything enumerated in a prompt — slang words, modern examples, moves —
 comes back as a tic within a week: the model recites the list instead of

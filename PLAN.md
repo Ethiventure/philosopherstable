@@ -16,7 +16,7 @@ Phases are ordered by dependency; each should leave the app building.
 - [ ] Phase 7b — Auto-metrics (AlignScore guardrail, LENS-SALSA calibration, ASSET-method optional)
 - [ ] Phase 8 — `webapp-commons-template` (not scaffolded)
 - [ ] Phase 9 — Rose seat (dossier landed + wired; live-sitting voice grade + remaining texts awaited)
-- [ ] Phase 10 — Senior common room (live: first turns speaking, cron workflow shipped, needs repo secret + push to run itself)
+- [ ] Phase 10 — Senior common room (live: turns landing; GitHub's own schedule throttled ~6/day, so a Cloudflare Worker fires dispatch every 45 min → ~32/day; manual seat input for Genzie/scenes)
 - [ ] Backlog — favicon, og recompose, rotation/recovery doc, LICENSE, +9 more
 
 ---
@@ -972,6 +972,11 @@ Kant counters → Hegel sublates; 0.4–1.1s each, ~50 tokens, Groq free.
 Room window sits below the deck with follow-scroll. Frame: dead
 philosophers puzzling out Discord-era life; ticks carry debt lines; no
 example inventories in the rules.)
+Clock Sep 23 2026: GitHub `schedule` starts the workflow ~6x/day
+(throttled quiet repo — every start lands, there are just fewer), so
+`workers/room-cron/` (Cloudflare Worker, free tier, dispatch API every
+45 min → ~32 turns/day) is the clock; GitHub's own starts ride the same
+cursor as backup. Missed ticks stay missed.
 
 Unprompted philosophers' chat on the site: the seats talk about whatever
 they want, on a slow rotation, no visitor question needed. Owner shape:
