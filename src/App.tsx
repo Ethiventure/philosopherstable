@@ -35,7 +35,7 @@ import {
 } from '@/types';
 import { buildCodaEarlyPrompt, buildCodaEndPrompt, buildCodaPrompt, buildClosingScan, buildTurnInstruction, buildUserMessage, CODA_REPAIR_SUFFIX, CODA_SYSTEM, drawThreadCity, getTurnKind, GLOSSARY_SHAPE, LOW_CLOSING_REMINDER, PROMPT_VERSION, STRUCTURED_OUTPUT_HINT } from '@/lib/dialectic/prompts';
 import { LlmError, RATES_AS_OF, estimateCost, repairBreakdown, repairTotals, resetUsage, sharesPassage, usageTotals, type LlmErrorCode, type TurnOutput } from '@/lib/llm';
-import { DEEPINFRA_PRIMARIES, ALIBABA_MODEL_OPTIONS, CUSTOM_MODEL_VALUE, GROQ_MODEL_OPTIONS, OPENROUTER_PAID_OPTIONS, loadSettings, saveSettings, type CabinetSettings, type DeepInfraPrimary } from '@/lib/settings';
+import { DEEPINFRA_PRIMARIES, ALIBABA_MODEL_OPTIONS, CUSTOM_MODEL_VALUE, GROQ_MODEL_OPTIONS, OPENROUTER_PAID_OPTIONS, clearProviderHealth, loadProviderHealth, loadSettings, saveProviderHealth, saveSettings, type CabinetSettings, type DeepInfraPrimary, type ProviderHealth } from '@/lib/settings';
 import { applyDisplay, loadDisplay, saveDisplay } from '@/lib/preferences';
 import { generateTurnGroq, testGroqKey } from '@/lib/groq';
 import { generateTurnShared } from '@/lib/shared';
@@ -1394,6 +1394,11 @@ function App() {
         {interventions.length > orderedPhilosophers.length && <PositionComparison philosophers={orderedPhilosophers} interventions={interventions} onOpenSources={openSourcesAt} />}
       </main>
 
+      <footer className="mt-12 text-center">
+        <div className="ornament-divider mb-4"><span className="text-xl">✦</span></div>
+        <p className="text-xs italic text-[#465f75]/65">This cabinet is free software — <a className="underline underline-offset-2 decoration-[#8b5254]/40 hover:decoration-[#8b5254]" href="https://github.com/Ethiventure/philosopherstable" target="_blank" rel="noreferrer">read its source</a> (AGPL-3.0-only).</p>
+      </footer>
+
       {/* Halt banner: the inline error panel lives up at the question card, so
           a halt mid-deck would otherwise pass unnoticed. Fixed, so it alerts
           wherever the reader sits; Details scrolls to the full recovery panel. */}
@@ -1723,6 +1728,19 @@ function SettingsDrawer({ philosophers, activeSlugs, togglePhilosopher, settings
   }, [providerNow]);
   const [testState, setTestState] = useState<'idle' | 'testing' | 'ok' | 'error'>('idle');
   const [testMessage, setTestMessage] = useState('');
+  const [health, setHealth] = useState<Record<string, ProviderHealth>>(() => loadProviderHealth());
+  const recordHealth = (provider: string, ok: boolean, detail: string) => {
+    if (!provider) return;
+    saveProviderHealth(provider, { state: ok ? 'ok' : 'error', at: new Date().toISOString(), detail: detail.slice(0, 120) });
+    setHealth(loadProviderHealth());
+  };
+  const lastCheckLine = (provider: string) => {
+    const h = health[provider];
+    if (!h) return null;
+    const when = new Date(h.at);
+    const whenStr = isNaN(when.getTime()) ? '' : when.toLocaleString([], { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' });
+    return <p className={`text-xs italic ${h.state === 'ok' ? 'text-[#4a6b3f]' : 'text-[#8b5254]'}`}>Last check{whenStr ? ` ${whenStr}` : ''} — {h.state === 'ok' ? 'OK' : 'failed'}: {h.detail}</p>;
+  };
   const [tab, setTab] = useState<'key' | 'seats' | 'voice' | 'display'>(initialTab);
   const usingOpenRouter = settings.provider === 'openrouter';
   const usingGroq = settings.provider === 'groq';
@@ -1730,11 +1748,13 @@ function SettingsDrawer({ philosophers, activeSlugs, togglePhilosopher, settings
   const usingTogether = settings.provider === 'together';
   const usingAlibaba = settings.provider === 'alibaba';
   const activeKeyInput = usingGroq ? groqKeyInput : usingOpenRouter ? orKeyInput : usingDeepInfra ? deepInfraKeyInput : usingTogether ? togetherKeyInput : usingAlibaba ? alibabaKeyInput : '';
+  const activePid = usingGroq ? 'groq' : usingOpenRouter ? 'openrouter' : usingDeepInfra ? 'deepinfra' : usingTogether ? 'together' : usingAlibaba ? 'alibaba' : '';
   const activeStoredKey = usingGroq ? settings.groqApiKey : usingOpenRouter ? settings.openRouterApiKey : usingDeepInfra ? settings.deepInfraApiKey : usingTogether ? settings.togetherApiKey : usingAlibaba ? settings.alibabaApiKey : '';
   const keySaved = activeKeyInput === activeStoredKey && activeStoredKey.length > 0;
   const runTest = async () => {
     const key = activeKeyInput.trim();
     if (!key) return;
+    const pid = usingGroq ? 'groq' : usingOpenRouter ? 'openrouter' : usingDeepInfra ? 'deepinfra' : usingTogether ? 'together' : usingAlibaba ? 'alibaba' : '';
     setTestState('testing');
     setTestMessage('');
     try {
@@ -1742,31 +1762,38 @@ function SettingsDrawer({ philosophers, activeSlugs, togglePhilosopher, settings
         await testGroqKey(key, settings.groqModel);
         setTestState('ok');
         setTestMessage(`Key works on ${settings.groqModel}. Saved for this browser.`);
+        recordHealth(pid, true, settings.groqModel);
         onSettingsChange({ ...settings, groqApiKey: key });
       } else if (usingOpenRouter) {
         const modelUsed = await testOpenRouterKey(key, settings.openRouterMode, settings.openRouterModel);
         setTestState('ok');
         setTestMessage(`Key works (via ${modelUsed}). Saved for this browser.`);
+        recordHealth(pid, true, modelUsed);
         onSettingsChange({ ...settings, openRouterApiKey: key });
       } else if (usingDeepInfra) {
         await testDeepInfraKey(key, settings.deepInfraPrimary);
         setTestState('ok');
         setTestMessage(`Key works (${DEEPINFRA_PRIMARIES.find((p) => p.id === settings.deepInfraPrimary)?.label ?? settings.deepInfraPrimary} first). Saved for this browser.`);
+        recordHealth(pid, true, DEEPINFRA_PRIMARIES.find((p) => p.id === settings.deepInfraPrimary)?.model ?? settings.deepInfraPrimary);
         onSettingsChange({ ...settings, deepInfraApiKey: key });
       } else if (usingTogether) {
         await testTogetherKey(key);
         setTestState('ok');
         setTestMessage(`Key works on ${TOGETHER_MODEL}. Saved for this browser.`);
+        recordHealth(pid, true, TOGETHER_MODEL);
         onSettingsChange({ ...settings, togetherApiKey: key });
       } else if (usingAlibaba) {
         await testAlibabaKey(key, settings.alibabaModel);
         setTestState('ok');
         setTestMessage(`Key works on ${settings.alibabaModel}. Saved for this browser.`);
+        recordHealth(pid, true, settings.alibabaModel);
         onSettingsChange({ ...settings, alibabaApiKey: key });
       }
     } catch (error) {
+      const msg = error instanceof Error ? error.message : 'Key test failed.';
       setTestState('error');
-      setTestMessage(error instanceof Error ? error.message : 'Key test failed.');
+      setTestMessage(msg);
+      recordHealth(pid, false, msg);
     }
   };
   const clearKey = () => {
@@ -1788,6 +1815,8 @@ function SettingsDrawer({ philosophers, activeSlugs, togglePhilosopher, settings
       setAlibabaKeyInput('');
       onSettingsChange({ ...settings, alibabaApiKey: '' });
     }
+    clearProviderHealth(usingGroq ? 'groq' : usingOpenRouter ? 'openrouter' : usingDeepInfra ? 'deepinfra' : usingTogether ? 'together' : usingAlibaba ? 'alibaba' : '');
+    setHealth(loadProviderHealth());
   };
   const updateDisplay = (partial: Partial<AccessibilitySettings>) => {
     const next = { ...display, ...partial };
@@ -1838,6 +1867,7 @@ function SettingsDrawer({ philosophers, activeSlugs, togglePhilosopher, settings
                   {keySaved && <span className="text-xs italic self-center text-[#4a6b3f]">Saved in this browser.</span>}
                 </div>
                 {testMessage && <p className={`text-sm italic ${testState === 'ok' ? 'text-[#4a6b3f]' : 'text-[#8b5254]'}`}>{testMessage}</p>}
+                {activePid ? lastCheckLine(activePid) : null}
                 <p className="text-xs text-[#465f75]/70">Free tier, no card: 30 requests/min, ~1K/day shared across your uses. Get a key at <a className="underline" href="https://console.groq.com/keys" target="_blank" rel="noreferrer">console.groq.com</a>.</p>
                 <label htmlFor="groq-model" className="font-heading text-sm uppercase tracking-[0.16em] text-[#4a392d] pt-2 block">Model ID</label>
                 <ModelIdField id="groq-model" value={settings.groqModel} options={GROQ_MODEL_OPTIONS} placeholder="qwen/qwen3.8-27b" onPick={(m) => { onSettingsChange({ ...settings, groqModel: m }); setTestState('idle'); setTestMessage(''); }} />
@@ -1853,6 +1883,7 @@ function SettingsDrawer({ philosophers, activeSlugs, togglePhilosopher, settings
                   {keySaved && <span className="text-xs italic self-center text-[#4a6b3f]">Saved in this browser.</span>}
                 </div>
                 {testMessage && <p className={`text-sm italic ${testState === 'ok' ? 'text-[#4a6b3f]' : 'text-[#8b5254]'}`}>{testMessage}</p>}
+                {activePid ? lastCheckLine(activePid) : null}
                 <p className="text-xs text-[#465f75]/70">Get a free key at <a className="underline" href="https://openrouter.ai/keys" target="_blank" rel="noreferrer">openrouter.ai/keys</a> (no card needed).</p>
                 <span className="font-heading text-sm uppercase tracking-[0.16em] text-[#4a392d] pt-2 block">Model choice</span>
                 <div className="flex gap-2" role="radiogroup" aria-label="OpenRouter model choice">
@@ -1880,6 +1911,7 @@ function SettingsDrawer({ philosophers, activeSlugs, togglePhilosopher, settings
                   {keySaved && <span className="text-xs italic self-center text-[#4a6b3f]">Saved in this browser.</span>}
                 </div>
                 {testMessage && <p className={`text-sm italic ${testState === 'ok' ? 'text-[#4a6b3f]' : 'text-[#8b5254]'}`}>{testMessage}</p>}
+                {activePid ? lastCheckLine(activePid) : null}
                 <p className="text-xs text-[#465f75]/70">Qwen3-30B-A3B speaks first; failures halt visibly with resume — no weak rescue voice. The export says who spoke. Needs a card on file — get a key at <a className="underline" href="https://deepinfra.com/dash/api_keys" target="_blank" rel="noreferrer">deepinfra.com</a>.</p>
                 <label htmlFor="di-primary" className="font-heading text-sm uppercase tracking-[0.16em] text-[#4a392d] pt-2 block">First voice</label>
                 <select id="di-primary" value={settings.deepInfraPrimary} onChange={(event) => onSettingsChange({ ...settings, deepInfraPrimary: event.target.value as DeepInfraPrimary })} className="w-full bg-[#eae1ca]/60 border border-[#4a392d]/25 rounded-sm p-3 text-[15px] text-[#465f75] focus:outline-none focus:ring-2 focus:ring-[#8b5254]/30">
@@ -1904,6 +1936,7 @@ function SettingsDrawer({ philosophers, activeSlugs, togglePhilosopher, settings
                   {keySaved && <span className="text-xs italic self-center text-[#4a6b3f]">Saved in this browser.</span>}
                 </div>
                 {testMessage && <p className={`text-sm italic ${testState === 'ok' ? 'text-[#4a6b3f]' : 'text-[#8b5254]'}`}>{testMessage}</p>}
+                {activePid ? lastCheckLine(activePid) : null}
                 <p className="text-xs text-[#465f75]/70">Pinned model <span className="font-heading">Qwen/Qwen3-30B-A3B</span> — paste exactly that; verify it at <a className="underline" href="https://api.together.ai/models" target="_blank" rel="noreferrer">api.together.ai/models</a> if calls 404. The priciest route for these weights, and untested here — DeepInfra serves the same model cheaper. Get a key at <a className="underline" href="https://api.together.ai/settings/api-keys" target="_blank" rel="noreferrer">api.together.ai</a> (requires a card upfront).</p>
               </>
             ) : usingAlibaba ? (
@@ -1916,6 +1949,7 @@ function SettingsDrawer({ philosophers, activeSlugs, togglePhilosopher, settings
                   {keySaved && <span className="text-xs italic self-center text-[#4a6b3f]">Saved in this browser.</span>}
                 </div>
                 {testMessage && <p className={`text-sm italic ${testState === 'ok' ? 'text-[#4a6b3f]' : 'text-[#8b5254]'}`}>{testMessage}</p>}
+                {activePid ? lastCheckLine(activePid) : null}
                 <label htmlFor="ali-model" className="font-heading text-sm uppercase tracking-[0.16em] text-[#4a392d] pt-2 block">Model code</label>
                 <ModelIdField id="ali-model" value={settings.alibabaModel} options={ALIBABA_MODEL_OPTIONS} placeholder="qwen3.8-max" onPick={(m) => { onSettingsChange({ ...settings, alibabaModel: m }); setTestState('idle'); setTestMessage(''); }} />
                 <p className="text-xs text-[#465f75]/70">Default: <span className="font-heading">qwen3.8-max</span> — the finest voice, dearest price. If it stumbles the cabinet falls through <span className="font-heading">qwen3.7-plus</span>, then <span className="font-heading">qwen3.8-27b</span>, then <span className="font-heading">qwen3.8-flash</span>, and the export confesses who actually spoke. Free trial quota to Dec 16 2026 ($0 on quota). Model Studio codes vary by region — type the exact code and press Test key. Free quota pools in Singapore; enable Stop-on-Exhaust so overruns stop instead of billing. Check remaining quota in Model Studio before a big sitting.</p>

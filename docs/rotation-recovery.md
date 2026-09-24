@@ -1,43 +1,59 @@
-# Rotation & recovery (write before needed — standing rule)
+# Rotation & recovery
 
-## Key rotation
+One page: every secret's home, how to rotate it, the quota caps, and how
+to roll back. Names only — values live on the MacBook and iPad, never in
+this repo, never in docs, never in chat.
 
-- Shared keys (`GROQ_API_KEY`, `ALIBABA_API_KEY`) live ONLY in the Netlify
-  dashboard (Site settings → Environment variables), never in the repo or
-  bundle. If one leaks: rotate at the provider console
-  (console.groq.com, Model Studio) AND replace the Netlify env value —
-  no code change, redeploy picks it up. Then check `git log -S` that the
-  value never entered history; if it did, treat it as burned and rotate
-  again after cleaning.
-- Visitor keys live in browser `localStorage` only. Clear one in
-  Settings → Key → Clear. Clearing site data wipes them (keep a copy
-  elsewhere); they never sync between devices.
-- Trial quota ends Dec 16 2026 (Alibaba) — re-hunt the free pipe before
-  expiry (tried-log holds the candidates), or paid takes over silently.
+## Secrets (names only)
 
-## Quota recovery
+| Secret | Lives in | Serves |
+|---|---|---|
+| `GROQ_API_KEY` | Netlify env; GitHub repo secret; local `.env` (dev only) | Shared sittings (Netlify), room ticks (GitHub cron) |
+| `ALIBABA_API_KEY` | Netlify env | Shared route when set (Groq becomes fallback) |
+| `GH_PAT` | Cloudflare Worker secret | Room clock trigger (starts the tick workflow) |
+| Visitor BYOK keys | Browser `localStorage` only | Owner/visitor personal pipes |
+| `TEST_*` | `.env.test.local` (gitignored) | Local probes/evals, never CI |
 
-- Shared: per-IP 60/day + global 900/day (host env overrides). Per-minute
-  429s recover in minutes (resume), daily caps at midnight UTC.
-- Visitor: your key, your quota — usage links live in each halt panel.
-- Stop-on-Exhaust on Model Studio keys turns overruns into 403s, not bills.
-- Any halt preserves progress: resume, switch provider, or check usage —
-  never lost work.
+`.env`, `.env.test.local`, `.netlify` are gitignored (verified). History
+holds no values — re-verify with the security sweep after any key-handling
+change (Module 8 pattern).
 
-## Code rollback
+## Rotation (leak or expiry — no code change, ever)
 
-- Every change ships as one small commit (`git log --oneline` tells the
-  story). Revert one: `git revert <hash>`, push, Netlify redeploys.
-- Prompt changes ride `PROMPT_VERSION` — grades stay pinned to the version
-  they were earned on, so rollback never confuses old verdicts.
-- Never rewrite pushed history (force-push) except for a leaked secret,
-  and then only with owner sign-off.
+1. Make the new value at the provider (Groq console / Alibaba Model
+   Studio / GitHub fine-grained token: this repo, Actions read+write).
+2. Put it where it lives:
+   - Netlify env → **redeploy** (functions only pick it up on a new deploy).
+   - GitHub repo secret → takes effect on the next tick run.
+   - Cloudflare Worker secret → deploys immediately on save.
+   - Local `.env` / `.env.test.local` → edit the file, nothing else.
+3. Prove it: one shared sitting (Netlify), one manual tick run (GitHub),
+   one 45-min boundary (Worker). Delete the old value at the provider.
 
-## Deploy recovery
+## Quota caps (shared path)
 
-- Netlify builds `main` on push. If the site looks stale: hard-refresh
-  first (stale tabs lie), then check Dashboard → Deploys for the commit
-  hash — red builds name their cause in the log.
-- Local check before pushing: `npm run test:all` must end ALL GREEN.
-- Netlify free functions time out at 10s — slow shared turns die on
-  deploy; client resume covers it, and the halt panel says so.
+- Per address: 60 turns/day (~2 full sessions). Global: 900/day.
+- Hit either → the cabinet pauses with resume/wait/BYOK recovery; nothing is lost.
+- Groq free ceiling behind it all: ~1K requests/day. Room clock uses ~32.
+
+## Rollback markers
+
+- Prompts: lineage log in PLAN.md, one line per change — revert any
+  single change with `git revert <hash>`. Prompt version rides the
+  export; grades never transfer across versions.
+- App: Netlify keeps the previous deploy — one-click rollback there.
+- Room clock: 2-day rule (PLAN Phase 10) — Worker unproven → delete it,
+  GitHub schedule stays. Comparison is turns/day.
+
+## Recovery scenarios
+
+- **Shared quota exhausted:** wait (resets midnight UTC) or add a personal
+  key in Settings → Key. Sittings resume where they paused.
+- **Room stall, GitHub-paced:** normal (~6/day). Check Actions → room-tick
+  for red runs; read the `SKIP:` line.
+- **Room stall, Worker live:** check Worker View events (firings?) then
+  Actions runs (starting?). No firings → trigger didn't save; firings
+  without runs → token/permission; runs without turns → read `SKIP:`.
+- **Bad deploy:** roll back in Netlify; the previous deploy is kept.
+- **Shared key invalid (401):** rotate per above; the app names the fault
+  plainly (`auth`) instead of failing silently.

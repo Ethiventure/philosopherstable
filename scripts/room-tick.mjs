@@ -6,7 +6,7 @@
  * Loops forever: seat = roster[cursor % roster.length], then cursor + 1.
  * No end state, no backfill — a missed tick is simply skipped.
  *
- *   GROQ_API_KEY=... node scripts/room-tick.mjs [--dry-run] [--seat genzie]
+ *   GROQ_API_KEY=... node scripts/room-tick.mjs [--dry-run] [--seat genzie] [--turns 3]
  *
  * Budget per tick (~3k input tokens, well inside Groq's 7k wall):
  * persona ~1000 + 8 recent turns + own top-up ~1200 + 2 passages ~400 + rules ~350.
@@ -59,12 +59,20 @@ if (newcomer) {
   let guard = 0;
   while (t.roster[t.cursor % t.roster.length] !== newcomer && guard++ < 1000) t.cursor += 1;
 }
-// Manual override (one-off, rotation untouched): --seat genzie makes
-// Genzie speak next; the cursor still advances, so the cron resumes
-// its normal order on the following tick.
-let slug = t.roster[t.cursor % t.roster.length];
+// Manual scene controls: --seat <slug> sets the FIRST speaker (the rest
+// follow roster order, so a barge gets answered); --turns <n> writes n
+// turns in one run (1 default, 5 max — each turn sees the one before,
+// so a run plays a scene, not a batch). A failed turn aborts the run;
+// the workflow only commits on success, so scenes are all-or-nothing.
+const turnsArg = Number(process.argv[process.argv.indexOf('--turns') + 1]);
+const TURNS = process.argv.includes('--turns') ? Math.min(5, Math.max(1, Math.floor(turnsArg) || 1)) : 1;
 const seatFlag = process.argv.indexOf('--seat');
-if (seatFlag !== -1 && process.argv[seatFlag + 1]) slug = process.argv[seatFlag + 1];
+const firstSeat = seatFlag !== -1 && process.argv[seatFlag + 1] ? process.argv[seatFlag + 1] : null;
+if (firstSeat && !personas[firstSeat]) fail(`no persona for ${firstSeat}`);
+const key = (process.env.GROQ_API_KEY || process.env.TEST_GROQ_KEY || '').trim();
+if (!DRY && !key) fail('no GROQ_API_KEY (or TEST_GROQ_KEY) in env');
+for (let turn = 1; turn <= TURNS; turn++) {
+const slug = turn === 1 && firstSeat ? firstSeat : t.roster[t.cursor % t.roster.length];
 const seat = personas[slug];
 if (!seat) fail(`no persona for ${slug}`);
 const recent = (t.turns || []).slice(-8);
@@ -111,14 +119,12 @@ const userMessage = [
 const systemPrompt = `${seat.persona}\n\n${ROOM_RULES}`;
 
 const inEst = Math.round((systemPrompt.length + userMessage.length) / 4);
-console.log(`tick: ${seat.name} (${slug}) after ${recent.length} turns · ~${inEst} in-tokens · model ${MODEL}`);
+console.log(`tick ${turn}/${TURNS}: ${seat.name} (${slug}) after ${recent.length} turns · ~${inEst} in-tokens · model ${MODEL}`);
 if (DRY) {
   console.log('--- system head ---\n' + systemPrompt.slice(0, 300) + '\n--- user head ---\n' + userMessage.slice(0, 400));
   process.exit(0);
 }
 
-const key = (process.env.GROQ_API_KEY || process.env.TEST_GROQ_KEY || '').trim();
-if (!key) fail('no GROQ_API_KEY (or TEST_GROQ_KEY) in env');
 const t0 = Date.now();
 const ctrl = new AbortController();
 const timer = setTimeout(() => ctrl.abort(), 90000);
@@ -153,3 +159,4 @@ t.cursor = (t.cursor ?? 0) + 1;
 t.lastTick = new Date().toISOString();
 writeFileSync(T_PATH, `${JSON.stringify(t)}\n`);
 console.log(`appended turn ${t.turns.length} (cursor ${t.cursor})${dropped ? `, ${dropped} archived off` : ''}`);
+} // end scene loop (TURNS)

@@ -17,7 +17,7 @@ Phases are ordered by dependency; each should leave the app building.
 - [ ] Phase 8 — `webapp-commons-template` (not scaffolded)
 - [ ] Phase 9 — Rose seat (dossier landed + wired; live-sitting voice grade + remaining texts awaited)
 - [ ] Phase 10 — Senior common room (live: turns landing; GitHub's own schedule throttled ~6/day, so a Cloudflare Worker fires dispatch every 45 min → ~32/day; manual seat input for Genzie/scenes)
-- [ ] Backlog — favicon, og recompose, rotation/recovery doc, LICENSE, +9 more
+- [ ] Backlog — favicon, og recompose, rotation/recovery doc, +9 more (LICENSE shipped Sep 24: AGPL-3.0-only)
 
 ---
 
@@ -1074,8 +1074,8 @@ og-image recompose: file IS 1200×630 and meta tags are correct — but the
 artwork is a portrait panel centred with big empty brown sides. Recompose to
 FILL the landscape frame (e.g. title left, table screenshot right), keep
 1200×630 JPG, no code change.
-Rotation/recovery doc (keys, quota, rollback markers — standing rule says write
-before needed); LICENSE file for sharing; print/export-PDF stylesheet; session
+Rotation/recovery doc (SHIPPED Sep 24 2026: `docs/rotation-recovery.md` —
+keys as names only, rotation without code change, caps, rollback markers); LICENSE file for sharing (SHIPPED Sep 24 2026: AGPL-3.0-only, owner copyleft pick); print/export-PDF stylesheet; session
 resume + shareable URL hash; transcript search; per-seat mute; live cost
 estimator per sitting; level A/B eval harness wiring (§Phase 7); provider-health
 indicator; keyboard shortcuts + shortcuts list; mobile 390×844 verification log;

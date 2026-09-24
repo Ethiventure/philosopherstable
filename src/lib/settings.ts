@@ -145,3 +145,51 @@ export function clearApiKey(): CabinetSettings {
   saveSettings(next);
   return next;
 }
+
+// Provider health (Sep 24 2026): last Test-key outcome per provider,
+// browser-only like the keys themselves. Display-only, never a gate:
+// a stale OK never blocks a sitting, a past failure never forces one.
+export interface ProviderHealth {
+  state: 'ok' | 'error';
+  at: string; // ISO timestamp
+  detail: string; // short label: model ID on OK, truncated error otherwise
+}
+
+const HEALTH_KEY = 'dialectical-cabinet-provider-health';
+
+export function loadProviderHealth(): Record<string, ProviderHealth> {
+  try {
+    const raw = localStorage.getItem(HEALTH_KEY);
+    if (!raw) return {};
+    const parsed = JSON.parse(raw) as Record<string, ProviderHealth>;
+    const out: Record<string, ProviderHealth> = {};
+    for (const [k, v] of Object.entries(parsed)) {
+      if (!v || (v.state !== 'ok' && v.state !== 'error')) continue;
+      if (typeof v.at !== 'string' || typeof v.detail !== 'string') continue;
+      out[k] = { state: v.state, at: v.at, detail: v.detail.slice(0, 160) };
+    }
+    return out;
+  } catch {
+    return {};
+  }
+}
+
+export function saveProviderHealth(provider: string, health: ProviderHealth): void {
+  try {
+    const all = loadProviderHealth();
+    all[provider] = { state: health.state, at: health.at, detail: health.detail.slice(0, 160) };
+    localStorage.setItem(HEALTH_KEY, JSON.stringify(all));
+  } catch {
+    // Storage unavailable — health simply won't persist.
+  }
+}
+
+export function clearProviderHealth(provider: string): void {
+  try {
+    const all = loadProviderHealth();
+    delete all[provider];
+    localStorage.setItem(HEALTH_KEY, JSON.stringify(all));
+  } catch {
+    // Storage unavailable — nothing to clear.
+  }
+}

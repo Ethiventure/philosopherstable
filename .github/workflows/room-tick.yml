@@ -11,9 +11,13 @@ on:
   workflow_dispatch:
     inputs:
       seat:
-        description: 'Speak out of rotation once (e.g. genzie). Blank = roster order.'
+        description: 'First speaker (e.g. genzie). Blank = roster order; rest follow the roster.'
         required: false
         default: ''
+      turns:
+        description: 'Turns to write this run (1–5). A run plays one scene: each turn sees the one before.'
+        required: false
+        default: '1'
 
 permissions:
   contents: write
@@ -31,11 +35,11 @@ jobs:
         env:
           GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
         run: |
-          if [ -n "${{ inputs.seat }}" ]; then
-            node scripts/room-tick.mjs --seat "${{ inputs.seat }}"
-          else
-            node scripts/room-tick.mjs
-          fi
+          args=""
+          if [ -n "${{ inputs.seat }}" ]; then args="$args --seat ${{ inputs.seat }}"; fi
+          if [ -n "${{ inputs.turns }}" ] && [ "${{ inputs.turns }}" != "1" ]; then args="$args --turns ${{ inputs.turns }}"; fi
+          # shellcheck disable=SC2086
+          node scripts/room-tick.mjs $args
       - name: Commit transcript
         run: |
           git config user.name "cabinet-room"

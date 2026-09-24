@@ -13,7 +13,7 @@
  * Setup outcome Sep 24 2026: dashboard agent deployed the code exactly
  * but was denied the cron trigger and holds no secrets. Owner finishes
  * manually (worker → Settings): (1) Triggers → Cron Triggers → Add
- * `*/45 * * * *`; (2) Variables and Secrets → Add → Secret `GH_PAT`
+ * an every-45-minutes trigger (:00 and :45 UTC); (2) Variables and Secrets
  * (paste GitHub fine-grained token: this repo, Actions READ+WRITE);
  * (3) Deploy. GH_REPO landed as a secret instead of a plain variable —
  * harmless (code reads either), leave it.
@@ -21,7 +21,7 @@
  *  shows firings (allow ~15 min). First room turn lands within ~45 min
  *  (+ minutes for the file host to catch up).
  * Current method (kept until the Worker proves better): GitHub `schedule`
- * `*/20` in `.github/workflows/room-tick.yml` starts the workflow ~6x/day
+ * (every 20 minutes) in `.github/workflows/room-tick.yml` starts the workflow ~6x/day
  * on this quiet repo. ROLLBACK RULE: if the Worker isn't landing real
  * turns at :00/:45 cadence within 2 days of switch-on, delete the Worker
  * and keep the GitHub schedule — comparison is turns/day, nothing else.
