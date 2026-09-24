@@ -47,3 +47,8 @@ data/rag.sqlite
 # Local test-probe runs (test-sitting/test-matrix JSONL): machine scribble,
 # never committed. Curated transcripts live in docs/eval-sittings/ instead.
 data/test-runs/
+
+# Pasted outside-chat transcripts (~47k lines, untracked): open only for
+# Rose dossier/diagram receipts, never as project direction, never committed.
+docs/User.md
+docs/rose-research-chat.md

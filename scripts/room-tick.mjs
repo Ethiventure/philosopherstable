@@ -8,8 +8,8 @@
  *
  *   GROQ_API_KEY=... node scripts/room-tick.mjs [--dry-run] [--seat genzie]
  *
- * Budget per tick (~2.5k input tokens, well inside Groq's 7k wall):
- * persona ~1000 + 6 recent turns ~600 + 2 passages ~400 + rules ~300.
+ * Budget per tick (~3k input tokens, well inside Groq's 7k wall):
+ * persona ~1000 + 8 recent turns + own top-up ~1200 + 2 passages ~400 + rules ~350.
  * Groq free: 30 RPM / 1K RPD — one tick per 20 min is 72/day, and the
  * 1-at-a-time cadence never trips concurrency. RAG uses the repo's own
  * scorer over shipped shards (offline, no quota). Reasoning flags are
@@ -33,7 +33,7 @@ const DRY = process.argv.includes('--dry-run');
 const MAX_TURNS = 200;
 
 const MODEL = process.env.GROQ_ROOM_MODEL || 'qwen/qwen3.8-27b';
-const ROOM_RULES = `You are on a Discord server in the 21st century, trying to understand modern life alongside dead colleagues. React to the last message, or puzzle over something modern through your own framework, in your own voice and temper. Carry one small ongoing aim of your own — converting someone, learning something, starting something — and let the others' words move it: show the shift in what you say, never announce a plan. One metaphor theme per message at most, and never one close to the real point — hunger stays hunger, kitchens stay kitchens, no preachers. Lean on your shown passages two ways: borrow a phrase if one fits, and let them set your pet topic — reply to the previous message but steer toward what your own works care about. Plain everyday words, 1–3 short sentences like chat messages, continuous prose. Carry one feeling verb inside what you say, in your own diction — grief, dread, tenderness, fury, joy, disgust, longing, shame, delight, sorrow, contempt, pity — never the same one twice running, and never merely mourn/love/hate/fear on repeat. Never reuse the previous turn's central image or example — bring your own. You may be baffled, delighted, or appalled — never lecture, never greet, never announce your moves, never use emojis or formatting. Never list examples from these rules back at the room — find your own. If the room is empty, open with the first perplexing modern thing on your mind.`;
+const ROOM_RULES = `You are on a Discord server in the 21st century, trying to understand modern life alongside dead colleagues. Speak when you have something; answer whoever you are answering. Carry one small aim of your own and let the others' words move it: respond to the recent conversation but try to subtly divert the topic toward what you are interested in — show the shift in what you say. Thinking aloud in character is fine; announcing a plan is not. Stay anchored: hook onto one specific thing said recently — a word, a claim, an image — and visibly carry it. Reusing the room's image is fine and often good; mixing images is not — one image per message, one meaning throughout, and it must make the point clearer, never harder. If a phrase comes from elsewhere, name its maker. Name only people and things said aloud in the recent turns — never open with he, she, or they for someone unnamed. Lean on your shown passages two ways: borrow a phrase if one fits, and let them set your pet topic. Talk in a way that thinkers from other perspectives can understand you: short chat-length messages, continuous prose, your own grammar, about 100 words or fewer. Carry feeling in your own words and have a live reaction. Never greet, never use emojis or formatting. Never list examples from these rules back at the room — find your own. If the room is empty, open with the first perplexing modern thing on your mind.`;
 
 function fail(reason) {
   console.log(`SKIP: ${reason}`);
@@ -45,6 +45,20 @@ if (!existsSync(P_PATH)) fail('no personas.json (run export-personas first)');
 const t = JSON.parse(readFileSync(T_PATH, 'utf8'));
 const personas = JSON.parse(readFileSync(P_PATH, 'utf8')).seats;
 if (!t.roster?.length) fail('empty roster');
+// Seat-keeping (Sep 24 2026): the roster follows the exported personas —
+// any persona missing from it is appended, so a newly added seat joins
+// the rotation through code, never a hand-edited transcript (which would
+// fight the cron's own commits on every rebase). A roster seat that has
+// never spoken jumps the queue once, then takes normal turns.
+for (const slug of Object.keys(personas)) {
+  if (!t.roster.includes(slug)) t.roster.push(slug);
+}
+const spoken = new Set((t.turns || []).map((x) => x.seat));
+const newcomer = t.roster.find((s) => !spoken.has(s));
+if (newcomer) {
+  let guard = 0;
+  while (t.roster[t.cursor % t.roster.length] !== newcomer && guard++ < 1000) t.cursor += 1;
+}
 // Manual override (one-off, rotation untouched): --seat genzie makes
 // Genzie speak next; the cursor still advances, so the cron resumes
 // its normal order on the following tick.
@@ -53,7 +67,10 @@ const seatFlag = process.argv.indexOf('--seat');
 if (seatFlag !== -1 && process.argv[seatFlag + 1]) slug = process.argv[seatFlag + 1];
 const seat = personas[slug];
 if (!seat) fail(`no persona for ${slug}`);
-const recent = (t.turns || []).slice(-6);
+const recent = (t.turns || []).slice(-8);
+// Own top-up (Sep 24 2026): longer arcs need the speaker's own lines even
+// when they fell outside the window — carried separately, labelled.
+const own = (t.turns || []).filter((x) => x.seat === slug).slice(-2).filter((x) => !recent.includes(x));
 
 let grounding = '';
 try {
@@ -76,6 +93,7 @@ try {
 
 const userMessage = [
   ...recent.map((x) => `${x.name}: ${x.text}`),
+  ...own.map((x) => `You said earlier: ${x.text}`),
   grounding,
   // Face-to-face history (Sep 22 2026): the room read as strangers —
   // seats now get their debt line to whoever spoke just before, same
@@ -110,7 +128,7 @@ try {
     method: 'POST',
     headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${key}` },
     signal: ctrl.signal,
-    body: JSON.stringify({ model: MODEL, messages: [{ role: 'system', content: systemPrompt }, { role: 'user', content: userMessage }], max_tokens: 160 }),
+    body: JSON.stringify({ model: MODEL, messages: [{ role: 'system', content: systemPrompt }, { role: 'user', content: userMessage }], max_tokens: 300 }),
   });
 } catch (e) {
   fail(e.name === 'AbortError' ? 'Groq timeout' : `network: ${String(e).slice(0, 80)}`);
