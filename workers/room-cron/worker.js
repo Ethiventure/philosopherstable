@@ -10,20 +10,23 @@
  * allowance; outbound calls aren't billed. $0. Verified Sep 23 2026
  * against developers.cloudflare.com pricing + cron-triggers docs.
  *
- * Setup (owner, ~10 minutes, once):
- *  1. Free Cloudflare account → Workers & Pages.
- *  2. GitHub → Settings → Developer settings → Personal access tokens →
- *     Fine-grained tokens → Generate: this repo only, Actions READ+WRITE
- *     (starting a workflow needs write; the token never touches code).
- *  3. `npx wrangler login` then in this directory:
- *       wrangler secret put GH_PAT     # paste the token, stored encrypted
- *       wrangler deploy
- *     GH_REPO ships below in wrangler.toml (public name, not a secret).
- *  4. Dashboard → worker → Settings → Triggers shows the cron; View events
- *     shows each firing. First room turn lands within ~45 min (+ minutes
- *     for the file host to catch up).
- * Rotation: when the token expires, make a new one and repeat step 3 only.
- * No code change, ever. Never commit the token.
+ * Setup outcome Sep 24 2026: dashboard agent deployed the code exactly
+ * but was denied the cron trigger and holds no secrets. Owner finishes
+ * manually (worker → Settings): (1) Triggers → Cron Triggers → Add
+ * `*/45 * * * *`; (2) Variables and Secrets → Add → Secret `GH_PAT`
+ * (paste GitHub fine-grained token: this repo, Actions READ+WRITE);
+ * (3) Deploy. GH_REPO landed as a secret instead of a plain variable —
+ * harmless (code reads either), leave it.
+ *  Confirm: worker → Settings → Triggers shows the cron; View events
+ *  shows firings (allow ~15 min). First room turn lands within ~45 min
+ *  (+ minutes for the file host to catch up).
+ * Current method (kept until the Worker proves better): GitHub `schedule`
+ * `*/20` in `.github/workflows/room-tick.yml` starts the workflow ~6x/day
+ * on this quiet repo. ROLLBACK RULE: if the Worker isn't landing real
+ * turns at :00/:45 cadence within 2 days of switch-on, delete the Worker
+ * and keep the GitHub schedule — comparison is turns/day, nothing else.
+ * Rotation: when the token expires, make a new one and repeat the secret
+ * step only. No code change, ever. Never commit the token.
  */
 
 const DISPATCH_URL = (repo) =>

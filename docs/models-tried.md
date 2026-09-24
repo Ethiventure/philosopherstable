@@ -6,6 +6,34 @@ Retired entries are tombstoned, never deleted: they stay readable but
 excluded from active picks, so nobody re-tests them and nobody loses
 the reason they died.
 
+## Liked, best first (summary Sep 24 2026 — detail below; prices re-verify before quoting)
+
+1. `qwen3.8-max` via Alibaba — quality crown. Best combo at Medium, rich at High, graded at Low-long (city 14/15, debts spoken, Genzie 10/10). ~$0.40/session ($0 on trial to Dec 16).
+2. `qwen3.7-plus` via Alibaba — value crown. High favourite, solid Medium, graded Low (city 14/15, 0 repairs). ~$0.07/session.
+3. `qwen3.8-27b` via Alibaba — Low voice leader. Fast, cheap, 0 repairs; P2 echo kills it at Medium. $0 on trial.
+4. `qwen/qwen3-14b` via OpenRouter paid — cheapest proven paid (~$0.021). Survives Medium; drops city, no citations; tuning track open.
+5. `Qwen/Qwen3-30B-A3B` via DeepInfra — fastest sittings (~1–2 min), best dilemma-grasp; echo-prone, debts unspoken. ~$0.03.
+6. `qwen3.8-flash` via Alibaba — probe-clean, punchy High; least proven voice. ~$0.03.
+7. Free (crown vacant): OpenRouter free cycle (`qwen/qwen3.8-27b:free` first among named, throttled) or Groq free Low-only (7k input wall).
+
+## Rejected, best to worst (summary Sep 24 2026 — corpses stay buried)
+
+1. `z-ai/glm-5.3-flash` via OpenRouter paid — parked entirely: word salad at High across 3 sittings + halt. Medium history good but frozen.
+2. `deepseek/deepseek-v4.1-flash` via OpenRouter paid — parked entirely: halt + 2-turn partial, 12-min pace. Was the fallback engine.
+3. `qwen/qwen3-30b-a3b` via OpenRouter paid — parked at High (thin aphorisms, city dropped); loses Medium to GLM on echo.
+4. `Qwen/Qwen3.5-27B` via DeepInfra — unproven: EMPTY at turn caps, one data point.
+5. `Qwen/Qwen3.6-35B-A3B` via DeepInfra — thinking-burn (2.5 min first card, stuck pass 1) + ignores Low.
+6. `qwen/qwen3.8-flash` via OpenRouter paid — reasoning burn (content null, 3.5 min stuck seat 1). Different pipe, different verdict from Alibaba.
+7. `qwen/qwen3.5-9b` via OpenRouter paid — reasoning burn, 2+ min silence. Cheapest-Qwen line ends here.
+8. `mistral-small-3.2-24b` via OpenRouter paid — ~30x scaffold loop in one turn.
+9. `meta-llama/Llama-3.3-70B` as primary — weak prompt adherence (stays rescue backup only; DeepInfra backup verified working).
+10. `deepseek-r1-distill-qwen-32b` via Groq — dead on arrival (400 decommissioned).
+11. `qwen/qwen3.6-27b` on Groq — 404 retired.
+12. GPT-OSS (any route) — rejected without test: OpenAI-owned, standing ban.
+13. Gemini (any) — provider removed: 2.5 retired for new keys, consolidating pipes.
+
+Not rejected, just untested: Together `Qwen/Qwen3-30B-A3B` (no key), Z.ai `glm-4.7-flash` (pipe built, never run).
+
 ## Selection strategy (Sep 20 2026, owner order — revised same day)
 Goal: one model that carries all three levels. Per-level split is the
 fallback, not the prize — and if it sticks, the Voice tab says plainly

@@ -977,6 +977,10 @@ Clock Sep 23 2026: GitHub `schedule` starts the workflow ~6x/day
 `workers/room-cron/` (Cloudflare Worker, free tier, dispatch API every
 45 min → ~32 turns/day) is the clock; GitHub's own starts ride the same
 cursor as backup. Missed ticks stay missed.
+Status Sep 24 2026: Worker built, switch-on pending proof — GitHub
+`schedule` (~6/day, every start lands) remains the working method until
+the Worker lands real turns at :00/:45 cadence. Rollback: no proof in
+2 days → delete the Worker, keep GitHub; comparison is turns/day.
 
 Unprompted philosophers' chat on the site: the seats talk about whatever
 they want, on a slow rotation, no visitor question needed. Owner shape:

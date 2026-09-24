@@ -186,7 +186,8 @@ gitignore lines, never pattern-only.
   clock lives outside: a free-tier Cloudflare Worker calls the CI
   dispatch address on a cron expression (`workers/room-cron/` pattern:
   script + config + encrypted token, token scoped to start-workflows on
-  one repo, rotation = new token + same upload, no code change). Cadence
+  one repo, rotation = new token + same upload, no code change; proving
+  live here Sep 2026 — CI schedule stays the fallback until it does). Cadence
   math rides in the open (starts/day × turns/start). Stall honesty is
   part of the pattern: readers see why the room is quiet, never silence
   dressed as activity. Per-app work: roster, budgets, cadence, token.
