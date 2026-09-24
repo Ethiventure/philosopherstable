@@ -1470,16 +1470,23 @@ function LivingRoom() {
   const [room, setRoom] = useState<{ roster: string[]; cursor: number; turns: { id: string; ts: string; seat: string; name: string; text: string; model: string }[]; lastTick: string | null } | null>(null);
   const scrollRef = useRef<HTMLDivElement | null>(null);
   const seenCount = useRef(0);
-  // Transcript rides the CDN, not the deploy (Phase 10): the 20-minute
-  // cron commits a turn ~72×/day, and rebuilding the site per tick would
-  // burn Netlify build minutes — jsDelivr serves the raw file seconds
-  // after push, same-origin is the fallback. Cache-busted per 10-minute
-  // bucket (Sep 22 2026): browsers otherwise keep the first copy they saw
-  // and new turns never appear, no matter how often you reload. Computed
-  // inside the effect so the fetch fires once per mount, not per render.
+  // Transcript rides outside the deploy (Phase 10): the tick commits a
+  // turn and rebuilding the site per tick would burn Netlify build
+  // minutes. Fetch order is freshness-first (Sep 24 2026: jsDelivr sat on
+  // a stale copy for hours while GitHub had moved on): GitHub raw first
+  // (5-minute edge cache), jsDelivr second, same-origin deploy bundle
+  // last (frozen at build time — stale by construction, better than
+  // nothing). Unique query per mount + no-store so the browser never
+  // serves yesterday's copy; each load costs one small JSON fetch.
+  // Computed inside the effect so the fetch fires once per mount.
   useEffect(() => {
-    const url = `https://cdn.jsdelivr.net/gh/Ethiventure/philosopherstable@main/public/room/transcript.json?t=${Math.floor(Date.now() / 600000)}`;
-    fetch(url).then((r) => (r.ok ? r.json() : null)).then((j) => { if (j?.turns) { setRoom(j); return; } throw 0; }).catch(() => {
+    const bust = Date.now();
+    const urls = [
+      `https://raw.githubusercontent.com/Ethiventure/philosopherstable/main/public/room/transcript.json?t=${bust}`,
+      `https://cdn.jsdelivr.net/gh/Ethiventure/philosopherstable@main/public/room/transcript.json?t=${bust}`,
+    ];
+    const get = (u: string) => fetch(u, { cache: 'no-store' }).then((r) => (r.ok ? r.json() : null));
+    get(urls[0]).catch(() => get(urls[1])).then((j) => { if (j?.turns) { setRoom(j); return; } throw 0; }).catch(() => {
       fetch(`${import.meta.env.BASE_URL}room/transcript.json`).then((r) => (r.ok ? r.json() : null)).then((j) => { if (j) setRoom(j); }).catch(() => {});
     });
   }, []);

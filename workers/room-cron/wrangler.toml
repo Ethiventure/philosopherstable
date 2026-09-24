@@ -13,3 +13,11 @@ GH_REPO = "Ethiventure/philosopherstable"
 [triggers]
 # Minutes :00 and :45 of every hour, UTC = ~32 starts/day.
 crons = ["*/45 * * * *"]
+
+# Mirrors the dashboard's observability settings (logs enabled there) so a
+# future wrangler deploy doesn't clobber them.
+[observability.logs]
+enabled = true
+head_sampling_rate = 1
+invocation_logs = true
+persist = true
