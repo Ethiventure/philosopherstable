@@ -1,56 +1,58 @@
-# First thing tomorrow — Thu Sep 24 (owner-only tasks)
+# First thing tomorrow — Fri Sep 25 (owner-only tasks)
 
 In energy order. Smallest first, stop anywhere — everything keeps.
 
-## Today (Wed Sep 23): the room got its clock + Genzie joined
-Genzie is the 13th seat (debts, trios, grid, room persona) but speaks
-only when summoned — no manual run fired yet. Diagnosed the slow room:
-GitHub starts the schedule ~6x/day, every start lands. Fix chosen:
-Cloudflare Worker fires dispatch every 45 min (~32/day), free, most
-robust — code written (`workers/room-cron/`), not yet switched on.
-Research plan for the room's future delivered (memory/shape/watch/audience);
-awaiting your letter picks. All pushed (`fc2045d` on origin).
+## Today (Thu Sep 24): clock, licence, personas, scenes, health
+Biggest day yet. Shipped: persona-prompts doc + generator (`personas:docs`,
+13 seats, table-talk stripped, Medium-default, loose habits, compressed for
+LLMs); models-tried crowns summary (liked 7 / rejected 13); rotation-recovery
+doc; AGPL-3.0-only (LICENSE + package field + README + footer Source link);
+provider-health indicator (last Test-key per provider, browser-only);
+burst loop (`--turns 1–5`, seat sets first speaker, all-or-nothing);
+transcript fetch fix (GitHub-raw-first — Bogdanov reappeared, proves it);
+morning command + goodnight→morning nudge. Room rules rewritten to owner
+rulings (image reuse OK, loose feeling verbs, own grammar, anchor-not-prescribe).
+Decided: 45-min clock (~32/day), free-forever trigger, Cloudflare most robust.
+Unpushed: `4400291` + `morning.md`.
 
-## 1. Switch on the room clock (~10 min, needs your accounts)
-Steps live in `workers/room-cron/worker.js` header. Short version:
-free Cloudflare account → Workers & Pages → paste worker code →
-cron `*/45 * * * *` → secret `GH_PAT` (fine-grained token, this repo,
-Actions read+write) + variable `GH_REPO=Ethiventure/philosopherstable`.
-First turn lands within ~45 min — watch one land before trusting it.
+## 1. Push (1 min, unlocks everything downstream)
+`git pull --rebase origin main && git push origin main` (stash graphify-out
+first if it complains). Until this lands the cron runs pre-seating code.
 
-## 2. Summon Genzie (1 min)
-Actions → room-tick → Run workflow → seat box: `genzie`.
-Her line lands ~1 min later.
+## 2. Prove the room (no effort, just looking)
+- Genzie's first line (seating code ships in the push).
+- Worker turns at :00/:45 (trigger + GH_PAT finishes are yours; View events
+  is the witness). 2-day rollback rule stands.
+- One manual burst (seat + turns 3) whenever curious.
 
 ## 3. Shared key off Groq (checks + 1 sitting)
-Netlify env has `ALIBABA_API_KEY`? Latest deploy after the Alibaba
-change? Then one shared sitting — export names the model, that's the
-live test the code still marks pending.
+Netlify `ALIBABA_API_KEY` set? Deployed after the change? One shared
+sitting — export names the model, that's the live test.
 
 ## 4. Room future (whenever, pick letters)
-Research plan in chat Sep 23: memory (roundup/self-memory/old lines),
-shape (forward links/date hooks/stall honesty), watchability (polling,
-filters, TTS, model credit), audience steering. Reply with surviving
-letters; build order suggested is memory → shape → watchability.
+Research plan stands: memory (roundup/self-memory/old lines), shape
+(forward links/date hooks/stall honesty), watchability (polling, filters,
+TTS, model credit), audience steering. Plus parked: Genzie dossier
+reframe for standalone use, daily recap, auto-refresh polling.
 
 ## 5. Sittings/verdicts/picks (only if you feel like it)
-Crowns stand (3.8-max / 3.7-plus / free vacant). `Grade: TODO` files
-in `docs/eval-sittings/`; golden picks for Phase 7c voice exemplars.
+Crowns stand (3.8-max / 3.7-plus / free vacant). `Grade: TODO` files in
+`docs/eval-sittings/`; golden picks for Phase 7c.
 
-## 6. Small decisions (carried, each under a minute)
-LICENSE · git-history name · Together pipe: key or drop ·
-`.env.test.local`: confirm TEST_OPENROUTER_MODEL is `qwen/qwen3.7-plus` ·
-favicon/OG art · Rose texts (Mourning re-convert, find Love's Work).
+## 6. Small decisions (carried)
+Together pipe: key or drop · `.env.test.local` model check · favicon/OG
+art (both need your artwork) · git-history name.
 
 ## Explicitly NOT (parked, no nagging)
-Z.ai pipe · GLM/DeepSeek sittings (gibberish rule) · 30B length tests ·
-template scaffold · podcast · RAG latency · 14B tuning · visitor posting
-in the room (login+moderation, against the rules) · denser cron syntax
-(same GitHub throttle) · Netlify scheduled functions (storage redesign).
+Z.ai · GLM/DeepSeek sittings · 30B length tests · template scaffold ·
+podcast · RAG latency · 14B tuning · visitor posting · denser cron ·
+Netlify scheduled functions · rigid confusion checklist · parting pointer.
 
 ## Dropped today (dead, with reason)
-- "Push unlocks cron" (Sep 22 §1): pushed; cron runs on its own.
-- "Cron watch / zero self-fires" (Sep 22 §2): self-fires ~6x/day;
-  Worker replaces the watch.
-- Burst-per-run as default: folded into manual scenes on demand, so the
-  ~30/day target holds.
+- "Push unlocks cron" pattern: replaced by pull-rebase habit + rebase-proof
+  commits (code changes only, room owns the transcript).
+- Dashboard-created Worker path: dashboard has no blank-worker flow;
+  terminal/agent routes documented instead.
+- jsDelivr-first fetch: sat stale for hours; GitHub-raw-first now.
+- MIT/Apache: answered, AGPL-3.0 picked.
+- Who/what/where-first rule: too prescriptive; anchor rule replaces it.

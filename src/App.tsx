@@ -1392,11 +1392,12 @@ function App() {
         </section>
 
         {interventions.length > orderedPhilosophers.length && <PositionComparison philosophers={orderedPhilosophers} interventions={interventions} onOpenSources={openSourcesAt} />}
+        <HowBuilt />
       </main>
 
       <footer className="mt-12 text-center">
         <div className="ornament-divider mb-4"><span className="text-xl">✦</span></div>
-        <p className="text-xs italic text-[#465f75]/65">This cabinet is free software — <a className="underline underline-offset-2 decoration-[#8b5254]/40 hover:decoration-[#8b5254]" href="https://github.com/Ethiventure/philosopherstable" target="_blank" rel="noreferrer">read its source</a> (AGPL-3.0-only).</p>
+        <p className="text-xs italic text-[#465f75]/65">This cabinet is free software — <a className="underline underline-offset-2 decoration-[#8b5254]/40 hover:decoration-[#8b5254]" href="https://github.com/Ethiventure/philosopherstable" target="_blank" rel="noreferrer">read its source</a> (AGPL-3.0-only) · <a className="underline underline-offset-2 decoration-[#8b5254]/40 hover:decoration-[#8b5254]" href="#how-built">how it was built</a>.</p>
       </footer>
 
       {/* Halt banner: the inline error panel lives up at the question card, so
@@ -1461,6 +1462,54 @@ function ModelIdField({ id, value, options, placeholder, onPick }: {
         <input type="text" autoComplete="off" spellCheck={false} value={value} onChange={(event) => onPick(event.target.value)} placeholder={placeholder} aria-label={`${id} custom model ID`} className={`${cls} mt-2 placeholder:text-[#465f75]/45`} />
       )}
     </>
+  );
+}
+
+const REPO = 'https://github.com/Ethiventure/philosopherstable/blob/main';
+
+function HowBuilt() {
+  const blocks = [
+    {
+      title: 'Seating & debts',
+      body: 'One file per thinker — profile, voice machinery, works. Birth order seats the table, so the order cannot drift. Who owes whom at this table lives in a single debts table, and the map above is drawn from it, never hand-edited.',
+      link: `${REPO}/src/philosophers/influences.ts`,
+      label: 'debts table',
+    },
+    {
+      title: 'Grounding',
+      body: 'Every speaker searches its own indexed books first — 11,000+ passages, word-stems not embeddings — and must borrow their actual vocabulary. Receipts ride under each turn, inspectable, and the export lists what was shown.',
+      link: `${REPO}/PLAN.md`,
+      label: 'retrieval design',
+    },
+    {
+      title: 'Model funnel',
+      body: 'Model IDs rot in days, so the app never pins a dropdown: a free-text field with a live key check, dead IDs falling through mid-sitting. Crowns are dated and re-confirmed; failures stay buried in the log so nobody re-tests a corpse.',
+      link: `${REPO}/docs/models-tried.md`,
+      label: 'trial log',
+    },
+    {
+      title: 'Room clock & provenance',
+      body: 'The common room writes itself on a clock — one turn per tick, committed to a file visitors only read. Every export names the model behind each turn and the prompt version behind the sitting, so old grades never launder into new builds.',
+      link: `${REPO}/scripts/room-tick.mjs`,
+      label: 'tick script',
+    },
+  ];
+  return (
+    <section id="how-built" className="mt-12" aria-label="How this was built">
+      <div className="ornament-divider mb-6"><span className="text-xl">✦</span></div>
+      <p className="pass-indicator text-[#8b5254]">Provenance, not a dev dump</p>
+      <h2 className="text-3xl mb-2">How this was built</h2>
+      <p className="text-xs italic text-[#465f75]/65 mb-5">The making of the cabinet — each part links its working source on GitHub.</p>
+      <div className="grid md:grid-cols-2 gap-4">
+        {blocks.map((b) => (
+          <div key={b.title} className="dark-academia-card p-5">
+            <h3 className="text-xl mb-2">{b.title}</h3>
+            <p className="text-sm leading-relaxed text-[#465f75]/80">{b.body}</p>
+            <p className="mt-3"><a className="text-xs uppercase tracking-wider text-[#8b5254] underline underline-offset-2 decoration-[#8b5254]/40 hover:decoration-[#8b5254]" href={b.link} target="_blank" rel="noreferrer">Read the {b.label}</a></p>
+          </div>
+        ))}
+      </div>
+    </section>
   );
 }
 
