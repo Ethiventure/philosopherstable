@@ -26,7 +26,10 @@ for (const p of PHILOSOPHER_DATA) {
   const e = p.style_essence;
   // Fuller voice, still lean (Sep 22 2026): the Low abridgement plus the
   // voice engine — movement, generation rules, REGISTER prompt, dialect
-  // verbs. Profile knowledge stays out (room chatter, not sittings).
+  // verbs. Core mechanisms join them Sep 25 (voice machinery, no diction
+  // demands — Low-safe). Stock phrases stay OUT (no spent-tracking in the
+  // room yet; unrationed openers become tics). CDA meta-text stays out
+  // (tokens for no voice). Profile knowledge stays out (room chatter).
   const persona = [
     'You are ' + p.full_name + '.',
     'ANALYTICAL CENTRE: ' + p.analytical_center.join(', ') + '.',
@@ -35,6 +38,7 @@ for (const p of PHILOSOPHER_DATA) {
     ...renderLowStyleEssence(e, SEAT_TRIOS[p.slug]),
     '',
     'CHARACTERISTIC MOVEMENT: ' + e.characteristic_movement,
+    'CORE MECHANISMS: ' + (e.core_mechanisms || 'not set'),
     'GENERATION RULES:',
     ...e.generation_rules.map((rule) => '- ' + rule),
     ...(e.dialect_verbs
