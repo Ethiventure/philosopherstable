@@ -37,7 +37,7 @@ export type TurnKind = 'opening' | 'critique' | 'reconstruction';
  * text change so grades stay comparable: a verdict on version C never
  * transfers silently to version D.
  */
-export const PROMPT_VERSION = '2026-09-20j';
+export const PROMPT_VERSION = '2026-09-20k';
 
 export const WORD_BUDGETS = {
   normal: { negation: 25, reformulation: 40, total: 60, opening: 40 },
@@ -136,10 +136,10 @@ export function buildTurnInstruction({ kind, prevName, isFinalSeat, longForm, re
           : 'PASS JOB (critique): judge PREV, then move the question up a level in your own terms.';
 
   const negationLine = pass === 2
-    ? `1. THE BREAK (roughly ${b.negation} words, ONE paragraph): one break from inside ${prev}'s own argument, shaped like this — you are right that X, which is exactly why Y fails. X is the clause they got right, Y the fault line their own premises open. No steelman, no keep/break ceremony, no new topics: the single break is the whole turn.`
+      ? `1. THE BREAK (roughly ${b.negation} words, ONE paragraph): one break from inside ${prev}'s own argument, shaped like this — you are right that X, which is exactly why Y fails. X is the clause they got right, Y the fault line their own premises open. Make X one of ${prev}'s phrases (five words or fewer, single quotes), broken on its own terms. No steelman, no keep/break ceremony, no new topics: the single break is the whole turn.`
     : pass === 1
-      ? `1. REJECTION (roughly ${b.negation} words, ONE paragraph): name the ONE specific claim of ${prev} you reject and the contradiction it carries — in your framework's own vocabulary, no clause over five words matching ${prev} verbatim. No steelman, no keep/break ceremony: one rejection, one contradiction. If history lines about ${prev} appear below, open by relating what they just said to your past relationship with them — then move on to the rejection.`
-      : `1. REJECTION (roughly ${b.negation} words, ONE paragraph): reject one specific thing — from PREV or the survey — in a clause, in your framework's own vocabulary, no clause over five words matching ${prev} verbatim. No steelman, no keep/break ceremony.`;
+      ? `1. REJECTION (roughly ${b.negation} words, ONE paragraph): name the ONE specific claim of ${prev} you reject and the contradiction it carries — in your framework's own vocabulary, no clause over five words matching ${prev} verbatim. Lift one of ${prev}'s phrases (five words or fewer, single quotes) and break it on its own terms — quote to break, never to agree. No steelman, no keep/break ceremony: one rejection, one contradiction. If history lines about ${prev} appear below, open by relating what they just said to your past relationship with them — then move on to the rejection.`
+      : `1. REJECTION (roughly ${b.negation} words, ONE paragraph): reject one specific thing — from PREV or the survey — in a clause, in your framework's own vocabulary, no clause over five words matching ${prev} verbatim. Lift one PREV phrase (five words or fewer, single quotes — never the survey) and break it on its own terms — quote to break, never to agree. No steelman, no keep/break ceremony.`;
 
   const reformulationLine =
     kind === 'reconstruction'
@@ -178,7 +178,7 @@ export function buildTurnInstruction({ kind, prevName, isFinalSeat, longForm, re
     ...(pass === 1
       ? ['HISTORY TONE: below PREV’s text, find the lines headed YOUR HISTORY WITH / OWES YOU plus YOUR PEOPLE — relate what PREV just said to your past relationship with them, then move on to the rejection. Never quote these history lines verbatim — the five-word rule holds on them like everything else; a turn reciting its debt note has mistaken the prompt for the argument. When such lines appear, the relation is mandatory: a P1 turn that never touches them has failed. If no such lines appear, argue from the live claims alone.']
       : []),
-    'SCENARIO THREAD: the opening turn’s concrete scene (named person, place, predicament) carries the whole sitting — reuse its people, never invent new ones each turn. Every turn routes at least one sentence through that scene: the argument must touch the named person or place, not hover above them. Hold every stated premise of the scenario as a fixed constraint for all turns (if necessary work is done by robots, no humans do cleaning — never reintroduce what the scenario removed). The scene illustrates the philosophy; it never becomes the debate. A turn that argues about the scenario instead of through it has mistaken the example for the point. A turn that breaks a stated premise has failed.',
+    'SCENARIO THREAD: the opening turn’s concrete scene (named person, place, predicament) carries the whole sitting — reuse its people, never invent new ones each turn. Claim first, then the scene: state the idea in your framework, then relate it to the carried scene — illustration, never a second argument, never a second scene or fresh metaphor. Hold every stated premise of the scenario as a fixed constraint (if necessary work is done by robots, no humans do cleaning — never reintroduce what the scenario removed). The scene illustrates the philosophy; it never becomes the debate. A turn that argues about the scenario instead of through it has mistaken the example for the point. A turn that breaks a stated premise has failed.',
     'MOOD, OUT LOUD: let the feeling show strongly in your own diction — blunt words, swears, exclamations, sorrow, fear, joy, interjections where your voice would use them; mourning, fury, tenderness where it would feel them. The reader should hear this sitting cost you something. Polite evenness fails the turn.',
     'RHYTHM BREAKS: vary sentence structure and never three long sentences running without a short punch after. Even cadence lulls; the reader should feel the gear change.',
     'FELT VERBS: the feeling lives inside the move, not beside it — the rejection, the break, the build each carries one feeling verb in your own diction: grief, dread, tenderness, fury, joy, disgust, longing, shame, delight, sorrow, contempt, pity — never the same verb twice in one turn, and never merely mourn/love/hate/fear on repeat (real people rarely say "mourn"). Name the cost inside the move: what your framework gives up to land it. A move performed coolly fails the turn; display verbs alone (shows, reveals, demonstrates) fail it twice.',
@@ -194,7 +194,7 @@ export function buildTurnInstruction({ kind, prevName, isFinalSeat, longForm, re
       ? ['FINAL SEAT: return the question, changed, to the user — no new claims after it. Name one point of agreement, if any, and which ideas the sitting has rejected — no summary.']
       : []),
     ...(kind === 'reconstruction' && !isFinalSeat
-      ? ['Invoke at least one surveyed idea from another seat by name (STRIKING IDEAS), transformed into your terms, never quoted; a pass-3 turn answering only PREV has failed.']
+      ? ['Invoke at most two surveyed ideas from other seats by name (STRIKING IDEAS), transformed into your terms, never quoted — and break with at least one; a litany fails. A pass-3 turn answering only PREV has failed.']
       : []),
     ...(kind === 'reconstruction' && marginsNote
       ? [`The NOTES FROM THE MARGINS ride first in the survey: in your reformulation's first two sentences, name ${MARGINS_WRITER_NAME} and answer one of its questions directly, in your own terms — before you touch PREV. Buried or unnamed answers have failed.`]
@@ -228,7 +228,7 @@ export function buildTurnInstruction({ kind, prevName, isFinalSeat, longForm, re
       : level === 'high'
         ? 'SOURCE passages below: quote generously (at least four distinctive words/phrases, ≤6 words each, single quotes only) and echo their tics and rhythms; none shown: carry colour from persona and voice anchor. A High turn showing fewer than four visible loans has failed. '
         : 'SOURCE passages below: borrow visibly (at least two distinctive words/phrases, ≤6 words each, single quotes only); none shown: carry colour from your persona. A turn at Medium or above showing no visible loans has failed. ')
-    + 'FIVE-WORD RULE on everything — question, PREV, survey, margins, priors: never lift a multi-word clause; paraphrase always, agreements and self-repeats phrased afresh. Standard grammar: complete sentences, terminal punctuation. The dialectical movement stays audible in the argument, never announced. Never open with a generic verdict (errs, fails to see, overlooks) — begin from the concrete object with your own verbs.',
+    + 'FIVE-WORD RULE on everything — question, PREV, survey, margins, priors: never lift a multi-word clause; paraphrase always, agreements and self-repeats phrased afresh. Standard grammar: complete sentences, terminal punctuation. The dialectical movement stays audible in the argument, never announced. Never open with a generic verdict (errs, fails to see, overlooks) — open inside your temper, on the concrete object, with your own verbs: no setup sentence.',
   ].join(' ');
 }
 

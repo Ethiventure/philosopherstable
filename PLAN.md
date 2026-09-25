@@ -236,6 +236,12 @@ silently across versions.
   verbose-by-design teaching, High gains per-thinker authentic register
   (gap to Low differs honestly) + answer-for-real over impression.
   Old grades stay on v2026-09-20i and earlier.
+- Prompt v2026-09-20k (Sep 25 2026, owner voice-authenticity round):
+  claim-first light scenario rule (one carried scene, never a second),
+  quote-to-break PREV phrase (≤5 words, never the survey) in all three
+  rejection shapes, temper-first openings (trial — revert alone if flat),
+  invoke-at-most-two with mandatory break. Old grades stay on
+  v2026-09-20j and earlier.
 
 ### Embeddings (Phase 5)
 `test_embeddings.py` uses local Ollama `nomic-embed-text` (768 dims); the schema is
