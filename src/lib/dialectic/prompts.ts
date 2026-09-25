@@ -37,7 +37,7 @@ export type TurnKind = 'opening' | 'critique' | 'reconstruction';
  * text change so grades stay comparable: a verdict on version C never
  * transfers silently to version D.
  */
-export const PROMPT_VERSION = '2026-09-20k';
+export const PROMPT_VERSION = '2026-09-20l';
 
 export const WORD_BUDGETS = {
   normal: { negation: 25, reformulation: 40, total: 60, opening: 40 },

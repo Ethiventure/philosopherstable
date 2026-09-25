@@ -242,6 +242,11 @@ silently across versions.
   rejection shapes, temper-first openings (trial — revert alone if flat),
   invoke-at-most-two with mandatory break. Old grades stay on
   v2026-09-20j and earlier.
+- Prompt v2026-09-20l (Sep 25 2026, owner: CDA as instructions): persona
+  render frames reader-effects as orders (produce them on purpose) and
+  stance as second-person lines (speak as / modality / reader / aim /
+  pronouns, all 13 seats verified). No content touched. Old grades stay
+  on v2026-09-20k and earlier.
 
 ### Embeddings (Phase 5)
 `test_embeddings.py` uses local Ollama `nomic-embed-text` (768 dims); the schema is
