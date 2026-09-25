@@ -13,6 +13,7 @@ dist
 dist-ssr
 *.local
 .venv/
+.venv312/
 ingest_urls.py.depends
 
 .vscode/*
@@ -52,3 +53,7 @@ data/test-runs/
 # Rose dossier/diagram receipts, never as project direction, never committed.
 docs/User.md
 docs/rose-research-chat.md
+
+# Sitting-transcript inbox (owner drops files here; agent files, grades, removes).
+# Never committed — processed files move to docs/eval-sittings/ with grades.
+docs/eval-sittings/inbox/

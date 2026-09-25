@@ -2,57 +2,62 @@
 
 In energy order. Smallest first, stop anywhere — everything keeps.
 
-## Today (Thu Sep 24): clock, licence, personas, scenes, health
-Biggest day yet. Shipped: persona-prompts doc + generator (`personas:docs`,
-13 seats, table-talk stripped, Medium-default, loose habits, compressed for
-LLMs); models-tried crowns summary (liked 7 / rejected 13); rotation-recovery
-doc; AGPL-3.0-only (LICENSE + package field + README + footer Source link);
-provider-health indicator (last Test-key per provider, browser-only);
-burst loop (`--turns 1–5`, seat sets first speaker, all-or-nothing);
-transcript fetch fix (GitHub-raw-first — Bogdanov reappeared, proves it);
-morning command + goodnight→morning nudge. Room rules rewritten to owner
-rulings (image reuse OK, loose feeling verbs, own grammar, anchor-not-prescribe).
-Decided: 45-min clock (~32/day), free-forever trigger, Cloudflare most robust.
-Unpushed: `4400291` + `morning.md`.
+## Today (Thu Sep 24): clock nearly proven, licence shipped, room fixed
+Shipped: AGPL-3.0-only (LICENSE + package field + README + footer Source
+link + HowBuilt section); persona-prompts doc + generator; models-tried
+crowns summary; rotation-recovery doc; provider-health indicator; burst
+loop; transcript fetch fix (GitHub-raw-first — Bogdanov reappeared);
+morning command. Room rules rewritten to owner rulings. Decided: 45-min
+clock, free-forever trigger, Cloudflare most robust. All pushed.
+Worker status: code live, fires on schedule (4 firings logged) — but
+dispatch 403s: token lacks Actions:write. Fix is a new token (permissions
+freeze at creation), pre-filled link given. Everything else proven or
+queued behind that token.
 
-## 1. Push (1 min, unlocks everything downstream)
-`git pull --rebase origin main && git push origin main` (stash graphify-out
-first if it complains). Until this lands the cron runs pre-seating code.
+## 1. New token, paste, Deploy (5 min — unblocks everything)
+Pre-filled link in chat Sep 24 (Actions:write pre-ticked — pick repo +
+expiry). Paste into worker `GH_PAT` → Deploy. Next :00/:45 proves it.
+Delete the old token after.
 
-## 2. Prove the room (no effort, just looking)
-- Genzie's first line (seating code ships in the push).
-- Worker turns at :00/:45 (trigger + GH_PAT finishes are yours; View events
-  is the witness). 2-day rollback rule stands.
+## 2. Prove the room (just looking)
+- First clock-time turn + Genzie's first line (seating code is live).
 - One manual burst (seat + turns 3) whenever curious.
+- Eyes on footer/health/HowBuilt after deploy.
 
 ## 3. Shared key off Groq (checks + 1 sitting)
 Netlify `ALIBABA_API_KEY` set? Deployed after the change? One shared
 sitting — export names the model, that's the live test.
 
 ## 4. Room future (whenever, pick letters)
-Research plan stands: memory (roundup/self-memory/old lines), shape
-(forward links/date hooks/stall honesty), watchability (polling, filters,
-TTS, model credit), audience steering. Plus parked: Genzie dossier
-reframe for standalone use, daily recap, auto-refresh polling.
+Memory / shape / watchability / audience steering (research plan Sep 23).
+Parked: Genzie dossier reframe, daily recap, auto-refresh polling.
 
-## 5. Sittings/verdicts/picks (only if you feel like it)
+## 5. Phase 7b auto-metrics (new today — plan first, then build)
+AlignScore guardrail, LENS-SALSA calibration, ASSET-method optional.
+Honest costing: new Python deps (torch + spacy + weights), GPU-preferred —
+slow on this MacBook's CPU. Sequenced after the room proofs; say go and
+the plan gets written before anything installs.
+Venv ready: `.venv312` (Python 3.12.13) built Sep 25 with the old venv's
+full package set; old `.venv` untouched. One import proof still owed —
+this session's sandbox blocked reads of the new dir (EPERM), so run
+`.venv312/bin/python -c "import langchain_ollama"` in a real terminal
+(or next session verifies).
+
+## 6. Sittings/verdicts/picks (only if you feel like it)
 Crowns stand (3.8-max / 3.7-plus / free vacant). `Grade: TODO` files in
 `docs/eval-sittings/`; golden picks for Phase 7c.
 
-## 6. Small decisions (carried)
+## 7. Small decisions (carried)
 Together pipe: key or drop · `.env.test.local` model check · favicon/OG
-art (both need your artwork) · git-history name.
+art (needs your artwork) · git-history name.
 
 ## Explicitly NOT (parked, no nagging)
 Z.ai · GLM/DeepSeek sittings · 30B length tests · template scaffold ·
 podcast · RAG latency · 14B tuning · visitor posting · denser cron ·
-Netlify scheduled functions · rigid confusion checklist · parting pointer.
+Netlify scheduled functions.
 
 ## Dropped today (dead, with reason)
-- "Push unlocks cron" pattern: replaced by pull-rebase habit + rebase-proof
-  commits (code changes only, room owns the transcript).
-- Dashboard-created Worker path: dashboard has no blank-worker flow;
-  terminal/agent routes documented instead.
-- jsDelivr-first fetch: sat stale for hours; GitHub-raw-first now.
-- MIT/Apache: answered, AGPL-3.0 picked.
-- Who/what/where-first rule: too prescriptive; anchor rule replaces it.
+- Dashboard-created Worker path: no blank-worker flow; agent/terminal
+  routes documented instead.
+- Reusing the old token: permissions freeze at creation — new token only.
+- MIT/Apache: AGPL-3.0 picked.

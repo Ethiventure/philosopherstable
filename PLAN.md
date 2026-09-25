@@ -12,10 +12,10 @@ Phases are ordered by dependency; each should leave the app building.
 - [x] Phase 4 — Accessibility & display
 - [x] Phase 5 — RAG v1 lexical (vectors deferred)
 - [x] Phase 6 — Richer philosopher information + influence grid
-- [ ] Phase 7 — Model-family A/B (superseded by the funnel + DECISION in `docs/models-tried.md`: crowns are 3.8-max quality, 3.7-plus value, free vacant; 14B tuning track 7c and fix-triage ledger 7e stay live)
+- [x] Phase 7 — Model-family A/B (decided Sep 21 2026: funnel + DECISION in `docs/models-tried.md`; crowns are 3.8-max quality, 3.7-plus value, free vacant; 14B tuning track 7c and fix-triage ledger 7e continue as live tracks)
 - [ ] Phase 7b — Auto-metrics (AlignScore guardrail, LENS-SALSA calibration, ASSET-method optional)
 - [ ] Phase 8 — `webapp-commons-template` (not scaffolded)
-- [ ] Phase 9 — Rose seat (dossier landed + wired; live-sitting voice grade + remaining texts awaited)
+- [x] Phase 9 — Rose seat (dossier landed + wired; live-sitting voice grade)
 - [ ] Phase 10 — Senior common room (live: turns landing; GitHub's own schedule throttled ~6/day, so a Cloudflare Worker fires dispatch every 45 min → ~32/day; manual seat input for Genzie/scenes)
 - [ ] Backlog — favicon, og recompose, rotation/recovery doc, +9 more (LICENSE shipped Sep 24: AGPL-3.0-only)
 
@@ -725,8 +725,18 @@ Groq-Qwen, Together once each with the output-token line as judge.
   source→rewrite scorer with word-level error tags. Strongest fit — scores our
   own High→Low pairs with no refs, and error tags map onto leaked hard terms.
   Calibrate first: run on one past Low session, adopt as leak detector only if
-  its tags agree with the owner's leaked-term list (generic-simplification
-  training may misread philosophical voice).
+   its tags agree with the owner's leaked-term list (generic-simplification
+   training may misread philosophical voice).
+   VERDICT Sep 25 2026 — DROPPED after calibration (9 same-seat Medium→Low
+   pairs, education question, Bristol/Naples): 0 ban-inventory hits, and its
+   heaviest fire (0.4–0.8) lands on proper names (seats, cities, Genzie) and
+   concrete nouns (child, sensors, cobalt) — exactly the words our rules
+   require. Trained on generic simplification, it reads legitimate
+   paraphrase as badness. The feared misread was the actual misread. Setup
+   notes for nobody (do not repeat): lens-metric 0.2.0 needs the legacy
+   `.venv` (py3.9) + numpy<2 + cython<3 + --no-build-isolation (pandas 1.5.3
+   cannot build on 3.12); checkpoint needs CPU-mapping + weights_only=False
+   overrides; weights: HF davidheineman/lens-salsa.
 - **ASSET + EASSE** (idea yes, dependency no): ASSET is 2,359 Wikipedia
   sentences × 10 refs with SARI — wrong genre for multi-sentence philosophical
   turns, and SARI would punish High voice if misapplied. EASSE is 2019-era,
@@ -981,6 +991,9 @@ Status Sep 24 2026: Worker built, switch-on pending proof — GitHub
 `schedule` (~6/day, every start lands) remains the working method until
 the Worker lands real turns at :00/:45 cadence. Rollback: no proof in
 2 days → delete the Worker, keep GitHub; comparison is turns/day.
+Sep 24 eve: Worker fires on schedule (4 logged firings) but dispatch
+403s — PAT lacks Actions:write, permissions freeze at creation, so the
+fix is a new token (pre-filled link with owner); retest pending.
 
 Unprompted philosophers' chat on the site: the seats talk about whatever
 they want, on a slow rotation, no visitor question needed. Owner shape:

@@ -63,6 +63,9 @@ full edge-list fallback. Content-agnostic: substitute any entities.
   uses domain diction with banned stock verbs — homogenised prose is a
   defect. When the evidence is good, public-facing text states the claim
   plainly (no hedging); caveats live in code comments, never on the surface.
+- Explain-as-you-go: every non-trivial step gets one plain non-jargon
+  sentence saying what it does and why this method — including which
+  options were rejected and why.
 - Beauty is a requirement: adjustments speak the design's palette and type;
   generic accessible-minimalism is a failure mode. Dark surfaces keep tested
   font/button/accent pairs — never a lone text-colour toggle.

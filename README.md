@@ -63,6 +63,8 @@ npx netlify dev        # app on http://localhost:8888 + the shared-key function
 
 Plain `npm run dev` also works but serves the app only — the shared provider shows an unreachable note there while visitor keys keep working. If `:8888` is already taken, stop the old server first (one instance owns the port).
 
+Python side (eval tooling only — the app itself needs just Node): Python 3.12 via `uv python install 3.12`, envs live in `.venv312/` (current) and `.venv/` (old ingest env, kept until the new one proves itself). Neither is committed — recreate with `uv venv --python 3.12 .venv312` plus the package set. Phase 7b metric installs (torch et al, CPU-only, ~2GB downloads) target `.venv312`; any Apple-Silicon Mac runs them, slowly — no GPU, no server, no paid anything.
+
 `npm run test:all` runs the whole local sweep in one go (typecheck, lint, build, RAG tests + eval + offline bench, key checks, probe dry-run) and ends with your 3 next moves. Keys live in `.env.test.local` (see `scripts/test-keys.env.example`) — pipes without a key skip, nothing spends. After a live sitting, `npm run grade -- <transcript>` prints a mechanical scorecard (length, verbatim echo, city hold, cites, margins, volatility) plus a half-filled log row — you verify, add 2–3 quotes, and write the verdict.
 
 Deploying: connect the repo to Netlify (builds via `netlify.toml`), then set `GROQ_API_KEY` in Site settings → Environment variables. The key must never appear in the repo or the frontend bundle — it lives server-side in `netlify/functions/cabinet.js`'s environment only. See `PLAN.md` for the full agent-facing build plan.

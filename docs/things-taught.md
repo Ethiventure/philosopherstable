@@ -4,6 +4,36 @@ Low intensity, nothing dumbed down: every entry keeps the full fact,
 only the words stay simple. Newest first. The owner asked for this
 Sep 17 2026 — keep writing here, one entry per lesson.
 
+## A generic grader punishes your best moves (Sep 25 2026)
+We tested a published simplification-scorer as our leak detector: it
+passed good Low turns and flagged the wrong words — people's names,
+cities, and concrete nouns like child and sensors, with high confidence.
+Those are the exact words our rules demand (debts need names, cities
+anchor the thread, plain words need concrete things). The scorer learned
+"simpler" from encyclopedia sentences, where cutting names is tidiness;
+in philosophy, cutting them is lobotomy. We dropped it the same day.
+The lesson: a metric is only as wise as its training diet — before
+trusting any auto-grader, run it on work you already graded by hand and
+check it flags what you flagged. Ours didn't, so it stays buried.
+
+## A token's permissions freeze at birth (Sep 24 2026)
+A GitHub fine-grained token can never gain new powers — there is no
+edit-permissions button, only make-a-new-one (regenerate just replaces
+the secret with the same powers). So when an automation 403s on scope,
+don't reread your code: the token was born without the permission.
+Rotation always means a new token plus one paste, never a code change —
+which is why the recovery doc says "new token + same upload" instead
+of anything cleverer.
+
+## Keep your commits off the robot's files (Sep 24 2026)
+A cron that commits data files will fight every human push: the remote
+moves under you and the rebase complains. The fix is ownership, not
+force — the robot owns the transcript, humans own code and docs, and
+the two never share a file. New seats join through code that edits the
+data at runtime (append-if-missing), so even seating changes travel as
+clean code commits. If a push is rejected, pull-rebase-push; never
+force-push a branch the robot writes to.
+
 ## A schedule is a request, not a promise (Sep 23 2026)
 A cron line says when you *want* something to run: five slots for
 minute, hour, day-of-month, month, weekday, so `*/45 * * * *` means
