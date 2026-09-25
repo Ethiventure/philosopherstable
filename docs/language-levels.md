@@ -43,6 +43,17 @@ drifts while the others stay undefined:
   translates the vocabulary, never blunts the blow. Strong language where
   temper and argument require it (actual words, occasionally, never
   decoration); identity slurs banned for all seats.
+- Owner doctrine Sep 25 2026 (the philosophy behind the levels — complexity
+  of idea stays, only the telling changes): Low is ordinary simple language
+  needing no degree, and never assumes the reader less intelligent — the
+  vocabulary differs, not the mind. Medium teaches the vocabulary: authentic
+  terms kept, each quietly translated into typical English alongside, more
+  verbose by design. High is the thinker at full stretch: authentic terms
+  and moves, answering the question for real, never an impression. Consequence:
+  no thinker here writes plain by default (even the clearest carry their
+  terms), so High is never Low — but the gap narrows for plain writers
+  (Weil, Lenin, Fisher) and widens for dense ones (Hegel, Deleuze). Levels
+  are per-thinker, not absolute; the floor is shared, the ceiling differs.
 
 **2. Starve Low of difficulty generators — never of temper.** The language block alone
 loses to ~3,000 tokens of academic profile above it — Deleuze's profile

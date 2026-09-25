@@ -1516,6 +1516,8 @@ function HowBuilt() {
 function LivingRoom() {
   // Read-only transcript of the unprompted room (Phase 10): visitors read,
   // never generate — one shared stream written by the 20-minute cron.
+  // Room display names (Sep 25 2026): Genzie reads with her margins role
+  // attached; everywhere else she stays plain Genzie.
   const [room, setRoom] = useState<{ roster: string[]; cursor: number; turns: { id: string; ts: string; seat: string; name: string; text: string; model: string }[]; lastTick: string | null } | null>(null);
   const scrollRef = useRef<HTMLDivElement | null>(null);
   const seenCount = useRef(0);
@@ -1569,7 +1571,7 @@ function LivingRoom() {
         >
           {room.turns.map((t) => (
             <article key={t.id} className="border-t border-[#4a392d]/15 pt-3 mt-3 first:border-t-0 first:pt-0 first:mt-0">
-              <p className="text-[10px] uppercase tracking-wider text-[#8b5254]">{t.name} · {new Date(t.ts).toLocaleString([], { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' })}</p>
+              <p className="text-[10px] uppercase tracking-wider text-[#8b5254]">{t.seat === 'genzie' ? 'Genzie (notes from the margins 21st century commentary)' : t.name} · {new Date(t.ts).toLocaleString([], { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' })}</p>
               <p className="text-[15px] leading-relaxed whitespace-pre-line text-[#465f75] mt-1">{t.text}</p>
             </article>
           ))}

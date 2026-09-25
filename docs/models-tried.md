@@ -11,7 +11,7 @@ the reason they died.
 1. `qwen3.8-max` via Alibaba — quality crown. Best combo at Medium, rich at High, graded at Low-long (city 14/15, debts spoken, Genzie 10/10). ~$0.40/session ($0 on trial to Dec 16).
 2. `qwen3.7-plus` via Alibaba — value crown. High favourite, solid Medium, graded Low (city 14/15, 0 repairs). ~$0.07/session.
 3. `qwen3.8-27b` via Alibaba — Low voice leader. Fast, cheap, 0 repairs; P2 echo kills it at Medium. $0 on trial.
-4. `qwen/qwen3-14b` via OpenRouter paid — cheapest proven paid (~$0.021). Survives Medium; drops city, no citations; tuning track open.
+4. `qwen/qwen3-14b` via OpenRouter paid — cheapest proven paid (~$0.021). Survives Medium; drops city, no citations; tuning track parked Sep 25 (7c — superseded by the value crown, golden picks never arrived).
 5. `Qwen/Qwen3-30B-A3B` via DeepInfra — fastest sittings (~1–2 min), best dilemma-grasp; echo-prone, debts unspoken. ~$0.03.
 6. `qwen3.8-flash` via Alibaba — probe-clean, punchy High; least proven voice. ~$0.03.
 7. Free (crown vacant): OpenRouter free cycle (`qwen/qwen3.8-27b:free` first among named, throttled) or Groq free Low-only (7k input wall).

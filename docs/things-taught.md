@@ -4,6 +4,39 @@ Low intensity, nothing dumbed down: every entry keeps the full fact,
 only the words stay simple. Newest first. The owner asked for this
 Sep 17 2026 — keep writing here, one entry per lesson.
 
+## What the autumn metric trials actually did (Sep 25 2026)
+The full record, since the lessons below only carry the morals. Two
+published tools were tested against turns you had already graded by
+hand, keep-only-on-agreement in both cases.
+LENS-SALSA (leak detector): installed 2023 code into the old Python
+(new Python can't build its spreadsheet part), fetched its ~1GB brain,
+ran 9 same-thinker Medium→Low pairs from the Bristol/Naples sittings.
+Result: zero ban-list hits; heaviest fire on names, cities, concrete
+nouns (0.4–0.8). Dropped same day.
+AlignScore-large (meaning guardrail): installed from its GitHub home
+(not on PyPI; its pinned torch fits only old Python), fetched its
+4.9GB brain, scored 24 Low turns against profiles plus 3 controls —
+copy 0.98, faithful paraphrase 0.37, outright lie 0.01. All 24 real
+turns landed 0.12–0.52, the paraphrase band. Dropped same day.
+Running either needed two shims (force CPU, allow the old file format)
+kept in throwaway scripts, never the repo. What survives: the ban-list
+idea (a plain script checking your list would do the job), the ASSET
+method on paper only (needs your hand-written references — expensive,
+probably the same paraphrase disease), and the proof that paraphrase is
+the assignment, not the failure.
+
+## A guardrail that flags everything guards nothing (Sep 25 2026)
+Sequel to the generic-grader lesson: the meaning-checker failed the
+mirror test. It scores word-overlap dressed as understanding — a copied
+sentence gets 0.98, a true paraphrase gets 0.37, an outright lie gets
+0.01. Our plain-language turns live at 0.37 by design (translated words
+are the whole job), so every turn would arrive flagged and the human
+would learn to ignore every flag. A warning nobody heeds is worse than
+no warning: it spends attention while pretending to save it. We buried
+this one too. The rule that survives both burials: calibrate on your own
+graded work first, and demand few sharp flags — mass flags mean the
+instrument, not the writing.
+
 ## A generic grader punishes your best moves (Sep 25 2026)
 We tested a published simplification-scorer as our leak detector: it
 passed good Low turns and flagged the wrong words — people's names,

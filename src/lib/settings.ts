@@ -33,7 +33,7 @@ export type DeepInfraPrimary = 'qwen30b' | 'qwen14b';
  *  plain line (model, price, reason). */
 export const DEEPINFRA_PRIMARIES: { id: DeepInfraPrimary; label: string; model: DeepInfraModel; why: string }[] = [
   { id: 'qwen30b', label: 'Qwen3-30B-A3B', model: 'Qwen/Qwen3-30B-A3B', why: 'Default. Tuning target: best dilemma-grasp measured, ~1–2 min debates, ~$0.03/sitting. Echo clusters + unspoken history still open.' },
-  { id: 'qwen14b', label: 'Qwen3-14B', model: 'Qwen/Qwen3-14B', why: 'Cheapest proven paid engine (~$0.021/sitting); tuning track. Slow pipe (42s probe), over budget — needs room, not haste.' },
+  { id: 'qwen14b', label: 'Qwen3-14B', model: 'Qwen/Qwen3-14B', why: 'Cheapest proven paid engine (~$0.021/sitting); tuning parked. Slow pipe (42s probe), over budget — needs room, not haste.' },
 ];
 
 export type TurnEconomy = 'full' | 'efficient';

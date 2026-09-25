@@ -8,7 +8,8 @@
  *
  * Checks: words/turn vs budget (worst turns named), echo clusters (shared
  * 8-grams quoted), thread-city hold per turn, citation count, Genzie
- * namings per pass, P3 vague verbs, volatility shapes. Prints a plain-text
+ * namings per pass, P3 vague verbs, volatility shapes, banned Low terms
+ * (repo's own ban inventory, Low only). Prints a plain-text
  * scorecard (reads aloud cleanly) plus a paste-ready models-tried.md row
  * with human fields marked TODO — best/worst quotes and the verdict stay
  * yours; the machine never writes them.
@@ -16,7 +17,10 @@
  * Uses the repo's own detectors (sharesPassage, detectVolatility) imported
  * from src — same normalization as the live guards, no duplication.
  */
-import { readFileSync } from 'node:fs';
+import { readFileSync, writeFileSync, mkdirSync, rmSync } from 'node:fs';
+import { execSync } from 'node:child_process';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
 import { sharesPassage, findSharedPassage, detectVolatility } from '../src/lib/llm.ts';
 
 const rawArgs = process.argv.slice(2);
@@ -146,6 +150,67 @@ for (const t of loanShort.slice(0, 8)) {
 }
 if (loanShort.length > 8) lines.push(`  …and ${loanShort.length - 8} more`);
 lines.push('');
+
+// 4c. Banned terms at Low: per-seat low_translations terms + the shared
+// describe-never-name seeds, loaded from source via a throwaway esbuild
+// bundle (same mechanism as export-personas) — never a copied list, so it
+// cannot drift. Own-seat hits are the strong signal; shared-seed hits the
+// backup. Above Low the check is meaningless: skipped, not zero.
+const loadBanInventory = () => {
+  try {
+    const root = process.cwd();
+    const esbuild = join(root, 'node_modules', '.bin', 'esbuild');
+    const work = join(tmpdir(), `grade-bans-${Date.now()}`);
+    const outJson = JSON.stringify(join(tmpdir(), 'grade-bans-out.json'));
+    const entry = `import { PHILOSOPHER_DATA } from ${JSON.stringify(join(root, 'src', 'philosophers', 'index.ts'))};
+import { LOW_CONCEPT_RULES } from ${JSON.stringify(join(root, 'src', 'philosophers', 'shared', 'low-style.ts'))};
+import { writeFileSync as _w } from 'node:fs';
+const seedLine = LOW_CONCEPT_RULES.find((s) => s.includes('describe-never-name')) || '';
+const seeds = seedLine.split(':').slice(1).join(':').split(/,|;/).map((s) => s.replace(/\\(.*?\\)/g, '').replace(/ and their kin\\.?/i, '').trim()).filter((s) => s.length > 2);
+const seats = {};
+for (const p of PHILOSOPHER_DATA) {
+  seats[p.slug] = { name: p.name, full: p.full_name, terms: (((p.style_essence || {}).low_translations) || []).map((t) => t.term) };
+}
+_w(${outJson}, JSON.stringify({ seeds, seats }));`;
+    const tmp = join(work, 'entry.mjs');
+    const out = join(work, 'bundle.mjs');
+    mkdirSync(work, { recursive: true });
+    writeFileSync(tmp, entry);
+    execSync(`"${esbuild}" ${JSON.stringify(tmp)} --bundle --platform=node --format=esm --alias:@=${JSON.stringify(join(root, 'src'))} --outfile=${JSON.stringify(out)} --log-level=error && node ${JSON.stringify(out)}`, { cwd: root, encoding: 'utf8', stdio: ['ignore', 'ignore', 'ignore'] });
+    const data = JSON.parse(readFileSync(join(tmpdir(), 'grade-bans-out.json'), 'utf8'));
+    rmSync(work, { recursive: true, force: true });
+    try { rmSync(join(tmpdir(), 'grade-bans-out.json'), { force: true }); } catch { /* ignore */ }
+    return data && data.seats ? data : null;
+  } catch {
+    return null;
+  }
+};
+let bannedCount = 0;
+if (level.startsWith('low')) {
+  const inv = loadBanInventory();
+  if (!inv) {
+    lines.push('BANNED TERMS: inventory unreadable — skipped, grade by eye');
+  } else {
+    const esc = (s) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    const hitsFor = (text, terms) => terms.filter((term) => new RegExp(`\\b${esc(term)}(?:s)?\\b`, 'i').test(text));
+    const flagged = [];
+    for (const t of turns) {
+      const tl = t.name.toLowerCase();
+      const slug = Object.keys(inv.seats).find((s) => tl === inv.seats[s].name.toLowerCase() || tl === inv.seats[s].full.toLowerCase());
+      if (!slug) continue;
+      const own = hitsFor(t.text, inv.seats[slug].terms);
+      const shared = hitsFor(t.text, inv.seeds.filter((x) => !inv.seats[slug].terms.some((o) => o.toLowerCase() === x.toLowerCase())));
+      if (own.length || shared.length) flagged.push({ t, own, shared });
+    }
+    bannedCount = flagged.length;
+    lines.push(`BANNED TERMS (Low, own-seat + shared seeds): ${flagged.length}/${turns.length} turns name a banned term${flagged.length ? '' : ' — all clean'}`);
+    for (const f of flagged.slice(0, 8)) lines.push(`  pass ${f.t.pass} ${f.t.name}: ${[...f.own, ...f.shared.map((s) => `${s} (seed)`)].join(', ')}`);
+    if (flagged.length > 8) lines.push(`  …and ${flagged.length - 8} more`);
+  }
+} else {
+  lines.push('BANNED TERMS: Low-only check — skipped above Low');
+}
+lines.push('');
 const rlSection = md
   ? (text.match(/## READING LIST\n([\s\S]*?)(?=\n## |\s*$)/) || [])[1] ?? ''
   : (text.match(/READING LIST\n([\s\S]*?)(?=\n[A-Z][A-Z' ]*\n|\nSITTING|\nMODELS USED|$)/) || [])[1] ?? '';
@@ -182,6 +247,7 @@ lines.push('');
 lines.push('MANUAL (no mechanical check exists): debts spoken in P1, heat per seat, Medium gloss hygiene, High voice, best/worst quotes, THE VERDICT.');
 lines.push('');
 lines.push('| Model | Provider | Time | Tokens (in/out, calls) | Errors | Quality notes | Interim verdict | Next step | Final verdict |');
-lines.push(`| TODO-model | TODO-provider | TODO-time, prompt ${version}, ${city ?? 'TODO-city'} | TODO-tokens | TODO-errors | probe-grade: ${over.length} over budget, ${clusters.length} echo, city ${city ? `${turns.length - turns.filter((t) => !t.text.toLowerCase().includes(city.toLowerCase())).length}/${turns.length}` : '?'}, ${cites} cites, loans met ${turns.length - loanShort.length}/${turns.length}, Genzie P2 ${genzie(p2)}/${p2.length} P3 ${genzie(p3)}/${p3.length}, vague-P3 ${vague.length}, volatile ${vol.length} | TODO | TODO | Open |`);
+const bannedStr = level.startsWith('low') ? `, banned ${bannedCount}` : '';
+lines.push(`| TODO-model | TODO-provider | TODO-time, prompt ${version}, ${city ?? 'TODO-city'} | TODO-tokens | TODO-errors | probe-grade: ${over.length} over budget, ${clusters.length} echo, city ${city ? `${turns.length - turns.filter((t) => !t.text.toLowerCase().includes(city.toLowerCase())).length}/${turns.length}` : '?'}, ${cites} cites, loans met ${turns.length - loanShort.length}/${turns.length}, Genzie P2 ${genzie(p2)}/${p2.length} P3 ${genzie(p3)}/${p3.length}, vague-P3 ${vague.length}, volatile ${vol.length}${bannedStr} | TODO | TODO | Open |`);
 
 console.log(lines.join('\n'));

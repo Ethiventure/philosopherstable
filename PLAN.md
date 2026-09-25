@@ -12,10 +12,10 @@ Phases are ordered by dependency; each should leave the app building.
 - [x] Phase 4 — Accessibility & display
 - [x] Phase 5 — RAG v1 lexical (vectors deferred)
 - [x] Phase 6 — Richer philosopher information + influence grid
-- [x] Phase 7 — Model-family A/B (decided Sep 21 2026: funnel + DECISION in `docs/models-tried.md`; crowns are 3.8-max quality, 3.7-plus value, free vacant; 14B tuning track 7c and fix-triage ledger 7e continue as live tracks)
+- [x] Phase 7 — Model-family A/B (decided Sep 21 2026: funnel + DECISION in `docs/models-tried.md`; crowns are 3.8-max quality, 3.7-plus value, free vacant; fix-triage ledger 7e continues as a watch-list (retests ride along on sittings, schedules nothing); 14B tuning track 7c parked Sep 25 — nothing defaults to it, golden picks never arrived)
 - [ ] Phase 7b — Auto-metrics (AlignScore guardrail, LENS-SALSA calibration, ASSET-method optional)
 - [ ] Phase 8 — `webapp-commons-template` (not scaffolded)
-- [x] Phase 9 — Rose seat (dossier landed + wired; live-sitting voice grade)
+- [x] Phase 9 — Rose seat (dossier landed + wired; voice graded across sittings; texts resolved Sep 25 — 6 books metadata-only by rights, 2 estate texts ingested, rest correctly refused)
 - [ ] Phase 10 — Senior common room (live: turns landing; GitHub's own schedule throttled ~6/day, so a Cloudflare Worker fires dispatch every 45 min → ~32/day; manual seat input for Genzie/scenes)
 - [ ] Backlog — favicon, og recompose, rotation/recovery doc, +9 more (LICENSE shipped Sep 24: AGPL-3.0-only)
 
@@ -231,6 +231,11 @@ silently across versions.
   repeat): feeling-verb palette broadened to twelve with no-repeat
   rules, in cabinet prompts and room rules alike. Old grades stay on
   v2026-09-20h and earlier.
+- Prompt v2026-09-20j (Sep 25 2026, owner difficulty doctrine): Low gains
+  the respect line (no degree, full intelligence), Medium gains
+  verbose-by-design teaching, High gains per-thinker authentic register
+  (gap to Low differs honestly) + answer-for-real over impression.
+  Old grades stay on v2026-09-20i and earlier.
 
 ### Embeddings (Phase 5)
 `test_embeddings.py` uses local Ollama `nomic-embed-text` (768 dims); the schema is
@@ -719,7 +724,20 @@ Groq-Qwen, Together once each with the output-token line as judge.
   factual check. Use: Low turn = claim, High turn + profile = context. Catches
   invented content and contradictions (= meaning drift, our "simplify language,
   not ideas" line). Sees NOTHING about simplicity, voice, or omissions.
-  Adopt as the every-session meaning guardrail; flag low scores for human review.
+   Adopt as the every-session meaning guardrail; flag low scores for human review.
+   VERDICT Sep 25 2026 — DROPPED after calibration (AlignScore-large, CPU,
+   24 Low claims vs profile context + 3 controls): verbatim 0.978,
+   faithful paraphrase 0.373, contradiction 0.007. All 24 real turns land
+   0.12–0.52 — the paraphrase band, since our Low register IS paraphrase
+   (translated vocabulary by design). A guardrail that flags everything
+   saves no labour and teaches the owner to ignore it; threshold-at-0.1
+   would pass everything and catch only what eyes catch free. Same
+   family as the LENS failure: overlap metrics punish paraphrase.
+   Setup notes for nobody: git+https install (not on PyPI), torch 1.13
+   pin has no 3.12 wheels (use legacy .venv py3.9 --no-deps + pin
+   transformers<4.46, sklearn, spacy, nltk, punkt data); checkpoint needs
+   the same CPU-mapping + weights_only=False overrides; weights: HF
+   yzha/AlignScore AlignScore-large.ckpt (~4.9GB).
 - **LENS-SALSA** (Apache-2.0, clean; `davidheineman/salsa`, `pip install
   lens-metric` + HF `davidheineman/lens-salsa` weights, GPU): REFERENCELESS
   source→rewrite scorer with word-level error tags. Strongest fit — scores our
@@ -792,7 +810,13 @@ Groq-Qwen, Together once each with the output-token line as judge.
   per-constraint scorecard decomposes the composed turn into separately
   graded constraints instead of one holistic mark.
 
-## Phase 7c — Qwen-14B tuning track (open, Sep 20 2026; frontrunner)
+## Phase 7c — Qwen-14B tuning track (parked Sep 25 2026, was open/frontrunner Sep 20)
+Parked, not erased: 14B last ran Sep 20, nothing defaults to it (DeepInfra
+default is 30B; crowns cover quality + value), and the golden-turn picks
+it needed never arrived. The option stays in the DeepInfra dropdown at
+zero maintenance cost — still the cheapest proven paid engine if a crown
+fails. Revisit condition: value crown fails or paid budget forces the
+$0.021 tier. Original brief below, kept for that day.
 Qwen-14B holds the contract at ~$0.021/sitting but reads thinner than the
 bigger Qwen: less emotional grip, dropped cities, no citations, unspoken
 debts, beat-less P3s. Tune the prompts toward it, not away from it:
@@ -811,7 +835,9 @@ debts, beat-less P3s. Tune the prompts toward it, not away from it:
   14B carries Low/cheap, 30B carries Medium/emotional — and say so in the
   Voice tab copy.
 
-## Phase 7e — Fix ledger (TODO; ordered by priority, Sep 20 2026)
+## Phase 7e — Fix ledger (watch-list, not a task; Sep 20 2026)
+Nothing here schedules work: fixes ship, retests ride along whenever a
+sitting runs anyway. Ordered by priority.
 Rule: non-model-specific fixes outrank model-specific ones. Never ship
 a single-model tweak as universal (anti-overfit rule); each fix lists
 evidence, unbalance risk, retest matrix.
@@ -827,7 +853,9 @@ evidence, unbalance risk, retest matrix.
    local loops). Grade on 30B first, watch other voices for flattening.
    PARK CONDITION: if the next 30B sitting still clusters, 30B parks as
    an engine (dilemma-grasp challenges only). Retest: one Medium sitting
-   on 30B — GLM can't retest (parked entirely); grade badge hits.
+    on 30B — GLM can't retest (parked entirely); grade badge hits.
+    DONE Sep 25 2026 — Glasgow retest still clustered (echo 10/15, worst
+    on record); park condition met, 30B an engine for dilemma-grasp only.
    Sep 21 riders from the Glasgow run: template-slot "(X)" leaks now trip
    the volatility guard (failed toolkit fill = garble); the margins note
    can never enter works_referenced (filtered at toIntervention).
@@ -837,43 +865,56 @@ evidence, unbalance risk, retest matrix.
    v2026-09-20d: the P3 answer must land in the reformulation's FIRST TWO
    SENTENCES naming Genzie, before touching PREV (position salience —
    buried answers were the failure shape). Retest: GLM Medium, grade
-   answer position not just presence.
+    answer position not just presence. DONE Sep 25 — GLM retest impossible
+    (parked); living models name Genzie (10/10 max, 4/5 plus): fix holds
+    where it can run.
 3. Coda premise-blindness (bunks under full automation) — evidence GLM
    High v1. SHIPPED Sep 20 2026 in prompt v2026-09-20b (all three coda
    builders carry PREMISE HOLD: givens are settled facts, attack the
-   answers never the premise). Retest: any High sitting.
+    answers never the premise). Retest: any High sitting. DONE Sep 25 —
+    4+ High sittings since (Istanbul, Athens, Warsaw, São Paulo), no
+    premise-blindness recurred.
 4. Coda failures recurring (missing `reformulation` ×2, GLM same day) —
    no cure yet; needs a second-model data point. HARDENED Sep 20 2026:
-   failure console line now carries which/lines-read/prompt-version/
-   provider, so the next failure arrives triage-ready. Repair retry +
-   visible failed state already stood.
+    failure console line now carries which/lines-read/prompt-version/
+    provider, so the next failure arrives triage-ready. Repair retry +
+    visible failed state already stood. OPEN (watch) — still needs a
+    second-model failure data point; nothing to build until one occurs.
 5. Volatility handling (word salad, key-salad, 4000-token cutoff) —
    evidence GLM High ×4, DeepSeek halt ×1. SHIPPED Sep 20 2026
-   (`detectVolatility` in `src/lib/llm.ts`: key-salad / word-repeat /
-   sentence-repeat / low-diversity gate on parsed prose, retryable parse
-   error, snippet in panel + full text in console). Retest: any High
-   sitting — watch the false-positive line on long term-heavy turns.
+    (`detectVolatility` in `src/lib/llm.ts`: key-salad / word-repeat /
+    sentence-repeat / low-diversity gate on parsed prose, retryable parse
+    error, snippet in panel + full text in console). Retest: any High
+    sitting — watch the false-positive line on long term-heavy turns.
+    DONE Sep 25 — no volatility events and no false positives on living
+    models since (both "salad" hits in transcripts are Genzie's own slang).
 6. Provenance check (`[UN143]` invented tag, 30B High) — evidence ×1.
    SHIPPED Sep 20 2026: `findInventedTags` (letter-digit bracket shape;
    plain `[12]` numbers stay untouched) flags the card's turn in console
-   and lists hits in an export UNVERIFIED TAGS footer (absent when clean).
-   Tags stay in the prose as evidence — flagged, never laundered.
+    and lists hits in an export UNVERIFIED TAGS footer (absent when clean).
+    Tags stay in the prose as evidence — flagged, never laundered.
+    DONE Sep 25 — runs on every export.
 7. Shared free path (Groq walls + dead fallback) — see Phase 7d.
+    OPEN — blocked on the Alibaba shared live test (owner-side).
 8. Quote-checker blind to single quotes — SHIPPED Sep 21 2026
    (`extractQuotes` only matched "..." while the contract orders '...'
-   loans, so every compliant turn read "nothing to check"; now catches
-   single-quoted loans with contraction guards, and the empty message is
-   the short honest line "No quoted loans in this turn.").
+    loans, so every compliant turn read "nothing to check"; now catches
+    single-quoted loans with contraction guards, and the empty message is
+    the short honest line "No quoted loans in this turn.").
+    DONE Sep 25 — in code (`extractQuotes`, verify.ts).
 
 ### B. Style, NOT model-specific (do second)
 8. Debts unspoken in P1 (5 rounds, all models) — SHIPPED Sep 20 2026 in
    prompt v2026-09-20b (HISTORY TONE binding: when history lines appear,
-   a P1 turn that never touches them fails). Retest: 14B + 30B Medium.
+    a P1 turn that never touches them fails). Retest: 14B + 30B Medium.
+    DONE Sep 25 — debts spoken on living models (Bristol Medium); 14B
+    retest parked with 7c.
 9. P3s beat-less (no slogans/why-better on 30B/GLM/Alibaba) — owner
    verdict Sep 20 2026: slogans read naff, instruction DROPPED. Replaced
-   with one specific applied move (prompt v2026-09-20a: named body doing
-   a named thing in the thread city, first step inside the sentence).
-   Retest: 3.7-plus Medium (closest living voice) — grade specificity, not slogans.
+    with one specific applied move (prompt v2026-09-20a: named body doing
+    a named thing in the thread city, first step inside the sentence).
+    Retest: 3.7-plus Medium (closest living voice) — grade specificity, not slogans.
+    OPEN — Naples Medium filed, ungraded.
 10. Thread-city drops (Berlin-default Hegel P1s on GLM + Alibaba;
     Bangkok ×1/15 on 30B High) — SHIPPED Sep 20 2026 in prompt
     v2026-09-20c (opening anywhere but the thread city fails; relocating
@@ -881,15 +922,15 @@ evidence, unbalance risk, retest matrix.
     branch never received the THREAD CITY value line (later turns did),
     so seat 1 was ordered to ground in a city it was never told — now
     named with birthplace explicitly exiled. Retest: any sitting, grade
-    seat 1 first.
+    seat 1 first. DONE Sep 25 — city 14/15 on both crowns.
 
 ### C. Style, model-specific (do last, one model at a time)
-11. 14B emotional gap (Phase 7c golden few-shots) — 14B only; risk to
-    others: nil (additive exemplars, quarantined to 14B runs).
+11. 14B emotional gap (Phase 7c golden few-shots) — parked with 7c Sep 25.
 12. Bookchin-Weil bleed (High 30B P2 clone; GLM P2 attention-carry) —
     needs a third exhibit before deciding nature vs plumbing.
+    OPEN (watch) — still two exhibits.
 13. 30B High thinness (aphoristic 2-sentence turns) — 30B only; revisit
-    only if 30B returns to High.
+    only if 30B returns to High. OPEN conditional — unchanged.
 
 Queued (Sep 20, owner): move the OpenRouter paid default pin off
 parked `deepseek/deepseek-v4.1-flash` to Medium-holder
@@ -911,7 +952,7 @@ before the trial expires Dec 16 2026. Watch-out: one shared quota means
 one visitor can drink the well — caps stay, and owner testing moves to a
 visitor key meanwhile.
 
-## Phase 9 — Rose seat (dossier landed, voice grade pending, Sep 2026)
+## Phase 9 — Rose seat (dossier landed, voice graded, texts resolved, Sep 2026)
 Gillian Rose (1947–1995) dossier built per `docs/new-philosopher-brief.md`
 Phase 1 (seat + debts + diagram + trio + copy sweep, with
 `low_translations`); seat + debts + diagram land together once it returns (grid exporter
@@ -946,8 +987,13 @@ full text. Only route: owner converts copies as before (same local-index
 path). No secondary sources — dossier and voice come from Rose's texts only. Style essence: built from the texts by the
 builder (fields per `fisher.style.ts`), or via the extraction prompt below.
 *Eval: dossier landed and wired (trio + low_translations + debts + RAG
-excerpts live); still awaited: a live-sitting voice grade for Rose, plus
-the missing local texts (see below).*
+excerpts live). Voice grade arrived across graded sittings (Sep 17 trio:
+Rose P1+P3 excellent; "genuinely Rosean", "Rose superb" in sitting
+verdicts; live room turn Sep 23) — no dedicated Rose sitting needed.
+Texts resolved Sep 25, not awaited: the 6 books stay metadata-only
+(in-copyright, correctly refused — Mourning blank and Love's Work missing
+change nothing, there is no free route); the 2 estate texts are ingested
+and live in the shard.*
 RAG landed Sep 17 2026 (owner-approved, dated act): `Italian Journey`
 (~8.1k words, 46 passages) + `Your Visit to Auschwitz` (~2.0k words,
 14 passages) from gillianrose.org — executor-shared CC BY-NC-ND 4.0.
