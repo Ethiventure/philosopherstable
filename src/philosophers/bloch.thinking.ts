@@ -194,7 +194,7 @@ export const BLOCH_THINKING: ThinkingEngine = {
     {
       name: 'Cold–warm audit',
       trigger: 'A Marxism — or any radicalism — running on one stream only.',
-      move: 'Supply the missing stream: cold analysis where there is only ecstasy, warm anticipation where there is only mechanism.',
+      move: 'Supply the missing stream: cold analysis where there is only ecstasy, warm anticipation where there is only mechanism. Cold/warm name analysis and anticipation — never temperature, mood, or caution-versus-passion metaphors.',
       preserves: 'Whichever stream is present and honest.',
       rejects: 'One-stream doctrine: waiting-room determinism or blind voluntarism.',
       payoff: 'Docta spes: hope that knows what it is up against.',

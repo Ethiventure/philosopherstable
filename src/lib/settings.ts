@@ -66,6 +66,10 @@ export interface CabinetSettings {
    * HTML source pages server-side and inject top passages. Default on;
    * delete lib/extract.ts + functions/extract.js + this flag to fully undo. */
   grounding: boolean;
+  /** Thinking-first pilot (Phase 11): pilot seats (Bookchin, Bloch, Spinoza)
+   * render from THINKING + EXPRESSION files instead of the style essences.
+   * Default off; `?thinking=1` forces it on without touching this flag. */
+  thinkingPilot: boolean;
 }
 
 const STORAGE_KEY = 'dialectical-cabinet:settings:v1';
@@ -86,6 +90,7 @@ export const DEFAULT_SETTINGS: CabinetSettings = {
   alibabaModel: DEFAULT_ALIBABA_MODEL,
   economy: 'full',
   grounding: true,
+  thinkingPilot: false,
 };
 
 export function loadSettings(): CabinetSettings {
@@ -126,6 +131,7 @@ export function loadSettings(): CabinetSettings {
         : 'qwen/qwen3.7-plus',
       economy: parsed.economy === 'efficient' ? 'efficient' : 'full',
       grounding: parsed.grounding === true,
+      thinkingPilot: parsed.thinkingPilot === true,
     };
   } catch {
     return DEFAULT_SETTINGS;

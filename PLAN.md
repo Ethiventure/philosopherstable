@@ -243,6 +243,13 @@ silently across versions.
   rejection shapes, temper-first openings (trial — revert alone if flat),
   invoke-at-most-two with mandatory break. Old grades stay on
   v2026-09-20j and earlier.
+- Prompt v2026-09-20m (Sep 26 2026, thinking-pilot strip-back): new
+  `buildPilotTurnInstruction` used ONLY for pilot seats with the flag on —
+  pass job, PREV discipline, budgets, scene/premise hold, margins duty,
+  closing; MOOD/FELT VERBS/RHYTHM/CUT-IN/HISTORY/STOCK/VOICE essays
+  dropped (renderer carries them). Old-path text byte-unchanged; pilot
+  grades ride m, old grades stay on k and earlier. (l skipped: used and
+  reverted Sep 26.)
 
 ### Embeddings (Phase 5)
 `test_embeddings.py` uses local Ollama `nomic-embed-text` (768 dims); the schema is
@@ -1168,7 +1175,8 @@ tied to their letter (lineage log below grows one line per bump); export
 footer + `models-tried.md` rows + `test-runs/` carry the version. Version
 record also kept in `docs/thinker-compiler.md` header + per-thinker file
 header + PLAN lineage line — three places, same letter.
-Lineage: v2026-09-20k = last style-essence version (grades stay on k).
+Lineage: v2026-09-20k = last style-essence version (grades stay on k);
+v2026-09-20m = pilot lean scaffold, pilot turns only (old-path text unchanged).
 
 ### Knock-on files (fix when the pilot lands, not before)
 
@@ -1225,6 +1233,19 @@ Lineage: v2026-09-20k = last style-essence version (grades stay on k).
   pilot registry in `philosophers/index.ts` behind caller flag, old path
   default; `scripts/pilot-slice-demo.mjs` dry-run: slices ≈900–1300 tokens,
   far inside the ~7k wall, zero API spend). Typecheck + lint + build green.
+  Wired Sep 26 (flag `thinkingPilot` in settings + `?thinking=1` URL override;
+  App turn loop + service desk both branch to the slice renderer for pilot
+  seats only, old path default; Voice tab toggle; export SITTING stamps pilot
+  use; localhost smoke 200 clean).
+  Add-back protocol (locked Sep 26 — how stripped aspects return, if ever):
+  ONE rule at a time, appended as a single isolated line to the pilot
+  scaffold; one fixed-question sitting; blind grade (owner assigns stripped
+  turns); keep-or-revert per rule with one line logged here naming the rule,
+  the sitting, and the verdict. Never restore by feel, never two rules at
+  once, never without a blind grade. Dropped-rule inventory lives in the
+  `buildPilotTurnInstruction` docstring (source of truth — read it before
+  proposing a return). First candidate already queued: no-scene variant
+  (uncanny-valley scenes) — see below.
   Next: run the fixed-question sitting, owner blind test in THINK mode.
 
 ## Missing-features backlog (considered, not yet scheduled)

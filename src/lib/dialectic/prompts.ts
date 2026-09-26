@@ -37,7 +37,7 @@ export type TurnKind = 'opening' | 'critique' | 'reconstruction';
  * text change so grades stay comparable: a verdict on version C never
  * transfers silently to version D.
  */
-export const PROMPT_VERSION = '2026-09-20k';
+export const PROMPT_VERSION = '2026-09-20m';
 
 export const WORD_BUDGETS = {
   normal: { negation: 25, reformulation: 40, total: 60, opening: 40 },
@@ -229,6 +229,74 @@ export function buildTurnInstruction({ kind, prevName, isFinalSeat, longForm, re
         ? 'SOURCE passages below: quote generously (at least four distinctive words/phrases, ≤6 words each, single quotes only) and echo their tics and rhythms; none shown: carry colour from persona and voice anchor. A High turn showing fewer than four visible loans has failed. '
         : 'SOURCE passages below: borrow visibly (at least two distinctive words/phrases, ≤6 words each, single quotes only); none shown: carry colour from your persona. A turn at Medium or above showing no visible loans has failed. ')
     + 'FIVE-WORD RULE on everything — question, PREV, survey, margins, priors: never lift a multi-word clause; paraphrase always, agreements and self-repeats phrased afresh. Standard grammar: complete sentences, terminal punctuation. The dialectical movement stays audible in the argument, never announced. Never open with a generic verdict (errs, fails to see, overlooks) — open inside your temper, on the concrete object, with your own verbs: no setup sentence.',
+  ].join(' ');
+}
+
+/**
+ * Pilot lean turn instruction (Phase 11, v2026-09-20m) — used ONLY when the
+ * thinking-pilot flag is on for a pilot seat. The thinking files already
+ * carry voice, moves, temper, and distinctions, so this scaffold keeps just:
+ * pass job, PREV discipline, budgets, scene hold, premise hold, margins
+ * duty, closing. Dropped from the old scaffold: MOOD, FELT VERBS, RHYTHM,
+ * CUT-IN ceremony, HISTORY TONE, STOCK PHRASES, VOICE/HEAT/loans, LOW
+ * ORDERS, TIME RULE, and every essay-length rule that restated a one-line
+ * order three ways. Old path (`buildTurnInstruction`) untouched — the A/B
+ * baseline survives; grades ride the version stamp, never transfer.
+ */
+export function buildPilotTurnInstruction({ kind, prevName, isFinalSeat, longForm, pass, threadCity = null, marginsNote = false, marginsFirst = false, noScene = false }: {
+  kind: TurnKind;
+  prevName: string | null;
+  isFinalSeat: boolean;
+  longForm: boolean;
+  pass?: number;
+  threadCity?: string | null;
+  marginsNote?: boolean;
+  marginsFirst?: boolean;
+  /** Uncanny-valley experiment (Sep 2026): drop every scene and metaphor
+   * mandate — no thread city, no opening scene, no scene reuse, Z lands as
+   * an institutional commitment without city staging. One variable only;
+   * everything else identical. URL-only (`?thinking=1&scene=0`). */
+  noScene?: boolean;
+}): string {
+  const b = longForm ? WORD_BUDGETS.long : WORD_BUDGETS.normal;
+
+  if (kind === 'opening') {
+    return [
+      noScene
+        ? `OPENING TURN (HARD ceiling: ${b.opening} words — finish the idea, then stop). Answer the question directly in your own framework. No scene-setting, no invented persons or places, no metaphor — argue the structure straight.`
+        : `OPENING TURN (HARD ceiling: ${b.opening} words — finish the idea, then stop). Answer the question directly in your own framework, through one concrete scene: a named person in ${threadCity ?? 'the thread city'}, and their predicament. This scene carries the whole sitting.`,
+      'Follow your characteristic movement. End on the live edge: your framework\'s own unresolved tension.',
+    ].join(' ');
+  }
+
+  const prev = prevName ?? 'PREV';
+
+  const job = pass === 1
+    ? `PASS 1 (diagnosis): name the ONE claim of ${prev} you reject and the contradiction it carries, then your own diagnosis. Nothing else.`
+    : pass === 2
+      ? `PASS 2 (pressure): land ONE break from inside ${prev}'s own argument — you are right that X, which is exactly why Y fails. No new topics; Z waits for pass 3. End with the contradiction handed on, one sentence.`
+      : noScene
+        ? 'PASS 3 (reconstruction): reject something specific, then add the new idea (Z) as one applied move — a named body taking a named decision, first step inside the sentence. Commitments (must, shall, will), never possibilities. No staging, no scene.'
+        : `PASS 3 (reconstruction): reject something specific, then add the new idea (Z) as one applied move — a named body doing a named thing in ${threadCity ?? 'the thread city'}, first step inside the sentence. Commitments (must, shall, will), never possibilities.`;
+
+  return [
+    `${kind === 'reconstruction' ? 'RECONSTRUCTION' : 'IMMANENT CRITIQUE'} TURN (HARD ceiling: ${b.total} words — shorter is better). Respond ONLY to ${prev}.`,
+    job,
+    `${prev} is YOU — a live opponent, never a specimen. Never describe them in third person.`,
+    'Never restate PREV, yourself, or the question: every sentence pushes somewhere new. Never lift a multi-word clause from PREV, the survey, or the question — paraphrase always.',
+    ...(noScene
+      ? ['No invented persons, places, or metaphors anywhere in the turn — argue the structure straight.']
+      : ['Reuse the opening scene and its people; invent no second scene. Stay in the thread city; never relocate to your homeland.']),
+    'Hold the question\'s givens as fixed constraints — never restore what the premise removed to make your answer easier.',
+    'Answer the original question fresh AND advance the PREV debate — a turn doing only one has stalled or drifted.',
+    ...((kind === 'reconstruction' && marginsFirst)
+      ? [`You speak first after the margins note (${MARGINS_WRITER_NAME} wrote it): open by naming ${MARGINS_WRITER_NAME} and one of its questions, and answer it directly.`]
+      : (kind === 'reconstruction' && marginsNote
+        ? [`The margins note rides first in the survey: in your first two sentences, name ${MARGINS_WRITER_NAME} and answer one of its questions directly, in your own terms.`]
+        : [])),
+    isFinalSeat
+      ? 'FINAL SEAT: return the question, changed, to the user — no new claims after it.'
+      : 'End on the live edge. Name no next speaker.',
   ].join(' ');
 }
 

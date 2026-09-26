@@ -10,8 +10,56 @@
  * can load it alongside the dialectic builders.
  */
 import type { FaultLine, ThinkingEngine, ThinkingOperation } from './thinking-types';
+import type { StyleIntensity } from '@/types';
+import type { ExpressionModel } from './thinking-types';
 
 export type ThinkMode = 'think' | 'teach' | 'thinkAndSound';
+
+/** Old level → new mode (same conclusions, different expression contract). */
+export function intensityToThinkMode(intensity: StyleIntensity): ThinkMode {
+  return intensity === 'low' ? 'think' : intensity === 'high' ? 'thinkAndSound' : 'teach';
+}
+
+/** `?thinking=1` forces the pilot on without touching stored settings —
+ * works on localhost, deploy previews, and live alike. */
+export function thinkingPilotRequested(): boolean {
+  try {
+    return new URLSearchParams(window.location.search).get('thinking') === '1';
+  } catch {
+    return false;
+  }
+}
+
+/** `?thinking=1&scene=0` runs the pilot without any scene or metaphor
+ * mandate (uncanny-valley experiment). URL-only — no settings field, so
+ * the experiment can never leak into anyone else's sitting. */
+export function thinkingSceneOff(): boolean {
+  try {
+    const q = new URLSearchParams(window.location.search);
+    return q.get('thinking') === '1' && q.get('scene') === '0';
+  } catch {
+    return false;
+  }
+}
+
+/** Trio line for the mode: think sees Think only, teach sees Teach,
+ * thinkAndSound sees the verbatim quote itself. */
+export function trioFor(expression: ExpressionModel, mode: ThinkMode): string {
+  return mode === 'think' ? expression.trio.think : mode === 'teach' ? expression.trio.teach : expression.trio.thinkAndSound;
+}
+
+/** Short voice block for teach/thinkAndSound. Null in THINK mode —
+ * THINK sends no expression content at all. */
+export function buildExpressionText(expression: ExpressionModel, mode: ThinkMode): string | null {
+  if (mode === 'think') return null;
+  if (mode === 'teach') return `YOUR VOICE (teach — full terms, every term explained): ${expression.sentenceBehaviour}`;
+  return [
+    `YOUR VOICE: ${expression.movement}`,
+    expression.sentenceBehaviour,
+    `Temper: ${expression.temper.join(' / ')}`,
+    `Core terms (use only where the concept works): ${expression.vocabulary.core.join(', ')}.`,
+  ].join('\n');
+}
 
 export interface ThinkingSlice {
   operations: ThinkingOperation[];

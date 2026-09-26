@@ -4,6 +4,19 @@ Low intensity, nothing dumbed down: every entry keeps the full fact,
 only the words stay simple. Newest first. The owner asked for this
 Sep 17 2026 — keep writing here, one entry per lesson.
 
+## Subtract before you add: the pilot turn scaffold (Sep 26 2026)
+The owner's verdict on a weak sitting was to strip the general prompts,
+not extend them — and the numbers backed it: the old turn scaffold ran
+~6,000 characters of orders (mood, feeling verbs, rhythm, naming
+ceremonies, stock phrases) against a ~4,000-character thinking slice, so
+the generic instructions outweighed the thinker twice over in attention.
+The pilot scaffold keeps seven things (pass job, PREV discipline,
+budgets, scene hold, premise hold, margins duty, closing) and drops the
+rest, because the thinking files already carry voice, moves, and temper.
+The old scaffold stays byte-unchanged behind the flag as the A/B
+baseline, and the version stamp (now m) keeps the grades apart. Lesson:
+when a prompt underperforms, weigh it first — the fix may be deletion.
+
 ## Stored examples may not invent scenes (Sep 26 2026)
 A trio TEACH line explained its quote with a power station that existed
 nowhere in the corpus — pure invention smuggled into a stored example.

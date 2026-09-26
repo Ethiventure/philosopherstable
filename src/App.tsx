@@ -22,7 +22,8 @@ import {
 } from 'lucide-react';
 import { supabase } from '@/lib/supabase';
 import { CORPUS_SOURCES_DATA } from '@/data/corpus-sources';
-import { DEFAULT_SEATING_ORDER, PHILOSOPHER_BY_SLUG, PHILOSOPHER_DATA, renderPersona } from '@/philosophers';
+import { DEFAULT_SEATING_ORDER, PHILOSOPHER_BY_SLUG, PHILOSOPHER_DATA, getThinkingPilot, hasThinkingPilot, renderPersona } from '@/philosophers';
+import { buildExpressionText, intensityToThinkMode, renderThinkingPersona, selectThinkingSlice, thinkingPilotRequested, thinkingSceneOff, trioFor } from '@/philosophers/thinking-select';
 import { CABINET_DEBTS, cabinetHeirs, relationshipLine, tableStancesLine } from '@/philosophers/influences';
 import {
   DEFAULT_ACCESSIBILITY,
@@ -33,7 +34,7 @@ import {
   type Philosopher,
   type StyleEssence,
 } from '@/types';
-import { buildCodaEarlyPrompt, buildCodaEndPrompt, buildCodaPrompt, buildClosingScan, buildTurnInstruction, buildUserMessage, CODA_REPAIR_SUFFIX, CODA_SYSTEM, drawThreadCity, getTurnKind, GLOSSARY_SHAPE, LOW_CLOSING_REMINDER, PROMPT_VERSION, STRUCTURED_OUTPUT_HINT } from '@/lib/dialectic/prompts';
+import { buildCodaEarlyPrompt, buildCodaEndPrompt, buildCodaPrompt, buildClosingScan, buildPilotTurnInstruction, buildTurnInstruction, buildUserMessage, CODA_REPAIR_SUFFIX, CODA_SYSTEM, drawThreadCity, getTurnKind, GLOSSARY_SHAPE, LOW_CLOSING_REMINDER, PROMPT_VERSION, STRUCTURED_OUTPUT_HINT } from '@/lib/dialectic/prompts';
 import { LlmError, RATES_AS_OF, estimateCost, repairBreakdown, repairTotals, resetUsage, sharesPassage, usageTotals, type LlmErrorCode, type TurnOutput } from '@/lib/llm';
 import { DEEPINFRA_PRIMARIES, ALIBABA_MODEL_OPTIONS, CUSTOM_MODEL_VALUE, GROQ_MODEL_OPTIONS, OPENROUTER_PAID_OPTIONS, clearProviderHealth, loadProviderHealth, loadSettings, saveProviderHealth, saveSettings, type CabinetSettings, type DeepInfraPrimary, type ProviderHealth } from '@/lib/settings';
 import { applyDisplay, loadDisplay, saveDisplay } from '@/lib/preferences';
@@ -241,6 +242,9 @@ function App() {
   const pushRunLevel = (level: string) => {
     if (runLevelsRef.current[runLevelsRef.current.length - 1] !== level) runLevelsRef.current.push(level);
   };
+  // Thinking-first pilot (Phase 11): set the first time any turn renders
+  // from THINKING + EXPRESSION files, so the export footer can say so.
+  const thinkingPilotUsedRef = useRef<boolean>(false);
   // Sitting stopwatch: started on Begin, read at export. The owner grades
   // pace but is bad at the stopclock — the export keeps time instead.
   const sittingStartedAt = useRef<number | null>(null);
@@ -664,7 +668,26 @@ function App() {
               })),
           ]
           : [];
-      const turnInstruction = buildTurnInstruction({
+      // Thinking-first pilot (Phase 11): resolved once per turn and shared
+      // by the turn instruction (lean scaffold) and the system prompt
+      // (thinking slice). Null everywhere except a pilot seat with the flag
+      // (settings or `?thinking=1`) on — the old path below is untouched.
+      const pilotEntry = (snap.thinkingPilot || thinkingPilotRequested()) && hasThinkingPilot(speaker.slug)
+        ? getThinkingPilot(speaker.slug)
+        : null;
+      const turnInstruction = pilotEntry
+        ? buildPilotTurnInstruction({
+          kind,
+          prevName: previousSpeaker?.name ?? null,
+          isFinalSeat: isFinalTurn,
+          longForm: snap.longForm,
+          pass: pass + 1,
+          threadCity: threadCityRef.current || null,
+          marginsNote: pass === 2 && !!codaRef.current,
+          marginsFirst: pass === 2 && index === 0 && !!codaRef.current,
+          noScene: thinkingSceneOff(),
+        })
+        : buildTurnInstruction({
         kind,
         prevName: previousSpeaker?.name ?? null,
         isFinalSeat: isFinalTurn,
@@ -678,7 +701,23 @@ function App() {
         threadCity: threadCityRef.current || null,
         pass: pass + 1,
       });
-      const systemPrompt = renderPersona(speaker, snap.intensity);
+      const systemPrompt = (() => {
+        // Thinking-first pilot (Phase 11): pilot seats render from THINKING +
+        // EXPRESSION files when the flag (settings or `?thinking=1`) is on.
+        // Every other seat — and every seat with the flag off — keeps the
+        // old style-essence persona untouched.
+        if ((snap.thinkingPilot || thinkingPilotRequested()) && hasThinkingPilot(speaker.slug)) {
+          const entry = getThinkingPilot(speaker.slug);
+          if (entry) {
+            const mode = intensityToThinkMode(snap.intensity);
+            const slicePrev = n === 0 ? null : (collected[collected.length - 1]?.response_text ?? null);
+            const slice = selectThinkingSlice(entry.thinking, question, slicePrev, previousSpeaker?.slug ?? null);
+            thinkingPilotUsedRef.current = true;
+            return renderThinkingPersona(entry.thinking, mode, slice, buildExpressionText(entry.expression, mode), trioFor(entry.expression, mode));
+          }
+        }
+        return renderPersona(speaker, snap.intensity);
+      })();
       // Efficient economy trims the fed-back predecessor text (the displayed
       // and exported transcript keeps everything). Voices are untouched —
       // personas are never trimmed. Shared/Groq always trim: Groq's free tier
@@ -1030,6 +1069,7 @@ function App() {
     threadCityRef.current = drawThreadCity();
     setThreadCity(threadCityRef.current);
     runLevelsRef.current = [settings.intensity];
+    thinkingPilotUsedRef.current = false;
     sittingStartedAt.current = Date.now();
     debateEndedAt.current = null;
     spentRef.current = [];
@@ -1125,6 +1165,7 @@ function App() {
     provRef.current = [];
     resetUsage();
     runLevelsRef.current = [];
+    thinkingPilotUsedRef.current = false;
     spentRef.current = [];
     setSelectedIntervention(null);
   };
@@ -1197,7 +1238,7 @@ function App() {
     const levelText = runLevels.length > 1
       ? `${runLevels.join(' → ')} (level changed mid-sitting)`
       : (runLevels[0] ?? settings.intensity);
-    const settingsText = `\nSITTING\n— Level: ${levelText} · Long form: ${settings.longForm ? 'on' : 'off'} · Grounding: ${settings.grounding ? 'on' : 'off'} · Economy: ${settings.economy} (at export)${threadCityRef.current ? ` · Thread city: ${threadCityRef.current}` : ''} · Prompt v${PROMPT_VERSION}\n${(() => {
+    const settingsText = `\nSITTING\n— Level: ${levelText}${thinkingPilotUsedRef.current ? ` · Thinking pilot: Bookchin/Bloch/Spinoza spoke from THINKING + EXPRESSION files${thinkingSceneOff() ? ' (no-scene variant)' : ''}` : ''} · Long form: ${settings.longForm ? 'on' : 'off'} · Grounding: ${settings.grounding ? 'on' : 'off'} · Economy: ${settings.economy} (at export)${threadCityRef.current ? ` · Thread city: ${threadCityRef.current}` : ''} · Prompt v${PROMPT_VERSION}\n${(() => {
       if (!sittingStartedAt.current) return '— Tested: time not recorded (sitting predates the stopwatch)\n';
       const started = new Date(sittingStartedAt.current);
       const fmt = (ms: number) => {
@@ -2044,6 +2085,8 @@ function SettingsDrawer({ philosophers, activeSlugs, togglePhilosopher, settings
                 <button role="radio" aria-checked={settings.intensity === 'high'} title="Full voice — authentic vocabulary, hostile where the author warrants it." onClick={() => onSettingsChange({ ...settings, intensity: 'high' })} className={`btn-secondary capitalize ${settings.intensity === 'high' ? '!border-[#8b5254] !text-[#8b5254]' : ''}`}>High</button>
               </div>
               {settings.intensity === 'medium' && <p className="text-xs italic text-[#8b5254]">Medium sends the most tokens of any level — pricier on metered keys and likelier to strain free-tier limits than Low or High.</p>}
+              <button role="checkbox" aria-checked={settings.thinkingPilot} title="Pilot seats (Bookchin, Bloch, Spinoza) speak from new THINKING + EXPRESSION files instead of the old style essences. Off by default; ?thinking=1 in the address forces it on." onClick={() => onSettingsChange({ ...settings, thinkingPilot: !settings.thinkingPilot })} className={`btn-secondary mt-2 ${settings.thinkingPilot ? '!border-[#8b5254] !text-[#8b5254]' : ''}`}>Thinking pilot (3 seats){settings.thinkingPilot ? ' — on' : ' — off'}</button>
+              <p className="text-xs italic text-[#465f75]/70">Experimental rebuild: thinking-first files for three seats. Low/Medium/High become Think/Teach/Think &amp; sound for those seats only; everyone else is untouched.</p>
               <span className="font-heading text-sm uppercase tracking-[0.16em] text-[#4a392d] pt-2 block" title="How long each answer runs. Short is the default — quick thrusts, not lectures.">Turn length</span>
               <p className="text-xs italic text-[#465f75]/70">Short is punchier and cheaper — pick Long only for slow, developed sittings.</p>
               <div className="flex gap-2" role="radiogroup" aria-label="Turn length">

@@ -16,6 +16,7 @@ import { BLOCH_EXPRESSION } from '../src/philosophers/bloch.expression.ts';
 import { SPINOZA_THINKING } from '../src/philosophers/spinoza.thinking.ts';
 import { SPINOZA_EXPRESSION } from '../src/philosophers/spinoza.expression.ts';
 import { selectThinkingSlice, renderThinkingPersona } from '../src/philosophers/thinking-select.ts';
+import { buildPilotTurnInstruction } from '../src/lib/dialectic/prompts.ts';
 
 const QUESTION =
   'Automation and robotics have replaced almost all human necessary work. How does this change the education system? What do we teach children?';
@@ -58,3 +59,9 @@ for (const mode of modes) {
   }
 }
 console.log('\nDone — no API calls made.');
+
+console.log('\n######## TURN SCAFFOLD (critique, pass 1) ########');
+for (const noScene of [false, true]) {
+  const t = buildPilotTurnInstruction({ kind: 'critique', prevName: 'Marx', isFinalSeat: false, longForm: false, pass: 1, threadCity: 'Nairobi', noScene });
+  console.log(`${noScene ? 'no-scene' : 'scene'}: ${t.length} chars ≈ ${Math.round(t.length / 4)} tokens`);
+}
