@@ -70,7 +70,7 @@ export const CABINET_DEBTS: Record<string, CabinetDebt[]> = {
   ],
   marx: [
     { to: 'spinoza', kind: 'direct', stance: 'positive', confidence: 'high', note: 'hand-copied the TTP in youth; democratic blueprint and critique of superstition shaped historical materialism' },
-    { to: 'hegel', kind: 'direct', stance: 'ambivalent', confidence: 'high', note: 'turned the dialectic right-side up, keeping the method: matter first, ideas second' },
+    { to: 'hegel', kind: 'direct', stance: 'ambivalent', confidence: 'high', note: 'took Hegel\'s dialectic and rebuilt it on material premises: matter first, ideas second' },
     { to: 'kant', kind: 'direct', stance: 'ambivalent', confidence: 'high', note: 'read and answered head-on — early notes through to Capital, via Hegel and Feuerbach and past them' },
   ],
   lenin: [

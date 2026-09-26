@@ -17,6 +17,7 @@ Phases are ordered by dependency; each should leave the app building.
 - [ ] Phase 8 — `webapp-commons-template` (not scaffolded)
 - [x] Phase 9 — Rose seat (dossier landed + wired; voice graded across sittings; texts resolved Sep 25 — 6 books metadata-only by rights, 2 estate texts ingested, rest correctly refused)
 - [ ] Phase 10 — Senior common room (live: turns landing; GitHub's own schedule throttled ~6/day, so a Cloudflare Worker fires dispatch every 45 min → ~32/day; manual seat input for Genzie/scenes)
+- [ ] Phase 11 — Thinking-first rebuild (compiler `docs/thinker-compiler.md`; per-thinker THINKING + EXPRESSION `.ts`, old style archived; pilot Bookchin + Bloch, then rest; loans kept, later tweak logged below)
 - [ ] Backlog — favicon, og recompose, rotation/recovery doc, +9 more (LICENSE shipped Sep 24: AGPL-3.0-only)
 
 ---
@@ -242,11 +243,13 @@ silently across versions.
   rejection shapes, temper-first openings (trial — revert alone if flat),
   invoke-at-most-two with mandatory break. Old grades stay on
   v2026-09-20j and earlier.
-- Prompt v2026-09-20l (Sep 25 2026, owner: CDA as instructions): persona
-  render frames reader-effects as orders (produce them on purpose) and
-  stance as second-person lines (speak as / modality / reader / aim /
-  pronouns, all 13 seats verified). No content touched. Old grades stay
-  on v2026-09-20k and earlier.
+- Prompt v2026-09-20m (Sep 26 2026, thinking-pilot strip-back): new
+  `buildPilotTurnInstruction` used ONLY for pilot seats with the flag on —
+  pass job, PREV discipline, budgets, scene/premise hold, margins duty,
+  closing; MOOD/FELT VERBS/RHYTHM/CUT-IN/HISTORY/STOCK/VOICE essays
+  dropped (renderer carries them). Old-path text byte-unchanged; pilot
+  grades ride m, old grades stay on k and earlier. (l skipped: used and
+  reverted Sep 26.)
 
 ### Embeddings (Phase 5)
 `test_embeddings.py` uses local Ollama `nomic-embed-text` (768 dims); the schema is
@@ -1038,7 +1041,9 @@ archive.org "Public Domain Mark" Melancholy Science scan stays OUT
 Kant counters → Hegel sublates; 0.4–1.1s each, ~50 tokens, Groq free.
 Room window sits below the deck with follow-scroll. Frame: dead
 philosophers puzzling out Discord-era life; ticks carry debt lines; no
-example inventories in the rules.)
+example inventories in the rules. Scene rotation Sep 25: anchor +
+same-scene rules converged one image forever (parody), so the opening
+seat may open a fresh scene each full rotation, anchor lifted that turn.)
 Clock Sep 23 2026: GitHub `schedule` starts the workflow ~6x/day
 (throttled quiet repo — every start lands, there are just fewer), so
 `workers/room-cron/` (Cloudflare Worker, free tier, dispatch API every
@@ -1133,7 +1138,135 @@ lives, and the one rule that keeps it alive:
   it is used (Braille Institute, Apache, MIT ok; GPL never a dependency —
   external scripts only). Rule: flag at ingest time, not audit time.
 
+## Phase 11 — Thinking-first rebuild (approved Sep 2026; pilot Bookchin + Bloch)
+
+Compiler: `docs/thinker-compiler.md` (tightened Sep 2026 per ChatGPT delta:
+THINK / TEACH / THINK & SOUND modes with semantic invariant — same judgment,
+different accessibility; debts split from fault-lines; SELECTION TAGS per op,
+code proposes / model disposes; SHAPES-VOICE removed; runtime detail lives in
+runtime docs, not the compiler; Claude short kept as runtime-header idea only;
+Gemini Bookchin mined for op verbs, quotes unverified).
+Direction: thinking causes style. Each thinker gets THINKING (engine) +
+EXPRESSION (downstream voice) as `.ts` exports. Old `{slug}.style.ts` files
+are `git mv`'d to `src/philosophers/archive/` — copied, never deleted.
+Knowledge is never kept as bare facts (§0 identity excepted); every fact is
+reframed as how it shaped thinking/expression (fact elsewhere only with
+demonstrated relevance to formation/development/relationships/commitments).
+Trio per thinker: THINK & SOUND line IS the real verified quote (no parallel
+anchor field — quote and source live together so they cannot drift);
+TEACH explains it, THINK shows the bare reasoning that leads to it, all under
+a semantic invariant (claim, causal relation,
+distinction, qualification, uncertainty, PREV-response preserved). TEACH =
+explained, not restrained: full complexity and terminology, every term taught;
+practical cap is quote volume (each quote costs explaining words). Modes
+(expression contracts, not intelligence levels): THINK / TEACH / THINK & SOUND.
+Loans (RAG quotes) KEPT as-is for now — flagged tweak later (floor→cap?),
+not this phase. Relevance: code scorer picks 1–3 ops per turn from SELECTION
+TAGS + debt pair + RAG stems (`rag-search.ts` already does this for shards);
+code proposes 1–3 candidate ops, model may accept/reject/combine — full files
+are truth on disk, slices ride
+per turn (fits the ~7k shared wall; short contracts obeyed better).
+Blind test in THINK mode is the gate (owner knows Bookchin/Bloch best).
+
+Safety: branch `rebuild-thinking`, tag `before-thinking-rebuild`, one commit
+per thinker, `git revert <hash>` per thinker or reset to tag for all. Prompt
+text change bumps `PROMPT_VERSION` (`prompts.ts:40`) a letter; grades stay
+tied to their letter (lineage log below grows one line per bump); export
+footer + `models-tried.md` rows + `test-runs/` carry the version. Version
+record also kept in `docs/thinker-compiler.md` header + per-thinker file
+header + PLAN lineage line — three places, same letter.
+Lineage: v2026-09-20k = last style-essence version (grades stay on k);
+v2026-09-20m = pilot lean scaffold, pilot turns only (old-path text unchanged).
+
+### Knock-on files (fix when the pilot lands, not before)
+
+- [ ] `src/types/index.ts` — add `ThinkingEngine` + `ExpressionModel` types;
+  keep `StyleEssence` until all 12 migrate (display still reads it).
+- [ ] `src/philosophers/index.ts` (`renderPersona`) — render THINKING slice
+  + EXPRESSION per mode; keep old path behind flag until pilot grades pass.
+- [ ] `src/philosophers/shared/low-style.ts` + `universal-mechanisms.ts` +
+  `anti-waffle.ts` — retire/merge into mode renderers (Think = no expression
+  rendering: no tics, temper performance, or quotes — complexity stays;
+  Teach = gloss shape; Think-&-sound = full voice, thinking wins).
+- [ ] `src/philosophers/trios.ts` — extend trio entry to `{ think, teach,
+  thinkAndSound }` with verified quote + source + semantic invariant;
+  fallback stays until wired.
+- [ ] `src/philosophers/influences.ts` (`CABINET_DEBTS`, `relationshipLine`)
+  — kept; add DEBT (borrowed/transformed/rejected/retained) split from
+  FAULT-LINE per pair; pilot pairs Bookchin↔Marx, Bloch↔Bookchin first.
+- [ ] `src/lib/dialectic/prompts.ts` — new mode lines (Think/Teach/
+  Think-&-sound), slice slot (1–3 ops + distinctions + fault-line), common
+  runtime shared across thinkers; bump `PROMPT_VERSION` + lineage line.
+- [ ] `src/lib/rag-ground.ts` (+ `extract.ts`) — keep loan counts for now;
+  log floor-vs-cap question for later; Think mode stays paraphrase-only.
+- [ ] `src/lib/service-chat.ts` + `src/App.tsx` (persona call sites ~lines
+  681/767, export footer ~1200, modal `StyleEssenceDisplay` ~2217,
+  `GenealogyMap.tsx`) — wire new modes, rename Low/Med/High labels in
+  Settings/Voice tab + export SITTING line, keep old labels mapping until
+  migration done.
+- [ ] `scripts/export-personas.mjs` + `export-persona-docs.mjs`
+  (`docs/persona-prompts.md`) — regen from new files once pilot lands.
+- [ ] `scripts/grade-sitting.mjs` + `test-sitting.mjs` + `test-matrix.mjs` +
+  `docs/language-levels.md` + `docs/models-tried.md` + `docs/family-eval.md`
+  — add blind-seat check (Think mode, name hidden) + same-PREV split check;
+  rubric moves from loan counts to move recognition; version-stamped.
+- [ ] `docs/new-philosopher-brief.md` — mark Phase 1 superseded by compiler
+  for rebuilds; keep for brand-new seats until migrated.
+- [ ] `docs/things-taught.md` — one plain-words entry per structural lesson
+  as the owner learns it (newest first).
+- [ ] Pilot order: Bookchin + Bloch THINKING/EXPRESSION drafts → 1 sitting
+  (fixed education question, 5 seats) → owner blind test → go/no-go for
+  remaining 10 + Genzie.
+  Status: drafts landed on `rebuild-thinking` (Bookchin + Bloch + Spinoza as
+  distant seat; shared `thinking-types.ts`; old style files untouched until
+  wiring). RAG-checked Sep 26: all 3 anchor quotes verified verbatim in
+  shipped shards; 3 anchors fixed to shipped works (PSA/On-Karl-Marx are
+  metadata-only or unshipped — never cite unshipped works as anchors).
+  Second pass Sep 26: all 6 pilot files converted to second person (owner
+  call — removes the description-to-inhabitation translation step);
+  Bookchin gained paideia + usufruct/complementarity domains,
+  assembly-vs-soviet distinction, and dual power (all RAG-verified);
+  owner-correction pattern recorded as de-genericization rule in compiler;
+  RAG-first + audit-existing-files workflow mandatory for remaining seats.
+  Wired Sep 26 (`thinking-select.ts`: tag scorer proposes 1–3 ops, fault
+  line by PREV pair, per-mode renderer with THINK sending no expression;
+  pilot registry in `philosophers/index.ts` behind caller flag, old path
+  default; `scripts/pilot-slice-demo.mjs` dry-run: slices ≈900–1300 tokens,
+  far inside the ~7k wall, zero API spend). Typecheck + lint + build green.
+  Wired Sep 26 (flag `thinkingPilot` in settings + `?thinking=1` URL override;
+  App turn loop + service desk both branch to the slice renderer for pilot
+  seats only, old path default; Voice tab toggle; export SITTING stamps pilot
+  use; localhost smoke 200 clean).
+  Add-back protocol (locked Sep 26 — how stripped aspects return, if ever):
+  ONE rule at a time, appended as a single isolated line to the pilot
+  scaffold; one fixed-question sitting; blind grade (owner assigns stripped
+  turns); keep-or-revert per rule with one line logged here naming the rule,
+  the sitting, and the verdict. Never restore by feel, never two rules at
+  once, never without a blind grade. Dropped-rule inventory lives in the
+  `buildPilotTurnInstruction` docstring (source of truth — read it before
+  proposing a return).   First candidate already queued: no-scene variant
+  (uncanny-valley scenes) — see below.
+  No-scene update Sep 26: the variant now suppresses scene/metaphor mandates
+  in the OLD scaffold too (`noScene` option on `buildTurnInstruction`),
+  because a variant covering 3 seats while ordering the rest into scenes
+  tests nothing. Export stamp is mode-aware (THINK = no expression rode).
+  Echo enforcement Sep 26: detector proven working (verbatim P2 pair fires
+  8-gram match live) — failure was enforcement, not detection. One
+  localized repair naming the shared run (blind retry stays buried:
+  10 retries, echo persisted); survivors keep badge + gain an export mark;
+  repair count surfaces in the footer breakdown.
+  Next: run the fixed-question sitting, owner blind test in THINK mode.
+
 ## Missing-features backlog (considered, not yet scheduled)
+Genzie placement (queued Sep 26 2026, owner call — for later, not now):
+Genzie leaves the seat picker (never a selectable sitting seat — they speak
+from the margins regardless); in the room version every Genzie turn changes
+the conversation topic and stops seeing the previous 12 turns' topic.
+Key-privacy copy (queued Sep 26 2026 — public site must never describe the
+owner's key setup): audit + reword `App.tsx` line ~1380 ("The shared key
+speaks Low only — its free tier…", reveals the backend key tier),
+plus any quota/limit wording traceable to the owner's keys. Visitor-key
+wording (Groq/OpenRouter/Alibaba free tiers — the visitor's own key) stays.
 Favicon ("little icon on the tab"): ship `public/favicon-32x32.png` (32×32,
 the tab), `public/apple-touch-icon.png` (180×180, iOS bookmarks), optional
 inline SVG data-URI (scalable, no file), plus 192×192 + 512×512 manifest icons

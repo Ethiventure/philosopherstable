@@ -28,7 +28,7 @@ function alibabaError(status: number, detail: string, model: string): LlmError {
     // Stop-on-Exhaust is on — read the detail before blaming the key.
     if (/quota|exhaust|free.?tier|insufficient|balance|arrear/i.test(detail)) {
       return new LlmError(
-        `Alibaba free quota exhausted on ${model} (403). The trial budget is spent — switch model or provider, or top up at Model Studio billing.` +
+        `Alibaba free quota exhausted on ${model} (403). The free quota is spent — switch model or provider, or top up at Model Studio billing.` +
           (detail ? ` Detail: ${detail}` : ''),
         true,
         'quota',

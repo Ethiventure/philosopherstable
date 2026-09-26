@@ -16,6 +16,13 @@ import { renderUniversalMechanisms } from './shared/universal-mechanisms';
 import { renderAntiWaffle } from './shared/anti-waffle';
 import { LOW_CONCEPT_RULES, LOW_OVERRIDE, LOW_PLAIN_RULES, renderLanguageLevel, renderLowStyleEssence } from './shared/low-style';
 import { FALLBACK_MEDIUM_EXAMPLE, SEAT_TRIOS } from './trios';
+import type { ExpressionModel, ThinkingEngine } from './thinking-types';
+import { BOOKCHIN_THINKING } from './bookchin.thinking';
+import { BOOKCHIN_EXPRESSION } from './bookchin.expression';
+import { BLOCH_THINKING } from './bloch.thinking';
+import { BLOCH_EXPRESSION } from './bloch.expression';
+import { SPINOZA_THINKING } from './spinoza.thinking';
+import { SPINOZA_EXPRESSION } from './spinoza.expression';
 
 const DEFINITIONS: PhilosopherDefinition[] = [SPINOZA, KANT, HEGEL, MARX, LENIN, BOGDANOV, BLOCH, WEIL, BOOKCHIN, DELEUZE, ROSE, FISHER, GENZIE];
 
@@ -32,6 +39,31 @@ export const DEFAULT_SEATING_ORDER: string[] = PHILOSOPHER_DATA.map((p) => p.slu
 export const PHILOSOPHER_BY_SLUG: Record<string, Omit<Philosopher, 'id' | 'created_at'>> = Object.fromEntries(
   PHILOSOPHER_DATA.map((p) => [p.slug, p]),
 );
+
+/**
+ * Phase 11 pilot registry: seats with THINKING + EXPRESSION files.
+ * Flag-gated by caller — `renderPersona` (old path) stays the default
+ * everywhere until the pilot sitting grades pass. Old `{slug}.style.ts`
+ * files remain untouched until wiring.
+ */
+export interface ThinkingPilotEntry {
+  thinking: ThinkingEngine;
+  expression: ExpressionModel;
+}
+
+const THINKING_PILOT: Record<string, ThinkingPilotEntry> = {
+  bookchin: { thinking: BOOKCHIN_THINKING, expression: BOOKCHIN_EXPRESSION },
+  bloch: { thinking: BLOCH_THINKING, expression: BLOCH_EXPRESSION },
+  spinoza: { thinking: SPINOZA_THINKING, expression: SPINOZA_EXPRESSION },
+};
+
+export function hasThinkingPilot(slug: string): boolean {
+  return slug in THINKING_PILOT;
+}
+
+export function getThinkingPilot(slug: string): ThinkingPilotEntry | null {
+  return THINKING_PILOT[slug] ?? null;
+}
 
 /**
  * Builds the persona portion of a system prompt: who the philosopher is, how they
