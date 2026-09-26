@@ -1,63 +1,52 @@
-# First thing tomorrow — Fri Sep 25 (owner-only tasks)
+# First thing tomorrow — Sat Sep 26 (owner-only tasks)
 
 In energy order. Smallest first, stop anywhere — everything keeps.
 
-## Today (Thu Sep 24): clock nearly proven, licence shipped, room fixed
-Shipped: AGPL-3.0-only (LICENSE + package field + README + footer Source
-link + HowBuilt section); persona-prompts doc + generator; models-tried
-crowns summary; rotation-recovery doc; provider-health indicator; burst
-loop; transcript fetch fix (GitHub-raw-first — Bogdanov reappeared);
-morning command. Room rules rewritten to owner rulings. Decided: 45-min
-clock, free-forever trigger, Cloudflare most robust. All pushed.
-Worker status: code live, fires on schedule (4 firings logged) — but
-dispatch 403s: token lacks Actions:write. Fix is a new token (permissions
-freeze at creation), pre-filled link given. Everything else proven or
-queued behind that token.
+## Today (Fri Sep 25): versions j/k shipped, l dropped by owner verdict
+Shipped + pushed: v20j difficulty doctrine, v20k voice-authenticity round;
+room core-mechanisms, banned-terms grader, Genzie margins label, provider
+health, HowBuilt, morning command; 42 transcripts filed. Clock alive
+(~40 ticks; token fixed). Parody diagnosed + fixed (Marx note reworded,
+scene rotation per cycle). LENS + AlignScore buried with numbers.
+Then: owner selectively reverted in the working tree — v20l CDA wrapper
+gone (version back to k, lineage entry removed), room paraphrase +
+same-image sentences gone; scene rotation + debt-note reword KEPT.
+Uncommitted. Taken as the verdict (see §1).
 
-## 1. New token, paste, Deploy (5 min — unblocks everything)
-Pre-filled link in chat Sep 24 (Actions:write pre-ticked — pick repo +
-expiry). Paste into worker `GH_PAT` → Deploy. Next :00/:45 proves it.
-Delete the old token after.
+## 1. Commit the rollback as-is (2 min)
+`/gh` carries it: v20l gone, paraphrase/same-image gone, scene rotation
++ debt reword stay. After push, re-export personas (`npm run
+room:personas`) so the stamp reads k everywhere, then `/gh` again — or
+batch it into the same push if tidy. Do not restore v20l content.
 
 ## 2. Prove the room (just looking)
-- First clock-time turn + Genzie's first line (seating code is live).
-- One manual burst (seat + turns 3) whenever curious.
-- Eyes on footer/health/HowBuilt after deploy.
+- Fresh scene at the next rotation opener (scene rotation's first live test).
+- Clock-time turns holding? Genzie lines?
+- Eyes on footer/health/HowBuilt/label after deploy.
 
 ## 3. Shared key off Groq (checks + 1 sitting)
 Netlify `ALIBABA_API_KEY` set? Deployed after the change? One shared
 sitting — export names the model, that's the live test.
 
 ## 4. Room future (whenever, pick letters)
-Memory / shape / watchability / audience steering (research plan Sep 23).
-Parked: Genzie dossier reframe, daily recap, auto-refresh polling.
+Memory / shape / watchability / audience steering. Parked: Genzie
+dossier reframe, daily recap, auto-refresh polling.
 
-## 5. Phase 7b auto-metrics (new today — plan first, then build)
-AlignScore guardrail, LENS-SALSA calibration, ASSET-method optional.
-Honest costing: new Python deps (torch + spacy + weights), GPU-preferred —
-slow on this MacBook's CPU. Sequenced after the room proofs; say go and
-the plan gets written before anything installs.
-Venv ready: `.venv312` (Python 3.12.13) built Sep 25 with the old venv's
-full package set; old `.venv` untouched. One import proof still owed —
-this session's sandbox blocked reads of the new dir (EPERM), so run
-`.venv312/bin/python -c "import langchain_ollama"` in a real terminal
-(or next session verifies).
+## 5. Sittings/verdicts/picks (only if you feel like it)
+Crowns stand (3.8-max / 3.7-plus / free vacant). `Grade: TODO` files;
+golden picks (general exemplars, 7c parked).
 
-## 6. Sittings/verdicts/picks (only if you feel like it)
-Crowns stand (3.8-max / 3.7-plus / free vacant). `Grade: TODO` files in
-`docs/eval-sittings/`; golden picks for Phase 7c.
-
-## 7. Small decisions (carried)
+## 6. Small decisions (carried)
 Together pipe: key or drop · `.env.test.local` model check · favicon/OG
 art (needs your artwork) · git-history name.
 
 ## Explicitly NOT (parked, no nagging)
 Z.ai · GLM/DeepSeek sittings · 30B length tests · template scaffold ·
 podcast · RAG latency · 14B tuning · visitor posting · denser cron ·
-Netlify scheduled functions.
+Netlify scheduled functions · ASSET (pilot of 5 before any labor) ·
+CDA wrapper (reverted by verdict).
 
-## Dropped today (dead, with reason)
-- Dashboard-created Worker path: no blank-worker flow; agent/terminal
-  routes documented instead.
-- Reusing the old token: permissions freeze at creation — new token only.
-- MIT/Apache: AGPL-3.0 picked.
+## Dropped (dead, with reason)
+- v20l CDA-as-instructions: owner reverted, no argument.
+- Room paraphrase + same-image sentences: owner reverted.
+- LENS-SALSA + AlignScore: buried with control numbers.

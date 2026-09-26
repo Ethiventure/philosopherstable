@@ -242,11 +242,6 @@ silently across versions.
   rejection shapes, temper-first openings (trial — revert alone if flat),
   invoke-at-most-two with mandatory break. Old grades stay on
   v2026-09-20j and earlier.
-- Prompt v2026-09-20l (Sep 25 2026, owner: CDA as instructions): persona
-  render frames reader-effects as orders (produce them on purpose) and
-  stance as second-person lines (speak as / modality / reader / aim /
-  pronouns, all 13 seats verified). No content touched. Old grades stay
-  on v2026-09-20k and earlier.
 
 ### Embeddings (Phase 5)
 `test_embeddings.py` uses local Ollama `nomic-embed-text` (768 dims); the schema is
@@ -1038,7 +1033,9 @@ archive.org "Public Domain Mark" Melancholy Science scan stays OUT
 Kant counters → Hegel sublates; 0.4–1.1s each, ~50 tokens, Groq free.
 Room window sits below the deck with follow-scroll. Frame: dead
 philosophers puzzling out Discord-era life; ticks carry debt lines; no
-example inventories in the rules.)
+example inventories in the rules. Scene rotation Sep 25: anchor +
+same-scene rules converged one image forever (parody), so the opening
+seat may open a fresh scene each full rotation, anchor lifted that turn.)
 Clock Sep 23 2026: GitHub `schedule` starts the workflow ~6x/day
 (throttled quiet repo — every start lands, there are just fewer), so
 `workers/room-cron/` (Cloudflare Worker, free tier, dispatch API every
