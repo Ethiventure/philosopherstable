@@ -35,7 +35,7 @@ import {
   type StyleEssence,
 } from '@/types';
 import { buildCodaEarlyPrompt, buildCodaEndPrompt, buildCodaPrompt, buildClosingScan, buildPilotTurnInstruction, buildTurnInstruction, buildUserMessage, CODA_REPAIR_SUFFIX, CODA_SYSTEM, drawThreadCity, getTurnKind, GLOSSARY_SHAPE, LOW_CLOSING_REMINDER, PROMPT_VERSION, STRUCTURED_OUTPUT_HINT } from '@/lib/dialectic/prompts';
-import { LlmError, RATES_AS_OF, estimateCost, repairBreakdown, repairTotals, resetUsage, sharesPassage, usageTotals, type LlmErrorCode, type TurnOutput } from '@/lib/llm';
+import { LlmError, RATES_AS_OF, estimateCost, repairBreakdown, repairTotals, resetUsage, sharesPassage, usageTotals, ECHO_REPAIR_SUFFIX, findSharedPassage, incrementRepair, type LlmErrorCode, type TurnOutput } from '@/lib/llm';
 import { DEEPINFRA_PRIMARIES, ALIBABA_MODEL_OPTIONS, CUSTOM_MODEL_VALUE, GROQ_MODEL_OPTIONS, OPENROUTER_PAID_OPTIONS, clearProviderHealth, loadProviderHealth, loadSettings, saveProviderHealth, saveSettings, type CabinetSettings, type DeepInfraPrimary, type ProviderHealth } from '@/lib/settings';
 import { applyDisplay, loadDisplay, saveDisplay } from '@/lib/preferences';
 import { generateTurnGroq, testGroqKey } from '@/lib/groq';
@@ -242,9 +242,10 @@ function App() {
   const pushRunLevel = (level: string) => {
     if (runLevelsRef.current[runLevelsRef.current.length - 1] !== level) runLevelsRef.current.push(level);
   };
-  // Thinking-first pilot (Phase 11): set the first time any turn renders
-  // from THINKING + EXPRESSION files, so the export footer can say so.
-  const thinkingPilotUsedRef = useRef<boolean>(false);
+  // Thinking-first pilot (Phase 11): modes actually rendered from THINKING
+  // files this sitting — the export footer names them, so a Low sitting
+  // never claims expression content rode when only THINK did.
+  const thinkingPilotUsedRef = useRef<string[]>([]);
   // Sitting stopwatch: started on Begin, read at export. The owner grades
   // pace but is bad at the stopclock — the export keeps time instead.
   const sittingStartedAt = useRef<number | null>(null);
@@ -700,21 +701,18 @@ function App() {
         heat: typeof speaker.profile['emotional_tone'] === 'string' ? speaker.profile['emotional_tone'] : undefined,
         threadCity: threadCityRef.current || null,
         pass: pass + 1,
+        noScene: thinkingSceneOff(),
       });
       const systemPrompt = (() => {
-        // Thinking-first pilot (Phase 11): pilot seats render from THINKING +
-        // EXPRESSION files when the flag (settings or `?thinking=1`) is on.
-        // Every other seat — and every seat with the flag off — keeps the
-        // old style-essence persona untouched.
-        if ((snap.thinkingPilot || thinkingPilotRequested()) && hasThinkingPilot(speaker.slug)) {
-          const entry = getThinkingPilot(speaker.slug);
-          if (entry) {
-            const mode = intensityToThinkMode(snap.intensity);
-            const slicePrev = n === 0 ? null : (collected[collected.length - 1]?.response_text ?? null);
-            const slice = selectThinkingSlice(entry.thinking, question, slicePrev, previousSpeaker?.slug ?? null);
-            thinkingPilotUsedRef.current = true;
-            return renderThinkingPersona(entry.thinking, mode, slice, buildExpressionText(entry.expression, mode), trioFor(entry.expression, mode));
-          }
+        // Thinking-first pilot: pilotEntry resolved above covers both the
+        // turn instruction and this system prompt. Every other seat — and
+        // every seat with the flag off — keeps the old style-essence persona.
+        if (pilotEntry) {
+          const mode = intensityToThinkMode(snap.intensity);
+          const slicePrev = n === 0 ? null : (collected[collected.length - 1]?.response_text ?? null);
+          const slice = selectThinkingSlice(pilotEntry.thinking, question, slicePrev, previousSpeaker?.slug ?? null);
+          if (!thinkingPilotUsedRef.current.includes(mode)) thinkingPilotUsedRef.current.push(mode);
+          return renderThinkingPersona(pilotEntry.thinking, mode, slice, buildExpressionText(pilotEntry.expression, mode), trioFor(pilotEntry.expression, mode));
         }
         return renderPersona(speaker, snap.intensity);
       })();
@@ -854,10 +852,11 @@ function App() {
       // Gloss audit hook (Sep 2026): the auto-retry was rolled back as
       // spend-without-gain — the fifth key stays as a cheap nudge, but no
       // turn is ever re-sent for it. Bare-term counts, if ever needed, go here.
-      // Echo watch (Sep 2026): the rewrite retry was rolled back as
-      // spend-without-gain (10 retries, echo persisted) — the detector stays
-      // as a cost-free logger so evals keep measuring, and flags the card
-      // with a visible badge. Revert: delete block + badge + echoMap state.
+      // Echo enforcement (Phase 11): the blind rewrite retry was rolled back
+      // as spend-without-gain (10 retries, echo persisted) — but it never
+      // said WHAT was shared. One localized attempt names the offending run;
+      // failure keeps the original turn plus badge and export mark, never
+      // blocks the sitting. Revert: delete the repair attempt, keep logger.
       // (Computed here against pre-turn priors; filed under the item id below.)
       // Loan-aware (Sep 2026): grams appearing in shown grounding passages
       // are shared source vocabulary, not echo — excluded on both sides so
@@ -866,16 +865,38 @@ function App() {
         ...collected.flatMap((item) => groundMap[item.id]?.passages ?? []),
         ...(groundingReceipt?.passages ?? []),
       ];
-      const echoHit = sharesPassage(
+      const echoPriors = [
+        ...collected.map((item) => item.response_text),
+        ...(codaEarlyRef.current ? [codaEarlyRef.current] : []),
+        ...(codaRef.current ? [codaRef.current] : []),
+      ];
+      let echoHit = sharesPassage(
         `${output.negation} ${output.reformulation}`,
-        [
-          ...collected.map((item) => item.response_text),
-          ...(codaEarlyRef.current ? [codaEarlyRef.current] : []),
-          ...(codaRef.current ? [codaRef.current] : []),
-        ],
+        echoPriors,
         8,
         loanTexts,
       );
+      if (echoHit) {
+        const sample = findSharedPassage(
+          `${output.negation} ${output.reformulation}`,
+          echoPriors,
+          8,
+          loanTexts,
+        );
+        if (sample) {
+          try {
+            const repaired = await generateWithProvider(snap, systemPrompt, `${userMessage} ${ECHO_REPAIR_SUFFIX} Shared run to eliminate: “…${sample}…”.`, snap.longForm);
+            if (runRef.current !== runId) return;
+            if (!sharesPassage(`${repaired.negation} ${repaired.reformulation}`, echoPriors, 8, loanTexts)) {
+              output = repaired;
+              incrementRepair('echo');
+              echoHit = false;
+            }
+          } catch {
+            // Repair call failed — keep the original turn; badge stays.
+          }
+        }
+      }
       if (echoHit && typeof console !== 'undefined') {
         console.warn(`[Echo] overlap kept (logger only) for ${speaker.full_name}.`);
       }
@@ -1069,7 +1090,7 @@ function App() {
     threadCityRef.current = drawThreadCity();
     setThreadCity(threadCityRef.current);
     runLevelsRef.current = [settings.intensity];
-    thinkingPilotUsedRef.current = false;
+    thinkingPilotUsedRef.current = [];
     sittingStartedAt.current = Date.now();
     debateEndedAt.current = null;
     spentRef.current = [];
@@ -1165,7 +1186,7 @@ function App() {
     provRef.current = [];
     resetUsage();
     runLevelsRef.current = [];
-    thinkingPilotUsedRef.current = false;
+    thinkingPilotUsedRef.current = [];
     spentRef.current = [];
     setSelectedIntervention(null);
   };
@@ -1199,7 +1220,11 @@ function App() {
         inventedTags.push({ pass: item.pass_number, name, tags: invented });
         if (typeof console !== 'undefined') console.warn(`[Provenance] invented tags in pass ${item.pass_number} ${name}:`, invented.join(' '));
       }
-      return `PASS ${item.pass_number} — ${name}\n\n${clean}\n`;
+      // Echo honesty: a turn that kept shared wording after the localized
+      // repair (or with no repair possible) is marked in the export, not
+      // just badged on the card — grades must see it without the session.
+      const echoMark = echoMap[item.id] ? '\n☞ shares wording with an earlier turn.\n' : '';
+      return `PASS ${item.pass_number} — ${name}\n\n${clean}\n${echoMark}`;
     };
     // Each note sits where it spoke: the early note between pass 1 and pass 2,
     // the late note between the pass-2 close and pass-3 open.
@@ -1238,7 +1263,8 @@ function App() {
     const levelText = runLevels.length > 1
       ? `${runLevels.join(' → ')} (level changed mid-sitting)`
       : (runLevels[0] ?? settings.intensity);
-    const settingsText = `\nSITTING\n— Level: ${levelText}${thinkingPilotUsedRef.current ? ` · Thinking pilot: Bookchin/Bloch/Spinoza spoke from THINKING + EXPRESSION files${thinkingSceneOff() ? ' (no-scene variant)' : ''}` : ''} · Long form: ${settings.longForm ? 'on' : 'off'} · Grounding: ${settings.grounding ? 'on' : 'off'} · Economy: ${settings.economy} (at export)${threadCityRef.current ? ` · Thread city: ${threadCityRef.current}` : ''} · Prompt v${PROMPT_VERSION}\n${(() => {
+    const pilotModes = [...new Set(thinkingPilotUsedRef.current)];
+    const settingsText = `\nSITTING\n— Level: ${levelText}${pilotModes.length ? ` · Thinking pilot: THINKING files (modes: ${pilotModes.join('/')})${pilotModes.includes('teach') || pilotModes.includes('thinkAndSound') ? ' + EXPRESSION where the mode required it' : ' — no expression rode'}${thinkingSceneOff() ? ' (no-scene variant)' : ''}` : ''} · Long form: ${settings.longForm ? 'on' : 'off'} · Grounding: ${settings.grounding ? 'on' : 'off'} · Economy: ${settings.economy} (at export)${threadCityRef.current ? ` · Thread city: ${threadCityRef.current}` : ''} · Prompt v${PROMPT_VERSION}\n${(() => {
       if (!sittingStartedAt.current) return '— Tested: time not recorded (sitting predates the stopwatch)\n';
       const started = new Date(sittingStartedAt.current);
       const fmt = (ms: number) => {
@@ -1944,7 +1970,7 @@ function SettingsDrawer({ philosophers, activeSlugs, togglePhilosopher, settings
         {tab === 'key' && (
           <div className="space-y-3 border-b border-[#4a392d]/15 pb-6 mb-6">
             <p className="italic text-sm text-[#465f75]/70">Your own keys stay in this browser and go only to the named provider (OpenRouter → OpenRouter, whose free models may log prompts for training; Groq → Groq; DeepInfra → DeepInfra; Together → Together; Alibaba → Alibaba Model Studio). Naturally each provider also holds your key on their servers — that is how API keys work. What we never do: see them, store them, or ask for any login. The shared cabinet key never leaves the server. Nothing identifying is collected here.</p>
-            <p className="text-xs text-[#465f75]/70">What it costs, roughly: <span className="font-heading">free</span> — Cabinet shared (shared quota), Groq, OpenRouter cycle. <span className="font-heading">Pennies a sitting</span> — OpenRouter paid (~$0.01–0.06), DeepInfra (~$0.03). <span className="font-heading">Dear (~$0.40 a sitting)</span> — Alibaba max, Together. <span className="font-heading">Trial $0 to Dec</span> — Alibaba. Vague estimates from list prices; every export prints the measured cost, and the model behind each turn is named there too.</p>
+            <p className="text-xs text-[#465f75]/70">What it costs, roughly: <span className="font-heading">free</span> — Cabinet shared (shared quota), Groq, OpenRouter cycle. <span className="font-heading">Pennies a sitting</span> — OpenRouter paid (~$0.01–0.06), DeepInfra (~$0.03). <span className="font-heading">Dear (~$0.40 a sitting)</span> — Alibaba max, Together. <span className="font-heading">Free quota</span> — Alibaba. Vague estimates from list prices; every export prints the measured cost, and the model behind each turn is named there too.</p>
             <span className="font-heading text-sm uppercase tracking-[0.16em] text-[#4a392d] block">Provider</span>
             <div className="flex flex-wrap gap-2" role="radiogroup" aria-label="AI provider">
               <button role="radio" aria-checked={settings.provider === 'shared'} title="No key needed — the cabinet's own key, a few sittings a day each." onClick={() => { setTestState('idle'); setTestMessage(''); onSettingsChange({ ...settings, provider: 'shared' }); }} className={`btn-secondary ${settings.provider === 'shared' ? '!border-[#8b5254] !text-[#8b5254]' : ''}`}>Cabinet shared</button>
@@ -1955,7 +1981,7 @@ function SettingsDrawer({ philosophers, activeSlugs, togglePhilosopher, settings
               <button role="radio" aria-checked={usingAlibaba} title="Your Alibaba key — Model Studio codes, free trial quota." onClick={() => { setTestState('idle'); setTestMessage(''); onSettingsChange({ ...settings, provider: 'alibaba' }); }} className={`btn-secondary ${usingAlibaba ? '!border-[#8b5254] !text-[#8b5254]' : ''}`}>Alibaba</button>
             </div>
             {settings.provider === 'shared' ? (
-              <p className="text-xs text-[#465f75]/70">No key needed — the cabinet runs on its own key, held server-side and shared across visitors (about two full sessions a day each): Alibaba's trial bench first, Groq behind it. The export names the model behind each turn, so you can always see who spoke. If the shared quota runs dry, add your own OpenRouter, Groq, DeepInfra, Together or Alibaba key below by switching provider.</p>
+              <p className="text-xs text-[#465f75]/70">No key needed — the cabinet runs on its own key, held server-side and shared across visitors (about two full sessions a day each): shared quota first, Groq behind it. The export names the model behind each turn, so you can always see who spoke. If the shared quota runs dry, add your own OpenRouter, Groq, DeepInfra, Together or Alibaba key below by switching provider.</p>
             ) : usingGroq ? (
               <>
                 <label htmlFor="groq-key" className="font-heading text-sm uppercase tracking-[0.16em] text-[#4a392d]">Groq API key (free)</label>

@@ -86,6 +86,10 @@ interface TurnInstructionArgs {
   /** Sitting pass, 1-indexed (1 diagnosis, 2 pressure, 3 reconstruction).
    * Drives the PASS JOB line — each round does different work. */
   pass?: number;
+  /** Uncanny-valley experiment (Sep 2026): same meaning as on the pilot
+   * scaffold — suppress every scene and metaphor mandate in the old path
+   * too, so the variant covers all seats and the A/B stays fair. */
+  noScene?: boolean;
 }
 
 /**
@@ -106,15 +110,17 @@ export function drawThreadCity(random: () => number = Math.random): string {
   return THREAD_CITIES[Math.floor(random() * THREAD_CITIES.length)];
 }
 
-export function buildTurnInstruction({ kind, prevName, isFinalSeat, longForm, reversed = false, marginsNote = false, marginsEarly = false, marginsFirst = false, lowRegister = false, intensity, heat, threadCity = null, pass }: TurnInstructionArgs): string {
+export function buildTurnInstruction({ kind, prevName, isFinalSeat, longForm, reversed = false, marginsNote = false, marginsEarly = false, marginsFirst = false, lowRegister = false, intensity, heat, threadCity = null, pass, noScene = false }: TurnInstructionArgs): string {
   const b = longForm ? WORD_BUDGETS.long : WORD_BUDGETS.normal;
   const level: StyleIntensity = intensity ?? (lowRegister ? 'low' : 'medium');
   const low = level === 'low';
 
   if (kind === 'opening') {
     return [
-      `OPENING TURN (HARD ceiling: ${b.opening} words — shorter is welcome). As you near the ceiling, finish the current idea and sentence, then stop — never trail off mid-thought, never open a new point past it. Answer the question directly in your own framework. Paraphrase the question through your framework; never repeat it verbatim. Ground it: name the thread city, one named person there, and their predicament — this scene carries the whole sitting. An opening set anywhere but the thread city has failed the turn; never default to your home country or birthplace.`,
-      ...(threadCity
+      noScene
+        ? `OPENING TURN (HARD ceiling: ${b.opening} words — shorter is welcome). As you near the ceiling, finish the current idea and sentence, then stop — never trail off mid-thought, never open a new point past it. Answer the question directly in your own framework. Paraphrase the question through your framework; never repeat it verbatim. No scene-setting, no invented persons or places, no metaphor — argue the structure straight.`
+        : `OPENING TURN (HARD ceiling: ${b.opening} words — shorter is welcome). As you near the ceiling, finish the current idea and sentence, then stop — never trail off mid-thought, never open a new point past it. Answer the question directly in your own framework. Paraphrase the question through your framework; never repeat it verbatim. Ground it: name the thread city, one named person there, and their predicament — this scene carries the whole sitting. An opening set anywhere but the thread city has failed the turn; never default to your home country or birthplace.`,
+      ...(!noScene && threadCity
         ? [`THREAD CITY: this sitting lives in ${threadCity} — open set there: its streets, workplaces, councils. Your birthplace and home country are irrelevant to this sitting; leave them out entirely.`]
         : []),
       'Do not refer to any other thinker; there is no predecessor yet.',
@@ -132,7 +138,9 @@ export function buildTurnInstruction({ kind, prevName, isFinalSeat, longForm, re
       : pass === 2
         ? 'PASS JOB (pressure): land ONE break from inside PREV\'s own argument — no new topics of your own, nothing built here. The new idea (Z) waits for pass 3.'
         : kind === 'reconstruction'
-          ? 'PASS JOB (reconstruction): reject something specific, then add the new idea (Z) as one specific applied move — a named body (council, union branch, tenants, pupils) doing a named thing in the thread city, with its first step inside the sentence. Name who decides, where the fight happens, and what changes in the first week. Vague verbs (converse, raise awareness, prioritise, push for) fail the turn.'
+          ? (noScene
+          ? 'PASS JOB (reconstruction): reject something specific, then add the new idea (Z) as one applied move — a named body taking a named decision, first step inside the sentence. Name who decides, where the fight happens, and what changes in the first week. Vague verbs (converse, raise awareness, prioritise, push for) fail the turn.'
+          : 'PASS JOB (reconstruction): reject something specific, then add the new idea (Z) as one specific applied move — a named body (council, union branch, tenants, pupils) doing a named thing in the thread city, with its first step inside the sentence. Name who decides, where the fight happens, and what changes in the first week. Vague verbs (converse, raise awareness, prioritise, push for) fail the turn.')
           : 'PASS JOB (critique): judge PREV, then move the question up a level in your own terms.';
 
   const negationLine = pass === 2
@@ -143,7 +151,9 @@ export function buildTurnInstruction({ kind, prevName, isFinalSeat, longForm, re
 
   const reformulationLine =
     kind === 'reconstruction'
-      ? `2. THE BUILD (roughly ${b.reformulation} words, ONE paragraph): add the new idea (Z), not yet said in this sitting — then land it as one specific applied move: a named body doing a named thing in the thread city, first step inside the sentence (who decides, where the fight happens, what changes in the first week). TRANSFORM, never parrot: the margins demand and every survey line must be rebuilt in your framework's own vocabulary — repeating any of their demands or clauses word-for-word fails the turn, even with a citation. Phrase every consequence as a commitment (must, shall, will, let us) — never a possibility (may, might, could, would). Hedged builds fail the turn.${level === 'medium' ? ' DICTION IN THIS SECTION: every school-term kept here carries its plain meaning inside its sentence plus one short concrete sentence showing what it does — term, gloss, elaboration, no bare terms. Append a fifth JSON key "glossary": each hard term you used, one line each as term — plain meaning.' : ''}`
+      ? (noScene
+        ? `2. THE BUILD (roughly ${b.reformulation} words, ONE paragraph): add the new idea (Z), not yet said in this sitting — then land it as one applied move: a named body taking a named decision, first step inside the sentence (who decides, where the fight happens, what changes in the first week). TRANSFORM, never parrot: the margins demand and every survey line must be rebuilt in your framework's own vocabulary — repeating any of their demands or clauses word-for-word fails the turn, even with a citation. Phrase every consequence as a commitment (must, shall, will, let us) — never a possibility (may, might, could, would). Hedged builds fail the turn.${level === 'medium' ? ' DICTION IN THIS SECTION: every school-term kept here carries its plain meaning inside its sentence plus one short concrete sentence showing what it does — term, gloss, elaboration, no bare terms. Append a fifth JSON key "glossary": each hard term you used, one line each as term — plain meaning.' : ''}`
+        : `2. THE BUILD (roughly ${b.reformulation} words, ONE paragraph): add the new idea (Z), not yet said in this sitting — then land it as one specific applied move: a named body doing a named thing in the thread city, first step inside the sentence (who decides, where the fight happens, what changes in the first week). TRANSFORM, never parrot: the margins demand and every survey line must be rebuilt in your framework's own vocabulary — repeating any of their demands or clauses word-for-word fails the turn, even with a citation. Phrase every consequence as a commitment (must, shall, will, let us) — never a possibility (may, might, could, would). Hedged builds fail the turn.${level === 'medium' ? ' DICTION IN THIS SECTION: every school-term kept here carries its plain meaning inside its sentence plus one short concrete sentence showing what it does — term, gloss, elaboration, no bare terms. Append a fifth JSON key "glossary": each hard term you used, one line each as term — plain meaning.' : ''}`)
       : pass === 2
         ? `2. HANDOFF (one sentence): hand the contradiction on — the unresolved tension, stated as your framework's own problem. No new idea here; Z waits for pass 3.`
         : `2. DIAGNOSIS (roughly ${b.reformulation} words, ONE paragraph): your framework's own diagnosis of the question — one idea, one concrete consequence (an institution, a choice, a cost; who acts, where). No inject, no building: Z waits for pass 3. Phrase it as a commitment (must, shall, will), never a possibility (may, might, could).${level === 'medium' ? ' DICTION IN THIS SECTION: every school-term kept here carries its plain meaning inside its sentence plus one short concrete sentence showing what it does — term, gloss, elaboration, no bare terms. Append a fifth JSON key "glossary": each hard term you used, one line each as term — plain meaning.' : ''}`;
@@ -178,16 +188,20 @@ export function buildTurnInstruction({ kind, prevName, isFinalSeat, longForm, re
     ...(pass === 1
       ? ['HISTORY TONE: below PREV’s text, find the lines headed YOUR HISTORY WITH / OWES YOU plus YOUR PEOPLE — relate what PREV just said to your past relationship with them, then move on to the rejection. Never quote these history lines verbatim — the five-word rule holds on them like everything else; a turn reciting its debt note has mistaken the prompt for the argument. When such lines appear, the relation is mandatory: a P1 turn that never touches them has failed. If no such lines appear, argue from the live claims alone.']
       : []),
-    'SCENARIO THREAD: the opening turn’s concrete scene (named person, place, predicament) carries the whole sitting — reuse its people, never invent new ones each turn. Claim first, then the scene: state the idea in your framework, then relate it to the carried scene — illustration, never a second argument, never a second scene or fresh metaphor. Hold every stated premise of the scenario as a fixed constraint (if necessary work is done by robots, no humans do cleaning — never reintroduce what the scenario removed). The scene illustrates the philosophy; it never becomes the debate. A turn that argues about the scenario instead of through it has mistaken the example for the point. A turn that breaks a stated premise has failed.',
+    ...(noScene
+      ? ['No invented persons, places, or metaphors anywhere in the turn — argue the structure straight.']
+      : ['SCENARIO THREAD: the opening turn’s concrete scene (named person, place, predicament) carries the whole sitting — reuse its people, never invent new ones each turn. Claim first, then the scene: state the idea in your framework, then relate it to the carried scene — illustration, never a second argument, never a second scene or fresh metaphor. Hold every stated premise of the scenario as a fixed constraint (if necessary work is done by robots, no humans do cleaning — never reintroduce what the scenario removed). The scene illustrates the philosophy; it never becomes the debate. A turn that argues about the scenario instead of through it has mistaken the example for the point. A turn that breaks a stated premise has failed.']),
     'MOOD, OUT LOUD: let the feeling show strongly in your own diction — blunt words, swears, exclamations, sorrow, fear, joy, interjections where your voice would use them; mourning, fury, tenderness where it would feel them. The reader should hear this sitting cost you something. Polite evenness fails the turn.',
     'RHYTHM BREAKS: vary sentence structure and never three long sentences running without a short punch after. Even cadence lulls; the reader should feel the gear change.',
     'FELT VERBS: the feeling lives inside the move, not beside it — the rejection, the break, the build each carries one feeling verb in your own diction: grief, dread, tenderness, fury, joy, disgust, longing, shame, delight, sorrow, contempt, pity — never the same verb twice in one turn, and never merely mourn/love/hate/fear on repeat (real people rarely say "mourn"). Name the cost inside the move: what your framework gives up to land it. A move performed coolly fails the turn; display verbs alone (shows, reveals, demonstrates) fail it twice.',
     'TWO MASTERS: every turn answers the original question fresh AND advances the PREV debate. A turn that only answers PREV has drifted; a turn that only answers the question has stalled.',
     'PREMISE HOLD: the question\'s givens are fixed constraints for all passes — if necessary work is gone, there are no jobs to train for, no vocations to prepare, no labour market to enter. Never propose what the premise removed; never quietly restore the old world to make your answer easier. Every consequence and demand must assume the premise, not undo it. A turn that answers a different question has failed, however well argued.',
-    'PLACES: one sitting, one thread city — the opening turn names a city in the question’s world and every later turn stays there unless the argument itself travels. Never default to the speaker’s home country or birthplace; rotate the part of the world sitting to sitting. A thread city keeps the sitting rooted; a single country every sitting means the root never moves. A turn that relocates the sitting to the speaker’s homeland has failed.',
-    ...(threadCity
-      ? [`THREAD CITY: this sitting lives in ${threadCity}. Set every example there — streets, workplaces, councils. Leave it only if the argument itself travels, and say why.`]
-      : []),
+    ...(!noScene ? [
+      'PLACES: one sitting, one thread city — the opening turn names a city in the question’s world and every later turn stays there unless the argument itself travels. Never default to the speaker’s home country or birthplace; rotate the part of the world sitting to sitting. A thread city keeps the sitting rooted; a single country every sitting means the root never moves. A turn that relocates the sitting to the speaker’s homeland has failed.',
+      ...(threadCity
+        ? [`THREAD CITY: this sitting lives in ${threadCity}. Set every example there — streets, workplaces, councils. Leave it only if the argument itself travels, and say why.`]
+        : []),
+    ] : []),
     'TIME RULE: Mark present-day facts as facts and demands as demands: say what changes now (the minimum) and what the horizon holds (the maximum) — never present the horizon as already here, and never mistake a demand for a description.',
     closingLine,
     ...(isFinalSeat

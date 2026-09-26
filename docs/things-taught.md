@@ -4,6 +4,17 @@ Low intensity, nothing dumbed down: every entry keeps the full fact,
 only the words stay simple. Newest first. The owner asked for this
 Sep 17 2026 — keep writing here, one entry per lesson.
 
+## Test the detector before blaming it (Sep 26 2026)
+Three verbatim repeats across two sittings looked like a dead detector —
+and I said so out loud before checking. One script run later, the
+detector fired on the exact pair. The failure was downstream: detection
+ended in a log line and an unexported badge, with the blind retry (the
+only enforcement) long buried for good reasons. The fix names the shared
+run in a single repair attempt and marks survivors in the export. Two
+morals: reproduce before you accuse, and never report an invisible
+negative ("no badge fired") as fact — the export couldn't show badges
+either way.
+
 ## Subtract before you add: the pilot turn scaffold (Sep 26 2026)
 The owner's verdict on a weak sitting was to strip the general prompts,
 not extend them — and the numbers backed it: the old turn scaffold ran

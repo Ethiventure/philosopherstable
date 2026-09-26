@@ -1244,11 +1244,29 @@ v2026-09-20m = pilot lean scaffold, pilot turns only (old-path text unchanged).
   the sitting, and the verdict. Never restore by feel, never two rules at
   once, never without a blind grade. Dropped-rule inventory lives in the
   `buildPilotTurnInstruction` docstring (source of truth — read it before
-  proposing a return). First candidate already queued: no-scene variant
+  proposing a return).   First candidate already queued: no-scene variant
   (uncanny-valley scenes) — see below.
+  No-scene update Sep 26: the variant now suppresses scene/metaphor mandates
+  in the OLD scaffold too (`noScene` option on `buildTurnInstruction`),
+  because a variant covering 3 seats while ordering the rest into scenes
+  tests nothing. Export stamp is mode-aware (THINK = no expression rode).
+  Echo enforcement Sep 26: detector proven working (verbatim P2 pair fires
+  8-gram match live) — failure was enforcement, not detection. One
+  localized repair naming the shared run (blind retry stays buried:
+  10 retries, echo persisted); survivors keep badge + gain an export mark;
+  repair count surfaces in the footer breakdown.
   Next: run the fixed-question sitting, owner blind test in THINK mode.
 
 ## Missing-features backlog (considered, not yet scheduled)
+Genzie placement (queued Sep 26 2026, owner call — for later, not now):
+Genzie leaves the seat picker (never a selectable sitting seat — they speak
+from the margins regardless); in the room version every Genzie turn changes
+the conversation topic and stops seeing the previous 12 turns' topic.
+Key-privacy copy (queued Sep 26 2026 — public site must never describe the
+owner's key setup): audit + reword `App.tsx` line ~1380 ("The shared key
+speaks Low only — its free tier…", reveals the backend key tier),
+plus any quota/limit wording traceable to the owner's keys. Visitor-key
+wording (Groq/OpenRouter/Alibaba free tiers — the visitor's own key) stays.
 Favicon ("little icon on the tab"): ship `public/favicon-32x32.png` (32×32,
 the tab), `public/apple-touch-icon.png` (180×180, iOS bookmarks), optional
 inline SVG data-URI (scalable, no file), plus 192×192 + 512×512 manifest icons
