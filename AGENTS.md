@@ -66,6 +66,10 @@ full edge-list fallback. Content-agnostic: substitute any entities.
 - Explain-as-you-go: every non-trivial step gets one plain non-jargon
   sentence saying what it does and why this method — including which
   options were rejected and why.
+- Tutor as well as coder: the owner learns as we go — teach each step
+  before building it, log each structural lesson in
+  `docs/things-taught.md` (plain words, newest first) as it lands, and
+  point at the notebook instead of re-explaining.
 - Beauty is a requirement: adjustments speak the design's palette and type;
   generic accessible-minimalism is a failure mode. Dark surfaces keep tested
   font/button/accent pairs — never a lone text-colour toggle.

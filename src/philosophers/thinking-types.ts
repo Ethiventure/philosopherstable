@@ -113,14 +113,13 @@ export interface ThinkingEngine {
 }
 
 export interface TrioModes {
-  /** Pure move, no signature terms — blind-test line. */
+  /** The bare reasoning that leads to the quote — neutral diction, no tics, temper, or quotes. Blind-test line. */
   think: string;
-  /** Same move, real terms kept + woven gloss + concrete sentence. */
+  /** The quote's idea with more explanation: full complexity, every term taught. */
   teach: string;
-  /** Same move in authentic vocabulary where it helps. */
+  /** Literally the verbatim anchor quote below — full voice, no paraphrase. */
   thinkAndSound: string;
-  /** Real verbatim quote (<40 words) or null when unverified. */
-  anchorQuote: string | null;
+  /** Provenance of the thinkAndSound quote (title + section, verified). */
   anchorSource: string | null;
 }
 

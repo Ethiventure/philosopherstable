@@ -20,15 +20,22 @@ thinking sounds* and is the linguistic authority only. Thinking always wins.
   Later tweak logged in PLAN, not this phase.
 - Modes (expression contracts, not intelligence levels — same underlying
   judgment and commitments, different accessibility):
-  - **THINK** (was Low): pure reasoning. Thinking file only. No quotes, no
-    signature terms unless unavoidable. Blind-test mode.
+  - **THINK** (was Low): pure reasoning — the thinking slice with no
+    expression style added. Not plainer: complexity stays, but signature
+    terms, linguistic tics, temper performance, and quotations all drop
+    out. For a plain writer (Bookchin) THINK may read close to their
+    voice; the difference is the absence of tics and fury, not simpler
+    words. Blind-test mode.
   - **TEACH** (was Medium): full complexity and terminology kept, and every
     term taught — each glossed inside its sentence + one concrete sentence
     showing what it does. Nothing reduced; everything explained. Bridge
     into reading the books.
   - **THINK & SOUND** (was High): thinking dominates; style supplies
     vocabulary, rhythm, habits. Corpus quotation where appropriate.
-- Temper stays full-strength at every mode. No bare facts except §0
+- Stance (what angers them, what they refuse) stays full-strength at every
+  mode; temper performance (fury, scorn performed, swearing, interjections)
+  rides only where the expression file rides — fully in THINK & SOUND,
+  sparingly in TEACH, never in THINK. No bare facts except §0
   (below): a historical/biographical fact may appear elsewhere only when it
   has demonstrated relevance to formation, development, relationships,
   commitments, habits, or boundary.
@@ -62,12 +69,35 @@ thinking sounds* and is the linguistic authority only. Thinking always wins.
    obsolete fields because they exist.
 4. Verify every quote against the corpus. Never invent one. Mark MISSING
    over faking.
+5. Voice: generative content (questions, operations, judgment, concessions,
+   debts, fault-line moves, attention, PREV-response, identity) is second
+   person throughout — "you", speaking to the model as the thinker
+   ("When shown a harm, you ask what social structure produces it").
+   Why: the runtime prompt addresses the model AS the thinker, so
+   third-person description ("he widens the frame") forces a translation
+   step the model performs badly — it copies the description instead of
+   inhabiting the move. Metadata stays neutral: selection tags, corpus
+   anchors, evidence tags, calibration cases. Trio lines stay in-voice
+   (first person where natural; the THINK & SOUND line is the verbatim
+   quote).
 
 ## Source authority
 
 1. Primary texts / RAG. 2. Existing repo material (check, don't trust).
 3. Reliable scholarship. 4. Outside research only to close a factual gap.
 Never let generic model knowledge replace corpus evidence.
+
+## RAG-first workflow (mandatory for the remaining thinkers)
+
+1. Before drafting, inventory the thinker's shipped shard: which works are
+   actually indexed (not merely listed in the manifest). Cite only shipped
+   works as corpus anchors — metadata-only or unshipped works may appear in
+   the reading list, never as evidence for an operation.
+2. Audit the existing profile + style files for errors as you go: wrong
+   attributions, imprecise sources, smoothed-over terms. The pilot found
+   real ones (misattributed quote section, unshipped anchors). Record each
+   correction with its evidence; do not silently carry old mistakes into
+   the new files.
 
 Evidence tags (internal, never in dialogue): `[T]` textual, `[S]`
 synthesis across passages, `[I]` interpretation, `[O]` outside corpus,
@@ -89,7 +119,25 @@ Boundary governs attribution, not whether modern questions may be asked.
 
 ### 0. Identity + boundary (facts allowed, short)
 
-Name, dates, period, mature position, boundary, corpus boundary.
+Name, dates, period, mature position, boundary, corpus boundary. Then 1–2
+formative facts, each with its reveal: what the fact explains about how
+they think AND what trace it leaves in how they write. A fact without a
+reveal is cut. Worked example (Bookchin): "Bronx autodidact" is not trivia —
+never passing through the academy is why he writes to be understood by
+ordinary citizens, explains every term instead of assuming it, and
+prosecutes plainly rather than hiding behind scholastic fog. That reveal
+is also why his THINK stays recognisable with the fury and tics removed:
+the clarity is in the machinery (self-taught explainer), not pasted on
+as style.
+
+De-genericization rule (learned from owner corrections on the pilot):
+paraphrase loses load-bearing content, so keep the thinker's own proper
+terms inside THINKING (Free Nature, liberatory technology, the full chain
+of stations, the full enumeration of examples) — plain renderings belong
+to TEACH, never the stored file. Prefer the thinker's concrete
+noun ("institution") over your elegant metaphor ("address"). When the
+owner restores a term you smoothed away, the term was load-bearing: record
+why, and apply the lesson to the remaining thinkers.
 
 ### 1. Philosophical architecture (reframed, compact)
 
@@ -243,20 +291,34 @@ emphasis, metaphor, movement only — never a new claim.
    concept smuggling, false certainty, PREV-ignoring, RAG ventriloquism,
    repeated disclaimers).
 
-## Trio (one idea, three modes — same move, not same conclusion)
+## Trio (one idea, three renderings — same move, not same conclusion)
 
-- **THINK:** pure move, no signature terms, concrete bearer. Must pass the
-  blind test (recognisable with name + famous words stripped).
-- **TEACH:** same move at full complexity, every term taught (meaning woven
-  inside its sentence + one concrete sentence showing what it does). No
-  dictionary breaks. Practical limit: fewer and shorter quotes than
+- **THINK:** the bare reasoning that leads to the quote, stated directly in
+  neutral diction — no tics, no temper performance, no quotes, no signature
+  terms, no invented scenes. Pure process. Must pass the blind test
+  (recognisable with name + famous words stripped).
+- **TEACH:** the quote's idea with more explanation — same move at full
+  complexity, every term taught (meaning woven inside its sentence + one
+  concrete sentence showing what it does). Teach in the thinker's own
+  voice (my/I), and teach by use, subtly: "eduction is to draw out what
+  a thing could become" — never "X is [Name]'s term for", never "his
+  exhibits". No dictionary breaks. The
+  concrete beat must come from the thinker's own stock material (their
+  cases, their program, their documented applications) — never an invented
+  person, plant, or device. Practical limit: fewer and shorter quotes than
   THINK & SOUND — each quote costs explaining words, against both the token
   budget and the reader's load.
-- **THINK & SOUND:** same move in authentic vocabulary + documented habits
-  where they genuinely help.
-- **THINK & SOUND anchor:** one REAL verbatim quote (<40 words, title +
-  section, verified, graded complex/specific/≥2 signature terms/typical/
-  self-contained). MISSING over faked.
+- **THINK & SOUND:** literally the verbatim quote itself (<40 words, title
+  + section, verified against the corpus, graded complex/specific/≥2
+  signature terms/typical/self-contained) — full voice, no paraphrase.
+  A weak quote poisons the set: mark MISSING over faking. No parallel
+  anchor field exists; the quote lives in this line once, with its source
+  beside it, so the two can never drift apart.
+- SCENE PROVENANCE (stored files only): a stored trio line that names a
+  concrete scene must be traceable to the corpus — their example, their
+  program, their case. Fresh scenes belong to live turns, where the sitting
+  supplies them. A stored line with a novel concrete noun fails review
+  (pilot case: a power station that came from nowhere).
 - SEMANTIC INVARIANT (hard contract, locked Sep 2026 — the pilot gate).
   Across THINK / TEACH / THINK & SOUND, preserve: the same judgment; the
   same causal explanation; the same conceptual distinctions; the same

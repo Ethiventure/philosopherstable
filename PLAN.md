@@ -1145,8 +1145,10 @@ are `git mv`'d to `src/philosophers/archive/` — copied, never deleted.
 Knowledge is never kept as bare facts (§0 identity excepted); every fact is
 reframed as how it shaped thinking/expression (fact elsewhere only with
 demonstrated relevance to formation/development/relationships/commitments).
-Trio per thinker: THINK & SOUND anchor = real verified quote; TEACH/THINK =
-same move per mode rules under a semantic invariant (claim, causal relation,
+Trio per thinker: THINK & SOUND line IS the real verified quote (no parallel
+anchor field — quote and source live together so they cannot drift);
+TEACH explains it, THINK shows the bare reasoning that leads to it, all under
+a semantic invariant (claim, causal relation,
 distinction, qualification, uncertainty, PREV-response preserved). TEACH =
 explained, not restrained: full complexity and terminology, every term taught;
 practical cap is quote volume (each quote costs explaining words). Modes
@@ -1175,8 +1177,9 @@ Lineage: v2026-09-20k = last style-essence version (grades stay on k).
 - [ ] `src/philosophers/index.ts` (`renderPersona`) — render THINKING slice
   + EXPRESSION per mode; keep old path behind flag until pilot grades pass.
 - [ ] `src/philosophers/shared/low-style.ts` + `universal-mechanisms.ts` +
-  `anti-waffle.ts` — retire/merge into mode renderers (Think = no style
-  machinery; Teach = gloss shape; Think-&-sound = full voice, thinking wins).
+  `anti-waffle.ts` — retire/merge into mode renderers (Think = no expression
+  rendering: no tics, temper performance, or quotes — complexity stays;
+  Teach = gloss shape; Think-&-sound = full voice, thinking wins).
 - [ ] `src/philosophers/trios.ts` — extend trio entry to `{ think, teach,
   thinkAndSound }` with verified quote + source + semantic invariant;
   fallback stays until wired.
@@ -1208,8 +1211,21 @@ Lineage: v2026-09-20k = last style-essence version (grades stay on k).
   remaining 10 + Genzie.
   Status: drafts landed on `rebuild-thinking` (Bookchin + Bloch + Spinoza as
   distant seat; shared `thinking-types.ts`; old style files untouched until
-  wiring). Next: wire THINK-mode slice into `renderPersona` behind a flag,
-  run the fixed-question sitting, owner blind test in THINK mode.
+  wiring). RAG-checked Sep 26: all 3 anchor quotes verified verbatim in
+  shipped shards; 3 anchors fixed to shipped works (PSA/On-Karl-Marx are
+  metadata-only or unshipped — never cite unshipped works as anchors).
+  Second pass Sep 26: all 6 pilot files converted to second person (owner
+  call — removes the description-to-inhabitation translation step);
+  Bookchin gained paideia + usufruct/complementarity domains,
+  assembly-vs-soviet distinction, and dual power (all RAG-verified);
+  owner-correction pattern recorded as de-genericization rule in compiler;
+  RAG-first + audit-existing-files workflow mandatory for remaining seats.
+  Wired Sep 26 (`thinking-select.ts`: tag scorer proposes 1–3 ops, fault
+  line by PREV pair, per-mode renderer with THINK sending no expression;
+  pilot registry in `philosophers/index.ts` behind caller flag, old path
+  default; `scripts/pilot-slice-demo.mjs` dry-run: slices ≈900–1300 tokens,
+  far inside the ~7k wall, zero API spend). Typecheck + lint + build green.
+  Next: run the fixed-question sitting, owner blind test in THINK mode.
 
 ## Missing-features backlog (considered, not yet scheduled)
 Favicon ("little icon on the tab"): ship `public/favicon-32x32.png` (32×32,
