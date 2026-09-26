@@ -17,6 +17,7 @@ Phases are ordered by dependency; each should leave the app building.
 - [ ] Phase 8 — `webapp-commons-template` (not scaffolded)
 - [x] Phase 9 — Rose seat (dossier landed + wired; voice graded across sittings; texts resolved Sep 25 — 6 books metadata-only by rights, 2 estate texts ingested, rest correctly refused)
 - [ ] Phase 10 — Senior common room (live: turns landing; GitHub's own schedule throttled ~6/day, so a Cloudflare Worker fires dispatch every 45 min → ~32/day; manual seat input for Genzie/scenes)
+- [ ] Phase 11 — Thinking-first rebuild (compiler `docs/thinker-compiler.md`; per-thinker THINKING + EXPRESSION `.ts`, old style archived; pilot Bookchin + Bloch, then rest; loans kept, later tweak logged below)
 - [ ] Backlog — favicon, og recompose, rotation/recovery doc, +9 more (LICENSE shipped Sep 24: AGPL-3.0-only)
 
 ---
@@ -1129,6 +1130,86 @@ lives, and the one rule that keeps it alive:
 - **Licence flags**: every vendored text/model/dataset notes its licence where
   it is used (Braille Institute, Apache, MIT ok; GPL never a dependency —
   external scripts only). Rule: flag at ingest time, not audit time.
+
+## Phase 11 — Thinking-first rebuild (approved Sep 2026; pilot Bookchin + Bloch)
+
+Compiler: `docs/thinker-compiler.md` (tightened Sep 2026 per ChatGPT delta:
+THINK / TEACH / THINK & SOUND modes with semantic invariant — same judgment,
+different accessibility; debts split from fault-lines; SELECTION TAGS per op,
+code proposes / model disposes; SHAPES-VOICE removed; runtime detail lives in
+runtime docs, not the compiler; Claude short kept as runtime-header idea only;
+Gemini Bookchin mined for op verbs, quotes unverified).
+Direction: thinking causes style. Each thinker gets THINKING (engine) +
+EXPRESSION (downstream voice) as `.ts` exports. Old `{slug}.style.ts` files
+are `git mv`'d to `src/philosophers/archive/` — copied, never deleted.
+Knowledge is never kept as bare facts (§0 identity excepted); every fact is
+reframed as how it shaped thinking/expression (fact elsewhere only with
+demonstrated relevance to formation/development/relationships/commitments).
+Trio per thinker: THINK & SOUND anchor = real verified quote; TEACH/THINK =
+same move per mode rules under a semantic invariant (claim, causal relation,
+distinction, qualification, uncertainty, PREV-response preserved). TEACH =
+explained, not restrained: full complexity and terminology, every term taught;
+practical cap is quote volume (each quote costs explaining words). Modes
+(expression contracts, not intelligence levels): THINK / TEACH / THINK & SOUND.
+Loans (RAG quotes) KEPT as-is for now — flagged tweak later (floor→cap?),
+not this phase. Relevance: code scorer picks 1–3 ops per turn from SELECTION
+TAGS + debt pair + RAG stems (`rag-search.ts` already does this for shards);
+code proposes 1–3 candidate ops, model may accept/reject/combine — full files
+are truth on disk, slices ride
+per turn (fits the ~7k shared wall; short contracts obeyed better).
+Blind test in THINK mode is the gate (owner knows Bookchin/Bloch best).
+
+Safety: branch `rebuild-thinking`, tag `before-thinking-rebuild`, one commit
+per thinker, `git revert <hash>` per thinker or reset to tag for all. Prompt
+text change bumps `PROMPT_VERSION` (`prompts.ts:40`) a letter; grades stay
+tied to their letter (lineage log below grows one line per bump); export
+footer + `models-tried.md` rows + `test-runs/` carry the version. Version
+record also kept in `docs/thinker-compiler.md` header + per-thinker file
+header + PLAN lineage line — three places, same letter.
+Lineage: v2026-09-20k = last style-essence version (grades stay on k).
+
+### Knock-on files (fix when the pilot lands, not before)
+
+- [ ] `src/types/index.ts` — add `ThinkingEngine` + `ExpressionModel` types;
+  keep `StyleEssence` until all 12 migrate (display still reads it).
+- [ ] `src/philosophers/index.ts` (`renderPersona`) — render THINKING slice
+  + EXPRESSION per mode; keep old path behind flag until pilot grades pass.
+- [ ] `src/philosophers/shared/low-style.ts` + `universal-mechanisms.ts` +
+  `anti-waffle.ts` — retire/merge into mode renderers (Think = no style
+  machinery; Teach = gloss shape; Think-&-sound = full voice, thinking wins).
+- [ ] `src/philosophers/trios.ts` — extend trio entry to `{ think, teach,
+  thinkAndSound }` with verified quote + source + semantic invariant;
+  fallback stays until wired.
+- [ ] `src/philosophers/influences.ts` (`CABINET_DEBTS`, `relationshipLine`)
+  — kept; add DEBT (borrowed/transformed/rejected/retained) split from
+  FAULT-LINE per pair; pilot pairs Bookchin↔Marx, Bloch↔Bookchin first.
+- [ ] `src/lib/dialectic/prompts.ts` — new mode lines (Think/Teach/
+  Think-&-sound), slice slot (1–3 ops + distinctions + fault-line), common
+  runtime shared across thinkers; bump `PROMPT_VERSION` + lineage line.
+- [ ] `src/lib/rag-ground.ts` (+ `extract.ts`) — keep loan counts for now;
+  log floor-vs-cap question for later; Think mode stays paraphrase-only.
+- [ ] `src/lib/service-chat.ts` + `src/App.tsx` (persona call sites ~lines
+  681/767, export footer ~1200, modal `StyleEssenceDisplay` ~2217,
+  `GenealogyMap.tsx`) — wire new modes, rename Low/Med/High labels in
+  Settings/Voice tab + export SITTING line, keep old labels mapping until
+  migration done.
+- [ ] `scripts/export-personas.mjs` + `export-persona-docs.mjs`
+  (`docs/persona-prompts.md`) — regen from new files once pilot lands.
+- [ ] `scripts/grade-sitting.mjs` + `test-sitting.mjs` + `test-matrix.mjs` +
+  `docs/language-levels.md` + `docs/models-tried.md` + `docs/family-eval.md`
+  — add blind-seat check (Think mode, name hidden) + same-PREV split check;
+  rubric moves from loan counts to move recognition; version-stamped.
+- [ ] `docs/new-philosopher-brief.md` — mark Phase 1 superseded by compiler
+  for rebuilds; keep for brand-new seats until migrated.
+- [ ] `docs/things-taught.md` — one plain-words entry per structural lesson
+  as the owner learns it (newest first).
+- [ ] Pilot order: Bookchin + Bloch THINKING/EXPRESSION drafts → 1 sitting
+  (fixed education question, 5 seats) → owner blind test → go/no-go for
+  remaining 10 + Genzie.
+  Status: drafts landed on `rebuild-thinking` (Bookchin + Bloch + Spinoza as
+  distant seat; shared `thinking-types.ts`; old style files untouched until
+  wiring). Next: wire THINK-mode slice into `renderPersona` behind a flag,
+  run the fixed-question sitting, owner blind test in THINK mode.
 
 ## Missing-features backlog (considered, not yet scheduled)
 Favicon ("little icon on the tab"): ship `public/favicon-32x32.png` (32×32,
