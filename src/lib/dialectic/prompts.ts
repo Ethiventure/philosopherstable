@@ -37,7 +37,7 @@ export type TurnKind = 'opening' | 'critique' | 'reconstruction';
  * text change so grades stay comparable: a verdict on version C never
  * transfers silently to version D.
  */
-export const PROMPT_VERSION = '2026-09-20m';
+export const PROMPT_VERSION = '2026-09-20n';
 
 export const WORD_BUDGETS = {
   normal: { negation: 25, reformulation: 40, total: 60, opening: 40 },
@@ -256,6 +256,9 @@ export function buildTurnInstruction({ kind, prevName, isFinalSeat, longForm, re
  * ORDERS, TIME RULE, and every essay-length rule that restated a one-line
  * order three ways. Old path (`buildTurnInstruction`) untouched — the A/B
  * baseline survives; grades ride the version stamp, never transfer.
+ * Dropped-rule inventory for the add-back protocol: the ranked return
+ * queue with full previous wordings lives in `docs/add-back-queue.md` —
+ * read it before proposing a return.
  */
 export function buildPilotTurnInstruction({ kind, prevName, isFinalSeat, longForm, pass, threadCity = null, marginsNote = false, marginsFirst = false, noScene = false }: {
   kind: TurnKind;
@@ -294,7 +297,7 @@ export function buildPilotTurnInstruction({ kind, prevName, isFinalSeat, longFor
         : `PASS 3 (reconstruction): reject something specific, then add the new idea (Z) as one applied move — a named body doing a named thing in ${threadCity ?? 'the thread city'}, first step inside the sentence. Commitments (must, shall, will), never possibilities.`;
 
   return [
-    `${kind === 'reconstruction' ? 'RECONSTRUCTION' : 'IMMANENT CRITIQUE'} TURN (HARD ceiling: ${b.total} words — shorter is better). Respond ONLY to ${prev}.`,
+    `${kind === 'reconstruction' ? 'RECONSTRUCTION' : 'IMMANENT CRITIQUE'} TURN (HARD ceiling: ${b.total} words — shorter is better). Respond ONLY to ${prev} — answer its second half, the live edge, never its opening recap.`,
     job,
     `${prev} is YOU — a live opponent, never a specimen. Never describe them in third person.`,
     'Never restate PREV, yourself, or the question: every sentence pushes somewhere new. Never lift a multi-word clause from PREV, the survey, or the question — paraphrase always.',

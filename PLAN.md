@@ -250,6 +250,11 @@ silently across versions.
   dropped (renderer carries them). Old-path text byte-unchanged; pilot
   grades ride m, old grades stay on k and earlier. (l skipped: used and
   reverted Sep 26.)
+- Prompt v2026-09-20n (Sep 26 2026, barest-bones cut): pilot renderer drops
+  pressure questions, judgment patterns, and trio except in TEACH;
+  pilot turns drop debt narration, stock toolkit at all modes, and the Low
+  plain-words reminder (contradicted modes); pilot scaffold gains the
+  second-half-PREV clause. Old path untouched; pilot grades ride n.
 
 ### Embeddings (Phase 5)
 `test_embeddings.py` uses local Ollama `nomic-embed-text` (768 dims); the schema is
@@ -1176,7 +1181,8 @@ footer + `models-tried.md` rows + `test-runs/` carry the version. Version
 record also kept in `docs/thinker-compiler.md` header + per-thinker file
 header + PLAN lineage line — three places, same letter.
 Lineage: v2026-09-20k = last style-essence version (grades stay on k);
-v2026-09-20m = pilot lean scaffold, pilot turns only (old-path text unchanged).
+v2026-09-20m = pilot lean scaffold, pilot turns only (old-path text unchanged);
+v2026-09-20n = barest-bones cut, pilot path only.
 
 ### Knock-on files (fix when the pilot lands, not before)
 
@@ -1244,8 +1250,12 @@ v2026-09-20m = pilot lean scaffold, pilot turns only (old-path text unchanged).
   the sitting, and the verdict. Never restore by feel, never two rules at
   once, never without a blind grade. Dropped-rule inventory lives in the
   `buildPilotTurnInstruction` docstring (source of truth — read it before
-  proposing a return).   First candidate already queued: no-scene variant
+  proposing a return). First candidate already queued: no-scene variant
   (uncanny-valley scenes) — see below.
+  Ranked return queue (Sep 26): `docs/add-back-queue.md` — 11 rules ranked
+  by observed failure modes (echo paragraph first, rhythm last; deliberately
+  not historical order), each with trigger condition, full previous wording,
+  verdict log, and a never-returning list.
   No-scene update Sep 26: the variant now suppresses scene/metaphor mandates
   in the OLD scaffold too (`noScene` option on `buildTurnInstruction`),
   because a variant covering 3 seats while ordering the rest into scenes
@@ -1255,6 +1265,12 @@ v2026-09-20m = pilot lean scaffold, pilot turns only (old-path text unchanged).
   localized repair naming the shared run (blind retry stays buried:
   10 retries, echo persisted); survivors keep badge + gain an export mark;
   repair count surfaces in the footer breakdown.
+  Vocabulary-leak audit Sep 28: expression path verified OFF in THINK mode
+  (null renderer, neutral trio, no toolkit, old persona uncalled) — the leak
+  is smuggled labels inside thinking instructions (op names now withheld:
+  numbered moves, selector keeps names in code). Remaining terms are
+  load-bearing concepts, not labels; blind retest proposed with grounding
+  OFF to isolate the files from shown passages.
   Next: run the fixed-question sitting, owner blind test in THINK mode.
 
 ## Missing-features backlog (considered, not yet scheduled)

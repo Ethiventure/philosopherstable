@@ -4,6 +4,29 @@ Low intensity, nothing dumbed down: every entry keeps the full fact,
 only the words stay simple. Newest first. The owner asked for this
 Sep 17 2026 — keep writing here, one entry per lesson.
 
+## Audit every line, not every intention (Sep 26 2026)
+The barest-bones cut worked from the rendered prompt, not the source
+files: identity, entry questions, numbered moves, distinctions, fault
+line, mode line — plus evidence (grounding), priors, survey, budgets,
+and the JSON envelope. Everything else went back to the files
+(pressure questions, judgment patterns, trio except in TEACH) or out
+entirely (debt narration, stock toolkit, the Low plain-words reminder
+that contradicted modes). Prompt shrank ~25% and every cut has a return
+address in the add-back log. Lesson: audit what the model actually
+receives — good intentions in dead code paths still cost attention.
+
+## Labels leak: show the move, not its name (Sep 28 2026)
+The owner's blind grading caught vocabulary giving the thinker away, and
+the audit found the mechanism: operation names ("Eduction", "Factum into
+Fieri") shown in the prompt become borrowed words in the answer — a label
+meant for the code picker ends up as diction for the writer. Rendered
+moves are now numbered; names live in code only. Honest limit found the
+same hour: stripping labels removed ~2 of ~28 hits, because the rest are
+load-bearing concepts (hierarchy, tendency) that cannot go without taking
+the thought with them. Orders like "use no signature terms" lie when the
+prompt shows twenty-five — the line now says terms appear only where the
+move needs them.
+
 ## Test the detector before blaming it (Sep 26 2026)
 Three verbatim repeats across two sittings looked like a dead detector —
 and I said so out loud before checking. One script run later, the

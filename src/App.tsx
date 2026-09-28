@@ -783,7 +783,10 @@ function App() {
         buildUserMessage({
           question,
           prevText,
-          relationshipLine: relationshipBlock || null,
+          // Pilot seats meet PREV through their fault line, not the debt
+          // narration; stock openers are old-voice machinery with a
+          // verbatim-lift record — the pilot path carries neither.
+          relationshipLine: pilotEntry ? null : (relationshipBlock || null),
           ownPriorLines,
           // Lean ration on shared/Groq: the margins note (first when present)
           // plus five seats — the full survey can't fit Groq's free-tier wall.
@@ -792,6 +795,7 @@ function App() {
             : othersPriorLines,
           turnInstruction,
           stockBlock: (() => {
+            if (pilotEntry) return '';
             // The opener has no predecessor ("Do not refer to any other
             // thinker"), so PREV-addressed openers must not ride in its
             // prompt — they used to, contradicting the opening instruction.
@@ -818,16 +822,17 @@ function App() {
               ...(reframing.length ? [`REFRAMING: ${reframing.join(' / ')}`] : []),
             ].join('\n');
           })(),
-          spentPhrases: isOpeningTurn || snap.intensity === 'low' ? [] : spentRef.current,
+          spentPhrases: pilotEntry || isOpeningTurn || snap.intensity === 'low' ? [] : spentRef.current,
           intensity: snap.intensity,
           surveyKind: pass === 1 ? 'early' : 'late',
         }),
       ];
       if (groundingBlock) messageParts.push('', groundingBlock);
       // Closing scan at every level just before the JSON hint (closest
-      // instruction to generation; the hint itself stays final). Low keeps
-      // its own language check on top.
-      if (snap.intensity === 'low') messageParts.push('', LOW_CLOSING_REMINDER);
+      // instruction to generation; the hint itself stays final). The old Low
+      // reminder orders plain words and contradicts modes, so pilot turns
+      // skip it at every level; the scan (echo last gate) stays for all.
+      if (snap.intensity === 'low' && !pilotEntry) messageParts.push('', LOW_CLOSING_REMINDER);
       messageParts.push('', buildClosingScan(snap.intensity));
       const userMessage = [...messageParts, '', STRUCTURED_OUTPUT_HINT + (snap.intensity === 'medium' ? ` ${GLOSSARY_SHAPE}` : '')].join('\n');
       setActivePass(pass);

@@ -94,18 +94,21 @@ export function selectThinkingSlice(
   return { operations, faultLine };
 }
 
-function renderOperation(op: ThinkingOperation): string {
+function renderOperation(op: ThinkingOperation, index: number): string {
+  // The name is deliberately withheld: it is a selector label ("Eduction",
+  // "Factum into Fieri"), and shown names become borrowed vocabulary. The
+  // numbered move carries the full meaning without teaching the word.
   return [
-    `OPERATION — ${op.name}. Trigger: ${op.trigger}`,
-    `Move: ${op.move}`,
-    `Preserve: ${op.preserves} Reject: ${op.rejects}`,
-    `Payoff: ${op.payoff}`,
+    `MOVE ${index + 1}. When: ${op.trigger}`,
+    `Do: ${op.move}`,
+    `Keep: ${op.preserves} Drop: ${op.rejects}`,
+    `You gain: ${op.payoff}`,
   ].join('\n');
 }
 
 const MODE_LINES: Record<ThinkMode, string> = {
   think:
-    'THINK MODE: reason only, no added expression style. No signature terms, no linguistic tics, no temper performance, no quotations. Keep the full complexity of the move — clarity comes from the reasoning, never from simplifying. Your thinking move must carry your identity alone.',
+    'THINK MODE: reason only, no added expression style. Signature terms appear only where the move needs them — never borrow a word you are not using. No linguistic tics, no temper performance, no quotations. Keep the full complexity of the move — clarity comes from the reasoning, never from simplifying. Your thinking move must carry your identity alone.',
   teach:
     'TEACH MODE: full complexity, every term taught. Keep your real terminology; weave each term’s plain meaning inside its sentence plus one short concrete sentence showing what it does. Nothing reduced; everything explained. Fewer, shorter quotes than full voice — each quote costs explaining words.',
   thinkAndSound:
@@ -115,8 +118,14 @@ const MODE_LINES: Record<ThinkMode, string> = {
 /**
  * System prompt from a thinking slice. `expressionText` is a short,
  * pre-rendered voice block (movement + sentence + temper) — pass null in
- * THINK mode. Trio lines ride per mode: think sees Think only, teach sees
- * Teach, thinkAndSound sees the verbatim quote itself.
+ * THINK mode. Trio rides in TEACH only: rules describe, examples
+ * demonstrate, and teach is the mode that needs the shape shown.
+ *
+ * Barest-bones audit (Sep 2026): pressure questions and judgment patterns
+ * were cut from the render — the moves imply the choices, and the files
+ * keep the rest for selective activation later. Rendered prompt is now:
+ * identity, entry questions, numbered moves, distinctions, fault line,
+ * expression (non-think), trio (teach only), mode line.
  */
 export function renderThinkingPersona(
   engine: ThinkingEngine,
@@ -131,13 +140,8 @@ export function renderThinkingPersona(
     ...engine.problemSensing.entry.map((q) => `- ${q}`),
     '',
   );
-  lines.push(
-    'YOUR PRESSURE QUESTIONS — once you detect weakness:',
-    ...engine.problemSensing.pressure.map((q) => `- ${q}`),
-    '',
-  );
-  lines.push('CANDIDATE OPERATIONS (code-proposed from your tags — use what fits, ignore the rest):');
-  for (const op of slice.operations) lines.push('', renderOperation(op));
+  lines.push('CANDIDATE MOVES (code-proposed from your tags — use what fits, ignore the rest):');
+  slice.operations.forEach((op, i) => lines.push('', renderOperation(op, i)));
   lines.push('');
   lines.push(
     'YOUR LOAD-BEARING DISTINCTIONS:',
@@ -152,13 +156,8 @@ export function renderThinkingPersona(
       '',
     );
   }
-  lines.push(
-    'YOUR JUDGMENT PATTERNS:',
-    ...engine.judgment.patterns.map((p) => `- ${p}`),
-    '',
-  );
   if (expressionText) lines.push(expressionText, '');
-  if (trioLine) lines.push(`YOUR WORKED EXAMPLE (same move, your mode — shape your terms like this): “${trioLine}”`, '');
+  if (mode === 'teach' && trioLine) lines.push(`YOUR WORKED EXAMPLE (shape every kept term exactly like this — term kept, meaning woven beside it): “${trioLine}”`, '');
   lines.push(MODE_LINES[mode]);
   return lines.join('\n');
 }

@@ -21,11 +21,12 @@ thinking sounds* and is the linguistic authority only. Thinking always wins.
 - Modes (expression contracts, not intelligence levels — same underlying
   judgment and commitments, different accessibility):
   - **THINK** (was Low): pure reasoning — the thinking slice with no
-    expression style added. Not plainer: complexity stays, but signature
-    terms, linguistic tics, temper performance, and quotations all drop
-    out. For a plain writer (Bookchin) THINK may read close to their
-    voice; the difference is the absence of tics and fury, not simpler
-    words. Blind-test mode.
+    expression style added. Not plainer: complexity stays; linguistic tics,
+    temper performance, and quotations drop out, and signature terms appear
+    only where the move needs them (never borrowed for decoration). For a
+    plain writer (Bookchin) THINK may read close to their voice; the
+    difference is the absence of tics and fury, not simpler words.
+    Blind-test mode.
   - **TEACH** (was Medium): full complexity and terminology kept, and every
     term taught — each glossed inside its sentence + one concrete sentence
     showing what it does. Nothing reduced; everything explained. Bridge
