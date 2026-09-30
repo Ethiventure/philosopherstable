@@ -196,6 +196,10 @@ const RATE_TABLE: RateRow[] = [
   // is an unverified lead, not a number.
   { match: (p, m) => p.includes('alibaba') && m.includes('qwen3.7-plus'), perIn: 0.40, perOut: 1.60 },
   { match: (p, m) => p.includes('alibaba') && m.includes('qwen3.8-max'), perIn: 2.00, perOut: 6.00 },
+  // qwen3.8-max-0902 rides the row above (substring match). qwen3.8-2.4t-a95b:
+  // max-class proxy from the Singapore list (CNY 14.988/44.965 per 1M ≈
+  // $2.06/$6.18) — re-verify at the console before quoting exactly.
+  { match: (p, m) => p.includes('alibaba') && m.includes('qwen3.8-2.4t-a95b'), perIn: 2.00, perOut: 6.00 },
   // Alibaba qwen3.8-flash direct: $0.15/$0.47 per 1M, 1M context
   // (owner-supplied Sep 20 2026, same source) — ≈$0.026–0.035/session.
   { match: (p, m) => p.includes('groq') && m.includes('qwen3.8-27b'), perIn: 0.80, perOut: 4.00 },

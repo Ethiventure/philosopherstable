@@ -47,6 +47,11 @@ full edge-list fallback. Content-agnostic: substitute any entities.
 - Public app, no login, zero identifying data. Keys never in repo/bundle.
 - No OpenAI models for generation, ever. Prefer good-value open-weight
   models; cost paid picks per session before recommending.
+- Spend nudge: paid test runs burn real money in small invisible amounts —
+  roughly every 7 responses during a paid-model run of sittings, or whenever
+  an export shows paid spend, suggest checking Model Studio Usage & Billing
+  (console page name only, never values). Same cadence as a push nudge;
+  never nag twice.
 - Provider model IDs rot in days: free-text ID field + live key check, never
   a pinned dropdown; dead IDs fall back to the default on load. Every test
   queue entry, verdict, and owner-facing model mention carries the exact

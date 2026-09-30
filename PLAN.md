@@ -12,7 +12,7 @@ Phases are ordered by dependency; each should leave the app building.
 - [x] Phase 4 — Accessibility & display
 - [x] Phase 5 — RAG v1 lexical (vectors deferred)
 - [x] Phase 6 — Richer philosopher information + influence grid
-- [x] Phase 7 — Model-family A/B (decided Sep 21 2026: funnel + DECISION in `docs/models-tried.md`; crowns are 3.8-max quality, 3.7-plus value, free vacant; fix-triage ledger 7e continues as a watch-list (retests ride along on sittings, schedules nothing); 14B tuning track 7c parked Sep 25 — nothing defaults to it, golden picks never arrived)
+- [x] Phase 7 — Model-family A/B (decided Sep 21 2026: funnel + DECISION in `docs/models-tried.md`; crowns are 3.8-max quality, 3.7-plus value, free vacant; fix-triage ledger 7e continues as a watch-list (retests ride along on sittings, schedules nothing); 14B tuning track 7c parked Sep 25 — nothing defaults to it, golden picks never arrived; billing snapshot Sep 28 2026 below)
 - [ ] Phase 7b — Auto-metrics (AlignScore guardrail, LENS-SALSA calibration, ASSET-method optional)
 - [ ] Phase 8 — `webapp-commons-template` (not scaffolded)
 - [x] Phase 9 — Rose seat (dossier landed + wired; voice graded across sittings; texts resolved Sep 25 — 6 books metadata-only by rights, 2 estate texts ingested, rest correctly refused)
@@ -662,6 +662,19 @@ no profile prose has leaked into turns to date.*
 Selection now follows the funnel (`docs/model-selection.md`: research →
 keys → probes → max 4 sittings → dated crowns), which supersedes the
 open-ended A/B below — read the funnel first, this section second.
+### Billing snapshot (Sep 28 2026, owner console — facts, not verdicts)
+One Alibaba key covers all models (quotas + stop switches are per-model,
+not per-key). Paid-approved: qwen3.7-plus (~$0.07/table) as the daily
+driver, qwen3.8-flash (~$0.03) as cheap backup; qwen3.8-max (~$0.40)
+special occasions only. Free-quota state: plus ~80% used (~1 table left),
+max + 3.8-27b exhausted (stop switch can't retro-apply — deselect or pay),
+max-0902 / 2.4t-a95b / 30b-instruct-2507 / 30b-thinking-2507 full 1M each
+with stop-on-exhaust ON. New IDs ride the Alibaba dropdown (neutral
+labels — no trial-status wording on site) but are UNGRADED: probe-first
+(Test key + one probe turn) before any graded sitting; fallback chain
+unchanged. Rates re-verified live Sep 28 (max $2/$6, plus $0.40/$1.60,
+flash $0.15/$0.47); 2.4t-a95b rides a max-class proxy — re-verify exact
+before quoting.
 What follows is the research record (kept for provenance, not direction):
 DeepSeek parked entirely, GLM parked entirely, paid pins moved twice
 since (now 3.7-plus via OpenRouter, 3.8-max via Alibaba).
@@ -1265,6 +1278,13 @@ v2026-09-20n = barest-bones cut, pilot path only.
   localized repair naming the shared run (blind retry stays buried:
   10 retries, echo persisted); survivors keep badge + gain an export mark;
   repair count surfaces in the footer breakdown.
+  Sheet B graded Sep 28: R=Bookchin correct (location emphasis gave it away
+  — ruled structural, not decorative: assemblies must meet somewhere);
+  P/Q flipped (both echo-copies read as their true author — ground truth
+  itself muddy). Voice-in-thinking audit: one smuggled sentence found
+  (Bookchin identity's prose orders moved to EXPRESSION); Bloch/Spinoza
+  clean. Residual vocabulary ruled load-bearing; next blind runs with
+  grounding OFF to isolate the files.
   Vocabulary-leak audit Sep 28: expression path verified OFF in THINK mode
   (null renderer, neutral trio, no toolkit, old persona uncalled) — the leak
   is smuggled labels inside thinking instructions (op names now withheld:
@@ -1330,3 +1350,36 @@ sittings with a distinct voice per thinker. Must be free or near-free:
 Web Speech per-voice mapping first (device voices differ — no guarantees),
 paid TTS only as an opt-in BYOK route. Per-seat voice assignment needs the
 same persistence as display settings.
+
+## Future projects (owner notes, Sep 30 2026 — not scheduled, not scoped)
+
+Ethiventure website revamp: add persona characters as chatbots + full UI
+recompose. No design or roster yet — needs its own brief before any build.
+
+Half-done project to finish: title/details pending — ASK THE OWNER what
+it is before writing anything else here.
+
+Second brain (owner constraints): must work from the iPad; can use the
+home PC server (Debian 13, i5/32GB — plenty for note apps, no 9B+ local
+LLM on 4GB VRAM); LAN-only preferred — no outside company holding the
+content (outside services in the pipeline are acceptable if they never
+see content); open-source/local first. Core problem to beat: bad memory
+— capture must be near-frictionless or nothing else matters. Owner has
+tentative earlier decisions from second-brain videos/research: ASK what
+they were before recommending. Agent's standing steer (Sep 30): plain
+Markdown files on disk + self-hosted web UI on the LAN box (iPad reads
+via browser, nothing to install) + SQLite search, lexical first (same
+doctrine as this repo's RAG: no vectors until eval proves lexical fails);
+git backup; capture via inbox + daily note; weekly review assisted in
+these sessions. Candidates to compare when scoped: SilverBullet,
+TriliumNext, Memos/Blinko, Logseq.
+
+## How we work (agreed Sep 30 2026)
+
+No boss, no fixed order — which means shiny things derail finished
+things. Counterweight: the agent holds a prioritized queue, opens each
+session with one anchor task plus a small buffet, states the sensible
+order once when a request jumps it, and drops it immediately if resisted
+(never nags twice). Health and clarity vary day to day, so a smorgasbord
+of tasks is legitimate — but the agent does the cognitive heavy lifting:
+smallest-first breakdowns, exact commands, no implied steps.

@@ -21,7 +21,7 @@ export const GROQ_MODEL_OPTIONS = ['qwen/qwen3.8-27b'];
  *  probe, cheapest), 3.8-flash (burn verdict reversed on new prompts).
  *  Dead pins fall through the list mid-sitting; stored GLM migrates. */
 export const OPENROUTER_PAID_OPTIONS = ['qwen/qwen3.7-plus', 'qwen/qwen3.7-flash', 'qwen/qwen3.8-flash'];
-export const ALIBABA_MODEL_OPTIONS = ['qwen3.8-max', 'qwen3.7-plus', 'qwen3.8-27b', 'qwen3.8-flash'];
+export const ALIBABA_MODEL_OPTIONS = ['qwen3.8-max', 'qwen3.7-plus', 'qwen3.8-27b', 'qwen3.8-flash', 'qwen3.8-max-0902', 'qwen3.8-2.4t-a95b', 'qwen3-30b-a3b-instruct-2507', 'qwen3-30b-a3b-thinking-2507'];
 
 export type DeepInfraModel = 'Qwen/Qwen3-30B-A3B' | 'Qwen/Qwen3-14B';
 
