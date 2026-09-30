@@ -11,12 +11,13 @@ export let lastOpenRouterModel: string = '';
  * cycle through free models: if one is rate-limited, down, retired, or can't
  * produce the required JSON, the next one takes over mid-session.
  *
- * Why a fixed ordered cycle with the router first: the router picks a random
+ * Why a fixed ordered cycle with named models first: the router picks a random
  * model per call, which shifts voice across the 30 turns — owner Sep 2026 finds
- * that entertaining, so router-first stays. Last-good memory still holds a
- * named model once one succeeds; router hits never persist, so variety lasts
- * until the bench catches. NOTE: gpt-oss arriving via the router is accepted
- * (owner call) — it is never pinned separately.
+ * some of that entertaining, but a Gemma-first bench (Sep 30) tests voice
+ * continuity, so the router rides last as fallback only. Last-good memory
+ * still holds a named model once one succeeds; router hits never persist, so
+ * variety lasts until the bench catches. NOTE: gpt-oss arriving via the router
+ * is accepted (owner call) — it is never pinned separately.
  *
  * Removed Sep 2026 per owner: `qwen/qwen3-coder:free` (coder-tuned, wrong
  * shape for chatbot turns), `deepseek/deepseek-v4-flash:free` (404 since Jun
@@ -31,37 +32,38 @@ export let lastOpenRouterModel: string = '';
  * says so.
  */
 
-// All IDs verified live via the /models API Sep 15 2026 (20 free total).
-// Ordered by context window (desc) past the router: each free model carries
-// its own per-model quota, so more models = more tokens/session. Owner Sep
-// 2026: gpt-oss arriving via the router is acceptable (never pinned
-// separately). qwen3.8-27b:free revived Sep 20 2026 (owner tip, verified
-// alive but upstream-throttled — the cycle skips 429s, so it serves when
-// open and costs nothing when shut). Deliberately excluded: coder-tuned
-// qwen3-coder, dead deepseek:free + 404 qwen3.6-plus-preview:free (Sep 20),
-// and the content-safety filter model.
+// All IDs verified live via the /models API Sep 30 2026 (16 free total).
+// Gemma-first by owner order (outside feedback: Qwen reads agentic,
+// Gemma more literary; small Qwens suspected of rote-survival regime).
+// Objective correction Sep 30: the prize is move execution, not prose —
+// literary quality is decoration, and a beautiful generic turn fails our
+// blind tests while a clunky correct move passes. Judge the bench on
+// moves (blind Sheets), never on voice. Per-mode hypothesis, unproven:
+// agentic discipline may execute THINK slices better; literary fluency
+// may render THINK & SOUND better. Test both modes blind.
+// Dead IDs stay out, never as placeholders:
+// ling-fin + ling-vl + nex pro/mini + glm-5.2 all rotted since Sep 15.
+// ling-tiny never existed on free (paid-only ID). Deliberately excluded:
+// coder-tuned qwen3-coder, dead deepseek:free + 404 qwen3.6-plus-preview:free
+// (Sep 20), and the content-safety filter model. Random `openrouter/free`
+// rides LAST (breaks voice continuity) — named Gemmas first.
 export const FREE_MODEL_CYCLE = [
-  'openrouter/free',
+  'google/gemma-4-26b-a4b-it:free',
+  'google/gemma-4-31b-it:free',
   'qwen/qwen3.8-27b:free',
   'thinkingmachines/inkling:free',
   'thinkingmachines/inkling-small:free',
   'nvidia/nemotron-3-ultra-550b-a55b:free',
   'nvidia/nemotron-3.5-lightning:free',
   'dots-studio/dots-3-note-preview:free',
-  'google/gemma-4-31b-it:free',
-  'google/gemma-4-26b-a4b-it:free',
-  'inclusionai/ling-3.0-flash-fin:free',
   'inclusionai/ling-3.0-flash-sante:free',
-  'inclusionai/ling-3.0-flash-vl:free',
-  'nex-agi/nex-n2.5-pro:free',
-  'nex-agi/nex-n2.5-mini:free',
   'nvidia/nemotron-3-super-120b-a12b:free',
   'poolside/laguna-s-2.1:free',
   'poolside/laguna-xs-2.1:free',
   'nvidia/nemotron-3-nano-omni-30b-a3b-reasoning:free',
   'cohere/north-mini-code:free',
   'liquid/lfm-2.5-2.6b:free',
-  'z-ai/glm-5.2:free',
+  'openrouter/free',
 ] as const;
 
 const LASTGOOD_KEY = 'dialectical-cabinet:openrouter-lastgood:v1';
