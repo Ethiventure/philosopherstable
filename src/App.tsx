@@ -1550,8 +1550,8 @@ function HowBuilt() {
     {
       title: 'Grounding',
       body: 'Every speaker searches its own indexed books first — 11,000+ passages, word-stems not embeddings — and must borrow their actual vocabulary. Receipts ride under each turn, inspectable, and the export lists what was shown.',
-      link: `${REPO}/PLAN.md`,
-      label: 'retrieval design',
+      link: `${REPO}/src/lib/rag-search.ts`,
+      label: 'scorer',
     },
     {
       title: 'Model funnel',

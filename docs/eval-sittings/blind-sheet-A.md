@@ -7,7 +7,6 @@ within this sheet and mean nothing outside it. Mapping held by the
 assistant — grade first, then ask for the reveal.
 
 For each turn, name the thinker (Bookchin or Bloch) from the *move* alone.
-
 ## A1 (voice Q)
 
 [Previous speaker], You mistake the machine for a neutral tool we can simply grab. Seizing servers ignores that the software's logic is built to extract, not teach. You cannot rewrite a trap into a door just by changing who holds the key; the code itself carries the hunger of profit, not learning.
