@@ -4,6 +4,17 @@ Low intensity, nothing dumbed down: every entry keeps the full fact,
 only the words stay simple. Newest first. The owner asked for this
 Sep 17 2026 — keep writing here, one entry per lesson.
 
+## Search for the true objective, not its prettiest proxy (Sep 30 2026)
+Outside advice said to try Gemma for its literary quality — and the
+reorder was first built to test "voice continuity", which is the wrong
+prize. Our blind tests grade moves, so the model search must grade moves:
+a beautiful generic turn fails, a clunky correct one passes. Literary
+fluency is decoration on top of executed reasoning, never evidence of
+it. The per-mode version of the hypothesis survives as testable
+(agentic discipline for THINK execution, literary fluency for THINK &
+SOUND rendering) — everything else about "which family writes better"
+is noise to this project.
+
 ## Audit every line, not every intention (Sep 26 2026)
 The barest-bones cut worked from the rendered prompt, not the source
 files: identity, entry questions, numbered moves, distinctions, fault

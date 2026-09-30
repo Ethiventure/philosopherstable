@@ -185,12 +185,11 @@ export type DeckEntry =
 
 function App() {
   const [philosophers, setPhilosophers] = useState<Philosopher[]>([]);
-  // TEMPORARY default (Sep 21 2026): the leftistsforAI moderation question,
-  // so test sittings start with zero setup. Revert to the education question
-  // when the test round ends (it stays the family-eval default).
-  // Table rule: Bookchin moderates — names the sub rules, pulls the
-  // conversation back, threatens bans.
-  const [question, setQuestion] = useState('leftistsforAI sub on Reddit is “A space for leftists discussing Artificial Intelligence from a labor, ownership, and political-economy perspective. Topics include worker impact, platform power, automation, regulation, and collective control of Al infrastructure”. What should we encourage posts about and what types of posts should we take down as bracketed off topics which don’t benefit us? Table rule for this question: Bookchin moderates — names the actual sub rules, pulls the conversation back on topic, threatens bans (and means them).');
+  // Default question (owner pick Sep 30 2026): the regional AI-grid
+  // organisation question — novel to every seat, forces reconstructive
+  // moves. Edit freely in the box below; the table debates whatever
+  // stands here when Begin is pressed.
+  const [question, setQuestion] = useState('A region shares one AI grid to coordinate energy, food and transport. How is this best organised? What would you change about this setup?');
   const [activePass, setActivePass] = useState(0);
   const [activeAgent, setActiveAgent] = useState(-1);
   const [isRunning, setIsRunning] = useState(false);
@@ -1374,9 +1373,9 @@ function App() {
             <div className="dark-academia-card p-4 md:p-5 mb-5" id="question-card">
               <div className="flex items-center justify-between gap-4 mb-3">
                 <label htmlFor="question" className="font-heading text-sm uppercase tracking-[0.16em] text-[#4a392d]">The contemporary problem</label>
-                <span className="text-xs text-[#465f75]/65">The question remains constant; its formulation may change.</span>
+                <span className="text-xs text-[#465f75]/65">Yours to rewrite — clear the box and pose any question; the table debates whatever stands here when you press Begin.</span>
               </div>
-              <textarea id="question" value={question} onChange={(event) => setQuestion(event.target.value)} disabled={isRunning} className="w-full min-h-[72px] resize-y bg-[#eae1ca]/60 border border-[#4a392d]/25 rounded-sm p-3 text-base leading-relaxed text-[#465f75] placeholder:text-[#465f75]/45 focus:outline-none focus:ring-2 focus:ring-[#8b5254]/30" />
+              <textarea id="question" value={question} onChange={(event) => setQuestion(event.target.value)} disabled={isRunning} placeholder="Type your own question here…" className="w-full min-h-[72px] resize-y bg-[#eae1ca]/60 border border-[#4a392d]/25 rounded-sm p-3 text-base leading-relaxed text-[#465f75] placeholder:text-[#465f75]/45 focus:outline-none focus:ring-2 focus:ring-[#8b5254]/30" />
               <div className="flex flex-wrap gap-3 mt-4">
                 <button className="btn-primary flex items-center gap-2" onClick={isRunning ? pauseMeeting : interventions.length ? resumeMeeting : startMeeting} disabled={!question.trim() || orderedPhilosophers.length < 2 || (!isRunning && (!hasKey || isComplete || freeTierNeedsLow))}>{isRunning ? <><CirclePause size={17} /> Pause circuit</> : <><CirclePlay size={17} /> {isComplete ? 'Cabinet complete' : interventions.length ? 'Resume cabinet' : 'Begin cabinet'}</>}</button>
                 <button className="btn-secondary flex items-center gap-2" onClick={resetMeeting}><RotateCcw size={15} /> Restart</button>
