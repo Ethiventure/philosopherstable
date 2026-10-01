@@ -1,9 +1,14 @@
 /**
- * export-personas: dump lean Low room-personas to public/room/personas.json.
+ * export-personas: dump room personas to public/room/personas.json.
  * The cron room-tick runs under plain node (no `@/` alias, no bundler),
  * so personas are exported here — deterministic, versioned, reviewable.
- * Re-run after any persona/style edit: npm run room:personas
- * Room voice = Low register by design (short plain chatter, not sittings).
+ * Re-run after any thinking-file edit: npm run room:personas
+ *
+ * Room voice = THINK mode, anonymous (Sep 30 2026): the thinking slice
+ * with no life file and no expression file — moves must identify, names
+ * never ride. All ops ship (no per-turn selection in a static file;
+ * the prompt says use what fits). Genzie keeps her old-style entry:
+ * fictional seat, no corpus, no thinking file — rude margins voice.
  */
 import { execSync } from 'node:child_process';
 import { writeFileSync, mkdirSync, rmSync } from 'node:fs';
@@ -18,35 +23,29 @@ const tmp = join(work, 'entry.mjs');
 const out = join(work, 'bundle.mjs');
 
 const entry = `import { PHILOSOPHER_DATA } from ${JSON.stringify(join(root, 'src/philosophers/index.ts'))};
-import { renderLowStyleEssence } from ${JSON.stringify(join(root, 'src/philosophers/shared/low-style.ts'))};
-import { SEAT_TRIOS } from ${JSON.stringify(join(root, 'src/philosophers/trios.ts'))};
+import { renderThinkingPersona } from ${JSON.stringify(join(root, 'src/philosophers/thinking-select.ts'))};
+import { ANONYMOUS_LEAD } from ${JSON.stringify(join(root, 'src/philosophers/thinking-select.ts'))};
+import { getThinkingPilot } from ${JSON.stringify(join(root, 'src/philosophers/index.ts'))};
 import { PROMPT_VERSION } from ${JSON.stringify(join(root, 'src/lib/dialectic/prompts.ts'))};
 const seats = {};
 for (const p of PHILOSOPHER_DATA) {
-  const e = p.style_essence;
-  // Fuller voice, still lean (Sep 22 2026): the Low abridgement plus the
-  // voice engine — movement, generation rules, REGISTER prompt, dialect
-  // verbs. Core mechanisms join them Sep 25 (voice machinery, no diction
-  // demands — Low-safe). Stock phrases stay OUT (no spent-tracking in the
-  // room yet; unrationed openers become tics). CDA meta-text stays out
-  // (tokens for no voice). Profile knowledge stays out (room chatter).
-  const persona = [
-    'You are ' + p.full_name + '.',
-    'ANALYTICAL CENTRE: ' + p.analytical_center.join(', ') + '.',
-    'EMOTIONAL TONE: ' + p.profile.emotional_tone,
-    '',
-    ...renderLowStyleEssence(e, SEAT_TRIOS[p.slug]),
-    '',
-    'CHARACTERISTIC MOVEMENT: ' + e.characteristic_movement,
-    'CORE MECHANISMS: ' + (e.core_mechanisms || 'not set'),
-    'GENERATION RULES:',
-    ...e.generation_rules.map((rule) => '- ' + rule),
-    ...(e.dialect_verbs
-      ? ['YOUR MOVE VERBS — your own verbs for breaking and building, in your own sentences: BREAK: ' + e.dialect_verbs.break.join(' / ') + '. BUILD: ' + e.dialect_verbs.build.join(' / ') + '.']
-      : []),
-    '',
-    'REGISTER: ' + e.prompt,
-  ].join('\\n');
+  const entry = getThinkingPilot(p.slug);
+  if (!entry) {
+    // Genzie and any unmigrated seat keep the old-style room persona.
+    const e = p.style_essence;
+    seats[p.slug] = { name: p.full_name, short: p.name, persona: [
+      'You are ' + p.full_name + '.',
+      'ANALYTICAL CENTRE: ' + p.analytical_center.join(', ') + '.',
+      'EMOTIONAL TONE: ' + p.profile.emotional_tone,
+      '',
+      'CHARACTERISTIC MOVEMENT: ' + e.characteristic_movement,
+      'REGISTER: ' + e.prompt,
+    ].join('\\n') };
+    continue;
+  }
+  const t = entry.thinking;
+  const persona = renderThinkingPersona(t, 'think',
+    { operations: t.operations, faultLine: null }, null, null, ANONYMOUS_LEAD);
   seats[p.slug] = { name: p.full_name, short: p.name, persona };
 }
 console.log(JSON.stringify({ promptVersion: PROMPT_VERSION, exportedAt: new Date().toISOString(), seats }));
