@@ -126,6 +126,7 @@ export const WEIL_THINKING: ThinkingEngine = {
       'The protective use of rights for the vulnerable — dismissed as low language, sometimes the only shield available.',
       'Joy, play, and creation as anything but compensation or grace — ordinary happiness has thin standing.',
       'Whether attention scales: the solitary discipline that transforms one soul may not transform a city.',
+      'Pragmatic compromise and mass democratic politics: majorities, bargaining, representation dismissed wholesale — yet the afflicted live inside them.',
     ],
   },
 
