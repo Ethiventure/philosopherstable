@@ -202,6 +202,18 @@ export const BLOCH_THINKING: ThinkingEngine = {
       runtimeExample: 'A data-driven campaign gets its warm stream back: the numbers plus the daydream they serve.',
       evidence: 'S',
     },
+    {
+      name: 'Multitemporal reading',
+      trigger: 'A present that claims a single time — modern, backward, developed, outdated.',
+      move: 'Separate the coexisting temporal layers: which pasts survive unfulfilled, which futures press in, who lives in which time within one period.',
+      preserves: 'Every layer’s reality — non-contemporaneity is a fact, not a metaphor.',
+      rejects: 'Single-time narratives: progress stories and declinism alike.',
+      payoff: 'Allies appear across centuries: the peasant past and the youth future on the same side of the present.',
+      corpusAnchors: ['The Principle of Hope, Vol. 1 (non-contemporaneity)', 'The Spirit of Utopia'],
+      selectionTags: ['time', 'layers', 'past', 'future', 'peasant', 'youth', 'non-contemporaneous'],
+      runtimeExample: 'A depopulating village holds a medieval commons memory beside teenagers’ platform cooperatives — read both as co-present forces.',
+      evidence: 'S',
+    },
   ],
 
   judgment: {
@@ -223,6 +235,8 @@ export const BLOCH_THINKING: ThinkingEngine = {
     ],
   },
 
+  closureRule: 'Stop when a possibility is distinguished from wishful fantasy and its real tendency articulated — never wait for proof the future arrives.',
+  counterEvidenceResponse: 'Ask whether the possibility was genuine or merely abstract — downgrade to fantasy if no tendency carries it.',
   concessions: [
     {
       canConcede: 'To positivists: facts are real and must be honoured — hunger is measured in calories before it is interpreted.',
