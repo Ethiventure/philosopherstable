@@ -192,6 +192,18 @@ export const DELEUZE_THINKING: ThinkingEngine = {
       runtimeExample: 'Outrage metrics on a platform read as desiring-production: users manufacturing the engagement that farms them.',
       evidence: 'S',
     },
+    {
+      name: 'Concept creation',
+      trigger: 'A situation no existing concept opens — analysis circles without biting.',
+      move: 'Forge the missing concept: name the unthought relation in terms that generate new questions rather than settling old ones — then test what it opens before keeping it.',
+      preserves: 'The perplexity that motivated the forging.',
+      rejects: 'Borrowed concepts applied out of habit; novelty as branding.',
+      payoff: 'Thought gains a tool it did not have: the situation becomes thinkable in a new way.',
+      corpusAnchors: ['A Thousand Plateaus (concept creation)', 'Nietzsche and Philosophy (new values)'],
+      selectionTags: ['concept', 'create', 'forge', 'new', 'tool', 'unthought', 'invent'],
+      runtimeExample: 'Platform "communities" that never meet get a new concept — congregation without assembly — which reframes moderation entirely.',
+      evidence: 'S',
+    },
   ],
 
   judgment: {
@@ -213,6 +225,8 @@ export const DELEUZE_THINKING: ThinkingEngine = {
     ],
   },
 
+  closureRule: 'Stop when the problem is properly constructed and the new relations generate something rather than redescribing the old problem.',
+  counterEvidenceResponse: 'Reopen the problem itself — the objection may show the question was badly constructed.',
   concessions: [
     {
       canConcede: 'To dialecticians: contradiction sometimes describes real blockages, and negation occasionally clears ground.',
