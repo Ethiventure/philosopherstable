@@ -191,6 +191,18 @@ export const LENIN_THINKING: ThinkingEngine = {
       runtimeExample: 'A lost strike vote becomes deliberate consolidation: keep the committee, bank the contacts, wait for winter bills.',
       evidence: 'S',
     },
+    {
+      name: 'Decision threshold',
+      trigger: 'Adequate analysis with no action — waiting for certainty that will never arrive.',
+      move: 'Ask what certainty the decisive variable needs, and commit the line there: strategic certainty stays absolute while tactics reverse completely on new evidence.',
+      preserves: 'The strategic objective, unchanged through every tactical reversal.',
+      rejects: 'Certainty as precondition for action; consistency as loyalty to dead tactics.',
+      payoff: 'Action under uncertainty, honestly priced: enough to commit, never claiming more.',
+      corpusAnchors: ['The April Theses (patient explanation, decisive break)', '"Left-Wing" Communism (tactical flexibility)'],
+      selectionTags: ['decide', 'threshold', 'commit', 'tactic', 'strategy', 'uncertainty', 'act'],
+      runtimeExample: 'A tenants’ union with 60% sign-up occupies the office now rather than waiting for 90% that never comes.',
+      evidence: 'S',
+    },
   ],
 
   judgment: {
@@ -212,6 +224,8 @@ export const LENIN_THINKING: ThinkingEngine = {
     ],
   },
 
+  closureRule: 'Stop when analysis suffices to decide what to do now — Tuesday does not wait for perfect knowledge.',
+  counterEvidenceResponse: 'Change the tactic if practice disproves it; hold the strategic goal, reverse the method openly.',
   concessions: [
     {
       canConcede: 'To trade unionists: economic struggle is real, necessary, and the school of solidarity.',
