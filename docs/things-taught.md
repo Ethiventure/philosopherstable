@@ -4,6 +4,16 @@ Low intensity, nothing dumbed down: every entry keeps the full fact,
 only the words stay simple. Newest first. The owner asked for this
 Sep 17 2026 — keep writing here, one entry per lesson.
 
+## Ask when they stop, not just how they start (Sep 30 2026)
+The cross-model comparison exposed a missing field: every engine said
+what its thinker notices and does, but none said what makes them decide
+they have thought far enough. Now each file carries a closure rule
+(rendered — it shapes output length directly) and a counter-evidence
+response (stored for evaluation). The sharpest payoff: four thinkers who
+all "change their minds" do it for different reasons (Hegel generates,
+Lenin retacts tactically, Bogdanov redesigns, Deleuze re-questions) —
+and that distinction alone defeats generic-clever-philosopher output.
+
 ## Comparisons live in one map, not twelve dossiers (Sep 30 2026)
 Owner call: no thinker file compares itself to another anymore — fault
 lines moved to a central map, neighbour tests to a meta-view doc, and
