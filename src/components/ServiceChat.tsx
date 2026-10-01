@@ -17,7 +17,6 @@ import {
   SERVICE_MAX_QUESTIONS,
   type ServiceHistoryItem,
 } from '@/lib/service-chat';
-import { thinkingPilotRequested } from '@/philosophers/thinking-select';
 import { LlmError } from '@/lib/llm';
 import type { CabinetSettings } from '@/lib/settings';
 import type { Intervention, Philosopher, StyleIntensity } from '@/types';
@@ -129,7 +128,7 @@ export default function ServiceChat({ thinkers, interventions, settings, open, o
       }
       const answer = await generateServiceText(
         settings,
-        buildServiceSystemPrompt(thinker, level, settings.thinkingPilot || thinkingPilotRequested(), text, { anonymous: settings.anonThinker, feelings: settings.feelingsOn, quotes: settings.quotesOn }),
+        buildServiceSystemPrompt(thinker, level, text, { anonymous: settings.anonThinker, feelings: settings.feelingsOn, quotes: settings.quotesOn }),
         buildServiceUserMessage({ question: text, history, tableLines, groundingBlock, intensity: level }),
       );
       const sources = grounding?.chunks ?? [];

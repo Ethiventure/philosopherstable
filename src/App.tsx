@@ -23,7 +23,7 @@ import {
 import { supabase } from '@/lib/supabase';
 import { CORPUS_SOURCES_DATA } from '@/data/corpus-sources';
 import { DEFAULT_SEATING_ORDER, PHILOSOPHER_BY_SLUG, PHILOSOPHER_DATA, getThinkingPilot, hasThinkingPilot, renderPersona } from '@/philosophers';
-import { composePersona, intensityToThinkMode, thinkingPilotRequested, thinkingSceneOff } from '@/philosophers/thinking-select';
+import { composePersona, intensityToThinkMode, thinkingSceneOff } from '@/philosophers/thinking-select';
 import { CABINET_DEBTS, cabinetHeirs, relationshipLine, tableStancesLine } from '@/philosophers/influences';
 import {
   DEFAULT_ACCESSIBILITY,
@@ -34,7 +34,7 @@ import {
   type Philosopher,
   type StyleEssence,
 } from '@/types';
-import { buildCodaEarlyPrompt, buildCodaEndPrompt, buildCodaPrompt, buildClosingScan, buildPilotTurnInstruction, buildTurnInstruction, buildUserMessage, CODA_REPAIR_SUFFIX, CODA_SYSTEM, drawThreadCity, getTurnKind, GLOSSARY_SHAPE, LOW_CLOSING_REMINDER, PROMPT_VERSION, STRUCTURED_OUTPUT_HINT } from '@/lib/dialectic/prompts';
+import { buildCodaEarlyPrompt, buildCodaEndPrompt, buildCodaPrompt, buildClosingScan, buildPilotTurnInstruction, buildTurnInstruction, buildUserMessage, CODA_REPAIR_SUFFIX, CODA_SYSTEM, drawThreadCity, getTurnKind, GLOSSARY_SHAPE, LOW_CLOSING_REMINDER, PILOT_LAST_WORD, PROMPT_VERSION, STRUCTURED_OUTPUT_HINT } from '@/lib/dialectic/prompts';
 import { LlmError, RATES_AS_OF, estimateCost, repairBreakdown, repairTotals, resetUsage, sharesPassage, usageTotals, ECHO_REPAIR_SUFFIX, findSharedPassage, incrementRepair, type LlmErrorCode, type TurnOutput } from '@/lib/llm';
 import { DEEPINFRA_PRIMARIES, ALIBABA_MODEL_OPTIONS, CUSTOM_MODEL_VALUE, GROQ_MODEL_OPTIONS, OPENROUTER_PAID_OPTIONS, clearProviderHealth, loadProviderHealth, loadSettings, saveProviderHealth, saveSettings, type CabinetSettings, type DeepInfraPrimary, type ProviderHealth } from '@/lib/settings';
 import { applyDisplay, loadDisplay, saveDisplay } from '@/lib/preferences';
@@ -679,11 +679,11 @@ function App() {
               })),
           ]
           : [];
-      // Thinking-first pilot (Phase 11): resolved once per turn and shared
-      // by the turn instruction (lean scaffold) and the system prompt
-      // (thinking slice). Null everywhere except a pilot seat with the flag
-      // (settings or `?thinking=1`) on — the old path below is untouched.
-      const pilotEntry = (snap.thinkingPilot || thinkingPilotRequested()) && hasThinkingPilot(speaker.slug)
+      // Thinking-first files (Phase 11, live): resolved once per turn and
+      // shared by the turn instruction (lean scaffold) and the system prompt
+      // (thinking slice). Non-null for seats carrying THINKING files —
+      // everyone else keeps the old style-essence persona until migrated.
+      const pilotEntry = hasThinkingPilot(speaker.slug)
         ? getThinkingPilot(speaker.slug)
         : null;
       // Toggle snapshot for the export trail (defaults = anonymous, all on).
@@ -864,7 +864,7 @@ function App() {
       // skip it at every level; the scan (echo last gate) stays for all.
       if (snap.intensity === 'low' && !pilotEntry) messageParts.push('', LOW_CLOSING_REMINDER);
       messageParts.push('', buildClosingScan(snap.intensity));
-      const userMessage = [...messageParts, '', STRUCTURED_OUTPUT_HINT + (snap.intensity === 'medium' ? ` ${GLOSSARY_SHAPE}` : '')].join('\n');
+      const userMessage = [...messageParts, ...(pilotEntry ? ['', PILOT_LAST_WORD] : []), '', STRUCTURED_OUTPUT_HINT + (snap.intensity === 'medium' ? ` ${GLOSSARY_SHAPE}` : '')].join('\n');
       setActivePass(pass);
       setActiveAgent(seatPos);
       setThinkingName(speaker.full_name);
@@ -1311,7 +1311,7 @@ function App() {
     const pilotModes = [...new Set(thinkingPilotUsedRef.current)];
     const toggleTrail = [...new Set(toggleTrailRef.current)];
     const mechText = toggleTrail.some((t) => t !== 'defaults') ? ` · Mechanics: ${toggleTrail.join(' → ')}` : '';
-    const settingsText = `\nSITTING\n— Level: ${levelText}${pilotModes.length ? ` · Thinking pilot: THINKING files (modes: ${pilotModes.join('/')})${pilotModes.includes('teach') || pilotModes.includes('thinkAndSound') ? ' + EXPRESSION where the mode required it' : ' — no expression rode'}${thinkingSceneOff() ? ' (no-scene variant)' : ''}` : ''}${mechText} · Long form: ${settings.longForm ? 'on' : 'off'} · Grounding: ${settings.grounding ? 'on' : 'off'} · Economy: ${settings.economy} (at export)${threadCityRef.current ? ` · Thread city: ${threadCityRef.current}` : ''} · Prompt v${PROMPT_VERSION}\n${(() => {
+    const settingsText = `\nSITTING\n— Level: ${levelText}${pilotModes.length ? ` · Thinking files (modes: ${pilotModes.join('/')})${pilotModes.includes('teach') || pilotModes.includes('thinkAndSound') ? ' + EXPRESSION where the mode required it' : ' — no expression rode'}${thinkingSceneOff() ? ' (no-scene variant)' : ''}` : ''}${mechText} · Long form: ${settings.longForm ? 'on' : 'off'} · Grounding: ${settings.grounding ? 'on' : 'off'} · Economy: ${settings.economy} (at export)${threadCityRef.current ? ` · Thread city: ${threadCityRef.current}` : ''} · Prompt v${PROMPT_VERSION}\n${(() => {
       if (!sittingStartedAt.current) return '— Tested: time not recorded (sitting predates the stopwatch)\n';
       const started = new Date(sittingStartedAt.current);
       const fmt = (ms: number) => {
@@ -1434,7 +1434,7 @@ function App() {
                   </div>
                 </div>
               )}
-              {freeTierNeedsLow && !isRunning && <p className="text-sm italic text-[#8b5254] mt-3">{settings.provider === 'groq' ? 'Your Groq key speaks Low only — the free tier cannot fit Medium or High prompts (they halt on the first turn; no wait fixes it). ' : 'The shared key speaks Low only — its free tier cannot fit Medium or High prompts (they halt mid-sitting). '}<button className="underline" onClick={() => updateSettings({ ...settings, intensity: 'low' })}>Continue in Think</button>{settings.provider === 'shared' ? <> or <button className="underline" onClick={() => openSettings('key')}>add your own key</button> for the full voice.</> : <> or switch provider for the full voice.</>}</p>}
+              {freeTierNeedsLow && !isRunning && <p className="text-sm italic text-[#8b5254] mt-3">{settings.provider === 'groq' ? 'Your Groq key speaks Think only — the free tier cannot fit Teach or Think & sound prompts (they halt on the first turn; no wait fixes it). ' : 'The shared key speaks Think only — its free tier cannot fit Teach or Think & sound prompts (they halt mid-sitting). '}<button className="underline" onClick={() => updateSettings({ ...settings, intensity: 'low' })}>Continue in Think</button>{settings.provider === 'shared' ? <> or <button className="underline" onClick={() => openSettings('key')}>add your own key</button> for the full voice.</> : <> or switch provider for the full voice.</>}</p>}
               {!hasKey && <p className="text-sm italic text-[#8b5254] mt-3">Add your {activeKeyLabel} in <button className="underline" onClick={() => setShowSettings(true)}>Settings</button> to begin — it stays in this browser and goes straight to the provider alone; we never see it{settings.provider === 'openrouter' ? ', and goes straight to OpenRouter.' : settings.provider === 'groq' ? ', and goes straight to Groq.' : settings.provider === 'deepinfra' ? ', and goes straight to DeepInfra.' : settings.provider === 'together' ? ', and goes straight to Together.' : settings.provider === 'alibaba' ? ', and goes straight to Alibaba.' : '.'}</p>}
               {runError && (runError.code === 'quota' ? <div role="alert" className="mt-3 p-5 bg-[#8b5254]/10 border-l-2 border-[#8b5254]"><p className="text-xs uppercase tracking-widest text-[#8b5254]">Paused — free-tier quota reached</p><p className="text-sm mt-2 text-[#465f75]">{runError.message}</p><p className="text-sm mt-2 text-[#465f75]">Nothing is lost: {interventions.length} of {orderedPhilosophers.length * 3} interventions are kept, and read-aloud plus export keep working. Quotas reset with time — per-minute caps within minutes, daily caps the next day.</p><div className="flex flex-wrap gap-2 mt-3"><button className="btn-secondary" onClick={() => resumeMeeting()} disabled={!hasKey}>Try resume</button>{settings.provider === 'shared' && <button className="btn-secondary" onClick={() => { setRunError(null); setShowSettings(true); }}>Use my own key instead</button>}{settings.provider === 'openrouter' && settings.openRouterMode === 'paid' && <button className="btn-secondary" onClick={switchToFreeCycleAndResume}>Back to free cycle & resume</button>}{(settings.provider === 'groq' || settings.provider === 'deepinfra' || settings.provider === 'together' || settings.provider === 'alibaba') && <button className="btn-secondary" onClick={() => switchProviderAndResume('shared')}>Fall back to shared</button>}<button className="btn-secondary" onClick={() => setShowSettings(true)}>Open settings</button>{settings.provider === 'openrouter' ? <a className="btn-secondary" href="https://openrouter.ai/activity" target="_blank" rel="noreferrer">Check usage</a> : settings.provider === 'groq' ? <a className="btn-secondary" href="https://console.groq.com" target="_blank" rel="noreferrer">Check usage</a> : settings.provider === 'deepinfra' ? <a className="btn-secondary" href="https://deepinfra.com/dash" target="_blank" rel="noreferrer">Check usage</a> : settings.provider === 'together' ? <a className="btn-secondary" href="https://api.together.xyz/settings/api-keys" target="_blank" rel="noreferrer">Check usage</a> : settings.provider === 'alibaba' ? <a className="btn-secondary" href="https://bailian.console.aliyun.com/" target="_blank" rel="noreferrer">Check usage</a> : null}<button className="btn-secondary" onClick={() => setRunError(null)}>Dismiss</button></div></div> : <div className="mt-3 p-4 bg-[#8b5254]/8 border-l-2 border-[#8b5254]"><p className="text-xs uppercase tracking-widest text-[#8b5254]">Philosopher Strike Demand</p><p className="text-sm mt-1 text-[#465f75]">{runError.message}</p><div className="flex flex-wrap gap-2 mt-3"><button className="btn-secondary" onClick={resumeMeeting} disabled={!hasKey}>Resume cabinet</button><button className="btn-secondary" onClick={() => setShowSettings(true)}>Open settings</button><button className="btn-secondary" onClick={() => setRunError(null)}>Dismiss</button></div></div>)}
             </div>
@@ -2146,13 +2146,13 @@ function SettingsDrawer({ philosophers, activeSlugs, togglePhilosopher, settings
         {tab === 'seats' && (
           <div>
             <div className="flex items-start justify-between mb-4"><div><p className="pass-indicator text-[#8b5254]">Who sits at the table</p><h2 className="text-2xl">Cabinet selection</h2></div></div>
-            <div className="space-y-2">{DEFAULT_SEATING_ORDER.map((slug) => {
+            <div className="space-y-2">{DEFAULT_SEATING_ORDER.filter((slug) => slug !== 'genzie').map((slug) => {
               const philosopher = philosophers.find((item) => item.slug === slug);
               const isActive = activeSlugs.includes(slug);
               if (!philosopher) return null;
               return <button key={slug} onClick={() => togglePhilosopher(slug)} aria-pressed={isActive} title={philosopher.biography} className={`w-full flex items-center gap-3 p-3 border transition-all ${isActive ? 'bg-[#f2ebd9]/65 border-[#4a392d]/40' : 'bg-transparent border-[#4a392d]/10 opacity-50 hover:opacity-80'}`}><div className={`w-5 h-5 rounded-sm border flex items-center justify-center ${isActive ? 'bg-[#8b5254] border-[#8b5254]' : 'border-[#4a392d]/30'}`}>{isActive && <X size={12} className="text-white" />}</div><span className="w-8 h-8 rounded-full border flex items-center justify-center font-heading" style={{ borderColor: philosopher.accent_color, color: philosopher.accent_color }}>{philosopher.name.charAt(0)}</span><span className="font-heading text-lg text-[#4a392d]">{philosopher.full_name}</span></button>;
             })}</div>
-            <p className="text-xs italic text-[#465f75]/60 mt-5">The baton passes only to active thinkers, always to the immediate next seat. The dialectical order remains fixed to preserve the historical-conceptual movement.</p>
+            <p className="text-xs italic text-[#465f75]/60 mt-5">The baton passes only to active thinkers, always to the immediate next seat. The dialectical order remains fixed to preserve the historical-conceptual movement. Genzie is not seated — they speak from the margins regardless.</p>
             <p className="text-xs text-[#465f75]/70 mt-2">{activeSlugs.length} thinkers × 3 passes = {activeSlugs.length * 3} turns{activeSlugs.length > 5 ? ' — five seats (≈15 turns) is the recommended session; it halves token use with the arc intact.' : ' — a lean session.'}</p>
           </div>
         )}
@@ -2168,8 +2168,7 @@ function SettingsDrawer({ philosophers, activeSlugs, togglePhilosopher, settings
                 <button role="radio" aria-checked={settings.intensity === 'high'} title="Think & sound: full thinking in the full voice. Sounds like them because it thinks like them." onClick={() => onSettingsChange({ ...settings, intensity: 'high' })} className={`btn-secondary capitalize ${settings.intensity === 'high' ? '!border-[#8b5254] !text-[#8b5254]' : ''}`}>Think &amp; sound</button>
               </div>
               {settings.intensity === 'medium' && <p className="text-xs italic text-[#8b5254]">Teach sends the most tokens of any mode — pricier on metered keys and likelier to strain free-tier limits than Think or Think & sound.</p>}
-              <button role="checkbox" aria-checked={settings.thinkingPilot} title="Pilot seats (Bookchin, Bloch, Spinoza) speak from new THINKING + EXPRESSION files instead of the old style essences. On by default; untick to run the old voices." onClick={() => onSettingsChange({ ...settings, thinkingPilot: !settings.thinkingPilot })} className={`btn-secondary mt-2 ${settings.thinkingPilot ? '!border-[#8b5254] !text-[#8b5254]' : ''}`}>Thinking pilot (3 seats){settings.thinkingPilot ? ' — on' : ' — off'}</button>
-              <p className="text-xs italic text-[#465f75]/70">Experimental rebuild: thinking-first files for three seats. Everyone else is untouched.</p>
+              <p className="text-xs italic text-[#465f75]/70">Bookchin, Bloch and Spinoza speak from thinking-first files; every other seat keeps its old voice until migrated.</p>
               <span className="font-heading text-sm uppercase tracking-[0.16em] text-[#4a392d] pt-2 block" title="Each option changes the debate visibly. Defaults are our best-tested setup; every combination stamps the export so grades compare per setup only.">Cabinet mechanics (advanced)</span>
               <p className="text-xs italic text-[#465f75]/70">Each switch visibly changes how the table thinks. Defaults are our best guess — flip one at a time and compare sittings, never several at once.</p>
               <div className="space-y-2">

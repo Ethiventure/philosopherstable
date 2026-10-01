@@ -70,18 +70,8 @@ export function intensityToThinkMode(intensity: StyleIntensity): ThinkMode {
   return intensity === 'low' ? 'think' : intensity === 'high' ? 'thinkAndSound' : 'teach';
 }
 
-/** `?thinking=1` forces the pilot on without touching stored settings —
- * works on localhost, deploy previews, and live alike. */
-export function thinkingPilotRequested(): boolean {
-  try {
-    return new URLSearchParams(window.location.search).get('thinking') === '1';
-  } catch {
-    return false;
-  }
-}
-
-/** `?thinking=1&scene=0` runs the pilot without any scene or metaphor
- * mandate (uncanny-valley experiment). URL-only — no settings field, so
+/** `?thinking=1&scene=0` runs without any scene or metaphor mandate
+ * (uncanny-valley experiment). URL-only — no settings field, so
  * the experiment can never leak into anyone else's sitting. */
 export function thinkingSceneOff(): boolean {
   try {

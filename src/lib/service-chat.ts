@@ -40,7 +40,7 @@ const HISTORY_EXCHANGES = 12;
  * plain, Medium natural gloss, High full voice); quoted source loans stay
  * verbatim at every level, and sequential summaries are allowed on request.
  */
-export function buildServiceSystemPrompt(philosopher: Philosopher, intensity: StyleIntensity = 'high', thinkingPilot = false, question = '', opts?: { anonymous?: boolean; feelings?: boolean; quotes?: boolean }): string {
+export function buildServiceSystemPrompt(philosopher: Philosopher, intensity: StyleIntensity = 'high', question = '', opts?: { anonymous?: boolean; feelings?: boolean; quotes?: boolean }): string {
   const defineLine = intensity === 'low'
     ? 'Scaffold every answer in four short moves: 1) answer the question directly in your own framework, in plain everyday words; 2) translate or describe every school-term or unusual word in plain words instead of using it — where a word has no plain equal, describe what it does; 3) land one concrete 21st-century example; 4) close with one short question checking the idea landed.'
     : intensity === 'medium'
@@ -49,13 +49,10 @@ export function buildServiceSystemPrompt(philosopher: Philosopher, intensity: St
   const sourcesLine = intensity === 'high'
     ? 'SOURCES, honestly: passages headed SEARCHED PASSAGES below are the only text you actually searched — quote generously (several short verbatim loans in ‘single’ quotes) and say “from the quoted passage below” when you do; echo their filler words, diction tics, and rhythms. Otherwise your answer comes from your profile and framework: say “on my account” rather than implying you re-read the books. Your links are the only ones you can search — never cite, quote, or claim another thinker’s works; if asked about them, answer from your own framework and say whose desk that question belongs at.'
     : 'SOURCES, honestly: passages headed SEARCHED PASSAGES below are the only text you actually searched — when they fit, borrow visibly with direct quotes (at least one short verbatim loan in ‘single’ quotes) and say “from the quoted passage below” when you do. Direct quotation stays verbatim at every desk level — your own surrounding words follow the level. Otherwise your answer comes from your profile and framework: say “on my account” rather than implying you re-read the books. Your links are the only ones you can search — never cite, quote, or claim another thinker’s works; if asked about them, answer from your own framework and say whose desk that question belongs at.';
-  // Thinking-first pilot (Phase 11): pilot seats teach from THINKING +
-  // EXPRESSION files. No PREV at the desk, so the slice is selected on the
-  // visitor's question alone. THINK gets a paraphrase-only sources line
-  // (no expression file rides); TEACH and THINK & SOUND keep the desk's
-  // standing verbatim-quote rule above.
-  const pilot = thinkingPilot ? getThinkingPilot(philosopher.slug) : null;
-  const pilotEntry = pilot && hasThinkingPilot(philosopher.slug) ? pilot : null;
+  // Thinking-first files (Phase 11, live): seats carrying THINKING files
+  // teach from them — no flag, the registry decides. No PREV at the desk,
+  // so the slice is selected on the visitor's question alone.
+  const pilotEntry = hasThinkingPilot(philosopher.slug) ? getThinkingPilot(philosopher.slug) : null;
   const pilotMode = intensityToThinkMode(intensity);
   const quotes = opts?.quotes ?? true;
   const persona = pilotEntry

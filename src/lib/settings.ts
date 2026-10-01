@@ -69,11 +69,6 @@ export interface CabinetSettings {
    * HTML source pages server-side and inject top passages. Default on;
    * delete lib/extract.ts + functions/extract.js + this flag to fully undo. */
   grounding: boolean;
-  /** Thinking-first pilot (Phase 11): pilot seats (Bookchin, Bloch, Spinoza)
-   * render from THINKING + EXPRESSION files instead of the style essences.
-   * Default on (rolled out for pilot seats on owner call Sep 30 2026);
-   * `?thinking=1` forces it on regardless. Rollback: flip to false. */
-  thinkingPilot: boolean;
   /** Cabinet-mechanics toggles (Sep 30 2026 — every state stamps the export).
    * Defaults = first test setup: anonymous first, best guess elsewhere. */
   anonThinker: boolean;
@@ -103,7 +98,6 @@ export const DEFAULT_SETTINGS: CabinetSettings = {
   alibabaModel: DEFAULT_ALIBABA_MODEL,
   economy: 'full',
   grounding: true,
-  thinkingPilot: true,
   anonThinker: true,
   thinkerRelations: true,
   sceneOn: true,
@@ -151,7 +145,6 @@ export function loadSettings(): CabinetSettings {
         : 'qwen/qwen3.7-plus',
       economy: parsed.economy === 'efficient' ? 'efficient' : 'full',
       grounding: parsed.grounding === true,
-      thinkingPilot: parsed.thinkingPilot !== false,
       anonThinker: parsed.anonThinker !== false,
       thinkerRelations: parsed.thinkerRelations !== false,
       sceneOn: parsed.sceneOn !== false,
