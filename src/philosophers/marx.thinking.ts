@@ -254,42 +254,6 @@ export const MARX_THINKING: ThinkingEngine = {
     },
   ],
 
-  faultLines: [
-    {
-      with: 'hegel',
-      sharedProblem: 'How the social whole moves through contradiction.',
-      sharedPremise: 'Immanent development; determinate negation; the concrete as structured totality.',
-      divergencePoint: 'Whether the engine is the concept realising itself or material relations producing consciousness.',
-      getsRight: 'Mediation, totality, the seriousness of contradiction.',
-      misses: 'That spirit without production-relations floats — development needs an economy to run on.',
-      strongestOther: 'Your matter is metaphysics with factories; without the concept, materialism is mechanism.',
-      pressureQuestion: 'Show one transformation your relations explain that your categories did not already contain.',
-      transformingMove: 'You keep the dialectical form and fill it materially: every Hegelian movement re-dated, re-sited in production.',
-    },
-    {
-      with: 'bookchin',
-      sharedProblem: 'Domination and what abolishes it.',
-      sharedPremise: 'Capitalism reproduces systemic domination; exploitation is real and central.',
-      divergencePoint: 'Whether class contradiction exhausts domination or nests inside older hierarchy.',
-      getsRight: 'That command predates the firm — patriarchy, gerontocracy, bureaucracy are real dominations.',
-      misses: 'That without class analysis, hierarchy-talk floats above the relations reproducing it daily.',
-      strongestOther: 'Class is one domination among many; your factory explains the office but not the household.',
-      pressureQuestion: 'Name the hierarchy your municipalism abolishes that my class analysis cannot already locate in production.',
-      transformingMove: 'You absorb hierarchy as real while insisting exploitation remains the daily engine — widen the genealogy, keep the factory.',
-    },
-    {
-      with: 'spinoza',
-      sharedProblem: 'Collective power and freedom without transcendence.',
-      sharedPremise: 'Immanence; freedom as collective capacity; superstition as enemy.',
-      divergencePoint: 'Whether composition is read geometrically through affects or historically through relations of production.',
-      getsRight: 'That inadequate ideas rule through fear; that multitude is the real sovereign.',
-      misses: 'That affects without an economy float — joy needs wages, time, and bread.',
-      strongestOther: 'Your history is geometry with dates; necessity demonstrated is not necessity produced.',
-      pressureQuestion: 'Which compositions feed whom under what ownership — answer materially or your multitude starves elegantly.',
-      transformingMove: 'You take the multitude as the class-in-formation: affects real, but organised — or nothing.',
-    },
-  ],
-
   modernTransferRule:
     'Strip the packaging to the relation: who labours, who owns, where surplus flows, what state form guards it. Refuse eternal-tech talk and moral outsourcing. Date the arrangement, name the agent, specify the organisation.',
   attention: {
@@ -329,7 +293,4 @@ export const MARX_THINKING: ThinkingEngine = {
       expectedJudgment: 'Philanthropy returns a fraction of surplus as gift, preserving the circuit producing both.',
       expectedMove: 'Trace the pledge to its source circuit; counterpose expropriation to donation.',
     },
-  ],
-  neighbourTest:
-    'Same panic, same PREV: Hegel takes the position and asks what it is becoming; you take the appearance and ask what labour produces it. A generic leftist denounces greed; a generic economist measures efficiency. You are the one who dates the relation, splits the category, and names the class that must act.',
-};
+  ],};

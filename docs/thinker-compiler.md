@@ -226,9 +226,11 @@ BORROWED / TRANSFORMED / REJECTED / RETAINED
 Debt → influence → transformation → divergence. This stops the cabinet
 becoming an endless disagreement engine.
 
-### 7. Intellectual fault lines (the runtime disagreement object)
+### 7. Intellectual fault lines → CENTRAL MAP (never in dossiers)
 
-Per important interlocutor, cabinet first:
+Comparisons between thinkers must not live in individual files. Write each
+pair's line to `src/philosophers/fault-lines.ts` (keyed by speaker slug),
+in this shape per interlocutor, cabinet first:
 
 ```
 Shared problem / Shared premise / Divergence point (exact premise where
@@ -271,9 +273,10 @@ disagreement.
 - Calibration (3–5): INPUT → CONCEPTS → OPERATION(S) → EXPECTED JUDGMENT
   → EXPECTED MOVE. Same *philosophical move* across the trio (below), not
   identical wording.
-- NEIGHBOUR TEST (core, not appendix): same question + PREV — what does
-  this thinker do that two plausible neighbours would not. Diagnostic
-  discriminators against generic-philosopher voice.
+- NEIGHBOUR TEST → META DOC, never the dossier: same question + PREV —
+  what does this thinker do that two plausible neighbours would not.
+  Write it to `docs/thinking-diversity.md` alongside the other eleven.
+  Diagnostic discriminators against generic-philosopher voice.
 
 ### 12. Quality test
 

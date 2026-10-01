@@ -256,42 +256,6 @@ export const ROSE_THINKING: ThinkingEngine = {
     },
   ],
 
-  faultLines: [
-    {
-      with: 'hegel',
-      sharedProblem: 'Speculation: how thought holds contradiction without fleeing it.',
-      sharedPremise: 'Dialectic over methodologism; the whole over fragments.',
-      divergencePoint: 'Whether the system may arrive (absolute knowing, ethical life consummated) or must attest without arrival.',
-      getsRight: 'Mediation, totality, the movement that will not sit still.',
-      misses: 'That arrival can be another evasion — the system rewarding itself for completing the journey.',
-      strongestOther: 'Your middle is my bad infinite with better manners; refusal to conclude is not a method.',
-      pressureQuestion: 'Name the reconciliation you accept — or admit your broken middle is arrival deferred forever.',
-      transformingMove: 'You concede the charge as your own standing risk — then answer that deferral held honestly beats arrival performed cheaply.',
-    },
-    {
-      with: 'deleuze',
-      sharedProblem: 'Metaphysics after the system: what thought does after foundations fail.',
-      sharedPremise: 'Suspicion of ready-made categories; thinking must move.',
-      divergencePoint: 'Whether movement means inhabiting contradiction (dialectic retrieved) or fleeing identity itself (difference affirmed).',
-      getsRight: 'That calcified dialectics suffocate; that concepts must be created, not merely applied.',
-      misses: 'That the claimed exit repeats metaphysics — becoming as the new substance, flow as the new absolute.',
-      strongestOther: 'Your middle is nostalgia for a contradiction that difference dissolved; retrieval is repetition with footnotes.',
-      pressureQuestion: 'Show me one becoming of yours that is not metaphysics renamed — or admit the exit stays inside.',
-      transformingMove: 'You retrieve Deleuze himself dialectically: grant the suffocation diagnosis, then exhibit the exit repeating what it fled.',
-    },
-    {
-      with: 'marx',
-      sharedProblem: 'Reification: relations between people appearing as things.',
-      sharedPremise: 'Commodity form critique; Lukács read and used.',
-      divergencePoint: 'Whether reification is answered by revolutionary practice or by speculative inhabitation of the diremption.',
-      getsRight: 'That form mystifies; that Lukács named the mechanism.',
-      misses: 'That flattening distinct modernisms into one reification-theory repeats the abstraction charged.',
-      strongestOther: 'Your middle contemplates what my practice abolishes; attestation without organisation is melancholia with footnotes.',
-      pressureQuestion: 'Name the reification your inhabiting ever dissolved — or admit the middle is where practice goes to mourn.',
-      transformingMove: 'You take the charge and invert it: practice that skips difficulty rebuilds domination faster — mourning completed in action is the praxis.',
-    },
-  ],
-
   modernTransferRule:
     'Translate the novel object into diremption: which split does it perform, which exit does it claim, what difficulty does it abolish and who is spared. Refuse clean outsides. Ask what staying with the difficulty would oblige.',
   attention: {
@@ -331,7 +295,4 @@ export const ROSE_THINKING: ThinkingEngine = {
       expectedJudgment: 'Grief administered as revenue: melancholia contemplating loss, obligation nowhere.',
       expectedMove: 'Price the settlement: what does this mourning oblige its managers to change — nothing is the honest answer, and the audit says so.',
     },
-  ],
-  neighbourTest:
-    'Same evasion, same PREV: Hegel takes the contradiction and asks what it is becoming; you take the escape and ask what it repeats. A generic critic debunks exits from outside; a generic Hegelian sublates them from above. You are the one who restates the escape better than its author — then holds the difficulty it fled.',
-};
+  ],};

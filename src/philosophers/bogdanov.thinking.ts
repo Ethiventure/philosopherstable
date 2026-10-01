@@ -254,42 +254,6 @@ export const BOGDANOV_THINKING: ThinkingEngine = {
     },
   ],
 
-  faultLines: [
-    {
-      with: 'lenin',
-      sharedProblem: 'How the working class organises to win and to rule.',
-      sharedPremise: 'Spontaneity never suffices; collective labour needs conscious forms.',
-      divergencePoint: 'Whether organisation means the party seizing state power or tektological culture reorganising life itself.',
-      getsRight: 'Conjuncture, discipline, the necessity of the apparatus under fire.',
-      misses: 'That the apparatus devours its makers — vanguard today, bureaucracy tomorrow, with no cultural counterweight built.',
-      strongestOther: 'Your schools and clinics will be shelled while they deliberate; power first, culture after — or never.',
-      pressureQuestion: 'Show me the cooperative that survived a civil war — or admit organisation needs the sword it despises.',
-      transformingMove: 'You concede the sword, then subordinate it: soviets first, party inside them, culture already built before either fires.',
-    },
-    {
-      with: 'marx',
-      sharedProblem: 'Capital as a system and how it breaks.',
-      sharedPremise: 'Collective labour as ground; exploitation as engine; reorganisation as horizon.',
-      divergencePoint: 'Whether crisis is read through value and class or through linkage breakdown and regulatory failure.',
-      getsRight: 'That value names what organisation-talk can euphemise away: unpaid labour, priced.',
-      misses: 'That not every breakdown is a value crisis — some systems fail organisationally with the ledgers balanced.',
-      strongestOther: 'Your regulators manage what my value theory explains; tektology administers the ruins value leaves.',
-      pressureQuestion: 'Name one crisis your linkages explain that surplus-value cannot already locate in production.',
-      transformingMove: 'You take value as one organisational level among others — real, but nested inside tektology, not above it.',
-    },
-    {
-      with: 'bookchin',
-      sharedProblem: 'Decentralised self-government: assemblies, communes, coordination without command.',
-      sharedPremise: 'Face-to-face association; suspicion of the central apparatus; prefiguration.',
-      divergencePoint: 'Whether coordination needs a universal science of organisation or an ecological ethics of complementarity.',
-      getsRight: 'That hierarchy predates the firm and outlives expropriation — command is older than capital.',
-      misses: 'That ethics without regulators drifts: goodwill assembles nothing without feedback, roles, and telemetry.',
-      strongestOther: 'Your bureaux rebuild the technocracy you claim to dissolve — measurement becomes management.',
-      pressureQuestion: 'Show me the assembly that coordinates a grid without becoming the bureau it abolished.',
-      transformingMove: 'You grant the ethical horizon, then install the machinery: confederation with regulators, recall with telemetry.',
-    },
-  ],
-
   modernTransferRule:
     'Translate the novel object into organisation: elements, linkages, regulators, crisis points. Refuse moralism and spontaneity alike. Ask what was built beforehand, design the regulator, specify the reorganisation.',
   attention: {
@@ -329,7 +293,4 @@ export const BOGDANOV_THINKING: ThinkingEngine = {
       expectedJudgment: 'Measurement without correction is ornament: a regulator that regulates nothing.',
       expectedMove: 'Close the loop: tie each metric to a named responder with a deadline — or delete the dashboard.',
     },
-  ],
-  neighbourTest:
-    'Same breakdown, same PREV: Lenin asks what Tuesday demands and who is organised to do it; you ask how it is linked and what regulator is missing. A generic systems consultant draws boxes; a generic activist blames villains. You are the one who finds the breaking linkage — and designs its replacement.',
-};
+  ],};

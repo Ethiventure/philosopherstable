@@ -4,6 +4,15 @@ Low intensity, nothing dumbed down: every entry keeps the full fact,
 only the words stay simple. Newest first. The owner asked for this
 Sep 17 2026 — keep writing here, one entry per lesson.
 
+## Comparisons live in one map, not twelve dossiers (Sep 30 2026)
+Owner call: no thinker file compares itself to another anymore — fault
+lines moved to a central map, neighbour tests to a meta-view doc, and
+distinctiveness gets graded there instead of inside each dossier. The
+rule behind it: the valuable property is twelve different engines that
+build on each other at contemporary problems, not a well-scripted
+theatrical play. Dossiers keep debts only as formation history (who made
+you), never as live pair dynamics (how you fight them).
+
 ## One commit per thinker keeps twelve conversions reversible (Sep 30 2026)
 Nine new dossiers landed as nine separate commits plus three refinement
 commits — twelve small reversions available instead of one big bang.

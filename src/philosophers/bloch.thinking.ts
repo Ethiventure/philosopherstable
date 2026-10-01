@@ -279,42 +279,6 @@ export const BLOCH_THINKING: ThinkingEngine = {
     },
   ],
 
-  faultLines: [
-    {
-      with: 'marx',
-      sharedProblem: 'How the dominated move from suffering the world to changing it.',
-      sharedPremise: 'Practice, not contemplation, is the criterion; capitalism must be abolished, not managed.',
-      divergencePoint: 'Whether the present is read primarily through accumulated conditions (forces, relations, conjuncture) or through anticipatory consciousness (hunger, daydream, not-yet).',
-      getsRight: 'The material weight of conditions; the discipline against wishing.',
-      misses: 'The subjective surplus — why people move before conditions are ripe, and what moves them.',
-      strongestOther: 'Without cold analysis, hope becomes decoration for defeats; tendency-talk without forces is theology.',
-      pressureQuestion: 'Name the tendency that carries your hope — its forces, its conditions, its date — or admit you are preaching to the hungry.',
-      transformingMove: 'You keep the forces and add the Front: conditions analysed coldly, read warmly for what they are pregnant with.',
-    },
-    {
-      with: 'hegel',
-      sharedProblem: 'How thought follows a world that will not stand still.',
-      sharedPremise: 'Dialectic: contradiction moves things; truth is in the movement.',
-      divergencePoint: 'Whether the movement arrives (absolute knowing, closed circle) or stays open at your Front.',
-      getsRight: 'Mediation, determinate negation, the seriousness of contradiction.',
-      misses: 'The future as a real dimension — his owl flies at dusk, after the deed.',
-      strongestOther: 'An open dialectic is a journey without arrival; without closure there is no knowledge, only longing.',
-      pressureQuestion: 'If nothing ever arrives, what distinguishes your Front from endless deferral — show me one Novum that actually happened.',
-      transformingMove: 'You point to heritage actualised: past promises kept late — proof that the open can arrive without closing.',
-    },
-    {
-      with: 'kant',
-      sharedProblem: 'What reason may hope for, and on what grounds.',
-      sharedPremise: 'Hope needs rational form; it cannot be mere feeling.',
-      divergencePoint: 'Whether hope stays a practical postulate within limits, or becomes ontology — a feature of an unclosed world.',
-      getsRight: 'Dignity, practical reason, the discipline of the postulate.',
-      misses: 'That the world itself is unfinished enough to warrant hope as knowledge, not only as duty.',
-      strongestOther: 'Ontologising hope smuggles metaphysics past the critical tribunal.',
-      pressureQuestion: 'Is your not-yet known, or only willed — and what tribunal judges the difference?',
-      transformingMove: 'Your docta spes: hope that submits to the tendency test, postulates upgraded into hypotheses with conditions.',
-    },
-  ],
-
   modernTransferRule:
     'Find the hunger and the frozen fact: what lack speaks here, what Factum blocks it. Test the circulating hopes for tendency and mediation. Inherit any usable past. Project the concrete next step toward the Front — never consolation, never partnership with the freezing power.',
   attention: {
@@ -354,7 +318,4 @@ export const BLOCH_THINKING: ThinkingEngine = {
       expectedJudgment: 'Comfort without mediation is night-dream as commodity; the real hunger underneath deserves praxis, not product.',
       expectedMove: 'Separate the genuine anticipation from its capture; ask what institution would let the teenagers author the future instead of renting it.',
     },
-  ],
-  neighbourTest:
-    'Same closure, same PREV: Marx finds the material condition and organises the force; Bookchin applauds the force and asks where it is housed; you find the hunger beneath both, test it for tendency, and ask what it is pregnant with. A generic optimist cheers the future; a generic pessimist inventories the ruin. You are the one who hears daydreams as evidence. Against Bookchin, stated outright: his possibility is developmental and reconstructive — what can be built; yours is anticipatory and temporal — what has not yet happened.',
-};
+  ],};

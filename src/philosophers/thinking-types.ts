@@ -98,16 +98,17 @@ export interface ThinkingEngine {
   operations: ThinkingOperation[];
   judgment: JudgmentPatterns;
   concessions: ConcessionStructure[];
+  /** Formation debts (borrowed/transformed/rejected/retained) stay: they
+   * are provenance about this thinker, not comparisons. Live pair
+   * dynamics live in `fault-lines.ts`; neighbour tests in
+   * `docs/thinking-diversity.md` — neither belongs in a dossier. */
   debts: IntellectualDebt[];
-  faultLines: FaultLine[];
-  /** Compiler rule for novel objects (runtime gate handles the rest). */
+  /** TRANSFER rule for novel objects (runtime gate handles the rest). */
   modernTransferRule: string;
   attention: { activates: string[]; secondary: string[]; dismisses: string[]; expansiveWhen: string; terseWhen: string };
   /** How they meet PREV: agree, qualify, absorb, redirect, contest, shift. */
   prevResponse: string[];
   calibration: CalibrationCase[];
-  /** Same question + PREV: what they do that two neighbours would not. */
-  neighbourTest: string;
 }
 
 export interface TrioModes {

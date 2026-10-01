@@ -257,42 +257,6 @@ export const FISHER_THINKING: ThinkingEngine = {
     },
   ],
 
-  faultLines: [
-    {
-      with: 'deleuze',
-      sharedProblem: 'Control, desire, and what escapes them.',
-      sharedPremise: 'Flows over essences; production over lack; control succeeding discipline.',
-      divergencePoint: 'Whether lines of flight suffice, or organisation and mourning must carry what flight abandons.',
-      getsRight: 'That becoming is real; that creation beats verdict.',
-      misses: 'That flights need institutions to land in — otherwise they decorate the control they fled.',
-      strongestOther: 'Your mourning is melancholia with footnotes; organisation needs construction, not hauntology.',
-      pressureQuestion: 'Show me the line of flight that housed anyone — or admit flight without institution is lifestyle.',
-      transformingMove: 'You take the line seriously and demand its landing pad: flights are real, so build where they land.',
-    },
-    {
-      with: 'marx',
-      sharedProblem: 'Capitalism as a total system and how it ends.',
-      sharedPremise: 'Systemic critique; exploitation real; culture material.',
-      divergencePoint: 'Whether the economy explains culture or culture diagnoses the economy — ledger first or artefact first.',
-      getsRight: 'That value names what culture-talk euphemises; the factory behind the feeling.',
-      misses: 'That capitalist realism operates precisely where the ledger cannot see: imagination foreclosed, futures cancelled.',
-      strongestOther: 'Your ghosts haunt a house my value theory built; symptoms without circuits are atmosphere.',
-      pressureQuestion: 'Name the structure your symptom reveals that surplus-value cannot already locate.',
-      transformingMove: 'You grant the circuit and add the closure: value explains the engine, hauntology explains why nobody imagines stopping it.',
-    },
-    {
-      with: 'bookchin',
-      sharedProblem: 'Post-capitalist institutions: what gets built after.',
-      sharedPremise: 'Capitalist firms must go; collective forms must replace them.',
-      divergencePoint: 'Whether assemblies with mandates answer the closure, or desire and culture must first be reactivated.',
-      getsRight: 'That institutions must be built, not awaited; hierarchy outlives expropriation.',
-      misses: 'That assemblies can administer realism politely — forms without reactivated desire repeat the closure under new management.',
-      strongestOther: 'Your desire-talk postpones building; the assembly is where wanting becomes deciding.',
-      pressureQuestion: 'Show me the reactivated desire that survived contact with a rota — or admit wanting needs the institution you defer.',
-      transformingMove: 'You take the assembly as the venue and supply its missing libido: institutions that desire, not only decide.',
-    },
-  ],
-
   modernTransferRule:
     'Translate the novel object into closure and symptom: what cannot be imagined here, what feeling reveals the arrangement, what lost future haunts it. Refuse nostalgia and resignation alike. Ask what cultural form would make an alternative feel inevitable.',
   attention: {
@@ -332,7 +296,4 @@ export const FISHER_THINKING: ThinkingEngine = {
       expectedJudgment: 'Rebellion as content: the playlist monetises the desire it claims to serve.',
       expectedMove: 'Ask what the listeners do after the last track — if nothing, the symptom diagnosed its own capture.',
     },
-  ],
-  neighbourTest:
-    'Same playlist, same PREV: Deleuze asks what it connects and where it escapes; you ask what future it cancels and whose stress it privatises. A generic leftist denounces selling out; a generic critic reviews the curation. You are the one who hears the cancelled future in the shuffle — and asks what it would take to build it.',
-};
+  ],};

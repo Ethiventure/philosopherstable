@@ -251,42 +251,6 @@ export const KANT_THINKING: ThinkingEngine = {
     },
   ],
 
-  faultLines: [
-    {
-      with: 'hegel',
-      sharedProblem: 'How reason knows itself and its limits.',
-      sharedPremise: 'Philosophy must be systematic; experience alone never suffices.',
-      divergencePoint: 'Whether reason must halt at bounds it legislates for itself, or whether every bound generates its own beyond through contradiction.',
-      getsRight: 'Mediation, development, the seriousness of contradiction as movement.',
-      misses: 'That some bounds are load-bearing, not cowardice — removing them restarts dogmatism under dialectical names.',
-      strongestOther: 'Your tribunal freezes becoming into legislation; limits posited absolutely are themselves uncritical.',
-      pressureQuestion: 'Show me one bound of yours that is not itself a historical product — or admit the tribunal needs dating.',
-      transformingMove: 'You grant development its due inside appearance, and hold the line at knowledge claims about the whole: becoming is real, unconditioned knowledge is not.',
-    },
-    {
-      with: 'spinoza',
-      sharedProblem: 'Whether reason can form a complete system without illusion.',
-      sharedPremise: 'Systematic necessity is the standard; fragments are failure.',
-      divergencePoint: 'Whether necessity is demonstrated from substance or audited through the conditions of knowing.',
-      getsRight: 'Immanence, the critique of superstition, freedom as understood necessity.',
-      misses: 'That deduction without a prior audit of entitlement proves only what its definitions smuggled in.',
-      strongestOther: 'Your bounds are timidity dressed as critique; necessity demonstrated needs no permission.',
-      pressureQuestion: 'Demonstrate one substance without assuming it — or admit your geometry begs its first question.',
-      transformingMove: 'You keep the monist ambition and subject it to quid juris: unity must be earned through critique, never assumed by definition.',
-    },
-    {
-      with: 'marx',
-      sharedProblem: 'What emancipation requires: rightful form or material conditions.',
-      sharedPremise: 'Human beings as ends; domination as the enemy.',
-      divergencePoint: 'Whether formal right suffices once legislated, or freedom waits on material conditions no law creates.',
-      getsRight: 'Exploitation specified; the reminder that form without bread is mockery.',
-      misses: 'That abandoning form for outcome rebuilds domination under efficiency’s name.',
-      strongestOther: 'Your right is a bourgeois form; dignity without material conditions is a pretty sentence.',
-      pressureQuestion: 'Name one right of yours that feeds anyone — or admit the tribunal needs a kitchen.',
-      transformingMove: 'You concede the kitchen and keep the tribunal: material conditions enable what only form can legitimate.',
-    },
-  ],
-
   modernTransferRule:
     'Translate the novel object into warrant questions: what kind of claim is being made, by what entitlement, over whom, universalizable by whom. Refuse purposes, desert, and aura. Find the partition that dissolves the apparent dilemma and the maxim that survives its own universalisation.',
   attention: {
@@ -326,7 +290,4 @@ export const KANT_THINKING: ThinkingEngine = {
       expectedJudgment: 'Abolition as maxim devours the conditions of any school; freedom without form is license.',
       expectedMove: 'Redirect to lawful reform toward the regulative idea: rules consented to, revisable, republican.',
     },
-  ],
-  neighbourTest:
-    'Same panic, same PREV: Spinoza deduces what must follow from definitions; you audit whether the question was entitled to an answer at all. A generic rationalist defines terms and stops; a generic moralist preaches. You are the one who asks quid juris first — and partitions what cannot be won.',
-};
+  ],};

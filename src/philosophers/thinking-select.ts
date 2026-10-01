@@ -10,6 +10,7 @@
  * can load it alongside the dialectic builders.
  */
 import type { FaultLine, LifeFile, ThinkerFiles, ThinkingEngine, ThinkingOperation } from './thinking-types';
+import { resolveFaultLine } from './fault-lines.ts';
 import type { StyleIntensity } from '@/types';
 import type { ExpressionModel } from './thinking-types';
 
@@ -131,7 +132,8 @@ export function selectThinkingSlice(
   // Fallback: nothing matched — first operation (the thinker's default move).
   // Entry questions always ride in the prompt regardless.
   const operations = (hits.length > 0 ? hits : scored.slice(0, 1)).map((s) => s.op);
-  const faultLine = prevSlug ? engine.faultLines.find((f) => f.with === prevSlug) ?? null : null;
+  // Pair dynamics resolve from the central map, never from dossiers.
+  const faultLine = resolveFaultLine(engine.slug, prevSlug);
   return { operations, faultLine };
 }
 

@@ -252,42 +252,6 @@ export const HEGEL_THINKING: ThinkingEngine = {
     },
   ],
 
-  faultLines: [
-    {
-      with: 'marx',
-      sharedProblem: 'How the social whole moves and what drives it.',
-      sharedPremise: 'Immanent development through contradiction; the concrete as structured totality.',
-      divergencePoint: 'Whether the engine is the concept realising itself or material relations producing consciousness.',
-      getsRight: 'That ideas live inside material relations; that philosophy without economy floats.',
-      misses: 'That matter without the concept’s self-movement is just as abstract as the idealism charged — mechanism in material dress.',
-      strongestOther: 'Your spirit is capital thinking about itself; development with no mode of production is theology.',
-      pressureQuestion: 'Name the productive relations your necessity runs on — or admit the Absolute has no economy.',
-      transformingMove: 'You grant the material filling while insisting the form is logical: production is real, and its intelligibility is the concept’s own work.',
-    },
-    {
-      with: 'spinoza',
-      sharedProblem: 'Whether reason forms one complete system.',
-      sharedPremise: 'Systematic necessity; against fragments and superstition.',
-      divergencePoint: 'Whether substance completes itself as self-caused necessity or must become subject through contradiction and history.',
-      getsRight: 'Immanence without beyond; affects without moralism; the democratic blueprint.',
-      misses: 'That a substance which never becomes cannot think novelty — eternity without biography.',
-      strongestOther: 'Your becoming adds nothing but story to what necessity already contains.',
-      pressureQuestion: 'Show one novelty your system generates that your beginning did not already contain.',
-      transformingMove: 'You take substance as the true beginning — and demonstrate that beginnings prove themselves only at the end.',
-    },
-    {
-      with: 'kant',
-      sharedProblem: 'What reason may claim and where it must halt.',
-      sharedPremise: 'Systematic rigour; bounds against enthusiasm.',
-      divergencePoint: 'Whether bounds are legislated walls or moments that generate their beyond.',
-      getsRight: 'Discipline against dogmatism; the tribunal’s honest labour.',
-      misses: 'That legislated bounds freeze becoming — critique guarding the status quo of thought.',
-      strongestOther: 'Your movement smuggles uncritical metaphysics past the tribunal it claims to honour.',
-      pressureQuestion: 'Derive one bound of yours without presupposing the movement it forbids.',
-      transformingMove: 'You keep every Kantian limit as a genuine moment — then show it sublating itself the moment it is thought.',
-    },
-  ],
-
   modernTransferRule:
     'Translate the novel object into movement: what position does it take as immediate, what contradiction does it generate, what richer determination preserves it. Refuse external verdicts and brute givens. Find the whole of which it is a moment.',
   attention: {
@@ -327,7 +291,4 @@ export const HEGEL_THINKING: ThinkingEngine = {
       expectedJudgment: 'Disruption asserts immediacy — a beginning posing as result, with no account of what it preserves.',
       expectedMove: 'Ask what truth of schooling it cancels versus carries; judge it by its determinate content, not its novelty.',
     },
-  ],
-  neighbourTest:
-    'Same closure, same PREV: Kant audits whether the question was entitled to an answer; you take the answer and ask what it is becoming. A generic dialectician intones thesis-antithesis-synthesis; a generic critic debunks from outside. You are the one who lets the position fail on its own premises — then preserves what it proved.',
-};
+  ],};
