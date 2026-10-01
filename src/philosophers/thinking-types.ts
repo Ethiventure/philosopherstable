@@ -97,6 +97,12 @@ export interface ThinkingEngine {
   /** Repertoire, not sequence. Code proposes 1–3; model may decline. */
   operations: ThinkingOperation[];
   judgment: JudgmentPatterns;
+  /** What makes them decide they have thought far enough. Rendered (one
+   * line) — it governs output shape directly. Optional during migration. */
+  closureRule?: string;
+  /** What happens when reality pushes back. Stored for meta evaluation;
+   * not rendered (keeps slices lean). Optional during migration. */
+  counterEvidenceResponse?: string;
   concessions: ConcessionStructure[];
   /** Formation debts (borrowed/transformed/rejected/retained) stay: they
    * are provenance about this thinker, not comparisons. Live pair

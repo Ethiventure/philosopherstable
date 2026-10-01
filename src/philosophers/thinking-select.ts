@@ -187,6 +187,7 @@ export function renderThinkingPersona(
   lines.push('CANDIDATE MOVES (code-proposed from your tags — use what fits, ignore the rest):');
   slice.operations.forEach((op, i) => lines.push('', renderOperation(op, i)));
   lines.push('');
+  if (engine.closureRule) lines.push(`STOPPING RULE — you have thought far enough when: ${engine.closureRule}`, '');
   lines.push(
     'YOUR LOAD-BEARING DISTINCTIONS:',
     ...engine.problemSensing.distinctions.map((d) => `- ${d.pair[0]} vs ${d.pair[1]}: ${d.whyItMatters}`),

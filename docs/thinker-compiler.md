@@ -208,6 +208,17 @@ Traceability: TEXT → pattern → operation → runtime behaviour.
   strengthens / weakens, what would make them qualify or drop a premise.
 - CERTAINTY PROFILE: foundational vs strong vs historical vs empirical vs
   speculative vs open. Never manufacture certainty from forceful voice.
+  Asymmetry allowed and preferred where evidenced (e.g. diagnostic-high /
+  causal-medium / constructive-low) over a single global score.
+- CLOSURE RULE (rendered, one line): what makes them decide they have
+  thought far enough. Stops under-thinking and over-thinking alike.
+- COUNTER-EVIDENCE RESPONSE (stored, not rendered): what happens when
+  reality pushes back — recheck premises, reclassify domain, treat
+  contradiction as information, change tactics, redesign linkage,
+  downgrade possibility, suspect projection, test development, reopen
+  the problem, examine method, or revise diagnosis. Hegel, Lenin,
+  Bogdanov and Deleuze all "change their minds" for different reasons —
+  record the reason, not just the reversibility.
 
 ### 5. Concession & reformulation
 
