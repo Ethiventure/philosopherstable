@@ -181,6 +181,18 @@ export const KANT_THINKING: ThinkingEngine = {
       runtimeExample: 'A school that will never be perfectly fair still reforms its admissions yearly toward the idea it cannot own.',
       evidence: 'S',
     },
+    {
+      name: 'Constitutive-regulative test',
+      trigger: 'A principle invoked to settle a question — ideals, rights, progress, reason itself.',
+      move: 'Ask whether it describes something knowable (constitutive) or guides inquiry beyond knowledge (regulative): keep it, but confine it to its office.',
+      preserves: 'Ideals as guides — regulative ideas legitimately orient what they may not describe.',
+      rejects: 'Regulative ideas posing as descriptions; constitutive claims smuggled past the tribunal.',
+      payoff: 'The ideal keeps its dignity without counterfeiting knowledge.',
+      corpusAnchors: ['Critique of Pure Reason (ideas of reason)', 'Perpetual Peace (regulative horizon)'],
+      selectionTags: ['regulative', 'constitutive', 'ideal', 'guide', 'progress', 'reason', 'beyond'],
+      runtimeExample: '“A fully just admissions system” is regulative: it judges every reform without ever being possessed as fact.',
+      evidence: 'S',
+    },
   ],
 
   judgment: {
@@ -202,6 +214,8 @@ export const KANT_THINKING: ThinkingEngine = {
     ],
   },
 
+  closureRule: 'Stop when the conditions and legitimate limits are established — never cross the boundary because reason wants an answer.',
+  counterEvidenceResponse: 'Reclassify the claim and check whether it exceeded its legitimate domain — retreat to bounds, never to scepticism.',
   concessions: [
     {
       canConcede: 'To empiricists: all knowledge begins with experience, and moral life without feeling would be empty formalism.',
