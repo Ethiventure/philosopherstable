@@ -15,7 +15,7 @@ import { BLOCH_THINKING } from '../src/philosophers/bloch.thinking.ts';
 import { BLOCH_EXPRESSION } from '../src/philosophers/bloch.expression.ts';
 import { SPINOZA_THINKING } from '../src/philosophers/spinoza.thinking.ts';
 import { SPINOZA_EXPRESSION } from '../src/philosophers/spinoza.expression.ts';
-import { selectThinkingSlice, renderThinkingPersona, identityFor, buildExpressionText, trioFor } from '../src/philosophers/thinking-select.ts';
+import { composePersona } from '../src/philosophers/thinking-select.ts';
 import { BOOKCHIN_LIFE } from '../src/philosophers/bookchin.life.ts';
 import { BLOCH_LIFE } from '../src/philosophers/bloch.life.ts';
 import { SPINOZA_LIFE } from '../src/philosophers/spinoza.life.ts';
@@ -39,8 +39,7 @@ for (const mode of modes) {
   ]) {
     const prevSlug = engine.slug === 'bookchin' ? 'marx' : engine.slug === 'bloch' ? 'marx' : 'hegel';
     const prev = engine.slug === 'spinoza' ? 'Spirit learns discipline through negation in the school ban.' : MARX_PREV;
-    const slice = selectThinkingSlice(engine, QUESTION, prev, prevSlug);
-    const prompt = renderThinkingPersona(engine, mode, slice, buildExpressionText(expr, mode), trioFor(expr, mode), identityFor(life, anon));
+    const { system: prompt, slice } = composePersona({ thinking: engine, expression: expr, life }, QUESTION, prev, prevSlug, { mode, anonymous: anon });
     const toks = Math.round(prompt.length / 4);
     console.log(`\n--- ${engine.slug} (${prompt.length} chars ≈ ${toks} tokens) ---`);
     console.log(`ops: ${slice.operations.map((o) => o.name).join(' | ')}`);

@@ -23,7 +23,7 @@ import {
 import { supabase } from '@/lib/supabase';
 import { CORPUS_SOURCES_DATA } from '@/data/corpus-sources';
 import { DEFAULT_SEATING_ORDER, PHILOSOPHER_BY_SLUG, PHILOSOPHER_DATA, getThinkingPilot, hasThinkingPilot, renderPersona } from '@/philosophers';
-import { buildExpressionText, identityFor, intensityToThinkMode, renderThinkingPersona, selectThinkingSlice, thinkingPilotRequested, thinkingSceneOff, trioFor } from '@/philosophers/thinking-select';
+import { composePersona, intensityToThinkMode, thinkingPilotRequested, thinkingSceneOff } from '@/philosophers/thinking-select';
 import { CABINET_DEBTS, cabinetHeirs, relationshipLine, tableStancesLine } from '@/philosophers/influences';
 import {
   DEFAULT_ACCESSIBILITY,
@@ -731,10 +731,14 @@ function App() {
         if (pilotEntry) {
           const mode = intensityToThinkMode(snap.intensity);
           const slicePrev = n === 0 ? null : (collected[collected.length - 1]?.response_text ?? null);
-          const picked = selectThinkingSlice(pilotEntry.thinking, question, slicePrev, previousSpeaker?.slug ?? null);
-          const slice = snap.thinkerRelations ? picked : { ...picked, faultLine: null };
+          const { system } = composePersona(pilotEntry, question, slicePrev, previousSpeaker?.slug ?? null, {
+            mode,
+            anonymous: snap.anonThinker,
+            feelings: snap.feelingsOn,
+            relations: snap.thinkerRelations,
+          });
           if (!thinkingPilotUsedRef.current.includes(mode)) thinkingPilotUsedRef.current.push(mode);
-          return renderThinkingPersona(pilotEntry.thinking, mode, slice, buildExpressionText(pilotEntry.expression, mode, snap.feelingsOn), trioFor(pilotEntry.expression, mode), identityFor(pilotEntry.life, snap.anonThinker));
+          return system;
         }
         return renderPersona(speaker, snap.intensity);
       })();

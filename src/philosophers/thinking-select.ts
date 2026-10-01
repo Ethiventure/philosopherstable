@@ -9,7 +9,7 @@
  * Dependency-free by design (only relative type import) so node scripts
  * can load it alongside the dialectic builders.
  */
-import type { FaultLine, LifeFile, ThinkingEngine, ThinkingOperation } from './thinking-types';
+import type { FaultLine, LifeFile, ThinkerFiles, ThinkingEngine, ThinkingOperation } from './thinking-types';
 import type { StyleIntensity } from '@/types';
 import type { ExpressionModel } from './thinking-types';
 
@@ -22,6 +22,45 @@ export const ANONYMOUS_LEAD =
 /** Identity line for the prompt: the life file, or the anonymous lead. */
 export function identityFor(life: LifeFile, anonymous: boolean): string {
   return anonymous ? ANONYMOUS_LEAD : life.identity;
+}
+
+export interface ComposeOpts {
+  mode: ThinkMode;
+  anonymous?: boolean;
+  feelings?: boolean;
+  relations?: boolean;
+}
+
+/**
+ * One composer for every caller (cabinet loop, desk, demo scripts) so the
+ * file combinations behave identically everywhere:
+ * - named: THINKING + EXPRESSION + LIFE;
+ * - anonymous: same minus LIFE (identity line replaced, never omitted);
+ * - anonymous + think&sound: trio quote withheld (a verbatim quote names
+ *   its author instantly — the one combination that would unblind itself).
+ * Teach trio keeps its terms even when anonymous: terms are load-bearing,
+ * and anonymous-teach is inherently leaky — documented, not hidden.
+ */
+export function composePersona(
+  entry: ThinkerFiles,
+  question: string,
+  prevText: string | null,
+  prevSlug: string | null,
+  opts: ComposeOpts,
+): { system: string; slice: ThinkingSlice } {
+  const anonymous = opts.anonymous ?? false;
+  const picked = selectThinkingSlice(entry.thinking, question, prevText, prevSlug);
+  const slice = opts.relations === false ? { ...picked, faultLine: null } : picked;
+  const expressionText = opts.mode === 'think'
+    ? null
+    : buildExpressionText(entry.expression, opts.mode, opts.feelings ?? true);
+  const trioLine = opts.mode === 'teach' || (opts.mode === 'thinkAndSound' && !anonymous)
+    ? trioFor(entry.expression, opts.mode)
+    : opts.mode === 'think' ? trioFor(entry.expression, 'think') : null;
+  const system = renderThinkingPersona(
+    entry.thinking, opts.mode, slice, expressionText, trioLine, identityFor(entry.life, anonymous),
+  );
+  return { system, slice };
 }
 
 export type ThinkMode = 'think' | 'teach' | 'thinkAndSound';

@@ -12,7 +12,7 @@
  * links: `groundableSource` resolves per-thinker, and nothing else is passed.
  */
 import { getThinkingPilot, hasThinkingPilot, renderPersona } from '@/philosophers';
-import { buildExpressionText, identityFor, intensityToThinkMode, renderThinkingPersona, selectThinkingSlice, trioFor } from '@/philosophers/thinking-select';
+import { composePersona, intensityToThinkMode } from '@/philosophers/thinking-select';
 import { generateTextDeepInfra } from '@/lib/deepinfra';
 import { generateTextGroq } from '@/lib/groq';
 import { generateTextOpenRouter } from '@/lib/openrouter';
@@ -57,18 +57,14 @@ export function buildServiceSystemPrompt(philosopher: Philosopher, intensity: St
   const pilot = thinkingPilot ? getThinkingPilot(philosopher.slug) : null;
   const pilotEntry = pilot && hasThinkingPilot(philosopher.slug) ? pilot : null;
   const pilotMode = intensityToThinkMode(intensity);
-  const anonymous = opts?.anonymous ?? false;
-  const feelings = opts?.feelings ?? true;
   const quotes = opts?.quotes ?? true;
   const persona = pilotEntry
-    ? renderThinkingPersona(
-      pilotEntry.thinking,
-      pilotMode,
-      selectThinkingSlice(pilotEntry.thinking, question, null, null),
-      buildExpressionText(pilotEntry.expression, pilotMode, feelings),
-      trioFor(pilotEntry.expression, pilotMode),
-      identityFor(pilotEntry.life, anonymous),
-    )
+    ? composePersona(pilotEntry, question, null, null, {
+      mode: pilotMode,
+      anonymous: opts?.anonymous ?? false,
+      feelings: opts?.feelings ?? true,
+      relations: true,
+    }).system
     : renderPersona(philosopher, intensity);
   const sources = pilotEntry && (pilotMode === 'think' || !quotes)
     ? 'SOURCES, honestly: passages headed SEARCHED PASSAGES below are the only text you actually searched — read them for ideas and describe them in your own words, always citing [n]; never lift distinctive words verbatim. Otherwise your answer comes from your thinking file: say “on my account” rather than implying you re-read the books. Your links are the only ones you can search — never cite, quote, or claim another thinker’s works; if asked about them, answer from your own framework and say whose desk that question belongs at.'

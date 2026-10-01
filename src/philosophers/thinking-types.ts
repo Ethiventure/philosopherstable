@@ -122,6 +122,17 @@ export interface TrioModes {
 }
 
 /**
+ * The three files travel as one: thinking + expression + life. Named modes
+ * need all three; anonymous mode withholds life only. Life never ships
+ * alone — there is no mode that renders a name without its machinery.
+ */
+export interface ThinkerFiles {
+  thinking: ThinkingEngine;
+  expression: ExpressionModel;
+  life: LifeFile;
+}
+
+/**
  * File 2 of the three-file split: who the thinker is. The ONLY file the
  * anonymous mode withholds. Formative facts live here with their reveal
  * (what each explains about the thinking), never as trivia.
