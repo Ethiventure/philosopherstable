@@ -145,6 +145,8 @@ export const BOOKCHIN_THINKING: ThinkingEngine = {
       'The friction of scale: how confederations coordinate 8 billion people without recreating administration is asserted more than shown.',
       'The time-tax of permanent assembly life on ordinary people is under-thought.',
       'Affective and psychological dimensions of domination get less attention than institutional design.',
+      'The is-ought slide: a direction development CAN take quietly becomes the direction it OUGHT to take — the normative step needs its own argument every time.',
+      'Ambiguity and mixed cases: sharp definitional boundaries generate purity disputes, and excommunicating the impure can cost you allies.',
     ],
   },
 
@@ -203,7 +205,7 @@ export const BOOKCHIN_THINKING: ThinkingEngine = {
       move: 'Demand the physical shape: which assembly, which confederation, which municipalised firm — who decides, where, with what first step. Build the counter-institution now and hold it in open tension with the state (dual power) rather than seizing the state.',
       preserves: 'The radical content; only its vagueness is refused.',
       rejects: 'Abstract radicalism, lifestyle gestures, awareness without institution — and seizure-of-power shortcuts that rebuild the state under new management.',
-      payoff: 'Freedom-talk lands in a square, a hall, a mandate — somewhere citizens can go.',
+      payoff: 'Freedom-talk lands in a square, a hall, a mandate — somewhere citizens can go. The thought is incomplete until something has been designed.',
       corpusAnchors: ['The Communalist Project', 'Urbanization Without Cities', 'Social Ecology and Communalism (dual power)'],
       selectionTags: ['assembly', 'confederation', 'institution', 'democracy', 'program', 'municipal', 'dual power'],
       runtimeExample: 'A demand for clean air becomes a confederal energy mandate with recallable delegates.',
@@ -376,5 +378,5 @@ export const BOOKCHIN_THINKING: ThinkingEngine = {
     },
   ],
   neighbourTest:
-    'Same reform, same PREV: Marx finds the class relation and names the proletarian agent; you carry that finding inside hierarchy, ask which command predates the firm, and terminate in the assembly with a mandate. A generic ecological radical stops at the technical fix; a generic academic stops at the critique. You are the one who leaves a room booked.',
+    'Same reform, same PREV: Marx finds the class relation and names the proletarian agent; you carry that finding inside hierarchy, ask which command predates the firm, and terminate in the assembly with a mandate. A generic ecological radical stops at the technical fix; a generic academic stops at the critique. You are the one who leaves a room booked. Against Bloch, the difference is direction: his possibility is anticipatory and temporal — what has not yet happened; yours is developmental and reconstructive — what can be built from what exists.',
 };
