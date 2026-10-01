@@ -15,7 +15,10 @@ import { BLOCH_THINKING } from '../src/philosophers/bloch.thinking.ts';
 import { BLOCH_EXPRESSION } from '../src/philosophers/bloch.expression.ts';
 import { SPINOZA_THINKING } from '../src/philosophers/spinoza.thinking.ts';
 import { SPINOZA_EXPRESSION } from '../src/philosophers/spinoza.expression.ts';
-import { selectThinkingSlice, renderThinkingPersona } from '../src/philosophers/thinking-select.ts';
+import { selectThinkingSlice, renderThinkingPersona, identityFor, buildExpressionText, trioFor } from '../src/philosophers/thinking-select.ts';
+import { BOOKCHIN_LIFE } from '../src/philosophers/bookchin.life.ts';
+import { BLOCH_LIFE } from '../src/philosophers/bloch.life.ts';
+import { SPINOZA_LIFE } from '../src/philosophers/spinoza.life.ts';
 import { buildPilotTurnInstruction } from '../src/lib/dialectic/prompts.ts';
 
 const QUESTION =
@@ -25,32 +28,19 @@ const MARX_PREV =
 
 const rawMode = process.argv.find((a) => a.startsWith('--mode'))?.split('=')[1] ?? 'think';
 const modes = rawMode === 'all' ? ['think', 'teach', 'thinkAndSound'] : [rawMode];
-
-const trioFor = (expr, mode) =>
-  mode === 'think' ? expr.trio.think : mode === 'teach' ? expr.trio.teach : expr.trio.thinkAndSound;
-
-const exprTextFor = (slug, expr, mode) => {
-  if (mode === 'think') return null;
-  if (mode === 'teach') return `YOUR VOICE (teach — full terms, every term explained): ${expr.sentenceBehaviour}`;
-  return [
-    `YOUR VOICE: ${expr.movement}`,
-    expr.sentenceBehaviour,
-    `Temper: ${expr.temper.join(' / ')}`,
-    `Core terms (use only where the concept works): ${expr.vocabulary.core.join(', ')}.`,
-  ].join('\n');
-};
+const anon = process.argv.includes('--anon');
 
 for (const mode of modes) {
-  console.log(`\n######## MODE: ${mode} ########`);
-  for (const [engine, expr] of [
-    [BOOKCHIN_THINKING, BOOKCHIN_EXPRESSION],
-    [BLOCH_THINKING, BLOCH_EXPRESSION],
-    [SPINOZA_THINKING, SPINOZA_EXPRESSION],
+  console.log(`\n######## MODE: ${mode}${anon ? ' (anonymous)' : ''} ########`);
+  for (const [engine, expr, life] of [
+    [BOOKCHIN_THINKING, BOOKCHIN_EXPRESSION, BOOKCHIN_LIFE],
+    [BLOCH_THINKING, BLOCH_EXPRESSION, BLOCH_LIFE],
+    [SPINOZA_THINKING, SPINOZA_EXPRESSION, SPINOZA_LIFE],
   ]) {
     const prevSlug = engine.slug === 'bookchin' ? 'marx' : engine.slug === 'bloch' ? 'marx' : 'hegel';
     const prev = engine.slug === 'spinoza' ? 'Spirit learns discipline through negation in the school ban.' : MARX_PREV;
     const slice = selectThinkingSlice(engine, QUESTION, prev, prevSlug);
-    const prompt = renderThinkingPersona(engine, mode, slice, exprTextFor(engine.slug, expr, mode), trioFor(expr, mode));
+    const prompt = renderThinkingPersona(engine, mode, slice, buildExpressionText(expr, mode), trioFor(expr, mode), identityFor(life, anon));
     const toks = Math.round(prompt.length / 4);
     console.log(`\n--- ${engine.slug} (${prompt.length} chars ≈ ${toks} tokens) ---`);
     console.log(`ops: ${slice.operations.map((o) => o.name).join(' | ')}`);

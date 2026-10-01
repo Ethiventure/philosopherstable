@@ -90,9 +90,7 @@ export interface CalibrationCase {
 
 export interface ThinkingEngine {
   slug: string;
-  /** §0: name, dates, period, mature position, boundary — facts allowed. */
-  identity: string;
-  historicalBoundary: string;
+  /** Identity lives in the LIFE file, never here — anonymous mode drops it. */
   /** §1: compact FOUNDATION → CONSEQUENCE → THINKING EFFECT → LIMIT. */
   architecture: { domain: string; foundation: string; consequence: string; thinkingEffect: string; limit: string; weight: 'CORE' | 'SUPPORTING' | 'INTERPRETIVE' }[];
   problemSensing: ProblemSensing;
@@ -121,6 +119,18 @@ export interface TrioModes {
   thinkAndSound: string;
   /** Provenance of the thinkAndSound quote (title + section, verified). */
   anchorSource: string | null;
+}
+
+/**
+ * File 2 of the three-file split: who the thinker is. The ONLY file the
+ * anonymous mode withholds. Formative facts live here with their reveal
+ * (what each explains about the thinking), never as trivia.
+ */
+export interface LifeFile {
+  slug: string;
+  /** Full second-person identity (name, stations, mature position). */
+  identity: string;
+  historicalBoundary: string;
 }
 
 export interface ExpressionModel {

@@ -1,36 +1,23 @@
-# Next session — Sun Sep 27 2026
+# Next session — current tasks (rewritten Sep 30 2026)
 
-Day summary: Phase 11 pilot built end-to-end on `rebuild-thinking` —
-THINKING/EXPRESSION files (Bookchin, Bloch, Spinoza), slice renderer,
-flag wiring (settings + `?thinking=1`), lean scaffold v2026-09-20m,
-no-scene variant, echo enforcement with export marks. Two live sittings
-run (AI-tutor question); blind test 4/4 on the first batch.
+Branch `rebuild-thinking` now carries: three-file split (life files),
+anonymous-by-default pilot, 7-toggles Options drawer, interrupt &
+redirect, mode buttons, full export trail, prompt v2026-09-20o.
+Old path untouched throughout.
 
-Open problems (one line each):
-- Echo repeats verbatim across sittings (3 cases, detector works, localized
-  repair untested live) — next sitting proves or kills it.
-- Scene-vs-no-scene A/B ungraded — blind sheets A + B wait in
-  `docs/eval-sittings/`.
-- Alibaba qwen3.8-27b hit its free limit mid-test — next runs on flash or
-  shared, or 3-seat pilot-only sittings.
-- Two sitting transcripts unlogged in `docs/models-tried.md` (machine never
-  writes verdicts — owner pastes rows after grading).
-
-Carry forward (smallest first):
-- `npm run grade` a blind-sheet verdict → paste row to models-tried, ask
-  assistant for the letter reveal.
-- Rerun AI-tutor question (`?thinking=1`, usual pipe) to test echo repair;
-  read footer "echo N" + marked turns.
-- Rerun same question (`?thinking=1&scene=0`); blind-grade A vs B for
-  uncanny-valley moments; log verdict in PLAN per add-back protocol.
-- Generic control: same question, flag off, Bookchin old path (1 call).
-- Key-privacy copy: audit remaining quota wording (PLAN backlog has the
-  line numbers); Genzie seat-picker removal + room topic-change (queued).
-- Remaining 9 thinkers + Genzie THINKING/EXPRESSION (RAG-first workflow in
-  compiler) — only after pilot go/no-go.
+Do now, in order:
+1. Grade the mode rename by eye: open Settings → Options locally,
+   check buttons (Think / Teach / Think & sound), toggles with
+   explanations, interrupt box while paused.
+2. Run the anonymous-first sitting (AI-grid question, 3 pilot seats,
+   defaults as stored) — blind-grade P/Q/R, ask assistant for reveal.
+3. Flip toggles one at a time per the add-back protocol
+   (`docs/add-back-queue.md`); log each verdict in the queue table.
+4. Migrate seats 4–12 + Genzie via the RAG-first workflow (compiler) —
+   one commit + blind grade each; delete the global flag when done.
 
 Explicitly NOT (parked, no nagging):
-- Merging `rebuild-thinking` to main; old-path prompt edits; loan
-  floor-vs-cap rethink; Room Genzie changes; remaining-seat files.
+- Merging to main; old-path edits; loan rethink; remaining Netlify
+  deploy (minutes reset Oct 1 — verify the flag clears first).
 
 Everything keeps. Stop anywhere.

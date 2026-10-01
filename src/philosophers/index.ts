@@ -16,13 +16,16 @@ import { renderUniversalMechanisms } from './shared/universal-mechanisms';
 import { renderAntiWaffle } from './shared/anti-waffle';
 import { LOW_CONCEPT_RULES, LOW_OVERRIDE, LOW_PLAIN_RULES, renderLanguageLevel, renderLowStyleEssence } from './shared/low-style';
 import { FALLBACK_MEDIUM_EXAMPLE, SEAT_TRIOS } from './trios';
-import type { ExpressionModel, ThinkingEngine } from './thinking-types';
+import type { ExpressionModel, LifeFile, ThinkingEngine } from './thinking-types';
 import { BOOKCHIN_THINKING } from './bookchin.thinking';
 import { BOOKCHIN_EXPRESSION } from './bookchin.expression';
+import { BOOKCHIN_LIFE } from './bookchin.life';
 import { BLOCH_THINKING } from './bloch.thinking';
 import { BLOCH_EXPRESSION } from './bloch.expression';
+import { BLOCH_LIFE } from './bloch.life';
 import { SPINOZA_THINKING } from './spinoza.thinking';
 import { SPINOZA_EXPRESSION } from './spinoza.expression';
+import { SPINOZA_LIFE } from './spinoza.life';
 
 const DEFINITIONS: PhilosopherDefinition[] = [SPINOZA, KANT, HEGEL, MARX, LENIN, BOGDANOV, BLOCH, WEIL, BOOKCHIN, DELEUZE, ROSE, FISHER, GENZIE];
 
@@ -49,12 +52,13 @@ export const PHILOSOPHER_BY_SLUG: Record<string, Omit<Philosopher, 'id' | 'creat
 export interface ThinkingPilotEntry {
   thinking: ThinkingEngine;
   expression: ExpressionModel;
+  life: LifeFile;
 }
 
 const THINKING_PILOT: Record<string, ThinkingPilotEntry> = {
-  bookchin: { thinking: BOOKCHIN_THINKING, expression: BOOKCHIN_EXPRESSION },
-  bloch: { thinking: BLOCH_THINKING, expression: BLOCH_EXPRESSION },
-  spinoza: { thinking: SPINOZA_THINKING, expression: SPINOZA_EXPRESSION },
+  bookchin: { thinking: BOOKCHIN_THINKING, expression: BOOKCHIN_EXPRESSION, life: BOOKCHIN_LIFE },
+  bloch: { thinking: BLOCH_THINKING, expression: BLOCH_EXPRESSION, life: BLOCH_LIFE },
+  spinoza: { thinking: SPINOZA_THINKING, expression: SPINOZA_EXPRESSION, life: SPINOZA_LIFE },
 };
 
 export function hasThinkingPilot(slug: string): boolean {

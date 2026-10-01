@@ -4,6 +4,16 @@ Low intensity, nothing dumbed down: every entry keeps the full fact,
 only the words stay simple. Newest first. The owner asked for this
 Sep 17 2026 — keep writing here, one entry per lesson.
 
+## Toggles compose, surgery doesn't scale (Sep 30 2026)
+The mechanics drawer (name, relations, scene, quotation, survey,
+margins, feelings) works because each option is a file included or not —
+anonymous mode simply withholds the life file. No prompt surgery per
+option, no branches multiplying: the renderer composes from flags.
+Lesson: make every behavior a separable input and optionality becomes
+free; wire it into the prompt text and every combination costs a rewrite.
+Modes got their plain name the same day (Think/Teach/Think & sound —
+"voice style" was jargon for the same thing).
+
 ## Search for the true objective, not its prettiest proxy (Sep 30 2026)
 Outside advice said to try Gemma for its literary quality — and the
 reorder was first built to test "voice continuity", which is the wrong

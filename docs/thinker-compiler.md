@@ -18,8 +18,8 @@ thinking sounds* and is the linguistic authority only. Thinking always wins.
   never here).
 - Loans (short RAG quotes from the thinker's own books) stay as-is for now.
   Later tweak logged in PLAN, not this phase.
-- Modes (expression contracts, not intelligence levels — same underlying
-  judgment and commitments, different accessibility):
+- Modes (voice style — how the thinking is told, not how hard it is;
+  same underlying judgment and commitments at every mode):
   - **THINK** (was Low): pure reasoning — the thinking slice with no
     expression style added. Not plainer: complexity stays; linguistic tics,
     temper performance, and quotations drop out, and signature terms appear
@@ -33,10 +33,15 @@ thinking sounds* and is the linguistic authority only. Thinking always wins.
     into reading the books.
   - **THINK & SOUND** (was High): thinking dominates; style supplies
     vocabulary, rhythm, habits. Corpus quotation where appropriate.
-- Stance (what angers them, what they refuse) stays full-strength at every
-  mode; temper performance (fury, scorn performed, swearing, interjections)
-  rides only where the expression file rides — fully in THINK & SOUND,
-  sparingly in TEACH, never in THINK. No bare facts except §0
+- Feelings (owner call Sep 30): authentic emotional reactions ride in
+  file 1, tied to judgments — fury *at domination*, grief *at a lost
+  commune — never decoration beside the move. Temper-as-theatre
+  (performed swearing, interjections for show) stays out everywhere; there
+  is no separate temper toggle because stance and feeling are one thing
+  here, described neutrally as "emotional reactions". Feelings ride in
+  file 1 at every mode (they are reactions to judgments, not style);
+  THINK states them plainly, TEACH and THINK & SOUND let the voice carry
+  them. No bare facts except §0
   (below): a historical/biographical fact may appear elsewhere only when it
   has demonstrated relevance to formation, development, relationships,
   commitments, habits, or boundary.
@@ -118,11 +123,13 @@ Boundary governs attribution, not whether modern questions may be asked.
 
 ## THINKING — spec
 
-### 0. Identity + boundary (facts allowed, short)
+### 0. Identity + boundary → LIFE file (facts allowed, short)
 
-Name, dates, period, mature position, boundary, corpus boundary. Then 1–2
-formative facts, each with its reveal: what the fact explains about how
-they think AND what trace it leaves in how they write. A fact without a
+Name, dates, period, mature position, boundary, corpus boundary — then
+1–2 formative facts, each with its reveal (what each explains about how
+they think AND what trace it leaves). Ships as `{slug}.life.ts`, the ONLY
+file anonymous mode withholds. THINKING files carry no identity at all.
+A fact without a
 reveal is cut. Worked example (Bookchin): "Bronx autodidact" is not trivia —
 never passing through the academy is why he writes to be understood by
 ordinary citizens, explains every term instead of assuming it, and

@@ -9,9 +9,20 @@
  * Dependency-free by design (only relative type import) so node scripts
  * can load it alongside the dialectic builders.
  */
-import type { FaultLine, ThinkingEngine, ThinkingOperation } from './thinking-types';
+import type { FaultLine, LifeFile, ThinkingEngine, ThinkingOperation } from './thinking-types';
 import type { StyleIntensity } from '@/types';
 import type { ExpressionModel } from './thinking-types';
+
+/** Anonymous lead-in (kept here, not in thinking-types, so this module
+ * stays node-loadable without extension-ful imports): no name, no
+ * stations — the moves must identify. */
+export const ANONYMOUS_LEAD =
+  'You are one thinker among several at this table. Your name is withheld — even from you. Reason from the machinery below; never claim a name, never guess at one. The other thinkers stay named: answer them as themselves.';
+
+/** Identity line for the prompt: the life file, or the anonymous lead. */
+export function identityFor(life: LifeFile, anonymous: boolean): string {
+  return anonymous ? ANONYMOUS_LEAD : life.identity;
+}
 
 export type ThinkMode = 'think' | 'teach' | 'thinkAndSound';
 
@@ -49,14 +60,15 @@ export function trioFor(expression: ExpressionModel, mode: ThinkMode): string {
 }
 
 /** Short voice block for teach/thinkAndSound. Null in THINK mode —
- * THINK sends no expression content at all. */
-export function buildExpressionText(expression: ExpressionModel, mode: ThinkMode): string | null {
+ * THINK sends no expression content at all. With feelings off, the temper
+ * sentences drop (moves keep their verbs — feelings live in file 1). */
+export function buildExpressionText(expression: ExpressionModel, mode: ThinkMode, feelings = true): string | null {
   if (mode === 'think') return null;
   if (mode === 'teach') return `YOUR VOICE (teach — full terms, every term explained): ${expression.sentenceBehaviour}`;
   return [
     `YOUR VOICE: ${expression.movement}`,
     expression.sentenceBehaviour,
-    `Temper: ${expression.temper.join(' / ')}`,
+    ...(feelings ? [`Temper: ${expression.temper.join(' / ')}`] : []),
     `Core terms (use only where the concept works): ${expression.vocabulary.core.join(', ')}.`,
   ].join('\n');
 }
@@ -133,8 +145,9 @@ export function renderThinkingPersona(
   slice: ThinkingSlice,
   expressionText: string | null,
   trioLine: string | null,
+  identity: string,
 ): string {
-  const lines: string[] = [engine.identity, ''];
+  const lines: string[] = [identity, ''];
   lines.push(
     'YOUR FIRST QUESTIONS — ask these of any topic before anything else:',
     ...engine.problemSensing.entry.map((q) => `- ${q}`),

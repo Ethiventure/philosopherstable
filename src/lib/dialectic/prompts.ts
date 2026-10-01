@@ -37,7 +37,7 @@ export type TurnKind = 'opening' | 'critique' | 'reconstruction';
  * text change so grades stay comparable: a verdict on version C never
  * transfers silently to version D.
  */
-export const PROMPT_VERSION = '2026-09-20n';
+export const PROMPT_VERSION = '2026-09-20o';
 
 export const WORD_BUDGETS = {
   normal: { negation: 25, reformulation: 40, total: 60, opening: 40 },
@@ -335,9 +335,12 @@ interface UserMessageArgs {
   /** Which margins note heads the survey: the late one (pass-3 survey) or the
    * early one (pass-2 survey, note only). Changes the header, not the rules. */
   surveyKind?: 'late' | 'early';
+  /** Visitor interruptions injected mid-sitting (interrupt feature): newest
+   * first. The next speaker answers these before PREV. */
+  visitorRedirects?: string[];
 }
 
-export function buildUserMessage({ question, prevText, relationshipLine = null, ownPriorLines, turnInstruction, othersPriorLines = [], stockBlock = '', spentPhrases = [], intensity, surveyKind = 'late' }: UserMessageArgs): string {
+export function buildUserMessage({ question, prevText, relationshipLine = null, ownPriorLines, turnInstruction, othersPriorLines = [], stockBlock = '', spentPhrases = [], intensity, surveyKind = 'late', visitorRedirects = [] }: UserMessageArgs): string {
   const parts = [
     `QUESTION (verbatim): ${question}`,
     '',
@@ -350,6 +353,14 @@ export function buildUserMessage({ question, prevText, relationshipLine = null, 
 
   if (prevText) {
     parts.push('', `IMMEDIATE PREDECESSOR'S FULL TEXT:\n${prevText}`);
+  }
+
+  if (visitorRedirects.length > 0) {
+    parts.push(
+      '',
+      'VISITOR REDIRECTION — the visitor interrupted the debate with these remarks (newest first). Answer the newest one directly, in your own terms, before you touch PREV. A redirection never overrides your framework.',
+      ...visitorRedirects.map((line) => `- Visitor: ${line}`),
+    );
   }
 
   if (ownPriorLines.length > 0) {

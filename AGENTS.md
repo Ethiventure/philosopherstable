@@ -75,6 +75,11 @@ full edge-list fallback. Content-agnostic: substitute any entities.
   before building it, log each structural lesson in
   `docs/things-taught.md` (plain words, newest first) as it lands, and
   point at the notebook instead of re-explaining.
+- Unknown defaults are a feature, not a gap: when the best configuration
+  is undecided, separate every option so it toggles cleanly and let the
+  testing process become the app's personalisation (opinionated defaults
+  + advanced drawer, every toggle state stamped in the export). One
+  variable per test, blind grade, logged verdict — never restore by feel.
 - Beauty is a requirement: adjustments speak the design's palette and type;
   generic accessible-minimalism is a failure mode. Dark surfaces keep tested
   font/button/accent pairs — never a lone text-colour toggle.

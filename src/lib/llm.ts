@@ -210,6 +210,9 @@ const RATE_TABLE: RateRow[] = [
   // $0.03/$0.13 per 1M, 1M context. NOTE: not the same weights as
   // Alibaba qwen3.7-plus — grades never transfer across IDs.
   { match: (_p, m) => m.includes('qwen3.7-flash'), perIn: 0.03, perOut: 0.13 },
+  // Gemma paid pair, verified live via /models Sep 30 2026 (262k ctx).
+  { match: (_p, m) => m.includes('gemma-4-26b'), perIn: 0.076, perOut: 0.255 },
+  { match: (_p, m) => m.includes('gemma-4-31b'), perIn: 0.09, perOut: 0.34 },
   // Owner-supplied Sep 21 2026 (OpenRouter page): qwen3.7-plus
   // $0.32/$1.28 per 1M, 1M context — ≈$0.06/session, same weights as
   // the Alibaba value crown (host differs, grades ride along).

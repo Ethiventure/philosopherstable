@@ -12,7 +12,7 @@
  * links: `groundableSource` resolves per-thinker, and nothing else is passed.
  */
 import { getThinkingPilot, hasThinkingPilot, renderPersona } from '@/philosophers';
-import { buildExpressionText, intensityToThinkMode, renderThinkingPersona, selectThinkingSlice, trioFor } from '@/philosophers/thinking-select';
+import { buildExpressionText, identityFor, intensityToThinkMode, renderThinkingPersona, selectThinkingSlice, trioFor } from '@/philosophers/thinking-select';
 import { generateTextDeepInfra } from '@/lib/deepinfra';
 import { generateTextGroq } from '@/lib/groq';
 import { generateTextOpenRouter } from '@/lib/openrouter';
@@ -40,7 +40,7 @@ const HISTORY_EXCHANGES = 12;
  * plain, Medium natural gloss, High full voice); quoted source loans stay
  * verbatim at every level, and sequential summaries are allowed on request.
  */
-export function buildServiceSystemPrompt(philosopher: Philosopher, intensity: StyleIntensity = 'high', thinkingPilot = false, question = ''): string {
+export function buildServiceSystemPrompt(philosopher: Philosopher, intensity: StyleIntensity = 'high', thinkingPilot = false, question = '', opts?: { anonymous?: boolean; feelings?: boolean; quotes?: boolean }): string {
   const defineLine = intensity === 'low'
     ? 'Scaffold every answer in four short moves: 1) answer the question directly in your own framework, in plain everyday words; 2) translate or describe every school-term or unusual word in plain words instead of using it — where a word has no plain equal, describe what it does; 3) land one concrete 21st-century example; 4) close with one short question checking the idea landed.'
     : intensity === 'medium'
@@ -57,16 +57,20 @@ export function buildServiceSystemPrompt(philosopher: Philosopher, intensity: St
   const pilot = thinkingPilot ? getThinkingPilot(philosopher.slug) : null;
   const pilotEntry = pilot && hasThinkingPilot(philosopher.slug) ? pilot : null;
   const pilotMode = intensityToThinkMode(intensity);
+  const anonymous = opts?.anonymous ?? false;
+  const feelings = opts?.feelings ?? true;
+  const quotes = opts?.quotes ?? true;
   const persona = pilotEntry
     ? renderThinkingPersona(
       pilotEntry.thinking,
       pilotMode,
       selectThinkingSlice(pilotEntry.thinking, question, null, null),
-      buildExpressionText(pilotEntry.expression, pilotMode),
+      buildExpressionText(pilotEntry.expression, pilotMode, feelings),
       trioFor(pilotEntry.expression, pilotMode),
+      identityFor(pilotEntry.life, anonymous),
     )
     : renderPersona(philosopher, intensity);
-  const sources = pilotEntry && pilotMode === 'think'
+  const sources = pilotEntry && (pilotMode === 'think' || !quotes)
     ? 'SOURCES, honestly: passages headed SEARCHED PASSAGES below are the only text you actually searched — read them for ideas and describe them in your own words, always citing [n]; never lift distinctive words verbatim. Otherwise your answer comes from your thinking file: say “on my account” rather than implying you re-read the books. Your links are the only ones you can search — never cite, quote, or claim another thinker’s works; if asked about them, answer from your own framework and say whose desk that question belongs at.'
     : sourcesLine;
   return [
