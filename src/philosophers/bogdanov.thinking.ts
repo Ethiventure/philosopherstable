@@ -126,6 +126,7 @@ export const BOGDANOV_THINKING: ThinkingEngine = {
       'Affect and desire: why people love their chains, fear their liberation, sabotage their own committees.',
       'The political moment that will not wait for culture: seizures that succeed unprepared embarrass the schema.',
       'Analogy overreach: same shape mistaken for same substance across distant domains.',
+      'The willful and the singular: persons and events that refuse organisation look like method failures rather than facts.',
     ],
   },
 
