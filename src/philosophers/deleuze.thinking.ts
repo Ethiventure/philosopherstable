@@ -127,6 +127,7 @@ export const DELEUZE_THINKING: ThinkingEngine = {
       'Class and material interest shaping which flights are affordable to whom.',
       'Cases where identity and recognition genuinely matter and difference-talk evades them.',
       'When conceptual proliferation should stop: the point where new tools become new jargon.',
+      'Stable normative grounds and statecraft: what justifies the new assemblage and who administers it.',
     ],
   },
 
