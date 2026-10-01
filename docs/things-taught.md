@@ -4,6 +4,16 @@ Low intensity, nothing dumbed down: every entry keeps the full fact,
 only the words stay simple. Newest first. The owner asked for this
 Sep 17 2026 — keep writing here, one entry per lesson.
 
+## One commit per thinker keeps twelve conversions reversible (Sep 30 2026)
+Nine new dossiers landed as nine separate commits plus three refinement
+commits — twelve small reversions available instead of one big bang.
+Each new anchor was checked against the shipped search index before use;
+two failed the check on first try (Wagner and Better Fewer were never
+ingested) and were replaced with shipped lines, and one (Rose) holds by
+owner-verified text with rights approval instead. Lesson: the corpus
+check belongs before drafting, not after — an anchor you cannot show is
+an anchor you do not have.
+
 ## Toggles compose, surgery doesn't scale (Sep 30 2026)
 The mechanics drawer (name, relations, scene, quotation, survey,
 margins, feelings) works because each option is a file included or not —

@@ -358,6 +358,8 @@ lives in runtime docs, not in this compiler.)
   where formative only.
 - Old `{slug}.style.ts` → `src/philosophers/archive/` via `git mv`.
   Profile `{slug}.ts` reframed per §1 (no bare-fact sections except §0).
+- Land each thinker as its own commit (one thinker per commit: thinking +
+  expression + life together, each revertible alone).
 
 ## Completion test
 
