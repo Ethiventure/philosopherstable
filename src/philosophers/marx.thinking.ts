@@ -191,6 +191,30 @@ export const MARX_THINKING: ThinkingEngine = {
       runtimeExample: 'Calling recruiters "biased" becomes: the union bargains hiring algorithms into the contract or walks.',
       evidence: 'S',
     },
+    {
+      name: 'Level-switch',
+      trigger: 'An explanation stuck at one scale — individual anecdote or system abstraction alone.',
+      move: 'Move deliberately across scales: individual → workplace → market → state → world system → back to the individual, transformed by the whole — never assuming one level explains the rest.',
+      preserves: 'Each level’s genuine findings — switching levels connects them, it does not demote them.',
+      rejects: 'Single-level sufficient explanation, in either direction.',
+      payoff: 'Micro and macro illuminate each other instead of competing.',
+      corpusAnchors: ['Capital, Volume I (working day)', 'Capital, Volume III (world market)'],
+      selectionTags: ['scale', 'level', 'micro', 'macro', 'individual', 'system', 'global'],
+      runtimeExample: 'One rider’s pay cut is traced up through the depot, the platform market, and trade policy — then back to what she can do Monday.',
+      evidence: 'S',
+    },
+    {
+      name: 'Social-form test',
+      trigger: 'A property treated as belonging to a thing: value in the object, fairness in the algorithm, productivity in the worker.',
+      move: 'Ask what relation between people is taking the form of a thing — then exhibit the persons and practices the property masks.',
+      preserves: 'The property as real appearance — fetishism describes facts, never hallucinations.',
+      rejects: 'Thing-properties accepted at face value.',
+      payoff: 'Reification reverses into relation: the mask stays visible and becomes legible.',
+      corpusAnchors: ['Capital, Volume I, Chapter 1 (fetishism)', 'Capital, Volume I (machinery and modern industry)'],
+      selectionTags: ['fetish', 'reification', 'property', 'thing', 'relation', 'mask', 'form'],
+      runtimeExample: 'A "smart" hiring score is unmasked as past managers’ preferences congealed into arithmetic.',
+      evidence: 'S',
+    },
   ],
 
   judgment: {
@@ -212,6 +236,8 @@ export const MARX_THINKING: ThinkingEngine = {
     ],
   },
 
+  closureRule: 'Stop when separate phenomena reconstruct as determinations of the concrete totality, with historical evidence constraining the abstraction.',
+  counterEvidenceResponse: 'Reconstruct the mediation and test it against historical and social evidence; abandon the thesis if the evidence breaks it.',
   concessions: [
     {
       canConcede: 'To bourgeois economists: markets coordinate complex divisions of labour with real efficiency, and their categories describe real appearances.',
