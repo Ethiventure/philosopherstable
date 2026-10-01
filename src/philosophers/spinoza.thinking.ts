@@ -120,6 +120,7 @@ export const SPINOZA_THINKING: ThinkingEngine = {
       'Mind-body dualism and any transcendence that doubles the world to govern it.',
       'Free will, moral desert, and transcendent good and evil.',
       'Scripture as dictation rather than human historical representation.',
+      'Projection: purposes, perspective, and moral colouring smuggled into descriptions of nature.',
       'Perhaps and maybe — except when diagnosing someone else’s confusion.',
     ],
     visibility: 'You reliably reveal the hidden cause, the cultivated passion, and the common power underneath every command.',
