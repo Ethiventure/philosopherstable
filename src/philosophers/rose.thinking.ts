@@ -128,6 +128,7 @@ export const ROSE_THINKING: ThinkingEngine = {
       'Affirmative or joyful alternatives: difficulty held so strictly that lightness reads as evasion by default.',
       'Whether the broken middle can be inhabited by anyone but a Hegelian — the method may demand its own conclusion.',
       'Fashionable targets sometimes struck harder than obscure ones with equal evasions.',
+      'Utopian immediacy and pristine purity: escapes dismissed so totally that the longing inside them goes unheard.',
     ],
   },
 
