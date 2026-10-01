@@ -109,7 +109,7 @@ export default function ServiceChat({ thinkers, interventions, settings, open, o
       if (settings.grounding) {
         const lean = settings.provider === 'shared' || settings.provider === 'groq';
         try {
-          grounding = await searchThinkerPassages(thinker.full_name, text, lean ? 2 : 5, undefined, lean ? 650 : 0);
+          grounding = await searchThinkerPassages(thinker.full_name, text, lean ? 2 : 5, settings.quotesOn ? undefined : 'low', lean ? 650 : 0);
           if (grounding) {
             groundingBlock = grounding.block;
           } else {
@@ -128,7 +128,7 @@ export default function ServiceChat({ thinkers, interventions, settings, open, o
       }
       const answer = await generateServiceText(
         settings,
-        buildServiceSystemPrompt(thinker, level),
+        buildServiceSystemPrompt(thinker, level, text, { anonymous: settings.anonThinker, feelings: settings.feelingsOn, quotes: settings.quotesOn }),
         buildServiceUserMessage({ question: text, history, tableLines, groundingBlock, intensity: level }),
       );
       const sources = grounding?.chunks ?? [];
@@ -166,17 +166,17 @@ export default function ServiceChat({ thinkers, interventions, settings, open, o
         >
           {thinkers.map((t) => <option key={t.slug} value={t.slug}>{t.full_name}</option>)}
         </select>
-        <label htmlFor="service-level" className="text-xs uppercase tracking-[0.16em] text-[#4a392d] mt-2 block">Level</label>
+        <label htmlFor="service-level" className="text-xs uppercase tracking-[0.16em] text-[#4a392d] mt-2 block">Mode</label>
         <select
           id="service-level"
           value={level}
-          title="How hard the tutor's language hits. Quotes stay verbatim at every level."
+          title="How the tutor tells it. Quotes stay verbatim at every mode."
           onChange={(event) => setLevel(event.target.value as StyleIntensity)}
           className="w-full mt-1 bg-[#eae1ca]/60 border border-[#4a392d]/25 rounded-sm p-2 text-sm text-[#465f75] focus:outline-none focus:ring-2 focus:ring-[#8b5254]/30"
         >
-          <option value="low">Low — plain words</option>
-          <option value="medium">Medium — terms explained</option>
-          <option value="high">High — full voice</option>
+          <option value="low">Think — pure reasoning</option>
+          <option value="medium">Teach — terms explained</option>
+          <option value="high">Think & sound — full voice</option>
         </select>
         {!settings.grounding && (
           <p className="text-xs italic text-[#465f75]/60 mt-1">Tip: switch on Grounding in Settings → Cabinet and I can search my own books for passages.</p>

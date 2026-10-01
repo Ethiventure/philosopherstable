@@ -164,7 +164,19 @@ never held a value, examples carry names only, exports/logs print labels
 never values, server keys stay `process.env`. Key files get explicit
 gitignore lines, never pattern-only.
 
-## Adaptable engines (re-skin, don't lift verbatim)
+ ## Adaptable engines (re-skin, don't lift verbatim)
+
+- Thinker model for persona projects: THINKING + EXPRESSION + LIFE three-file split, code
+  selector, per-mode renderer, THINK/TEACH/THINK & SOUND voice styles with
+  semantic invariant. Thinking mechanics first, sounding-like never the
+  target — the engine transfers, no philosopher does.
+- Testing-as-personalisation ethos: when defaults are unknown, separate
+  every option so it toggles cleanly (identity, relationships, scene,
+  evidence, context width, feelings, quotation, margins voice) — then the
+  testing process IS the personalisation feature. Ship opinionated
+  defaults with an advanced drawer; stamp every toggle state in the
+  export so grades compare per configuration only. Never restore by feel:
+  one variable, one sitting, one blind grade, logged verdict.
 
 - Turn rotation / deliberation engine: passes × seats, PREV-only context,
   own-priors anti-repeat, survey of one-liners. The shapes (diagnose →

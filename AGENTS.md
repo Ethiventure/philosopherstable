@@ -47,6 +47,11 @@ full edge-list fallback. Content-agnostic: substitute any entities.
 - Public app, no login, zero identifying data. Keys never in repo/bundle.
 - No OpenAI models for generation, ever. Prefer good-value open-weight
   models; cost paid picks per session before recommending.
+- Spend nudge: paid test runs burn real money in small invisible amounts —
+  roughly every 7 responses during a paid-model run of sittings, or whenever
+  an export shows paid spend, suggest checking Model Studio Usage & Billing
+  (console page name only, never values). Same cadence as a push nudge;
+  never nag twice.
 - Provider model IDs rot in days: free-text ID field + live key check, never
   a pinned dropdown; dead IDs fall back to the default on load. Every test
   queue entry, verdict, and owner-facing model mention carries the exact
@@ -66,6 +71,15 @@ full edge-list fallback. Content-agnostic: substitute any entities.
 - Explain-as-you-go: every non-trivial step gets one plain non-jargon
   sentence saying what it does and why this method — including which
   options were rejected and why.
+- Tutor as well as coder: the owner learns as we go — teach each step
+  before building it, log each structural lesson in
+  `docs/things-taught.md` (plain words, newest first) as it lands, and
+  point at the notebook instead of re-explaining.
+- Unknown defaults are a feature, not a gap: when the best configuration
+  is undecided, separate every option so it toggles cleanly and let the
+  testing process become the app's personalisation (opinionated defaults
+  + advanced drawer, every toggle state stamped in the export). One
+  variable per test, blind grade, logged verdict — never restore by feel.
 - Beauty is a requirement: adjustments speak the design's palette and type;
   generic accessible-minimalism is a failure mode. Dark surfaces keep tested
   font/button/accent pairs — never a lone text-colour toggle.

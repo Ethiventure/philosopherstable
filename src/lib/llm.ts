@@ -196,6 +196,10 @@ const RATE_TABLE: RateRow[] = [
   // is an unverified lead, not a number.
   { match: (p, m) => p.includes('alibaba') && m.includes('qwen3.7-plus'), perIn: 0.40, perOut: 1.60 },
   { match: (p, m) => p.includes('alibaba') && m.includes('qwen3.8-max'), perIn: 2.00, perOut: 6.00 },
+  // qwen3.8-max-0902 rides the row above (substring match). qwen3.8-2.4t-a95b:
+  // max-class proxy from the Singapore list (CNY 14.988/44.965 per 1M ≈
+  // $2.06/$6.18) — re-verify at the console before quoting exactly.
+  { match: (p, m) => p.includes('alibaba') && m.includes('qwen3.8-2.4t-a95b'), perIn: 2.00, perOut: 6.00 },
   // Alibaba qwen3.8-flash direct: $0.15/$0.47 per 1M, 1M context
   // (owner-supplied Sep 20 2026, same source) — ≈$0.026–0.035/session.
   { match: (p, m) => p.includes('groq') && m.includes('qwen3.8-27b'), perIn: 0.80, perOut: 4.00 },
@@ -206,6 +210,9 @@ const RATE_TABLE: RateRow[] = [
   // $0.03/$0.13 per 1M, 1M context. NOTE: not the same weights as
   // Alibaba qwen3.7-plus — grades never transfer across IDs.
   { match: (_p, m) => m.includes('qwen3.7-flash'), perIn: 0.03, perOut: 0.13 },
+  // Gemma paid pair, verified live via /models Sep 30 2026 (262k ctx).
+  { match: (_p, m) => m.includes('gemma-4-26b'), perIn: 0.076, perOut: 0.255 },
+  { match: (_p, m) => m.includes('gemma-4-31b'), perIn: 0.09, perOut: 0.34 },
   // Owner-supplied Sep 21 2026 (OpenRouter page): qwen3.7-plus
   // $0.32/$1.28 per 1M, 1M context — ≈$0.06/session, same weights as
   // the Alibaba value crown (host differs, grades ride along).

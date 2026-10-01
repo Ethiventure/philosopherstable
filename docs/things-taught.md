@@ -4,6 +4,233 @@ Low intensity, nothing dumbed down: every entry keeps the full fact,
 only the words stay simple. Newest first. The owner asked for this
 Sep 17 2026 — keep writing here, one entry per lesson.
 
+## Ask when they stop, not just how they start (Sep 30 2026)
+The cross-model comparison exposed a missing field: every engine said
+what its thinker notices and does, but none said what makes them decide
+they have thought far enough. Now each file carries a closure rule
+(rendered — it shapes output length directly) and a counter-evidence
+response (stored for evaluation). The sharpest payoff: four thinkers who
+all "change their minds" do it for different reasons (Hegel generates,
+Lenin retacts tactically, Bogdanov redesigns, Deleuze re-questions) —
+and that distinction alone defeats generic-clever-philosopher output.
+
+## Comparisons live in one map, not twelve dossiers (Sep 30 2026)
+Owner call: no thinker file compares itself to another anymore — fault
+lines moved to a central map, neighbour tests to a meta-view doc, and
+distinctiveness gets graded there instead of inside each dossier. The
+rule behind it: the valuable property is twelve different engines that
+build on each other at contemporary problems, not a well-scripted
+theatrical play. Dossiers keep debts only as formation history (who made
+you), never as live pair dynamics (how you fight them).
+
+## One commit per thinker keeps twelve conversions reversible (Sep 30 2026)
+Nine new dossiers landed as nine separate commits plus three refinement
+commits — twelve small reversions available instead of one big bang.
+Each new anchor was checked against the shipped search index before use;
+two failed the check on first try (Wagner and Better Fewer were never
+ingested) and were replaced with shipped lines, and one (Rose) holds by
+owner-verified text with rights approval instead. Lesson: the corpus
+check belongs before drafting, not after — an anchor you cannot show is
+an anchor you do not have.
+
+## Toggles compose, surgery doesn't scale (Sep 30 2026)
+The mechanics drawer (name, relations, scene, quotation, survey,
+margins, feelings) works because each option is a file included or not —
+anonymous mode simply withholds the life file. No prompt surgery per
+option, no branches multiplying: the renderer composes from flags.
+Lesson: make every behavior a separable input and optionality becomes
+free; wire it into the prompt text and every combination costs a rewrite.
+Modes got their plain name the same day (Think/Teach/Think & sound —
+"voice style" was jargon for the same thing).
+
+## Search for the true objective, not its prettiest proxy (Sep 30 2026)
+Outside advice said to try Gemma for its literary quality — and the
+reorder was first built to test "voice continuity", which is the wrong
+prize. Our blind tests grade moves, so the model search must grade moves:
+a beautiful generic turn fails, a clunky correct one passes. Literary
+fluency is decoration on top of executed reasoning, never evidence of
+it. The per-mode version of the hypothesis survives as testable
+(agentic discipline for THINK execution, literary fluency for THINK &
+SOUND rendering) — everything else about "which family writes better"
+is noise to this project.
+
+## Audit every line, not every intention (Sep 26 2026)
+The barest-bones cut worked from the rendered prompt, not the source
+files: identity, entry questions, numbered moves, distinctions, fault
+line, mode line — plus evidence (grounding), priors, survey, budgets,
+and the JSON envelope. Everything else went back to the files
+(pressure questions, judgment patterns, trio except in TEACH) or out
+entirely (debt narration, stock toolkit, the Low plain-words reminder
+that contradicted modes). Prompt shrank ~25% and every cut has a return
+address in the add-back log. Lesson: audit what the model actually
+receives — good intentions in dead code paths still cost attention.
+
+## Labels leak: show the move, not its name (Sep 28 2026)
+The owner's blind grading caught vocabulary giving the thinker away, and
+the audit found the mechanism: operation names ("Eduction", "Factum into
+Fieri") shown in the prompt become borrowed words in the answer — a label
+meant for the code picker ends up as diction for the writer. Rendered
+moves are now numbered; names live in code only. Honest limit found the
+same hour: stripping labels removed ~2 of ~28 hits, because the rest are
+load-bearing concepts (hierarchy, tendency) that cannot go without taking
+the thought with them. Orders like "use no signature terms" lie when the
+prompt shows twenty-five — the line now says terms appear only where the
+move needs them.
+
+## Test the detector before blaming it (Sep 26 2026)
+Three verbatim repeats across two sittings looked like a dead detector —
+and I said so out loud before checking. One script run later, the
+detector fired on the exact pair. The failure was downstream: detection
+ended in a log line and an unexported badge, with the blind retry (the
+only enforcement) long buried for good reasons. The fix names the shared
+run in a single repair attempt and marks survivors in the export. Two
+morals: reproduce before you accuse, and never report an invisible
+negative ("no badge fired") as fact — the export couldn't show badges
+either way.
+
+## Subtract before you add: the pilot turn scaffold (Sep 26 2026)
+The owner's verdict on a weak sitting was to strip the general prompts,
+not extend them — and the numbers backed it: the old turn scaffold ran
+~6,000 characters of orders (mood, feeling verbs, rhythm, naming
+ceremonies, stock phrases) against a ~4,000-character thinking slice, so
+the generic instructions outweighed the thinker twice over in attention.
+The pilot scaffold keeps seven things (pass job, PREV discipline,
+budgets, scene hold, premise hold, margins duty, closing) and drops the
+rest, because the thinking files already carry voice, moves, and temper.
+The old scaffold stays byte-unchanged behind the flag as the A/B
+baseline, and the version stamp (now m) keeps the grades apart. Lesson:
+when a prompt underperforms, weigh it first — the fix may be deletion.
+
+## Stored examples may not invent scenes (Sep 26 2026)
+A trio TEACH line explained its quote with a power station that existed
+nowhere in the corpus — pure invention smuggled into a stored example.
+The rule it produced: concrete scenes in stored files must be traceable
+to the thinker's own stock material (their cases, their program); fresh
+scenes belong to live turns, where the sitting supplies them. Same pass
+also tightened THINK: no signature terms at all, not merely "where
+unavoidable" — the thinking process in neutral words, with the terms
+returning in TEACH and the voice in THINK & SOUND.
+
+## One quote, one home: the trio's third line IS the quote (Sep 26 2026)
+Correction from the owner: the trio used to keep the verbatim quote in a
+separate anchor field beside a paraphrased full-voice line — two homes
+for one idea, guaranteed to drift apart. Now the shape is strict: THINK
+shows the bare reasoning that leads to the quote, TEACH explains the
+quote's idea at full complexity, and THINK & SOUND literally is the
+quote, source beside it. The general lesson: any fact stored twice will
+contradict itself eventually, so store it once where it is used.
+
+## Modes are jobs, not levels: THINK is not plainer (Sep 26 2026)
+Correction caught by the owner mid-pilot: several new files described
+THINK as plain-words output, smuggling the old Low level back in under a
+new name. The actual distinction is different. THINK means the thinking
+slice with no expression style added — no tics, no performed temper, no
+quotes — while complexity and terms stay wherever the move needs them.
+For a plain writer like Bookchin, THINK may read almost like his voice;
+the difference is the missing fury and tics, not simpler words. Temper
+split the same way: stance (what angers them) rides everywhere,
+performance (fury, swearing) rides only with the expression file. Lesson:
+when renaming a system, grep the new files for the old system's
+adjectives — "plain", "simple", "restrained" — because the old mental
+model hides inside words like that.
+
+## Speak to the model as the thinker, not about them (Sep 26 2026)
+The pilot files were first written in third person ("he widens the
+frame") and converted on owner call to second person ("you widen the
+frame"). Why it matters: the runtime prompt addresses the model AS the
+thinker, so a third-person file forces a translation step — description
+into inhabitation — that small models perform badly: they copy the
+description instead of performing the move. "You ask" skips the step.
+Metadata (tags, anchors, tests) stays neutral; only the generative
+content speaks as you. The compiler now mandates this for all remaining
+thinkers.
+
+## Paraphrase eats the load-bearing words (Sep 26 2026)
+Sequel to the entry above. The owner's accuracy corrections on the
+Bookchin draft fell into one pattern: my paraphrases had smoothed away
+his proper terms (Free Nature, liberatory technology, the full
+Marxist→Trotskyist→anarchist→communalist chain, the full list of
+revolutions) and swapped his concrete nouns for my metaphors
+("address" for "institution"). Every restored term was doing conceptual
+work, not decoration — which is exactly why paraphrase is dangerous in
+THINKING files: plain renderings belong to the runtime modes, never the
+stored file. Rule recorded in the compiler: keep the thinker's own terms
+and full enumerations; prefer their concrete noun over your elegant one.
+Same sitting also showed biography done right: "Bronx autodidact" earned
+its place by explaining his plain prosecuting voice — the likely reason
+Bookchin reads easiest.
+
+## Check the library before citing it (Sep 26 2026)
+Two pilot anchors cited works the manifest lists but the shipped search
+index does not contain (one metadata-only book, one unshipped ingest).
+They read fine and were wrong — a turn grounded on them would quote from
+nothing. So the remaining thinkers get RAG-first treatment: inventory the
+shipped shard before drafting, cite only shipped works, and audit the old
+profile/style files for errors on the way (they hold real ones). A
+manifest entry is a catalogue card, not a book on the shelf.
+
+## Why the cabinet kept doing impressions, and the split that fixes it (Sep 26 2026)
+The turns were turning into parody: each thinker sounded like a costume
+of famous words. The cause was mechanical, not mysterious. The old
+prompts listed 14–25 style orders per thinker ("use vampiric imagery",
+"use larval subjects") next to a few vague thinking orders ("trace the
+inner connection"). Small models obey what is easy to check — a word is
+easy to check, a way of reasoning is not — so they did the words and
+dropped the thought. Tight word budgets made it worse: 60 words and 30
+demands leaves room for only the 3 most famous markers. The fix reverses
+the shape: each thinker gets a THINKING file (what they notice, ask,
+distinguish, do, concede — the engine) and an EXPRESSION file that only
+decides how an already-made judgment sounds. Voice may choose the
+realization, never the content. If voice and thinking clash, thinking
+wins — written as a rule, not hoped from word order.
+
+## Order in a prompt is not obedience (Sep 26 2026)
+Sequel to the entry above. It is tempting to believe that putting
+thinking first and style last in a prompt makes the model weight them
+90/10. It does not — position is a nudge, not a lock, and a later
+instruction can easily shout louder than an earlier one. So the rebuild
+does not rely on order at all: thinking and voice live in separate
+files, the thinking file is named the semantic authority and the voice
+file the linguistic authority only, and the shared runtime carries one
+precedence rule both must obey. The lesson travels: whenever two
+instructions compete, write who wins explicitly instead of arranging
+furniture.
+
+## The model picks from a menu it never sees cooked (Sep 26 2026)
+A puzzle from the rebuild: how can plain code choose which 1–3 thinking
+moves ride in a turn without the model reading the whole file? Answer:
+the same trick the RAG search already uses. Every operation carries 3–6
+plain keywords (selection tags); the code matches question + last-turn
+words against those tags plus the thinker-pair, with word-stem scoring —
+no model call, no reading. Full files stay on disk as the truth; small
+slices ride per turn. This also fits the hard 7k-token wall on the free
+tier and the finding that small models obey short orders better. And the
+safeguard both ways: code proposes, the thinker disposes — the model may
+decline the offered moves if the question does not fire them, so the
+picker never hardens into a hidden script.
+
+## Same judgment, not same conclusion — plus TEACH means explained (Sep 26 2026)
+Two fine points locked before the pilot. First, the three modes (THINK /
+TEACH / THINK & SOUND) must preserve the same underlying judgment across
+all tellings: same claim, same causal reason, same distinctions,
+concessions, uncertainty, and answer to the last speaker. "Same
+conclusion" was judged too weak — a mode can reach the same conclusion
+for a different reason, and then it is a different philosopher wearing
+the same verdict. That version fails the invariant. Second, TEACH is not
+a watered-down middle: it keeps full complexity and terminology and
+teaches every term (meaning woven in + one concrete sentence). The only
+practical restraint is quote volume, because each quote costs explaining
+words. Modes are jobs, not intelligence levels.
+
+## Git tags do not travel with git push (Sep 26 2026)
+Small practical one from the rebuild safety steps. A tag (our rollback
+marker `before-thinking-rebuild`) lives only on your machine until you
+push it by name: `git push origin <tag>`. A plain `git push` sends
+branches, never tags — so a rollback point you never pushed is a
+rollback point that does not exist on GitHub. Same sitting also showed:
+uncommitted files travel with neither; commit first, push branch second,
+push tag third.
+
 ## What the autumn metric trials actually did (Sep 25 2026)
 The full record, since the lessons below only carry the morals. Two
 published tools were tested against turns you had already graded by

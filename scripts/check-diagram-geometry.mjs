@@ -22,7 +22,13 @@ const CLEAR = GEN_NODE_R + 8;
 
 const edges = [];
 for (const [debtor, debts] of Object.entries(CABINET_DEBTS)) {
-  for (const d of debts) edges.push({ from: d.to, to: debtor, kind: d.kind });
+  // Mirror the renderer: Genzie is excluded from the diagram (fictional
+  // seat, margins-only) — undrawn lines are not checked.
+  if (debtor === 'genzie') continue;
+  for (const d of debts) {
+    if (d.to === 'genzie') continue;
+    edges.push({ from: d.to, to: debtor, kind: d.kind });
+  }
 }
 console.log(`debts: ${edges.length}`);
 

@@ -16,6 +16,43 @@ import { renderUniversalMechanisms } from './shared/universal-mechanisms';
 import { renderAntiWaffle } from './shared/anti-waffle';
 import { LOW_CONCEPT_RULES, LOW_OVERRIDE, LOW_PLAIN_RULES, renderLanguageLevel, renderLowStyleEssence } from './shared/low-style';
 import { FALLBACK_MEDIUM_EXAMPLE, SEAT_TRIOS } from './trios';
+import type { ExpressionModel, LifeFile, ThinkingEngine } from './thinking-types';
+import { BOOKCHIN_THINKING } from './bookchin.thinking';
+import { BOOKCHIN_EXPRESSION } from './bookchin.expression';
+import { BOOKCHIN_LIFE } from './bookchin.life';
+import { BLOCH_THINKING } from './bloch.thinking';
+import { BLOCH_EXPRESSION } from './bloch.expression';
+import { BLOCH_LIFE } from './bloch.life';
+import { SPINOZA_THINKING } from './spinoza.thinking';
+import { SPINOZA_EXPRESSION } from './spinoza.expression';
+import { SPINOZA_LIFE } from './spinoza.life';
+import { KANT_THINKING } from './kant.thinking';
+import { KANT_EXPRESSION } from './kant.expression';
+import { KANT_LIFE } from './kant.life';
+import { HEGEL_THINKING } from './hegel.thinking';
+import { HEGEL_EXPRESSION } from './hegel.expression';
+import { HEGEL_LIFE } from './hegel.life';
+import { MARX_THINKING } from './marx.thinking';
+import { MARX_EXPRESSION } from './marx.expression';
+import { MARX_LIFE } from './marx.life';
+import { LENIN_THINKING } from './lenin.thinking';
+import { LENIN_EXPRESSION } from './lenin.expression';
+import { LENIN_LIFE } from './lenin.life';
+import { BOGDANOV_THINKING } from './bogdanov.thinking';
+import { BOGDANOV_EXPRESSION } from './bogdanov.expression';
+import { BOGDANOV_LIFE } from './bogdanov.life';
+import { WEIL_THINKING } from './weil.thinking';
+import { WEIL_EXPRESSION } from './weil.expression';
+import { WEIL_LIFE } from './weil.life';
+import { DELEUZE_THINKING } from './deleuze.thinking';
+import { DELEUZE_EXPRESSION } from './deleuze.expression';
+import { DELEUZE_LIFE } from './deleuze.life';
+import { ROSE_THINKING } from './rose.thinking';
+import { ROSE_EXPRESSION } from './rose.expression';
+import { ROSE_LIFE } from './rose.life';
+import { FISHER_THINKING } from './fisher.thinking';
+import { FISHER_EXPRESSION } from './fisher.expression';
+import { FISHER_LIFE } from './fisher.life';
 
 const DEFINITIONS: PhilosopherDefinition[] = [SPINOZA, KANT, HEGEL, MARX, LENIN, BOGDANOV, BLOCH, WEIL, BOOKCHIN, DELEUZE, ROSE, FISHER, GENZIE];
 
@@ -32,6 +69,42 @@ export const DEFAULT_SEATING_ORDER: string[] = PHILOSOPHER_DATA.map((p) => p.slu
 export const PHILOSOPHER_BY_SLUG: Record<string, Omit<Philosopher, 'id' | 'created_at'>> = Object.fromEntries(
   PHILOSOPHER_DATA.map((p) => [p.slug, p]),
 );
+
+/**
+ * Phase 11 registry: every real seat carries THINKING + EXPRESSION + LIFE
+ * files (Genzie excluded — fictional seat, no corpus). Seats resolve
+ * through `hasThinkingPilot`; unmigrated seats would fall back to the old
+ * style essences, but none remain. Old `{slug}.style.ts` files are headed
+ * for `src/philosophers/archive/` once their seat's grade passes.
+ */
+export interface ThinkingPilotEntry {
+  thinking: ThinkingEngine;
+  expression: ExpressionModel;
+  life: LifeFile;
+}
+
+const THINKING_PILOT: Record<string, ThinkingPilotEntry> = {
+  spinoza: { thinking: SPINOZA_THINKING, expression: SPINOZA_EXPRESSION, life: SPINOZA_LIFE },
+  kant: { thinking: KANT_THINKING, expression: KANT_EXPRESSION, life: KANT_LIFE },
+  hegel: { thinking: HEGEL_THINKING, expression: HEGEL_EXPRESSION, life: HEGEL_LIFE },
+  marx: { thinking: MARX_THINKING, expression: MARX_EXPRESSION, life: MARX_LIFE },
+  lenin: { thinking: LENIN_THINKING, expression: LENIN_EXPRESSION, life: LENIN_LIFE },
+  bogdanov: { thinking: BOGDANOV_THINKING, expression: BOGDANOV_EXPRESSION, life: BOGDANOV_LIFE },
+  bloch: { thinking: BLOCH_THINKING, expression: BLOCH_EXPRESSION, life: BLOCH_LIFE },
+  weil: { thinking: WEIL_THINKING, expression: WEIL_EXPRESSION, life: WEIL_LIFE },
+  bookchin: { thinking: BOOKCHIN_THINKING, expression: BOOKCHIN_EXPRESSION, life: BOOKCHIN_LIFE },
+  deleuze: { thinking: DELEUZE_THINKING, expression: DELEUZE_EXPRESSION, life: DELEUZE_LIFE },
+  rose: { thinking: ROSE_THINKING, expression: ROSE_EXPRESSION, life: ROSE_LIFE },
+  fisher: { thinking: FISHER_THINKING, expression: FISHER_EXPRESSION, life: FISHER_LIFE },
+};
+
+export function hasThinkingPilot(slug: string): boolean {
+  return slug in THINKING_PILOT;
+}
+
+export function getThinkingPilot(slug: string): ThinkingPilotEntry | null {
+  return THINKING_PILOT[slug] ?? null;
+}
 
 /**
  * Builds the persona portion of a system prompt: who the philosopher is, how they

@@ -11,7 +11,8 @@
  * searched passages from ITS OWN links. It can never read other thinkers'
  * links: `groundableSource` resolves per-thinker, and nothing else is passed.
  */
-import { renderPersona } from '@/philosophers';
+import { getThinkingPilot, hasThinkingPilot, renderPersona } from '@/philosophers';
+import { composePersona, intensityToThinkMode } from '@/philosophers/thinking-select';
 import { generateTextDeepInfra } from '@/lib/deepinfra';
 import { generateTextGroq } from '@/lib/groq';
 import { generateTextOpenRouter } from '@/lib/openrouter';
@@ -39,7 +40,7 @@ const HISTORY_EXCHANGES = 12;
  * plain, Medium natural gloss, High full voice); quoted source loans stay
  * verbatim at every level, and sequential summaries are allowed on request.
  */
-export function buildServiceSystemPrompt(philosopher: Philosopher, intensity: StyleIntensity = 'high'): string {
+export function buildServiceSystemPrompt(philosopher: Philosopher, intensity: StyleIntensity = 'high', question = '', opts?: { anonymous?: boolean; feelings?: boolean; quotes?: boolean }): string {
   const defineLine = intensity === 'low'
     ? 'Scaffold every answer in four short moves: 1) answer the question directly in your own framework, in plain everyday words; 2) translate or describe every school-term or unusual word in plain words instead of using it — where a word has no plain equal, describe what it does; 3) land one concrete 21st-century example; 4) close with one short question checking the idea landed.'
     : intensity === 'medium'
@@ -48,14 +49,31 @@ export function buildServiceSystemPrompt(philosopher: Philosopher, intensity: St
   const sourcesLine = intensity === 'high'
     ? 'SOURCES, honestly: passages headed SEARCHED PASSAGES below are the only text you actually searched — quote generously (several short verbatim loans in ‘single’ quotes) and say “from the quoted passage below” when you do; echo their filler words, diction tics, and rhythms. Otherwise your answer comes from your profile and framework: say “on my account” rather than implying you re-read the books. Your links are the only ones you can search — never cite, quote, or claim another thinker’s works; if asked about them, answer from your own framework and say whose desk that question belongs at.'
     : 'SOURCES, honestly: passages headed SEARCHED PASSAGES below are the only text you actually searched — when they fit, borrow visibly with direct quotes (at least one short verbatim loan in ‘single’ quotes) and say “from the quoted passage below” when you do. Direct quotation stays verbatim at every desk level — your own surrounding words follow the level. Otherwise your answer comes from your profile and framework: say “on my account” rather than implying you re-read the books. Your links are the only ones you can search — never cite, quote, or claim another thinker’s works; if asked about them, answer from your own framework and say whose desk that question belongs at.';
+  // Thinking-first files (Phase 11, live): seats carrying THINKING files
+  // teach from them — no flag, the registry decides. No PREV at the desk,
+  // so the slice is selected on the visitor's question alone.
+  const pilotEntry = hasThinkingPilot(philosopher.slug) ? getThinkingPilot(philosopher.slug) : null;
+  const pilotMode = intensityToThinkMode(intensity);
+  const quotes = opts?.quotes ?? true;
+  const persona = pilotEntry
+    ? composePersona(pilotEntry, question, null, null, {
+      mode: pilotMode,
+      anonymous: opts?.anonymous ?? false,
+      feelings: opts?.feelings ?? true,
+      relations: true,
+    }).system
+    : renderPersona(philosopher, intensity);
+  const sources = pilotEntry && (pilotMode === 'think' || !quotes)
+    ? 'SOURCES, honestly: passages headed SEARCHED PASSAGES below are the only text you actually searched — read them for ideas and describe them in your own words, always citing [n]; never lift distinctive words verbatim. Otherwise your answer comes from your thinking file: say “on my account” rather than implying you re-read the books. Your links are the only ones you can search — never cite, quote, or claim another thinker’s works; if asked about them, answer from your own framework and say whose desk that question belongs at.'
+    : sourcesLine;
   return [
-    renderPersona(philosopher, intensity),
+    persona,
     '',
     'PHILOSOPHERS’ SERVICE DESK: you are staffing a help desk as yourself. A visitor asks; you teach. Not a debate, no opponent, no negation — explain your own thinking so a newcomer can use it. Riff on the visitor’s question — paraphrase it in your own terms; never repeat it verbatim.',
     'VOICE FIRST: the scaffold below serves your diction, never the reverse. Enter through your own framework’s verdict — never a shared opening move, never "Think of a …" scene-setting every other desk uses. The honesty phrase "on my account" belongs mid-answer, never as the opener. No two thinkers open alike; if your opening could have been written by another seat, rewrite it. Vary your example every answer — everyday scenes, never the same city twice running; the visitor is lost, so meet them somewhere familiar, not where the sitting lives.',
     defineLine,
     'HARD ceiling 180 words. Continuous prose, no headings, no lists of more than three items. Standard written English: complete sentences, terminal punctuation.',
-    sourcesLine,
+    sources,
     'The sitting’s one-line determinations below are what the main table has said so far — you may refer to a seat by name, in your own terms, never quoted verbatim. They do not override the visitor’s question.',
     'DESK OVERRIDE, governing summaries only: when the visitor asks for a recap or turn-by-turn summary, give it sequentially — the no-summary rule above does not apply at the help desk. Everything else above still holds.',
   ].join('\n');

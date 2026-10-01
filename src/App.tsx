@@ -22,7 +22,8 @@ import {
 } from 'lucide-react';
 import { supabase } from '@/lib/supabase';
 import { CORPUS_SOURCES_DATA } from '@/data/corpus-sources';
-import { DEFAULT_SEATING_ORDER, PHILOSOPHER_BY_SLUG, PHILOSOPHER_DATA, renderPersona } from '@/philosophers';
+import { DEFAULT_SEATING_ORDER, PHILOSOPHER_BY_SLUG, PHILOSOPHER_DATA, getThinkingPilot, hasThinkingPilot, renderPersona } from '@/philosophers';
+import { composePersona, intensityToThinkMode, thinkingSceneOff } from '@/philosophers/thinking-select';
 import { CABINET_DEBTS, cabinetHeirs, relationshipLine, tableStancesLine } from '@/philosophers/influences';
 import {
   DEFAULT_ACCESSIBILITY,
@@ -33,8 +34,8 @@ import {
   type Philosopher,
   type StyleEssence,
 } from '@/types';
-import { buildCodaEarlyPrompt, buildCodaEndPrompt, buildCodaPrompt, buildClosingScan, buildTurnInstruction, buildUserMessage, CODA_REPAIR_SUFFIX, CODA_SYSTEM, drawThreadCity, getTurnKind, GLOSSARY_SHAPE, LOW_CLOSING_REMINDER, PROMPT_VERSION, STRUCTURED_OUTPUT_HINT } from '@/lib/dialectic/prompts';
-import { LlmError, RATES_AS_OF, estimateCost, repairBreakdown, repairTotals, resetUsage, sharesPassage, usageTotals, type LlmErrorCode, type TurnOutput } from '@/lib/llm';
+import { buildCodaEarlyPrompt, buildCodaEndPrompt, buildCodaPrompt, buildClosingScan, buildPilotTurnInstruction, buildTurnInstruction, buildUserMessage, CODA_REPAIR_SUFFIX, CODA_SYSTEM, drawThreadCity, getTurnKind, GLOSSARY_SHAPE, LOW_CLOSING_REMINDER, PILOT_LAST_WORD, PROMPT_VERSION, STRUCTURED_OUTPUT_HINT } from '@/lib/dialectic/prompts';
+import { LlmError, RATES_AS_OF, estimateCost, repairBreakdown, repairTotals, resetUsage, sharesPassage, usageTotals, ECHO_REPAIR_SUFFIX, findSharedPassage, incrementRepair, type LlmErrorCode, type TurnOutput } from '@/lib/llm';
 import { DEEPINFRA_PRIMARIES, ALIBABA_MODEL_OPTIONS, CUSTOM_MODEL_VALUE, GROQ_MODEL_OPTIONS, OPENROUTER_PAID_OPTIONS, clearProviderHealth, loadProviderHealth, loadSettings, saveProviderHealth, saveSettings, type CabinetSettings, type DeepInfraPrimary, type ProviderHealth } from '@/lib/settings';
 import { applyDisplay, loadDisplay, saveDisplay } from '@/lib/preferences';
 import { generateTurnGroq, testGroqKey } from '@/lib/groq';
@@ -184,16 +185,20 @@ export type DeckEntry =
 
 function App() {
   const [philosophers, setPhilosophers] = useState<Philosopher[]>([]);
-  // TEMPORARY default (Sep 21 2026): the leftistsforAI moderation question,
-  // so test sittings start with zero setup. Revert to the education question
-  // when the test round ends (it stays the family-eval default).
-  // Table rule: Bookchin moderates — names the sub rules, pulls the
-  // conversation back, threatens bans.
-  const [question, setQuestion] = useState('leftistsforAI sub on Reddit is “A space for leftists discussing Artificial Intelligence from a labor, ownership, and political-economy perspective. Topics include worker impact, platform power, automation, regulation, and collective control of Al infrastructure”. What should we encourage posts about and what types of posts should we take down as bracketed off topics which don’t benefit us? Table rule for this question: Bookchin moderates — names the actual sub rules, pulls the conversation back on topic, threatens bans (and means them).');
+  // Default question (owner pick Sep 30 2026): the regional AI-grid
+  // organisation question — novel to every seat, forces reconstructive
+  // moves. Edit freely in the box below; the table debates whatever
+  // stands here when Begin is pressed.
+  const [question, setQuestion] = useState('A region shares one AI grid to coordinate energy, food and transport. How is this best organised? What would you change about this setup?');
   const [activePass, setActivePass] = useState(0);
   const [activeAgent, setActiveAgent] = useState(-1);
   const [isRunning, setIsRunning] = useState(false);
   const [interventions, setInterventions] = useState<Intervention[]>([]);
+  // Visitor interrupt & redirect: remarks injected while paused ride in every
+  // later turn's prompt (newest first) until cleared. Kept in a ref (loop
+  // reads) + draft state (box). Exported verbatim under VISITOR REDIRECTS.
+  const redirectRef = useRef<{ at: number; text: string }[]>([]);
+  const [redirectDraft, setRedirectDraft] = useState('');
   const [coda, setCoda] = useState<{ text: string } | null>(null);
   const [codaError, setCodaError] = useState<string | null>(null);
   // The margin note runs between pass 2 and pass 3, so it gets its own
@@ -241,6 +246,14 @@ function App() {
   const pushRunLevel = (level: string) => {
     if (runLevelsRef.current[runLevelsRef.current.length - 1] !== level) runLevelsRef.current.push(level);
   };
+  // Mechanics trail: per-turn toggle snapshot (defaults collapse to one
+  // word). Grades compare per configuration only, so the export must say
+  // which configuration each turn ran under.
+  const toggleTrailRef = useRef<string[]>([]);
+  // Thinking-first pilot (Phase 11): modes actually rendered from THINKING
+  // files this sitting — the export footer names them, so a Low sitting
+  // never claims expression content rode when only THINK did.
+  const thinkingPilotUsedRef = useRef<string[]>([]);
   // Sitting stopwatch: started on Begin, read at export. The owner grades
   // pace but is bad at the stopclock — the export keeps time instead.
   const sittingStartedAt = useRef<number | null>(null);
@@ -322,11 +335,11 @@ function App() {
     setShowSources(true);
   };
   const [showSettings, setShowSettings] = useState(false);
-  const [settingsTab, setSettingsTab] = useState<'key' | 'seats' | 'voice' | 'display'>('seats');
+  const [settingsTab, setSettingsTab] = useState<'key' | 'seats' | 'options' | 'display'>('seats');
   // Philosophers' Service desk: floating tutor window + its export log.
   const [showService, setShowService] = useState(false);
   const [serviceLog, setServiceLog] = useState<ServiceLogEntry[]>([]);
-  const openSettings = (tab: 'key' | 'seats' | 'voice' | 'display' = 'seats') => {
+  const openSettings = (tab: 'key' | 'seats' | 'options' | 'display' = 'seats') => {
     setSettingsTab(tab);
     setShowSettings(true);
   };
@@ -435,9 +448,11 @@ function App() {
   const orderedPhilosophers = useMemo(() => DEFAULT_SEATING_ORDER
     .map((slug) => philosophers.find((p) => p.slug === slug))
     .filter((p): p is Philosopher => p !== undefined && activeSlugs.includes(p.slug)), [philosophers, activeSlugs]);
-  // Service desk offers all twelve thinkers in chronological seating order,
-  // whether or not they hold a seat in this sitting.
+  // Service desk offers the twelve seated thinkers in chronological order,
+  // whether or not they hold a seat in this sitting. Genzie is excluded:
+  // margins-only, never seated, never tutored.
   const allOrderedPhilosophers = useMemo(() => DEFAULT_SEATING_ORDER
+    .filter((slug) => slug !== 'genzie')
     .map((slug) => philosophers.find((p) => p.slug === slug))
     .filter((p): p is Philosopher => p !== undefined), [philosophers]);
   const currentSpeaker = orderedPhilosophers[activeAgent];
@@ -595,7 +610,7 @@ function App() {
       // The early note barges in once, right before the second round,
       // reading only pass 1 — contradictions, translations, banked actionables,
       // missing perspectives. A failed note never blocks pass 2.
-      if (pass === 1 && index === 0 && !codaEarlyRef.current) {
+      if (pass === 1 && index === 0 && !codaEarlyRef.current && snap.genzOn) {
         await runCoda(runId, collected, snap, 'early');
         if (runRef.current !== runId) return;
       }
@@ -603,7 +618,7 @@ function App() {
       // reading only the first two passes. A failed note never blocks
       // pass 3 — the sitting stands without it and the retry button
       // re-runs it.
-      if (pass === 2 && index === 0 && !codaRef.current) {
+      if (pass === 2 && index === 0 && !codaRef.current && snap.genzOn) {
         await runCoda(runId, collected, snap, 'late');
         if (runRef.current !== runId) return;
       }
@@ -646,7 +661,9 @@ function App() {
       // holds); pass 3 carries the late note first, then other seats'
       // determinations, labelled by name, so the final rotation can invoke
       // the most striking ideas — including the note's demands.
-      const noteEntry = pass === 1 && codaEarlyRef.current
+      // Gen Z reaction + summary rides only with the toggle on — off means
+      // no note runs and no note entries, so P3 answers PREV alone.
+      const noteEntry = !snap.genzOn ? [] : pass === 1 && codaEarlyRef.current
         ? [{ name: 'Notes from the margins (after pass 1)', line: codaEarlyRef.current }]
         : pass === 2 && codaRef.current
           ? [{ name: 'Notes from the margins', line: codaRef.current }]
@@ -664,7 +681,37 @@ function App() {
               })),
           ]
           : [];
-      const turnInstruction = buildTurnInstruction({
+      // Thinking-first files (Phase 11, live): resolved once per turn and
+      // shared by the turn instruction (lean scaffold) and the system prompt
+      // (thinking slice). Non-null for seats carrying THINKING files —
+      // everyone else keeps the old style-essence persona until migrated.
+      const pilotEntry = hasThinkingPilot(speaker.slug)
+        ? getThinkingPilot(speaker.slug)
+        : null;
+      // Toggle snapshot for the export trail (defaults = anonymous, all on).
+      const toggleSig = [
+        snap.anonThinker ? null : 'named',
+        snap.thinkerRelations ? null : 'no-relations',
+        snap.sceneOn ? null : 'no-scene',
+        snap.quotesOn ? null : 'paraphrase-only',
+        snap.fullSurvey ? null : 'prev-only',
+        snap.genzOn ? null : 'no-margins',
+        snap.feelingsOn ? null : 'no-feelings',
+      ].filter((m): m is string => m !== null).join('+') || 'defaults';
+      if (toggleTrailRef.current[toggleTrailRef.current.length - 1] !== toggleSig) toggleTrailRef.current.push(toggleSig);
+      const turnInstruction = pilotEntry
+        ? buildPilotTurnInstruction({
+          kind,
+          prevName: previousSpeaker?.name ?? null,
+          isFinalSeat: isFinalTurn,
+          longForm: snap.longForm,
+          pass: pass + 1,
+          threadCity: threadCityRef.current || null,
+          marginsNote: pass === 2 && !!codaRef.current,
+          marginsFirst: pass === 2 && index === 0 && !!codaRef.current,
+          noScene: !snap.sceneOn || thinkingSceneOff(),
+        })
+        : buildTurnInstruction({
         kind,
         prevName: previousSpeaker?.name ?? null,
         isFinalSeat: isFinalTurn,
@@ -677,8 +724,26 @@ function App() {
         heat: typeof speaker.profile['emotional_tone'] === 'string' ? speaker.profile['emotional_tone'] : undefined,
         threadCity: threadCityRef.current || null,
         pass: pass + 1,
+        noScene: !snap.sceneOn || thinkingSceneOff(),
       });
-      const systemPrompt = renderPersona(speaker, snap.intensity);
+      const systemPrompt = (() => {
+        // Thinking-first pilot: pilotEntry resolved above covers both the
+        // turn instruction and this system prompt. Every other seat — and
+        // every seat with the flag off — keeps the old style-essence persona.
+        if (pilotEntry) {
+          const mode = intensityToThinkMode(snap.intensity);
+          const slicePrev = n === 0 ? null : (collected[collected.length - 1]?.response_text ?? null);
+          const { system } = composePersona(pilotEntry, question, slicePrev, previousSpeaker?.slug ?? null, {
+            mode,
+            anonymous: snap.anonThinker,
+            feelings: snap.feelingsOn,
+            relations: snap.thinkerRelations,
+          });
+          if (!thinkingPilotUsedRef.current.includes(mode)) thinkingPilotUsedRef.current.push(mode);
+          return system;
+        }
+        return renderPersona(speaker, snap.intensity);
+      })();
       // Efficient economy trims the fed-back predecessor text (the displayed
       // and exported transcript keeps everything). Voices are untouched —
       // personas are never trimmed. Shared/Groq always trim: Groq's free tier
@@ -702,6 +767,9 @@ function App() {
         // tier walls single requests at ~7k input tokens (observed 413 at
         // 7271). Other providers keep the full six.
         const leanRation = snap.provider === 'shared' || snap.provider === 'groq';
+        // Quotation toggle off means paraphrase-only grounding at every
+        // mode (the Low header orders description, never lifting).
+        const groundIntensity = pilotEntry && !snap.quotesOn ? 'low' as const : snap.intensity;
         try {
           // Query in the speaker's OWN words: the question plus their own
           // developing line. PREV's full text used to ride here — another
@@ -711,7 +779,7 @@ function App() {
             speaker.full_name,
             `${question} ${ownPriorLines.join(' ')}`.slice(0, 800),
             leanRation ? 2 : 6,
-            snap.intensity,
+            groundIntensity,
             leanRation ? 650 : 0,
           );
           if (runRef.current !== runId) return;
@@ -732,7 +800,7 @@ function App() {
             const rationed = leanRation
               ? passages.slice(0, 2).map((p) => ({ text: smartCut(p.text, 650) }))
               : passages;
-            groundingBlock = formatGroundedBlock(g.source.title, g.number, rationed, snap.intensity);
+            groundingBlock = formatGroundedBlock(g.source.title, g.number, rationed, groundIntensity);
             groundingReceipt = {
               title: g.source.title,
               number: g.number,
@@ -746,15 +814,19 @@ function App() {
         buildUserMessage({
           question,
           prevText,
-          relationshipLine: relationshipBlock || null,
+          // Pilot seats meet PREV through their fault line, not the debt
+          // narration; stock openers are old-voice machinery with a
+          // verbatim-lift record — the pilot path carries neither.
+          relationshipLine: pilotEntry ? null : (relationshipBlock || null),
           ownPriorLines,
-          // Lean ration on shared/Groq: the margins note (first when present)
-          // plus five seats — the full survey can't fit Groq's free-tier wall.
-          othersPriorLines: (snap.provider === 'shared' || snap.provider === 'groq') && othersPriorLines.length > 6
+          // Full-conversation toggle off means PREV only: no survey lines ride
+          // (margins entries are gated separately above).
+          othersPriorLines: pilotEntry && !snap.fullSurvey ? [] : (snap.provider === 'shared' || snap.provider === 'groq') && othersPriorLines.length > 6
             ? [othersPriorLines[0], ...othersPriorLines.slice(1, 6)]
             : othersPriorLines,
           turnInstruction,
           stockBlock: (() => {
+            if (pilotEntry) return '';
             // The opener has no predecessor ("Do not refer to any other
             // thinker"), so PREV-addressed openers must not ride in its
             // prompt — they used to, contradicting the opening instruction.
@@ -781,18 +853,20 @@ function App() {
               ...(reframing.length ? [`REFRAMING: ${reframing.join(' / ')}`] : []),
             ].join('\n');
           })(),
-          spentPhrases: isOpeningTurn || snap.intensity === 'low' ? [] : spentRef.current,
+          spentPhrases: pilotEntry || isOpeningTurn || snap.intensity === 'low' ? [] : spentRef.current,
           intensity: snap.intensity,
           surveyKind: pass === 1 ? 'early' : 'late',
+          visitorRedirects: [...redirectRef.current].reverse().map((r) => r.text),
         }),
       ];
       if (groundingBlock) messageParts.push('', groundingBlock);
       // Closing scan at every level just before the JSON hint (closest
-      // instruction to generation; the hint itself stays final). Low keeps
-      // its own language check on top.
-      if (snap.intensity === 'low') messageParts.push('', LOW_CLOSING_REMINDER);
+      // instruction to generation; the hint itself stays final). The old Low
+      // reminder orders plain words and contradicts modes, so pilot turns
+      // skip it at every level; the scan (echo last gate) stays for all.
+      if (snap.intensity === 'low' && !pilotEntry) messageParts.push('', LOW_CLOSING_REMINDER);
       messageParts.push('', buildClosingScan(snap.intensity));
-      const userMessage = [...messageParts, '', STRUCTURED_OUTPUT_HINT + (snap.intensity === 'medium' ? ` ${GLOSSARY_SHAPE}` : '')].join('\n');
+      const userMessage = [...messageParts, ...(pilotEntry ? ['', PILOT_LAST_WORD] : []), '', STRUCTURED_OUTPUT_HINT + (snap.intensity === 'medium' ? ` ${GLOSSARY_SHAPE}` : '')].join('\n');
       setActivePass(pass);
       setActiveAgent(seatPos);
       setThinkingName(speaker.full_name);
@@ -815,10 +889,11 @@ function App() {
       // Gloss audit hook (Sep 2026): the auto-retry was rolled back as
       // spend-without-gain — the fifth key stays as a cheap nudge, but no
       // turn is ever re-sent for it. Bare-term counts, if ever needed, go here.
-      // Echo watch (Sep 2026): the rewrite retry was rolled back as
-      // spend-without-gain (10 retries, echo persisted) — the detector stays
-      // as a cost-free logger so evals keep measuring, and flags the card
-      // with a visible badge. Revert: delete block + badge + echoMap state.
+      // Echo enforcement (Phase 11): the blind rewrite retry was rolled back
+      // as spend-without-gain (10 retries, echo persisted) — but it never
+      // said WHAT was shared. One localized attempt names the offending run;
+      // failure keeps the original turn plus badge and export mark, never
+      // blocks the sitting. Revert: delete the repair attempt, keep logger.
       // (Computed here against pre-turn priors; filed under the item id below.)
       // Loan-aware (Sep 2026): grams appearing in shown grounding passages
       // are shared source vocabulary, not echo — excluded on both sides so
@@ -827,16 +902,38 @@ function App() {
         ...collected.flatMap((item) => groundMap[item.id]?.passages ?? []),
         ...(groundingReceipt?.passages ?? []),
       ];
-      const echoHit = sharesPassage(
+      const echoPriors = [
+        ...collected.map((item) => item.response_text),
+        ...(codaEarlyRef.current ? [codaEarlyRef.current] : []),
+        ...(codaRef.current ? [codaRef.current] : []),
+      ];
+      let echoHit = sharesPassage(
         `${output.negation} ${output.reformulation}`,
-        [
-          ...collected.map((item) => item.response_text),
-          ...(codaEarlyRef.current ? [codaEarlyRef.current] : []),
-          ...(codaRef.current ? [codaRef.current] : []),
-        ],
+        echoPriors,
         8,
         loanTexts,
       );
+      if (echoHit) {
+        const sample = findSharedPassage(
+          `${output.negation} ${output.reformulation}`,
+          echoPriors,
+          8,
+          loanTexts,
+        );
+        if (sample) {
+          try {
+            const repaired = await generateWithProvider(snap, systemPrompt, `${userMessage} ${ECHO_REPAIR_SUFFIX} Shared run to eliminate: “…${sample}…”.`, snap.longForm);
+            if (runRef.current !== runId) return;
+            if (!sharesPassage(`${repaired.negation} ${repaired.reformulation}`, echoPriors, 8, loanTexts)) {
+              output = repaired;
+              incrementRepair('echo');
+              echoHit = false;
+            }
+          } catch {
+            // Repair call failed — keep the original turn; badge stays.
+          }
+        }
+      }
       if (echoHit && typeof console !== 'undefined') {
         console.warn(`[Echo] overlap kept (logger only) for ${speaker.full_name}.`);
       }
@@ -875,7 +972,7 @@ function App() {
     // The ending summary barges in once, after the final seat, reading only
     // the final round. A failed note never breaks the sitting.
     if (typeof console !== 'undefined') console.info('[Margins-end] trigger reached.');
-    if (!codaEndRef.current) {
+    if (!codaEndRef.current && snap.genzOn) {
       await runCoda(runId, collected, snap, 'end');
       if (runRef.current !== runId) return;
     }
@@ -1030,6 +1127,10 @@ function App() {
     threadCityRef.current = drawThreadCity();
     setThreadCity(threadCityRef.current);
     runLevelsRef.current = [settings.intensity];
+    thinkingPilotUsedRef.current = [];
+    toggleTrailRef.current = [];
+    redirectRef.current = [];
+    setRedirectDraft('');
     sittingStartedAt.current = Date.now();
     debateEndedAt.current = null;
     spentRef.current = [];
@@ -1125,6 +1226,10 @@ function App() {
     provRef.current = [];
     resetUsage();
     runLevelsRef.current = [];
+    thinkingPilotUsedRef.current = [];
+    toggleTrailRef.current = [];
+    redirectRef.current = [];
+    setRedirectDraft('');
     spentRef.current = [];
     setSelectedIntervention(null);
   };
@@ -1158,7 +1263,11 @@ function App() {
         inventedTags.push({ pass: item.pass_number, name, tags: invented });
         if (typeof console !== 'undefined') console.warn(`[Provenance] invented tags in pass ${item.pass_number} ${name}:`, invented.join(' '));
       }
-      return `PASS ${item.pass_number} — ${name}\n\n${clean}\n`;
+      // Echo honesty: a turn that kept shared wording after the localized
+      // repair (or with no repair possible) is marked in the export, not
+      // just badged on the card — grades must see it without the session.
+      const echoMark = echoMap[item.id] ? '\n☞ shares wording with an earlier turn.\n' : '';
+      return `PASS ${item.pass_number} — ${name}\n\n${clean}\n${echoMark}`;
     };
     // Each note sits where it spoke: the early note between pass 1 and pass 2,
     // the late note between the pass-2 close and pass-3 open.
@@ -1173,6 +1282,9 @@ function App() {
     const trailingCoda = `${codaEarly && !pass2.length ? earlyText : ''}${coda && !late.length ? codaText : ''}${codaEnd && !late.length ? endText : ''}`;
     const serviceText = serviceLog.length
       ? `\nPHILOSOPHERS' SERVICE\n${serviceLog.map((entry) => `— ${entry.thinker} was asked:\n${entry.question}\n— ${entry.thinker} answered:\n${entry.answer.replace(/\[\d+\]/g, '').replace(/[ \t]+/g, ' ')}\n${entry.sources.length ? `— Sources shown: ${entry.sources.join('; ')}\n` : ''}`).join('\n')}`
+      : '';
+    const redirectText = redirectRef.current.length
+      ? `\nVISITOR REDIRECTS\n${redirectRef.current.map((r) => `— after turn ${r.at}: ${r.text}`).join('\n')}\n`
       : '';
     const readingList = `\nREADING LIST\n${citedNumbers.length
       ? entriesForNumbers(citedNumbers).map(({ number, source }) => {
@@ -1194,10 +1306,14 @@ function App() {
     // the picker value at export time is NOT truth (Sep 19 2026: a Medium run
     // exported as "low" after the picker moved). Mid-sitting changes print all.
     const runLevels = [...new Set(runLevelsRef.current)];
+    const modeName = (l: string) => l === 'low' ? 'think' : l === 'high' ? 'think & sound' : 'teach';
     const levelText = runLevels.length > 1
-      ? `${runLevels.join(' → ')} (level changed mid-sitting)`
-      : (runLevels[0] ?? settings.intensity);
-    const settingsText = `\nSITTING\n— Level: ${levelText} · Long form: ${settings.longForm ? 'on' : 'off'} · Grounding: ${settings.grounding ? 'on' : 'off'} · Economy: ${settings.economy} (at export)${threadCityRef.current ? ` · Thread city: ${threadCityRef.current}` : ''} · Prompt v${PROMPT_VERSION}\n${(() => {
+      ? `${runLevels.map(modeName).join(' → ')} (mode changed mid-sitting)`
+      : (modeName(runLevels[0] ?? settings.intensity));
+    const pilotModes = [...new Set(thinkingPilotUsedRef.current)];
+    const toggleTrail = [...new Set(toggleTrailRef.current)];
+    const mechText = toggleTrail.some((t) => t !== 'defaults') ? ` · Mechanics: ${toggleTrail.join(' → ')}` : '';
+    const settingsText = `\nSITTING\n— Level: ${levelText}${pilotModes.length ? ` · Thinking files (modes: ${pilotModes.join('/')})${pilotModes.includes('teach') || pilotModes.includes('thinkAndSound') ? ' + EXPRESSION where the mode required it' : ' — no expression rode'}${thinkingSceneOff() ? ' (no-scene variant)' : ''}` : ''}${mechText} · Long form: ${settings.longForm ? 'on' : 'off'} · Grounding: ${settings.grounding ? 'on' : 'off'} · Economy: ${settings.economy} (at export)${threadCityRef.current ? ` · Thread city: ${threadCityRef.current}` : ''} · Prompt v${PROMPT_VERSION}\n${(() => {
       if (!sittingStartedAt.current) return '— Tested: time not recorded (sitting predates the stopwatch)\n';
       const started = new Date(sittingStartedAt.current);
       const fmt = (ms: number) => {
@@ -1231,7 +1347,7 @@ function App() {
     })()}\n`;
     // BOM + explicit charset: without them some viewers (notably Windows
     // Notepad) decode UTF-8 smart quotes/dashes as Latin-1 mojibake (â€…).
-    const text = `\uFEFF${body}${trailingCoda}${serviceText}${readingList}${provenanceText}${inventedText}${settingsText}${usageText}`;
+    const text = `\uFEFF${body}${trailingCoda}${redirectText}${serviceText}${readingList}${provenanceText}${inventedText}${settingsText}${usageText}`;
     const blob = new Blob([text], { type: 'text/plain;charset=utf-8' });
     const url = URL.createObjectURL(blob);
     const anchor = document.createElement('a');
@@ -1302,15 +1418,25 @@ function App() {
             <div className="dark-academia-card p-4 md:p-5 mb-5" id="question-card">
               <div className="flex items-center justify-between gap-4 mb-3">
                 <label htmlFor="question" className="font-heading text-sm uppercase tracking-[0.16em] text-[#4a392d]">The contemporary problem</label>
-                <span className="text-xs text-[#465f75]/65">The question remains constant; its formulation may change.</span>
+                <span className="text-xs text-[#465f75]/65">Yours to rewrite — clear the box and pose any question; the table debates whatever stands here when you press Begin.</span>
               </div>
-              <textarea id="question" value={question} onChange={(event) => setQuestion(event.target.value)} disabled={isRunning} className="w-full min-h-[72px] resize-y bg-[#eae1ca]/60 border border-[#4a392d]/25 rounded-sm p-3 text-base leading-relaxed text-[#465f75] placeholder:text-[#465f75]/45 focus:outline-none focus:ring-2 focus:ring-[#8b5254]/30" />
+              <textarea id="question" value={question} onChange={(event) => setQuestion(event.target.value)} disabled={isRunning} placeholder="Type your own question here…" className="w-full min-h-[72px] resize-y bg-[#eae1ca]/60 border border-[#4a392d]/25 rounded-sm p-3 text-base leading-relaxed text-[#465f75] placeholder:text-[#465f75]/45 focus:outline-none focus:ring-2 focus:ring-[#8b5254]/30" />
               <div className="flex flex-wrap gap-3 mt-4">
                 <button className="btn-primary flex items-center gap-2" onClick={isRunning ? pauseMeeting : interventions.length ? resumeMeeting : startMeeting} disabled={!question.trim() || orderedPhilosophers.length < 2 || (!isRunning && (!hasKey || isComplete || freeTierNeedsLow))}>{isRunning ? <><CirclePause size={17} /> Pause circuit</> : <><CirclePlay size={17} /> {isComplete ? 'Cabinet complete' : interventions.length ? 'Resume cabinet' : 'Begin cabinet'}</>}</button>
                 <button className="btn-secondary flex items-center gap-2" onClick={resetMeeting}><RotateCcw size={15} /> Restart</button>
                 <button className="btn-secondary flex items-center gap-2" onClick={exportTranscript} disabled={!interventions.length}><Download size={15} /> Export</button>
               </div>
-              {freeTierNeedsLow && !isRunning && <p className="text-sm italic text-[#8b5254] mt-3">{settings.provider === 'groq' ? 'Your Groq key speaks Low only — the free tier cannot fit Medium or High prompts (they halt on the first turn; no wait fixes it). ' : 'The shared key speaks Low only — its free tier cannot fit Medium or High prompts (they halt mid-sitting). '}<button className="underline" onClick={() => updateSettings({ ...settings, intensity: 'low' })}>Continue at Low</button>{settings.provider === 'shared' ? <> or <button className="underline" onClick={() => openSettings('key')}>add your own key</button> for the full voice.</> : <> or switch provider for the full voice.</>}</p>}
+              {!isRunning && interventions.length > 0 && !isComplete && (
+                <div className="mt-3 border-t border-[#4a392d]/15 pt-3">
+                  <label htmlFor="redirect" className="font-heading text-xs uppercase tracking-[0.16em] text-[#4a392d] block mb-2">Interrupt & redirect</label>
+                  <textarea id="redirect" value={redirectDraft} onChange={(event) => setRedirectDraft(event.target.value)} placeholder="Steer the debate — the next speaker answers this first, then PREV…" className="w-full min-h-[48px] resize-y bg-[#eae1ca]/60 border border-[#4a392d]/25 rounded-sm p-2 text-sm leading-relaxed text-[#465f75] placeholder:text-[#465f75]/45 focus:outline-none focus:ring-2 focus:ring-[#8b5254]/30" />
+                  <div className="flex flex-wrap gap-2 mt-2">
+                    <button className="btn-secondary !text-xs" disabled={!redirectDraft.trim()} onClick={() => { redirectRef.current.push({ at: interventions.length, text: redirectDraft.trim().slice(0, 500) }); setRedirectDraft(''); resumeMeeting(); }}>Inject & resume</button>
+                    {redirectRef.current.length > 0 && <button className="btn-secondary !text-xs" onClick={() => { redirectRef.current = []; }}>Clear redirects ({redirectRef.current.length})</button>}
+                  </div>
+                </div>
+              )}
+              {freeTierNeedsLow && !isRunning && <p className="text-sm italic text-[#8b5254] mt-3">{settings.provider === 'groq' ? 'Your Groq key speaks Think only — the free tier cannot fit Teach or Think & sound prompts (they halt on the first turn; no wait fixes it). ' : 'The shared key speaks Think only — its free tier cannot fit Teach or Think & sound prompts (they halt mid-sitting). '}<button className="underline" onClick={() => updateSettings({ ...settings, intensity: 'low' })}>Continue in Think</button>{settings.provider === 'shared' ? <> or <button className="underline" onClick={() => openSettings('key')}>add your own key</button> for the full voice.</> : <> or switch provider for the full voice.</>}</p>}
               {!hasKey && <p className="text-sm italic text-[#8b5254] mt-3">Add your {activeKeyLabel} in <button className="underline" onClick={() => setShowSettings(true)}>Settings</button> to begin — it stays in this browser and goes straight to the provider alone; we never see it{settings.provider === 'openrouter' ? ', and goes straight to OpenRouter.' : settings.provider === 'groq' ? ', and goes straight to Groq.' : settings.provider === 'deepinfra' ? ', and goes straight to DeepInfra.' : settings.provider === 'together' ? ', and goes straight to Together.' : settings.provider === 'alibaba' ? ', and goes straight to Alibaba.' : '.'}</p>}
               {runError && (runError.code === 'quota' ? <div role="alert" className="mt-3 p-5 bg-[#8b5254]/10 border-l-2 border-[#8b5254]"><p className="text-xs uppercase tracking-widest text-[#8b5254]">Paused — free-tier quota reached</p><p className="text-sm mt-2 text-[#465f75]">{runError.message}</p><p className="text-sm mt-2 text-[#465f75]">Nothing is lost: {interventions.length} of {orderedPhilosophers.length * 3} interventions are kept, and read-aloud plus export keep working. Quotas reset with time — per-minute caps within minutes, daily caps the next day.</p><div className="flex flex-wrap gap-2 mt-3"><button className="btn-secondary" onClick={() => resumeMeeting()} disabled={!hasKey}>Try resume</button>{settings.provider === 'shared' && <button className="btn-secondary" onClick={() => { setRunError(null); setShowSettings(true); }}>Use my own key instead</button>}{settings.provider === 'openrouter' && settings.openRouterMode === 'paid' && <button className="btn-secondary" onClick={switchToFreeCycleAndResume}>Back to free cycle & resume</button>}{(settings.provider === 'groq' || settings.provider === 'deepinfra' || settings.provider === 'together' || settings.provider === 'alibaba') && <button className="btn-secondary" onClick={() => switchProviderAndResume('shared')}>Fall back to shared</button>}<button className="btn-secondary" onClick={() => setShowSettings(true)}>Open settings</button>{settings.provider === 'openrouter' ? <a className="btn-secondary" href="https://openrouter.ai/activity" target="_blank" rel="noreferrer">Check usage</a> : settings.provider === 'groq' ? <a className="btn-secondary" href="https://console.groq.com" target="_blank" rel="noreferrer">Check usage</a> : settings.provider === 'deepinfra' ? <a className="btn-secondary" href="https://deepinfra.com/dash" target="_blank" rel="noreferrer">Check usage</a> : settings.provider === 'together' ? <a className="btn-secondary" href="https://api.together.xyz/settings/api-keys" target="_blank" rel="noreferrer">Check usage</a> : settings.provider === 'alibaba' ? <a className="btn-secondary" href="https://bailian.console.aliyun.com/" target="_blank" rel="noreferrer">Check usage</a> : null}<button className="btn-secondary" onClick={() => setRunError(null)}>Dismiss</button></div></div> : <div className="mt-3 p-4 bg-[#8b5254]/8 border-l-2 border-[#8b5254]"><p className="text-xs uppercase tracking-widest text-[#8b5254]">Philosopher Strike Demand</p><p className="text-sm mt-1 text-[#465f75]">{runError.message}</p><div className="flex flex-wrap gap-2 mt-3"><button className="btn-secondary" onClick={resumeMeeting} disabled={!hasKey}>Resume cabinet</button><button className="btn-secondary" onClick={() => setShowSettings(true)}>Open settings</button><button className="btn-secondary" onClick={() => setRunError(null)}>Dismiss</button></div></div>)}
             </div>
@@ -1478,8 +1604,8 @@ function HowBuilt() {
     {
       title: 'Grounding',
       body: 'Every speaker searches its own indexed books first — 11,000+ passages, word-stems not embeddings — and must borrow their actual vocabulary. Receipts ride under each turn, inspectable, and the export lists what was shown.',
-      link: `${REPO}/PLAN.md`,
-      label: 'retrieval design',
+      link: `${REPO}/src/lib/rag-search.ts`,
+      label: 'scorer',
     },
     {
       title: 'Model funnel',
@@ -1732,7 +1858,7 @@ function WelcomeModal({ onClose, onOpenSettings, ttsSupported, listening, onList
         <div className="space-y-4 mt-5 text-[15px] leading-relaxed text-[#465f75]">
           <p><span className="drop-cap">A</span>sk your question of the Philosophers' Table and watch dead thinkers debate it. Convene 4–6 of us (all 12 means a slow 36 turns); each speaks 3 times across three passes. Read along below the table, or export it all as one text file.</p>
           <p>Each of us answers only our predecessor — negating on its own premises, preserving what holds, handing a contradiction clockwise. Whatever truth appears shows up <em>between</em> our seats, never handed down.</p>
-          <p>Lost? Ring the Service desk bell (bottom-right): one thinker, plain definitions, an example, a check-back question — 20 per sitting, with its own voice picker. First set the table's voice in Settings → Voice: <strong>Low</strong> speaks plainly, <strong>Medium</strong> explains its terms, <strong>High</strong> runs at full difficulty. Ideas unchanged throughout.</p>
+          <p>Lost? Ring the Service desk bell (bottom-right): one thinker, plain definitions, an example, a check-back question — 20 per sitting, with its own mode picker. First set the table's mode in Settings → Options: <strong>Think</strong> reasons plainly, <strong>Teach</strong> explains its terms, <strong>Think & sound</strong> runs the full voice. Same mind throughout.</p>
           <p>No question? Scroll past the table to the Senior common room — the twelve idling out loud whenever an idea appears, no debate, no verdict.</p>
           <p>Start on the shared key: no account, nothing to configure. When the commons runs dry, bring your own — OpenRouter, Groq, DeepInfra, Together or Alibaba; keys stay in your browser. Test the key in Settings; if we ever halt, read the notice — Resume usually fixes it.</p>
         </div>
@@ -1764,7 +1890,7 @@ function SourceDrawer({ target, onClose }: { target: number | null; onClose: () 
   return <div className="fixed inset-0 z-50 bg-[#4a392d]/30 backdrop-blur-sm" onClick={onClose}><aside className="absolute right-0 top-0 bottom-0 w-full max-w-xl parchment-bg p-6 md:p-8 overflow-y-auto custom-scroll" onClick={(event) => event.stopPropagation()} role="dialog" aria-modal="true" aria-label="Corpus manifest"><div className="flex items-start justify-between mb-2"><div><p className="pass-indicator text-[#8b5254]">Corpus manifest</p><h2 className="text-3xl">Further reading</h2><p className="italic text-[#465f75]/65 mt-1">The works behind the cabinet — full-text badges mean indexed and searchable when Grounding is on.</p></div><button className="btn-secondary !px-3" onClick={onClose} aria-label="Close corpus manifest"><X size={17} /></button></div><p className="text-xs uppercase tracking-widest text-[#465f75]/60 mb-5">{sorted.length} works · newest first · numbers are stable file order</p><div className="space-y-3">{sorted.map((source) => { const number = CORPUS_SOURCES_DATA.indexOf(source) + 1; return <div key={`${source.author}-${source.title}`} id={`ref-${number}`} className={`border-b border-[#4a392d]/15 pb-3 ${target === number ? 'ref-flash' : ''}`}><div className="flex justify-between gap-3"><p className="font-heading text-base text-[#4a392d]"><span className="text-xs text-[#8b5254] mr-2" aria-label={`Reference ${number}`}>[{number}]</span>{source.source_url ? <a href={source.source_url} target="_blank" rel="noreferrer" className="underline underline-offset-2 decoration-[#8b5254]/40 hover:decoration-[#8b5254]">{source.title}</a> : source.title}</p><span className={`text-[9px] whitespace-nowrap uppercase tracking-wider ${source.full_text_ingested ? 'text-[#4a6b3f]' : 'text-[#8b5254]'}`}>{source.full_text_ingested ? 'Full text' : 'Metadata'}</span></div><p className="text-sm text-[#465f75]/70">{source.author} · {source.publication_date ?? 'undated'}</p><p className="text-[10px] uppercase tracking-widest text-[#8b5254]/80 mt-1">{source.licence_status}</p>{source.link_note && <p className="text-xs italic mt-1 text-[#8b5254]">⚠ {source.link_note}</p>}</div>; })}</div></aside></div>;
 }
 
-function SettingsDrawer({ philosophers, activeSlugs, togglePhilosopher, settings, onSettingsChange, display, onDisplayChange, initialTab, onClose }: { philosophers: Philosopher[]; activeSlugs: string[]; togglePhilosopher: (slug: string) => void; settings: CabinetSettings; onSettingsChange: (next: CabinetSettings) => void; display: AccessibilitySettings; onDisplayChange: (next: AccessibilitySettings) => void; initialTab: 'key' | 'seats' | 'voice' | 'display'; onClose: () => void }) {
+function SettingsDrawer({ philosophers, activeSlugs, togglePhilosopher, settings, onSettingsChange, display, onDisplayChange, initialTab, onClose }: { philosophers: Philosopher[]; activeSlugs: string[]; togglePhilosopher: (slug: string) => void; settings: CabinetSettings; onSettingsChange: (next: CabinetSettings) => void; display: AccessibilitySettings; onDisplayChange: (next: AccessibilitySettings) => void; initialTab: 'key' | 'seats' | 'options' | 'display'; onClose: () => void }) {
   const [orKeyInput, setOrKeyInput] = useState(settings.openRouterApiKey);
   const [groqKeyInput, setGroqKeyInput] = useState(settings.groqApiKey);
   const [deepInfraKeyInput, setDeepInfraKeyInput] = useState(settings.deepInfraApiKey);
@@ -1799,7 +1925,7 @@ function SettingsDrawer({ philosophers, activeSlugs, togglePhilosopher, settings
     const whenStr = isNaN(when.getTime()) ? '' : when.toLocaleString([], { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' });
     return <p className={`text-xs italic ${h.state === 'ok' ? 'text-[#4a6b3f]' : 'text-[#8b5254]'}`}>Last check{whenStr ? ` ${whenStr}` : ''} — {h.state === 'ok' ? 'OK' : 'failed'}: {h.detail}</p>;
   };
-  const [tab, setTab] = useState<'key' | 'seats' | 'voice' | 'display'>(initialTab);
+  const [tab, setTab] = useState<'key' | 'seats' | 'options' | 'display'>(initialTab);
   const usingOpenRouter = settings.provider === 'openrouter';
   const usingGroq = settings.provider === 'groq';
   const usingDeepInfra = settings.provider === 'deepinfra';
@@ -1894,16 +2020,16 @@ function SettingsDrawer({ philosophers, activeSlugs, togglePhilosopher, settings
           <button className="btn-secondary !px-3" onClick={onClose} aria-label="Close settings"><X size={17} /></button>
         </div>
         <div className="flex gap-2 mb-6" role="tablist" aria-label="Settings sections">
-          {(['seats', 'voice', 'display', 'key'] as const).map((t) => (
+          {(['seats', 'options', 'display', 'key'] as const).map((t) => (
             <button key={t} role="tab" aria-selected={tab === t} onClick={() => setTab(t)} className={`btn-secondary capitalize ${tab === t ? '!border-[#8b5254] !text-[#8b5254]' : ''}`}>
-              {t === 'key' ? 'Key' : t === 'seats' ? 'Seats' : t === 'voice' ? 'Voice' : 'Display'}
+              {t === 'key' ? 'Key' : t === 'seats' ? 'Seats' : t === 'options' ? 'Options' : 'Display'}
             </button>
           ))}
         </div>
         {tab === 'key' && (
           <div className="space-y-3 border-b border-[#4a392d]/15 pb-6 mb-6">
             <p className="italic text-sm text-[#465f75]/70">Your own keys stay in this browser and go only to the named provider (OpenRouter → OpenRouter, whose free models may log prompts for training; Groq → Groq; DeepInfra → DeepInfra; Together → Together; Alibaba → Alibaba Model Studio). Naturally each provider also holds your key on their servers — that is how API keys work. What we never do: see them, store them, or ask for any login. The shared cabinet key never leaves the server. Nothing identifying is collected here.</p>
-            <p className="text-xs text-[#465f75]/70">What it costs, roughly: <span className="font-heading">free</span> — Cabinet shared (shared quota), Groq, OpenRouter cycle. <span className="font-heading">Pennies a sitting</span> — OpenRouter paid (~$0.01–0.06), DeepInfra (~$0.03). <span className="font-heading">Dear (~$0.40 a sitting)</span> — Alibaba max, Together. <span className="font-heading">Trial $0 to Dec</span> — Alibaba. Vague estimates from list prices; every export prints the measured cost, and the model behind each turn is named there too.</p>
+            <p className="text-xs text-[#465f75]/70">What it costs, roughly: <span className="font-heading">free</span> — Cabinet shared (shared quota), Groq, OpenRouter cycle. <span className="font-heading">Pennies a sitting</span> — OpenRouter paid (~$0.01–0.06), DeepInfra (~$0.03). <span className="font-heading">Dear (~$0.40 a sitting)</span> — Alibaba max, Together. <span className="font-heading">Free quota</span> — Alibaba. Vague estimates from list prices; every export prints the measured cost, and the model behind each turn is named there too.</p>
             <span className="font-heading text-sm uppercase tracking-[0.16em] text-[#4a392d] block">Provider</span>
             <div className="flex flex-wrap gap-2" role="radiogroup" aria-label="AI provider">
               <button role="radio" aria-checked={settings.provider === 'shared'} title="No key needed — the cabinet's own key, a few sittings a day each." onClick={() => { setTestState('idle'); setTestMessage(''); onSettingsChange({ ...settings, provider: 'shared' }); }} className={`btn-secondary ${settings.provider === 'shared' ? '!border-[#8b5254] !text-[#8b5254]' : ''}`}>Cabinet shared</button>
@@ -1914,7 +2040,7 @@ function SettingsDrawer({ philosophers, activeSlugs, togglePhilosopher, settings
               <button role="radio" aria-checked={usingAlibaba} title="Your Alibaba key — Model Studio codes, free trial quota." onClick={() => { setTestState('idle'); setTestMessage(''); onSettingsChange({ ...settings, provider: 'alibaba' }); }} className={`btn-secondary ${usingAlibaba ? '!border-[#8b5254] !text-[#8b5254]' : ''}`}>Alibaba</button>
             </div>
             {settings.provider === 'shared' ? (
-              <p className="text-xs text-[#465f75]/70">No key needed — the cabinet runs on its own key, held server-side and shared across visitors (about two full sessions a day each): Alibaba's trial bench first, Groq behind it. The export names the model behind each turn, so you can always see who spoke. If the shared quota runs dry, add your own OpenRouter, Groq, DeepInfra, Together or Alibaba key below by switching provider.</p>
+              <p className="text-xs text-[#465f75]/70">No key needed — the cabinet runs on its own key, held server-side and shared across visitors (about two full sessions a day each): shared quota first, Groq behind it. The export names the model behind each turn, so you can always see who spoke. If the shared quota runs dry, add your own OpenRouter, Groq, DeepInfra, Together or Alibaba key below by switching provider.</p>
             ) : usingGroq ? (
               <>
                 <label htmlFor="groq-key" className="font-heading text-sm uppercase tracking-[0.16em] text-[#4a392d]">Groq API key (free)</label>
@@ -2022,28 +2148,47 @@ function SettingsDrawer({ philosophers, activeSlugs, togglePhilosopher, settings
         {tab === 'seats' && (
           <div>
             <div className="flex items-start justify-between mb-4"><div><p className="pass-indicator text-[#8b5254]">Who sits at the table</p><h2 className="text-2xl">Cabinet selection</h2></div></div>
-            <div className="space-y-2">{DEFAULT_SEATING_ORDER.map((slug) => {
+            <div className="space-y-2">{DEFAULT_SEATING_ORDER.filter((slug) => slug !== 'genzie').map((slug) => {
               const philosopher = philosophers.find((item) => item.slug === slug);
               const isActive = activeSlugs.includes(slug);
               if (!philosopher) return null;
               return <button key={slug} onClick={() => togglePhilosopher(slug)} aria-pressed={isActive} title={philosopher.biography} className={`w-full flex items-center gap-3 p-3 border transition-all ${isActive ? 'bg-[#f2ebd9]/65 border-[#4a392d]/40' : 'bg-transparent border-[#4a392d]/10 opacity-50 hover:opacity-80'}`}><div className={`w-5 h-5 rounded-sm border flex items-center justify-center ${isActive ? 'bg-[#8b5254] border-[#8b5254]' : 'border-[#4a392d]/30'}`}>{isActive && <X size={12} className="text-white" />}</div><span className="w-8 h-8 rounded-full border flex items-center justify-center font-heading" style={{ borderColor: philosopher.accent_color, color: philosopher.accent_color }}>{philosopher.name.charAt(0)}</span><span className="font-heading text-lg text-[#4a392d]">{philosopher.full_name}</span></button>;
             })}</div>
-            <p className="text-xs italic text-[#465f75]/60 mt-5">The baton passes only to active thinkers, always to the immediate next seat. The dialectical order remains fixed to preserve the historical-conceptual movement.</p>
+            <p className="text-xs italic text-[#465f75]/60 mt-5">The baton passes only to active thinkers, always to the immediate next seat. The dialectical order remains fixed to preserve the historical-conceptual movement. Genzie is not seated — they speak from the margins regardless.</p>
             <p className="text-xs text-[#465f75]/70 mt-2">{activeSlugs.length} thinkers × 3 passes = {activeSlugs.length * 3} turns{activeSlugs.length > 5 ? ' — five seats (≈15 turns) is the recommended session; it halves token use with the arc intact.' : ' — a lean session.'}</p>
           </div>
         )}
-        {tab === 'voice' && (
+        {tab === 'options' && (
           <div>
-            <div className="flex items-start justify-between mb-4"><div><p className="pass-indicator text-[#8b5254]">How the table talks</p><h2 className="text-2xl">Voice</h2></div></div>
+            <div className="flex items-start justify-between mb-4"><div><p className="pass-indicator text-[#8b5254]">How the table talks</p><h2 className="text-2xl">Options</h2></div></div>
             <div className="space-y-3">
-              <span className="font-heading text-sm uppercase tracking-[0.16em] text-[#4a392d] block" title="How hard the language hits. Ideas stay the same at every level — only the words change.">How it speaks (all seats)</span>
-              <p className="text-xs italic text-[#465f75]/70">Low speaks plainly · Medium explains its terms · High runs at full difficulty — the ideas stay the same. Medium is a good starting point: drop to Low if too hard, up to High for the full voice.</p>
-              <div className="flex gap-2" role="radiogroup" aria-label="Style intensity">
-                <button role="radio" aria-checked={settings.intensity === 'low'} title="Plain everyday words — the easiest read. Temper unchanged." onClick={() => onSettingsChange({ ...settings, intensity: 'low' })} className={`btn-secondary capitalize ${settings.intensity === 'low' ? '!border-[#8b5254] !text-[#8b5254]' : ''}`}>Low</button>
-                <button role="radio" aria-checked={settings.intensity === 'medium'} title="The standard seminar — important terms kept and explained." onClick={() => onSettingsChange({ ...settings, intensity: 'medium' })} className={`btn-secondary capitalize ${settings.intensity === 'medium' ? '!border-[#8b5254] !text-[#8b5254]' : ''}`}>Medium</button>
-                <button role="radio" aria-checked={settings.intensity === 'high'} title="Full voice — authentic vocabulary, hostile where the author warrants it." onClick={() => onSettingsChange({ ...settings, intensity: 'high' })} className={`btn-secondary capitalize ${settings.intensity === 'high' ? '!border-[#8b5254] !text-[#8b5254]' : ''}`}>High</button>
+              <span className="font-heading text-sm uppercase tracking-[0.16em] text-[#4a392d] block" title="Three modes: how the thinking is told. Same judgment at every mode.">Mode (all seats)</span>
+              <p className="text-xs italic text-[#465f75]/70">Think reasons with no added style · Teach keeps full complexity with every term explained · Think &amp; sound adds the full voice — same mind throughout.</p>
+              <div className="flex gap-2" role="radiogroup" aria-label="Mode">
+                <button role="radio" aria-checked={settings.intensity === 'low'} title="Think: pure reasoning, no added style. Names withheld when anonymous is on." onClick={() => onSettingsChange({ ...settings, intensity: 'low' })} className={`btn-secondary capitalize ${settings.intensity === 'low' ? '!border-[#8b5254] !text-[#8b5254]' : ''}`}>Think</button>
+                <button role="radio" aria-checked={settings.intensity === 'medium'} title="Teach: full complexity, every term explained — the bridge into the books." onClick={() => onSettingsChange({ ...settings, intensity: 'medium' })} className={`btn-secondary capitalize ${settings.intensity === 'medium' ? '!border-[#8b5254] !text-[#8b5254]' : ''}`}>Teach</button>
+                <button role="radio" aria-checked={settings.intensity === 'high'} title="Think & sound: full thinking in the full voice. Sounds like them because it thinks like them." onClick={() => onSettingsChange({ ...settings, intensity: 'high' })} className={`btn-secondary capitalize ${settings.intensity === 'high' ? '!border-[#8b5254] !text-[#8b5254]' : ''}`}>Think &amp; sound</button>
               </div>
-              {settings.intensity === 'medium' && <p className="text-xs italic text-[#8b5254]">Medium sends the most tokens of any level — pricier on metered keys and likelier to strain free-tier limits than Low or High.</p>}
+              {settings.intensity === 'medium' && <p className="text-xs italic text-[#8b5254]">Teach sends the most tokens of any mode — pricier on metered keys and likelier to strain free-tier limits than Think or Think & sound.</p>}
+              <p className="text-xs italic text-[#465f75]/70">Bookchin, Bloch and Spinoza speak from thinking-first files; every other seat keeps its old voice until migrated.</p>
+              <span className="font-heading text-sm uppercase tracking-[0.16em] text-[#4a392d] pt-2 block" title="Each option changes the debate visibly. Defaults are our best-tested setup; every combination stamps the export so grades compare per setup only.">Cabinet mechanics (advanced)</span>
+              <p className="text-xs italic text-[#465f75]/70">Each switch visibly changes how the table thinks. Defaults are our best guess — flip one at a time and compare sittings, never several at once.</p>
+              <div className="space-y-2">
+                {([
+                  ['anonThinker', 'Knows own name', 'On: seats arrive named. Off: anonymous — no name given, moves must identify.'],
+                  ['thinkerRelations', 'Knows table relationships', 'On: each seat meets its predecessor through their shared fault line. Off: argues from live claims alone.'],
+                  ['sceneOn', 'Concrete scene discussed', 'On: one thread city with a named scene carried sitting-wide. Off: argue the structure straight, no invented persons or places.'],
+                  ['quotesOn', 'Direct quotation', 'On: seats may lift short verbatim loans from shown passages. Off: paraphrase only, always cited.'],
+                  ['fullSurvey', 'Sees full conversation', 'On: pass 3 sees every seat’s one-line determinations. Off: each turn answers its predecessor only.'],
+                  ['genzOn', 'Gen Z reaction and summary', 'On: the margins note barges in twice plus a closing summary, and pass 3 must answer it. Off: no notes at all.'],
+                  ['feelingsOn', 'Emotional reactions', 'On: evidenced feeling rides with judgments (fury at domination, grief at loss). Off: moves arrive cool. Never decoration either way.'],
+                ] as const).map(([key, label, hint]) => (
+                  <div key={key} className="flex items-start justify-between gap-3">
+                    <p className="text-xs text-[#465f75]/80" title={hint}>{label}</p>
+                    <button role="checkbox" aria-checked={settings[key]} aria-label={label} title={hint} onClick={() => onSettingsChange({ ...settings, [key]: !settings[key] })} className={`btn-secondary !text-xs !py-1 shrink-0 ${settings[key] ? '!border-[#8b5254] !text-[#8b5254]' : ''}`}>{settings[key] ? 'On' : 'Off'}</button>
+                  </div>
+                ))}
+              </div>
               <span className="font-heading text-sm uppercase tracking-[0.16em] text-[#4a392d] pt-2 block" title="How long each answer runs. Short is the default — quick thrusts, not lectures.">Turn length</span>
               <p className="text-xs italic text-[#465f75]/70">Short is punchier and cheaper — pick Long only for slow, developed sittings.</p>
               <div className="flex gap-2" role="radiogroup" aria-label="Turn length">

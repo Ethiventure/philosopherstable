@@ -19,9 +19,12 @@ export const GROQ_MODEL_OPTIONS = ['qwen/qwen3.8-27b'];
  *  best voice first among equals): 3.7-plus default (clean probe; same
  *  weights as the Alibaba value crown — host differs), 3.7-flash (clean
  *  probe, cheapest), 3.8-flash (burn verdict reversed on new prompts).
- *  Dead pins fall through the list mid-sitting; stored GLM migrates. */
-export const OPENROUTER_PAID_OPTIONS = ['qwen/qwen3.7-plus', 'qwen/qwen3.7-flash', 'qwen/qwen3.8-flash'];
-export const ALIBABA_MODEL_OPTIONS = ['qwen3.8-max', 'qwen3.7-plus', 'qwen3.8-27b', 'qwen3.8-flash'];
+ *  Gemma pair added Sep 30 2026 (verified live via /models: 26b
+ *  $0.076/$0.255, 31b $0.09/$0.34 per 1M — move-execution test, not
+ *  literary judgement). Dead pins fall through the list mid-sitting;
+ *  stored GLM migrates. */
+export const OPENROUTER_PAID_OPTIONS = ['qwen/qwen3.7-plus', 'qwen/qwen3.7-flash', 'google/gemma-4-26b-a4b-it', 'google/gemma-4-31b-it', 'qwen/qwen3.8-flash'];
+export const ALIBABA_MODEL_OPTIONS = ['qwen3.8-max', 'qwen3.7-plus', 'qwen3.8-27b', 'qwen3.8-flash', 'qwen3.8-max-0902', 'qwen3.8-2.4t-a95b', 'qwen3-30b-a3b-instruct-2507', 'qwen3-30b-a3b-thinking-2507'];
 
 export type DeepInfraModel = 'Qwen/Qwen3-30B-A3B' | 'Qwen/Qwen3-14B';
 
@@ -66,6 +69,15 @@ export interface CabinetSettings {
    * HTML source pages server-side and inject top passages. Default on;
    * delete lib/extract.ts + functions/extract.js + this flag to fully undo. */
   grounding: boolean;
+  /** Cabinet-mechanics toggles (Sep 30 2026 — every state stamps the export).
+   * Defaults = first test setup: anonymous first, best guess elsewhere. */
+  anonThinker: boolean;
+  thinkerRelations: boolean;
+  sceneOn: boolean;
+  quotesOn: boolean;
+  fullSurvey: boolean;
+  genzOn: boolean;
+  feelingsOn: boolean;
 }
 
 const STORAGE_KEY = 'dialectical-cabinet:settings:v1';
@@ -86,6 +98,13 @@ export const DEFAULT_SETTINGS: CabinetSettings = {
   alibabaModel: DEFAULT_ALIBABA_MODEL,
   economy: 'full',
   grounding: true,
+  anonThinker: true,
+  thinkerRelations: true,
+  sceneOn: true,
+  quotesOn: true,
+  fullSurvey: true,
+  genzOn: true,
+  feelingsOn: true,
 };
 
 export function loadSettings(): CabinetSettings {
@@ -126,6 +145,13 @@ export function loadSettings(): CabinetSettings {
         : 'qwen/qwen3.7-plus',
       economy: parsed.economy === 'efficient' ? 'efficient' : 'full',
       grounding: parsed.grounding === true,
+      anonThinker: parsed.anonThinker !== false,
+      thinkerRelations: parsed.thinkerRelations !== false,
+      sceneOn: parsed.sceneOn !== false,
+      quotesOn: parsed.quotesOn !== false,
+      fullSurvey: parsed.fullSurvey !== false,
+      genzOn: parsed.genzOn !== false,
+      feelingsOn: parsed.feelingsOn !== false,
     };
   } catch {
     return DEFAULT_SETTINGS;

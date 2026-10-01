@@ -33,8 +33,10 @@ interface Edge extends GeomEdge {
  * draws twice: the direct thread wins (guard — zero such pairs today).
  */
 const ALL_EDGES: Edge[] = Object.entries(CABINET_DEBTS).flatMap(([debtor, debts]) =>
-  debts
-    .filter((d) => d.kind === 'direct' || !debts.some((o) => o.to === d.to && o.kind === 'direct'))
+  // Genzie excluded from the diagram: fictional seat, margins-only — debts
+  // stay in the table for the room's relationship lines.
+  debtor === 'genzie' ? [] : debts
+    .filter((d) => d.to !== 'genzie' && (d.kind === 'direct' || !debts.some((o) => o.to === d.to && o.kind === 'direct')))
     .map((d) => ({ from: d.to, to: debtor, kind: d.kind, stance: d.stance, confidence: d.confidence, note: d.note, hops: d.hops })),
 );
 
@@ -52,13 +54,13 @@ function edgeStyle(e: Edge): { w: number; o: number; cls: string; dash?: string;
 
 // Seats on the spine get centred labels below; the paired rows label outward.
 const SPINE_SEATS = new Set(['spinoza', 'fisher']);
-const LEFT_SEATS = new Set(['kant', 'marx', 'bogdanov', 'weil', 'rose', 'genzie']);
+const LEFT_SEATS = new Set(['kant', 'marx', 'bogdanov', 'weil', 'rose']);
 
 // Label size: standard body (16px) for the least-connected seat, +2px per
 // extra connection. Degree counts every debt in or out. Size reflects
 // connectedness for legibility — never importance.
 const DEGREE: Record<string, number> = Object.fromEntries(
-  Object.keys(PHILOSOPHER_BY_SLUG).map((slug) => [
+  Object.keys(PHILOSOPHER_BY_SLUG).filter((slug) => slug !== 'genzie').map((slug) => [
     slug,
     ALL_EDGES.filter((e) => e.from === slug || e.to === slug).length,
   ]),
@@ -83,7 +85,7 @@ export default function GenealogyMap({
   philosophers: Philosopher[];
   onSelect: (p: Philosopher) => void;
 }) {
-  const order = DEFAULT_SEATING_ORDER.filter((slug) => PHILOSOPHER_BY_SLUG[slug]);
+  const order = DEFAULT_SEATING_ORDER.filter((slug) => slug !== 'genzie' && PHILOSOPHER_BY_SLUG[slug]);
   const bySlug = (slug: string) => philosophers.find((p) => p.slug === slug);
   const [lit, setLit] = useState<string | null>(null);
 
