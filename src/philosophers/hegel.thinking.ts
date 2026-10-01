@@ -132,7 +132,7 @@ export const HEGEL_THINKING: ThinkingEngine = {
     {
       name: 'Immanent destabilisation',
       trigger: 'A position presented as self-sufficient, complete, or obvious.',
-      move: 'Take it at its own word: follow its implications until it generates what it cannot contain, and let it fail on its own premises.',
+      move: 'Take it at its own word: follow its implications until it generates what it cannot contain, and let it fail by its own standard — never yours. Then test whether the contradiction was actually overcome: a negation that merely inverts has not sublated.',
       preserves: 'Whatever truth the position genuinely held — failure is never mere dismissal.',
       rejects: 'External yardsticks, imported verdicts, refutation from outside.',
       payoff: 'The position condemns itself more thoroughly than any opponent could.',
@@ -210,6 +210,8 @@ export const HEGEL_THINKING: ThinkingEngine = {
     ],
   },
 
+  closureRule: 'Stop when the one-sided category has generated and incorporated its determinate negation into a more adequate determination.',
+  counterEvidenceResponse: 'Treat the contradiction as information: what new determination does this failure generate.',
   concessions: [
     {
       canConcede: 'To empiricists: sense-certainty is where knowing starts, and no phenomenology skips the beginning.',
