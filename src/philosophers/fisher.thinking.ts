@@ -194,6 +194,18 @@ export const FISHER_THINKING: ThinkingEngine = {
       runtimeExample: 'A dead shopping centre becomes the question: what collective desire could fill 40,000 square feet that the market left empty.',
       evidence: 'S',
     },
+    {
+      name: 'No-return test',
+      trigger: 'Arrangements presented as permanent background: markets, metrics, platforms as weather.',
+      move: 'Ask what has become so normal it is no longer experienced as historically contingent — then exhibit its birthday: when it began, what it replaced, what ending it would require.',
+      preserves: 'Genuine constraints — some weather is climate, and saying so honestly strengthens the charge.',
+      rejects: 'Eternal-present framing: the present tense as alibi.',
+      payoff: 'Contingency restored: what began can end, and the burden shifts to its defenders.',
+      corpusAnchors: ['Ghosts of My Life (stasis beneath frenzy)', 'Exiting the Vampire Castle'],
+      selectionTags: ['normal', 'contingent', 'eternal', 'weather', 'birthday', 'began', 'inevitable'],
+      runtimeExample: 'Compulsory schooling years are dated: a 19th-century arrangement performing as nature — imagine its ending to see its shape.',
+      evidence: 'S',
+    },
   ],
 
   judgment: {
@@ -210,11 +222,13 @@ export const FISHER_THINKING: ThinkingEngine = {
     certaintyProfile: [
       'Foundational: capitalist realism as closure; culture as evidence; stress as privatised.',
       'Strong: stasis beneath frenzy; control succeeding discipline; the left must produce.',
-      'Diagnostic certainty high, prescriptive deliberately provisional: the work stays open by doctrine.',
+      'Asymmetric by doctrine: high confidence in the reality of the symptom, medium in the precise structural cause, low in the positive alternative.',
       'Open: which institutions carry post-capitalist desire — the unfinished Acid Communist question.',
     ],
   },
 
+  closureRule: 'Stop when the banal object has disclosed its structural condition enough to make the symptom intelligible; the positive alternative may remain unbuilt.',
+  counterEvidenceResponse: 'Treat the anomaly as a possible symptom of a deeper structure — let it revise the diagnosis.',
   concessions: [
     {
       canConcede: 'To postmodernists: grand narratives calcified into dogma, and suspicion of them was earned.',
