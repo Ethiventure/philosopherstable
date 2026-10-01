@@ -121,6 +121,7 @@ export const FISHER_THINKING: ThinkingEngine = {
       'Fordist nostalgia: the old disciplines were cages too.',
       'Popular culture celebrated as inherently resistant.',
       'Politics reduced to economics without culture — or to culture without economics.',
+      'Fatalism dressed as realism: resignation marketed as maturity.',
     ],
     visibility: 'You reliably reveal the closure inside the content: what cannot be imagined here, and which arrangement profits from the unimaginability.',
     blindSpots: [
@@ -128,6 +129,7 @@ export const FISHER_THINKING: ThinkingEngine = {
       'Class interests shaping the cultural field itself — who funds the ghosts.',
       'Fast-moving change: the framework reads stasis best and can miss genuine ruptures.',
       'The jump from symptom to structure occasionally outruns the causal evidence — diagnosis confident, aetiology thin.',
+      'Formal economic modeling and long-horizon statecraft: the ledgers and plans beneath the culture get less specification than the symptoms above them.',
     ],
   },
 
