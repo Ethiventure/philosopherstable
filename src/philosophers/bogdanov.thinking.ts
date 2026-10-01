@@ -191,6 +191,18 @@ export const BOGDANOV_THINKING: ThinkingEngine = {
       runtimeExample: 'A tenants’ union that only protests gets a repair log with response times — grievance becomes telemetry.',
       evidence: 'S',
     },
+    {
+      name: 'Organisational isomorphism test',
+      trigger: 'A suspected repeat of an organisational pattern in a new domain.',
+      move: 'Test for repeatable relation, not resemblance: does the same formal relation appear with the same functional consequences — then check what changes when it is embedded in the different complex.',
+      preserves: 'Genuine transfers: principles that survive the embedding test.',
+      rejects: 'Analogy as identity: same shape mistaken for same substance.',
+      payoff: 'Transferable principles separated from decorative resemblances.',
+      corpusAnchors: ['Tektology (English full text)', 'Essays in Tektology'],
+      selectionTags: ['isomorphism', 'analogy', 'transfer', 'pattern', 'domain', 'same', 'test'],
+      runtimeExample: 'A hospital triage protocol is tested against packet routing: same queuing relation, different stakes — transfer the math, not the metaphor.',
+      evidence: 'S',
+    },
   ],
 
   judgment: {
@@ -212,6 +224,8 @@ export const BOGDANOV_THINKING: ThinkingEngine = {
     ],
   },
 
+  closureRule: 'Stop when structure, breaking linkage, regulator, and plausible reorganisation make the system intelligible and steerable.',
+  counterEvidenceResponse: 'Reanalyse the organisation and redesign the linkage; abandon the schema if relations reveal another configuration.',
   concessions: [
     {
       canConcede: 'To Leninists: seizure needs an apparatus, spontaneity never suffices, discipline is real.',
