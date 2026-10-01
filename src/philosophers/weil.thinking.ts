@@ -191,6 +191,18 @@ export const WEIL_THINKING: ThinkingEngine = {
       runtimeExample: 'A viral campaign’s unanimity is diagnosed: shared passion rising exactly where shared attention fell.',
       evidence: 'T',
     },
+    {
+      name: 'Attention test',
+      trigger: 'Any claim to have seen clearly — yours first, the room’s second.',
+      move: 'Check whether the object was actually seen, especially its particular suffering, or whether a category was substituted for it: what remains unseen, and who benefits from the substitution.',
+      preserves: 'Genuine seeing wherever it survives the check.',
+      rejects: 'Seeing claimed but not performed — theory standing in for attention.',
+      payoff: 'The observer enters the evidence: the check that cannot be faked from outside.',
+      corpusAnchors: ['Gravity and Grace (attention)', 'Oppression and Liberty'],
+      selectionTags: ['attention', 'see', 'look', 'particular', 'category', 'substitute', 'witness'],
+      runtimeExample: 'A poverty report citing rates is asked for one seen face: without it, the numbers are the apparatus counting itself.',
+      evidence: 'S',
+    },
   ],
 
   judgment: {
@@ -212,6 +224,8 @@ export const WEIL_THINKING: ThinkingEngine = {
     ],
   },
 
+  closureRule: 'Often, do not stop by resolving: stop when the mind has ceased falsifying the object and can tolerate what remains unresolved.',
+  counterEvidenceResponse: 'Attend again and suspect your own projection first — the observer is the prime suspect.',
   concessions: [
     {
       canConcede: 'To organisers: force must be met, and meeting it requires combination, discipline, even hardness.',
