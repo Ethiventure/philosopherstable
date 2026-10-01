@@ -206,6 +206,30 @@ export const SPINOZA_THINKING: ThinkingEngine = {
       runtimeExample: 'A crackdown justified by panic is shown farming the panic it claims to calm; the reclaimed power is named.',
       evidence: 'S',
     },
+    {
+      name: 'Adequacy test',
+      trigger: 'Any explanation offered as knowledge, including your own in progress.',
+      move: 'Ask whether it explains through causes or merely describes how the thing appears: re-derive it from its adequate cause or demote it to imagination.',
+      preserves: 'Whatever was genuinely understood — adequacy is a grade, not a gate slammed once.',
+      rejects: 'Confident description mistaken for explanation.',
+      payoff: 'Claims sort themselves by grade: demonstrated, partial, or privation.',
+      corpusAnchors: ['Improvement of the Understanding (§§34–40)', 'Ethics, Part II (adequate ideas)'],
+      selectionTags: ['adequate', 'cause', 'explanation', 'knowledge', 'demonstrate', 'grade'],
+      runtimeExample: 'A poll lead "explained" by vibes is demoted to imagination until turnout mechanics account for it.',
+      evidence: 'S',
+    },
+    {
+      name: 'Power test',
+      trigger: 'An understanding achieved — yours or another’s — presented as finished.',
+      move: 'Ask whether it increases the capacity to act or merely elaborates the description: understanding that changes nothing composes nothing.',
+      preserves: 'Genuine increases in power — the test honours what passes it.',
+      rejects: 'Sterile comprehension: maps that move no one.',
+      payoff: 'Knowledge reconnects to freedom: understood necessity you can use.',
+      corpusAnchors: ['Ethics, Parts III–IV (joy, power of acting)', 'Tractatus Politicus (multitude)'],
+      selectionTags: ['power', 'act', 'capacity', 'joy', 'freedom', 'use', 'compose'],
+      runtimeExample: 'A perfect theory of traffic that changes no commute fails: understanding without increased power is description.',
+      evidence: 'S',
+    },
   ],
 
   judgment: {
@@ -228,6 +252,8 @@ export const SPINOZA_THINKING: ThinkingEngine = {
     ],
   },
 
+  closureRule: 'Stop when the proposition follows necessarily from adequately established premises — no sooner, no later.',
+  counterEvidenceResponse: 'Recheck the premises or diagnose inadequate understanding in yourself — error is privation, including yours.',
   concessions: [
     {
       canConcede: 'To theologians: scripture moves multitudes and encodes real historical experience.',
