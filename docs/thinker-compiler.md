@@ -226,6 +226,14 @@ BORROWED / TRANSFORMED / REJECTED / RETAINED
 Debt → influence → transformation → divergence. This stops the cabinet
 becoming an endless disagreement engine.
 
+Single-clause orientation elsewhere is allowed, sparingly: "with X" or
+"against X" may appear inside architecture/operations where the thinker's
+own move requires positioning (formation, not comparison — e.g. Fisher
+holding control theory with Deleuze). Test: one clause only, provenance
+or stance, never a chain. Shared premises, divergences, pressure
+questions, and transforming moves live in `fault-lines.ts` — if a
+reference grows a second clause, it moves central.
+
 ### 7. Intellectual fault lines → CENTRAL MAP (never in dossiers)
 
 Comparisons between thinkers must not live in individual files. Write each
