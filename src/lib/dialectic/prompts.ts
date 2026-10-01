@@ -37,7 +37,7 @@ export type TurnKind = 'opening' | 'critique' | 'reconstruction';
  * text change so grades stay comparable: a verdict on version C never
  * transfers silently to version D.
  */
-export const PROMPT_VERSION = '2026-09-20o';
+export const PROMPT_VERSION = '2026-09-20p';
 
 export const WORD_BUDGETS = {
   normal: { negation: 25, reformulation: 40, total: 60, opening: 40 },
@@ -344,10 +344,6 @@ export function buildUserMessage({ question, prevText, relationshipLine = null, 
   const parts = [
     `QUESTION (verbatim): ${question}`,
     '',
-    // The addressee context rides FIRST (Sep 2026): buried at position 20 it
-    // was never touched; as the second thing read it sets the frame.
-    ...(relationshipLine ? [`${relationshipLine}`] : []),
-    '',
     turnInstruction,
   ];
 
@@ -378,6 +374,13 @@ export function buildUserMessage({ question, prevText, relationshipLine = null, 
     parts.push('', `SPENT — these transitional variants are already used up this session, never reuse them: ${spentPhrases.join(' / ')}`);
   }
 
+  // Addressee history rides late (Sep 30): as the second thing read it set
+  // the frame but competed with the turn job; as flavour after the machinery
+  // it colours without commanding. Pilot turns pass null here anyway.
+  if (relationshipLine) {
+    parts.push('', relationshipLine);
+  }
+
   if (othersPriorLines.length > 0) {
     parts.push(
       '',
@@ -392,6 +395,15 @@ export function buildUserMessage({ question, prevText, relationshipLine = null, 
 
   return parts.join('\n');
 }
+
+/**
+ * Pilot last word (Phase 11, positional experiment): one line restating the
+ * pass job + paraphrase rule immediately before the JSON hint — the hottest
+ * compliant slot. Tests whether echo failure is positional (orders ignored
+ * mid-message but obeyed last) rather than textual. Pilot turns only.
+ */
+export const PILOT_LAST_WORD =
+  'LAST WORD before answering: do your pass job on PREV’s live edge — every sentence new, no clause over five words shared with anything above. Then the JSON.';
 
 /**
  * Low closing self-check, placed just before the JSON hint (which stays
