@@ -245,6 +245,8 @@ export const BOOKCHIN_THINKING: ThinkingEngine = {
     ],
   },
 
+  closureRule: 'Stop when the developmental tendency is translated into a plausible institutional form that could actually embody it.',
+  counterEvidenceResponse: 'Ask whether the proposed development actually realises the immanent potential or merely flatters it.',
   concessions: [
     {
       canConcede: 'To Marxism: capitalism runs on a ruthless grow-or-die logic; class exploitation is real and central.',
