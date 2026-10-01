@@ -448,9 +448,11 @@ function App() {
   const orderedPhilosophers = useMemo(() => DEFAULT_SEATING_ORDER
     .map((slug) => philosophers.find((p) => p.slug === slug))
     .filter((p): p is Philosopher => p !== undefined && activeSlugs.includes(p.slug)), [philosophers, activeSlugs]);
-  // Service desk offers all twelve thinkers in chronological seating order,
-  // whether or not they hold a seat in this sitting.
+  // Service desk offers the twelve seated thinkers in chronological order,
+  // whether or not they hold a seat in this sitting. Genzie is excluded:
+  // margins-only, never seated, never tutored.
   const allOrderedPhilosophers = useMemo(() => DEFAULT_SEATING_ORDER
+    .filter((slug) => slug !== 'genzie')
     .map((slug) => philosophers.find((p) => p.slug === slug))
     .filter((p): p is Philosopher => p !== undefined), [philosophers]);
   const currentSpeaker = orderedPhilosophers[activeAgent];

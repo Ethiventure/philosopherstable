@@ -11,19 +11,20 @@
 import { writeFileSync } from 'node:fs';
 import { CABINET_DEBTS } from '../src/philosophers/influences.ts';
 
-// Chronological seat order (matches DEFAULT_SEATING_ORDER).
+// Chronological seat order (matches DEFAULT_SEATING_ORDER). Genzie excluded
+// from the rendered grid: fictional seat, margins-only — debts stay in the
+// table for the room's relationship lines, validation below still covers them.
 const ORDER = [
   'spinoza', 'kant', 'hegel', 'marx', 'lenin', 'bogdanov',
-  'bloch', 'weil', 'bookchin', 'deleuze', 'rose', 'fisher', 'genzie',
+  'bloch', 'weil', 'bookchin', 'deleuze', 'rose', 'fisher',
 ];
 const NAME = {
   spinoza: 'Spinoza', kant: 'Kant', hegel: 'Hegel', marx: 'Marx',
   lenin: 'Lenin', bogdanov: 'Bogdanov', bloch: 'Bloch', weil: 'Weil',
   bookchin: 'Bookchin', deleuze: 'Deleuze', rose: 'Rose', fisher: 'Fisher',
-  genzie: 'Genzie',
 };
 
-const known = new Set(ORDER);
+const known = new Set([...ORDER, 'genzie']);
 for (const [from, debts] of Object.entries(CABINET_DEBTS)) {
   if (!known.has(from)) throw new Error(`unknown debtor slug: ${from}`);
   for (const d of debts) {
