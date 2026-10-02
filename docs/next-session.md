@@ -1,23 +1,28 @@
-# Next session — current tasks (rewritten Sep 30 2026)
+# Next session — Oct 1 2026 (evening)
 
-Branch `rebuild-thinking` now carries: three-file split (life files),
-anonymous-by-default pilot, 7-toggles Options drawer, interrupt &
-redirect, mode buttons, full export trail, prompt v2026-09-20o.
-Old path untouched throughout.
+Day summary: room migrated to THINK-anonymous personas (exporter rebuilt,
+Genzie rules, scenes retired) and pushed on `rebuild-thinking`; main still
+runs the old room (merge pending). Netlify minutes reset — verify the
+dashboard flag clears before expecting previews.
 
-Do now, in order:
-1. Grade the mode rename by eye: open Settings → Options locally,
-   check buttons (Think / Teach / Think & sound), toggles with
-   explanations, interrupt box while paused.
-2. Run the anonymous-first sitting (AI-grid question, 3 pilot seats,
-   defaults as stored) — blind-grade P/Q/R, ask assistant for reveal.
-3. Flip toggles one at a time per the add-back protocol
-   (`docs/add-back-queue.md`); log each verdict in the queue table.
-4. Migrate seats 4–12 + Genzie via the RAG-first workflow (compiler) —
-   one commit + blind grade each; delete the global flag when done.
+Open problems (one line each):
+- Echo repair failed live once — second failure makes it structural.
+- Blind sheets graded (A clean, B split); transcripts unlogged in
+  `docs/models-tried.md` (owner pastes rows after verdicts).
+- New paid IDs (max-0902, 2.4t, 30b pair) selectable, ungraded —
+  probe-first.
+- Room migration unproven live — first ticks after merge tell.
+
+Carry forward (smallest first):
+- Verify Netlify dashboard unpaused; retry the PR #26 deploy if needed.
+- Merge `rebuild-thinking` → main (second merge: room + copy fixes).
+- Watch first room ticks post-merge (Genzie swerves, no scenes, wipes).
+- Rerun AI-tutor question for echo verdict #2; read footer + marks.
+- Generic control (flag off, old path) whenever the A/B needs it.
+- Remaining 9 thinkers? DONE — all 12 converted. Genzie: margins-only.
 
 Explicitly NOT (parked, no nagging):
-- Merging to main; old-path edits; loan rethink; remaining Netlify
-  deploy (minutes reset Oct 1 — verify the flag clears first).
+- Old-path prompt edits; loan rethink; old style-file archive (waits on
+  first graded sitting); remaining-seat files (none remain).
 
 Everything keeps. Stop anywhere.
