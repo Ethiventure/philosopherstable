@@ -55,5 +55,9 @@ change (Module 8 pattern).
   Actions runs (starting?). No firings → trigger didn't save; firings
   without runs → token/permission; runs without turns → read `SKIP:`.
 - **Bad deploy:** roll back in Netlify; the previous deploy is kept.
+- **Deploy paused on minutes quota:** Netlify build minutes reset on the
+  1st of each month (observed Oct 2026: September pause cleared on the
+  1st, PR #26 deploy green Oct 1). If a deploy stalls on quota near
+  month-end, wait for the 1st, then retry the deploy.
 - **Shared key invalid (401):** rotate per above; the app names the fault
   plainly (`auth`) instead of failing silently.
