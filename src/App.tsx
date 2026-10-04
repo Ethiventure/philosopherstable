@@ -187,11 +187,12 @@ export type DeckEntry =
 
 function App() {
   const [philosophers, setPhilosophers] = useState<Philosopher[]>([]);
-  // Default question (owner pick Sep 30 2026): the regional AI-grid
-  // organisation question — novel to every seat, forces reconstructive
-  // moves. Edit freely in the box below; the table debates whatever
-  // stands here when Begin is pressed.
-  const [question, setQuestion] = useState('A region shares one AI grid to coordinate energy, food and transport. How is this best organised? What would you change about this setup?');
+  // Default question (owner pick Oct 4 2026): the video-game proposals
+  // question — tests distinctive answers per seat plus conversation
+  // response (separate proposals, not one group game). Edit freely in
+  // the box below; the table debates whatever stands here when Begin
+  // is pressed.
+  const [question, setQuestion] = useState('How would you design a video game to help us think differently about the future? Be as specific as possible. You can riff off each other but I want separate video game proposals, not one group game.');
   const [activePass, setActivePass] = useState(0);
   const [activeAgent, setActiveAgent] = useState(-1);
   const [isRunning, setIsRunning] = useState(false);
