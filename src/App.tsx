@@ -1674,7 +1674,21 @@ function LivingRoom() {
       if (scrollRef.current) scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
     }
   }, [room]);
+  // Nightly ledger (Oct 4 2026): the room's BEST + NEXT line per day, same
+  // freshness-first fetch as the transcript, fail-soft to nothing — a room
+  // with no ledger yet (or an unreachable file) simply shows no card.
+  const [ledger, setLedger] = useState<{ date: string; best: string; next: string }[] | null>(null);
+  useEffect(() => {
+    const bust = Date.now();
+    const urls = [
+      `https://raw.githubusercontent.com/Ethiventure/philosopherstable/main/public/room/ledger.json?t=${bust}`,
+      `https://cdn.jsdelivr.net/gh/Ethiventure/philosopherstable@main/public/room/ledger.json?t=${bust}`,
+    ];
+    const get = (u: string) => fetch(u, { cache: 'no-store' }).then((r) => (r.ok ? r.json() : null));
+    get(urls[0]).catch(() => get(urls[1])).then((j) => { if (Array.isArray(j) && j.length) setLedger(j); }).catch(() => {});
+  }, []);
   if (!room) return null;
+  const latestLedger = ledger && ledger.length ? ledger[ledger.length - 1] : null;
   return (
     <section className="mt-12" aria-label="Senior common room">
       <div className="ornament-divider mb-6"><span className="text-xl">✦</span></div>
@@ -1686,6 +1700,13 @@ function LivingRoom() {
         lowest voice, own books at hand. None of them is really thinking;
         the voices are.
       </p>
+      {latestLedger && (latestLedger.best || latestLedger.next) && (
+        <aside className="dark-academia-card p-5 mb-4" aria-label={`Room ledger for ${latestLedger.date}`}>
+          <p className="pass-indicator text-[#8b5254]">From the room, {latestLedger.date}</p>
+          {latestLedger.best && <p className="text-[15px] mt-1"><span className="font-heading">Kept:</span> {latestLedger.best}</p>}
+          {latestLedger.next && <p className="text-[15px] mt-1"><span className="font-heading">Next:</span> {latestLedger.next}</p>}
+        </aside>
+      )}
       {room.turns.length === 0 ? (
         <div className="dark-academia-card p-8 text-center"><p className="italic text-[#465f75]/65">The room wakes at the next tick — check back in a little while.</p></div>
       ) : (
