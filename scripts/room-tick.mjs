@@ -7,6 +7,9 @@
  * export-personas); Genzie keeps her old-style entry (no corpus).
  * Loops forever: seat = roster[cursor % roster.length], then cursor + 1.
  * No end state, no backfill — a missed tick is simply skipped.
+ * Rotation reset (Oct 4): every full cycle the speaker opens fresh
+ * ground. Nightly ledger (Oct 4): one BEST + NEXT line per day in
+ * public/room/ledger.json (one extra call/day, fail-soft).
  *
  *   GROQ_API_KEY=... node scripts/room-tick.mjs [--dry-run] [--seat genzie] [--turns 3]
  *
@@ -35,7 +38,7 @@ const DRY = process.argv.includes('--dry-run');
 const MAX_TURNS = 200;
 
 const MODEL = process.env.GROQ_ROOM_MODEL || 'qwen/qwen3.8-27b';
-const ROOM_RULES = `You are on a Discord server in the 21st century, trying to understand modern life alongside dead colleagues. Speak when you have something; answer whoever you are answering. Carry one small aim of your own and let the others' words move it: respond to the recent conversation but try to subtly divert the topic toward what you are interested in — show the shift in what you say. Thinking aloud in character is fine; announcing a plan is not. Move the conversation forward a step every turn — pick up the live thread and advance it; never swerve abruptly to a new subject out of nowhere (that swerve belongs to Genzie alone — see her rules). Stay anchored: hook onto one specific thing said recently — a word, a claim, an image — and visibly carry it. Reusing the room's image is fine and often good; mixing images is not — one image per message, one meaning throughout, and it must make the point clearer, never harder. If a phrase comes from elsewhere, name its maker. Name only people and things said aloud in the recent turns — never open with he, she, or they for someone unnamed. Lean on your shown passages one way only: let them set your pet topic, and describe what they say in your own words — never lift their phrases, not even short ones. Talk in a way that thinkers from other perspectives can understand you: short chat-length messages, continuous prose, your own grammar, about 100 words or fewer. Carry feeling in your own words and have a live reaction. Never greet, never use emojis or formatting. Never list examples from these rules back at the room — find your own. If the room is empty, open with the first perplexing modern thing on your mind.`;
+const ROOM_RULES = `You are on a Discord server in the 21st century, trying to understand modern life alongside dead colleagues. Speak when you have something; answer whoever you are answering. Carry one small aim of your own and let the others' words move it: respond to the recent conversation but try to subtly divert the topic toward what you are interested in — show the shift in what you say. Thinking aloud in character is fine; announcing a plan is not. Move the conversation forward a step every turn — pick up the live thread and advance it; never swerve abruptly to a new subject out of nowhere (that swerve belongs to Genzie alone — see her rules). Stay anchored: hook onto one specific thing said recently — a word or a claim — and visibly carry it. No metaphors anywhere — a turn built on a metaphor (pipes, fluids, weather, beasts as images) has failed. Illustrate with small fictitious examples instead: invented named nobodies in concrete spots, one per message, never a second example or fresh image. The example serves the point; it never becomes the debate. If a phrase comes from elsewhere, name its maker. Name only people and things said aloud in the recent turns — never open with he, she, or they for someone unnamed. Lean on your shown passages one way only: let them set your pet topic, and describe what they say in your own words — never lift their phrases, not even short ones. Talk in a way that thinkers from other perspectives can understand you: short chat-length messages, continuous prose, your own grammar, about 100 words or fewer. Carry feeling in your own words and have a live reaction. Never greet, never use emojis or formatting. Never list examples from these rules back at the room — find your own. If the room is empty, open with the first perplexing modern thing on your mind.`;
 
 // Genzie (margins voice, fictional seat): rude, and every one of her turns
 // changes the topic. Philosophical reasoning carries over between her turns
@@ -43,7 +46,7 @@ const ROOM_RULES = `You are on a Discord server in the 21st century, trying to u
 // abstract and drops every person, place, and example from before. She sees
 // only the live edge (last 2 turns + her own last line), never the 12-turn
 // topic she is about to break, so the swerve stays genuine.
-const GENZIE_RULES = `You are Genzie, young, working-class, from the Global South, barging into a room of dead western philosophers. You are rude — funny because you are right, never cruel for sport — and impatient with abstraction: name who does what first, always. Every turn you change the topic: open something new the room is ignoring, never continue the current thread politely. What carries across your turns is only the philosophical disagreement in the abstract — the live point of pressure, stripped of every person, place, scene, and example from before. Those are wiped: never reuse a name, city, worker, or scenario from earlier turns, yours or anyone's. You see only the last couple of messages plus your own last line — the older topic is invisible to you by design, so break it honestly. Keep it short: about 100 words or fewer, continuous prose, no greetings, no emojis, no formatting.`;
+const GENZIE_RULES = `You are Genzie, young, working-class, from the Global South, barging into a room of dead western philosophers. You are rude — funny because you are right, never cruel for sport — and impatient with abstraction: name who does what first, always. Every turn you change the topic: open something new the room is ignoring, never continue the current thread politely. What carries across your turns is only the philosophical disagreement in the abstract — the live point of pressure, stripped of every person, place, scene, and example from before. Those are wiped: never reuse a name, city, worker, or scenario from earlier turns, yours or anyone's. Never continue your own last turn's scene, addressee, or demand — each turn opens a new front with new nobodies. Mention nothing specifically remembered; keep the disagreement general, never a callback. Shape every turn the same way: back the practical move, slam the drift into abstraction, demand the missing voices — who isn't in the room and what do they need. No metaphors here either; fictitious nobodies only. You see only the last couple of messages — not even your own last line, which would re-seed the old scene. Break the topic honestly. Keep it short: about 100 words or fewer, continuous prose, no greetings, no emojis, no formatting.`;
 
 function fail(reason) {
   console.log(`SKIP: ${reason}`);
@@ -91,8 +94,9 @@ if (!seat) fail(`no persona for ${slug}`);
 const isGenzie = slug === 'genzie';
 const recent = (t.turns || []).slice(isGenzie ? -2 : -6);
 // Own top-up: the speaker's own last line even when it fell outside the
-// window — carried separately, labelled.
-const own = (t.turns || []).filter((x) => x.seat === slug).slice(-1).filter((x) => !recent.includes(x));
+// window — carried separately, labelled. Genzie gets none: her own last
+// line would re-seed the wiped scene, so she reads the live edge only.
+const own = isGenzie ? [] : (t.turns || []).filter((x) => x.seat === slug).slice(-1).filter((x) => !recent.includes(x));
 
 let grounding = '';
 try {
@@ -133,7 +137,12 @@ const userMessage = [
 // Scene rotation (Sep 25: anchor + same-scene rules) is retired — fresh
 // scenes every rotation converged the room onto performed imagery, and
 // Genzie wipes scenarios by rule anyway.
-const systemPrompt = `${seat.persona}\n\n${isGenzie ? GENZIE_RULES : ROOM_RULES}`;
+// Rotation reset (Oct 4 2026): every full cycle, the next speaker opens
+// fresh ground — the deterministic topic clock against attractor loops.
+const resetLine = (!isGenzie && (t.turns || []).length > 0 && t.cursor % t.roster.length === 0)
+  ? '\nROTATION RESET: open a topic the room has not touched in the last dozen turns — new question, new nobodies. Do not continue the current thread.'
+  : '';
+const systemPrompt = `${seat.persona}\n\n${isGenzie ? GENZIE_RULES : ROOM_RULES}${resetLine}`;
 
 const inEst = Math.round((systemPrompt.length + userMessage.length) / 4);
 console.log(`tick ${turn}/${TURNS}: ${seat.name} (${slug}) after ${recent.length} turns · ~${inEst} in-tokens · model ${MODEL}`);
@@ -176,4 +185,40 @@ t.cursor = (t.cursor ?? 0) + 1;
 t.lastTick = new Date().toISOString();
 writeFileSync(T_PATH, `${JSON.stringify(t)}\n`);
 console.log(`appended turn ${t.turns.length} (cursor ${t.cursor})${dropped ? `, ${dropped} archived off` : ''}`);
+// Nightly ledger (Oct 4 2026): one line per day — the best idea worth
+// keeping plus the direction the talk should move. Date-guarded (one
+// extra model call per day, ~150 tokens) and fail-soft: never fails
+// the tick.
+try {
+  const L_PATH = join(root, 'public', 'room', 'ledger.json');
+  const today = new Date().toISOString().slice(0, 10);
+  let ledger = [];
+  if (existsSync(L_PATH)) ledger = JSON.parse(readFileSync(L_PATH, 'utf8'));
+  if (Array.isArray(ledger) && !ledger.some((e) => e && e.date === today)) {
+    const digest = (t.turns || []).slice(-12).map((x) => `${x.name}: ${x.text}`).join('\n');
+    const lctrl = new AbortController();
+    const ltimer = setTimeout(() => lctrl.abort(), 60000);
+    try {
+      const lres = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${key}` },
+        signal: lctrl.signal,
+        body: JSON.stringify({ model: MODEL, messages: [{ role: 'system', content: 'You log one line per day for a philosophy chat room. Read the turns, reply with exactly two lines and nothing else:\nBEST: <the one concrete idea worth keeping, whose, in one sentence>\nNEXT: <the one direction the conversation should move, in one sentence>' }, { role: 'user', content: digest }], max_tokens: 150 }),
+      });
+      const ldata = await lres.json().catch(() => null);
+      const ltext = ldata?.choices?.[0]?.message?.content?.trim() ?? '';
+      const best = (ltext.match(/^BEST:\s*(.+)$/m) || [])[1]?.trim() ?? '';
+      const next = (ltext.match(/^NEXT:\s*(.+)$/m) || [])[1]?.trim() ?? '';
+      if (lres.ok && (best || next)) {
+        ledger.push({ date: today, best, next });
+        writeFileSync(L_PATH, `${JSON.stringify(ledger, null, 2)}\n`);
+        console.log(`ledger entry for ${today}`);
+      }
+    } finally {
+      clearTimeout(ltimer);
+    }
+  }
+} catch (e) {
+  console.log(`(ledger skipped: ${String((e && e.message) || e).slice(0, 100)})`);
+}
 } // end scene loop (TURNS)
