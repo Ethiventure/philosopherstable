@@ -4,6 +4,17 @@ Low intensity, nothing dumbed down: every entry keeps the full fact,
 only the words stay simple. Newest first. The owner asked for this
 Sep 17 2026 — keep writing here, one entry per lesson.
 
+## Ears hear the expression, not the thinking (Oct 2 2026)
+Three think-mode sittings ran with every liveliness switch off (no
+voice, no scenes, no feelings, PREV-only, paraphrase-only) — on screen
+they read as clean reasoning, but heard through text-to-speech they
+were dull, and only Genzie (the one voice with a body, short punches,
+direct address) held attention. Lesson: accuracy lives in the thinking
+files, but listenability lives entirely in the expression toggles;
+testing thinking with everything off proves the engine and hides the
+show. Engagement fixes therefore start with the toggles (mode,
+margins, feelings, scene), not with rewriting how anyone thinks.
+
 ## Ask when they stop, not just how they start (Sep 30 2026)
 The cross-model comparison exposed a missing field: every engine said
 what its thinker notices and does, but none said what makes them decide

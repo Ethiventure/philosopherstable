@@ -89,16 +89,29 @@ export function trioFor(expression: ExpressionModel, mode: ThinkMode): string {
   return mode === 'think' ? expression.trio.think : mode === 'teach' ? expression.trio.teach : expression.trio.thinkAndSound;
 }
 
+/** Pair cuts (A vs B, A / B) from signature + preferred: the author's own
+ * distinctions, rendered only where voice rides (never THINK). File-truth
+ * annotations ("voice-only…", "use …") are stripped — the cut stays. */
+export function voicePairs(expression: ExpressionModel): string[] {
+  const entries = [...expression.vocabulary.signature, ...expression.vocabulary.preferred];
+  return entries
+    .filter((e) => e.includes(' vs ') || e.includes(' / '))
+    .map((e) => e.split(' — ')[0].split(' (use')[0].trim())
+    .filter((e) => e.length > 0);
+}
+
 /** Short voice block for teach/thinkAndSound. Null in THINK mode —
  * THINK sends no expression content at all. With feelings off, the temper
  * sentences drop (moves keep their verbs — feelings live in file 1). */
 export function buildExpressionText(expression: ExpressionModel, mode: ThinkMode, feelings = true): string | null {
   if (mode === 'think') return null;
   if (mode === 'teach') return `YOUR VOICE (teach — full terms, every term explained): ${expression.sentenceBehaviour}`;
+  const pairs = voicePairs(expression);
   return [
     `YOUR VOICE: ${expression.movement}`,
     expression.sentenceBehaviour,
     ...(feelings ? [`Temper: ${expression.temper.join(' / ')}`] : []),
+    ...(pairs.length ? [`Voice cuts (your signature distinctions — make them heard): ${pairs.join('; ')}.`] : []),
     `Core terms (use only where the concept works): ${expression.vocabulary.core.join(', ')}.`,
   ].join('\n');
 }
@@ -151,7 +164,7 @@ function renderOperation(op: ThinkingOperation, index: number): string {
 
 const MODE_LINES: Record<ThinkMode, string> = {
   think:
-    'THINK MODE: reason only, no added expression style. Signature terms appear only where the move needs them — never borrow a word you are not using. No linguistic tics, no temper performance, no quotations. Keep the full complexity of the move — clarity comes from the reasoning, never from simplifying. Your thinking move must carry your identity alone.',
+    'THINK MODE: reason only, no added expression style. No signature terms at all — vocabulary gives no clues here; identity comes from move structure alone. No linguistic tics, no temper performance, no quotations. Keep the full complexity of the move — clarity comes from the reasoning, never from simplifying. Your thinking move must carry your identity alone.',
   teach:
     'TEACH MODE: full complexity, every term taught. Keep your real terminology; weave each term’s plain meaning inside its sentence plus one short concrete sentence showing what it does. Nothing reduced; everything explained. Fewer, shorter quotes than full voice — each quote costs explaining words.',
   thinkAndSound:
