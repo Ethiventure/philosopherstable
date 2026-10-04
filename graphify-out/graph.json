@@ -69,17 +69,69 @@
       "source_location": "L23"
     },
     {
+      "id": "src_lib_rag_ground_cachedauthor",
+      "label": "CachedAuthor",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 114,
+      "community_name": "rag-ground.ts",
+      "file_type": "code",
+      "norm_label": "cachedauthor",
+      "source_file": "src/lib/rag-ground.ts",
+      "source_location": "L21"
+    },
+    {
+      "id": "src_lib_rag_ground_raggrounding",
+      "label": "RagGrounding",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 114,
+      "community_name": "rag-ground.ts",
+      "file_type": "code",
+      "norm_label": "raggrounding",
+      "source_file": "src/lib/rag-ground.ts",
+      "source_location": "L78"
+    },
+    {
+      "id": "src_lib_rag_ground_shardhit",
+      "label": "ShardHit",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 114,
+      "community_name": "rag-ground.ts",
+      "file_type": "code",
+      "norm_label": "shardhit",
+      "source_file": "src/lib/rag-ground.ts",
+      "source_location": "L15"
+    },
+    {
       "id": "src_lib_rag_search_indexpassage",
       "label": "IndexPassage",
       "_callable": true,
       "_callable_class": true,
       "_origin": "ast",
       "community": 114,
-      "community_name": "rag-search.mjs",
+      "community_name": "rag-ground.ts",
       "file_type": "code",
       "norm_label": "indexpassage",
       "source_file": "src/lib/rag-search.ts",
       "source_location": "L11"
+    },
+    {
+      "id": "src_lib_rag_search_preparedindex",
+      "label": "PreparedIndex",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 114,
+      "community_name": "rag-ground.ts",
+      "file_type": "code",
+      "norm_label": "preparedindex",
+      "source_file": "src/lib/rag-search.ts",
+      "source_location": "L52"
     },
     {
       "id": "src_lib_rag_shard_authorshard",
@@ -88,7 +140,7 @@
       "_callable_class": true,
       "_origin": "ast",
       "community": 114,
-      "community_name": "rag-search.mjs",
+      "community_name": "rag-ground.ts",
       "file_type": "code",
       "norm_label": "authorshard",
       "source_file": "src/lib/rag-shard.ts",
@@ -101,7 +153,7 @@
       "_callable_class": true,
       "_origin": "ast",
       "community": 114,
-      "community_name": "rag-search.mjs",
+      "community_name": "rag-ground.ts",
       "file_type": "code",
       "norm_label": "shardpassage",
       "source_file": "src/lib/rag-shard.ts",
@@ -114,7 +166,7 @@
       "_callable_class": true,
       "_origin": "ast",
       "community": 114,
-      "community_name": "rag-search.mjs",
+      "community_name": "rag-ground.ts",
       "file_type": "code",
       "norm_label": "shardwork",
       "source_file": "src/lib/rag-shard.ts",
@@ -127,7 +179,7 @@
       "_callable_class": true,
       "_origin": "ast",
       "community": 12,
-      "community_name": "test-sitting.mjs",
+      "community_name": "dialectic/prompts.ts",
       "file_type": "code",
       "norm_label": "turninstructionargs",
       "source_file": "src/lib/dialectic/prompts.ts",
@@ -140,7 +192,7 @@
       "_callable_class": true,
       "_origin": "ast",
       "community": 12,
-      "community_name": "test-sitting.mjs",
+      "community_name": "dialectic/prompts.ts",
       "file_type": "code",
       "norm_label": "turnkind",
       "source_file": "src/lib/dialectic/prompts.ts",
@@ -153,11 +205,11 @@
       "_callable_class": true,
       "_origin": "ast",
       "community": 12,
-      "community_name": "test-sitting.mjs",
+      "community_name": "dialectic/prompts.ts",
       "file_type": "code",
       "norm_label": "usermessageargs",
       "source_file": "src/lib/dialectic/prompts.ts",
-      "source_location": "L320"
+      "source_location": "L323"
     },
     {
       "id": "src_lib_groq_groqtextargs",
@@ -199,19 +251,6 @@
       "source_location": "L4"
     },
     {
-      "id": "src_philosophers_trios_seattrio",
-      "label": "SeatTrio",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 15,
-      "community_name": "philosophers/index.ts",
-      "file_type": "code",
-      "norm_label": "seattrio",
-      "source_file": "src/philosophers/trios.ts",
-      "source_location": "L10"
-    },
-    {
       "id": "src_lib_prompts_promptcontext",
       "label": "PromptContext",
       "_callable": true,
@@ -225,26 +264,13 @@
       "source_location": "L25"
     },
     {
-      "id": "src_philosophers_index_thinkingpilotentry",
-      "label": "ThinkingPilotEntry",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 17,
-      "community_name": "LifeFile",
-      "file_type": "code",
-      "norm_label": "thinkingpilotentry",
-      "source_file": "src/philosophers/index.ts",
-      "source_location": "L80"
-    },
-    {
       "id": "src_philosophers_thinking_types_lifefile",
       "label": "LifeFile",
       "_callable": true,
       "_callable_class": true,
       "_origin": "ast",
       "community": 17,
-      "community_name": "LifeFile",
+      "community_name": "pilot-slice-demo.mjs",
       "file_type": "code",
       "norm_label": "lifefile",
       "source_file": "src/philosophers/thinking-types.ts",
@@ -602,17 +628,43 @@
       "source_location": "L42"
     },
     {
+      "id": "src_philosophers_index_thinkingpilotentry",
+      "label": "ThinkingPilotEntry",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 27,
+      "community_name": "philosophers/index.ts",
+      "file_type": "code",
+      "norm_label": "thinkingpilotentry",
+      "source_file": "src/philosophers/index.ts",
+      "source_location": "L80"
+    },
+    {
       "id": "src_philosophers_thinking_types_thinkingengine",
       "label": "ThinkingEngine",
       "_callable": true,
       "_callable_class": true,
       "_origin": "ast",
       "community": 27,
-      "community_name": "pilot-slice-demo.mjs",
+      "community_name": "philosophers/index.ts",
       "file_type": "code",
       "norm_label": "thinkingengine",
       "source_file": "src/philosophers/thinking-types.ts",
       "source_location": "L91"
+    },
+    {
+      "id": "src_philosophers_trios_seattrio",
+      "label": "SeatTrio",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 27,
+      "community_name": "philosophers/index.ts",
+      "file_type": "code",
+      "norm_label": "seattrio",
+      "source_file": "src/philosophers/trios.ts",
+      "source_location": "L10"
     },
     {
       "id": "src_app_deckentry",
@@ -625,7 +677,7 @@
       "file_type": "code",
       "norm_label": "deckentry",
       "source_file": "src/App.tsx",
-      "source_location": "L182"
+      "source_location": "L184"
     },
     {
       "id": "src_components_genealogymap_edge",
@@ -691,58 +743,6 @@
       "norm_label": "quotecheck",
       "source_file": "src/lib/verify.ts",
       "source_location": "L11"
-    },
-    {
-      "id": "src_lib_rag_ground_cachedauthor",
-      "label": "CachedAuthor",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 49,
-      "community_name": "rag-ground.ts",
-      "file_type": "code",
-      "norm_label": "cachedauthor",
-      "source_file": "src/lib/rag-ground.ts",
-      "source_location": "L21"
-    },
-    {
-      "id": "src_lib_rag_ground_raggrounding",
-      "label": "RagGrounding",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 49,
-      "community_name": "rag-ground.ts",
-      "file_type": "code",
-      "norm_label": "raggrounding",
-      "source_file": "src/lib/rag-ground.ts",
-      "source_location": "L78"
-    },
-    {
-      "id": "src_lib_rag_ground_shardhit",
-      "label": "ShardHit",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 49,
-      "community_name": "rag-ground.ts",
-      "file_type": "code",
-      "norm_label": "shardhit",
-      "source_file": "src/lib/rag-ground.ts",
-      "source_location": "L15"
-    },
-    {
-      "id": "src_lib_rag_search_preparedindex",
-      "label": "PreparedIndex",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 49,
-      "community_name": "rag-ground.ts",
-      "file_type": "code",
-      "norm_label": "preparedindex",
-      "source_file": "src/lib/rag-search.ts",
-      "source_location": "L52"
     },
     {
       "id": "src_lib_openrouter_openrouterturnargs",
@@ -1249,7 +1249,7 @@
       "file_type": "code",
       "norm_label": "providerhealth",
       "source_file": "src/lib/settings.ts",
-      "source_location": "L178"
+      "source_location": "L181"
     },
     {
       "id": "src_lib_settings_turneconomy",
@@ -1510,7 +1510,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 114,
-      "community_name": "rag-search.mjs",
+      "community_name": "rag-ground.ts",
       "file_type": "code",
       "norm_label": "get()",
       "source_file": "scripts/rag-search.mjs",
@@ -1522,11 +1522,71 @@
       "_callable": true,
       "_origin": "ast",
       "community": 114,
-      "community_name": "rag-search.mjs",
+      "community_name": "rag-ground.ts",
       "file_type": "code",
       "norm_label": "loadindex()",
       "source_file": "scripts/rag-search.mjs",
       "source_location": "L25"
+    },
+    {
+      "id": "scripts_test_sitting_groundauthor",
+      "label": "groundAuthor()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 114,
+      "community_name": "rag-ground.ts",
+      "file_type": "code",
+      "norm_label": "groundauthor()",
+      "source_file": "scripts/test-sitting.mjs",
+      "source_location": "L100"
+    },
+    {
+      "id": "src_lib_rag_ground_loadthinker",
+      "label": "loadThinker()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 114,
+      "community_name": "rag-ground.ts",
+      "file_type": "code",
+      "norm_label": "loadthinker()",
+      "source_file": "src/lib/rag-ground.ts",
+      "source_location": "L32"
+    },
+    {
+      "id": "src_lib_rag_ground_manifestnumberforurl",
+      "label": "manifestNumberForUrl()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 114,
+      "community_name": "rag-ground.ts",
+      "file_type": "code",
+      "norm_label": "manifestnumberforurl()",
+      "source_file": "src/lib/rag-ground.ts",
+      "source_location": "L27"
+    },
+    {
+      "id": "src_lib_rag_ground_searchthinkerpassages",
+      "label": "searchThinkerPassages()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 114,
+      "community_name": "rag-ground.ts",
+      "file_type": "code",
+      "norm_label": "searchthinkerpassages()",
+      "source_file": "src/lib/rag-ground.ts",
+      "source_location": "L91"
+    },
+    {
+      "id": "src_lib_rag_search_prepareindex",
+      "label": "prepareIndex()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 114,
+      "community_name": "rag-ground.ts",
+      "file_type": "code",
+      "norm_label": "prepareindex()",
+      "source_file": "src/lib/rag-search.ts",
+      "source_location": "L59"
     },
     {
       "id": "src_lib_rag_shard_joinshard",
@@ -1534,83 +1594,23 @@
       "_callable": true,
       "_origin": "ast",
       "community": 114,
-      "community_name": "rag-search.mjs",
+      "community_name": "rag-ground.ts",
       "file_type": "code",
       "norm_label": "joinshard()",
       "source_file": "src/lib/rag-shard.ts",
       "source_location": "L33"
     },
     {
-      "id": "scripts_test_sitting_args",
-      "label": "args()",
+      "id": "src_lib_rag_text_smartcut",
+      "label": "smartCut()",
       "_callable": true,
       "_origin": "ast",
-      "community": 12,
-      "community_name": "test-sitting.mjs",
+      "community": 114,
+      "community_name": "rag-ground.ts",
       "file_type": "code",
-      "norm_label": "args()",
-      "source_file": "scripts/test-sitting.mjs",
-      "source_location": "L52"
-    },
-    {
-      "id": "scripts_test_sitting_groundauthor",
-      "label": "groundAuthor()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 12,
-      "community_name": "test-sitting.mjs",
-      "file_type": "code",
-      "norm_label": "groundauthor()",
-      "source_file": "scripts/test-sitting.mjs",
-      "source_location": "L100"
-    },
-    {
-      "id": "scripts_test_sitting_runprobe",
-      "label": "runProbe()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 12,
-      "community_name": "test-sitting.mjs",
-      "file_type": "code",
-      "norm_label": "runprobe()",
-      "source_file": "scripts/test-sitting.mjs",
-      "source_location": "L120"
-    },
-    {
-      "id": "scripts_test_sitting_stripfences",
-      "label": "stripFences()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 12,
-      "community_name": "test-sitting.mjs",
-      "file_type": "code",
-      "norm_label": "stripfences()",
-      "source_file": "scripts/test-sitting.mjs",
-      "source_location": "L84"
-    },
-    {
-      "id": "scripts_test_sitting_wordcount",
-      "label": "wordCount()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 12,
-      "community_name": "test-sitting.mjs",
-      "file_type": "code",
-      "norm_label": "wordcount()",
-      "source_file": "scripts/test-sitting.mjs",
-      "source_location": "L93"
-    },
-    {
-      "id": "src_lib_dialectic_prompts_buildclosingscan",
-      "label": "buildClosingScan()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 12,
-      "community_name": "test-sitting.mjs",
-      "file_type": "code",
-      "norm_label": "buildclosingscan()",
-      "source_file": "src/lib/dialectic/prompts.ts",
-      "source_location": "L431"
+      "norm_label": "smartcut()",
+      "source_file": "src/lib/rag-text.ts",
+      "source_location": "L60"
     },
     {
       "id": "src_lib_dialectic_prompts_buildcodaearlyprompt",
@@ -1618,11 +1618,11 @@
       "_callable": true,
       "_origin": "ast",
       "community": 12,
-      "community_name": "test-sitting.mjs",
+      "community_name": "dialectic/prompts.ts",
       "file_type": "code",
       "norm_label": "buildcodaearlyprompt()",
       "source_file": "src/lib/dialectic/prompts.ts",
-      "source_location": "L523"
+      "source_location": "L526"
     },
     {
       "id": "src_lib_dialectic_prompts_buildcodaendprompt",
@@ -1630,11 +1630,11 @@
       "_callable": true,
       "_origin": "ast",
       "community": 12,
-      "community_name": "test-sitting.mjs",
+      "community_name": "dialectic/prompts.ts",
       "file_type": "code",
       "norm_label": "buildcodaendprompt()",
       "source_file": "src/lib/dialectic/prompts.ts",
-      "source_location": "L494"
+      "source_location": "L497"
     },
     {
       "id": "src_lib_dialectic_prompts_buildcodaprompt",
@@ -1642,35 +1642,11 @@
       "_callable": true,
       "_origin": "ast",
       "community": 12,
-      "community_name": "test-sitting.mjs",
+      "community_name": "dialectic/prompts.ts",
       "file_type": "code",
       "norm_label": "buildcodaprompt()",
       "source_file": "src/lib/dialectic/prompts.ts",
-      "source_location": "L469"
-    },
-    {
-      "id": "src_lib_dialectic_prompts_buildpilotturninstruction",
-      "label": "buildPilotTurnInstruction()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 12,
-      "community_name": "test-sitting.mjs",
-      "file_type": "code",
-      "norm_label": "buildpilotturninstruction()",
-      "source_file": "src/lib/dialectic/prompts.ts",
-      "source_location": "L263"
-    },
-    {
-      "id": "src_lib_dialectic_prompts_buildturninstruction",
-      "label": "buildTurnInstruction()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 12,
-      "community_name": "test-sitting.mjs",
-      "file_type": "code",
-      "norm_label": "buildturninstruction()",
-      "source_file": "src/lib/dialectic/prompts.ts",
-      "source_location": "L113"
+      "source_location": "L472"
     },
     {
       "id": "src_lib_dialectic_prompts_buildusermessage",
@@ -1678,11 +1654,11 @@
       "_callable": true,
       "_origin": "ast",
       "community": 12,
-      "community_name": "test-sitting.mjs",
+      "community_name": "dialectic/prompts.ts",
       "file_type": "code",
       "norm_label": "buildusermessage()",
       "source_file": "src/lib/dialectic/prompts.ts",
-      "source_location": "L343"
+      "source_location": "L346"
     },
     {
       "id": "src_lib_dialectic_prompts_drawthreadcity",
@@ -1690,11 +1666,11 @@
       "_callable": true,
       "_origin": "ast",
       "community": 12,
-      "community_name": "test-sitting.mjs",
+      "community_name": "dialectic/prompts.ts",
       "file_type": "code",
       "norm_label": "drawthreadcity()",
       "source_file": "src/lib/dialectic/prompts.ts",
-      "source_location": "L109"
+      "source_location": "L112"
     },
     {
       "id": "src_lib_dialectic_prompts_getturnkind",
@@ -1702,35 +1678,11 @@
       "_callable": true,
       "_origin": "ast",
       "community": 12,
-      "community_name": "test-sitting.mjs",
+      "community_name": "dialectic/prompts.ts",
       "file_type": "code",
       "norm_label": "getturnkind()",
       "source_file": "src/lib/dialectic/prompts.ts",
       "source_location": "L50"
-    },
-    {
-      "id": "src_lib_llm_estimatecost",
-      "label": "estimateCost()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 12,
-      "community_name": "test-sitting.mjs",
-      "file_type": "code",
-      "norm_label": "estimatecost()",
-      "source_file": "src/lib/llm.ts",
-      "source_location": "L231"
-    },
-    {
-      "id": "src_lib_rag_text_smartcut",
-      "label": "smartCut()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 12,
-      "community_name": "test-sitting.mjs",
-      "file_type": "code",
-      "norm_label": "smartcut()",
-      "source_file": "src/lib/rag-text.ts",
-      "source_location": "L60"
     },
     {
       "id": "src_lib_groq_extractdetail",
@@ -1913,36 +1865,12 @@
       "source_location": "L40"
     },
     {
-      "id": "src_philosophers_index_getthinkingpilot",
-      "label": "getThinkingPilot()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 15,
-      "community_name": "philosophers/index.ts",
-      "file_type": "code",
-      "norm_label": "getthinkingpilot()",
-      "source_file": "src/philosophers/index.ts",
-      "source_location": "L105"
-    },
-    {
-      "id": "src_philosophers_index_hasthinkingpilot",
-      "label": "hasThinkingPilot()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 15,
-      "community_name": "philosophers/index.ts",
-      "file_type": "code",
-      "norm_label": "hasthinkingpilot()",
-      "source_file": "src/philosophers/index.ts",
-      "source_location": "L101"
-    },
-    {
       "id": "src_philosophers_index_renderpersona",
       "label": "renderPersona()",
       "_callable": true,
       "_origin": "ast",
       "community": 15,
-      "community_name": "philosophers/index.ts",
+      "community_name": "low-style.ts",
       "file_type": "code",
       "norm_label": "renderpersona()",
       "source_file": "src/philosophers/index.ts",
@@ -1954,7 +1882,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 15,
-      "community_name": "philosophers/index.ts",
+      "community_name": "low-style.ts",
       "file_type": "code",
       "norm_label": "renderantiwaffle()",
       "source_file": "src/philosophers/shared/anti-waffle.ts",
@@ -1966,7 +1894,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 15,
-      "community_name": "philosophers/index.ts",
+      "community_name": "low-style.ts",
       "file_type": "code",
       "norm_label": "renderlanguagelevel()",
       "source_file": "src/philosophers/shared/low-style.ts",
@@ -1978,7 +1906,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 15,
-      "community_name": "philosophers/index.ts",
+      "community_name": "low-style.ts",
       "file_type": "code",
       "norm_label": "renderlowstyleessence()",
       "source_file": "src/philosophers/shared/low-style.ts",
@@ -1990,7 +1918,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 15,
-      "community_name": "philosophers/index.ts",
+      "community_name": "low-style.ts",
       "file_type": "code",
       "norm_label": "renderuniversalmechanisms()",
       "source_file": "src/philosophers/shared/universal-mechanisms.ts",
@@ -2055,6 +1983,18 @@
       "norm_label": "philosopherprofileblock()",
       "source_file": "src/lib/prompts.ts",
       "source_location": "L36"
+    },
+    {
+      "id": "src_lib_dialectic_prompts_buildpilotturninstruction",
+      "label": "buildPilotTurnInstruction()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 17,
+      "community_name": "pilot-slice-demo.mjs",
+      "file_type": "code",
+      "norm_label": "buildpilotturninstruction()",
+      "source_file": "src/lib/dialectic/prompts.ts",
+      "source_location": "L266"
     },
     {
       "id": "src_lib_shared_generatetextshared",
@@ -2489,6 +2429,30 @@
       "source_location": "L21"
     },
     {
+      "id": "src_philosophers_index_getthinkingpilot",
+      "label": "getThinkingPilot()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 27,
+      "community_name": "philosophers/index.ts",
+      "file_type": "code",
+      "norm_label": "getthinkingpilot()",
+      "source_file": "src/philosophers/index.ts",
+      "source_location": "L105"
+    },
+    {
+      "id": "src_philosophers_index_hasthinkingpilot",
+      "label": "hasThinkingPilot()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 27,
+      "community_name": "philosophers/index.ts",
+      "file_type": "code",
+      "norm_label": "hasthinkingpilot()",
+      "source_file": "src/philosophers/index.ts",
+      "source_location": "L101"
+    },
+    {
       "id": "src_app_app",
       "label": "App()",
       "_callable": true,
@@ -2498,7 +2462,7 @@
       "file_type": "code",
       "norm_label": "app()",
       "source_file": "src/App.tsx",
-      "source_location": "L186"
+      "source_location": "L188"
     },
     {
       "id": "src_app_cabinettable",
@@ -2510,7 +2474,7 @@
       "file_type": "code",
       "norm_label": "cabinettable()",
       "source_file": "src/App.tsx",
-      "source_location": "L1864"
+      "source_location": "L1869"
     },
     {
       "id": "src_app_displaytab",
@@ -2522,7 +2486,7 @@
       "file_type": "code",
       "norm_label": "displaytab()",
       "source_file": "src/App.tsx",
-      "source_location": "L2242"
+      "source_location": "L2248"
     },
     {
       "id": "src_app_displaytoggle",
@@ -2534,7 +2498,7 @@
       "file_type": "code",
       "norm_label": "displaytoggle()",
       "source_file": "src/App.tsx",
-      "source_location": "L2366"
+      "source_location": "L2372"
     },
     {
       "id": "src_app_getreadmoresource",
@@ -2558,7 +2522,7 @@
       "file_type": "code",
       "norm_label": "groundingreceipt()",
       "source_file": "src/App.tsx",
-      "source_location": "L2376"
+      "source_location": "L2382"
     },
     {
       "id": "src_app_howbuilt",
@@ -2570,7 +2534,7 @@
       "file_type": "code",
       "norm_label": "howbuilt()",
       "source_file": "src/App.tsx",
-      "source_location": "L1596"
+      "source_location": "L1601"
     },
     {
       "id": "src_app_interventionmodal",
@@ -2582,7 +2546,7 @@
       "file_type": "code",
       "norm_label": "interventionmodal()",
       "source_file": "src/App.tsx",
-      "source_location": "L2381"
+      "source_location": "L2387"
     },
     {
       "id": "src_app_livingroom",
@@ -2594,7 +2558,7 @@
       "file_type": "code",
       "norm_label": "livingroom()",
       "source_file": "src/App.tsx",
-      "source_location": "L1642"
+      "source_location": "L1647"
     },
     {
       "id": "src_app_modelidfield",
@@ -2606,7 +2570,7 @@
       "file_type": "code",
       "norm_label": "modelidfield()",
       "source_file": "src/App.tsx",
-      "source_location": "L1565"
+      "source_location": "L1570"
     },
     {
       "id": "src_app_positioncomparison",
@@ -2618,7 +2582,7 @@
       "file_type": "code",
       "norm_label": "positioncomparison()",
       "source_file": "src/App.tsx",
-      "source_location": "L1870"
+      "source_location": "L1875"
     },
     {
       "id": "src_app_profilemodal",
@@ -2630,7 +2594,7 @@
       "file_type": "code",
       "norm_label": "profilemodal()",
       "source_file": "src/App.tsx",
-      "source_location": "L2384"
+      "source_location": "L2390"
     },
     {
       "id": "src_app_readingdeck",
@@ -2642,7 +2606,7 @@
       "file_type": "code",
       "norm_label": "readingdeck()",
       "source_file": "src/App.tsx",
-      "source_location": "L1731"
+      "source_location": "L1736"
     },
     {
       "id": "src_app_readmore",
@@ -2678,7 +2642,7 @@
       "file_type": "code",
       "norm_label": "settingsdrawer()",
       "source_file": "src/App.tsx",
-      "source_location": "L1914"
+      "source_location": "L1919"
     },
     {
       "id": "src_app_sourcedrawer",
@@ -2690,7 +2654,7 @@
       "file_type": "code",
       "norm_label": "sourcedrawer()",
       "source_file": "src/App.tsx",
-      "source_location": "L1897"
+      "source_location": "L1902"
     },
     {
       "id": "src_app_spiralview",
@@ -2702,7 +2666,7 @@
       "file_type": "code",
       "norm_label": "spiralview()",
       "source_file": "src/App.tsx",
-      "source_location": "L1868"
+      "source_location": "L1873"
     },
     {
       "id": "src_app_styleessencedisplay",
@@ -2714,7 +2678,7 @@
       "file_type": "code",
       "norm_label": "styleessencedisplay()",
       "source_file": "src/App.tsx",
-      "source_location": "L2383"
+      "source_location": "L2389"
     },
     {
       "id": "src_app_tointervention",
@@ -2738,7 +2702,7 @@
       "file_type": "code",
       "norm_label": "welcomemodal()",
       "source_file": "src/App.tsx",
-      "source_location": "L1872"
+      "source_location": "L1877"
     },
     {
       "id": "src_components_genealogymap_edgestyle",
@@ -2813,6 +2777,174 @@
       "source_location": "L12"
     },
     {
+      "id": "scripts_test_env_loadtestenv",
+      "label": "loadTestEnv()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 40,
+      "community_name": "test-sitting.mjs",
+      "file_type": "code",
+      "norm_label": "loadtestenv()",
+      "source_file": "scripts/test-env.mjs",
+      "source_location": "L10"
+    },
+    {
+      "id": "scripts_test_providers_classifystatus",
+      "label": "classifyStatus()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 40,
+      "community_name": "test-sitting.mjs",
+      "file_type": "code",
+      "norm_label": "classifystatus()",
+      "source_file": "scripts/test-providers.mjs",
+      "source_location": "L32"
+    },
+    {
+      "id": "scripts_test_providers_postchat",
+      "label": "postChat()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 40,
+      "community_name": "test-sitting.mjs",
+      "file_type": "code",
+      "norm_label": "postchat()",
+      "source_file": "scripts/test-providers.mjs",
+      "source_location": "L44"
+    },
+    {
+      "id": "scripts_test_providers_resolvepipe",
+      "label": "resolvePipe()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 40,
+      "community_name": "test-sitting.mjs",
+      "file_type": "code",
+      "norm_label": "resolvepipe()",
+      "source_file": "scripts/test-providers.mjs",
+      "source_location": "L18"
+    },
+    {
+      "id": "scripts_test_sitting_args",
+      "label": "args()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 40,
+      "community_name": "test-sitting.mjs",
+      "file_type": "code",
+      "norm_label": "args()",
+      "source_file": "scripts/test-sitting.mjs",
+      "source_location": "L52"
+    },
+    {
+      "id": "scripts_test_sitting_runprobe",
+      "label": "runProbe()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 40,
+      "community_name": "test-sitting.mjs",
+      "file_type": "code",
+      "norm_label": "runprobe()",
+      "source_file": "scripts/test-sitting.mjs",
+      "source_location": "L120"
+    },
+    {
+      "id": "scripts_test_sitting_stripfences",
+      "label": "stripFences()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 40,
+      "community_name": "test-sitting.mjs",
+      "file_type": "code",
+      "norm_label": "stripfences()",
+      "source_file": "scripts/test-sitting.mjs",
+      "source_location": "L84"
+    },
+    {
+      "id": "scripts_test_sitting_wordcount",
+      "label": "wordCount()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 40,
+      "community_name": "test-sitting.mjs",
+      "file_type": "code",
+      "norm_label": "wordcount()",
+      "source_file": "scripts/test-sitting.mjs",
+      "source_location": "L93"
+    },
+    {
+      "id": "src_lib_dialectic_prompts_buildclosingscan",
+      "label": "buildClosingScan()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 40,
+      "community_name": "test-sitting.mjs",
+      "file_type": "code",
+      "norm_label": "buildclosingscan()",
+      "source_file": "src/lib/dialectic/prompts.ts",
+      "source_location": "L434"
+    },
+    {
+      "id": "src_lib_dialectic_prompts_buildturninstruction",
+      "label": "buildTurnInstruction()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 40,
+      "community_name": "test-sitting.mjs",
+      "file_type": "code",
+      "norm_label": "buildturninstruction()",
+      "source_file": "src/lib/dialectic/prompts.ts",
+      "source_location": "L116"
+    },
+    {
+      "id": "src_lib_llm_estimatecost",
+      "label": "estimateCost()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 40,
+      "community_name": "test-sitting.mjs",
+      "file_type": "code",
+      "norm_label": "estimatecost()",
+      "source_file": "src/lib/llm.ts",
+      "source_location": "L231"
+    },
+    {
+      "id": "scripts_rag_chunk_chunkparagraphs",
+      "label": "chunkParagraphs()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 41,
+      "community_name": "rag-text.mjs",
+      "file_type": "code",
+      "norm_label": "chunkparagraphs()",
+      "source_file": "scripts/rag-chunk.mjs",
+      "source_location": "L32"
+    },
+    {
+      "id": "scripts_rag_chunk_splitlongparagraph",
+      "label": "splitLongParagraph()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 41,
+      "community_name": "rag-text.mjs",
+      "file_type": "code",
+      "norm_label": "splitlongparagraph()",
+      "source_file": "scripts/rag-chunk.mjs",
+      "source_location": "L14"
+    },
+    {
+      "id": "src_lib_rag_text_wordcount",
+      "label": "wordCount()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 41,
+      "community_name": "rag-text.mjs",
+      "file_type": "code",
+      "norm_label": "wordcount()",
+      "source_file": "src/lib/rag-text.ts",
+      "source_location": "L53"
+    },
+    {
       "id": "src_lib_verify_extractquotes",
       "label": "extractQuotes()",
       "_callable": true,
@@ -2847,42 +2979,6 @@
       "norm_label": "verifyquotes()",
       "source_file": "src/lib/verify.ts",
       "source_location": "L60"
-    },
-    {
-      "id": "src_lib_rag_ground_loadthinker",
-      "label": "loadThinker()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 49,
-      "community_name": "rag-ground.ts",
-      "file_type": "code",
-      "norm_label": "loadthinker()",
-      "source_file": "src/lib/rag-ground.ts",
-      "source_location": "L32"
-    },
-    {
-      "id": "src_lib_rag_ground_manifestnumberforurl",
-      "label": "manifestNumberForUrl()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 49,
-      "community_name": "rag-ground.ts",
-      "file_type": "code",
-      "norm_label": "manifestnumberforurl()",
-      "source_file": "src/lib/rag-ground.ts",
-      "source_location": "L27"
-    },
-    {
-      "id": "src_lib_rag_ground_searchthinkerpassages",
-      "label": "searchThinkerPassages()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 49,
-      "community_name": "rag-ground.ts",
-      "file_type": "code",
-      "norm_label": "searchthinkerpassages()",
-      "source_file": "src/lib/rag-ground.ts",
-      "source_location": "L91"
     },
     {
       "id": "src_lib_openrouter_attemptmodel",
@@ -3101,30 +3197,6 @@
       "source_location": "L130"
     },
     {
-      "id": "scripts_rag_chunk_chunkparagraphs",
-      "label": "chunkParagraphs()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 53,
-      "community_name": "rag-ingest.mjs",
-      "file_type": "code",
-      "norm_label": "chunkparagraphs()",
-      "source_file": "scripts/rag-chunk.mjs",
-      "source_location": "L32"
-    },
-    {
-      "id": "scripts_rag_chunk_splitlongparagraph",
-      "label": "splitLongParagraph()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 53,
-      "community_name": "rag-ingest.mjs",
-      "file_type": "code",
-      "norm_label": "splitlongparagraph()",
-      "source_file": "scripts/rag-chunk.mjs",
-      "source_location": "L14"
-    },
-    {
       "id": "scripts_rag_ingest_authorslug",
       "label": "authorSlug()",
       "_callable": true,
@@ -3327,18 +3399,6 @@
       "norm_label": "normalizetext()",
       "source_file": "src/lib/rag-text.ts",
       "source_location": "L21"
-    },
-    {
-      "id": "src_lib_rag_text_wordcount",
-      "label": "wordCount()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 53,
-      "community_name": "rag-ingest.mjs",
-      "file_type": "code",
-      "norm_label": "wordcount()",
-      "source_file": "src/lib/rag-text.ts",
-      "source_location": "L53"
     },
     {
       "id": "scripts_rag_inspect_get",
@@ -3809,54 +3869,6 @@
       "source_location": "L95"
     },
     {
-      "id": "scripts_test_env_loadtestenv",
-      "label": "loadTestEnv()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 75,
-      "community_name": "test-matrix.mjs",
-      "file_type": "code",
-      "norm_label": "loadtestenv()",
-      "source_file": "scripts/test-env.mjs",
-      "source_location": "L10"
-    },
-    {
-      "id": "scripts_test_providers_classifystatus",
-      "label": "classifyStatus()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 75,
-      "community_name": "test-matrix.mjs",
-      "file_type": "code",
-      "norm_label": "classifystatus()",
-      "source_file": "scripts/test-providers.mjs",
-      "source_location": "L32"
-    },
-    {
-      "id": "scripts_test_providers_postchat",
-      "label": "postChat()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 75,
-      "community_name": "test-matrix.mjs",
-      "file_type": "code",
-      "norm_label": "postchat()",
-      "source_file": "scripts/test-providers.mjs",
-      "source_location": "L44"
-    },
-    {
-      "id": "scripts_test_providers_resolvepipe",
-      "label": "resolvePipe()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 75,
-      "community_name": "test-matrix.mjs",
-      "file_type": "code",
-      "norm_label": "resolvepipe()",
-      "source_file": "scripts/test-providers.mjs",
-      "source_location": "L18"
-    },
-    {
       "id": "src_lib_porter_endscvc",
       "label": "endsCvc()",
       "_callable": true,
@@ -4169,18 +4181,6 @@
       "source_location": "L74"
     },
     {
-      "id": "src_lib_rag_search_prepareindex",
-      "label": "prepareIndex()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 81,
-      "community_name": "rag-search.ts",
-      "file_type": "code",
-      "norm_label": "prepareindex()",
-      "source_file": "src/lib/rag-search.ts",
-      "source_location": "L59"
-    },
-    {
       "id": "src_lib_rag_search_round",
       "label": "round()",
       "_callable": true,
@@ -4238,7 +4238,7 @@
       "file_type": "code",
       "norm_label": "clearapikey()",
       "source_file": "src/lib/settings.ts",
-      "source_location": "L169"
+      "source_location": "L172"
     },
     {
       "id": "src_lib_settings_clearproviderhealth",
@@ -4250,7 +4250,7 @@
       "file_type": "code",
       "norm_label": "clearproviderhealth()",
       "source_file": "src/lib/settings.ts",
-      "source_location": "L213"
+      "source_location": "L216"
     },
     {
       "id": "src_lib_settings_loadproviderhealth",
@@ -4262,7 +4262,7 @@
       "file_type": "code",
       "norm_label": "loadproviderhealth()",
       "source_file": "src/lib/settings.ts",
-      "source_location": "L186"
+      "source_location": "L189"
     },
     {
       "id": "src_lib_settings_loadsettings",
@@ -4274,7 +4274,7 @@
       "file_type": "code",
       "norm_label": "loadsettings()",
       "source_file": "src/lib/settings.ts",
-      "source_location": "L110"
+      "source_location": "L112"
     },
     {
       "id": "src_lib_settings_saveproviderhealth",
@@ -4286,7 +4286,7 @@
       "file_type": "code",
       "norm_label": "saveproviderhealth()",
       "source_file": "src/lib/settings.ts",
-      "source_location": "L203"
+      "source_location": "L206"
     },
     {
       "id": "src_lib_settings_savesettings",
@@ -4298,7 +4298,7 @@
       "file_type": "code",
       "norm_label": "savesettings()",
       "source_file": "src/lib/settings.ts",
-      "source_location": "L161"
+      "source_location": "L164"
     },
     {
       "id": "scripts_bench_rag_derivequery",
@@ -5332,7 +5332,7 @@
       "label": "rag-search.mjs",
       "_origin": "ast",
       "community": 114,
-      "community_name": "rag-search.mjs",
+      "community_name": "rag-ground.ts",
       "file_type": "code",
       "norm_label": "rag-search.mjs",
       "source_file": "scripts/rag-search.mjs",
@@ -5343,7 +5343,7 @@
       "label": "args",
       "_origin": "ast",
       "community": 114,
-      "community_name": "rag-search.mjs",
+      "community_name": "rag-ground.ts",
       "file_type": "code",
       "norm_label": "args",
       "source_file": "scripts/rag-search.mjs",
@@ -5354,7 +5354,7 @@
       "label": "debug",
       "_origin": "ast",
       "community": 114,
-      "community_name": "rag-search.mjs",
+      "community_name": "rag-ground.ts",
       "file_type": "code",
       "norm_label": "debug",
       "source_file": "scripts/rag-search.mjs",
@@ -5365,7 +5365,7 @@
       "label": "{ manifest, passages }",
       "_origin": "ast",
       "community": 114,
-      "community_name": "rag-search.mjs",
+      "community_name": "rag-ground.ts",
       "file_type": "code",
       "norm_label": "{ manifest, passages }",
       "source_file": "scripts/rag-search.mjs",
@@ -5376,7 +5376,7 @@
       "label": "prepared",
       "_origin": "ast",
       "community": 114,
-      "community_name": "rag-search.mjs",
+      "community_name": "rag-ground.ts",
       "file_type": "code",
       "norm_label": "prepared",
       "source_file": "scripts/rag-search.mjs",
@@ -5387,18 +5387,40 @@
       "label": "query",
       "_origin": "ast",
       "community": 114,
-      "community_name": "rag-search.mjs",
+      "community_name": "rag-ground.ts",
       "file_type": "code",
       "norm_label": "query",
       "source_file": "scripts/rag-search.mjs",
       "source_location": "L18"
     },
     {
+      "id": "src_lib_rag_ground",
+      "label": "rag-ground.ts",
+      "_origin": "ast",
+      "community": 114,
+      "community_name": "rag-ground.ts",
+      "file_type": "code",
+      "norm_label": "rag-ground.ts",
+      "source_file": "src/lib/rag-ground.ts",
+      "source_location": "L1"
+    },
+    {
+      "id": "src_lib_rag_ground_cache",
+      "label": "cache",
+      "_origin": "ast",
+      "community": 114,
+      "community_name": "rag-ground.ts",
+      "file_type": "code",
+      "norm_label": "cache",
+      "source_file": "src/lib/rag-ground.ts",
+      "source_location": "L25"
+    },
+    {
       "id": "src_lib_rag_shard",
       "label": "rag-shard.ts",
       "_origin": "ast",
       "community": 114,
-      "community_name": "rag-search.mjs",
+      "community_name": "rag-ground.ts",
       "file_type": "code",
       "norm_label": "rag-shard.ts",
       "source_file": "src/lib/rag-shard.ts",
@@ -5556,22 +5578,11 @@
       "source_location": "L1"
     },
     {
-      "id": "scripts_test_sitting",
-      "label": "test-sitting.mjs",
-      "_origin": "ast",
-      "community": 12,
-      "community_name": "test-sitting.mjs",
-      "file_type": "code",
-      "norm_label": "test-sitting.mjs",
-      "source_file": "scripts/test-sitting.mjs",
-      "source_location": "L1"
-    },
-    {
       "id": "src_lib_dialectic_prompts",
       "label": "dialectic/prompts.ts",
       "_origin": "ast",
       "community": 12,
-      "community_name": "test-sitting.mjs",
+      "community_name": "dialectic/prompts.ts",
       "file_type": "code",
       "norm_label": "dialectic/prompts.ts",
       "source_file": "src/lib/dialectic/prompts.ts",
@@ -5582,73 +5593,73 @@
       "label": "CLOSING_SCAN",
       "_origin": "ast",
       "community": 12,
-      "community_name": "test-sitting.mjs",
+      "community_name": "dialectic/prompts.ts",
       "file_type": "code",
       "norm_label": "closing_scan",
       "source_file": "src/lib/dialectic/prompts.ts",
-      "source_location": "L423"
+      "source_location": "L426"
     },
     {
       "id": "src_lib_dialectic_prompts_coda_repair_suffix",
       "label": "CODA_REPAIR_SUFFIX",
       "_origin": "ast",
       "community": 12,
-      "community_name": "test-sitting.mjs",
+      "community_name": "dialectic/prompts.ts",
       "file_type": "code",
       "norm_label": "coda_repair_suffix",
       "source_file": "src/lib/dialectic/prompts.ts",
-      "source_location": "L512"
+      "source_location": "L515"
     },
     {
       "id": "src_lib_dialectic_prompts_coda_system",
       "label": "CODA_SYSTEM",
       "_origin": "ast",
       "community": 12,
-      "community_name": "test-sitting.mjs",
+      "community_name": "dialectic/prompts.ts",
       "file_type": "code",
       "norm_label": "coda_system",
       "source_file": "src/lib/dialectic/prompts.ts",
-      "source_location": "L463"
+      "source_location": "L466"
     },
     {
       "id": "src_lib_dialectic_prompts_glossary_shape",
       "label": "GLOSSARY_SHAPE",
       "_origin": "ast",
       "community": 12,
-      "community_name": "test-sitting.mjs",
+      "community_name": "dialectic/prompts.ts",
       "file_type": "code",
       "norm_label": "glossary_shape",
       "source_file": "src/lib/dialectic/prompts.ts",
-      "source_location": "L444"
+      "source_location": "L447"
     },
     {
       "id": "src_lib_dialectic_prompts_low_closing_reminder",
       "label": "LOW_CLOSING_REMINDER",
       "_origin": "ast",
       "community": 12,
-      "community_name": "test-sitting.mjs",
+      "community_name": "dialectic/prompts.ts",
       "file_type": "code",
       "norm_label": "low_closing_reminder",
       "source_file": "src/lib/dialectic/prompts.ts",
-      "source_location": "L414"
+      "source_location": "L417"
     },
     {
       "id": "src_lib_dialectic_prompts_margins_writer_name",
       "label": "MARGINS_WRITER_NAME",
       "_origin": "ast",
       "community": 12,
-      "community_name": "test-sitting.mjs",
+      "community_name": "dialectic/prompts.ts",
       "file_type": "code",
       "norm_label": "margins_writer_name",
       "source_file": "src/lib/dialectic/prompts.ts",
-      "source_location": "L453"
+      "source_location": "L456"
     },
     {
       "id": "src_lib_dialectic_prompts_max_output_tokens",
       "label": "MAX_OUTPUT_TOKENS",
       "_origin": "ast",
       "community": 12,
-      "community_name": "test-sitting.mjs",
+      "community_name": "dialectic/prompts.ts",
       "file_type": "code",
       "norm_label": "max_output_tokens",
       "source_file": "src/lib/dialectic/prompts.ts",
@@ -5659,29 +5670,29 @@
       "label": "MEDIUM_GLOSS_SCAN",
       "_origin": "ast",
       "community": 12,
-      "community_name": "test-sitting.mjs",
+      "community_name": "dialectic/prompts.ts",
       "file_type": "code",
       "norm_label": "medium_gloss_scan",
       "source_file": "src/lib/dialectic/prompts.ts",
-      "source_location": "L428"
+      "source_location": "L431"
     },
     {
       "id": "src_lib_dialectic_prompts_pilot_last_word",
       "label": "PILOT_LAST_WORD",
       "_origin": "ast",
       "community": 12,
-      "community_name": "test-sitting.mjs",
+      "community_name": "dialectic/prompts.ts",
       "file_type": "code",
       "norm_label": "pilot_last_word",
       "source_file": "src/lib/dialectic/prompts.ts",
-      "source_location": "L405"
+      "source_location": "L408"
     },
     {
       "id": "src_lib_dialectic_prompts_prompt_version",
       "label": "PROMPT_VERSION",
       "_origin": "ast",
       "community": 12,
-      "community_name": "test-sitting.mjs",
+      "community_name": "dialectic/prompts.ts",
       "file_type": "code",
       "norm_label": "prompt_version",
       "source_file": "src/lib/dialectic/prompts.ts",
@@ -5692,29 +5703,29 @@
       "label": "STRUCTURED_OUTPUT_HINT",
       "_origin": "ast",
       "community": 12,
-      "community_name": "test-sitting.mjs",
+      "community_name": "dialectic/prompts.ts",
       "file_type": "code",
       "norm_label": "structured_output_hint",
       "source_file": "src/lib/dialectic/prompts.ts",
-      "source_location": "L435"
+      "source_location": "L438"
     },
     {
       "id": "src_lib_dialectic_prompts_thread_cities",
       "label": "THREAD_CITIES",
       "_origin": "ast",
       "community": 12,
-      "community_name": "test-sitting.mjs",
+      "community_name": "dialectic/prompts.ts",
       "file_type": "code",
       "norm_label": "thread_cities",
       "source_file": "src/lib/dialectic/prompts.ts",
-      "source_location": "L100"
+      "source_location": "L103"
     },
     {
       "id": "src_lib_dialectic_prompts_word_budgets",
       "label": "WORD_BUDGETS",
       "_origin": "ast",
       "community": 12,
-      "community_name": "test-sitting.mjs",
+      "community_name": "dialectic/prompts.ts",
       "file_type": "code",
       "norm_label": "word_budgets",
       "source_file": "src/lib/dialectic/prompts.ts",
@@ -7119,77 +7130,11 @@
       "source_location": "L2306"
     },
     {
-      "id": "src_philosophers_index",
-      "label": "philosophers/index.ts",
-      "_origin": "ast",
-      "community": 15,
-      "community_name": "philosophers/index.ts",
-      "file_type": "code",
-      "norm_label": "philosophers/index.ts",
-      "source_file": "src/philosophers/index.ts",
-      "source_location": "L1"
-    },
-    {
-      "id": "src_philosophers_index_default_seating_order",
-      "label": "DEFAULT_SEATING_ORDER",
-      "_origin": "ast",
-      "community": 15,
-      "community_name": "philosophers/index.ts",
-      "file_type": "code",
-      "norm_label": "default_seating_order",
-      "source_file": "src/philosophers/index.ts",
-      "source_location": "L67"
-    },
-    {
-      "id": "src_philosophers_index_definitions",
-      "label": "DEFINITIONS",
-      "_origin": "ast",
-      "community": 15,
-      "community_name": "philosophers/index.ts",
-      "file_type": "code",
-      "norm_label": "definitions",
-      "source_file": "src/philosophers/index.ts",
-      "source_location": "L57"
-    },
-    {
-      "id": "src_philosophers_index_philosopher_by_slug",
-      "label": "PHILOSOPHER_BY_SLUG",
-      "_origin": "ast",
-      "community": 15,
-      "community_name": "philosophers/index.ts",
-      "file_type": "code",
-      "norm_label": "philosopher_by_slug",
-      "source_file": "src/philosophers/index.ts",
-      "source_location": "L69"
-    },
-    {
-      "id": "src_philosophers_index_philosopher_data",
-      "label": "PHILOSOPHER_DATA",
-      "_origin": "ast",
-      "community": 15,
-      "community_name": "philosophers/index.ts",
-      "file_type": "code",
-      "norm_label": "philosopher_data",
-      "source_file": "src/philosophers/index.ts",
-      "source_location": "L63"
-    },
-    {
-      "id": "src_philosophers_index_thinking_pilot",
-      "label": "THINKING_PILOT",
-      "_origin": "ast",
-      "community": 15,
-      "community_name": "philosophers/index.ts",
-      "file_type": "code",
-      "norm_label": "thinking_pilot",
-      "source_file": "src/philosophers/index.ts",
-      "source_location": "L86"
-    },
-    {
       "id": "src_philosophers_shared_anti_waffle",
       "label": "anti-waffle.ts",
       "_origin": "ast",
       "community": 15,
-      "community_name": "philosophers/index.ts",
+      "community_name": "low-style.ts",
       "file_type": "code",
       "norm_label": "anti-waffle.ts",
       "source_file": "src/philosophers/shared/anti-waffle.ts",
@@ -7200,7 +7145,7 @@
       "label": "ANTI_WAFFLE_RULES",
       "_origin": "ast",
       "community": 15,
-      "community_name": "philosophers/index.ts",
+      "community_name": "low-style.ts",
       "file_type": "code",
       "norm_label": "anti_waffle_rules",
       "source_file": "src/philosophers/shared/anti-waffle.ts",
@@ -7211,7 +7156,7 @@
       "label": "BANNED_PHRASES",
       "_origin": "ast",
       "community": 15,
-      "community_name": "philosophers/index.ts",
+      "community_name": "low-style.ts",
       "file_type": "code",
       "norm_label": "banned_phrases",
       "source_file": "src/philosophers/shared/anti-waffle.ts",
@@ -7222,7 +7167,7 @@
       "label": "DIALECTICAL_MATERIALISM_FRAME",
       "_origin": "ast",
       "community": 15,
-      "community_name": "philosophers/index.ts",
+      "community_name": "low-style.ts",
       "file_type": "code",
       "norm_label": "dialectical_materialism_frame",
       "source_file": "src/philosophers/shared/anti-waffle.ts",
@@ -7233,7 +7178,7 @@
       "label": "ROLE_INTEGRITY",
       "_origin": "ast",
       "community": 15,
-      "community_name": "philosophers/index.ts",
+      "community_name": "low-style.ts",
       "file_type": "code",
       "norm_label": "role_integrity",
       "source_file": "src/philosophers/shared/anti-waffle.ts",
@@ -7244,7 +7189,7 @@
       "label": "low-style.ts",
       "_origin": "ast",
       "community": 15,
-      "community_name": "philosophers/index.ts",
+      "community_name": "low-style.ts",
       "file_type": "code",
       "norm_label": "low-style.ts",
       "source_file": "src/philosophers/shared/low-style.ts",
@@ -7255,7 +7200,7 @@
       "label": "LANGUAGE_COMMON",
       "_origin": "ast",
       "community": 15,
-      "community_name": "philosophers/index.ts",
+      "community_name": "low-style.ts",
       "file_type": "code",
       "norm_label": "language_common",
       "source_file": "src/philosophers/shared/low-style.ts",
@@ -7266,7 +7211,7 @@
       "label": "LANGUAGE_LEVELS",
       "_origin": "ast",
       "community": 15,
-      "community_name": "philosophers/index.ts",
+      "community_name": "low-style.ts",
       "file_type": "code",
       "norm_label": "language_levels",
       "source_file": "src/philosophers/shared/low-style.ts",
@@ -7277,7 +7222,7 @@
       "label": "LOW_CONCEPT_RULES",
       "_origin": "ast",
       "community": 15,
-      "community_name": "philosophers/index.ts",
+      "community_name": "low-style.ts",
       "file_type": "code",
       "norm_label": "low_concept_rules",
       "source_file": "src/philosophers/shared/low-style.ts",
@@ -7288,7 +7233,7 @@
       "label": "LOW_OVERRIDE",
       "_origin": "ast",
       "community": 15,
-      "community_name": "philosophers/index.ts",
+      "community_name": "low-style.ts",
       "file_type": "code",
       "norm_label": "low_override",
       "source_file": "src/philosophers/shared/low-style.ts",
@@ -7299,44 +7244,77 @@
       "label": "LOW_PLAIN_RULES",
       "_origin": "ast",
       "community": 15,
-      "community_name": "philosophers/index.ts",
+      "community_name": "low-style.ts",
       "file_type": "code",
       "norm_label": "low_plain_rules",
       "source_file": "src/philosophers/shared/low-style.ts",
       "source_location": "L38"
     },
     {
-      "id": "src_philosophers_trios",
-      "label": "trios.ts",
+      "id": "src_philosophers_shared_universal_mechanisms",
+      "label": "universal-mechanisms.ts",
       "_origin": "ast",
       "community": 15,
-      "community_name": "philosophers/index.ts",
+      "community_name": "low-style.ts",
       "file_type": "code",
-      "norm_label": "trios.ts",
-      "source_file": "src/philosophers/trios.ts",
+      "norm_label": "universal-mechanisms.ts",
+      "source_file": "src/philosophers/shared/universal-mechanisms.ts",
       "source_location": "L1"
     },
     {
-      "id": "src_philosophers_trios_fallback_medium_example",
-      "label": "FALLBACK_MEDIUM_EXAMPLE",
+      "id": "src_philosophers_shared_universal_mechanisms_avoid_caricature",
+      "label": "AVOID_CARICATURE",
       "_origin": "ast",
       "community": 15,
-      "community_name": "philosophers/index.ts",
+      "community_name": "low-style.ts",
       "file_type": "code",
-      "norm_label": "fallback_medium_example",
-      "source_file": "src/philosophers/trios.ts",
-      "source_location": "L71"
+      "norm_label": "avoid_caricature",
+      "source_file": "src/philosophers/shared/universal-mechanisms.ts",
+      "source_location": "L19"
     },
     {
-      "id": "src_philosophers_trios_seat_trios",
-      "label": "SEAT_TRIOS",
+      "id": "src_philosophers_shared_universal_mechanisms_forensic_preamble",
+      "label": "FORENSIC_PREAMBLE",
       "_origin": "ast",
       "community": 15,
-      "community_name": "philosophers/index.ts",
+      "community_name": "low-style.ts",
       "file_type": "code",
-      "norm_label": "seat_trios",
-      "source_file": "src/philosophers/trios.ts",
-      "source_location": "L15"
+      "norm_label": "forensic_preamble",
+      "source_file": "src/philosophers/shared/universal-mechanisms.ts",
+      "source_location": "L6"
+    },
+    {
+      "id": "src_philosophers_shared_universal_mechanisms_generative_argument_model",
+      "label": "GENERATIVE_ARGUMENT_MODEL",
+      "_origin": "ast",
+      "community": 15,
+      "community_name": "low-style.ts",
+      "file_type": "code",
+      "norm_label": "generative_argument_model",
+      "source_file": "src/philosophers/shared/universal-mechanisms.ts",
+      "source_location": "L28"
+    },
+    {
+      "id": "src_philosophers_shared_universal_mechanisms_style_control_description",
+      "label": "STYLE_CONTROL_DESCRIPTION",
+      "_origin": "ast",
+      "community": 15,
+      "community_name": "low-style.ts",
+      "file_type": "code",
+      "norm_label": "style_control_description",
+      "source_file": "src/philosophers/shared/universal-mechanisms.ts",
+      "source_location": "L36"
+    },
+    {
+      "id": "src_philosophers_shared_universal_mechanisms_universal_supporting_mechanisms",
+      "label": "UNIVERSAL_SUPPORTING_MECHANISMS",
+      "_origin": "ast",
+      "community": 15,
+      "community_name": "low-style.ts",
+      "file_type": "code",
+      "norm_label": "universal_supporting_mechanisms",
+      "source_file": "src/philosophers/shared/universal-mechanisms.ts",
+      "source_location": "L8"
     },
     {
       "id": "docs_persona_prompts_1_identity_card_2550",
@@ -7947,11 +7925,165 @@
       "source_location": "L40"
     },
     {
+      "id": "scripts_pilot_slice_demo",
+      "label": "pilot-slice-demo.mjs",
+      "_origin": "ast",
+      "community": 17,
+      "community_name": "pilot-slice-demo.mjs",
+      "file_type": "code",
+      "norm_label": "pilot-slice-demo.mjs",
+      "source_file": "scripts/pilot-slice-demo.mjs",
+      "source_location": "L1"
+    },
+    {
+      "id": "scripts_pilot_slice_demo_anon",
+      "label": "anon",
+      "_origin": "ast",
+      "community": 17,
+      "community_name": "pilot-slice-demo.mjs",
+      "file_type": "code",
+      "norm_label": "anon",
+      "source_file": "scripts/pilot-slice-demo.mjs",
+      "source_location": "L58"
+    },
+    {
+      "id": "src_philosophers_bloch_life",
+      "label": "bloch.life.ts",
+      "_origin": "ast",
+      "community": 17,
+      "community_name": "pilot-slice-demo.mjs",
+      "file_type": "code",
+      "norm_label": "bloch.life.ts",
+      "source_file": "src/philosophers/bloch.life.ts",
+      "source_location": "L1"
+    },
+    {
+      "id": "src_philosophers_bloch_life_bloch_life",
+      "label": "BLOCH_LIFE",
+      "_origin": "ast",
+      "community": 17,
+      "community_name": "pilot-slice-demo.mjs",
+      "file_type": "code",
+      "norm_label": "bloch_life",
+      "source_file": "src/philosophers/bloch.life.ts",
+      "source_location": "L6"
+    },
+    {
+      "id": "src_philosophers_bogdanov_life",
+      "label": "bogdanov.life.ts",
+      "_origin": "ast",
+      "community": 17,
+      "community_name": "pilot-slice-demo.mjs",
+      "file_type": "code",
+      "norm_label": "bogdanov.life.ts",
+      "source_file": "src/philosophers/bogdanov.life.ts",
+      "source_location": "L1"
+    },
+    {
+      "id": "src_philosophers_bogdanov_life_bogdanov_life",
+      "label": "BOGDANOV_LIFE",
+      "_origin": "ast",
+      "community": 17,
+      "community_name": "pilot-slice-demo.mjs",
+      "file_type": "code",
+      "norm_label": "bogdanov_life",
+      "source_file": "src/philosophers/bogdanov.life.ts",
+      "source_location": "L6"
+    },
+    {
+      "id": "src_philosophers_bookchin_life",
+      "label": "bookchin.life.ts",
+      "_origin": "ast",
+      "community": 17,
+      "community_name": "pilot-slice-demo.mjs",
+      "file_type": "code",
+      "norm_label": "bookchin.life.ts",
+      "source_file": "src/philosophers/bookchin.life.ts",
+      "source_location": "L1"
+    },
+    {
+      "id": "src_philosophers_bookchin_life_bookchin_life",
+      "label": "BOOKCHIN_LIFE",
+      "_origin": "ast",
+      "community": 17,
+      "community_name": "pilot-slice-demo.mjs",
+      "file_type": "code",
+      "norm_label": "bookchin_life",
+      "source_file": "src/philosophers/bookchin.life.ts",
+      "source_location": "L6"
+    },
+    {
+      "id": "src_philosophers_deleuze_life",
+      "label": "deleuze.life.ts",
+      "_origin": "ast",
+      "community": 17,
+      "community_name": "pilot-slice-demo.mjs",
+      "file_type": "code",
+      "norm_label": "deleuze.life.ts",
+      "source_file": "src/philosophers/deleuze.life.ts",
+      "source_location": "L1"
+    },
+    {
+      "id": "src_philosophers_deleuze_life_deleuze_life",
+      "label": "DELEUZE_LIFE",
+      "_origin": "ast",
+      "community": 17,
+      "community_name": "pilot-slice-demo.mjs",
+      "file_type": "code",
+      "norm_label": "deleuze_life",
+      "source_file": "src/philosophers/deleuze.life.ts",
+      "source_location": "L6"
+    },
+    {
+      "id": "src_philosophers_fisher_life",
+      "label": "fisher.life.ts",
+      "_origin": "ast",
+      "community": 17,
+      "community_name": "pilot-slice-demo.mjs",
+      "file_type": "code",
+      "norm_label": "fisher.life.ts",
+      "source_file": "src/philosophers/fisher.life.ts",
+      "source_location": "L1"
+    },
+    {
+      "id": "src_philosophers_fisher_life_fisher_life",
+      "label": "FISHER_LIFE",
+      "_origin": "ast",
+      "community": 17,
+      "community_name": "pilot-slice-demo.mjs",
+      "file_type": "code",
+      "norm_label": "fisher_life",
+      "source_file": "src/philosophers/fisher.life.ts",
+      "source_location": "L6"
+    },
+    {
+      "id": "src_philosophers_hegel_expression",
+      "label": "hegel.expression.ts",
+      "_origin": "ast",
+      "community": 17,
+      "community_name": "pilot-slice-demo.mjs",
+      "file_type": "code",
+      "norm_label": "hegel.expression.ts",
+      "source_file": "src/philosophers/hegel.expression.ts",
+      "source_location": "L1"
+    },
+    {
+      "id": "src_philosophers_hegel_expression_hegel_expression",
+      "label": "HEGEL_EXPRESSION",
+      "_origin": "ast",
+      "community": 17,
+      "community_name": "pilot-slice-demo.mjs",
+      "file_type": "code",
+      "norm_label": "hegel_expression",
+      "source_file": "src/philosophers/hegel.expression.ts",
+      "source_location": "L10"
+    },
+    {
       "id": "src_philosophers_hegel_life",
       "label": "hegel.life.ts",
       "_origin": "ast",
       "community": 17,
-      "community_name": "LifeFile",
+      "community_name": "pilot-slice-demo.mjs",
       "file_type": "code",
       "norm_label": "hegel.life.ts",
       "source_file": "src/philosophers/hegel.life.ts",
@@ -7962,18 +8094,40 @@
       "label": "HEGEL_LIFE",
       "_origin": "ast",
       "community": 17,
-      "community_name": "LifeFile",
+      "community_name": "pilot-slice-demo.mjs",
       "file_type": "code",
       "norm_label": "hegel_life",
       "source_file": "src/philosophers/hegel.life.ts",
       "source_location": "L6"
     },
     {
+      "id": "src_philosophers_kant_expression",
+      "label": "kant.expression.ts",
+      "_origin": "ast",
+      "community": 17,
+      "community_name": "pilot-slice-demo.mjs",
+      "file_type": "code",
+      "norm_label": "kant.expression.ts",
+      "source_file": "src/philosophers/kant.expression.ts",
+      "source_location": "L1"
+    },
+    {
+      "id": "src_philosophers_kant_expression_kant_expression",
+      "label": "KANT_EXPRESSION",
+      "_origin": "ast",
+      "community": 17,
+      "community_name": "pilot-slice-demo.mjs",
+      "file_type": "code",
+      "norm_label": "kant_expression",
+      "source_file": "src/philosophers/kant.expression.ts",
+      "source_location": "L10"
+    },
+    {
       "id": "src_philosophers_kant_life",
       "label": "kant.life.ts",
       "_origin": "ast",
       "community": 17,
-      "community_name": "LifeFile",
+      "community_name": "pilot-slice-demo.mjs",
       "file_type": "code",
       "norm_label": "kant.life.ts",
       "source_file": "src/philosophers/kant.life.ts",
@@ -7984,7 +8138,7 @@
       "label": "KANT_LIFE",
       "_origin": "ast",
       "community": 17,
-      "community_name": "LifeFile",
+      "community_name": "pilot-slice-demo.mjs",
       "file_type": "code",
       "norm_label": "kant_life",
       "source_file": "src/philosophers/kant.life.ts",
@@ -7995,7 +8149,7 @@
       "label": "lenin.life.ts",
       "_origin": "ast",
       "community": 17,
-      "community_name": "LifeFile",
+      "community_name": "pilot-slice-demo.mjs",
       "file_type": "code",
       "norm_label": "lenin.life.ts",
       "source_file": "src/philosophers/lenin.life.ts",
@@ -8006,7 +8160,7 @@
       "label": "LENIN_LIFE",
       "_origin": "ast",
       "community": 17,
-      "community_name": "LifeFile",
+      "community_name": "pilot-slice-demo.mjs",
       "file_type": "code",
       "norm_label": "lenin_life",
       "source_file": "src/philosophers/lenin.life.ts",
@@ -8017,7 +8171,7 @@
       "label": "marx.life.ts",
       "_origin": "ast",
       "community": 17,
-      "community_name": "LifeFile",
+      "community_name": "pilot-slice-demo.mjs",
       "file_type": "code",
       "norm_label": "marx.life.ts",
       "source_file": "src/philosophers/marx.life.ts",
@@ -8028,7 +8182,7 @@
       "label": "MARX_LIFE",
       "_origin": "ast",
       "community": 17,
-      "community_name": "LifeFile",
+      "community_name": "pilot-slice-demo.mjs",
       "file_type": "code",
       "norm_label": "marx_life",
       "source_file": "src/philosophers/marx.life.ts",
@@ -8039,7 +8193,7 @@
       "label": "rose.life.ts",
       "_origin": "ast",
       "community": 17,
-      "community_name": "LifeFile",
+      "community_name": "pilot-slice-demo.mjs",
       "file_type": "code",
       "norm_label": "rose.life.ts",
       "source_file": "src/philosophers/rose.life.ts",
@@ -8050,10 +8204,54 @@
       "label": "ROSE_LIFE",
       "_origin": "ast",
       "community": 17,
-      "community_name": "LifeFile",
+      "community_name": "pilot-slice-demo.mjs",
       "file_type": "code",
       "norm_label": "rose_life",
       "source_file": "src/philosophers/rose.life.ts",
+      "source_location": "L6"
+    },
+    {
+      "id": "src_philosophers_spinoza_expression",
+      "label": "spinoza.expression.ts",
+      "_origin": "ast",
+      "community": 17,
+      "community_name": "pilot-slice-demo.mjs",
+      "file_type": "code",
+      "norm_label": "spinoza.expression.ts",
+      "source_file": "src/philosophers/spinoza.expression.ts",
+      "source_location": "L1"
+    },
+    {
+      "id": "src_philosophers_spinoza_expression_spinoza_expression",
+      "label": "SPINOZA_EXPRESSION",
+      "_origin": "ast",
+      "community": 17,
+      "community_name": "pilot-slice-demo.mjs",
+      "file_type": "code",
+      "norm_label": "spinoza_expression",
+      "source_file": "src/philosophers/spinoza.expression.ts",
+      "source_location": "L10"
+    },
+    {
+      "id": "src_philosophers_spinoza_life",
+      "label": "spinoza.life.ts",
+      "_origin": "ast",
+      "community": 17,
+      "community_name": "pilot-slice-demo.mjs",
+      "file_type": "code",
+      "norm_label": "spinoza.life.ts",
+      "source_file": "src/philosophers/spinoza.life.ts",
+      "source_location": "L1"
+    },
+    {
+      "id": "src_philosophers_spinoza_life_spinoza_life",
+      "label": "SPINOZA_LIFE",
+      "_origin": "ast",
+      "community": 17,
+      "community_name": "pilot-slice-demo.mjs",
+      "file_type": "code",
+      "norm_label": "spinoza_life",
+      "source_file": "src/philosophers/spinoza.life.ts",
       "source_location": "L6"
     },
     {
@@ -8061,7 +8259,7 @@
       "label": "weil.life.ts",
       "_origin": "ast",
       "community": 17,
-      "community_name": "LifeFile",
+      "community_name": "pilot-slice-demo.mjs",
       "file_type": "code",
       "norm_label": "weil.life.ts",
       "source_file": "src/philosophers/weil.life.ts",
@@ -8072,7 +8270,7 @@
       "label": "WEIL_LIFE",
       "_origin": "ast",
       "community": 17,
-      "community_name": "LifeFile",
+      "community_name": "pilot-slice-demo.mjs",
       "file_type": "code",
       "norm_label": "weil_life",
       "source_file": "src/philosophers/weil.life.ts",
@@ -8607,55 +8805,11 @@
       "source_location": "L15"
     },
     {
-      "id": "scripts_pilot_slice_demo",
-      "label": "pilot-slice-demo.mjs",
-      "_origin": "ast",
-      "community": 27,
-      "community_name": "pilot-slice-demo.mjs",
-      "file_type": "code",
-      "norm_label": "pilot-slice-demo.mjs",
-      "source_file": "scripts/pilot-slice-demo.mjs",
-      "source_location": "L1"
-    },
-    {
-      "id": "scripts_pilot_slice_demo_anon",
-      "label": "anon",
-      "_origin": "ast",
-      "community": 27,
-      "community_name": "pilot-slice-demo.mjs",
-      "file_type": "code",
-      "norm_label": "anon",
-      "source_file": "scripts/pilot-slice-demo.mjs",
-      "source_location": "L58"
-    },
-    {
-      "id": "src_philosophers_bloch_life",
-      "label": "bloch.life.ts",
-      "_origin": "ast",
-      "community": 27,
-      "community_name": "pilot-slice-demo.mjs",
-      "file_type": "code",
-      "norm_label": "bloch.life.ts",
-      "source_file": "src/philosophers/bloch.life.ts",
-      "source_location": "L1"
-    },
-    {
-      "id": "src_philosophers_bloch_life_bloch_life",
-      "label": "BLOCH_LIFE",
-      "_origin": "ast",
-      "community": 27,
-      "community_name": "pilot-slice-demo.mjs",
-      "file_type": "code",
-      "norm_label": "bloch_life",
-      "source_file": "src/philosophers/bloch.life.ts",
-      "source_location": "L6"
-    },
-    {
       "id": "src_philosophers_bloch_thinking",
       "label": "bloch.thinking.ts",
       "_origin": "ast",
       "community": 27,
-      "community_name": "pilot-slice-demo.mjs",
+      "community_name": "philosophers/index.ts",
       "file_type": "code",
       "norm_label": "bloch.thinking.ts",
       "source_file": "src/philosophers/bloch.thinking.ts",
@@ -8666,40 +8820,18 @@
       "label": "BLOCH_THINKING",
       "_origin": "ast",
       "community": 27,
-      "community_name": "pilot-slice-demo.mjs",
+      "community_name": "philosophers/index.ts",
       "file_type": "code",
       "norm_label": "bloch_thinking",
       "source_file": "src/philosophers/bloch.thinking.ts",
       "source_location": "L12"
     },
     {
-      "id": "src_philosophers_bogdanov_life",
-      "label": "bogdanov.life.ts",
-      "_origin": "ast",
-      "community": 27,
-      "community_name": "pilot-slice-demo.mjs",
-      "file_type": "code",
-      "norm_label": "bogdanov.life.ts",
-      "source_file": "src/philosophers/bogdanov.life.ts",
-      "source_location": "L1"
-    },
-    {
-      "id": "src_philosophers_bogdanov_life_bogdanov_life",
-      "label": "BOGDANOV_LIFE",
-      "_origin": "ast",
-      "community": 27,
-      "community_name": "pilot-slice-demo.mjs",
-      "file_type": "code",
-      "norm_label": "bogdanov_life",
-      "source_file": "src/philosophers/bogdanov.life.ts",
-      "source_location": "L6"
-    },
-    {
       "id": "src_philosophers_bogdanov_thinking",
       "label": "bogdanov.thinking.ts",
       "_origin": "ast",
       "community": 27,
-      "community_name": "pilot-slice-demo.mjs",
+      "community_name": "philosophers/index.ts",
       "file_type": "code",
       "norm_label": "bogdanov.thinking.ts",
       "source_file": "src/philosophers/bogdanov.thinking.ts",
@@ -8710,40 +8842,18 @@
       "label": "BOGDANOV_THINKING",
       "_origin": "ast",
       "community": 27,
-      "community_name": "pilot-slice-demo.mjs",
+      "community_name": "philosophers/index.ts",
       "file_type": "code",
       "norm_label": "bogdanov_thinking",
       "source_file": "src/philosophers/bogdanov.thinking.ts",
       "source_location": "L13"
     },
     {
-      "id": "src_philosophers_bookchin_life",
-      "label": "bookchin.life.ts",
-      "_origin": "ast",
-      "community": 27,
-      "community_name": "pilot-slice-demo.mjs",
-      "file_type": "code",
-      "norm_label": "bookchin.life.ts",
-      "source_file": "src/philosophers/bookchin.life.ts",
-      "source_location": "L1"
-    },
-    {
-      "id": "src_philosophers_bookchin_life_bookchin_life",
-      "label": "BOOKCHIN_LIFE",
-      "_origin": "ast",
-      "community": 27,
-      "community_name": "pilot-slice-demo.mjs",
-      "file_type": "code",
-      "norm_label": "bookchin_life",
-      "source_file": "src/philosophers/bookchin.life.ts",
-      "source_location": "L6"
-    },
-    {
       "id": "src_philosophers_bookchin_thinking",
       "label": "bookchin.thinking.ts",
       "_origin": "ast",
       "community": 27,
-      "community_name": "pilot-slice-demo.mjs",
+      "community_name": "philosophers/index.ts",
       "file_type": "code",
       "norm_label": "bookchin.thinking.ts",
       "source_file": "src/philosophers/bookchin.thinking.ts",
@@ -8754,40 +8864,18 @@
       "label": "BOOKCHIN_THINKING",
       "_origin": "ast",
       "community": 27,
-      "community_name": "pilot-slice-demo.mjs",
+      "community_name": "philosophers/index.ts",
       "file_type": "code",
       "norm_label": "bookchin_thinking",
       "source_file": "src/philosophers/bookchin.thinking.ts",
       "source_location": "L13"
     },
     {
-      "id": "src_philosophers_deleuze_life",
-      "label": "deleuze.life.ts",
-      "_origin": "ast",
-      "community": 27,
-      "community_name": "pilot-slice-demo.mjs",
-      "file_type": "code",
-      "norm_label": "deleuze.life.ts",
-      "source_file": "src/philosophers/deleuze.life.ts",
-      "source_location": "L1"
-    },
-    {
-      "id": "src_philosophers_deleuze_life_deleuze_life",
-      "label": "DELEUZE_LIFE",
-      "_origin": "ast",
-      "community": 27,
-      "community_name": "pilot-slice-demo.mjs",
-      "file_type": "code",
-      "norm_label": "deleuze_life",
-      "source_file": "src/philosophers/deleuze.life.ts",
-      "source_location": "L6"
-    },
-    {
       "id": "src_philosophers_deleuze_thinking",
       "label": "deleuze.thinking.ts",
       "_origin": "ast",
       "community": 27,
-      "community_name": "pilot-slice-demo.mjs",
+      "community_name": "philosophers/index.ts",
       "file_type": "code",
       "norm_label": "deleuze.thinking.ts",
       "source_file": "src/philosophers/deleuze.thinking.ts",
@@ -8798,40 +8886,18 @@
       "label": "DELEUZE_THINKING",
       "_origin": "ast",
       "community": 27,
-      "community_name": "pilot-slice-demo.mjs",
+      "community_name": "philosophers/index.ts",
       "file_type": "code",
       "norm_label": "deleuze_thinking",
       "source_file": "src/philosophers/deleuze.thinking.ts",
       "source_location": "L14"
     },
     {
-      "id": "src_philosophers_fisher_life",
-      "label": "fisher.life.ts",
-      "_origin": "ast",
-      "community": 27,
-      "community_name": "pilot-slice-demo.mjs",
-      "file_type": "code",
-      "norm_label": "fisher.life.ts",
-      "source_file": "src/philosophers/fisher.life.ts",
-      "source_location": "L1"
-    },
-    {
-      "id": "src_philosophers_fisher_life_fisher_life",
-      "label": "FISHER_LIFE",
-      "_origin": "ast",
-      "community": 27,
-      "community_name": "pilot-slice-demo.mjs",
-      "file_type": "code",
-      "norm_label": "fisher_life",
-      "source_file": "src/philosophers/fisher.life.ts",
-      "source_location": "L6"
-    },
-    {
       "id": "src_philosophers_fisher_thinking",
       "label": "fisher.thinking.ts",
       "_origin": "ast",
       "community": 27,
-      "community_name": "pilot-slice-demo.mjs",
+      "community_name": "philosophers/index.ts",
       "file_type": "code",
       "norm_label": "fisher.thinking.ts",
       "source_file": "src/philosophers/fisher.thinking.ts",
@@ -8842,7 +8908,7 @@
       "label": "FISHER_THINKING",
       "_origin": "ast",
       "community": 27,
-      "community_name": "pilot-slice-demo.mjs",
+      "community_name": "philosophers/index.ts",
       "file_type": "code",
       "norm_label": "fisher_thinking",
       "source_file": "src/philosophers/fisher.thinking.ts",
@@ -8853,7 +8919,7 @@
       "label": "hegel.thinking.ts",
       "_origin": "ast",
       "community": 27,
-      "community_name": "pilot-slice-demo.mjs",
+      "community_name": "philosophers/index.ts",
       "file_type": "code",
       "norm_label": "hegel.thinking.ts",
       "source_file": "src/philosophers/hegel.thinking.ts",
@@ -8864,18 +8930,84 @@
       "label": "HEGEL_THINKING",
       "_origin": "ast",
       "community": 27,
-      "community_name": "pilot-slice-demo.mjs",
+      "community_name": "philosophers/index.ts",
       "file_type": "code",
       "norm_label": "hegel_thinking",
       "source_file": "src/philosophers/hegel.thinking.ts",
       "source_location": "L12"
     },
     {
+      "id": "src_philosophers_index",
+      "label": "philosophers/index.ts",
+      "_origin": "ast",
+      "community": 27,
+      "community_name": "philosophers/index.ts",
+      "file_type": "code",
+      "norm_label": "philosophers/index.ts",
+      "source_file": "src/philosophers/index.ts",
+      "source_location": "L1"
+    },
+    {
+      "id": "src_philosophers_index_default_seating_order",
+      "label": "DEFAULT_SEATING_ORDER",
+      "_origin": "ast",
+      "community": 27,
+      "community_name": "philosophers/index.ts",
+      "file_type": "code",
+      "norm_label": "default_seating_order",
+      "source_file": "src/philosophers/index.ts",
+      "source_location": "L67"
+    },
+    {
+      "id": "src_philosophers_index_definitions",
+      "label": "DEFINITIONS",
+      "_origin": "ast",
+      "community": 27,
+      "community_name": "philosophers/index.ts",
+      "file_type": "code",
+      "norm_label": "definitions",
+      "source_file": "src/philosophers/index.ts",
+      "source_location": "L57"
+    },
+    {
+      "id": "src_philosophers_index_philosopher_by_slug",
+      "label": "PHILOSOPHER_BY_SLUG",
+      "_origin": "ast",
+      "community": 27,
+      "community_name": "philosophers/index.ts",
+      "file_type": "code",
+      "norm_label": "philosopher_by_slug",
+      "source_file": "src/philosophers/index.ts",
+      "source_location": "L69"
+    },
+    {
+      "id": "src_philosophers_index_philosopher_data",
+      "label": "PHILOSOPHER_DATA",
+      "_origin": "ast",
+      "community": 27,
+      "community_name": "philosophers/index.ts",
+      "file_type": "code",
+      "norm_label": "philosopher_data",
+      "source_file": "src/philosophers/index.ts",
+      "source_location": "L63"
+    },
+    {
+      "id": "src_philosophers_index_thinking_pilot",
+      "label": "THINKING_PILOT",
+      "_origin": "ast",
+      "community": 27,
+      "community_name": "philosophers/index.ts",
+      "file_type": "code",
+      "norm_label": "thinking_pilot",
+      "source_file": "src/philosophers/index.ts",
+      "source_location": "L86"
+    },
+    {
       "id": "src_philosophers_kant_thinking",
       "label": "kant.thinking.ts",
       "_origin": "ast",
       "community": 27,
-      "community_name": "pilot-slice-demo.mjs",
+      "community_name": "philosophers/index.ts",
       "file_type": "code",
       "norm_label": "kant.thinking.ts",
       "source_file": "src/philosophers/kant.thinking.ts",
@@ -8886,7 +9018,7 @@
       "label": "KANT_THINKING",
       "_origin": "ast",
       "community": 27,
-      "community_name": "pilot-slice-demo.mjs",
+      "community_name": "philosophers/index.ts",
       "file_type": "code",
       "norm_label": "kant_thinking",
       "source_file": "src/philosophers/kant.thinking.ts",
@@ -8897,7 +9029,7 @@
       "label": "lenin.thinking.ts",
       "_origin": "ast",
       "community": 27,
-      "community_name": "pilot-slice-demo.mjs",
+      "community_name": "philosophers/index.ts",
       "file_type": "code",
       "norm_label": "lenin.thinking.ts",
       "source_file": "src/philosophers/lenin.thinking.ts",
@@ -8908,7 +9040,7 @@
       "label": "LENIN_THINKING",
       "_origin": "ast",
       "community": 27,
-      "community_name": "pilot-slice-demo.mjs",
+      "community_name": "philosophers/index.ts",
       "file_type": "code",
       "norm_label": "lenin_thinking",
       "source_file": "src/philosophers/lenin.thinking.ts",
@@ -8919,7 +9051,7 @@
       "label": "marx.thinking.ts",
       "_origin": "ast",
       "community": 27,
-      "community_name": "pilot-slice-demo.mjs",
+      "community_name": "philosophers/index.ts",
       "file_type": "code",
       "norm_label": "marx.thinking.ts",
       "source_file": "src/philosophers/marx.thinking.ts",
@@ -8930,7 +9062,7 @@
       "label": "MARX_THINKING",
       "_origin": "ast",
       "community": 27,
-      "community_name": "pilot-slice-demo.mjs",
+      "community_name": "philosophers/index.ts",
       "file_type": "code",
       "norm_label": "marx_thinking",
       "source_file": "src/philosophers/marx.thinking.ts",
@@ -8941,7 +9073,7 @@
       "label": "rose.thinking.ts",
       "_origin": "ast",
       "community": 27,
-      "community_name": "pilot-slice-demo.mjs",
+      "community_name": "philosophers/index.ts",
       "file_type": "code",
       "norm_label": "rose.thinking.ts",
       "source_file": "src/philosophers/rose.thinking.ts",
@@ -8952,40 +9084,18 @@
       "label": "ROSE_THINKING",
       "_origin": "ast",
       "community": 27,
-      "community_name": "pilot-slice-demo.mjs",
+      "community_name": "philosophers/index.ts",
       "file_type": "code",
       "norm_label": "rose_thinking",
       "source_file": "src/philosophers/rose.thinking.ts",
       "source_location": "L15"
     },
     {
-      "id": "src_philosophers_spinoza_life",
-      "label": "spinoza.life.ts",
-      "_origin": "ast",
-      "community": 27,
-      "community_name": "pilot-slice-demo.mjs",
-      "file_type": "code",
-      "norm_label": "spinoza.life.ts",
-      "source_file": "src/philosophers/spinoza.life.ts",
-      "source_location": "L1"
-    },
-    {
-      "id": "src_philosophers_spinoza_life_spinoza_life",
-      "label": "SPINOZA_LIFE",
-      "_origin": "ast",
-      "community": 27,
-      "community_name": "pilot-slice-demo.mjs",
-      "file_type": "code",
-      "norm_label": "spinoza_life",
-      "source_file": "src/philosophers/spinoza.life.ts",
-      "source_location": "L6"
-    },
-    {
       "id": "src_philosophers_spinoza_thinking",
       "label": "spinoza.thinking.ts",
       "_origin": "ast",
       "community": 27,
-      "community_name": "pilot-slice-demo.mjs",
+      "community_name": "philosophers/index.ts",
       "file_type": "code",
       "norm_label": "spinoza.thinking.ts",
       "source_file": "src/philosophers/spinoza.thinking.ts",
@@ -8996,10 +9106,43 @@
       "label": "SPINOZA_THINKING",
       "_origin": "ast",
       "community": 27,
-      "community_name": "pilot-slice-demo.mjs",
+      "community_name": "philosophers/index.ts",
       "file_type": "code",
       "norm_label": "spinoza_thinking",
       "source_file": "src/philosophers/spinoza.thinking.ts",
+      "source_location": "L15"
+    },
+    {
+      "id": "src_philosophers_trios",
+      "label": "trios.ts",
+      "_origin": "ast",
+      "community": 27,
+      "community_name": "philosophers/index.ts",
+      "file_type": "code",
+      "norm_label": "trios.ts",
+      "source_file": "src/philosophers/trios.ts",
+      "source_location": "L1"
+    },
+    {
+      "id": "src_philosophers_trios_fallback_medium_example",
+      "label": "FALLBACK_MEDIUM_EXAMPLE",
+      "_origin": "ast",
+      "community": 27,
+      "community_name": "philosophers/index.ts",
+      "file_type": "code",
+      "norm_label": "fallback_medium_example",
+      "source_file": "src/philosophers/trios.ts",
+      "source_location": "L71"
+    },
+    {
+      "id": "src_philosophers_trios_seat_trios",
+      "label": "SEAT_TRIOS",
+      "_origin": "ast",
+      "community": 27,
+      "community_name": "philosophers/index.ts",
+      "file_type": "code",
+      "norm_label": "seat_trios",
+      "source_file": "src/philosophers/trios.ts",
       "source_location": "L15"
     },
     {
@@ -9007,7 +9150,7 @@
       "label": "weil.thinking.ts",
       "_origin": "ast",
       "community": 27,
-      "community_name": "pilot-slice-demo.mjs",
+      "community_name": "philosophers/index.ts",
       "file_type": "code",
       "norm_label": "weil.thinking.ts",
       "source_file": "src/philosophers/weil.thinking.ts",
@@ -9018,7 +9161,7 @@
       "label": "WEIL_THINKING",
       "_origin": "ast",
       "community": 27,
-      "community_name": "pilot-slice-demo.mjs",
+      "community_name": "philosophers/index.ts",
       "file_type": "code",
       "norm_label": "weil_thinking",
       "source_file": "src/philosophers/weil.thinking.ts",
@@ -9581,47 +9724,91 @@
       "source_location": "L1"
     },
     {
-      "id": "src_philosophers_hegel",
-      "label": "hegel.ts",
+      "id": "src_philosophers_deleuze",
+      "label": "deleuze.ts",
       "_origin": "ast",
       "community": 38,
-      "community_name": "hegel.ts",
+      "community_name": "deleuze.ts",
       "file_type": "code",
-      "norm_label": "hegel.ts",
-      "source_file": "src/philosophers/hegel.ts",
+      "norm_label": "deleuze.ts",
+      "source_file": "src/philosophers/deleuze.ts",
       "source_location": "L1"
     },
     {
-      "id": "src_philosophers_hegel_hegel",
-      "label": "HEGEL",
+      "id": "src_philosophers_deleuze_deleuze",
+      "label": "DELEUZE",
       "_origin": "ast",
       "community": 38,
-      "community_name": "hegel.ts",
+      "community_name": "deleuze.ts",
       "file_type": "code",
-      "norm_label": "hegel",
-      "source_file": "src/philosophers/hegel.ts",
+      "norm_label": "deleuze",
+      "source_file": "src/philosophers/deleuze.ts",
       "source_location": "L4"
     },
     {
-      "id": "src_philosophers_hegel_style",
-      "label": "hegel.style.ts",
+      "id": "src_philosophers_deleuze_style",
+      "label": "deleuze.style.ts",
       "_origin": "ast",
       "community": 38,
-      "community_name": "hegel.ts",
+      "community_name": "deleuze.ts",
       "file_type": "code",
-      "norm_label": "hegel.style.ts",
-      "source_file": "src/philosophers/hegel.style.ts",
+      "norm_label": "deleuze.style.ts",
+      "source_file": "src/philosophers/deleuze.style.ts",
       "source_location": "L1"
     },
     {
-      "id": "src_philosophers_hegel_style_hegel_style",
-      "label": "HEGEL_STYLE",
+      "id": "src_philosophers_deleuze_style_deleuze_style",
+      "label": "DELEUZE_STYLE",
       "_origin": "ast",
       "community": 38,
-      "community_name": "hegel.ts",
+      "community_name": "deleuze.ts",
       "file_type": "code",
-      "norm_label": "hegel_style",
-      "source_file": "src/philosophers/hegel.style.ts",
+      "norm_label": "deleuze_style",
+      "source_file": "src/philosophers/deleuze.style.ts",
+      "source_location": "L3"
+    },
+    {
+      "id": "src_philosophers_kant",
+      "label": "kant.ts",
+      "_origin": "ast",
+      "community": 38,
+      "community_name": "deleuze.ts",
+      "file_type": "code",
+      "norm_label": "kant.ts",
+      "source_file": "src/philosophers/kant.ts",
+      "source_location": "L1"
+    },
+    {
+      "id": "src_philosophers_kant_kant",
+      "label": "KANT",
+      "_origin": "ast",
+      "community": 38,
+      "community_name": "deleuze.ts",
+      "file_type": "code",
+      "norm_label": "kant",
+      "source_file": "src/philosophers/kant.ts",
+      "source_location": "L4"
+    },
+    {
+      "id": "src_philosophers_kant_style",
+      "label": "kant.style.ts",
+      "_origin": "ast",
+      "community": 38,
+      "community_name": "deleuze.ts",
+      "file_type": "code",
+      "norm_label": "kant.style.ts",
+      "source_file": "src/philosophers/kant.style.ts",
+      "source_location": "L1"
+    },
+    {
+      "id": "src_philosophers_kant_style_kant_style",
+      "label": "KANT_STYLE",
+      "_origin": "ast",
+      "community": 38,
+      "community_name": "deleuze.ts",
+      "file_type": "code",
+      "norm_label": "kant_style",
+      "source_file": "src/philosophers/kant.style.ts",
       "source_location": "L3"
     },
     {
@@ -9629,7 +9816,7 @@
       "label": "marx.ts",
       "_origin": "ast",
       "community": 38,
-      "community_name": "hegel.ts",
+      "community_name": "deleuze.ts",
       "file_type": "code",
       "norm_label": "marx.ts",
       "source_file": "src/philosophers/marx.ts",
@@ -9640,7 +9827,7 @@
       "label": "MARX",
       "_origin": "ast",
       "community": 38,
-      "community_name": "hegel.ts",
+      "community_name": "deleuze.ts",
       "file_type": "code",
       "norm_label": "marx",
       "source_file": "src/philosophers/marx.ts",
@@ -9651,7 +9838,7 @@
       "label": "marx.style.ts",
       "_origin": "ast",
       "community": 38,
-      "community_name": "hegel.ts",
+      "community_name": "deleuze.ts",
       "file_type": "code",
       "norm_label": "marx.style.ts",
       "source_file": "src/philosophers/marx.style.ts",
@@ -9662,55 +9849,11 @@
       "label": "MARX_STYLE",
       "_origin": "ast",
       "community": 38,
-      "community_name": "hegel.ts",
+      "community_name": "deleuze.ts",
       "file_type": "code",
       "norm_label": "marx_style",
       "source_file": "src/philosophers/marx.style.ts",
       "source_location": "L3"
-    },
-    {
-      "id": "src_philosophers_rose",
-      "label": "rose.ts",
-      "_origin": "ast",
-      "community": 38,
-      "community_name": "hegel.ts",
-      "file_type": "code",
-      "norm_label": "rose.ts",
-      "source_file": "src/philosophers/rose.ts",
-      "source_location": "L1"
-    },
-    {
-      "id": "src_philosophers_rose_rose",
-      "label": "ROSE",
-      "_origin": "ast",
-      "community": 38,
-      "community_name": "hegel.ts",
-      "file_type": "code",
-      "norm_label": "rose",
-      "source_file": "src/philosophers/rose.ts",
-      "source_location": "L4"
-    },
-    {
-      "id": "src_philosophers_rose_style",
-      "label": "rose.style.ts",
-      "_origin": "ast",
-      "community": 38,
-      "community_name": "hegel.ts",
-      "file_type": "code",
-      "norm_label": "rose.style.ts",
-      "source_file": "src/philosophers/rose.style.ts",
-      "source_location": "L1"
-    },
-    {
-      "id": "src_philosophers_rose_style_rose_style",
-      "label": "ROSE_STYLE",
-      "_origin": "ast",
-      "community": 38,
-      "community_name": "hegel.ts",
-      "file_type": "code",
-      "norm_label": "rose_style",
-      "source_file": "src/philosophers/rose.style.ts",
-      "source_location": "L6"
     },
     {
       "id": "src_philosophers_fisher",
@@ -9977,114 +10120,136 @@
       "source_location": "L29"
     },
     {
-      "id": "src_philosophers_shared_universal_mechanisms",
-      "label": "universal-mechanisms.ts",
+      "id": "scripts_test_env",
+      "label": "test-env.mjs",
       "_origin": "ast",
       "community": 40,
-      "community_name": "universal-mechanisms.ts",
+      "community_name": "test-sitting.mjs",
       "file_type": "code",
-      "norm_label": "universal-mechanisms.ts",
-      "source_file": "src/philosophers/shared/universal-mechanisms.ts",
+      "norm_label": "test-env.mjs",
+      "source_file": "scripts/test-env.mjs",
       "source_location": "L1"
     },
     {
-      "id": "src_philosophers_shared_universal_mechanisms_avoid_caricature",
-      "label": "AVOID_CARICATURE",
+      "id": "scripts_test_keys",
+      "label": "test-keys.mjs",
       "_origin": "ast",
       "community": 40,
-      "community_name": "universal-mechanisms.ts",
+      "community_name": "test-sitting.mjs",
       "file_type": "code",
-      "norm_label": "avoid_caricature",
-      "source_file": "src/philosophers/shared/universal-mechanisms.ts",
-      "source_location": "L19"
-    },
-    {
-      "id": "src_philosophers_shared_universal_mechanisms_forensic_preamble",
-      "label": "FORENSIC_PREAMBLE",
-      "_origin": "ast",
-      "community": 40,
-      "community_name": "universal-mechanisms.ts",
-      "file_type": "code",
-      "norm_label": "forensic_preamble",
-      "source_file": "src/philosophers/shared/universal-mechanisms.ts",
-      "source_location": "L6"
-    },
-    {
-      "id": "src_philosophers_shared_universal_mechanisms_generative_argument_model",
-      "label": "GENERATIVE_ARGUMENT_MODEL",
-      "_origin": "ast",
-      "community": 40,
-      "community_name": "universal-mechanisms.ts",
-      "file_type": "code",
-      "norm_label": "generative_argument_model",
-      "source_file": "src/philosophers/shared/universal-mechanisms.ts",
-      "source_location": "L28"
-    },
-    {
-      "id": "src_philosophers_shared_universal_mechanisms_style_control_description",
-      "label": "STYLE_CONTROL_DESCRIPTION",
-      "_origin": "ast",
-      "community": 40,
-      "community_name": "universal-mechanisms.ts",
-      "file_type": "code",
-      "norm_label": "style_control_description",
-      "source_file": "src/philosophers/shared/universal-mechanisms.ts",
-      "source_location": "L36"
-    },
-    {
-      "id": "src_philosophers_shared_universal_mechanisms_universal_supporting_mechanisms",
-      "label": "UNIVERSAL_SUPPORTING_MECHANISMS",
-      "_origin": "ast",
-      "community": 40,
-      "community_name": "universal-mechanisms.ts",
-      "file_type": "code",
-      "norm_label": "universal_supporting_mechanisms",
-      "source_file": "src/philosophers/shared/universal-mechanisms.ts",
-      "source_location": "L8"
-    },
-    {
-      "id": "src_philosophers_deleuze",
-      "label": "deleuze.ts",
-      "_origin": "ast",
-      "community": 41,
-      "community_name": "deleuze.ts",
-      "file_type": "code",
-      "norm_label": "deleuze.ts",
-      "source_file": "src/philosophers/deleuze.ts",
+      "norm_label": "test-keys.mjs",
+      "source_file": "scripts/test-keys.mjs",
       "source_location": "L1"
     },
     {
-      "id": "src_philosophers_deleuze_deleuze",
-      "label": "DELEUZE",
+      "id": "scripts_test_keys_rows",
+      "label": "rows",
       "_origin": "ast",
-      "community": 41,
-      "community_name": "deleuze.ts",
+      "community": 40,
+      "community_name": "test-sitting.mjs",
       "file_type": "code",
-      "norm_label": "deleuze",
-      "source_file": "src/philosophers/deleuze.ts",
-      "source_location": "L4"
+      "norm_label": "rows",
+      "source_file": "scripts/test-keys.mjs",
+      "source_location": "L25"
     },
     {
-      "id": "src_philosophers_deleuze_style",
-      "label": "deleuze.style.ts",
+      "id": "scripts_test_keys_width",
+      "label": "width",
       "_origin": "ast",
-      "community": 41,
-      "community_name": "deleuze.ts",
+      "community": 40,
+      "community_name": "test-sitting.mjs",
       "file_type": "code",
-      "norm_label": "deleuze.style.ts",
-      "source_file": "src/philosophers/deleuze.style.ts",
+      "norm_label": "width",
+      "source_file": "scripts/test-keys.mjs",
+      "source_location": "L38"
+    },
+    {
+      "id": "scripts_test_providers",
+      "label": "test-providers.mjs",
+      "_origin": "ast",
+      "community": 40,
+      "community_name": "test-sitting.mjs",
+      "file_type": "code",
+      "norm_label": "test-providers.mjs",
+      "source_file": "scripts/test-providers.mjs",
       "source_location": "L1"
     },
     {
-      "id": "src_philosophers_deleuze_style_deleuze_style",
-      "label": "DELEUZE_STYLE",
+      "id": "scripts_test_providers_providers",
+      "label": "PROVIDERS",
+      "_origin": "ast",
+      "community": 40,
+      "community_name": "test-sitting.mjs",
+      "file_type": "code",
+      "norm_label": "providers",
+      "source_file": "scripts/test-providers.mjs",
+      "source_location": "L10"
+    },
+    {
+      "id": "scripts_test_sitting",
+      "label": "test-sitting.mjs",
+      "_origin": "ast",
+      "community": 40,
+      "community_name": "test-sitting.mjs",
+      "file_type": "code",
+      "norm_label": "test-sitting.mjs",
+      "source_file": "scripts/test-sitting.mjs",
+      "source_location": "L1"
+    },
+    {
+      "id": "scripts_rag_chunk",
+      "label": "rag-chunk.mjs",
       "_origin": "ast",
       "community": 41,
-      "community_name": "deleuze.ts",
+      "community_name": "rag-text.mjs",
       "file_type": "code",
-      "norm_label": "deleuze_style",
-      "source_file": "src/philosophers/deleuze.style.ts",
-      "source_location": "L3"
+      "norm_label": "rag-chunk.mjs",
+      "source_file": "scripts/rag-chunk.mjs",
+      "source_location": "L1"
+    },
+    {
+      "id": "scripts_rag_chunk_chunk_soft_max",
+      "label": "CHUNK_SOFT_MAX",
+      "_origin": "ast",
+      "community": 41,
+      "community_name": "rag-text.mjs",
+      "file_type": "code",
+      "norm_label": "chunk_soft_max",
+      "source_file": "scripts/rag-chunk.mjs",
+      "source_location": "L12"
+    },
+    {
+      "id": "scripts_rag_chunk_chunk_soft_min",
+      "label": "CHUNK_SOFT_MIN",
+      "_origin": "ast",
+      "community": 41,
+      "community_name": "rag-text.mjs",
+      "file_type": "code",
+      "norm_label": "chunk_soft_min",
+      "source_file": "scripts/rag-chunk.mjs",
+      "source_location": "L11"
+    },
+    {
+      "id": "scripts_rag_chunk_chunk_target_words",
+      "label": "CHUNK_TARGET_WORDS",
+      "_origin": "ast",
+      "community": 41,
+      "community_name": "rag-text.mjs",
+      "file_type": "code",
+      "norm_label": "chunk_target_words",
+      "source_file": "scripts/rag-chunk.mjs",
+      "source_location": "L10"
+    },
+    {
+      "id": "scripts_rag_text",
+      "label": "rag-text.mjs",
+      "_origin": "ast",
+      "community": 41,
+      "community_name": "rag-text.mjs",
+      "file_type": "code",
+      "norm_label": "rag-text.mjs",
+      "source_file": "scripts/rag-text.mjs",
+      "source_location": "L1"
     },
     {
       "id": "src_philosophers_lenin",
@@ -10356,26 +10521,48 @@
       "source_location": "L1"
     },
     {
-      "id": "src_lib_rag_ground",
-      "label": "rag-ground.ts",
+      "id": "src_philosophers_hegel",
+      "label": "hegel.ts",
       "_origin": "ast",
       "community": 49,
-      "community_name": "rag-ground.ts",
+      "community_name": "hegel.ts",
       "file_type": "code",
-      "norm_label": "rag-ground.ts",
-      "source_file": "src/lib/rag-ground.ts",
+      "norm_label": "hegel.ts",
+      "source_file": "src/philosophers/hegel.ts",
       "source_location": "L1"
     },
     {
-      "id": "src_lib_rag_ground_cache",
-      "label": "cache",
+      "id": "src_philosophers_hegel_hegel",
+      "label": "HEGEL",
       "_origin": "ast",
       "community": 49,
-      "community_name": "rag-ground.ts",
+      "community_name": "hegel.ts",
       "file_type": "code",
-      "norm_label": "cache",
-      "source_file": "src/lib/rag-ground.ts",
-      "source_location": "L25"
+      "norm_label": "hegel",
+      "source_file": "src/philosophers/hegel.ts",
+      "source_location": "L4"
+    },
+    {
+      "id": "src_philosophers_hegel_style",
+      "label": "hegel.style.ts",
+      "_origin": "ast",
+      "community": 49,
+      "community_name": "hegel.ts",
+      "file_type": "code",
+      "norm_label": "hegel.style.ts",
+      "source_file": "src/philosophers/hegel.style.ts",
+      "source_location": "L1"
+    },
+    {
+      "id": "src_philosophers_hegel_style_hegel_style",
+      "label": "HEGEL_STYLE",
+      "_origin": "ast",
+      "community": 49,
+      "community_name": "hegel.ts",
+      "file_type": "code",
+      "norm_label": "hegel_style",
+      "source_file": "src/philosophers/hegel.style.ts",
+      "source_location": "L3"
     },
     {
       "id": "src_lib_openrouter",
@@ -10792,50 +10979,6 @@
       "source_location": "L195"
     },
     {
-      "id": "scripts_rag_chunk",
-      "label": "rag-chunk.mjs",
-      "_origin": "ast",
-      "community": 53,
-      "community_name": "rag-ingest.mjs",
-      "file_type": "code",
-      "norm_label": "rag-chunk.mjs",
-      "source_file": "scripts/rag-chunk.mjs",
-      "source_location": "L1"
-    },
-    {
-      "id": "scripts_rag_chunk_chunk_soft_max",
-      "label": "CHUNK_SOFT_MAX",
-      "_origin": "ast",
-      "community": 53,
-      "community_name": "rag-ingest.mjs",
-      "file_type": "code",
-      "norm_label": "chunk_soft_max",
-      "source_file": "scripts/rag-chunk.mjs",
-      "source_location": "L12"
-    },
-    {
-      "id": "scripts_rag_chunk_chunk_soft_min",
-      "label": "CHUNK_SOFT_MIN",
-      "_origin": "ast",
-      "community": 53,
-      "community_name": "rag-ingest.mjs",
-      "file_type": "code",
-      "norm_label": "chunk_soft_min",
-      "source_file": "scripts/rag-chunk.mjs",
-      "source_location": "L11"
-    },
-    {
-      "id": "scripts_rag_chunk_chunk_target_words",
-      "label": "CHUNK_TARGET_WORDS",
-      "_origin": "ast",
-      "community": 53,
-      "community_name": "rag-ingest.mjs",
-      "file_type": "code",
-      "norm_label": "chunk_target_words",
-      "source_file": "scripts/rag-chunk.mjs",
-      "source_location": "L10"
-    },
-    {
       "id": "scripts_rag_ingest",
       "label": "rag-ingest.mjs",
       "_origin": "ast",
@@ -10900,17 +11043,6 @@
       "norm_label": "root",
       "source_file": "scripts/rag-ingest.mjs",
       "source_location": "L20"
-    },
-    {
-      "id": "scripts_rag_text",
-      "label": "rag-text.mjs",
-      "_origin": "ast",
-      "community": 53,
-      "community_name": "rag-ingest.mjs",
-      "file_type": "code",
-      "norm_label": "rag-text.mjs",
-      "source_file": "scripts/rag-text.mjs",
-      "source_location": "L1"
     },
     {
       "id": "scripts_rag_inspect",
@@ -12375,50 +12507,6 @@
       "source_location": "L10"
     },
     {
-      "id": "src_philosophers_hegel_expression",
-      "label": "hegel.expression.ts",
-      "_origin": "ast",
-      "community": 63,
-      "community_name": "thinking-types.ts",
-      "file_type": "code",
-      "norm_label": "hegel.expression.ts",
-      "source_file": "src/philosophers/hegel.expression.ts",
-      "source_location": "L1"
-    },
-    {
-      "id": "src_philosophers_hegel_expression_hegel_expression",
-      "label": "HEGEL_EXPRESSION",
-      "_origin": "ast",
-      "community": 63,
-      "community_name": "thinking-types.ts",
-      "file_type": "code",
-      "norm_label": "hegel_expression",
-      "source_file": "src/philosophers/hegel.expression.ts",
-      "source_location": "L10"
-    },
-    {
-      "id": "src_philosophers_kant_expression",
-      "label": "kant.expression.ts",
-      "_origin": "ast",
-      "community": 63,
-      "community_name": "thinking-types.ts",
-      "file_type": "code",
-      "norm_label": "kant.expression.ts",
-      "source_file": "src/philosophers/kant.expression.ts",
-      "source_location": "L1"
-    },
-    {
-      "id": "src_philosophers_kant_expression_kant_expression",
-      "label": "KANT_EXPRESSION",
-      "_origin": "ast",
-      "community": 63,
-      "community_name": "thinking-types.ts",
-      "file_type": "code",
-      "norm_label": "kant_expression",
-      "source_file": "src/philosophers/kant.expression.ts",
-      "source_location": "L10"
-    },
-    {
       "id": "src_philosophers_lenin_expression",
       "label": "lenin.expression.ts",
       "_origin": "ast",
@@ -12482,28 +12570,6 @@
       "file_type": "code",
       "norm_label": "rose_expression",
       "source_file": "src/philosophers/rose.expression.ts",
-      "source_location": "L10"
-    },
-    {
-      "id": "src_philosophers_spinoza_expression",
-      "label": "spinoza.expression.ts",
-      "_origin": "ast",
-      "community": 63,
-      "community_name": "thinking-types.ts",
-      "file_type": "code",
-      "norm_label": "spinoza.expression.ts",
-      "source_file": "src/philosophers/spinoza.expression.ts",
-      "source_location": "L1"
-    },
-    {
-      "id": "src_philosophers_spinoza_expression_spinoza_expression",
-      "label": "SPINOZA_EXPRESSION",
-      "_origin": "ast",
-      "community": 63,
-      "community_name": "thinking-types.ts",
-      "file_type": "code",
-      "norm_label": "spinoza_expression",
-      "source_file": "src/philosophers/spinoza.expression.ts",
       "source_location": "L10"
     },
     {
@@ -14494,50 +14560,6 @@
       "source_location": "L168"
     },
     {
-      "id": "scripts_test_env",
-      "label": "test-env.mjs",
-      "_origin": "ast",
-      "community": 75,
-      "community_name": "test-matrix.mjs",
-      "file_type": "code",
-      "norm_label": "test-env.mjs",
-      "source_file": "scripts/test-env.mjs",
-      "source_location": "L1"
-    },
-    {
-      "id": "scripts_test_keys",
-      "label": "test-keys.mjs",
-      "_origin": "ast",
-      "community": 75,
-      "community_name": "test-matrix.mjs",
-      "file_type": "code",
-      "norm_label": "test-keys.mjs",
-      "source_file": "scripts/test-keys.mjs",
-      "source_location": "L1"
-    },
-    {
-      "id": "scripts_test_keys_rows",
-      "label": "rows",
-      "_origin": "ast",
-      "community": 75,
-      "community_name": "test-matrix.mjs",
-      "file_type": "code",
-      "norm_label": "rows",
-      "source_file": "scripts/test-keys.mjs",
-      "source_location": "L25"
-    },
-    {
-      "id": "scripts_test_keys_width",
-      "label": "width",
-      "_origin": "ast",
-      "community": 75,
-      "community_name": "test-matrix.mjs",
-      "file_type": "code",
-      "norm_label": "width",
-      "source_file": "scripts/test-keys.mjs",
-      "source_location": "L38"
-    },
-    {
       "id": "scripts_test_matrix",
       "label": "test-matrix.mjs",
       "_origin": "ast",
@@ -14657,28 +14679,6 @@
       "norm_label": "raw",
       "source_file": "scripts/test-matrix.mjs",
       "source_location": "L22"
-    },
-    {
-      "id": "scripts_test_providers",
-      "label": "test-providers.mjs",
-      "_origin": "ast",
-      "community": 75,
-      "community_name": "test-matrix.mjs",
-      "file_type": "code",
-      "norm_label": "test-providers.mjs",
-      "source_file": "scripts/test-providers.mjs",
-      "source_location": "L1"
-    },
-    {
-      "id": "scripts_test_providers_providers",
-      "label": "PROVIDERS",
-      "_origin": "ast",
-      "community": 75,
-      "community_name": "test-matrix.mjs",
-      "file_type": "code",
-      "norm_label": "providers",
-      "source_file": "scripts/test-providers.mjs",
-      "source_location": "L10"
     },
     {
       "id": "src_lib_porter",
@@ -15367,48 +15367,48 @@
       "source_location": "L6"
     },
     {
-      "id": "src_philosophers_kant",
-      "label": "kant.ts",
+      "id": "src_philosophers_rose",
+      "label": "rose.ts",
       "_origin": "ast",
       "community": 82,
-      "community_name": "kant.ts",
+      "community_name": "rose.ts",
       "file_type": "code",
-      "norm_label": "kant.ts",
-      "source_file": "src/philosophers/kant.ts",
+      "norm_label": "rose.ts",
+      "source_file": "src/philosophers/rose.ts",
       "source_location": "L1"
     },
     {
-      "id": "src_philosophers_kant_kant",
-      "label": "KANT",
+      "id": "src_philosophers_rose_rose",
+      "label": "ROSE",
       "_origin": "ast",
       "community": 82,
-      "community_name": "kant.ts",
+      "community_name": "rose.ts",
       "file_type": "code",
-      "norm_label": "kant",
-      "source_file": "src/philosophers/kant.ts",
+      "norm_label": "rose",
+      "source_file": "src/philosophers/rose.ts",
       "source_location": "L4"
     },
     {
-      "id": "src_philosophers_kant_style",
-      "label": "kant.style.ts",
+      "id": "src_philosophers_rose_style",
+      "label": "rose.style.ts",
       "_origin": "ast",
       "community": 82,
-      "community_name": "kant.ts",
+      "community_name": "rose.ts",
       "file_type": "code",
-      "norm_label": "kant.style.ts",
-      "source_file": "src/philosophers/kant.style.ts",
+      "norm_label": "rose.style.ts",
+      "source_file": "src/philosophers/rose.style.ts",
       "source_location": "L1"
     },
     {
-      "id": "src_philosophers_kant_style_kant_style",
-      "label": "KANT_STYLE",
+      "id": "src_philosophers_rose_style_rose_style",
+      "label": "ROSE_STYLE",
       "_origin": "ast",
       "community": 82,
-      "community_name": "kant.ts",
+      "community_name": "rose.ts",
       "file_type": "code",
-      "norm_label": "kant_style",
-      "source_file": "src/philosophers/kant.style.ts",
-      "source_location": "L3"
+      "norm_label": "rose_style",
+      "source_file": "src/philosophers/rose.style.ts",
+      "source_location": "L6"
     },
     {
       "id": "docs_eval_sittings_blind_sheet_a",
@@ -15787,7 +15787,7 @@
       "file_type": "code",
       "norm_label": "default_settings",
       "source_file": "src/lib/settings.ts",
-      "source_location": "L85"
+      "source_location": "L86"
     },
     {
       "id": "src_lib_settings_groq_model_options",
@@ -16124,6 +16124,17 @@
       "source_location": "L234"
     },
     {
+      "id": "scripts_grade_sitting_p3silent",
+      "label": "p3silent",
+      "_origin": "ast",
+      "community": 93,
+      "community_name": "grade-sitting.mjs",
+      "file_type": "code",
+      "norm_label": "p3silent",
+      "source_file": "scripts/grade-sitting.mjs",
+      "source_location": "L158"
+    },
+    {
       "id": "scripts_grade_sitting_p3turns",
       "label": "p3turns",
       "_origin": "ast",
@@ -16165,7 +16176,7 @@
       "file_type": "code",
       "norm_label": "unanswered",
       "source_file": "scripts/grade-sitting.mjs",
-      "source_location": "L158"
+      "source_location": "L236"
     },
     {
       "id": "scripts_grade_sitting_vague",
@@ -17554,7 +17565,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "src/App.tsx",
-      "source_location": "L940",
+      "source_location": "L945",
       "weight": 1.0
     },
     {
@@ -18730,7 +18741,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "src/lib/settings.ts",
-      "source_location": "L170",
+      "source_location": "L173",
       "weight": 1.0
     },
     {
@@ -18742,7 +18753,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "src/lib/settings.ts",
-      "source_location": "L171",
+      "source_location": "L174",
       "weight": 1.0
     },
     {
@@ -18754,7 +18765,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "src/lib/settings.ts",
-      "source_location": "L215",
+      "source_location": "L218",
       "weight": 1.0
     },
     {
@@ -18766,7 +18777,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "src/lib/settings.ts",
-      "source_location": "L205",
+      "source_location": "L208",
       "weight": 1.0
     },
     {
@@ -30977,6 +30988,17 @@
     },
     {
       "source": "scripts_grade_sitting",
+      "target": "scripts_grade_sitting_p3silent",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "scripts/grade-sitting.mjs",
+      "source_location": "L158",
+      "weight": 1.0
+    },
+    {
+      "source": "scripts_grade_sitting",
       "target": "scripts_grade_sitting_loadbaninventory",
       "relation": "contains",
       "_origin": "ast",
@@ -32347,7 +32369,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/App.tsx",
-      "source_location": "L1565",
+      "source_location": "L1570",
       "weight": 1.0
     },
     {
@@ -32358,7 +32380,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/App.tsx",
-      "source_location": "L1596",
+      "source_location": "L1601",
       "weight": 1.0
     },
     {
@@ -32369,7 +32391,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/App.tsx",
-      "source_location": "L1642",
+      "source_location": "L1647",
       "weight": 1.0
     },
     {
@@ -32380,7 +32402,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/App.tsx",
-      "source_location": "L1731",
+      "source_location": "L1736",
       "weight": 1.0
     },
     {
@@ -32391,18 +32413,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/App.tsx",
-      "source_location": "L182",
-      "weight": 1.0
-    },
-    {
-      "source": "src_app",
-      "target": "src_app_app",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "src/App.tsx",
-      "source_location": "L186",
+      "source_location": "L184",
       "weight": 1.0
     },
     {
@@ -32413,7 +32424,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/App.tsx",
-      "source_location": "L1864",
+      "source_location": "L1869",
       "weight": 1.0
     },
     {
@@ -32424,7 +32435,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/App.tsx",
-      "source_location": "L1868",
+      "source_location": "L1873",
       "weight": 1.0
     },
     {
@@ -32435,7 +32446,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/App.tsx",
-      "source_location": "L1870",
+      "source_location": "L1875",
       "weight": 1.0
     },
     {
@@ -32446,7 +32457,18 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/App.tsx",
-      "source_location": "L1872",
+      "source_location": "L1877",
+      "weight": 1.0
+    },
+    {
+      "source": "src_app",
+      "target": "src_app_app",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/App.tsx",
+      "source_location": "L188",
       "weight": 1.0
     },
     {
@@ -32457,7 +32479,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/App.tsx",
-      "source_location": "L1897",
+      "source_location": "L1902",
       "weight": 1.0
     },
     {
@@ -32468,7 +32490,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/App.tsx",
-      "source_location": "L1914",
+      "source_location": "L1919",
       "weight": 1.0
     },
     {
@@ -32479,7 +32501,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/App.tsx",
-      "source_location": "L2242",
+      "source_location": "L2248",
       "weight": 1.0
     },
     {
@@ -32490,7 +32512,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/App.tsx",
-      "source_location": "L2366",
+      "source_location": "L2372",
       "weight": 1.0
     },
     {
@@ -32501,7 +32523,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/App.tsx",
-      "source_location": "L2376",
+      "source_location": "L2382",
       "weight": 1.0
     },
     {
@@ -32512,7 +32534,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/App.tsx",
-      "source_location": "L2381",
+      "source_location": "L2387",
       "weight": 1.0
     },
     {
@@ -32523,7 +32545,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/App.tsx",
-      "source_location": "L2383",
+      "source_location": "L2389",
       "weight": 1.0
     },
     {
@@ -32534,7 +32556,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/App.tsx",
-      "source_location": "L2384",
+      "source_location": "L2390",
       "weight": 1.0
     },
     {
@@ -33051,7 +33073,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/lib/dialectic/prompts.ts",
-      "source_location": "L100",
+      "source_location": "L103",
       "weight": 1.0
     },
     {
@@ -33062,7 +33084,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/lib/dialectic/prompts.ts",
-      "source_location": "L109",
+      "source_location": "L112",
       "weight": 1.0
     },
     {
@@ -33073,7 +33095,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/lib/dialectic/prompts.ts",
-      "source_location": "L113",
+      "source_location": "L116",
       "weight": 1.0
     },
     {
@@ -33084,7 +33106,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/lib/dialectic/prompts.ts",
-      "source_location": "L263",
+      "source_location": "L266",
       "weight": 1.0
     },
     {
@@ -33095,7 +33117,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/lib/dialectic/prompts.ts",
-      "source_location": "L320",
+      "source_location": "L323",
       "weight": 1.0
     },
     {
@@ -33117,7 +33139,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/lib/dialectic/prompts.ts",
-      "source_location": "L343",
+      "source_location": "L346",
       "weight": 1.0
     },
     {
@@ -33139,7 +33161,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/lib/dialectic/prompts.ts",
-      "source_location": "L405",
+      "source_location": "L408",
       "weight": 1.0
     },
     {
@@ -33150,7 +33172,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/lib/dialectic/prompts.ts",
-      "source_location": "L414",
+      "source_location": "L417",
       "weight": 1.0
     },
     {
@@ -33172,7 +33194,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/lib/dialectic/prompts.ts",
-      "source_location": "L423",
+      "source_location": "L426",
       "weight": 1.0
     },
     {
@@ -33183,7 +33205,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/lib/dialectic/prompts.ts",
-      "source_location": "L428",
+      "source_location": "L431",
       "weight": 1.0
     },
     {
@@ -33194,7 +33216,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/lib/dialectic/prompts.ts",
-      "source_location": "L431",
+      "source_location": "L434",
       "weight": 1.0
     },
     {
@@ -33205,7 +33227,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/lib/dialectic/prompts.ts",
-      "source_location": "L435",
+      "source_location": "L438",
       "weight": 1.0
     },
     {
@@ -33216,7 +33238,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/lib/dialectic/prompts.ts",
-      "source_location": "L444",
+      "source_location": "L447",
       "weight": 1.0
     },
     {
@@ -33227,7 +33249,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/lib/dialectic/prompts.ts",
-      "source_location": "L453",
+      "source_location": "L456",
       "weight": 1.0
     },
     {
@@ -33238,18 +33260,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/lib/dialectic/prompts.ts",
-      "source_location": "L463",
-      "weight": 1.0
-    },
-    {
-      "source": "src_lib_dialectic_prompts",
-      "target": "src_lib_dialectic_prompts_buildcodaprompt",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "src/lib/dialectic/prompts.ts",
-      "source_location": "L469",
+      "source_location": "L466",
       "weight": 1.0
     },
     {
@@ -33265,13 +33276,24 @@
     },
     {
       "source": "src_lib_dialectic_prompts",
+      "target": "src_lib_dialectic_prompts_buildcodaprompt",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/lib/dialectic/prompts.ts",
+      "source_location": "L472",
+      "weight": 1.0
+    },
+    {
+      "source": "src_lib_dialectic_prompts",
       "target": "src_lib_dialectic_prompts_buildcodaendprompt",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/lib/dialectic/prompts.ts",
-      "source_location": "L494",
+      "source_location": "L497",
       "weight": 1.0
     },
     {
@@ -33293,7 +33315,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/lib/dialectic/prompts.ts",
-      "source_location": "L512",
+      "source_location": "L515",
       "weight": 1.0
     },
     {
@@ -33304,7 +33326,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/lib/dialectic/prompts.ts",
-      "source_location": "L523",
+      "source_location": "L526",
       "weight": 1.0
     },
     {
@@ -34954,7 +34976,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/lib/settings.ts",
-      "source_location": "L110",
+      "source_location": "L112",
       "weight": 1.0
     },
     {
@@ -34976,18 +34998,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/lib/settings.ts",
-      "source_location": "L161",
-      "weight": 1.0
-    },
-    {
-      "source": "src_lib_settings",
-      "target": "src_lib_settings_clearapikey",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "src/lib/settings.ts",
-      "source_location": "L169",
+      "source_location": "L164",
       "weight": 1.0
     },
     {
@@ -35003,13 +35014,24 @@
     },
     {
       "source": "src_lib_settings",
+      "target": "src_lib_settings_clearapikey",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/lib/settings.ts",
+      "source_location": "L172",
+      "weight": 1.0
+    },
+    {
+      "source": "src_lib_settings",
       "target": "src_lib_settings_providerhealth",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/lib/settings.ts",
-      "source_location": "L178",
+      "source_location": "L181",
       "weight": 1.0
     },
     {
@@ -35020,7 +35042,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/lib/settings.ts",
-      "source_location": "L186",
+      "source_location": "L189",
       "weight": 1.0
     },
     {
@@ -35031,7 +35053,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/lib/settings.ts",
-      "source_location": "L203",
+      "source_location": "L206",
       "weight": 1.0
     },
     {
@@ -35042,7 +35064,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/lib/settings.ts",
-      "source_location": "L213",
+      "source_location": "L216",
       "weight": 1.0
     },
     {
@@ -35185,7 +35207,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/lib/settings.ts",
-      "source_location": "L85",
+      "source_location": "L86",
       "weight": 1.0
     },
     {
@@ -37885,5 +37907,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "e7971740ab286c5e812d4795b4aba7fab9f0f20a"
+  "built_at_commit": "5cc455e956c6595ce53f5547d9f0b4ce39485264"
 }
