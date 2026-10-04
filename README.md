@@ -13,7 +13,7 @@ Try it here: https://philosopherstable.netlify.app/
 - **Export** saves the whole session as clean prose with a Reading List of full links at the end — nothing inline.
 - **Notes from the margins**: between pass 2 and pass 3, one rude reader breaks in — naming what the table missed and asking hard, concrete questions. Pass 3 must answer one.
 - **Philosophers' Service** (service bell, raised bottom-right, a card beside the table, and a mention in the welcome card): ask any of the twelve thinkers one-to-one — plain definitions, an example, and a check question each time, with a Level picker (plain words / terms explained / full voice). Twenty questions per sitting; chats append to export.
-- **Senior common room** (below the table): no question needed — the twelve idling out loud whenever an idea appears. Read-only; new lines arrive on their own.
+- **Senior common room** (below the table): no question needed — the twelve idling out loud whenever an idea appears. Read-only; new lines arrive on their own. One kept line per day says what stuck.
 
 ## Settings, explained (all four tabs)
 

@@ -9,8 +9,9 @@ restoration.
 Observed failure ladder (what would trigger a return):
 F1 verbatim echo/parroting (3 cases across 2 sittings) · F2 generic or
 unidentifiable moves (blind-test failure) · F3 gloss failures in TEACH ·
-F4 drift off PREV or the question · F5 bloodless tone (never observed —
-highest evidence bar).
+F4 drift off PREV or the question · F5 bloodless tone (OBSERVED Oct 2
+2026: THINK all-off dull on TTS — response is toggles-first per Oct 4,
+add-backs only if toggles fail).
 
 ## 1. Full ECHO RULE paragraph — trigger: F1 persists despite scan + repair
 

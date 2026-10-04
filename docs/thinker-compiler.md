@@ -9,8 +9,9 @@ Plain-language summary: each thinker gets 2 new files. THINKING holds *how
 they think* and is the semantic authority. EXPRESSION holds *how that
 thinking sounds* and is the linguistic authority only. Thinking always wins.
 
-Prompt version: v2026-09-20r (strict de-voice, Oct 4 2026 — rendered
-thinking fields carry no vocabulary tells; tells live in expression).
+Prompt version: v2026-09-20u (strict de-voice Oct 4 2026 — rendered
+thinking fields carry no vocabulary tells; tells live in expression;
+fault-line cards plain; think-&-sound renders the pair cuts).
 
 ## What changes and what stays
 
