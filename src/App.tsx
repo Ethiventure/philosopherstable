@@ -125,6 +125,7 @@ function toIntervention(
   index: number,
   output: TurnOutput,
   previousSpeaker: Philosopher | null,
+  namePrev: boolean,
 ): Intervention {
   const kind = getTurnKind(pass, index + 1);
   const isOpening = kind === 'opening' && !previousSpeaker;
@@ -139,6 +140,7 @@ function toIntervention(
     : [{ label: `[${philosopher.name.toUpperCase()}, SOURCE-GROUNDED PROFILE]`, verified: false }];
   // Mechanical address prefix (Sep 2026): the turn opens with PREV's name
   // because the app puts it there, not because the model remembered to.
+  // Gated by the namePrev toggle (Oct 2026) — off means no names anywhere.
   // Models that name PREV themselves get deduped first ("Hegel, Hegel, …"
   // observed live) — strip any leading self-naming before prefixing.
   const bodyParts = [
@@ -146,12 +148,12 @@ function toIntervention(
     output.incorporation,
     output.reformulation,
   ].filter((s) => s && s.trim());
-  const deduped = previousSpeaker
+  const deduped = previousSpeaker && namePrev
     ? bodyParts.map((s, i) => i === 0
       ? s.replace(new RegExp(`^${previousSpeaker.name.split(' ')[0]}[,\\s]+(${previousSpeaker.name}[,\\s]+)?`, 'i'), '')
       : s)
     : bodyParts;
-  const body = previousSpeaker && deduped.length
+  const body = previousSpeaker && namePrev && deduped.length
     ? [`${previousSpeaker.name}, ${deduped[0]}`, ...deduped.slice(1)].join('\n\n')
     : deduped.join('\n\n');
   return {
@@ -692,6 +694,7 @@ function App() {
       const toggleSig = [
         snap.anonThinker ? null : 'named',
         snap.thinkerRelations ? null : 'no-relations',
+        snap.namePrev ? null : 'no-name',
         snap.sceneOn ? null : 'no-scene',
         snap.quotesOn ? null : 'paraphrase-only',
         snap.fullSurvey ? null : 'prev-only',
@@ -725,6 +728,7 @@ function App() {
         threadCity: threadCityRef.current || null,
         pass: pass + 1,
         noScene: !snap.sceneOn || thinkingSceneOff(),
+        namePrev: snap.namePrev,
       });
       const systemPrompt = (() => {
         // Thinking-first pilot: pilotEntry resolved above covers both the
@@ -937,7 +941,7 @@ function App() {
       if (echoHit && typeof console !== 'undefined') {
         console.warn(`[Echo] overlap kept (logger only) for ${speaker.full_name}.`);
       }
-      const item = toIntervention(speaker, pass + 1, seatPos, output, previousSpeaker);
+      const item = toIntervention(speaker, pass + 1, seatPos, output, previousSpeaker, snap.namePrev);
       collected.push(item);
       markSpentVariants(item.response_text);
       if (echoHit) {
@@ -2198,6 +2202,7 @@ function SettingsDrawer({ philosophers, activeSlugs, togglePhilosopher, settings
                 {([
                   ['anonThinker', 'Knows own name', 'On: seats arrive named. Off: anonymous — no name given, moves must identify.'],
                   ['thinkerRelations', 'Knows table relationships', 'On: each seat meets its predecessor through their shared fault line. Off: argues from live claims alone.'],
+                  ['namePrev', 'Names the previous seat', 'On: the app opens each turn with the previous seat name. Off: turns answer PREV directly as YOU, no names anywhere.'],
                   ['sceneOn', 'Concrete scene discussed', 'On: one thread city with a named scene carried sitting-wide. Off: argue the structure straight, no invented persons or places.'],
                   ['quotesOn', 'Direct quotation', 'On: seats may lift short verbatim loans from shown passages. Off: paraphrase only, always cited.'],
                   ['fullSurvey', 'Sees full conversation', 'On: pass 3 sees every seat’s one-line determinations. Off: each turn answers its predecessor only.'],

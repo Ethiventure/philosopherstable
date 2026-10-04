@@ -73,6 +73,7 @@ export interface CabinetSettings {
    * Defaults = first test setup: anonymous first, best guess elsewhere. */
   anonThinker: boolean;
   thinkerRelations: boolean;
+  namePrev: boolean;
   sceneOn: boolean;
   quotesOn: boolean;
   fullSurvey: boolean;
@@ -100,6 +101,7 @@ export const DEFAULT_SETTINGS: CabinetSettings = {
   grounding: true,
   anonThinker: true,
   thinkerRelations: true,
+  namePrev: true,
   sceneOn: true,
   quotesOn: true,
   fullSurvey: true,
@@ -147,6 +149,7 @@ export function loadSettings(): CabinetSettings {
       grounding: parsed.grounding === true,
       anonThinker: parsed.anonThinker !== false,
       thinkerRelations: parsed.thinkerRelations !== false,
+      namePrev: parsed.namePrev !== false,
       sceneOn: parsed.sceneOn !== false,
       quotesOn: parsed.quotesOn !== false,
       fullSurvey: parsed.fullSurvey !== false,

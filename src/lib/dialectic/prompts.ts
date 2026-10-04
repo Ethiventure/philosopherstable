@@ -37,7 +37,7 @@ export type TurnKind = 'opening' | 'critique' | 'reconstruction';
  * text change so grades stay comparable: a verdict on version C never
  * transfers silently to version D.
  */
-export const PROMPT_VERSION = '2026-09-20v';
+export const PROMPT_VERSION = '2026-09-20w';
 
 export const WORD_BUDGETS = {
   normal: { negation: 25, reformulation: 40, total: 60, opening: 40 },
@@ -90,6 +90,9 @@ interface TurnInstructionArgs {
    * scaffold — suppress every scene and metaphor mandate in the old path
    * too, so the variant covers all seats and the A/B stays fair. */
   noScene?: boolean;
+  /** Name-PREV toggle (Oct 2026): off means no naming ceremony anywhere —
+   * turns answer PREV directly as YOU, and the app skips its prefix. */
+  namePrev?: boolean;
 }
 
 /**
@@ -110,7 +113,7 @@ export function drawThreadCity(random: () => number = Math.random): string {
   return THREAD_CITIES[Math.floor(random() * THREAD_CITIES.length)];
 }
 
-export function buildTurnInstruction({ kind, prevName, isFinalSeat, longForm, reversed = false, marginsNote = false, marginsEarly = false, marginsFirst = false, lowRegister = false, intensity, heat, threadCity = null, pass, noScene = false }: TurnInstructionArgs): string {
+export function buildTurnInstruction({ kind, prevName, isFinalSeat, longForm, reversed = false, marginsNote = false, marginsEarly = false, marginsFirst = false, lowRegister = false, intensity, heat, threadCity = null, pass, noScene = false, namePrev = true }: TurnInstructionArgs): string {
   const b = longForm ? WORD_BUDGETS.long : WORD_BUDGETS.normal;
   const level: StyleIntensity = intensity ?? (lowRegister ? 'low' : 'medium');
   const low = level === 'low';
@@ -172,7 +175,7 @@ export function buildTurnInstruction({ kind, prevName, isFinalSeat, longForm, re
     ...(reversed
       ? [`REVERSED ROTATION: ${prev} sits to your left and just spoke — address only that answer.`]
       : []),
-    ...(low
+    ...(low || !namePrev
       ? ['Open mid-argument through the concrete object, in your own words — concession or attack as temper dictates. No preamble, no greeting, no naming ceremony.']
       : (!reversed
         ? [`CUT IN, don't hand over: seize the weakest point in ${prev}'s closing lines. Open by naming ${prev} — then your own words, your own verbs. Answer the second half of ${prev}, the live edge — never rebut its opening recap. No preamble, no greeting beyond the name.`]
