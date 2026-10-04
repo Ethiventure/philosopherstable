@@ -37,7 +37,7 @@ export type TurnKind = 'opening' | 'critique' | 'reconstruction';
  * text change so grades stay comparable: a verdict on version C never
  * transfers silently to version D.
  */
-export const PROMPT_VERSION = '2026-09-20u';
+export const PROMPT_VERSION = '2026-09-20v';
 
 export const WORD_BUDGETS = {
   normal: { negation: 25, reformulation: 40, total: 60, opening: 40 },
@@ -134,13 +134,13 @@ export function buildTurnInstruction({ kind, prevName, isFinalSeat, longForm, re
 
   const passJob =
     pass === 1
-      ? 'PASS JOB (diagnosis): name the ONE specific claim of PREV you reject and the contradiction it carries, then give your own framework diagnosis. One rejection, one contradiction, your diagnosis: nothing else.'
+      ? 'PASS JOB (diagnosis): name the ONE specific claim of PREV you reject and the contradiction it carries, then give your own framework diagnosis, ending with your first move toward answering the question — one concrete step where the question allows one.'
       : pass === 2
         ? 'PASS JOB (pressure): land ONE break from inside PREV\'s own argument — no new topics of your own, nothing built here. The new idea (Z) waits for pass 3.'
         : kind === 'reconstruction'
           ? (noScene
-          ? 'PASS JOB (reconstruction): reject something specific, then add the new idea (Z) as one applied move — a named body taking a named decision, first step inside the sentence. Name who decides, where the fight happens, and what changes in the first week. Vague verbs (converse, raise awareness, prioritise, push for) fail the turn.'
-          : 'PASS JOB (reconstruction): reject something specific, then add the new idea (Z) as one specific applied move — a named body (council, union branch, tenants, pupils) doing a named thing in the thread city, with its first step inside the sentence. Name who decides, where the fight happens, and what changes in the first week. Vague verbs (converse, raise awareness, prioritise, push for) fail the turn.')
+          ? 'PASS JOB (reconstruction): reject something specific, then add the new idea (Z) as one applied move — a named body taking a named decision, first step inside the sentence. Name who decides, where the fight happens, and what changes in the first week. Vague verbs (converse, raise awareness, prioritise, push for) fail the turn. Revisit your own earlier answer in light of the conversation; improve it once; end with your plain answer to the visitor.'
+          : 'PASS JOB (reconstruction): reject something specific, then add the new idea (Z) as one specific applied move — a named body (council, union branch, tenants, pupils) doing a named thing in the thread city, with its first step inside the sentence. Name who decides, where the fight happens, and what changes in the first week. Vague verbs (converse, raise awareness, prioritise, push for) fail the turn. Revisit your own earlier answer in light of the conversation; improve it once; end with your plain answer to the visitor.')
           : 'PASS JOB (critique): judge PREV, then move the question up a level in your own terms.';
 
   const negationLine = pass === 2
@@ -289,12 +289,12 @@ export function buildPilotTurnInstruction({ kind, prevName, isFinalSeat, longFor
   const prev = prevName ?? 'PREV';
 
   const job = pass === 1
-    ? `PASS 1 (diagnosis): name the ONE claim of ${prev} you reject and the contradiction it carries, then your own diagnosis. Nothing else.`
+    ? `PASS 1 (diagnosis): name the ONE claim of ${prev} you reject and the contradiction it carries, then your own diagnosis, ending with your first move toward answering the question.`
     : pass === 2
       ? `PASS 2 (pressure): land ONE break from inside ${prev}'s own argument — you are right that X, which is exactly why Y fails. No new topics; Z waits for pass 3. End with the contradiction handed on, one sentence.`
       : noScene
-        ? 'PASS 3 (reconstruction): reject something specific, then add the new idea (Z) as one applied move — a named body taking a named decision, first step inside the sentence. Commitments (must, shall, will), never possibilities. No staging, no scene.'
-        : `PASS 3 (reconstruction): reject something specific, then add the new idea (Z) as one applied move — a named body doing a named thing in ${threadCity ?? 'the thread city'}, first step inside the sentence. Commitments (must, shall, will), never possibilities.`;
+        ? 'PASS 3 (reconstruction): reject something specific, then add the new idea (Z) as one applied move — a named body taking a named decision, first step inside the sentence. Commitments (must, shall, will), never possibilities. No staging, no scene. Revisit your pass-1 answer in light of the whole conversation; improve it once; end with your plain answer to the visitor.'
+        : `PASS 3 (reconstruction): reject something specific, then add the new idea (Z) as one applied move — a named body doing a named thing in ${threadCity ?? 'the thread city'}, first step inside the sentence. Commitments (must, shall, will), never possibilities. Revisit your pass-1 answer in light of the whole conversation; improve it once; end with your plain answer to the visitor.`;
 
   return [
     `${kind === 'reconstruction' ? 'RECONSTRUCTION' : 'IMMANENT CRITIQUE'} TURN (HARD ceiling: ${b.total} words — shorter is better). Respond ONLY to ${prev} — answer its second half, the live edge, never its opening recap.`,
@@ -504,7 +504,7 @@ export function buildCodaEndPrompt(
     'BELOW IS THE FINAL ROUND ONLY, EACH SEAT\u2019S OWN SECOND-HALF PARAGRAPH (its build — not its reply to its predecessor). This is everything you saw — translate it, do not invent beyond it. Never quote seat wording or specialist terms verbatim: render every hard idea in your own plain working-class English, describing what it does rather than naming it. Paraphrase the question above in your own voice too — never repeat it verbatim.',
     ...lines.map(({ name, line }) => `- ${name}: ${line}`),
     '',
-    'Write the closing summary in three moves, HARD ceiling 200 words total, as flowing paragraphs (never numbered lists, never bracketed names — this note is spoken): (1) ‘What I would actually use is…’ — the one or two most practical suggestions in these lines, restated in your own words, each with its first step woven into the sentence; (2) ‘The genuinely new move was…’ — name who made it and praise it like you mean it, no backhand; (3) ‘And the weakest move was…’ — one amusing rude passing shot, funny because it is true — then admit one margins question pass 3 left unanswered, if any, saying plainly it went unanswered. Vary which of the three moves leads, sitting to sitting. THIN INPUT: this final-round-only summary is everything you saw — never fill its gaps with invented sitting content. PREMISE HOLD: the QUESTION\'s givens are settled facts — never contradict the setup; attack the answers, never the premise. Name no real person, group, or place unless it appeared in the sitting lines above. Vague verbs fail the note: never have conversations, raise awareness, prioritise or push for anything without saying who does what first. Inside values, use only single or smart quotes — never bare double quotes, which corrupt the envelope. Respond with JSON only, matching this shape exactly (all four keys always present): { negation, reformulation, new_contribution, works_referenced: string[] }. Put the usable picks in negation, the praise plus parting shot in reformulation, and the single sharpest verdict as the one-line new_contribution. Set works_referenced to [].',
+    'Write the closing summary in three moves, HARD ceiling 200 words total, as flowing paragraphs (never numbered lists, never bracketed names — this note is spoken): (1) the verdict — how good this conversation actually was, said rude and plain, no padding, no picking a favourite answer for yourself (you are not the asker); (2) the answers ranked — every seat\'s final answer in relevance order, most usable first, one line each in your own words; (3) ‘And the weakest move was…’ — one amusing rude passing shot, funny because it is true — then admit one margins question pass 3 left unanswered, if any, saying plainly it went unanswered. Vary which of the three moves leads, sitting to sitting. THIN INPUT: this final-round-only summary is everything you saw — never fill its gaps with invented sitting content. PREMISE HOLD: the QUESTION\'s givens are settled facts — never contradict the setup; attack the answers, never the premise. Name no real person, group, or place unless it appeared in the sitting lines above. Vague verbs fail the note: never have conversations, raise awareness, prioritise or push for anything without saying who does what first. Inside values, use only single or smart quotes — never bare double quotes, which corrupt the envelope. Respond with JSON only, matching this shape exactly (all four keys always present): { negation, reformulation, new_contribution, works_referenced: string[] }. Put the verdict in negation, the ranked answers plus parting shot in reformulation, and the single sharpest verdict as the one-line new_contribution. Set works_referenced to [].',
   ].join('\n');
 }
 

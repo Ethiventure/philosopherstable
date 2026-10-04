@@ -8,7 +8,8 @@
  *
  * Checks: words/turn vs budget (worst turns named), echo clusters (shared
  * 8-grams quoted), thread-city hold per turn, citation count, Genzie
- * namings per pass, P3 vague verbs, volatility shapes, banned Low terms
+ * namings per pass, P3 vague verbs, P3 answers (visitor-address +
+ * commitment — counted, never judged), volatility shapes, banned Low terms
  * (repo's own ban inventory, Low only). Prints a plain-text
  * scorecard (reads aloud cleanly) plus a paste-ready models-tried.md row
  * with human fields marked TODO — best/worst quotes and the verdict stay
@@ -149,6 +150,15 @@ for (const t of loanShort.slice(0, 8)) {
   lines.push(`  pass ${t.pass} ${t.name}: ${l.quoted} quoted + ${l.tags} tags`);
 }
 if (loanShort.length > 8) lines.push(`  …and ${loanShort.length - 8} more`);
+lines.push('');
+
+// 4b. Answers: each P3 should end with a plain answer to the visitor —
+// measured, never judged: visitor-address plus a commitment verb.
+const p3turns = turns.filter((t) => t.pass === 3);
+const p3silent = p3turns.filter((t) => !(/\byou\b/i.test(t.text) && /\b(must|shall|will|should)\b/i.test(t.text)));
+lines.push(`ANSWERS (P3 speaks to the visitor with a commitment): ${p3turns.length - p3silent.length}/${p3turns.length} final turns answer${p3silent.length ? '' : ' — all answer'}`);
+for (const t of p3silent.slice(0, 8)) lines.push(`  ${t.name}: no direct answer`);
+if (p3silent.length > 8) lines.push(`  …and ${p3silent.length - 8} more`);
 lines.push('');
 
 // 4c. Banned terms at Low: per-seat low_translations terms + the shared
