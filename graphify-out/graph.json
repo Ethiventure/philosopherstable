@@ -157,7 +157,7 @@
       "file_type": "code",
       "norm_label": "usermessageargs",
       "source_file": "src/lib/dialectic/prompts.ts",
-      "source_location": "L323"
+      "source_location": "L324"
     },
     {
       "id": "src_lib_groq_groqtextargs",
@@ -1538,7 +1538,7 @@
       "file_type": "code",
       "norm_label": "buildcodaearlyprompt()",
       "source_file": "src/lib/dialectic/prompts.ts",
-      "source_location": "L526"
+      "source_location": "L527"
     },
     {
       "id": "src_lib_dialectic_prompts_buildcodaendprompt",
@@ -1550,7 +1550,7 @@
       "file_type": "code",
       "norm_label": "buildcodaendprompt()",
       "source_file": "src/lib/dialectic/prompts.ts",
-      "source_location": "L497"
+      "source_location": "L498"
     },
     {
       "id": "src_lib_dialectic_prompts_buildcodaprompt",
@@ -1562,7 +1562,7 @@
       "file_type": "code",
       "norm_label": "buildcodaprompt()",
       "source_file": "src/lib/dialectic/prompts.ts",
-      "source_location": "L472"
+      "source_location": "L473"
     },
     {
       "id": "src_lib_dialectic_prompts_buildpilotturninstruction",
@@ -1586,7 +1586,7 @@
       "file_type": "code",
       "norm_label": "buildusermessage()",
       "source_file": "src/lib/dialectic/prompts.ts",
-      "source_location": "L346"
+      "source_location": "L347"
     },
     {
       "id": "src_lib_dialectic_prompts_drawthreadcity",
@@ -2750,7 +2750,7 @@
       "file_type": "code",
       "norm_label": "buildclosingscan()",
       "source_file": "src/lib/dialectic/prompts.ts",
-      "source_location": "L434"
+      "source_location": "L435"
     },
     {
       "id": "src_lib_dialectic_prompts_buildturninstruction",
@@ -5575,7 +5575,7 @@
       "file_type": "code",
       "norm_label": "closing_scan",
       "source_file": "src/lib/dialectic/prompts.ts",
-      "source_location": "L426"
+      "source_location": "L427"
     },
     {
       "id": "src_lib_dialectic_prompts_coda_repair_suffix",
@@ -5586,7 +5586,7 @@
       "file_type": "code",
       "norm_label": "coda_repair_suffix",
       "source_file": "src/lib/dialectic/prompts.ts",
-      "source_location": "L515"
+      "source_location": "L516"
     },
     {
       "id": "src_lib_dialectic_prompts_coda_system",
@@ -5597,7 +5597,7 @@
       "file_type": "code",
       "norm_label": "coda_system",
       "source_file": "src/lib/dialectic/prompts.ts",
-      "source_location": "L466"
+      "source_location": "L467"
     },
     {
       "id": "src_lib_dialectic_prompts_margins_writer_name",
@@ -5608,7 +5608,7 @@
       "file_type": "code",
       "norm_label": "margins_writer_name",
       "source_file": "src/lib/dialectic/prompts.ts",
-      "source_location": "L456"
+      "source_location": "L457"
     },
     {
       "id": "src_lib_dialectic_prompts_medium_gloss_scan",
@@ -5619,7 +5619,7 @@
       "file_type": "code",
       "norm_label": "medium_gloss_scan",
       "source_file": "src/lib/dialectic/prompts.ts",
-      "source_location": "L431"
+      "source_location": "L432"
     },
     {
       "id": "src_lib_dialectic_prompts_pilot_last_word",
@@ -5630,7 +5630,7 @@
       "file_type": "code",
       "norm_label": "pilot_last_word",
       "source_file": "src/lib/dialectic/prompts.ts",
-      "source_location": "L408"
+      "source_location": "L409"
     },
     {
       "id": "src_lib_dialectic_prompts_thread_cities",
@@ -9820,7 +9820,7 @@
       "file_type": "code",
       "norm_label": "glossary_shape",
       "source_file": "src/lib/dialectic/prompts.ts",
-      "source_location": "L447"
+      "source_location": "L448"
     },
     {
       "id": "src_lib_dialectic_prompts_low_closing_reminder",
@@ -9831,7 +9831,7 @@
       "file_type": "code",
       "norm_label": "low_closing_reminder",
       "source_file": "src/lib/dialectic/prompts.ts",
-      "source_location": "L417"
+      "source_location": "L418"
     },
     {
       "id": "src_lib_dialectic_prompts_max_output_tokens",
@@ -9864,7 +9864,7 @@
       "file_type": "code",
       "norm_label": "structured_output_hint",
       "source_file": "src/lib/dialectic/prompts.ts",
-      "source_location": "L438"
+      "source_location": "L439"
     },
     {
       "id": "src_lib_dialectic_prompts_word_budgets",
@@ -33140,7 +33140,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/lib/dialectic/prompts.ts",
-      "source_location": "L323",
+      "source_location": "L324",
       "weight": 1.0
     },
     {
@@ -33162,7 +33162,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/lib/dialectic/prompts.ts",
-      "source_location": "L346",
+      "source_location": "L347",
       "weight": 1.0
     },
     {
@@ -33184,7 +33184,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/lib/dialectic/prompts.ts",
-      "source_location": "L408",
+      "source_location": "L409",
       "weight": 1.0
     },
     {
@@ -33195,7 +33195,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/lib/dialectic/prompts.ts",
-      "source_location": "L417",
+      "source_location": "L418",
       "weight": 1.0
     },
     {
@@ -33217,7 +33217,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/lib/dialectic/prompts.ts",
-      "source_location": "L426",
+      "source_location": "L427",
       "weight": 1.0
     },
     {
@@ -33228,7 +33228,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/lib/dialectic/prompts.ts",
-      "source_location": "L431",
+      "source_location": "L432",
       "weight": 1.0
     },
     {
@@ -33239,7 +33239,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/lib/dialectic/prompts.ts",
-      "source_location": "L434",
+      "source_location": "L435",
       "weight": 1.0
     },
     {
@@ -33250,7 +33250,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/lib/dialectic/prompts.ts",
-      "source_location": "L438",
+      "source_location": "L439",
       "weight": 1.0
     },
     {
@@ -33261,7 +33261,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/lib/dialectic/prompts.ts",
-      "source_location": "L447",
+      "source_location": "L448",
       "weight": 1.0
     },
     {
@@ -33272,7 +33272,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/lib/dialectic/prompts.ts",
-      "source_location": "L456",
+      "source_location": "L457",
       "weight": 1.0
     },
     {
@@ -33283,7 +33283,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/lib/dialectic/prompts.ts",
-      "source_location": "L466",
+      "source_location": "L467",
       "weight": 1.0
     },
     {
@@ -33305,7 +33305,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/lib/dialectic/prompts.ts",
-      "source_location": "L472",
+      "source_location": "L473",
       "weight": 1.0
     },
     {
@@ -33316,7 +33316,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/lib/dialectic/prompts.ts",
-      "source_location": "L497",
+      "source_location": "L498",
       "weight": 1.0
     },
     {
@@ -33338,7 +33338,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/lib/dialectic/prompts.ts",
-      "source_location": "L515",
+      "source_location": "L516",
       "weight": 1.0
     },
     {
@@ -33349,7 +33349,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/lib/dialectic/prompts.ts",
-      "source_location": "L526",
+      "source_location": "L527",
       "weight": 1.0
     },
     {
@@ -37930,5 +37930,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "95f06c6afc209ec760d43a48d878362103cb6606"
+  "built_at_commit": "141504c734e3de128c15c3957281652e0700fe8c"
 }
