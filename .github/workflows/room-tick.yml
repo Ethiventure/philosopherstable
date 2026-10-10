@@ -45,4 +45,4 @@ jobs:
           git config user.name "cabinet-room"
           git config user.email "cabinet-room@users.noreply.github.com"
           git add public/room/transcript.json public/room/ledger.json
-          git diff --cached --quiet && echo "no turn appended" || git commit -m "Room tick" && git push
+          git diff --cached --quiet && echo "no turn appended" || git commit -m "Room tick [skip ci]" && git push
