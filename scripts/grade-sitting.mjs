@@ -116,6 +116,23 @@ lines.push('(verbatim runs only — paraphrase-level clones stay human; past sit
 for (const c of clusters) lines.push(`  pass ${turns[c.i].pass} ${turns[c.i].name} ≈ ${turns[c.i].echoWith}: “…${c.sample}…”`);
 lines.push('');
 
+// 2b. Metaphors: banned-image inventory (Oct 10 2026, zero-tolerance
+// wording) — logger only, like echo: flags turns for the human grade,
+// never fails them. Similes ride the same nouns (song sung, weather
+// talk), so nouns are the tripwire, not grammar.
+const METAPHOR_NOUNS = ['pipe', 'fluid', 'weather', 'beast', 'garden', 'ghost', 'song', 'loom', 'mold', 'mould', 'dye', 'valve', 'thermometer'];
+const metaphorHits = turns
+  .map((t) => {
+    const low = t.text.toLowerCase();
+    const hits = [...new Set(METAPHOR_NOUNS.filter((n) => new RegExp(`\\b${n}s?\\b`).test(low)))];
+    return { t, hits };
+  })
+  .filter((x) => x.hits.length);
+lines.push(`METAPHORS (banned images present): ${metaphorHits.length}/${turns.length} turns flagged${metaphorHits.length ? '' : ' — all clean'}`);
+for (const { t, hits } of metaphorHits.slice(0, 10)) lines.push(`  pass ${t.pass} ${t.name}: ${hits.join(', ')}`);
+if (metaphorHits.length > 10) lines.push(`  …and ${metaphorHits.length - 10} more`);
+lines.push('');
+
 // 3. City hold.
 if (city) {
   const low = city.toLowerCase();
