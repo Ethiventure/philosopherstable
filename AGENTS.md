@@ -101,7 +101,8 @@ full edge-list fallback. Content-agnostic: substitute any entities.
 
 First setup: `graphify opencode install`, then `graphify .` (`--code-only`
 without an LLM key). After edits: `graphify update .` (AST-only, no API
-cost). Install once per machine; per-project graph lives in `graphify-out/`
+cost), and commit `graphify-out/` in the same push so the map never
+lags the territory. Install once per machine; per-project graph lives in `graphify-out/`
 (dirty files after hooks are expected — not a reason to skip it).
 
 ## free TTS recipe (Web Speech, no key)

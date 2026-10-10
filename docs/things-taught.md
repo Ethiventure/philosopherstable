@@ -4,6 +4,15 @@ Low intensity, nothing dumbed down: every entry keeps the full fact,
 only the words stay simple. Newest first. The owner asked for this
 Sep 17 2026 — keep writing here, one entry per lesson.
 
+## File-truth that never renders is decoration (Oct 4 2026)
+The pair audit moved every authorial distinction into the expression
+files — then we found nothing renders those lists into any prompt:
+the think-&-sound voice block sent movement, temper, and core terms
+only. A voice record the model never sees cannot steer wording, so
+the pairs got their own rendered line ("Voice cuts — make them
+heard"). Lesson: every store of words needs a named render path, or
+it is notes, not machinery. Check the render, not just the file.
+
 ## Ears hear the expression, not the thinking (Oct 2 2026)
 Three think-mode sittings ran with every liveliness switch off (no
 voice, no scenes, no feelings, PREV-only, paraphrase-only) — on screen
