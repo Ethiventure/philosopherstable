@@ -119,20 +119,33 @@ try {
 
 // This week in the world (Oct 10 2026, Genzie turns only): real current
 // headlines give her fresh matter no prompt can stale-date. Keyless
-// Hacker News API, ~2 free calls on her ~3 turns/day, fail-soft — a
-// failed fetch simply runs the turn without headlines, never skips it.
+// Hacker News API, Genzie turns only (~3/day), fail-soft — a failed
+// fetch simply runs the turn without headlines, never skips it.
+// Ranked, not raw: last-24h items scored by comment count (contention
+// proxy) plus a boost for left-politics keywords (the room's home
+// ground). Keyword list is hand-tuned in the open — edit freely.
+const NEWS_KEYWORDS = ['strike', 'union', 'protest', 'evict', 'wage', 'landlord', 'rent', 'police', 'border', 'deport', 'asylum', 'climate', 'ceasefire', 'gaza', 'ukraine', 'coup', 'election', 'austerity', 'nhs', 'homeless', 'prison', 'famine', 'tariff', 'layoff'];
 let weekNews = '';
 if (isGenzie) {
   try {
-    const signal = AbortSignal.timeout(8000);
+    const signal = AbortSignal.timeout(10000);
     const ids = await (await fetch('https://hacker-news.firebaseio.com/v0/topstories.json', { signal })).json();
     const items = await Promise.all(
-      (Array.isArray(ids) ? ids.slice(0, 5) : []).map((id) =>
+      (Array.isArray(ids) ? ids.slice(0, 15) : []).map((id) =>
         fetch(`https://hacker-news.firebaseio.com/v0/item/${id}.json`, { signal })
           .then((r) => r.json()).catch(() => null)),
     );
-    const titles = items.filter((x) => x && x.title).slice(0, 3).map((x) => String(x.title).slice(0, 140));
-    if (titles.length) weekNews = `\nTHIS WEEK (real current headlines — hook one demand onto one of these where it fits, never forced):\n${titles.map((t) => `- ${t}`).join('\n')}`;
+    const dayAgo = Date.now() / 1000 - 86400;
+    const scored = items
+      .filter((x) => x && x.title && x.time > dayAgo)
+      .map((x) => {
+        const title = String(x.title);
+        const boost = NEWS_KEYWORDS.some((k) => title.toLowerCase().includes(k)) ? 100 : 0;
+        return { title: title.slice(0, 140), score: (x.descendants ?? 0) + boost };
+      })
+      .sort((a, b) => b.score - a.score)
+      .slice(0, 3);
+    if (scored.length) weekNews = `\nTHIS WEEK (real current headlines — hook one demand onto one of these where it fits, never forced):\n${scored.map((s) => `- ${s.title}`).join('\n')}`;
   } catch (e) {
     console.log(`(news skipped: ${String((e && e.message) || e).slice(0, 100)})`);
   }
