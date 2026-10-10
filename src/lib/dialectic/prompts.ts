@@ -37,7 +37,7 @@ export type TurnKind = 'opening' | 'critique' | 'reconstruction';
  * text change so grades stay comparable: a verdict on version C never
  * transfers silently to version D.
  */
-export const PROMPT_VERSION = '2026-09-20y';
+export const PROMPT_VERSION = '2026-09-20z';
 
 export const WORD_BUDGETS = {
   normal: { negation: 25, reformulation: 40, total: 60, opening: 40 },
@@ -142,8 +142,8 @@ export function buildTurnInstruction({ kind, prevName, isFinalSeat, longForm, re
         ? 'PASS JOB (pressure): land ONE break from inside PREV\'s own argument — no new topics of your own, nothing built here. The new idea (Z) waits for pass 3.'
         : kind === 'reconstruction'
           ? (noScene
-          ? 'PASS JOB (reconstruction): reject something specific, then add the new idea (Z) as one applied move — a named body taking a named decision, first step inside the sentence. Name who decides, where the fight happens, and what changes in the first week. Vague verbs (converse, raise awareness, prioritise, push for) fail the turn. Revisit your own earlier answer in light of the conversation; improve it once; end with your plain answer to the visitor.'
-          : 'PASS JOB (reconstruction): reject something specific, then add the new idea (Z) as one specific applied move — a named body (council, union branch, tenants, pupils) doing a named thing in the thread city, with its first step inside the sentence. Name who decides, where the fight happens, and what changes in the first week. Vague verbs (converse, raise awareness, prioritise, push for) fail the turn. Revisit your own earlier answer in light of the conversation; improve it once; end with your plain answer to the visitor.')
+          ? 'PASS JOB (reconstruction): reject something specific, then add the new idea (Z) as one applied move — a named body taking a named decision, first step inside the sentence. Name who decides, where the fight happens, and what changes in the first week. Vague verbs (converse, raise awareness, prioritise, push for) fail the turn. Revisit your own earlier answer in light of the conversation; improve it once; end with your plain answer to the visitor. If the question asks what to do or make, end with your programme — ordered steps; if it asks what is true, end with your verdict.'
+          : 'PASS JOB (reconstruction): reject something specific, then add the new idea (Z) as one specific applied move — a named body (council, union branch, tenants, pupils) doing a named thing in the thread city, with its first step inside the sentence. Name who decides, where the fight happens, and what changes in the first week. Vague verbs (converse, raise awareness, prioritise, push for) fail the turn. Revisit your own earlier answer in light of the conversation; improve it once; end with your plain answer to the visitor. If the question asks what to do or make, end with your programme — ordered steps; if it asks what is true, end with your verdict.')
           : 'PASS JOB (critique): judge PREV, then move the question up a level in your own terms.';
 
   const negationLine = pass === 2
@@ -211,7 +211,7 @@ export function buildTurnInstruction({ kind, prevName, isFinalSeat, longForm, re
       ? ['FINAL SEAT: return the question, changed, to the user — no new claims after it. Name one point of agreement, if any, and which ideas the sitting has rejected — no summary.']
       : []),
     ...(kind === 'reconstruction' && !isFinalSeat
-      ? ['Invoke at most two surveyed ideas from other seats by name (STRIKING IDEAS), transformed into your terms, never quoted — and break with at least one; a litany fails. A pass-3 turn answering only PREV has failed.']
+      ? ['Invoke at most two surveyed ideas from other seats by name (STRIKING IDEAS), transformed into your terms, never quoted — and break with at least one; a litany fails. Name the closest surveyed proposal and state your mechanism-difference from it in one sentence. A pass-3 turn answering only PREV has failed.']
       : []),
     ...(kind === 'reconstruction' && marginsNote
       ? [`The NOTES FROM THE MARGINS ride first in the survey: in your reformulation's first two sentences, name ${MARGINS_WRITER_NAME} and answer one of its questions directly, in your own terms — before you touch PREV. Buried or unnamed answers have failed.`]
@@ -296,8 +296,8 @@ export function buildPilotTurnInstruction({ kind, prevName, isFinalSeat, longFor
     : pass === 2
       ? `PASS 2 (pressure): land ONE break from inside ${prev}'s own argument — you are right that X, which is exactly why Y fails. No new topics; Z waits for pass 3. End with the contradiction handed on, one sentence.`
       : noScene
-        ? 'PASS 3 (reconstruction): reject something specific, then add the new idea (Z) as one applied move — a named body taking a named decision, first step inside the sentence. Commitments (must, shall, will), never possibilities. No staging, no scene. Revisit your pass-1 answer in light of the whole conversation; improve it once; end with your plain answer to the visitor.'
-        : `PASS 3 (reconstruction): reject something specific, then add the new idea (Z) as one applied move — a named body doing a named thing in ${threadCity ?? 'the thread city'}, first step inside the sentence. Commitments (must, shall, will), never possibilities. Revisit your pass-1 answer in light of the whole conversation; improve it once; end with your plain answer to the visitor.`;
+        ? 'PASS 3 (reconstruction): reject something specific, then add the new idea (Z) as one applied move — a named body taking a named decision, first step inside the sentence. Commitments (must, shall, will), never possibilities. No staging, no scene. Revisit your pass-1 answer in light of the whole conversation; improve it once; end with your plain answer to the visitor. If the question asks what to do or make, end with your programme — ordered steps; if it asks what is true, end with your verdict. Name the closest surveyed proposal and state your mechanism-difference from it in one sentence.'
+        : `PASS 3 (reconstruction): reject something specific, then add the new idea (Z) as one applied move — a named body doing a named thing in ${threadCity ?? 'the thread city'}, first step inside the sentence. Commitments (must, shall, will), never possibilities. Revisit your pass-1 answer in light of the whole conversation; improve it once; end with your plain answer to the visitor. If the question asks what to do or make, end with your programme — ordered steps; if it asks what is true, end with your verdict. Name the closest surveyed proposal and state your mechanism-difference from it in one sentence.`;
 
   return [
     `${kind === 'reconstruction' ? 'RECONSTRUCTION' : 'IMMANENT CRITIQUE'} TURN (HARD ceiling: ${b.total} words — shorter is better). Respond ONLY to ${prev} — answer its second half, the live edge, never its opening recap.`,
