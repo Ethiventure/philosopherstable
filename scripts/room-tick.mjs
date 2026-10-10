@@ -248,7 +248,7 @@ try {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${key}` },
         signal: lctrl.signal,
-        body: JSON.stringify({ model: MODEL, messages: [{ role: 'system', content: 'You log one line per day for a philosophy chat room. Read the turns, reply with exactly two lines and nothing else:\nBEST: <the one concrete idea worth keeping, whose, in one sentence>\nNEXT: <the one direction the conversation should move, in one sentence>' }, { role: 'user', content: digest }], max_tokens: 150 }),
+        body: JSON.stringify({ model: MODEL, messages: [{ role: 'system', content: 'You log one line per day for a philosophy chat room. Plain everyday words, no jargon, no metaphors. Reply with exactly two lines and nothing else, each under 30 words:\nBEST: <the one concrete idea worth keeping — whose, what they do first>\nNEXT: <the one direction the talk should move — who acts, what changes>' }, { role: 'user', content: digest }], max_tokens: 150 }),
       });
       const ldata = await lres.json().catch(() => null);
       const ltext = ldata?.choices?.[0]?.message?.content?.trim() ?? '';
