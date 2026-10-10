@@ -134,5 +134,24 @@ full text.
 - Chunking: heading-aware ~350w chunks, idempotent stable passage IDs;
   non-author front matter filtered before chunking. Eval (`rag-eval.mjs`,
   12/12) records its chunker version and refuses stale contracts.
+  check archive.org excluded here — full RAG runbook above already covers it.
 - Fail-soft per source with visible reasons; thin/link-dense/stub pages
   refused, never forced. Ship full text only with owner approval.
+
+## Netlify legacy free (do not lose it)
+
+- Owner's tier: legacy free (joined Jun 2025) — 300 build minutes,
+  100 GB bandwidth, 1M edge invocations, 1 concurrent build, hard
+  limits, usage resets on the 1st, projects pause on empty. No
+  overage charges exist on this tier and no one-off packs can be
+  bought — a paused project waits for the 1st. (Oct 2026: 453/300
+  spent, paused — tick-builds were the burn, now skipped.)
+- NEVER upgrade, downgrade, or switch plans via the dashboard: any
+  move is irreversible and lands on credit-based free (300 shared
+  credits ≈ 20 deploys), legacy gone forever. Support-first if
+  tempted; never click the change-plan button.
+- No second-account games: the Netlify team is GitHub-linked, so a
+  fresh account cannot quietly carry this repo.
+- Room ticks must never trigger builds: tick commits carry
+  `[skip ci]` (workflow), transcript serves via GitHub raw +
+  jsDelivr. Only app-code pushes build.
