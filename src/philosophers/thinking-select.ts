@@ -192,6 +192,16 @@ export function renderThinkingPersona(
   identity: string,
 ): string {
   const lines: string[] = [identity, ''];
+  // Engagement first (Oct 2026): how the reasoning itself holds
+  // attention, in plain words — rendered before the moves in every
+  // mode. Never forced: a move rides only where the topic supports it.
+  if (engine.engagement) lines.push(
+    'HOW YOUR REASONING HOLDS ATTENTION (do this, plainly — never force it: use a move only where the topic supports it):',
+    `- Hook: ${engine.engagement.hook}`,
+    `- Movement: ${engine.engagement.movement}`,
+    `- Payoff: ${engine.engagement.payoff}`,
+    '',
+  );
   lines.push(
     'YOUR FIRST QUESTIONS — ask these of any topic before anything else:',
     ...engine.problemSensing.entry.map((q) => `- ${q}`),

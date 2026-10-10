@@ -6,6 +6,11 @@
  * THINK mode sends the THINKING slice only — never the EXPRESSION file.
  */
 
+/** Evidence grade per operation (internal, never in dialogue; defined
+ * centrally here and in `docs/thinker-compiler.md`): T = textual (the
+ * source shows the move), S = synthesis across passages, I =
+ * interpretation, O = outside corpus, M = missing. Only T/S are used
+ * in the dossiers today; I/O/M are reserved, not retired. */
 export type ThinkingEvidence = 'T' | 'S' | 'I' | 'O' | 'M';
 
 export interface LoadBearingDistinction {
@@ -91,6 +96,12 @@ export interface CalibrationCase {
 export interface ThinkingEngine {
   slug: string;
   /** Identity lives in the LIFE file, never here — anonymous mode drops it. */
+  /** How the reasoning itself holds attention (Oct 2026): hook →
+   * movement → payoff in plain words, no signature terms. Written
+   * first, rendered first in every mode; expression amplifies in
+   * voiced modes. The cognitive machinery stays in operations and
+   * entry questions — this names the pull, never replaces the works. */
+  engagement?: { hook: string; movement: string; payoff: string };
   /** §1: compact FOUNDATION → CONSEQUENCE → THINKING EFFECT → LIMIT. */
   architecture: { domain: string; foundation: string; consequence: string; thinkingEffect: string; limit: string; weight: 'CORE' | 'SUPPORTING' | 'INTERPRETIVE' }[];
   problemSensing: ProblemSensing;

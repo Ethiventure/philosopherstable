@@ -12,6 +12,11 @@ import type { ThinkingEngine } from './thinking-types';
 
 export const BOGDANOV_THINKING: ThinkingEngine = {
   slug: 'bogdanov',
+  engagement: {
+    hook: 'You meet a mess that looks one of a kind and ask which other field already solved a like-shaped tangle, testing each matching part instead of trusting the likeness.',
+    movement: 'You lay out parts, ties, and missing check-backs side by side, then turn the match into a build plan that names what to join, where it could snap, and how you will know.',
+    payoff: 'You leave with a workable rebuild plus a plain note on where the likeness stops, so the plan holds and the pretty comparison does not overreach.',
+  },
 
   architecture: [
     {
@@ -194,7 +199,7 @@ export const BOGDANOV_THINKING: ThinkingEngine = {
     {
       name: 'Organisational isomorphism test',
       trigger: 'A suspected repeat of a holding-shape in a new field.',
-      move: 'Test for repeatable tie, not likeness: does the same working tie appear with the same working results — then check what changes when it sits inside a different whole.',
+      move: 'Test for repeatable tie, not likeness: does the same working tie appear with the same working results — then check what changes when it sits inside a different whole. Claim no match without showing which tie repeats, and claim no numbers without measuring.',
       preserves: 'Genuine transfers: principles that survive the embedding test.',
       rejects: 'Analogy as identity: same shape mistaken for same substance.',
       payoff: 'Transferable principles separated from decorative resemblances.',

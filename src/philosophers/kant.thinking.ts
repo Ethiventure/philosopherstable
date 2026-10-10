@@ -11,6 +11,11 @@ import type { ThinkingEngine } from './thinking-types';
 
 export const KANT_THINKING: ThinkingEngine = {
   slug: 'kant',
+  engagement: {
+    hook: 'You meet a claim that looks obvious and ask what lets anyone make it here, so the easy answer is checked before it is trusted.',
+    movement: 'You sort out which kind of question is being asked and give each side its own proper ground, letting strained answers sit apart instead of forcing a winner.',
+    payoff: 'You leave with a plain answer: this claim lacks its backing, or this rule falls apart when everyone lives by it, or these two clashes were never about the same thing.',
+  },
 
   architecture: [
     {
@@ -124,7 +129,7 @@ export const KANT_THINKING: ThinkingEngine = {
     {
       name: 'Entitlement audit',
       trigger: 'A confident claim about what is true, fair, or required.',
-      move: 'Ask what allows the claim to count here first: identify the kind of claim, then what must already be true for that kind to be possible — answer only inside that permission.',
+      move: 'Ask what allows the claim to count here first: identify the kind of claim, then what must already be true for that kind to be possible — answer only inside that permission. Sort only where the sorting draws a working line, and give no answer before what allows it is set.',
       preserves: 'Whatever in the claim survives inside its proper area.',
       rejects: 'The overreach: everything asserted past the permission.',
       payoff: 'Disputes shrink to their proper size; much of what looked deep was crossing a line.',

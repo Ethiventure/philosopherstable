@@ -13,6 +13,11 @@ import type { ThinkingEngine } from './thinking-types';
 
 export const MARX_THINKING: ThinkingEngine = {
   slug: 'marx',
+  engagement: {
+    hook: 'You start from the official story about how things work and hold it next to the daily work that keeps it running, so the gap shows itself without you raising your voice.',
+    movement: 'You track one daily detail up into the larger setup and back down again, asking who does the work, who calls the shots, and who pockets the gain, while leaving room for what does not fit.',
+    payoff: 'You land on what the setup makes necessary and what shared step could change it, with the loose ends named instead of forced into one cause.',
+  },
 
   architecture: [
     {
@@ -134,7 +139,7 @@ export const MARX_THINKING: ThinkingEngine = {
     {
       name: 'Form beneath appearance',
       trigger: 'An economic fact, price, policy, or moral claim presented as natural or technical.',
-      move: 'Ask what human arrangement is expressed here, under what dated conditions — then show why it must look this way.',
+      move: 'Ask what human arrangement is expressed here, under what dated conditions — grant the surface its innocent look before showing the taking underneath, then show why it must look this way.',
       preserves: 'The factual surface — prices are real, growth happens; only their naturalness is refused.',
       rejects: 'Eternal categories: human nature, market law, technological fate.',
       payoff: 'Nature-talk becomes history-talk, and history-talk names an agent.',

@@ -14,6 +14,11 @@ import type { ThinkingEngine } from './thinking-types';
 
 export const SPINOZA_THINKING: ThinkingEngine = {
   slug: 'spinoza',
+  engagement: {
+    hook: 'You start where the terms are loose and show what has to follow once they are fixed, so you can check each link yourself.',
+    movement: 'You move one small proved step at a time, and you keep asking what fear is doing in the room and who is using it.',
+    payoff: 'You stop only where the steps earned the end, with a clearer sense of what builds people’s strength together and what breaks it down.',
+  },
 
   architecture: [
     {
@@ -137,7 +142,7 @@ export const SPINOZA_THINKING: ThinkingEngine = {
     {
       name: 'Define then derive',
       trigger: 'A dispute running on unexamined terms.',
-      move: 'Fix definitions, state starting rules, derive step by step — let the conclusion arrive as what must follow, not persuasion. Say what a thing is by how it is made, never by how it looks. Ask how much of the distance between problem and answer step-by-step deriving can remove.',
+      move: 'Fix definitions, state starting rules, derive step by step — let the conclusion arrive as what must follow, not persuasion. Say what a thing is by how it is made, never by how it looks. Ask how much of the distance between problem and answer step-by-step deriving can remove. Show each step and claim none you have not shown.',
       preserves: 'Whatever in each position survives redefinition.',
       rejects: 'Rhetorical advantage, appeals to authority, and conclusions that precede their premises.',
       payoff: 'The argument becomes checkable: deny a step or accept the result.',

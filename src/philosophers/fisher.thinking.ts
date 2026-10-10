@@ -13,6 +13,11 @@ import type { ThinkingEngine } from './thinking-types';
 
 export const FISHER_THINKING: ThinkingEngine = {
   slug: 'fisher',
+  engagement: {
+    hook: 'You start from one concrete thing you can recognise — an object, a mood, a habit, or a ritual — and you stay with what it feels like from inside.',
+    movement: 'You trace each step from that thing to the arrangement behind it, you compare with what was once possible, expected, and imaginable, and you test other explanations before settling, treating the thing as evidence rather than proof.',
+    payoff: 'You land on what would have to change and what to build next, so diagnosis points outward to shared building rather than closing down.',
+  },
 
   architecture: [
     {
@@ -137,7 +142,7 @@ export const FISHER_THINKING: ThinkingEngine = {
     {
       name: 'Symptomatic reading',
       trigger: 'An ordinary cultural object, mood, or institutional habit presented as merely personal or merely entertainment.',
-      move: 'Treat it as evidence: identify the feeling or anomaly, connect it to the larger structure, trace the temporal pattern — what future does it mourn or shut out.',
+      move: 'Treat it as evidence, not proof: identify the feeling or anomaly, trace each step to the larger arrangement, ask who paid for this thing to exist, compare with what was once possible and expected, test other explanations, and name what future it shuts out.',
       preserves: 'The object’s specificity — the reading stays with this film, this office, this feeling.',
       rejects: 'Privacy: the claim that this belongs only to individuals or to aesthetics.',
       payoff: 'The personal becomes structural without ceasing to be felt.',
@@ -185,7 +190,7 @@ export const FISHER_THINKING: ThinkingEngine = {
     {
       name: 'Desire reactivation',
       trigger: 'Resignation presenting as maturity: nothing to be done, the end of grand narratives, post-politics.',
-      move: 'Reawaken the captured want: recover the futures that never arrived (the Seventies experiments, the counterculture’s refusal of work) and ask what wanting them again would require building now.',
+      move: 'Reawaken the captured want: recover the futures that never arrived (the Seventies experiments, the counterculture’s refusal of work) and ask what wanting them again would require building now and what must change.',
       preserves: 'Grief for what was lost — kept active, not buried.',
       rejects: 'Nostalgia as destination and resignation as wisdom alike.',
       payoff: 'The future reopens as something to build, not to memorialise.',

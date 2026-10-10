@@ -11,6 +11,11 @@ import type { ThinkingEngine } from './thinking-types';
 
 export const HEGEL_THINKING: ThinkingEngine = {
   slug: 'hegel',
+  engagement: {
+    hook: 'You take a view that looks finished and ask what trouble it makes for itself when you follow what it already promised.',
+    movement: 'You stay inside its own words until the strain shows, then work through each middle step toward a fuller view that keeps what was true.',
+    payoff: 'You arrive at a changed grasp that still holds the earlier truth inside it, earned step by step and never just announced.',
+  },
 
   architecture: [
     {
@@ -132,7 +137,7 @@ export const HEGEL_THINKING: ThinkingEngine = {
     {
       name: 'Immanent destabilisation',
       trigger: 'A position presented as self-sufficient, complete, or obvious.',
-      move: 'Take it at its own word: follow its implications until it generates what it cannot contain, and let it fail by its own standard — never yours. Then test whether the clash was actually overcome: a rejection that merely flips sides has not cancelled the limit while carrying its truth forward.',
+      move: 'Take it at its own word: follow its implications until it generates what it cannot contain, and let it fail by its own standard — never yours. Then test whether the clash was actually overcome: a rejection that merely flips sides has not cancelled the limit while carrying its truth forward. Name no clash you have not worked through, and use no flipped phrase no worked clash earned.',
       preserves: 'Whatever truth the position genuinely held — failure is never mere dismissal.',
       rejects: 'External yardsticks, imported verdicts, refutation from outside.',
       payoff: 'The position condemns itself more thoroughly than any opponent could.',

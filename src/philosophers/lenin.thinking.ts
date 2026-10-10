@@ -13,6 +13,11 @@ import type { ThinkingEngine } from './thinking-types';
 
 export const LENIN_THINKING: ThinkingEngine = {
   slug: 'lenin',
+  engagement: {
+    hook: 'You face a live tangle where several things are failing at once, time and hands are short, and you must choose what to hit first.',
+    movement: 'You sort which break matters most, who is ready to move with what tools, what it will cost, and what shifts if that break snaps or you take the other road, saying plainly where the proof runs thin.',
+    payoff: 'You leave with a dated next move that names who does what, plus what a pullback would teach if the ground will not hold.',
+  },
 
   architecture: [
     {
@@ -134,7 +139,7 @@ export const LENIN_THINKING: ThinkingEngine = {
     {
       name: 'Conjunctural audit',
       trigger: 'A slogan, principle, or demand presented without a date.',
-      move: 'Fix the specific situation: forces, ground, timing, readiness — then judge whether this proposal fits this month.',
+      move: 'Fix the specific situation: forces, ground, timing, readiness — call out busy balancing that decides nothing — then judge whether this proposal fits this month.',
       preserves: 'The principle, relocated to its proper conditions.',
       rejects: 'Timeless correctness: right proposals at wrong moments.',
       payoff: 'Abstraction becomes instruction: do this now, not everything always.',
@@ -194,7 +199,7 @@ export const LENIN_THINKING: ThinkingEngine = {
     {
       name: 'Decision threshold',
       trigger: 'Adequate analysis with no action — waiting for certainty that will never arrive.',
-      move: 'Ask what certainty the deciding factor needs, and commit there: the far goal stays fixed while short-term steps reverse completely on new evidence.',
+      move: 'Ask what certainty the deciding factor needs, and commit there: say plainly where proof runs thin, the far goal stays fixed while short-term steps reverse completely on new evidence.',
       preserves: 'The far goal, unchanged through every short-term reversal.',
       rejects: 'Certainty as precondition for action; consistency as loyalty to dead steps.',
       payoff: 'Action under uncertainty, honestly priced: enough to commit, never claiming more.',

@@ -69,69 +69,17 @@
       "source_location": "L23"
     },
     {
-      "id": "src_lib_rag_ground_cachedauthor",
-      "label": "CachedAuthor",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 114,
-      "community_name": "rag-ground.ts",
-      "file_type": "code",
-      "norm_label": "cachedauthor",
-      "source_file": "src/lib/rag-ground.ts",
-      "source_location": "L21"
-    },
-    {
-      "id": "src_lib_rag_ground_raggrounding",
-      "label": "RagGrounding",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 114,
-      "community_name": "rag-ground.ts",
-      "file_type": "code",
-      "norm_label": "raggrounding",
-      "source_file": "src/lib/rag-ground.ts",
-      "source_location": "L78"
-    },
-    {
-      "id": "src_lib_rag_ground_shardhit",
-      "label": "ShardHit",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 114,
-      "community_name": "rag-ground.ts",
-      "file_type": "code",
-      "norm_label": "shardhit",
-      "source_file": "src/lib/rag-ground.ts",
-      "source_location": "L15"
-    },
-    {
       "id": "src_lib_rag_search_indexpassage",
       "label": "IndexPassage",
       "_callable": true,
       "_callable_class": true,
       "_origin": "ast",
       "community": 114,
-      "community_name": "rag-ground.ts",
+      "community_name": "rag-search.mjs",
       "file_type": "code",
       "norm_label": "indexpassage",
       "source_file": "src/lib/rag-search.ts",
       "source_location": "L11"
-    },
-    {
-      "id": "src_lib_rag_search_preparedindex",
-      "label": "PreparedIndex",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 114,
-      "community_name": "rag-ground.ts",
-      "file_type": "code",
-      "norm_label": "preparedindex",
-      "source_file": "src/lib/rag-search.ts",
-      "source_location": "L52"
     },
     {
       "id": "src_lib_rag_shard_authorshard",
@@ -140,7 +88,7 @@
       "_callable_class": true,
       "_origin": "ast",
       "community": 114,
-      "community_name": "rag-ground.ts",
+      "community_name": "rag-search.mjs",
       "file_type": "code",
       "norm_label": "authorshard",
       "source_file": "src/lib/rag-shard.ts",
@@ -153,7 +101,7 @@
       "_callable_class": true,
       "_origin": "ast",
       "community": 114,
-      "community_name": "rag-ground.ts",
+      "community_name": "rag-search.mjs",
       "file_type": "code",
       "norm_label": "shardpassage",
       "source_file": "src/lib/rag-shard.ts",
@@ -166,7 +114,7 @@
       "_callable_class": true,
       "_origin": "ast",
       "community": 114,
-      "community_name": "rag-ground.ts",
+      "community_name": "rag-search.mjs",
       "file_type": "code",
       "norm_label": "shardwork",
       "source_file": "src/lib/rag-shard.ts",
@@ -251,6 +199,19 @@
       "source_location": "L4"
     },
     {
+      "id": "src_philosophers_trios_seattrio",
+      "label": "SeatTrio",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 15,
+      "community_name": "philosophers/index.ts",
+      "file_type": "code",
+      "norm_label": "seattrio",
+      "source_file": "src/philosophers/trios.ts",
+      "source_location": "L10"
+    },
+    {
       "id": "src_lib_prompts_promptcontext",
       "label": "PromptContext",
       "_callable": true,
@@ -264,17 +225,134 @@
       "source_location": "L25"
     },
     {
+      "id": "src_philosophers_index_thinkingpilotentry",
+      "label": "ThinkingPilotEntry",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 17,
+      "community_name": "thinking-types.ts",
+      "file_type": "code",
+      "norm_label": "thinkingpilotentry",
+      "source_file": "src/philosophers/index.ts",
+      "source_location": "L80"
+    },
+    {
+      "id": "src_philosophers_thinking_types_calibrationcase",
+      "label": "CalibrationCase",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 17,
+      "community_name": "thinking-types.ts",
+      "file_type": "code",
+      "norm_label": "calibrationcase",
+      "source_file": "src/philosophers/thinking-types.ts",
+      "source_location": "L88"
+    },
+    {
+      "id": "src_philosophers_thinking_types_concessionstructure",
+      "label": "ConcessionStructure",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 17,
+      "community_name": "thinking-types.ts",
+      "file_type": "code",
+      "norm_label": "concessionstructure",
+      "source_file": "src/philosophers/thinking-types.ts",
+      "source_location": "L60"
+    },
+    {
+      "id": "src_philosophers_thinking_types_intellectualdebt",
+      "label": "IntellectualDebt",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 17,
+      "community_name": "thinking-types.ts",
+      "file_type": "code",
+      "norm_label": "intellectualdebt",
+      "source_file": "src/philosophers/thinking-types.ts",
+      "source_location": "L66"
+    },
+    {
+      "id": "src_philosophers_thinking_types_judgmentpatterns",
+      "label": "JudgmentPatterns",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 17,
+      "community_name": "thinking-types.ts",
+      "file_type": "code",
+      "norm_label": "judgmentpatterns",
+      "source_file": "src/philosophers/thinking-types.ts",
+      "source_location": "L54"
+    },
+    {
       "id": "src_philosophers_thinking_types_lifefile",
       "label": "LifeFile",
       "_callable": true,
       "_callable_class": true,
       "_origin": "ast",
       "community": 17,
-      "community_name": "pilot-slice-demo.mjs",
+      "community_name": "thinking-types.ts",
       "file_type": "code",
       "norm_label": "lifefile",
       "source_file": "src/philosophers/thinking-types.ts",
-      "source_location": "L147"
+      "source_location": "L158"
+    },
+    {
+      "id": "src_philosophers_thinking_types_loadbearingdistinction",
+      "label": "LoadBearingDistinction",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 17,
+      "community_name": "thinking-types.ts",
+      "file_type": "code",
+      "norm_label": "loadbearingdistinction",
+      "source_file": "src/philosophers/thinking-types.ts",
+      "source_location": "L16"
+    },
+    {
+      "id": "src_philosophers_thinking_types_problemsensing",
+      "label": "ProblemSensing",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 17,
+      "community_name": "thinking-types.ts",
+      "file_type": "code",
+      "norm_label": "problemsensing",
+      "source_file": "src/philosophers/thinking-types.ts",
+      "source_location": "L24"
+    },
+    {
+      "id": "src_philosophers_thinking_types_thinkingevidence",
+      "label": "ThinkingEvidence",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 17,
+      "community_name": "thinking-types.ts",
+      "file_type": "code",
+      "norm_label": "thinkingevidence",
+      "source_file": "src/philosophers/thinking-types.ts",
+      "source_location": "L14"
+    },
+    {
+      "id": "src_philosophers_thinking_types_triomodes",
+      "label": "TrioModes",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 17,
+      "community_name": "thinking-types.ts",
+      "file_type": "code",
+      "norm_label": "triomodes",
+      "source_file": "src/philosophers/thinking-types.ts",
+      "source_location": "L131"
     },
     {
       "id": "src_types_index_accessibilitysettings",
@@ -628,43 +706,17 @@
       "source_location": "L42"
     },
     {
-      "id": "src_philosophers_index_thinkingpilotentry",
-      "label": "ThinkingPilotEntry",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 27,
-      "community_name": "philosophers/index.ts",
-      "file_type": "code",
-      "norm_label": "thinkingpilotentry",
-      "source_file": "src/philosophers/index.ts",
-      "source_location": "L80"
-    },
-    {
       "id": "src_philosophers_thinking_types_thinkingengine",
       "label": "ThinkingEngine",
       "_callable": true,
       "_callable_class": true,
       "_origin": "ast",
       "community": 27,
-      "community_name": "philosophers/index.ts",
+      "community_name": "ThinkingEngine",
       "file_type": "code",
       "norm_label": "thinkingengine",
       "source_file": "src/philosophers/thinking-types.ts",
-      "source_location": "L91"
-    },
-    {
-      "id": "src_philosophers_trios_seattrio",
-      "label": "SeatTrio",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 27,
-      "community_name": "philosophers/index.ts",
-      "file_type": "code",
-      "norm_label": "seattrio",
-      "source_file": "src/philosophers/trios.ts",
-      "source_location": "L10"
+      "source_location": "L96"
     },
     {
       "id": "src_app_deckentry",
@@ -730,6 +782,58 @@
       "norm_label": "servicelogentry",
       "source_file": "src/components/ServiceChat.tsx",
       "source_location": "L24"
+    },
+    {
+      "id": "src_lib_rag_ground_cachedauthor",
+      "label": "CachedAuthor",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 41,
+      "community_name": "rag-ground.ts",
+      "file_type": "code",
+      "norm_label": "cachedauthor",
+      "source_file": "src/lib/rag-ground.ts",
+      "source_location": "L21"
+    },
+    {
+      "id": "src_lib_rag_ground_raggrounding",
+      "label": "RagGrounding",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 41,
+      "community_name": "rag-ground.ts",
+      "file_type": "code",
+      "norm_label": "raggrounding",
+      "source_file": "src/lib/rag-ground.ts",
+      "source_location": "L78"
+    },
+    {
+      "id": "src_lib_rag_ground_shardhit",
+      "label": "ShardHit",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 41,
+      "community_name": "rag-ground.ts",
+      "file_type": "code",
+      "norm_label": "shardhit",
+      "source_file": "src/lib/rag-ground.ts",
+      "source_location": "L15"
+    },
+    {
+      "id": "src_lib_rag_search_preparedindex",
+      "label": "PreparedIndex",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 41,
+      "community_name": "rag-ground.ts",
+      "file_type": "code",
+      "norm_label": "preparedindex",
+      "source_file": "src/lib/rag-search.ts",
+      "source_location": "L52"
     },
     {
       "id": "src_lib_verify_quotecheck",
@@ -836,121 +940,17 @@
       "source_location": "L47"
     },
     {
-      "id": "src_philosophers_thinking_types_calibrationcase",
-      "label": "CalibrationCase",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 63,
-      "community_name": "thinking-types.ts",
-      "file_type": "code",
-      "norm_label": "calibrationcase",
-      "source_file": "src/philosophers/thinking-types.ts",
-      "source_location": "L83"
-    },
-    {
-      "id": "src_philosophers_thinking_types_concessionstructure",
-      "label": "ConcessionStructure",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 63,
-      "community_name": "thinking-types.ts",
-      "file_type": "code",
-      "norm_label": "concessionstructure",
-      "source_file": "src/philosophers/thinking-types.ts",
-      "source_location": "L55"
-    },
-    {
       "id": "src_philosophers_thinking_types_expressionmodel",
       "label": "ExpressionModel",
       "_callable": true,
       "_callable_class": true,
       "_origin": "ast",
       "community": 63,
-      "community_name": "thinking-types.ts",
+      "community_name": "pilot-slice-demo.mjs",
       "file_type": "code",
       "norm_label": "expressionmodel",
       "source_file": "src/philosophers/thinking-types.ts",
-      "source_location": "L154"
-    },
-    {
-      "id": "src_philosophers_thinking_types_intellectualdebt",
-      "label": "IntellectualDebt",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 63,
-      "community_name": "thinking-types.ts",
-      "file_type": "code",
-      "norm_label": "intellectualdebt",
-      "source_file": "src/philosophers/thinking-types.ts",
-      "source_location": "L61"
-    },
-    {
-      "id": "src_philosophers_thinking_types_judgmentpatterns",
-      "label": "JudgmentPatterns",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 63,
-      "community_name": "thinking-types.ts",
-      "file_type": "code",
-      "norm_label": "judgmentpatterns",
-      "source_file": "src/philosophers/thinking-types.ts",
-      "source_location": "L49"
-    },
-    {
-      "id": "src_philosophers_thinking_types_loadbearingdistinction",
-      "label": "LoadBearingDistinction",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 63,
-      "community_name": "thinking-types.ts",
-      "file_type": "code",
-      "norm_label": "loadbearingdistinction",
-      "source_file": "src/philosophers/thinking-types.ts",
-      "source_location": "L11"
-    },
-    {
-      "id": "src_philosophers_thinking_types_problemsensing",
-      "label": "ProblemSensing",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 63,
-      "community_name": "thinking-types.ts",
-      "file_type": "code",
-      "norm_label": "problemsensing",
-      "source_file": "src/philosophers/thinking-types.ts",
-      "source_location": "L19"
-    },
-    {
-      "id": "src_philosophers_thinking_types_thinkingevidence",
-      "label": "ThinkingEvidence",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 63,
-      "community_name": "thinking-types.ts",
-      "file_type": "code",
-      "norm_label": "thinkingevidence",
-      "source_file": "src/philosophers/thinking-types.ts",
-      "source_location": "L9"
-    },
-    {
-      "id": "src_philosophers_thinking_types_triomodes",
-      "label": "TrioModes",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 63,
-      "community_name": "thinking-types.ts",
-      "file_type": "code",
-      "norm_label": "triomodes",
-      "source_file": "src/philosophers/thinking-types.ts",
-      "source_location": "L120"
+      "source_location": "L165"
     },
     {
       "id": "src_lib_alibaba_alibabatextargs",
@@ -1028,7 +1028,7 @@
       "file_type": "code",
       "norm_label": "faultline",
       "source_file": "src/philosophers/thinking-types.ts",
-      "source_location": "L69"
+      "source_location": "L74"
     },
     {
       "id": "src_philosophers_thinking_types_thinkerfiles",
@@ -1041,7 +1041,7 @@
       "file_type": "code",
       "norm_label": "thinkerfiles",
       "source_file": "src/philosophers/thinking-types.ts",
-      "source_location": "L136"
+      "source_location": "L147"
     },
     {
       "id": "src_philosophers_thinking_types_thinkingoperation",
@@ -1054,7 +1054,7 @@
       "file_type": "code",
       "norm_label": "thinkingoperation",
       "source_file": "src/philosophers/thinking-types.ts",
-      "source_location": "L33"
+      "source_location": "L38"
     },
     {
       "id": "src_lib_llm_llmerror",
@@ -1510,7 +1510,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 114,
-      "community_name": "rag-ground.ts",
+      "community_name": "rag-search.mjs",
       "file_type": "code",
       "norm_label": "get()",
       "source_file": "scripts/rag-search.mjs",
@@ -1522,95 +1522,11 @@
       "_callable": true,
       "_origin": "ast",
       "community": 114,
-      "community_name": "rag-ground.ts",
+      "community_name": "rag-search.mjs",
       "file_type": "code",
       "norm_label": "loadindex()",
       "source_file": "scripts/rag-search.mjs",
       "source_location": "L25"
-    },
-    {
-      "id": "scripts_test_sitting_groundauthor",
-      "label": "groundAuthor()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 114,
-      "community_name": "rag-ground.ts",
-      "file_type": "code",
-      "norm_label": "groundauthor()",
-      "source_file": "scripts/test-sitting.mjs",
-      "source_location": "L100"
-    },
-    {
-      "id": "src_lib_rag_ground_loadthinker",
-      "label": "loadThinker()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 114,
-      "community_name": "rag-ground.ts",
-      "file_type": "code",
-      "norm_label": "loadthinker()",
-      "source_file": "src/lib/rag-ground.ts",
-      "source_location": "L32"
-    },
-    {
-      "id": "src_lib_rag_ground_manifestnumberforurl",
-      "label": "manifestNumberForUrl()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 114,
-      "community_name": "rag-ground.ts",
-      "file_type": "code",
-      "norm_label": "manifestnumberforurl()",
-      "source_file": "src/lib/rag-ground.ts",
-      "source_location": "L27"
-    },
-    {
-      "id": "src_lib_rag_ground_searchthinkerpassages",
-      "label": "searchThinkerPassages()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 114,
-      "community_name": "rag-ground.ts",
-      "file_type": "code",
-      "norm_label": "searchthinkerpassages()",
-      "source_file": "src/lib/rag-ground.ts",
-      "source_location": "L91"
-    },
-    {
-      "id": "src_lib_rag_search_prepareindex",
-      "label": "prepareIndex()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 114,
-      "community_name": "rag-ground.ts",
-      "file_type": "code",
-      "norm_label": "prepareindex()",
-      "source_file": "src/lib/rag-search.ts",
-      "source_location": "L59"
-    },
-    {
-      "id": "src_lib_rag_shard_joinshard",
-      "label": "joinShard()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 114,
-      "community_name": "rag-ground.ts",
-      "file_type": "code",
-      "norm_label": "joinshard()",
-      "source_file": "src/lib/rag-shard.ts",
-      "source_location": "L33"
-    },
-    {
-      "id": "src_lib_rag_text_smartcut",
-      "label": "smartCut()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 114,
-      "community_name": "rag-ground.ts",
-      "file_type": "code",
-      "norm_label": "smartcut()",
-      "source_file": "src/lib/rag-text.ts",
-      "source_location": "L60"
     },
     {
       "id": "src_lib_dialectic_prompts_buildcodaearlyprompt",
@@ -1647,6 +1563,18 @@
       "norm_label": "buildcodaprompt()",
       "source_file": "src/lib/dialectic/prompts.ts",
       "source_location": "L472"
+    },
+    {
+      "id": "src_lib_dialectic_prompts_buildpilotturninstruction",
+      "label": "buildPilotTurnInstruction()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 12,
+      "community_name": "dialectic/prompts.ts",
+      "file_type": "code",
+      "norm_label": "buildpilotturninstruction()",
+      "source_file": "src/lib/dialectic/prompts.ts",
+      "source_location": "L266"
     },
     {
       "id": "src_lib_dialectic_prompts_buildusermessage",
@@ -1865,12 +1793,36 @@
       "source_location": "L40"
     },
     {
+      "id": "src_philosophers_index_getthinkingpilot",
+      "label": "getThinkingPilot()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 15,
+      "community_name": "philosophers/index.ts",
+      "file_type": "code",
+      "norm_label": "getthinkingpilot()",
+      "source_file": "src/philosophers/index.ts",
+      "source_location": "L105"
+    },
+    {
+      "id": "src_philosophers_index_hasthinkingpilot",
+      "label": "hasThinkingPilot()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 15,
+      "community_name": "philosophers/index.ts",
+      "file_type": "code",
+      "norm_label": "hasthinkingpilot()",
+      "source_file": "src/philosophers/index.ts",
+      "source_location": "L101"
+    },
+    {
       "id": "src_philosophers_index_renderpersona",
       "label": "renderPersona()",
       "_callable": true,
       "_origin": "ast",
       "community": 15,
-      "community_name": "low-style.ts",
+      "community_name": "philosophers/index.ts",
       "file_type": "code",
       "norm_label": "renderpersona()",
       "source_file": "src/philosophers/index.ts",
@@ -1882,7 +1834,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 15,
-      "community_name": "low-style.ts",
+      "community_name": "philosophers/index.ts",
       "file_type": "code",
       "norm_label": "renderantiwaffle()",
       "source_file": "src/philosophers/shared/anti-waffle.ts",
@@ -1894,7 +1846,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 15,
-      "community_name": "low-style.ts",
+      "community_name": "philosophers/index.ts",
       "file_type": "code",
       "norm_label": "renderlanguagelevel()",
       "source_file": "src/philosophers/shared/low-style.ts",
@@ -1906,7 +1858,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 15,
-      "community_name": "low-style.ts",
+      "community_name": "philosophers/index.ts",
       "file_type": "code",
       "norm_label": "renderlowstyleessence()",
       "source_file": "src/philosophers/shared/low-style.ts",
@@ -1918,7 +1870,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 15,
-      "community_name": "low-style.ts",
+      "community_name": "philosophers/index.ts",
       "file_type": "code",
       "norm_label": "renderuniversalmechanisms()",
       "source_file": "src/philosophers/shared/universal-mechanisms.ts",
@@ -1983,18 +1935,6 @@
       "norm_label": "philosopherprofileblock()",
       "source_file": "src/lib/prompts.ts",
       "source_location": "L36"
-    },
-    {
-      "id": "src_lib_dialectic_prompts_buildpilotturninstruction",
-      "label": "buildPilotTurnInstruction()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 17,
-      "community_name": "pilot-slice-demo.mjs",
-      "file_type": "code",
-      "norm_label": "buildpilotturninstruction()",
-      "source_file": "src/lib/dialectic/prompts.ts",
-      "source_location": "L266"
     },
     {
       "id": "src_lib_shared_generatetextshared",
@@ -2429,30 +2369,6 @@
       "source_location": "L21"
     },
     {
-      "id": "src_philosophers_index_getthinkingpilot",
-      "label": "getThinkingPilot()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 27,
-      "community_name": "philosophers/index.ts",
-      "file_type": "code",
-      "norm_label": "getthinkingpilot()",
-      "source_file": "src/philosophers/index.ts",
-      "source_location": "L105"
-    },
-    {
-      "id": "src_philosophers_index_hasthinkingpilot",
-      "label": "hasThinkingPilot()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 27,
-      "community_name": "philosophers/index.ts",
-      "file_type": "code",
-      "norm_label": "hasthinkingpilot()",
-      "source_file": "src/philosophers/index.ts",
-      "source_location": "L101"
-    },
-    {
       "id": "src_app_app",
       "label": "App()",
       "_callable": true,
@@ -2777,54 +2693,6 @@
       "source_location": "L12"
     },
     {
-      "id": "scripts_test_env_loadtestenv",
-      "label": "loadTestEnv()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 40,
-      "community_name": "test-sitting.mjs",
-      "file_type": "code",
-      "norm_label": "loadtestenv()",
-      "source_file": "scripts/test-env.mjs",
-      "source_location": "L10"
-    },
-    {
-      "id": "scripts_test_providers_classifystatus",
-      "label": "classifyStatus()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 40,
-      "community_name": "test-sitting.mjs",
-      "file_type": "code",
-      "norm_label": "classifystatus()",
-      "source_file": "scripts/test-providers.mjs",
-      "source_location": "L32"
-    },
-    {
-      "id": "scripts_test_providers_postchat",
-      "label": "postChat()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 40,
-      "community_name": "test-sitting.mjs",
-      "file_type": "code",
-      "norm_label": "postchat()",
-      "source_file": "scripts/test-providers.mjs",
-      "source_location": "L44"
-    },
-    {
-      "id": "scripts_test_providers_resolvepipe",
-      "label": "resolvePipe()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 40,
-      "community_name": "test-sitting.mjs",
-      "file_type": "code",
-      "norm_label": "resolvepipe()",
-      "source_file": "scripts/test-providers.mjs",
-      "source_location": "L18"
-    },
-    {
       "id": "scripts_test_sitting_args",
       "label": "args()",
       "_callable": true,
@@ -2909,40 +2777,88 @@
       "source_location": "L231"
     },
     {
-      "id": "scripts_rag_chunk_chunkparagraphs",
-      "label": "chunkParagraphs()",
+      "id": "scripts_test_sitting_groundauthor",
+      "label": "groundAuthor()",
       "_callable": true,
       "_origin": "ast",
       "community": 41,
-      "community_name": "rag-text.mjs",
+      "community_name": "rag-ground.ts",
       "file_type": "code",
-      "norm_label": "chunkparagraphs()",
-      "source_file": "scripts/rag-chunk.mjs",
+      "norm_label": "groundauthor()",
+      "source_file": "scripts/test-sitting.mjs",
+      "source_location": "L100"
+    },
+    {
+      "id": "src_lib_rag_ground_loadthinker",
+      "label": "loadThinker()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 41,
+      "community_name": "rag-ground.ts",
+      "file_type": "code",
+      "norm_label": "loadthinker()",
+      "source_file": "src/lib/rag-ground.ts",
       "source_location": "L32"
     },
     {
-      "id": "scripts_rag_chunk_splitlongparagraph",
-      "label": "splitLongParagraph()",
+      "id": "src_lib_rag_ground_manifestnumberforurl",
+      "label": "manifestNumberForUrl()",
       "_callable": true,
       "_origin": "ast",
       "community": 41,
-      "community_name": "rag-text.mjs",
+      "community_name": "rag-ground.ts",
       "file_type": "code",
-      "norm_label": "splitlongparagraph()",
-      "source_file": "scripts/rag-chunk.mjs",
-      "source_location": "L14"
+      "norm_label": "manifestnumberforurl()",
+      "source_file": "src/lib/rag-ground.ts",
+      "source_location": "L27"
     },
     {
-      "id": "src_lib_rag_text_wordcount",
-      "label": "wordCount()",
+      "id": "src_lib_rag_ground_searchthinkerpassages",
+      "label": "searchThinkerPassages()",
       "_callable": true,
       "_origin": "ast",
       "community": 41,
-      "community_name": "rag-text.mjs",
+      "community_name": "rag-ground.ts",
       "file_type": "code",
-      "norm_label": "wordcount()",
+      "norm_label": "searchthinkerpassages()",
+      "source_file": "src/lib/rag-ground.ts",
+      "source_location": "L91"
+    },
+    {
+      "id": "src_lib_rag_search_prepareindex",
+      "label": "prepareIndex()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 41,
+      "community_name": "rag-ground.ts",
+      "file_type": "code",
+      "norm_label": "prepareindex()",
+      "source_file": "src/lib/rag-search.ts",
+      "source_location": "L59"
+    },
+    {
+      "id": "src_lib_rag_shard_joinshard",
+      "label": "joinShard()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 41,
+      "community_name": "rag-ground.ts",
+      "file_type": "code",
+      "norm_label": "joinshard()",
+      "source_file": "src/lib/rag-shard.ts",
+      "source_location": "L33"
+    },
+    {
+      "id": "src_lib_rag_text_smartcut",
+      "label": "smartCut()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 41,
+      "community_name": "rag-ground.ts",
+      "file_type": "code",
+      "norm_label": "smartcut()",
       "source_file": "src/lib/rag-text.ts",
-      "source_location": "L53"
+      "source_location": "L60"
     },
     {
       "id": "src_lib_verify_extractquotes",
@@ -3197,6 +3113,30 @@
       "source_location": "L130"
     },
     {
+      "id": "scripts_rag_chunk_chunkparagraphs",
+      "label": "chunkParagraphs()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 53,
+      "community_name": "rag-ingest.mjs",
+      "file_type": "code",
+      "norm_label": "chunkparagraphs()",
+      "source_file": "scripts/rag-chunk.mjs",
+      "source_location": "L32"
+    },
+    {
+      "id": "scripts_rag_chunk_splitlongparagraph",
+      "label": "splitLongParagraph()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 53,
+      "community_name": "rag-ingest.mjs",
+      "file_type": "code",
+      "norm_label": "splitlongparagraph()",
+      "source_file": "scripts/rag-chunk.mjs",
+      "source_location": "L14"
+    },
+    {
       "id": "scripts_rag_ingest_authorslug",
       "label": "authorSlug()",
       "_callable": true,
@@ -3399,6 +3339,18 @@
       "norm_label": "normalizetext()",
       "source_file": "src/lib/rag-text.ts",
       "source_location": "L21"
+    },
+    {
+      "id": "src_lib_rag_text_wordcount",
+      "label": "wordCount()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 53,
+      "community_name": "rag-ingest.mjs",
+      "file_type": "code",
+      "norm_label": "wordcount()",
+      "source_file": "src/lib/rag-text.ts",
+      "source_location": "L53"
     },
     {
       "id": "scripts_rag_inspect_get",
@@ -3869,6 +3821,54 @@
       "source_location": "L95"
     },
     {
+      "id": "scripts_test_env_loadtestenv",
+      "label": "loadTestEnv()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 75,
+      "community_name": "test-matrix.mjs",
+      "file_type": "code",
+      "norm_label": "loadtestenv()",
+      "source_file": "scripts/test-env.mjs",
+      "source_location": "L10"
+    },
+    {
+      "id": "scripts_test_providers_classifystatus",
+      "label": "classifyStatus()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 75,
+      "community_name": "test-matrix.mjs",
+      "file_type": "code",
+      "norm_label": "classifystatus()",
+      "source_file": "scripts/test-providers.mjs",
+      "source_location": "L32"
+    },
+    {
+      "id": "scripts_test_providers_postchat",
+      "label": "postChat()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 75,
+      "community_name": "test-matrix.mjs",
+      "file_type": "code",
+      "norm_label": "postchat()",
+      "source_file": "scripts/test-providers.mjs",
+      "source_location": "L44"
+    },
+    {
+      "id": "scripts_test_providers_resolvepipe",
+      "label": "resolvePipe()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 75,
+      "community_name": "test-matrix.mjs",
+      "file_type": "code",
+      "norm_label": "resolvepipe()",
+      "source_file": "scripts/test-providers.mjs",
+      "source_location": "L18"
+    },
+    {
       "id": "src_lib_porter_endscvc",
       "label": "endsCvc()",
       "_callable": true,
@@ -4013,18 +4013,6 @@
       "source_location": "L81"
     },
     {
-      "id": "src_lib_llm_findsharedpassage",
-      "label": "findSharedPassage()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 8,
-      "community_name": "llm.ts",
-      "file_type": "code",
-      "norm_label": "findsharedpassage()",
-      "source_file": "src/lib/llm.ts",
-      "source_location": "L115"
-    },
-    {
       "id": "src_lib_llm_incrementrepair",
       "label": "incrementRepair()",
       "_callable": true,
@@ -4143,18 +4131,6 @@
       "norm_label": "retryafterms()",
       "source_file": "src/lib/llm.ts",
       "source_location": "L420"
-    },
-    {
-      "id": "src_lib_llm_sharespassage",
-      "label": "sharesPassage()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 8,
-      "community_name": "llm.ts",
-      "file_type": "code",
-      "norm_label": "sharespassage()",
-      "source_file": "src/lib/llm.ts",
-      "source_location": "L104"
     },
     {
       "id": "src_lib_llm_usagetotals",
@@ -4419,6 +4395,30 @@
       "norm_label": "detectvolatility()",
       "source_file": "src/lib/llm.ts",
       "source_location": "L151"
+    },
+    {
+      "id": "src_lib_llm_findsharedpassage",
+      "label": "findSharedPassage()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 93,
+      "community_name": "grade-sitting.mjs",
+      "file_type": "code",
+      "norm_label": "findsharedpassage()",
+      "source_file": "src/lib/llm.ts",
+      "source_location": "L115"
+    },
+    {
+      "id": "src_lib_llm_sharespassage",
+      "label": "sharesPassage()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 93,
+      "community_name": "grade-sitting.mjs",
+      "file_type": "code",
+      "norm_label": "sharespassage()",
+      "source_file": "src/lib/llm.ts",
+      "source_location": "L104"
     },
     {
       "id": "scripts_room_tick_fail",
@@ -4812,14 +4812,14 @@
       "source_location": "L1"
     },
     {
-      "id": "docs_next_session_next_session_oct_2_2026_evening",
-      "label": "Next session \u2014 Oct 2 2026 (evening)",
+      "id": "docs_next_session_next_session_oct_4_2026_evening",
+      "label": "Next session \u2014 Oct 4 2026 (evening)",
       "_origin": "ast",
       "community": 102,
       "community_name": "next-session.md",
       "file_type": "document",
       "node_kind": "heading",
-      "norm_label": "next session \u2014 oct 2 2026 (evening)",
+      "norm_label": "next session \u2014 oct 4 2026 (evening)",
       "source_file": "docs/next-session.md",
       "source_location": "L1"
     },
@@ -5332,7 +5332,7 @@
       "label": "rag-search.mjs",
       "_origin": "ast",
       "community": 114,
-      "community_name": "rag-ground.ts",
+      "community_name": "rag-search.mjs",
       "file_type": "code",
       "norm_label": "rag-search.mjs",
       "source_file": "scripts/rag-search.mjs",
@@ -5343,7 +5343,7 @@
       "label": "args",
       "_origin": "ast",
       "community": 114,
-      "community_name": "rag-ground.ts",
+      "community_name": "rag-search.mjs",
       "file_type": "code",
       "norm_label": "args",
       "source_file": "scripts/rag-search.mjs",
@@ -5354,7 +5354,7 @@
       "label": "debug",
       "_origin": "ast",
       "community": 114,
-      "community_name": "rag-ground.ts",
+      "community_name": "rag-search.mjs",
       "file_type": "code",
       "norm_label": "debug",
       "source_file": "scripts/rag-search.mjs",
@@ -5365,7 +5365,7 @@
       "label": "{ manifest, passages }",
       "_origin": "ast",
       "community": 114,
-      "community_name": "rag-ground.ts",
+      "community_name": "rag-search.mjs",
       "file_type": "code",
       "norm_label": "{ manifest, passages }",
       "source_file": "scripts/rag-search.mjs",
@@ -5376,7 +5376,7 @@
       "label": "prepared",
       "_origin": "ast",
       "community": 114,
-      "community_name": "rag-ground.ts",
+      "community_name": "rag-search.mjs",
       "file_type": "code",
       "norm_label": "prepared",
       "source_file": "scripts/rag-search.mjs",
@@ -5387,40 +5387,18 @@
       "label": "query",
       "_origin": "ast",
       "community": 114,
-      "community_name": "rag-ground.ts",
+      "community_name": "rag-search.mjs",
       "file_type": "code",
       "norm_label": "query",
       "source_file": "scripts/rag-search.mjs",
       "source_location": "L18"
     },
     {
-      "id": "src_lib_rag_ground",
-      "label": "rag-ground.ts",
-      "_origin": "ast",
-      "community": 114,
-      "community_name": "rag-ground.ts",
-      "file_type": "code",
-      "norm_label": "rag-ground.ts",
-      "source_file": "src/lib/rag-ground.ts",
-      "source_location": "L1"
-    },
-    {
-      "id": "src_lib_rag_ground_cache",
-      "label": "cache",
-      "_origin": "ast",
-      "community": 114,
-      "community_name": "rag-ground.ts",
-      "file_type": "code",
-      "norm_label": "cache",
-      "source_file": "src/lib/rag-ground.ts",
-      "source_location": "L25"
-    },
-    {
       "id": "src_lib_rag_shard",
       "label": "rag-shard.ts",
       "_origin": "ast",
       "community": 114,
-      "community_name": "rag-ground.ts",
+      "community_name": "rag-search.mjs",
       "file_type": "code",
       "norm_label": "rag-shard.ts",
       "source_file": "src/lib/rag-shard.ts",
@@ -5622,28 +5600,6 @@
       "source_location": "L466"
     },
     {
-      "id": "src_lib_dialectic_prompts_glossary_shape",
-      "label": "GLOSSARY_SHAPE",
-      "_origin": "ast",
-      "community": 12,
-      "community_name": "dialectic/prompts.ts",
-      "file_type": "code",
-      "norm_label": "glossary_shape",
-      "source_file": "src/lib/dialectic/prompts.ts",
-      "source_location": "L447"
-    },
-    {
-      "id": "src_lib_dialectic_prompts_low_closing_reminder",
-      "label": "LOW_CLOSING_REMINDER",
-      "_origin": "ast",
-      "community": 12,
-      "community_name": "dialectic/prompts.ts",
-      "file_type": "code",
-      "norm_label": "low_closing_reminder",
-      "source_file": "src/lib/dialectic/prompts.ts",
-      "source_location": "L417"
-    },
-    {
       "id": "src_lib_dialectic_prompts_margins_writer_name",
       "label": "MARGINS_WRITER_NAME",
       "_origin": "ast",
@@ -5653,17 +5609,6 @@
       "norm_label": "margins_writer_name",
       "source_file": "src/lib/dialectic/prompts.ts",
       "source_location": "L456"
-    },
-    {
-      "id": "src_lib_dialectic_prompts_max_output_tokens",
-      "label": "MAX_OUTPUT_TOKENS",
-      "_origin": "ast",
-      "community": 12,
-      "community_name": "dialectic/prompts.ts",
-      "file_type": "code",
-      "norm_label": "max_output_tokens",
-      "source_file": "src/lib/dialectic/prompts.ts",
-      "source_location": "L47"
     },
     {
       "id": "src_lib_dialectic_prompts_medium_gloss_scan",
@@ -5688,28 +5633,6 @@
       "source_location": "L408"
     },
     {
-      "id": "src_lib_dialectic_prompts_prompt_version",
-      "label": "PROMPT_VERSION",
-      "_origin": "ast",
-      "community": 12,
-      "community_name": "dialectic/prompts.ts",
-      "file_type": "code",
-      "norm_label": "prompt_version",
-      "source_file": "src/lib/dialectic/prompts.ts",
-      "source_location": "L40"
-    },
-    {
-      "id": "src_lib_dialectic_prompts_structured_output_hint",
-      "label": "STRUCTURED_OUTPUT_HINT",
-      "_origin": "ast",
-      "community": 12,
-      "community_name": "dialectic/prompts.ts",
-      "file_type": "code",
-      "norm_label": "structured_output_hint",
-      "source_file": "src/lib/dialectic/prompts.ts",
-      "source_location": "L438"
-    },
-    {
       "id": "src_lib_dialectic_prompts_thread_cities",
       "label": "THREAD_CITIES",
       "_origin": "ast",
@@ -5719,17 +5642,6 @@
       "norm_label": "thread_cities",
       "source_file": "src/lib/dialectic/prompts.ts",
       "source_location": "L103"
-    },
-    {
-      "id": "src_lib_dialectic_prompts_word_budgets",
-      "label": "WORD_BUDGETS",
-      "_origin": "ast",
-      "community": 12,
-      "community_name": "dialectic/prompts.ts",
-      "file_type": "code",
-      "norm_label": "word_budgets",
-      "source_file": "src/lib/dialectic/prompts.ts",
-      "source_location": "L42"
     },
     {
       "id": "docs_eval_sittings_openrouter_qwen3_30b_a3b_medium_v19aa_neworleans2",
@@ -7130,11 +7042,121 @@
       "source_location": "L2306"
     },
     {
+      "id": "src_philosophers_hegel",
+      "label": "hegel.ts",
+      "_origin": "ast",
+      "community": 15,
+      "community_name": "philosophers/index.ts",
+      "file_type": "code",
+      "norm_label": "hegel.ts",
+      "source_file": "src/philosophers/hegel.ts",
+      "source_location": "L1"
+    },
+    {
+      "id": "src_philosophers_hegel_hegel",
+      "label": "HEGEL",
+      "_origin": "ast",
+      "community": 15,
+      "community_name": "philosophers/index.ts",
+      "file_type": "code",
+      "norm_label": "hegel",
+      "source_file": "src/philosophers/hegel.ts",
+      "source_location": "L4"
+    },
+    {
+      "id": "src_philosophers_hegel_style",
+      "label": "hegel.style.ts",
+      "_origin": "ast",
+      "community": 15,
+      "community_name": "philosophers/index.ts",
+      "file_type": "code",
+      "norm_label": "hegel.style.ts",
+      "source_file": "src/philosophers/hegel.style.ts",
+      "source_location": "L1"
+    },
+    {
+      "id": "src_philosophers_hegel_style_hegel_style",
+      "label": "HEGEL_STYLE",
+      "_origin": "ast",
+      "community": 15,
+      "community_name": "philosophers/index.ts",
+      "file_type": "code",
+      "norm_label": "hegel_style",
+      "source_file": "src/philosophers/hegel.style.ts",
+      "source_location": "L3"
+    },
+    {
+      "id": "src_philosophers_index",
+      "label": "philosophers/index.ts",
+      "_origin": "ast",
+      "community": 15,
+      "community_name": "philosophers/index.ts",
+      "file_type": "code",
+      "norm_label": "philosophers/index.ts",
+      "source_file": "src/philosophers/index.ts",
+      "source_location": "L1"
+    },
+    {
+      "id": "src_philosophers_index_default_seating_order",
+      "label": "DEFAULT_SEATING_ORDER",
+      "_origin": "ast",
+      "community": 15,
+      "community_name": "philosophers/index.ts",
+      "file_type": "code",
+      "norm_label": "default_seating_order",
+      "source_file": "src/philosophers/index.ts",
+      "source_location": "L67"
+    },
+    {
+      "id": "src_philosophers_index_definitions",
+      "label": "DEFINITIONS",
+      "_origin": "ast",
+      "community": 15,
+      "community_name": "philosophers/index.ts",
+      "file_type": "code",
+      "norm_label": "definitions",
+      "source_file": "src/philosophers/index.ts",
+      "source_location": "L57"
+    },
+    {
+      "id": "src_philosophers_index_philosopher_by_slug",
+      "label": "PHILOSOPHER_BY_SLUG",
+      "_origin": "ast",
+      "community": 15,
+      "community_name": "philosophers/index.ts",
+      "file_type": "code",
+      "norm_label": "philosopher_by_slug",
+      "source_file": "src/philosophers/index.ts",
+      "source_location": "L69"
+    },
+    {
+      "id": "src_philosophers_index_philosopher_data",
+      "label": "PHILOSOPHER_DATA",
+      "_origin": "ast",
+      "community": 15,
+      "community_name": "philosophers/index.ts",
+      "file_type": "code",
+      "norm_label": "philosopher_data",
+      "source_file": "src/philosophers/index.ts",
+      "source_location": "L63"
+    },
+    {
+      "id": "src_philosophers_index_thinking_pilot",
+      "label": "THINKING_PILOT",
+      "_origin": "ast",
+      "community": 15,
+      "community_name": "philosophers/index.ts",
+      "file_type": "code",
+      "norm_label": "thinking_pilot",
+      "source_file": "src/philosophers/index.ts",
+      "source_location": "L86"
+    },
+    {
       "id": "src_philosophers_shared_anti_waffle",
       "label": "anti-waffle.ts",
       "_origin": "ast",
       "community": 15,
-      "community_name": "low-style.ts",
+      "community_name": "philosophers/index.ts",
       "file_type": "code",
       "norm_label": "anti-waffle.ts",
       "source_file": "src/philosophers/shared/anti-waffle.ts",
@@ -7145,7 +7167,7 @@
       "label": "ANTI_WAFFLE_RULES",
       "_origin": "ast",
       "community": 15,
-      "community_name": "low-style.ts",
+      "community_name": "philosophers/index.ts",
       "file_type": "code",
       "norm_label": "anti_waffle_rules",
       "source_file": "src/philosophers/shared/anti-waffle.ts",
@@ -7156,7 +7178,7 @@
       "label": "BANNED_PHRASES",
       "_origin": "ast",
       "community": 15,
-      "community_name": "low-style.ts",
+      "community_name": "philosophers/index.ts",
       "file_type": "code",
       "norm_label": "banned_phrases",
       "source_file": "src/philosophers/shared/anti-waffle.ts",
@@ -7167,7 +7189,7 @@
       "label": "DIALECTICAL_MATERIALISM_FRAME",
       "_origin": "ast",
       "community": 15,
-      "community_name": "low-style.ts",
+      "community_name": "philosophers/index.ts",
       "file_type": "code",
       "norm_label": "dialectical_materialism_frame",
       "source_file": "src/philosophers/shared/anti-waffle.ts",
@@ -7178,7 +7200,7 @@
       "label": "ROLE_INTEGRITY",
       "_origin": "ast",
       "community": 15,
-      "community_name": "low-style.ts",
+      "community_name": "philosophers/index.ts",
       "file_type": "code",
       "norm_label": "role_integrity",
       "source_file": "src/philosophers/shared/anti-waffle.ts",
@@ -7189,7 +7211,7 @@
       "label": "low-style.ts",
       "_origin": "ast",
       "community": 15,
-      "community_name": "low-style.ts",
+      "community_name": "philosophers/index.ts",
       "file_type": "code",
       "norm_label": "low-style.ts",
       "source_file": "src/philosophers/shared/low-style.ts",
@@ -7200,7 +7222,7 @@
       "label": "LANGUAGE_COMMON",
       "_origin": "ast",
       "community": 15,
-      "community_name": "low-style.ts",
+      "community_name": "philosophers/index.ts",
       "file_type": "code",
       "norm_label": "language_common",
       "source_file": "src/philosophers/shared/low-style.ts",
@@ -7211,7 +7233,7 @@
       "label": "LANGUAGE_LEVELS",
       "_origin": "ast",
       "community": 15,
-      "community_name": "low-style.ts",
+      "community_name": "philosophers/index.ts",
       "file_type": "code",
       "norm_label": "language_levels",
       "source_file": "src/philosophers/shared/low-style.ts",
@@ -7222,7 +7244,7 @@
       "label": "LOW_CONCEPT_RULES",
       "_origin": "ast",
       "community": 15,
-      "community_name": "low-style.ts",
+      "community_name": "philosophers/index.ts",
       "file_type": "code",
       "norm_label": "low_concept_rules",
       "source_file": "src/philosophers/shared/low-style.ts",
@@ -7233,7 +7255,7 @@
       "label": "LOW_OVERRIDE",
       "_origin": "ast",
       "community": 15,
-      "community_name": "low-style.ts",
+      "community_name": "philosophers/index.ts",
       "file_type": "code",
       "norm_label": "low_override",
       "source_file": "src/philosophers/shared/low-style.ts",
@@ -7244,77 +7266,44 @@
       "label": "LOW_PLAIN_RULES",
       "_origin": "ast",
       "community": 15,
-      "community_name": "low-style.ts",
+      "community_name": "philosophers/index.ts",
       "file_type": "code",
       "norm_label": "low_plain_rules",
       "source_file": "src/philosophers/shared/low-style.ts",
       "source_location": "L38"
     },
     {
-      "id": "src_philosophers_shared_universal_mechanisms",
-      "label": "universal-mechanisms.ts",
+      "id": "src_philosophers_trios",
+      "label": "trios.ts",
       "_origin": "ast",
       "community": 15,
-      "community_name": "low-style.ts",
+      "community_name": "philosophers/index.ts",
       "file_type": "code",
-      "norm_label": "universal-mechanisms.ts",
-      "source_file": "src/philosophers/shared/universal-mechanisms.ts",
+      "norm_label": "trios.ts",
+      "source_file": "src/philosophers/trios.ts",
       "source_location": "L1"
     },
     {
-      "id": "src_philosophers_shared_universal_mechanisms_avoid_caricature",
-      "label": "AVOID_CARICATURE",
+      "id": "src_philosophers_trios_fallback_medium_example",
+      "label": "FALLBACK_MEDIUM_EXAMPLE",
       "_origin": "ast",
       "community": 15,
-      "community_name": "low-style.ts",
+      "community_name": "philosophers/index.ts",
       "file_type": "code",
-      "norm_label": "avoid_caricature",
-      "source_file": "src/philosophers/shared/universal-mechanisms.ts",
-      "source_location": "L19"
+      "norm_label": "fallback_medium_example",
+      "source_file": "src/philosophers/trios.ts",
+      "source_location": "L71"
     },
     {
-      "id": "src_philosophers_shared_universal_mechanisms_forensic_preamble",
-      "label": "FORENSIC_PREAMBLE",
+      "id": "src_philosophers_trios_seat_trios",
+      "label": "SEAT_TRIOS",
       "_origin": "ast",
       "community": 15,
-      "community_name": "low-style.ts",
+      "community_name": "philosophers/index.ts",
       "file_type": "code",
-      "norm_label": "forensic_preamble",
-      "source_file": "src/philosophers/shared/universal-mechanisms.ts",
-      "source_location": "L6"
-    },
-    {
-      "id": "src_philosophers_shared_universal_mechanisms_generative_argument_model",
-      "label": "GENERATIVE_ARGUMENT_MODEL",
-      "_origin": "ast",
-      "community": 15,
-      "community_name": "low-style.ts",
-      "file_type": "code",
-      "norm_label": "generative_argument_model",
-      "source_file": "src/philosophers/shared/universal-mechanisms.ts",
-      "source_location": "L28"
-    },
-    {
-      "id": "src_philosophers_shared_universal_mechanisms_style_control_description",
-      "label": "STYLE_CONTROL_DESCRIPTION",
-      "_origin": "ast",
-      "community": 15,
-      "community_name": "low-style.ts",
-      "file_type": "code",
-      "norm_label": "style_control_description",
-      "source_file": "src/philosophers/shared/universal-mechanisms.ts",
-      "source_location": "L36"
-    },
-    {
-      "id": "src_philosophers_shared_universal_mechanisms_universal_supporting_mechanisms",
-      "label": "UNIVERSAL_SUPPORTING_MECHANISMS",
-      "_origin": "ast",
-      "community": 15,
-      "community_name": "low-style.ts",
-      "file_type": "code",
-      "norm_label": "universal_supporting_mechanisms",
-      "source_file": "src/philosophers/shared/universal-mechanisms.ts",
-      "source_location": "L8"
+      "norm_label": "seat_trios",
+      "source_file": "src/philosophers/trios.ts",
+      "source_location": "L15"
     },
     {
       "id": "docs_persona_prompts_1_identity_card_2550",
@@ -7892,6 +7881,50 @@
       "source_location": "L1"
     },
     {
+      "id": "src_philosophers_marx",
+      "label": "marx.ts",
+      "_origin": "ast",
+      "community": 166,
+      "community_name": "marx.ts",
+      "file_type": "code",
+      "norm_label": "marx.ts",
+      "source_file": "src/philosophers/marx.ts",
+      "source_location": "L1"
+    },
+    {
+      "id": "src_philosophers_marx_marx",
+      "label": "MARX",
+      "_origin": "ast",
+      "community": 166,
+      "community_name": "marx.ts",
+      "file_type": "code",
+      "norm_label": "marx",
+      "source_file": "src/philosophers/marx.ts",
+      "source_location": "L4"
+    },
+    {
+      "id": "src_philosophers_marx_style",
+      "label": "marx.style.ts",
+      "_origin": "ast",
+      "community": 166,
+      "community_name": "marx.ts",
+      "file_type": "code",
+      "norm_label": "marx.style.ts",
+      "source_file": "src/philosophers/marx.style.ts",
+      "source_location": "L1"
+    },
+    {
+      "id": "src_philosophers_marx_style_marx_style",
+      "label": "MARX_STYLE",
+      "_origin": "ast",
+      "community": 166,
+      "community_name": "marx.ts",
+      "file_type": "code",
+      "norm_label": "marx_style",
+      "source_file": "src/philosophers/marx.style.ts",
+      "source_location": "L3"
+    },
+    {
       "id": "vite_config",
       "label": "vite.config.ts",
       "_origin": "ast",
@@ -7925,33 +7958,11 @@
       "source_location": "L40"
     },
     {
-      "id": "scripts_pilot_slice_demo",
-      "label": "pilot-slice-demo.mjs",
-      "_origin": "ast",
-      "community": 17,
-      "community_name": "pilot-slice-demo.mjs",
-      "file_type": "code",
-      "norm_label": "pilot-slice-demo.mjs",
-      "source_file": "scripts/pilot-slice-demo.mjs",
-      "source_location": "L1"
-    },
-    {
-      "id": "scripts_pilot_slice_demo_anon",
-      "label": "anon",
-      "_origin": "ast",
-      "community": 17,
-      "community_name": "pilot-slice-demo.mjs",
-      "file_type": "code",
-      "norm_label": "anon",
-      "source_file": "scripts/pilot-slice-demo.mjs",
-      "source_location": "L58"
-    },
-    {
       "id": "src_philosophers_bloch_life",
       "label": "bloch.life.ts",
       "_origin": "ast",
       "community": 17,
-      "community_name": "pilot-slice-demo.mjs",
+      "community_name": "thinking-types.ts",
       "file_type": "code",
       "norm_label": "bloch.life.ts",
       "source_file": "src/philosophers/bloch.life.ts",
@@ -7962,7 +7973,7 @@
       "label": "BLOCH_LIFE",
       "_origin": "ast",
       "community": 17,
-      "community_name": "pilot-slice-demo.mjs",
+      "community_name": "thinking-types.ts",
       "file_type": "code",
       "norm_label": "bloch_life",
       "source_file": "src/philosophers/bloch.life.ts",
@@ -7973,7 +7984,7 @@
       "label": "bogdanov.life.ts",
       "_origin": "ast",
       "community": 17,
-      "community_name": "pilot-slice-demo.mjs",
+      "community_name": "thinking-types.ts",
       "file_type": "code",
       "norm_label": "bogdanov.life.ts",
       "source_file": "src/philosophers/bogdanov.life.ts",
@@ -7984,7 +7995,7 @@
       "label": "BOGDANOV_LIFE",
       "_origin": "ast",
       "community": 17,
-      "community_name": "pilot-slice-demo.mjs",
+      "community_name": "thinking-types.ts",
       "file_type": "code",
       "norm_label": "bogdanov_life",
       "source_file": "src/philosophers/bogdanov.life.ts",
@@ -7995,7 +8006,7 @@
       "label": "bookchin.life.ts",
       "_origin": "ast",
       "community": 17,
-      "community_name": "pilot-slice-demo.mjs",
+      "community_name": "thinking-types.ts",
       "file_type": "code",
       "norm_label": "bookchin.life.ts",
       "source_file": "src/philosophers/bookchin.life.ts",
@@ -8006,7 +8017,7 @@
       "label": "BOOKCHIN_LIFE",
       "_origin": "ast",
       "community": 17,
-      "community_name": "pilot-slice-demo.mjs",
+      "community_name": "thinking-types.ts",
       "file_type": "code",
       "norm_label": "bookchin_life",
       "source_file": "src/philosophers/bookchin.life.ts",
@@ -8017,7 +8028,7 @@
       "label": "deleuze.life.ts",
       "_origin": "ast",
       "community": 17,
-      "community_name": "pilot-slice-demo.mjs",
+      "community_name": "thinking-types.ts",
       "file_type": "code",
       "norm_label": "deleuze.life.ts",
       "source_file": "src/philosophers/deleuze.life.ts",
@@ -8028,7 +8039,7 @@
       "label": "DELEUZE_LIFE",
       "_origin": "ast",
       "community": 17,
-      "community_name": "pilot-slice-demo.mjs",
+      "community_name": "thinking-types.ts",
       "file_type": "code",
       "norm_label": "deleuze_life",
       "source_file": "src/philosophers/deleuze.life.ts",
@@ -8039,7 +8050,7 @@
       "label": "fisher.life.ts",
       "_origin": "ast",
       "community": 17,
-      "community_name": "pilot-slice-demo.mjs",
+      "community_name": "thinking-types.ts",
       "file_type": "code",
       "norm_label": "fisher.life.ts",
       "source_file": "src/philosophers/fisher.life.ts",
@@ -8050,40 +8061,18 @@
       "label": "FISHER_LIFE",
       "_origin": "ast",
       "community": 17,
-      "community_name": "pilot-slice-demo.mjs",
+      "community_name": "thinking-types.ts",
       "file_type": "code",
       "norm_label": "fisher_life",
       "source_file": "src/philosophers/fisher.life.ts",
       "source_location": "L6"
     },
     {
-      "id": "src_philosophers_hegel_expression",
-      "label": "hegel.expression.ts",
-      "_origin": "ast",
-      "community": 17,
-      "community_name": "pilot-slice-demo.mjs",
-      "file_type": "code",
-      "norm_label": "hegel.expression.ts",
-      "source_file": "src/philosophers/hegel.expression.ts",
-      "source_location": "L1"
-    },
-    {
-      "id": "src_philosophers_hegel_expression_hegel_expression",
-      "label": "HEGEL_EXPRESSION",
-      "_origin": "ast",
-      "community": 17,
-      "community_name": "pilot-slice-demo.mjs",
-      "file_type": "code",
-      "norm_label": "hegel_expression",
-      "source_file": "src/philosophers/hegel.expression.ts",
-      "source_location": "L10"
-    },
-    {
       "id": "src_philosophers_hegel_life",
       "label": "hegel.life.ts",
       "_origin": "ast",
       "community": 17,
-      "community_name": "pilot-slice-demo.mjs",
+      "community_name": "thinking-types.ts",
       "file_type": "code",
       "norm_label": "hegel.life.ts",
       "source_file": "src/philosophers/hegel.life.ts",
@@ -8094,40 +8083,18 @@
       "label": "HEGEL_LIFE",
       "_origin": "ast",
       "community": 17,
-      "community_name": "pilot-slice-demo.mjs",
+      "community_name": "thinking-types.ts",
       "file_type": "code",
       "norm_label": "hegel_life",
       "source_file": "src/philosophers/hegel.life.ts",
       "source_location": "L6"
     },
     {
-      "id": "src_philosophers_kant_expression",
-      "label": "kant.expression.ts",
-      "_origin": "ast",
-      "community": 17,
-      "community_name": "pilot-slice-demo.mjs",
-      "file_type": "code",
-      "norm_label": "kant.expression.ts",
-      "source_file": "src/philosophers/kant.expression.ts",
-      "source_location": "L1"
-    },
-    {
-      "id": "src_philosophers_kant_expression_kant_expression",
-      "label": "KANT_EXPRESSION",
-      "_origin": "ast",
-      "community": 17,
-      "community_name": "pilot-slice-demo.mjs",
-      "file_type": "code",
-      "norm_label": "kant_expression",
-      "source_file": "src/philosophers/kant.expression.ts",
-      "source_location": "L10"
-    },
-    {
       "id": "src_philosophers_kant_life",
       "label": "kant.life.ts",
       "_origin": "ast",
       "community": 17,
-      "community_name": "pilot-slice-demo.mjs",
+      "community_name": "thinking-types.ts",
       "file_type": "code",
       "norm_label": "kant.life.ts",
       "source_file": "src/philosophers/kant.life.ts",
@@ -8138,7 +8105,7 @@
       "label": "KANT_LIFE",
       "_origin": "ast",
       "community": 17,
-      "community_name": "pilot-slice-demo.mjs",
+      "community_name": "thinking-types.ts",
       "file_type": "code",
       "norm_label": "kant_life",
       "source_file": "src/philosophers/kant.life.ts",
@@ -8149,7 +8116,7 @@
       "label": "lenin.life.ts",
       "_origin": "ast",
       "community": 17,
-      "community_name": "pilot-slice-demo.mjs",
+      "community_name": "thinking-types.ts",
       "file_type": "code",
       "norm_label": "lenin.life.ts",
       "source_file": "src/philosophers/lenin.life.ts",
@@ -8160,7 +8127,7 @@
       "label": "LENIN_LIFE",
       "_origin": "ast",
       "community": 17,
-      "community_name": "pilot-slice-demo.mjs",
+      "community_name": "thinking-types.ts",
       "file_type": "code",
       "norm_label": "lenin_life",
       "source_file": "src/philosophers/lenin.life.ts",
@@ -8171,7 +8138,7 @@
       "label": "marx.life.ts",
       "_origin": "ast",
       "community": 17,
-      "community_name": "pilot-slice-demo.mjs",
+      "community_name": "thinking-types.ts",
       "file_type": "code",
       "norm_label": "marx.life.ts",
       "source_file": "src/philosophers/marx.life.ts",
@@ -8182,7 +8149,7 @@
       "label": "MARX_LIFE",
       "_origin": "ast",
       "community": 17,
-      "community_name": "pilot-slice-demo.mjs",
+      "community_name": "thinking-types.ts",
       "file_type": "code",
       "norm_label": "marx_life",
       "source_file": "src/philosophers/marx.life.ts",
@@ -8193,7 +8160,7 @@
       "label": "rose.life.ts",
       "_origin": "ast",
       "community": 17,
-      "community_name": "pilot-slice-demo.mjs",
+      "community_name": "thinking-types.ts",
       "file_type": "code",
       "norm_label": "rose.life.ts",
       "source_file": "src/philosophers/rose.life.ts",
@@ -8204,40 +8171,18 @@
       "label": "ROSE_LIFE",
       "_origin": "ast",
       "community": 17,
-      "community_name": "pilot-slice-demo.mjs",
+      "community_name": "thinking-types.ts",
       "file_type": "code",
       "norm_label": "rose_life",
       "source_file": "src/philosophers/rose.life.ts",
       "source_location": "L6"
     },
     {
-      "id": "src_philosophers_spinoza_expression",
-      "label": "spinoza.expression.ts",
-      "_origin": "ast",
-      "community": 17,
-      "community_name": "pilot-slice-demo.mjs",
-      "file_type": "code",
-      "norm_label": "spinoza.expression.ts",
-      "source_file": "src/philosophers/spinoza.expression.ts",
-      "source_location": "L1"
-    },
-    {
-      "id": "src_philosophers_spinoza_expression_spinoza_expression",
-      "label": "SPINOZA_EXPRESSION",
-      "_origin": "ast",
-      "community": 17,
-      "community_name": "pilot-slice-demo.mjs",
-      "file_type": "code",
-      "norm_label": "spinoza_expression",
-      "source_file": "src/philosophers/spinoza.expression.ts",
-      "source_location": "L10"
-    },
-    {
       "id": "src_philosophers_spinoza_life",
       "label": "spinoza.life.ts",
       "_origin": "ast",
       "community": 17,
-      "community_name": "pilot-slice-demo.mjs",
+      "community_name": "thinking-types.ts",
       "file_type": "code",
       "norm_label": "spinoza.life.ts",
       "source_file": "src/philosophers/spinoza.life.ts",
@@ -8248,33 +8193,22 @@
       "label": "SPINOZA_LIFE",
       "_origin": "ast",
       "community": 17,
-      "community_name": "pilot-slice-demo.mjs",
+      "community_name": "thinking-types.ts",
       "file_type": "code",
       "norm_label": "spinoza_life",
       "source_file": "src/philosophers/spinoza.life.ts",
       "source_location": "L6"
     },
     {
-      "id": "src_philosophers_weil_life",
-      "label": "weil.life.ts",
+      "id": "src_philosophers_thinking_types",
+      "label": "thinking-types.ts",
       "_origin": "ast",
       "community": 17,
-      "community_name": "pilot-slice-demo.mjs",
+      "community_name": "thinking-types.ts",
       "file_type": "code",
-      "norm_label": "weil.life.ts",
-      "source_file": "src/philosophers/weil.life.ts",
+      "norm_label": "thinking-types.ts",
+      "source_file": "src/philosophers/thinking-types.ts",
       "source_location": "L1"
-    },
-    {
-      "id": "src_philosophers_weil_life_weil_life",
-      "label": "WEIL_LIFE",
-      "_origin": "ast",
-      "community": 17,
-      "community_name": "pilot-slice-demo.mjs",
-      "file_type": "code",
-      "norm_label": "weil_life",
-      "source_file": "src/philosophers/weil.life.ts",
-      "source_location": "L6"
     },
     {
       "id": "docs_thinking_diversity",
@@ -8566,7 +8500,7 @@
       "node_kind": "heading",
       "norm_label": "free tts recipe (web speech, no key)",
       "source_file": "AGENTS.md",
-      "source_location": "L107"
+      "source_location": "L108"
     },
     {
       "id": "agents_genealogy_diagram",
@@ -8614,7 +8548,7 @@
       "node_kind": "heading",
       "norm_label": "rag runbook (this repo)",
       "source_file": "AGENTS.md",
-      "source_location": "L117"
+      "source_location": "L118"
     },
     {
       "id": "agents_working_rules_shared_project_norms",
@@ -8809,7 +8743,7 @@
       "label": "bloch.thinking.ts",
       "_origin": "ast",
       "community": 27,
-      "community_name": "philosophers/index.ts",
+      "community_name": "ThinkingEngine",
       "file_type": "code",
       "norm_label": "bloch.thinking.ts",
       "source_file": "src/philosophers/bloch.thinking.ts",
@@ -8820,7 +8754,7 @@
       "label": "BLOCH_THINKING",
       "_origin": "ast",
       "community": 27,
-      "community_name": "philosophers/index.ts",
+      "community_name": "ThinkingEngine",
       "file_type": "code",
       "norm_label": "bloch_thinking",
       "source_file": "src/philosophers/bloch.thinking.ts",
@@ -8831,7 +8765,7 @@
       "label": "bogdanov.thinking.ts",
       "_origin": "ast",
       "community": 27,
-      "community_name": "philosophers/index.ts",
+      "community_name": "ThinkingEngine",
       "file_type": "code",
       "norm_label": "bogdanov.thinking.ts",
       "source_file": "src/philosophers/bogdanov.thinking.ts",
@@ -8842,7 +8776,7 @@
       "label": "BOGDANOV_THINKING",
       "_origin": "ast",
       "community": 27,
-      "community_name": "philosophers/index.ts",
+      "community_name": "ThinkingEngine",
       "file_type": "code",
       "norm_label": "bogdanov_thinking",
       "source_file": "src/philosophers/bogdanov.thinking.ts",
@@ -8853,7 +8787,7 @@
       "label": "bookchin.thinking.ts",
       "_origin": "ast",
       "community": 27,
-      "community_name": "philosophers/index.ts",
+      "community_name": "ThinkingEngine",
       "file_type": "code",
       "norm_label": "bookchin.thinking.ts",
       "source_file": "src/philosophers/bookchin.thinking.ts",
@@ -8864,40 +8798,18 @@
       "label": "BOOKCHIN_THINKING",
       "_origin": "ast",
       "community": 27,
-      "community_name": "philosophers/index.ts",
+      "community_name": "ThinkingEngine",
       "file_type": "code",
       "norm_label": "bookchin_thinking",
       "source_file": "src/philosophers/bookchin.thinking.ts",
       "source_location": "L13"
     },
     {
-      "id": "src_philosophers_deleuze_thinking",
-      "label": "deleuze.thinking.ts",
-      "_origin": "ast",
-      "community": 27,
-      "community_name": "philosophers/index.ts",
-      "file_type": "code",
-      "norm_label": "deleuze.thinking.ts",
-      "source_file": "src/philosophers/deleuze.thinking.ts",
-      "source_location": "L1"
-    },
-    {
-      "id": "src_philosophers_deleuze_thinking_deleuze_thinking",
-      "label": "DELEUZE_THINKING",
-      "_origin": "ast",
-      "community": 27,
-      "community_name": "philosophers/index.ts",
-      "file_type": "code",
-      "norm_label": "deleuze_thinking",
-      "source_file": "src/philosophers/deleuze.thinking.ts",
-      "source_location": "L14"
-    },
-    {
       "id": "src_philosophers_fisher_thinking",
       "label": "fisher.thinking.ts",
       "_origin": "ast",
       "community": 27,
-      "community_name": "philosophers/index.ts",
+      "community_name": "ThinkingEngine",
       "file_type": "code",
       "norm_label": "fisher.thinking.ts",
       "source_file": "src/philosophers/fisher.thinking.ts",
@@ -8908,7 +8820,7 @@
       "label": "FISHER_THINKING",
       "_origin": "ast",
       "community": 27,
-      "community_name": "philosophers/index.ts",
+      "community_name": "ThinkingEngine",
       "file_type": "code",
       "norm_label": "fisher_thinking",
       "source_file": "src/philosophers/fisher.thinking.ts",
@@ -8919,7 +8831,7 @@
       "label": "hegel.thinking.ts",
       "_origin": "ast",
       "community": 27,
-      "community_name": "philosophers/index.ts",
+      "community_name": "ThinkingEngine",
       "file_type": "code",
       "norm_label": "hegel.thinking.ts",
       "source_file": "src/philosophers/hegel.thinking.ts",
@@ -8930,128 +8842,18 @@
       "label": "HEGEL_THINKING",
       "_origin": "ast",
       "community": 27,
-      "community_name": "philosophers/index.ts",
+      "community_name": "ThinkingEngine",
       "file_type": "code",
       "norm_label": "hegel_thinking",
       "source_file": "src/philosophers/hegel.thinking.ts",
       "source_location": "L12"
     },
     {
-      "id": "src_philosophers_index",
-      "label": "philosophers/index.ts",
-      "_origin": "ast",
-      "community": 27,
-      "community_name": "philosophers/index.ts",
-      "file_type": "code",
-      "norm_label": "philosophers/index.ts",
-      "source_file": "src/philosophers/index.ts",
-      "source_location": "L1"
-    },
-    {
-      "id": "src_philosophers_index_default_seating_order",
-      "label": "DEFAULT_SEATING_ORDER",
-      "_origin": "ast",
-      "community": 27,
-      "community_name": "philosophers/index.ts",
-      "file_type": "code",
-      "norm_label": "default_seating_order",
-      "source_file": "src/philosophers/index.ts",
-      "source_location": "L67"
-    },
-    {
-      "id": "src_philosophers_index_definitions",
-      "label": "DEFINITIONS",
-      "_origin": "ast",
-      "community": 27,
-      "community_name": "philosophers/index.ts",
-      "file_type": "code",
-      "norm_label": "definitions",
-      "source_file": "src/philosophers/index.ts",
-      "source_location": "L57"
-    },
-    {
-      "id": "src_philosophers_index_philosopher_by_slug",
-      "label": "PHILOSOPHER_BY_SLUG",
-      "_origin": "ast",
-      "community": 27,
-      "community_name": "philosophers/index.ts",
-      "file_type": "code",
-      "norm_label": "philosopher_by_slug",
-      "source_file": "src/philosophers/index.ts",
-      "source_location": "L69"
-    },
-    {
-      "id": "src_philosophers_index_philosopher_data",
-      "label": "PHILOSOPHER_DATA",
-      "_origin": "ast",
-      "community": 27,
-      "community_name": "philosophers/index.ts",
-      "file_type": "code",
-      "norm_label": "philosopher_data",
-      "source_file": "src/philosophers/index.ts",
-      "source_location": "L63"
-    },
-    {
-      "id": "src_philosophers_index_thinking_pilot",
-      "label": "THINKING_PILOT",
-      "_origin": "ast",
-      "community": 27,
-      "community_name": "philosophers/index.ts",
-      "file_type": "code",
-      "norm_label": "thinking_pilot",
-      "source_file": "src/philosophers/index.ts",
-      "source_location": "L86"
-    },
-    {
-      "id": "src_philosophers_kant_thinking",
-      "label": "kant.thinking.ts",
-      "_origin": "ast",
-      "community": 27,
-      "community_name": "philosophers/index.ts",
-      "file_type": "code",
-      "norm_label": "kant.thinking.ts",
-      "source_file": "src/philosophers/kant.thinking.ts",
-      "source_location": "L1"
-    },
-    {
-      "id": "src_philosophers_kant_thinking_kant_thinking",
-      "label": "KANT_THINKING",
-      "_origin": "ast",
-      "community": 27,
-      "community_name": "philosophers/index.ts",
-      "file_type": "code",
-      "norm_label": "kant_thinking",
-      "source_file": "src/philosophers/kant.thinking.ts",
-      "source_location": "L12"
-    },
-    {
-      "id": "src_philosophers_lenin_thinking",
-      "label": "lenin.thinking.ts",
-      "_origin": "ast",
-      "community": 27,
-      "community_name": "philosophers/index.ts",
-      "file_type": "code",
-      "norm_label": "lenin.thinking.ts",
-      "source_file": "src/philosophers/lenin.thinking.ts",
-      "source_location": "L1"
-    },
-    {
-      "id": "src_philosophers_lenin_thinking_lenin_thinking",
-      "label": "LENIN_THINKING",
-      "_origin": "ast",
-      "community": 27,
-      "community_name": "philosophers/index.ts",
-      "file_type": "code",
-      "norm_label": "lenin_thinking",
-      "source_file": "src/philosophers/lenin.thinking.ts",
-      "source_location": "L14"
-    },
-    {
       "id": "src_philosophers_marx_thinking",
       "label": "marx.thinking.ts",
       "_origin": "ast",
       "community": 27,
-      "community_name": "philosophers/index.ts",
+      "community_name": "ThinkingEngine",
       "file_type": "code",
       "norm_label": "marx.thinking.ts",
       "source_file": "src/philosophers/marx.thinking.ts",
@@ -9062,95 +8864,18 @@
       "label": "MARX_THINKING",
       "_origin": "ast",
       "community": 27,
-      "community_name": "philosophers/index.ts",
+      "community_name": "ThinkingEngine",
       "file_type": "code",
       "norm_label": "marx_thinking",
       "source_file": "src/philosophers/marx.thinking.ts",
       "source_location": "L14"
     },
     {
-      "id": "src_philosophers_rose_thinking",
-      "label": "rose.thinking.ts",
-      "_origin": "ast",
-      "community": 27,
-      "community_name": "philosophers/index.ts",
-      "file_type": "code",
-      "norm_label": "rose.thinking.ts",
-      "source_file": "src/philosophers/rose.thinking.ts",
-      "source_location": "L1"
-    },
-    {
-      "id": "src_philosophers_rose_thinking_rose_thinking",
-      "label": "ROSE_THINKING",
-      "_origin": "ast",
-      "community": 27,
-      "community_name": "philosophers/index.ts",
-      "file_type": "code",
-      "norm_label": "rose_thinking",
-      "source_file": "src/philosophers/rose.thinking.ts",
-      "source_location": "L15"
-    },
-    {
-      "id": "src_philosophers_spinoza_thinking",
-      "label": "spinoza.thinking.ts",
-      "_origin": "ast",
-      "community": 27,
-      "community_name": "philosophers/index.ts",
-      "file_type": "code",
-      "norm_label": "spinoza.thinking.ts",
-      "source_file": "src/philosophers/spinoza.thinking.ts",
-      "source_location": "L1"
-    },
-    {
-      "id": "src_philosophers_spinoza_thinking_spinoza_thinking",
-      "label": "SPINOZA_THINKING",
-      "_origin": "ast",
-      "community": 27,
-      "community_name": "philosophers/index.ts",
-      "file_type": "code",
-      "norm_label": "spinoza_thinking",
-      "source_file": "src/philosophers/spinoza.thinking.ts",
-      "source_location": "L15"
-    },
-    {
-      "id": "src_philosophers_trios",
-      "label": "trios.ts",
-      "_origin": "ast",
-      "community": 27,
-      "community_name": "philosophers/index.ts",
-      "file_type": "code",
-      "norm_label": "trios.ts",
-      "source_file": "src/philosophers/trios.ts",
-      "source_location": "L1"
-    },
-    {
-      "id": "src_philosophers_trios_fallback_medium_example",
-      "label": "FALLBACK_MEDIUM_EXAMPLE",
-      "_origin": "ast",
-      "community": 27,
-      "community_name": "philosophers/index.ts",
-      "file_type": "code",
-      "norm_label": "fallback_medium_example",
-      "source_file": "src/philosophers/trios.ts",
-      "source_location": "L71"
-    },
-    {
-      "id": "src_philosophers_trios_seat_trios",
-      "label": "SEAT_TRIOS",
-      "_origin": "ast",
-      "community": 27,
-      "community_name": "philosophers/index.ts",
-      "file_type": "code",
-      "norm_label": "seat_trios",
-      "source_file": "src/philosophers/trios.ts",
-      "source_location": "L15"
-    },
-    {
       "id": "src_philosophers_weil_thinking",
       "label": "weil.thinking.ts",
       "_origin": "ast",
       "community": 27,
-      "community_name": "philosophers/index.ts",
+      "community_name": "ThinkingEngine",
       "file_type": "code",
       "norm_label": "weil.thinking.ts",
       "source_file": "src/philosophers/weil.thinking.ts",
@@ -9161,7 +8886,7 @@
       "label": "WEIL_THINKING",
       "_origin": "ast",
       "community": 27,
-      "community_name": "philosophers/index.ts",
+      "community_name": "ThinkingEngine",
       "file_type": "code",
       "norm_label": "weil_thinking",
       "source_file": "src/philosophers/weil.thinking.ts",
@@ -9581,6 +9306,50 @@
       "source_location": "L3"
     },
     {
+      "id": "src_philosophers_kant",
+      "label": "kant.ts",
+      "_origin": "ast",
+      "community": 30,
+      "community_name": "bookchin.ts",
+      "file_type": "code",
+      "norm_label": "kant.ts",
+      "source_file": "src/philosophers/kant.ts",
+      "source_location": "L1"
+    },
+    {
+      "id": "src_philosophers_kant_kant",
+      "label": "KANT",
+      "_origin": "ast",
+      "community": 30,
+      "community_name": "bookchin.ts",
+      "file_type": "code",
+      "norm_label": "kant",
+      "source_file": "src/philosophers/kant.ts",
+      "source_location": "L4"
+    },
+    {
+      "id": "src_philosophers_kant_style",
+      "label": "kant.style.ts",
+      "_origin": "ast",
+      "community": 30,
+      "community_name": "bookchin.ts",
+      "file_type": "code",
+      "norm_label": "kant.style.ts",
+      "source_file": "src/philosophers/kant.style.ts",
+      "source_location": "L1"
+    },
+    {
+      "id": "src_philosophers_kant_style_kant_style",
+      "label": "KANT_STYLE",
+      "_origin": "ast",
+      "community": 30,
+      "community_name": "bookchin.ts",
+      "file_type": "code",
+      "norm_label": "kant_style",
+      "source_file": "src/philosophers/kant.style.ts",
+      "source_location": "L3"
+    },
+    {
       "id": "opencode_plugins_graphify",
       "label": "graphify.js",
       "_origin": "ast",
@@ -9765,94 +9534,6 @@
       "file_type": "code",
       "norm_label": "deleuze_style",
       "source_file": "src/philosophers/deleuze.style.ts",
-      "source_location": "L3"
-    },
-    {
-      "id": "src_philosophers_kant",
-      "label": "kant.ts",
-      "_origin": "ast",
-      "community": 38,
-      "community_name": "deleuze.ts",
-      "file_type": "code",
-      "norm_label": "kant.ts",
-      "source_file": "src/philosophers/kant.ts",
-      "source_location": "L1"
-    },
-    {
-      "id": "src_philosophers_kant_kant",
-      "label": "KANT",
-      "_origin": "ast",
-      "community": 38,
-      "community_name": "deleuze.ts",
-      "file_type": "code",
-      "norm_label": "kant",
-      "source_file": "src/philosophers/kant.ts",
-      "source_location": "L4"
-    },
-    {
-      "id": "src_philosophers_kant_style",
-      "label": "kant.style.ts",
-      "_origin": "ast",
-      "community": 38,
-      "community_name": "deleuze.ts",
-      "file_type": "code",
-      "norm_label": "kant.style.ts",
-      "source_file": "src/philosophers/kant.style.ts",
-      "source_location": "L1"
-    },
-    {
-      "id": "src_philosophers_kant_style_kant_style",
-      "label": "KANT_STYLE",
-      "_origin": "ast",
-      "community": 38,
-      "community_name": "deleuze.ts",
-      "file_type": "code",
-      "norm_label": "kant_style",
-      "source_file": "src/philosophers/kant.style.ts",
-      "source_location": "L3"
-    },
-    {
-      "id": "src_philosophers_marx",
-      "label": "marx.ts",
-      "_origin": "ast",
-      "community": 38,
-      "community_name": "deleuze.ts",
-      "file_type": "code",
-      "norm_label": "marx.ts",
-      "source_file": "src/philosophers/marx.ts",
-      "source_location": "L1"
-    },
-    {
-      "id": "src_philosophers_marx_marx",
-      "label": "MARX",
-      "_origin": "ast",
-      "community": 38,
-      "community_name": "deleuze.ts",
-      "file_type": "code",
-      "norm_label": "marx",
-      "source_file": "src/philosophers/marx.ts",
-      "source_location": "L4"
-    },
-    {
-      "id": "src_philosophers_marx_style",
-      "label": "marx.style.ts",
-      "_origin": "ast",
-      "community": 38,
-      "community_name": "deleuze.ts",
-      "file_type": "code",
-      "norm_label": "marx.style.ts",
-      "source_file": "src/philosophers/marx.style.ts",
-      "source_location": "L1"
-    },
-    {
-      "id": "src_philosophers_marx_style_marx_style",
-      "label": "MARX_STYLE",
-      "_origin": "ast",
-      "community": 38,
-      "community_name": "deleuze.ts",
-      "file_type": "code",
-      "norm_label": "marx_style",
-      "source_file": "src/philosophers/marx.style.ts",
       "source_location": "L3"
     },
     {
@@ -10120,72 +9801,6 @@
       "source_location": "L29"
     },
     {
-      "id": "scripts_test_env",
-      "label": "test-env.mjs",
-      "_origin": "ast",
-      "community": 40,
-      "community_name": "test-sitting.mjs",
-      "file_type": "code",
-      "norm_label": "test-env.mjs",
-      "source_file": "scripts/test-env.mjs",
-      "source_location": "L1"
-    },
-    {
-      "id": "scripts_test_keys",
-      "label": "test-keys.mjs",
-      "_origin": "ast",
-      "community": 40,
-      "community_name": "test-sitting.mjs",
-      "file_type": "code",
-      "norm_label": "test-keys.mjs",
-      "source_file": "scripts/test-keys.mjs",
-      "source_location": "L1"
-    },
-    {
-      "id": "scripts_test_keys_rows",
-      "label": "rows",
-      "_origin": "ast",
-      "community": 40,
-      "community_name": "test-sitting.mjs",
-      "file_type": "code",
-      "norm_label": "rows",
-      "source_file": "scripts/test-keys.mjs",
-      "source_location": "L25"
-    },
-    {
-      "id": "scripts_test_keys_width",
-      "label": "width",
-      "_origin": "ast",
-      "community": 40,
-      "community_name": "test-sitting.mjs",
-      "file_type": "code",
-      "norm_label": "width",
-      "source_file": "scripts/test-keys.mjs",
-      "source_location": "L38"
-    },
-    {
-      "id": "scripts_test_providers",
-      "label": "test-providers.mjs",
-      "_origin": "ast",
-      "community": 40,
-      "community_name": "test-sitting.mjs",
-      "file_type": "code",
-      "norm_label": "test-providers.mjs",
-      "source_file": "scripts/test-providers.mjs",
-      "source_location": "L1"
-    },
-    {
-      "id": "scripts_test_providers_providers",
-      "label": "PROVIDERS",
-      "_origin": "ast",
-      "community": 40,
-      "community_name": "test-sitting.mjs",
-      "file_type": "code",
-      "norm_label": "providers",
-      "source_file": "scripts/test-providers.mjs",
-      "source_location": "L10"
-    },
-    {
       "id": "scripts_test_sitting",
       "label": "test-sitting.mjs",
       "_origin": "ast",
@@ -10197,59 +9812,92 @@
       "source_location": "L1"
     },
     {
-      "id": "scripts_rag_chunk",
-      "label": "rag-chunk.mjs",
+      "id": "src_lib_dialectic_prompts_glossary_shape",
+      "label": "GLOSSARY_SHAPE",
+      "_origin": "ast",
+      "community": 40,
+      "community_name": "test-sitting.mjs",
+      "file_type": "code",
+      "norm_label": "glossary_shape",
+      "source_file": "src/lib/dialectic/prompts.ts",
+      "source_location": "L447"
+    },
+    {
+      "id": "src_lib_dialectic_prompts_low_closing_reminder",
+      "label": "LOW_CLOSING_REMINDER",
+      "_origin": "ast",
+      "community": 40,
+      "community_name": "test-sitting.mjs",
+      "file_type": "code",
+      "norm_label": "low_closing_reminder",
+      "source_file": "src/lib/dialectic/prompts.ts",
+      "source_location": "L417"
+    },
+    {
+      "id": "src_lib_dialectic_prompts_max_output_tokens",
+      "label": "MAX_OUTPUT_TOKENS",
+      "_origin": "ast",
+      "community": 40,
+      "community_name": "test-sitting.mjs",
+      "file_type": "code",
+      "norm_label": "max_output_tokens",
+      "source_file": "src/lib/dialectic/prompts.ts",
+      "source_location": "L47"
+    },
+    {
+      "id": "src_lib_dialectic_prompts_prompt_version",
+      "label": "PROMPT_VERSION",
+      "_origin": "ast",
+      "community": 40,
+      "community_name": "test-sitting.mjs",
+      "file_type": "code",
+      "norm_label": "prompt_version",
+      "source_file": "src/lib/dialectic/prompts.ts",
+      "source_location": "L40"
+    },
+    {
+      "id": "src_lib_dialectic_prompts_structured_output_hint",
+      "label": "STRUCTURED_OUTPUT_HINT",
+      "_origin": "ast",
+      "community": 40,
+      "community_name": "test-sitting.mjs",
+      "file_type": "code",
+      "norm_label": "structured_output_hint",
+      "source_file": "src/lib/dialectic/prompts.ts",
+      "source_location": "L438"
+    },
+    {
+      "id": "src_lib_dialectic_prompts_word_budgets",
+      "label": "WORD_BUDGETS",
+      "_origin": "ast",
+      "community": 40,
+      "community_name": "test-sitting.mjs",
+      "file_type": "code",
+      "norm_label": "word_budgets",
+      "source_file": "src/lib/dialectic/prompts.ts",
+      "source_location": "L42"
+    },
+    {
+      "id": "src_lib_rag_ground",
+      "label": "rag-ground.ts",
       "_origin": "ast",
       "community": 41,
-      "community_name": "rag-text.mjs",
+      "community_name": "rag-ground.ts",
       "file_type": "code",
-      "norm_label": "rag-chunk.mjs",
-      "source_file": "scripts/rag-chunk.mjs",
+      "norm_label": "rag-ground.ts",
+      "source_file": "src/lib/rag-ground.ts",
       "source_location": "L1"
     },
     {
-      "id": "scripts_rag_chunk_chunk_soft_max",
-      "label": "CHUNK_SOFT_MAX",
+      "id": "src_lib_rag_ground_cache",
+      "label": "cache",
       "_origin": "ast",
       "community": 41,
-      "community_name": "rag-text.mjs",
+      "community_name": "rag-ground.ts",
       "file_type": "code",
-      "norm_label": "chunk_soft_max",
-      "source_file": "scripts/rag-chunk.mjs",
-      "source_location": "L12"
-    },
-    {
-      "id": "scripts_rag_chunk_chunk_soft_min",
-      "label": "CHUNK_SOFT_MIN",
-      "_origin": "ast",
-      "community": 41,
-      "community_name": "rag-text.mjs",
-      "file_type": "code",
-      "norm_label": "chunk_soft_min",
-      "source_file": "scripts/rag-chunk.mjs",
-      "source_location": "L11"
-    },
-    {
-      "id": "scripts_rag_chunk_chunk_target_words",
-      "label": "CHUNK_TARGET_WORDS",
-      "_origin": "ast",
-      "community": 41,
-      "community_name": "rag-text.mjs",
-      "file_type": "code",
-      "norm_label": "chunk_target_words",
-      "source_file": "scripts/rag-chunk.mjs",
-      "source_location": "L10"
-    },
-    {
-      "id": "scripts_rag_text",
-      "label": "rag-text.mjs",
-      "_origin": "ast",
-      "community": 41,
-      "community_name": "rag-text.mjs",
-      "file_type": "code",
-      "norm_label": "rag-text.mjs",
-      "source_file": "scripts/rag-text.mjs",
-      "source_location": "L1"
+      "norm_label": "cache",
+      "source_file": "src/lib/rag-ground.ts",
+      "source_location": "L25"
     },
     {
       "id": "src_philosophers_lenin",
@@ -10521,48 +10169,70 @@
       "source_location": "L1"
     },
     {
-      "id": "src_philosophers_hegel",
-      "label": "hegel.ts",
+      "id": "src_philosophers_shared_universal_mechanisms",
+      "label": "universal-mechanisms.ts",
       "_origin": "ast",
       "community": 49,
-      "community_name": "hegel.ts",
+      "community_name": "universal-mechanisms.ts",
       "file_type": "code",
-      "norm_label": "hegel.ts",
-      "source_file": "src/philosophers/hegel.ts",
+      "norm_label": "universal-mechanisms.ts",
+      "source_file": "src/philosophers/shared/universal-mechanisms.ts",
       "source_location": "L1"
     },
     {
-      "id": "src_philosophers_hegel_hegel",
-      "label": "HEGEL",
+      "id": "src_philosophers_shared_universal_mechanisms_avoid_caricature",
+      "label": "AVOID_CARICATURE",
       "_origin": "ast",
       "community": 49,
-      "community_name": "hegel.ts",
+      "community_name": "universal-mechanisms.ts",
       "file_type": "code",
-      "norm_label": "hegel",
-      "source_file": "src/philosophers/hegel.ts",
-      "source_location": "L4"
+      "norm_label": "avoid_caricature",
+      "source_file": "src/philosophers/shared/universal-mechanisms.ts",
+      "source_location": "L19"
     },
     {
-      "id": "src_philosophers_hegel_style",
-      "label": "hegel.style.ts",
+      "id": "src_philosophers_shared_universal_mechanisms_forensic_preamble",
+      "label": "FORENSIC_PREAMBLE",
       "_origin": "ast",
       "community": 49,
-      "community_name": "hegel.ts",
+      "community_name": "universal-mechanisms.ts",
       "file_type": "code",
-      "norm_label": "hegel.style.ts",
-      "source_file": "src/philosophers/hegel.style.ts",
-      "source_location": "L1"
+      "norm_label": "forensic_preamble",
+      "source_file": "src/philosophers/shared/universal-mechanisms.ts",
+      "source_location": "L6"
     },
     {
-      "id": "src_philosophers_hegel_style_hegel_style",
-      "label": "HEGEL_STYLE",
+      "id": "src_philosophers_shared_universal_mechanisms_generative_argument_model",
+      "label": "GENERATIVE_ARGUMENT_MODEL",
       "_origin": "ast",
       "community": 49,
-      "community_name": "hegel.ts",
+      "community_name": "universal-mechanisms.ts",
       "file_type": "code",
-      "norm_label": "hegel_style",
-      "source_file": "src/philosophers/hegel.style.ts",
-      "source_location": "L3"
+      "norm_label": "generative_argument_model",
+      "source_file": "src/philosophers/shared/universal-mechanisms.ts",
+      "source_location": "L28"
+    },
+    {
+      "id": "src_philosophers_shared_universal_mechanisms_style_control_description",
+      "label": "STYLE_CONTROL_DESCRIPTION",
+      "_origin": "ast",
+      "community": 49,
+      "community_name": "universal-mechanisms.ts",
+      "file_type": "code",
+      "norm_label": "style_control_description",
+      "source_file": "src/philosophers/shared/universal-mechanisms.ts",
+      "source_location": "L36"
+    },
+    {
+      "id": "src_philosophers_shared_universal_mechanisms_universal_supporting_mechanisms",
+      "label": "UNIVERSAL_SUPPORTING_MECHANISMS",
+      "_origin": "ast",
+      "community": 49,
+      "community_name": "universal-mechanisms.ts",
+      "file_type": "code",
+      "norm_label": "universal_supporting_mechanisms",
+      "source_file": "src/philosophers/shared/universal-mechanisms.ts",
+      "source_location": "L8"
     },
     {
       "id": "src_lib_openrouter",
@@ -10979,6 +10649,50 @@
       "source_location": "L195"
     },
     {
+      "id": "scripts_rag_chunk",
+      "label": "rag-chunk.mjs",
+      "_origin": "ast",
+      "community": 53,
+      "community_name": "rag-ingest.mjs",
+      "file_type": "code",
+      "norm_label": "rag-chunk.mjs",
+      "source_file": "scripts/rag-chunk.mjs",
+      "source_location": "L1"
+    },
+    {
+      "id": "scripts_rag_chunk_chunk_soft_max",
+      "label": "CHUNK_SOFT_MAX",
+      "_origin": "ast",
+      "community": 53,
+      "community_name": "rag-ingest.mjs",
+      "file_type": "code",
+      "norm_label": "chunk_soft_max",
+      "source_file": "scripts/rag-chunk.mjs",
+      "source_location": "L12"
+    },
+    {
+      "id": "scripts_rag_chunk_chunk_soft_min",
+      "label": "CHUNK_SOFT_MIN",
+      "_origin": "ast",
+      "community": 53,
+      "community_name": "rag-ingest.mjs",
+      "file_type": "code",
+      "norm_label": "chunk_soft_min",
+      "source_file": "scripts/rag-chunk.mjs",
+      "source_location": "L11"
+    },
+    {
+      "id": "scripts_rag_chunk_chunk_target_words",
+      "label": "CHUNK_TARGET_WORDS",
+      "_origin": "ast",
+      "community": 53,
+      "community_name": "rag-ingest.mjs",
+      "file_type": "code",
+      "norm_label": "chunk_target_words",
+      "source_file": "scripts/rag-chunk.mjs",
+      "source_location": "L10"
+    },
+    {
       "id": "scripts_rag_ingest",
       "label": "rag-ingest.mjs",
       "_origin": "ast",
@@ -11043,6 +10757,17 @@
       "norm_label": "root",
       "source_file": "scripts/rag-ingest.mjs",
       "source_location": "L20"
+    },
+    {
+      "id": "scripts_rag_text",
+      "label": "rag-text.mjs",
+      "_origin": "ast",
+      "community": 53,
+      "community_name": "rag-ingest.mjs",
+      "file_type": "code",
+      "norm_label": "rag-text.mjs",
+      "source_file": "scripts/rag-text.mjs",
+      "source_location": "L1"
     },
     {
       "id": "scripts_rag_inspect",
@@ -12397,11 +12122,33 @@
       "source_location": "L16"
     },
     {
+      "id": "scripts_pilot_slice_demo",
+      "label": "pilot-slice-demo.mjs",
+      "_origin": "ast",
+      "community": 63,
+      "community_name": "pilot-slice-demo.mjs",
+      "file_type": "code",
+      "norm_label": "pilot-slice-demo.mjs",
+      "source_file": "scripts/pilot-slice-demo.mjs",
+      "source_location": "L1"
+    },
+    {
+      "id": "scripts_pilot_slice_demo_anon",
+      "label": "anon",
+      "_origin": "ast",
+      "community": 63,
+      "community_name": "pilot-slice-demo.mjs",
+      "file_type": "code",
+      "norm_label": "anon",
+      "source_file": "scripts/pilot-slice-demo.mjs",
+      "source_location": "L58"
+    },
+    {
       "id": "src_philosophers_bloch_expression",
       "label": "bloch.expression.ts",
       "_origin": "ast",
       "community": 63,
-      "community_name": "thinking-types.ts",
+      "community_name": "pilot-slice-demo.mjs",
       "file_type": "code",
       "norm_label": "bloch.expression.ts",
       "source_file": "src/philosophers/bloch.expression.ts",
@@ -12412,7 +12159,7 @@
       "label": "BLOCH_EXPRESSION",
       "_origin": "ast",
       "community": 63,
-      "community_name": "thinking-types.ts",
+      "community_name": "pilot-slice-demo.mjs",
       "file_type": "code",
       "norm_label": "bloch_expression",
       "source_file": "src/philosophers/bloch.expression.ts",
@@ -12423,7 +12170,7 @@
       "label": "bogdanov.expression.ts",
       "_origin": "ast",
       "community": 63,
-      "community_name": "thinking-types.ts",
+      "community_name": "pilot-slice-demo.mjs",
       "file_type": "code",
       "norm_label": "bogdanov.expression.ts",
       "source_file": "src/philosophers/bogdanov.expression.ts",
@@ -12434,7 +12181,7 @@
       "label": "BOGDANOV_EXPRESSION",
       "_origin": "ast",
       "community": 63,
-      "community_name": "thinking-types.ts",
+      "community_name": "pilot-slice-demo.mjs",
       "file_type": "code",
       "norm_label": "bogdanov_expression",
       "source_file": "src/philosophers/bogdanov.expression.ts",
@@ -12445,7 +12192,7 @@
       "label": "bookchin.expression.ts",
       "_origin": "ast",
       "community": 63,
-      "community_name": "thinking-types.ts",
+      "community_name": "pilot-slice-demo.mjs",
       "file_type": "code",
       "norm_label": "bookchin.expression.ts",
       "source_file": "src/philosophers/bookchin.expression.ts",
@@ -12456,7 +12203,7 @@
       "label": "BOOKCHIN_EXPRESSION",
       "_origin": "ast",
       "community": 63,
-      "community_name": "thinking-types.ts",
+      "community_name": "pilot-slice-demo.mjs",
       "file_type": "code",
       "norm_label": "bookchin_expression",
       "source_file": "src/philosophers/bookchin.expression.ts",
@@ -12467,7 +12214,7 @@
       "label": "deleuze.expression.ts",
       "_origin": "ast",
       "community": 63,
-      "community_name": "thinking-types.ts",
+      "community_name": "pilot-slice-demo.mjs",
       "file_type": "code",
       "norm_label": "deleuze.expression.ts",
       "source_file": "src/philosophers/deleuze.expression.ts",
@@ -12478,18 +12225,40 @@
       "label": "DELEUZE_EXPRESSION",
       "_origin": "ast",
       "community": 63,
-      "community_name": "thinking-types.ts",
+      "community_name": "pilot-slice-demo.mjs",
       "file_type": "code",
       "norm_label": "deleuze_expression",
       "source_file": "src/philosophers/deleuze.expression.ts",
       "source_location": "L10"
     },
     {
+      "id": "src_philosophers_deleuze_thinking",
+      "label": "deleuze.thinking.ts",
+      "_origin": "ast",
+      "community": 63,
+      "community_name": "pilot-slice-demo.mjs",
+      "file_type": "code",
+      "norm_label": "deleuze.thinking.ts",
+      "source_file": "src/philosophers/deleuze.thinking.ts",
+      "source_location": "L1"
+    },
+    {
+      "id": "src_philosophers_deleuze_thinking_deleuze_thinking",
+      "label": "DELEUZE_THINKING",
+      "_origin": "ast",
+      "community": 63,
+      "community_name": "pilot-slice-demo.mjs",
+      "file_type": "code",
+      "norm_label": "deleuze_thinking",
+      "source_file": "src/philosophers/deleuze.thinking.ts",
+      "source_location": "L14"
+    },
+    {
       "id": "src_philosophers_fisher_expression",
       "label": "fisher.expression.ts",
       "_origin": "ast",
       "community": 63,
-      "community_name": "thinking-types.ts",
+      "community_name": "pilot-slice-demo.mjs",
       "file_type": "code",
       "norm_label": "fisher.expression.ts",
       "source_file": "src/philosophers/fisher.expression.ts",
@@ -12500,18 +12269,84 @@
       "label": "FISHER_EXPRESSION",
       "_origin": "ast",
       "community": 63,
-      "community_name": "thinking-types.ts",
+      "community_name": "pilot-slice-demo.mjs",
       "file_type": "code",
       "norm_label": "fisher_expression",
       "source_file": "src/philosophers/fisher.expression.ts",
       "source_location": "L10"
     },
     {
+      "id": "src_philosophers_hegel_expression",
+      "label": "hegel.expression.ts",
+      "_origin": "ast",
+      "community": 63,
+      "community_name": "pilot-slice-demo.mjs",
+      "file_type": "code",
+      "norm_label": "hegel.expression.ts",
+      "source_file": "src/philosophers/hegel.expression.ts",
+      "source_location": "L1"
+    },
+    {
+      "id": "src_philosophers_hegel_expression_hegel_expression",
+      "label": "HEGEL_EXPRESSION",
+      "_origin": "ast",
+      "community": 63,
+      "community_name": "pilot-slice-demo.mjs",
+      "file_type": "code",
+      "norm_label": "hegel_expression",
+      "source_file": "src/philosophers/hegel.expression.ts",
+      "source_location": "L10"
+    },
+    {
+      "id": "src_philosophers_kant_expression",
+      "label": "kant.expression.ts",
+      "_origin": "ast",
+      "community": 63,
+      "community_name": "pilot-slice-demo.mjs",
+      "file_type": "code",
+      "norm_label": "kant.expression.ts",
+      "source_file": "src/philosophers/kant.expression.ts",
+      "source_location": "L1"
+    },
+    {
+      "id": "src_philosophers_kant_expression_kant_expression",
+      "label": "KANT_EXPRESSION",
+      "_origin": "ast",
+      "community": 63,
+      "community_name": "pilot-slice-demo.mjs",
+      "file_type": "code",
+      "norm_label": "kant_expression",
+      "source_file": "src/philosophers/kant.expression.ts",
+      "source_location": "L10"
+    },
+    {
+      "id": "src_philosophers_kant_thinking",
+      "label": "kant.thinking.ts",
+      "_origin": "ast",
+      "community": 63,
+      "community_name": "pilot-slice-demo.mjs",
+      "file_type": "code",
+      "norm_label": "kant.thinking.ts",
+      "source_file": "src/philosophers/kant.thinking.ts",
+      "source_location": "L1"
+    },
+    {
+      "id": "src_philosophers_kant_thinking_kant_thinking",
+      "label": "KANT_THINKING",
+      "_origin": "ast",
+      "community": 63,
+      "community_name": "pilot-slice-demo.mjs",
+      "file_type": "code",
+      "norm_label": "kant_thinking",
+      "source_file": "src/philosophers/kant.thinking.ts",
+      "source_location": "L12"
+    },
+    {
       "id": "src_philosophers_lenin_expression",
       "label": "lenin.expression.ts",
       "_origin": "ast",
       "community": 63,
-      "community_name": "thinking-types.ts",
+      "community_name": "pilot-slice-demo.mjs",
       "file_type": "code",
       "norm_label": "lenin.expression.ts",
       "source_file": "src/philosophers/lenin.expression.ts",
@@ -12522,18 +12357,40 @@
       "label": "LENIN_EXPRESSION",
       "_origin": "ast",
       "community": 63,
-      "community_name": "thinking-types.ts",
+      "community_name": "pilot-slice-demo.mjs",
       "file_type": "code",
       "norm_label": "lenin_expression",
       "source_file": "src/philosophers/lenin.expression.ts",
       "source_location": "L10"
     },
     {
+      "id": "src_philosophers_lenin_thinking",
+      "label": "lenin.thinking.ts",
+      "_origin": "ast",
+      "community": 63,
+      "community_name": "pilot-slice-demo.mjs",
+      "file_type": "code",
+      "norm_label": "lenin.thinking.ts",
+      "source_file": "src/philosophers/lenin.thinking.ts",
+      "source_location": "L1"
+    },
+    {
+      "id": "src_philosophers_lenin_thinking_lenin_thinking",
+      "label": "LENIN_THINKING",
+      "_origin": "ast",
+      "community": 63,
+      "community_name": "pilot-slice-demo.mjs",
+      "file_type": "code",
+      "norm_label": "lenin_thinking",
+      "source_file": "src/philosophers/lenin.thinking.ts",
+      "source_location": "L14"
+    },
+    {
       "id": "src_philosophers_marx_expression",
       "label": "marx.expression.ts",
       "_origin": "ast",
       "community": 63,
-      "community_name": "thinking-types.ts",
+      "community_name": "pilot-slice-demo.mjs",
       "file_type": "code",
       "norm_label": "marx.expression.ts",
       "source_file": "src/philosophers/marx.expression.ts",
@@ -12544,7 +12401,7 @@
       "label": "MARX_EXPRESSION",
       "_origin": "ast",
       "community": 63,
-      "community_name": "thinking-types.ts",
+      "community_name": "pilot-slice-demo.mjs",
       "file_type": "code",
       "norm_label": "marx_expression",
       "source_file": "src/philosophers/marx.expression.ts",
@@ -12555,7 +12412,7 @@
       "label": "rose.expression.ts",
       "_origin": "ast",
       "community": 63,
-      "community_name": "thinking-types.ts",
+      "community_name": "pilot-slice-demo.mjs",
       "file_type": "code",
       "norm_label": "rose.expression.ts",
       "source_file": "src/philosophers/rose.expression.ts",
@@ -12566,29 +12423,84 @@
       "label": "ROSE_EXPRESSION",
       "_origin": "ast",
       "community": 63,
-      "community_name": "thinking-types.ts",
+      "community_name": "pilot-slice-demo.mjs",
       "file_type": "code",
       "norm_label": "rose_expression",
       "source_file": "src/philosophers/rose.expression.ts",
       "source_location": "L10"
     },
     {
-      "id": "src_philosophers_thinking_types",
-      "label": "thinking-types.ts",
+      "id": "src_philosophers_rose_thinking",
+      "label": "rose.thinking.ts",
       "_origin": "ast",
       "community": 63,
-      "community_name": "thinking-types.ts",
+      "community_name": "pilot-slice-demo.mjs",
       "file_type": "code",
-      "norm_label": "thinking-types.ts",
-      "source_file": "src/philosophers/thinking-types.ts",
+      "norm_label": "rose.thinking.ts",
+      "source_file": "src/philosophers/rose.thinking.ts",
       "source_location": "L1"
+    },
+    {
+      "id": "src_philosophers_rose_thinking_rose_thinking",
+      "label": "ROSE_THINKING",
+      "_origin": "ast",
+      "community": 63,
+      "community_name": "pilot-slice-demo.mjs",
+      "file_type": "code",
+      "norm_label": "rose_thinking",
+      "source_file": "src/philosophers/rose.thinking.ts",
+      "source_location": "L15"
+    },
+    {
+      "id": "src_philosophers_spinoza_expression",
+      "label": "spinoza.expression.ts",
+      "_origin": "ast",
+      "community": 63,
+      "community_name": "pilot-slice-demo.mjs",
+      "file_type": "code",
+      "norm_label": "spinoza.expression.ts",
+      "source_file": "src/philosophers/spinoza.expression.ts",
+      "source_location": "L1"
+    },
+    {
+      "id": "src_philosophers_spinoza_expression_spinoza_expression",
+      "label": "SPINOZA_EXPRESSION",
+      "_origin": "ast",
+      "community": 63,
+      "community_name": "pilot-slice-demo.mjs",
+      "file_type": "code",
+      "norm_label": "spinoza_expression",
+      "source_file": "src/philosophers/spinoza.expression.ts",
+      "source_location": "L10"
+    },
+    {
+      "id": "src_philosophers_spinoza_thinking",
+      "label": "spinoza.thinking.ts",
+      "_origin": "ast",
+      "community": 63,
+      "community_name": "pilot-slice-demo.mjs",
+      "file_type": "code",
+      "norm_label": "spinoza.thinking.ts",
+      "source_file": "src/philosophers/spinoza.thinking.ts",
+      "source_location": "L1"
+    },
+    {
+      "id": "src_philosophers_spinoza_thinking_spinoza_thinking",
+      "label": "SPINOZA_THINKING",
+      "_origin": "ast",
+      "community": 63,
+      "community_name": "pilot-slice-demo.mjs",
+      "file_type": "code",
+      "norm_label": "spinoza_thinking",
+      "source_file": "src/philosophers/spinoza.thinking.ts",
+      "source_location": "L15"
     },
     {
       "id": "src_philosophers_weil_expression",
       "label": "weil.expression.ts",
       "_origin": "ast",
       "community": 63,
-      "community_name": "thinking-types.ts",
+      "community_name": "pilot-slice-demo.mjs",
       "file_type": "code",
       "norm_label": "weil.expression.ts",
       "source_file": "src/philosophers/weil.expression.ts",
@@ -12599,11 +12511,33 @@
       "label": "WEIL_EXPRESSION",
       "_origin": "ast",
       "community": 63,
-      "community_name": "thinking-types.ts",
+      "community_name": "pilot-slice-demo.mjs",
       "file_type": "code",
       "norm_label": "weil_expression",
       "source_file": "src/philosophers/weil.expression.ts",
       "source_location": "L10"
+    },
+    {
+      "id": "src_philosophers_weil_life",
+      "label": "weil.life.ts",
+      "_origin": "ast",
+      "community": 63,
+      "community_name": "pilot-slice-demo.mjs",
+      "file_type": "code",
+      "norm_label": "weil.life.ts",
+      "source_file": "src/philosophers/weil.life.ts",
+      "source_location": "L1"
+    },
+    {
+      "id": "src_philosophers_weil_life_weil_life",
+      "label": "WEIL_LIFE",
+      "_origin": "ast",
+      "community": 63,
+      "community_name": "pilot-slice-demo.mjs",
+      "file_type": "code",
+      "norm_label": "weil_life",
+      "source_file": "src/philosophers/weil.life.ts",
+      "source_location": "L6"
     },
     {
       "id": "src_philosophers_bloch",
@@ -12723,7 +12657,7 @@
       "node_kind": "heading",
       "norm_label": "a generic grader punishes your best moves (sep 25 2026)",
       "source_file": "docs/things-taught.md",
-      "source_location": "L278"
+      "source_location": "L287"
     },
     {
       "id": "docs_things_taught_a_guardrail_that_flags_everything_guards_nothing_sep_25_2026",
@@ -12735,7 +12669,7 @@
       "node_kind": "heading",
       "norm_label": "a guardrail that flags everything guards nothing (sep 25 2026)",
       "source_file": "docs/things-taught.md",
-      "source_location": "L266"
+      "source_location": "L275"
     },
     {
       "id": "docs_things_taught_a_schedule_is_a_request_not_a_promise_sep_23_2026",
@@ -12747,7 +12681,7 @@
       "node_kind": "heading",
       "norm_label": "a schedule is a request, not a promise (sep 23 2026)",
       "source_file": "docs/things-taught.md",
-      "source_location": "L308"
+      "source_location": "L317"
     },
     {
       "id": "docs_things_taught_a_summary_of_reactions_is_not_a_summary_of_positions_sep_20_2026",
@@ -12759,7 +12693,7 @@
       "node_kind": "heading",
       "norm_label": "a summary of reactions is not a summary of positions (sep 20 2026)",
       "source_file": "docs/things-taught.md",
-      "source_location": "L367"
+      "source_location": "L376"
     },
     {
       "id": "docs_things_taught_a_token_s_permissions_freeze_at_birth_sep_24_2026",
@@ -12771,7 +12705,7 @@
       "node_kind": "heading",
       "norm_label": "a token's permissions freeze at birth (sep 24 2026)",
       "source_file": "docs/things-taught.md",
-      "source_location": "L290"
+      "source_location": "L299"
     },
     {
       "id": "docs_things_taught_ask_when_they_stop_not_just_how_they_start_sep_30_2026",
@@ -12783,7 +12717,7 @@
       "node_kind": "heading",
       "norm_label": "ask when they stop, not just how they start (sep 30 2026)",
       "source_file": "docs/things-taught.md",
-      "source_location": "L18"
+      "source_location": "L27"
     },
     {
       "id": "docs_things_taught_audit_every_line_not_every_intention_sep_26_2026",
@@ -12795,7 +12729,7 @@
       "node_kind": "heading",
       "norm_label": "audit every line, not every intention (sep 26 2026)",
       "source_file": "docs/things-taught.md",
-      "source_location": "L68"
+      "source_location": "L77"
     },
     {
       "id": "docs_things_taught_borrowed_words_are_not_copying_sep_20_2026",
@@ -12807,7 +12741,7 @@
       "node_kind": "heading",
       "norm_label": "borrowed words are not copying (sep 20 2026)",
       "source_file": "docs/things-taught.md",
-      "source_location": "L378"
+      "source_location": "L387"
     },
     {
       "id": "docs_things_taught_check_the_library_before_citing_it_sep_26_2026",
@@ -12819,7 +12753,7 @@
       "node_kind": "heading",
       "norm_label": "check the library before citing it (sep 26 2026)",
       "source_file": "docs/things-taught.md",
-      "source_location": "L174"
+      "source_location": "L183"
     },
     {
       "id": "docs_things_taught_comparisons_live_in_one_map_not_twelve_dossiers_sep_30_2026",
@@ -12831,7 +12765,7 @@
       "node_kind": "heading",
       "norm_label": "comparisons live in one map, not twelve dossiers (sep 30 2026)",
       "source_file": "docs/things-taught.md",
-      "source_location": "L28"
+      "source_location": "L37"
     },
     {
       "id": "docs_things_taught_copyright_has_two_clocks_sep_17_2026",
@@ -12843,7 +12777,7 @@
       "node_kind": "heading",
       "norm_label": "copyright has two clocks (sep 17 2026)",
       "source_file": "docs/things-taught.md",
-      "source_location": "L509"
+      "source_location": "L518"
     },
     {
       "id": "docs_things_taught_ears_hear_the_expression_not_the_thinking_oct_2_2026",
@@ -12854,6 +12788,18 @@
       "file_type": "document",
       "node_kind": "heading",
       "norm_label": "ears hear the expression, not the thinking (oct 2 2026)",
+      "source_file": "docs/things-taught.md",
+      "source_location": "L16"
+    },
+    {
+      "id": "docs_things_taught_file_truth_that_never_renders_is_decoration_oct_4_2026",
+      "label": "File-truth that never renders is decoration (Oct 4 2026)",
+      "_origin": "ast",
+      "community": 67,
+      "community_name": "Things taught (owner's notebook)",
+      "file_type": "document",
+      "node_kind": "heading",
+      "norm_label": "file-truth that never renders is decoration (oct 4 2026)",
       "source_file": "docs/things-taught.md",
       "source_location": "L7"
     },
@@ -12867,7 +12813,7 @@
       "node_kind": "heading",
       "norm_label": "flag the fake citation, don't delete it (sep 20 2026)",
       "source_file": "docs/things-taught.md",
-      "source_location": "L404"
+      "source_location": "L413"
     },
     {
       "id": "docs_things_taught_free_tiers_wall_mid_session_sep_17_2026",
@@ -12879,7 +12825,7 @@
       "node_kind": "heading",
       "norm_label": "free tiers wall mid-session (sep 17 2026)",
       "source_file": "docs/things-taught.md",
-      "source_location": "L497"
+      "source_location": "L506"
     },
     {
       "id": "docs_things_taught_garbled_turns_get_caught_by_shape_not_by_reading_sep_20_2026",
@@ -12891,7 +12837,7 @@
       "node_kind": "heading",
       "norm_label": "garbled turns get caught by shape, not by reading (sep 20 2026)",
       "source_file": "docs/things-taught.md",
-      "source_location": "L427"
+      "source_location": "L436"
     },
     {
       "id": "docs_things_taught_git_tags_do_not_travel_with_git_push_sep_26_2026",
@@ -12903,7 +12849,7 @@
       "node_kind": "heading",
       "norm_label": "git tags do not travel with git push (sep 26 2026)",
       "source_file": "docs/things-taught.md",
-      "source_location": "L236"
+      "source_location": "L245"
     },
     {
       "id": "docs_things_taught_input_tokens_run_the_show_sep_17_2026",
@@ -12915,7 +12861,7 @@
       "node_kind": "heading",
       "norm_label": "input tokens run the show (sep 17 2026)",
       "source_file": "docs/things-taught.md",
-      "source_location": "L483"
+      "source_location": "L492"
     },
     {
       "id": "docs_things_taught_inventories_become_tics_sep_22_2026",
@@ -12927,7 +12873,7 @@
       "node_kind": "heading",
       "norm_label": "inventories become tics (sep 22 2026)",
       "source_file": "docs/things-taught.md",
-      "source_location": "L326"
+      "source_location": "L335"
     },
     {
       "id": "docs_things_taught_keep_your_commits_off_the_robot_s_files_sep_24_2026",
@@ -12939,7 +12885,7 @@
       "node_kind": "heading",
       "norm_label": "keep your commits off the robot's files (sep 24 2026)",
       "source_file": "docs/things-taught.md",
-      "source_location": "L299"
+      "source_location": "L308"
     },
     {
       "id": "docs_things_taught_labels_leak_show_the_move_not_its_name_sep_28_2026",
@@ -12951,7 +12897,7 @@
       "node_kind": "heading",
       "norm_label": "labels leak: show the move, not its name (sep 28 2026)",
       "source_file": "docs/things-taught.md",
-      "source_location": "L79"
+      "source_location": "L88"
     },
     {
       "id": "docs_things_taught_model_ids_rot_sep_17_2026",
@@ -12963,7 +12909,7 @@
       "node_kind": "heading",
       "norm_label": "model ids rot (sep 17 2026)",
       "source_file": "docs/things-taught.md",
-      "source_location": "L503"
+      "source_location": "L512"
     },
     {
       "id": "docs_things_taught_modes_are_jobs_not_levels_think_is_not_plainer_sep_26_2026",
@@ -12975,7 +12921,7 @@
       "node_kind": "heading",
       "norm_label": "modes are jobs, not levels: think is not plainer (sep 26 2026)",
       "source_file": "docs/things-taught.md",
-      "source_location": "L134"
+      "source_location": "L143"
     },
     {
       "id": "docs_things_taught_one_browser_many_keys_no_login_localstorage_sep_20_2026",
@@ -12987,7 +12933,7 @@
       "node_kind": "heading",
       "norm_label": "one browser, many keys, no login: localstorage (sep 20 2026)",
       "source_file": "docs/things-taught.md",
-      "source_location": "L451"
+      "source_location": "L460"
     },
     {
       "id": "docs_things_taught_one_commit_per_thinker_keeps_twelve_conversions_reversible_sep_30_2026",
@@ -12999,7 +12945,7 @@
       "node_kind": "heading",
       "norm_label": "one commit per thinker keeps twelve conversions reversible (sep 30 2026)",
       "source_file": "docs/things-taught.md",
-      "source_location": "L37"
+      "source_location": "L46"
     },
     {
       "id": "docs_things_taught_one_quote_one_home_the_trio_s_third_line_is_the_quote_sep_26_2026",
@@ -13011,7 +12957,7 @@
       "node_kind": "heading",
       "norm_label": "one quote, one home: the trio's third line is the quote (sep 26 2026)",
       "source_file": "docs/things-taught.md",
-      "source_location": "L125"
+      "source_location": "L134"
     },
     {
       "id": "docs_things_taught_order_in_a_prompt_is_not_obedience_sep_26_2026",
@@ -13023,7 +12969,7 @@
       "node_kind": "heading",
       "norm_label": "order in a prompt is not obedience (sep 26 2026)",
       "source_file": "docs/things-taught.md",
-      "source_location": "L198"
+      "source_location": "L207"
     },
     {
       "id": "docs_things_taught_paraphrase_eats_the_load_bearing_words_sep_26_2026",
@@ -13035,7 +12981,7 @@
       "node_kind": "heading",
       "norm_label": "paraphrase eats the load-bearing words (sep 26 2026)",
       "source_file": "docs/things-taught.md",
-      "source_location": "L159"
+      "source_location": "L168"
     },
     {
       "id": "docs_things_taught_pass_3_architecture_sep_17_2026",
@@ -13047,7 +12993,7 @@
       "node_kind": "heading",
       "norm_label": "pass-3 architecture (sep 17 2026)",
       "source_file": "docs/things-taught.md",
-      "source_location": "L474"
+      "source_location": "L483"
     },
     {
       "id": "docs_things_taught_reasoning_burn_sep_17_2026",
@@ -13059,7 +13005,7 @@
       "node_kind": "heading",
       "norm_label": "reasoning burn (sep 17 2026)",
       "source_file": "docs/things-taught.md",
-      "source_location": "L490"
+      "source_location": "L499"
     },
     {
       "id": "docs_things_taught_same_judgment_not_same_conclusion_plus_teach_means_explained_sep_26_2026",
@@ -13071,7 +13017,7 @@
       "node_kind": "heading",
       "norm_label": "same judgment, not same conclusion \u2014 plus teach means explained (sep 26 2026)",
       "source_file": "docs/things-taught.md",
-      "source_location": "L223"
+      "source_location": "L232"
     },
     {
       "id": "docs_things_taught_search_for_the_true_objective_not_its_prettiest_proxy_sep_30_2026",
@@ -13083,7 +13029,7 @@
       "node_kind": "heading",
       "norm_label": "search for the true objective, not its prettiest proxy (sep 30 2026)",
       "source_file": "docs/things-taught.md",
-      "source_location": "L57"
+      "source_location": "L66"
     },
     {
       "id": "docs_things_taught_slogans_feel_cheap_applied_moves_feel_real_sep_20_2026",
@@ -13095,7 +13041,7 @@
       "node_kind": "heading",
       "norm_label": "slogans feel cheap, applied moves feel real (sep 20 2026)",
       "source_file": "docs/things-taught.md",
-      "source_location": "L416"
+      "source_location": "L425"
     },
     {
       "id": "docs_things_taught_speak_to_the_model_as_the_thinker_not_about_them_sep_26_2026",
@@ -13107,7 +13053,7 @@
       "node_kind": "heading",
       "norm_label": "speak to the model as the thinker, not about them (sep 26 2026)",
       "source_file": "docs/things-taught.md",
-      "source_location": "L148"
+      "source_location": "L157"
     },
     {
       "id": "docs_things_taught_stored_examples_may_not_invent_scenes_sep_26_2026",
@@ -13119,7 +13065,7 @@
       "node_kind": "heading",
       "norm_label": "stored examples may not invent scenes (sep 26 2026)",
       "source_file": "docs/things-taught.md",
-      "source_location": "L115"
+      "source_location": "L124"
     },
     {
       "id": "docs_things_taught_subtract_before_you_add_the_pilot_turn_scaffold_sep_26_2026",
@@ -13131,7 +13077,7 @@
       "node_kind": "heading",
       "norm_label": "subtract before you add: the pilot turn scaffold (sep 26 2026)",
       "source_file": "docs/things-taught.md",
-      "source_location": "L102"
+      "source_location": "L111"
     },
     {
       "id": "docs_things_taught_switches_are_per_model_not_per_provider_sep_20_2026",
@@ -13143,7 +13089,7 @@
       "node_kind": "heading",
       "norm_label": "switches are per model, not per provider (sep 20 2026)",
       "source_file": "docs/things-taught.md",
-      "source_location": "L344"
+      "source_location": "L353"
     },
     {
       "id": "docs_things_taught_test_the_detector_before_blaming_it_sep_26_2026",
@@ -13155,7 +13101,7 @@
       "node_kind": "heading",
       "norm_label": "test the detector before blaming it (sep 26 2026)",
       "source_file": "docs/things-taught.md",
-      "source_location": "L91"
+      "source_location": "L100"
     },
     {
       "id": "docs_things_taught_the_model_picks_from_a_menu_it_never_sees_cooked_sep_26_2026",
@@ -13167,7 +13113,7 @@
       "node_kind": "heading",
       "norm_label": "the model picks from a menu it never sees cooked (sep 26 2026)",
       "source_file": "docs/things-taught.md",
-      "source_location": "L210"
+      "source_location": "L219"
     },
     {
       "id": "docs_things_taught_the_right_passage_beats_the_exact_passage_sep_20_2026",
@@ -13179,7 +13125,7 @@
       "node_kind": "heading",
       "norm_label": "the right passage beats the exact passage (sep 20 2026)",
       "source_file": "docs/things-taught.md",
-      "source_location": "L355"
+      "source_location": "L364"
     },
     {
       "id": "docs_things_taught_things_taught_owner_s_notebook",
@@ -13203,7 +13149,7 @@
       "node_kind": "heading",
       "norm_label": "thinking models need a bigger \"are you there\" (sep 20 2026)",
       "source_file": "docs/things-taught.md",
-      "source_location": "L390"
+      "source_location": "L399"
     },
     {
       "id": "docs_things_taught_thinking_scales_with_the_load_sep_21_2026",
@@ -13215,7 +13161,7 @@
       "node_kind": "heading",
       "norm_label": "thinking scales with the load (sep 21 2026)",
       "source_file": "docs/things-taught.md",
-      "source_location": "L334"
+      "source_location": "L343"
     },
     {
       "id": "docs_things_taught_toggles_compose_surgery_doesn_t_scale_sep_30_2026",
@@ -13227,7 +13173,7 @@
       "node_kind": "heading",
       "norm_label": "toggles compose, surgery doesn't scale (sep 30 2026)",
       "source_file": "docs/things-taught.md",
-      "source_location": "L47"
+      "source_location": "L56"
     },
     {
       "id": "docs_things_taught_unthinking_models_answer_faster_sometimes_sep_17_2026",
@@ -13239,7 +13185,7 @@
       "node_kind": "heading",
       "norm_label": "unthinking models answer faster \u2014 sometimes (sep 17 2026)",
       "source_file": "docs/things-taught.md",
-      "source_location": "L463"
+      "source_location": "L472"
     },
     {
       "id": "docs_things_taught_what_the_autumn_metric_trials_actually_did_sep_25_2026",
@@ -13251,7 +13197,7 @@
       "node_kind": "heading",
       "norm_label": "what the autumn metric trials actually did (sep 25 2026)",
       "source_file": "docs/things-taught.md",
-      "source_location": "L245"
+      "source_location": "L254"
     },
     {
       "id": "docs_things_taught_when_every_model_makes_the_same_mistake_the_fault_is_in_our_instructions_sep_20_2026",
@@ -13263,7 +13209,7 @@
       "node_kind": "heading",
       "norm_label": "when every model makes the same mistake, the fault is in our instructions (sep 20 2026)",
       "source_file": "docs/things-taught.md",
-      "source_location": "L439"
+      "source_location": "L448"
     },
     {
       "id": "docs_things_taught_why_the_cabinet_kept_doing_impressions_and_the_split_that_fixes_it_sep_26_2026",
@@ -13275,7 +13221,7 @@
       "node_kind": "heading",
       "norm_label": "why the cabinet kept doing impressions, and the split that fixes it (sep 26 2026)",
       "source_file": "docs/things-taught.md",
-      "source_location": "L183"
+      "source_location": "L192"
     },
     {
       "id": "scripts_rag_translate_once",
@@ -14560,6 +14506,50 @@
       "source_location": "L168"
     },
     {
+      "id": "scripts_test_env",
+      "label": "test-env.mjs",
+      "_origin": "ast",
+      "community": 75,
+      "community_name": "test-matrix.mjs",
+      "file_type": "code",
+      "norm_label": "test-env.mjs",
+      "source_file": "scripts/test-env.mjs",
+      "source_location": "L1"
+    },
+    {
+      "id": "scripts_test_keys",
+      "label": "test-keys.mjs",
+      "_origin": "ast",
+      "community": 75,
+      "community_name": "test-matrix.mjs",
+      "file_type": "code",
+      "norm_label": "test-keys.mjs",
+      "source_file": "scripts/test-keys.mjs",
+      "source_location": "L1"
+    },
+    {
+      "id": "scripts_test_keys_rows",
+      "label": "rows",
+      "_origin": "ast",
+      "community": 75,
+      "community_name": "test-matrix.mjs",
+      "file_type": "code",
+      "norm_label": "rows",
+      "source_file": "scripts/test-keys.mjs",
+      "source_location": "L25"
+    },
+    {
+      "id": "scripts_test_keys_width",
+      "label": "width",
+      "_origin": "ast",
+      "community": 75,
+      "community_name": "test-matrix.mjs",
+      "file_type": "code",
+      "norm_label": "width",
+      "source_file": "scripts/test-keys.mjs",
+      "source_location": "L38"
+    },
+    {
       "id": "scripts_test_matrix",
       "label": "test-matrix.mjs",
       "_origin": "ast",
@@ -14679,6 +14669,28 @@
       "norm_label": "raw",
       "source_file": "scripts/test-matrix.mjs",
       "source_location": "L22"
+    },
+    {
+      "id": "scripts_test_providers",
+      "label": "test-providers.mjs",
+      "_origin": "ast",
+      "community": 75,
+      "community_name": "test-matrix.mjs",
+      "file_type": "code",
+      "norm_label": "test-providers.mjs",
+      "source_file": "scripts/test-providers.mjs",
+      "source_location": "L1"
+    },
+    {
+      "id": "scripts_test_providers_providers",
+      "label": "PROVIDERS",
+      "_origin": "ast",
+      "community": 75,
+      "community_name": "test-matrix.mjs",
+      "file_type": "code",
+      "norm_label": "providers",
+      "source_file": "scripts/test-providers.mjs",
+      "source_location": "L10"
     },
     {
       "id": "src_lib_porter",
@@ -19173,7 +19185,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "src/philosophers/thinking-select.ts",
-      "source_location": "L201",
+      "source_location": "L211",
       "weight": 1.0
     },
     {
@@ -24790,7 +24802,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "AGENTS.md",
-      "source_location": "L107",
+      "source_location": "L108",
       "weight": 1.0
     },
     {
@@ -24801,7 +24813,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "AGENTS.md",
-      "source_location": "L117",
+      "source_location": "L118",
       "weight": 1.0
     },
     {
@@ -27435,7 +27447,7 @@
     },
     {
       "source": "docs_next_session",
-      "target": "docs_next_session_next_session_oct_2_2026_evening",
+      "target": "docs_next_session_next_session_oct_4_2026_evening",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
@@ -28425,13 +28437,24 @@
     },
     {
       "source": "docs_things_taught_things_taught_owner_s_notebook",
+      "target": "docs_things_taught_test_the_detector_before_blaming_it_sep_26_2026",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/things-taught.md",
+      "source_location": "L100",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_things_taught_things_taught_owner_s_notebook",
       "target": "docs_things_taught_subtract_before_you_add_the_pilot_turn_scaffold_sep_26_2026",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/things-taught.md",
-      "source_location": "L102",
+      "source_location": "L111",
       "weight": 1.0
     },
     {
@@ -28442,7 +28465,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/things-taught.md",
-      "source_location": "L115",
+      "source_location": "L124",
       "weight": 1.0
     },
     {
@@ -28453,7 +28476,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/things-taught.md",
-      "source_location": "L125",
+      "source_location": "L134",
       "weight": 1.0
     },
     {
@@ -28464,7 +28487,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/things-taught.md",
-      "source_location": "L134",
+      "source_location": "L143",
       "weight": 1.0
     },
     {
@@ -28475,425 +28498,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/things-taught.md",
-      "source_location": "L148",
-      "weight": 1.0
-    },
-    {
-      "source": "docs_things_taught_things_taught_owner_s_notebook",
-      "target": "docs_things_taught_paraphrase_eats_the_load_bearing_words_sep_26_2026",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "docs/things-taught.md",
-      "source_location": "L159",
-      "weight": 1.0
-    },
-    {
-      "source": "docs_things_taught_things_taught_owner_s_notebook",
-      "target": "docs_things_taught_check_the_library_before_citing_it_sep_26_2026",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "docs/things-taught.md",
-      "source_location": "L174",
-      "weight": 1.0
-    },
-    {
-      "source": "docs_things_taught_things_taught_owner_s_notebook",
-      "target": "docs_things_taught_ask_when_they_stop_not_just_how_they_start_sep_30_2026",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "docs/things-taught.md",
-      "source_location": "L18",
-      "weight": 1.0
-    },
-    {
-      "source": "docs_things_taught_things_taught_owner_s_notebook",
-      "target": "docs_things_taught_why_the_cabinet_kept_doing_impressions_and_the_split_that_fixes_it_sep_26_2026",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "docs/things-taught.md",
-      "source_location": "L183",
-      "weight": 1.0
-    },
-    {
-      "source": "docs_things_taught_things_taught_owner_s_notebook",
-      "target": "docs_things_taught_order_in_a_prompt_is_not_obedience_sep_26_2026",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "docs/things-taught.md",
-      "source_location": "L198",
-      "weight": 1.0
-    },
-    {
-      "source": "docs_things_taught_things_taught_owner_s_notebook",
-      "target": "docs_things_taught_the_model_picks_from_a_menu_it_never_sees_cooked_sep_26_2026",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "docs/things-taught.md",
-      "source_location": "L210",
-      "weight": 1.0
-    },
-    {
-      "source": "docs_things_taught_things_taught_owner_s_notebook",
-      "target": "docs_things_taught_same_judgment_not_same_conclusion_plus_teach_means_explained_sep_26_2026",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "docs/things-taught.md",
-      "source_location": "L223",
-      "weight": 1.0
-    },
-    {
-      "source": "docs_things_taught_things_taught_owner_s_notebook",
-      "target": "docs_things_taught_git_tags_do_not_travel_with_git_push_sep_26_2026",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "docs/things-taught.md",
-      "source_location": "L236",
-      "weight": 1.0
-    },
-    {
-      "source": "docs_things_taught_things_taught_owner_s_notebook",
-      "target": "docs_things_taught_what_the_autumn_metric_trials_actually_did_sep_25_2026",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "docs/things-taught.md",
-      "source_location": "L245",
-      "weight": 1.0
-    },
-    {
-      "source": "docs_things_taught_things_taught_owner_s_notebook",
-      "target": "docs_things_taught_a_guardrail_that_flags_everything_guards_nothing_sep_25_2026",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "docs/things-taught.md",
-      "source_location": "L266",
-      "weight": 1.0
-    },
-    {
-      "source": "docs_things_taught_things_taught_owner_s_notebook",
-      "target": "docs_things_taught_a_generic_grader_punishes_your_best_moves_sep_25_2026",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "docs/things-taught.md",
-      "source_location": "L278",
-      "weight": 1.0
-    },
-    {
-      "source": "docs_things_taught_things_taught_owner_s_notebook",
-      "target": "docs_things_taught_comparisons_live_in_one_map_not_twelve_dossiers_sep_30_2026",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "docs/things-taught.md",
-      "source_location": "L28",
-      "weight": 1.0
-    },
-    {
-      "source": "docs_things_taught_things_taught_owner_s_notebook",
-      "target": "docs_things_taught_a_token_s_permissions_freeze_at_birth_sep_24_2026",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "docs/things-taught.md",
-      "source_location": "L290",
-      "weight": 1.0
-    },
-    {
-      "source": "docs_things_taught_things_taught_owner_s_notebook",
-      "target": "docs_things_taught_keep_your_commits_off_the_robot_s_files_sep_24_2026",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "docs/things-taught.md",
-      "source_location": "L299",
-      "weight": 1.0
-    },
-    {
-      "source": "docs_things_taught_things_taught_owner_s_notebook",
-      "target": "docs_things_taught_a_schedule_is_a_request_not_a_promise_sep_23_2026",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "docs/things-taught.md",
-      "source_location": "L308",
-      "weight": 1.0
-    },
-    {
-      "source": "docs_things_taught_things_taught_owner_s_notebook",
-      "target": "docs_things_taught_inventories_become_tics_sep_22_2026",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "docs/things-taught.md",
-      "source_location": "L326",
-      "weight": 1.0
-    },
-    {
-      "source": "docs_things_taught_things_taught_owner_s_notebook",
-      "target": "docs_things_taught_thinking_scales_with_the_load_sep_21_2026",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "docs/things-taught.md",
-      "source_location": "L334",
-      "weight": 1.0
-    },
-    {
-      "source": "docs_things_taught_things_taught_owner_s_notebook",
-      "target": "docs_things_taught_switches_are_per_model_not_per_provider_sep_20_2026",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "docs/things-taught.md",
-      "source_location": "L344",
-      "weight": 1.0
-    },
-    {
-      "source": "docs_things_taught_things_taught_owner_s_notebook",
-      "target": "docs_things_taught_the_right_passage_beats_the_exact_passage_sep_20_2026",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "docs/things-taught.md",
-      "source_location": "L355",
-      "weight": 1.0
-    },
-    {
-      "source": "docs_things_taught_things_taught_owner_s_notebook",
-      "target": "docs_things_taught_a_summary_of_reactions_is_not_a_summary_of_positions_sep_20_2026",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "docs/things-taught.md",
-      "source_location": "L367",
-      "weight": 1.0
-    },
-    {
-      "source": "docs_things_taught_things_taught_owner_s_notebook",
-      "target": "docs_things_taught_one_commit_per_thinker_keeps_twelve_conversions_reversible_sep_30_2026",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "docs/things-taught.md",
-      "source_location": "L37",
-      "weight": 1.0
-    },
-    {
-      "source": "docs_things_taught_things_taught_owner_s_notebook",
-      "target": "docs_things_taught_borrowed_words_are_not_copying_sep_20_2026",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "docs/things-taught.md",
-      "source_location": "L378",
-      "weight": 1.0
-    },
-    {
-      "source": "docs_things_taught_things_taught_owner_s_notebook",
-      "target": "docs_things_taught_thinking_models_need_a_bigger_are_you_there_sep_20_2026",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "docs/things-taught.md",
-      "source_location": "L390",
-      "weight": 1.0
-    },
-    {
-      "source": "docs_things_taught_things_taught_owner_s_notebook",
-      "target": "docs_things_taught_flag_the_fake_citation_don_t_delete_it_sep_20_2026",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "docs/things-taught.md",
-      "source_location": "L404",
-      "weight": 1.0
-    },
-    {
-      "source": "docs_things_taught_things_taught_owner_s_notebook",
-      "target": "docs_things_taught_slogans_feel_cheap_applied_moves_feel_real_sep_20_2026",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "docs/things-taught.md",
-      "source_location": "L416",
-      "weight": 1.0
-    },
-    {
-      "source": "docs_things_taught_things_taught_owner_s_notebook",
-      "target": "docs_things_taught_garbled_turns_get_caught_by_shape_not_by_reading_sep_20_2026",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "docs/things-taught.md",
-      "source_location": "L427",
-      "weight": 1.0
-    },
-    {
-      "source": "docs_things_taught_things_taught_owner_s_notebook",
-      "target": "docs_things_taught_when_every_model_makes_the_same_mistake_the_fault_is_in_our_instructions_sep_20_2026",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "docs/things-taught.md",
-      "source_location": "L439",
-      "weight": 1.0
-    },
-    {
-      "source": "docs_things_taught_things_taught_owner_s_notebook",
-      "target": "docs_things_taught_one_browser_many_keys_no_login_localstorage_sep_20_2026",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "docs/things-taught.md",
-      "source_location": "L451",
-      "weight": 1.0
-    },
-    {
-      "source": "docs_things_taught_things_taught_owner_s_notebook",
-      "target": "docs_things_taught_unthinking_models_answer_faster_sometimes_sep_17_2026",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "docs/things-taught.md",
-      "source_location": "L463",
-      "weight": 1.0
-    },
-    {
-      "source": "docs_things_taught_things_taught_owner_s_notebook",
-      "target": "docs_things_taught_toggles_compose_surgery_doesn_t_scale_sep_30_2026",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "docs/things-taught.md",
-      "source_location": "L47",
-      "weight": 1.0
-    },
-    {
-      "source": "docs_things_taught_things_taught_owner_s_notebook",
-      "target": "docs_things_taught_pass_3_architecture_sep_17_2026",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "docs/things-taught.md",
-      "source_location": "L474",
-      "weight": 1.0
-    },
-    {
-      "source": "docs_things_taught_things_taught_owner_s_notebook",
-      "target": "docs_things_taught_input_tokens_run_the_show_sep_17_2026",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "docs/things-taught.md",
-      "source_location": "L483",
-      "weight": 1.0
-    },
-    {
-      "source": "docs_things_taught_things_taught_owner_s_notebook",
-      "target": "docs_things_taught_reasoning_burn_sep_17_2026",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "docs/things-taught.md",
-      "source_location": "L490",
-      "weight": 1.0
-    },
-    {
-      "source": "docs_things_taught_things_taught_owner_s_notebook",
-      "target": "docs_things_taught_free_tiers_wall_mid_session_sep_17_2026",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "docs/things-taught.md",
-      "source_location": "L497",
-      "weight": 1.0
-    },
-    {
-      "source": "docs_things_taught_things_taught_owner_s_notebook",
-      "target": "docs_things_taught_model_ids_rot_sep_17_2026",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "docs/things-taught.md",
-      "source_location": "L503",
-      "weight": 1.0
-    },
-    {
-      "source": "docs_things_taught_things_taught_owner_s_notebook",
-      "target": "docs_things_taught_copyright_has_two_clocks_sep_17_2026",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "docs/things-taught.md",
-      "source_location": "L509",
-      "weight": 1.0
-    },
-    {
-      "source": "docs_things_taught_things_taught_owner_s_notebook",
-      "target": "docs_things_taught_search_for_the_true_objective_not_its_prettiest_proxy_sep_30_2026",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "docs/things-taught.md",
-      "source_location": "L57",
-      "weight": 1.0
-    },
-    {
-      "source": "docs_things_taught_things_taught_owner_s_notebook",
-      "target": "docs_things_taught_audit_every_line_not_every_intention_sep_26_2026",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "docs/things-taught.md",
-      "source_location": "L68",
+      "source_location": "L157",
       "weight": 1.0
     },
     {
@@ -28904,7 +28509,436 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/things-taught.md",
+      "source_location": "L16",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_things_taught_things_taught_owner_s_notebook",
+      "target": "docs_things_taught_paraphrase_eats_the_load_bearing_words_sep_26_2026",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/things-taught.md",
+      "source_location": "L168",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_things_taught_things_taught_owner_s_notebook",
+      "target": "docs_things_taught_check_the_library_before_citing_it_sep_26_2026",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/things-taught.md",
+      "source_location": "L183",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_things_taught_things_taught_owner_s_notebook",
+      "target": "docs_things_taught_why_the_cabinet_kept_doing_impressions_and_the_split_that_fixes_it_sep_26_2026",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/things-taught.md",
+      "source_location": "L192",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_things_taught_things_taught_owner_s_notebook",
+      "target": "docs_things_taught_order_in_a_prompt_is_not_obedience_sep_26_2026",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/things-taught.md",
+      "source_location": "L207",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_things_taught_things_taught_owner_s_notebook",
+      "target": "docs_things_taught_the_model_picks_from_a_menu_it_never_sees_cooked_sep_26_2026",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/things-taught.md",
+      "source_location": "L219",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_things_taught_things_taught_owner_s_notebook",
+      "target": "docs_things_taught_same_judgment_not_same_conclusion_plus_teach_means_explained_sep_26_2026",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/things-taught.md",
+      "source_location": "L232",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_things_taught_things_taught_owner_s_notebook",
+      "target": "docs_things_taught_git_tags_do_not_travel_with_git_push_sep_26_2026",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/things-taught.md",
+      "source_location": "L245",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_things_taught_things_taught_owner_s_notebook",
+      "target": "docs_things_taught_what_the_autumn_metric_trials_actually_did_sep_25_2026",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/things-taught.md",
+      "source_location": "L254",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_things_taught_things_taught_owner_s_notebook",
+      "target": "docs_things_taught_ask_when_they_stop_not_just_how_they_start_sep_30_2026",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/things-taught.md",
+      "source_location": "L27",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_things_taught_things_taught_owner_s_notebook",
+      "target": "docs_things_taught_a_guardrail_that_flags_everything_guards_nothing_sep_25_2026",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/things-taught.md",
+      "source_location": "L275",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_things_taught_things_taught_owner_s_notebook",
+      "target": "docs_things_taught_a_generic_grader_punishes_your_best_moves_sep_25_2026",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/things-taught.md",
+      "source_location": "L287",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_things_taught_things_taught_owner_s_notebook",
+      "target": "docs_things_taught_a_token_s_permissions_freeze_at_birth_sep_24_2026",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/things-taught.md",
+      "source_location": "L299",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_things_taught_things_taught_owner_s_notebook",
+      "target": "docs_things_taught_keep_your_commits_off_the_robot_s_files_sep_24_2026",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/things-taught.md",
+      "source_location": "L308",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_things_taught_things_taught_owner_s_notebook",
+      "target": "docs_things_taught_a_schedule_is_a_request_not_a_promise_sep_23_2026",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/things-taught.md",
+      "source_location": "L317",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_things_taught_things_taught_owner_s_notebook",
+      "target": "docs_things_taught_inventories_become_tics_sep_22_2026",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/things-taught.md",
+      "source_location": "L335",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_things_taught_things_taught_owner_s_notebook",
+      "target": "docs_things_taught_thinking_scales_with_the_load_sep_21_2026",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/things-taught.md",
+      "source_location": "L343",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_things_taught_things_taught_owner_s_notebook",
+      "target": "docs_things_taught_switches_are_per_model_not_per_provider_sep_20_2026",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/things-taught.md",
+      "source_location": "L353",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_things_taught_things_taught_owner_s_notebook",
+      "target": "docs_things_taught_the_right_passage_beats_the_exact_passage_sep_20_2026",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/things-taught.md",
+      "source_location": "L364",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_things_taught_things_taught_owner_s_notebook",
+      "target": "docs_things_taught_comparisons_live_in_one_map_not_twelve_dossiers_sep_30_2026",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/things-taught.md",
+      "source_location": "L37",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_things_taught_things_taught_owner_s_notebook",
+      "target": "docs_things_taught_a_summary_of_reactions_is_not_a_summary_of_positions_sep_20_2026",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/things-taught.md",
+      "source_location": "L376",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_things_taught_things_taught_owner_s_notebook",
+      "target": "docs_things_taught_borrowed_words_are_not_copying_sep_20_2026",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/things-taught.md",
+      "source_location": "L387",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_things_taught_things_taught_owner_s_notebook",
+      "target": "docs_things_taught_thinking_models_need_a_bigger_are_you_there_sep_20_2026",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/things-taught.md",
+      "source_location": "L399",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_things_taught_things_taught_owner_s_notebook",
+      "target": "docs_things_taught_flag_the_fake_citation_don_t_delete_it_sep_20_2026",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/things-taught.md",
+      "source_location": "L413",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_things_taught_things_taught_owner_s_notebook",
+      "target": "docs_things_taught_slogans_feel_cheap_applied_moves_feel_real_sep_20_2026",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/things-taught.md",
+      "source_location": "L425",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_things_taught_things_taught_owner_s_notebook",
+      "target": "docs_things_taught_garbled_turns_get_caught_by_shape_not_by_reading_sep_20_2026",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/things-taught.md",
+      "source_location": "L436",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_things_taught_things_taught_owner_s_notebook",
+      "target": "docs_things_taught_when_every_model_makes_the_same_mistake_the_fault_is_in_our_instructions_sep_20_2026",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/things-taught.md",
+      "source_location": "L448",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_things_taught_things_taught_owner_s_notebook",
+      "target": "docs_things_taught_one_commit_per_thinker_keeps_twelve_conversions_reversible_sep_30_2026",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/things-taught.md",
+      "source_location": "L46",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_things_taught_things_taught_owner_s_notebook",
+      "target": "docs_things_taught_one_browser_many_keys_no_login_localstorage_sep_20_2026",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/things-taught.md",
+      "source_location": "L460",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_things_taught_things_taught_owner_s_notebook",
+      "target": "docs_things_taught_unthinking_models_answer_faster_sometimes_sep_17_2026",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/things-taught.md",
+      "source_location": "L472",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_things_taught_things_taught_owner_s_notebook",
+      "target": "docs_things_taught_pass_3_architecture_sep_17_2026",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/things-taught.md",
+      "source_location": "L483",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_things_taught_things_taught_owner_s_notebook",
+      "target": "docs_things_taught_input_tokens_run_the_show_sep_17_2026",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/things-taught.md",
+      "source_location": "L492",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_things_taught_things_taught_owner_s_notebook",
+      "target": "docs_things_taught_reasoning_burn_sep_17_2026",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/things-taught.md",
+      "source_location": "L499",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_things_taught_things_taught_owner_s_notebook",
+      "target": "docs_things_taught_free_tiers_wall_mid_session_sep_17_2026",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/things-taught.md",
+      "source_location": "L506",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_things_taught_things_taught_owner_s_notebook",
+      "target": "docs_things_taught_model_ids_rot_sep_17_2026",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/things-taught.md",
+      "source_location": "L512",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_things_taught_things_taught_owner_s_notebook",
+      "target": "docs_things_taught_copyright_has_two_clocks_sep_17_2026",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/things-taught.md",
+      "source_location": "L518",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_things_taught_things_taught_owner_s_notebook",
+      "target": "docs_things_taught_toggles_compose_surgery_doesn_t_scale_sep_30_2026",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/things-taught.md",
+      "source_location": "L56",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_things_taught_things_taught_owner_s_notebook",
+      "target": "docs_things_taught_search_for_the_true_objective_not_its_prettiest_proxy_sep_30_2026",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/things-taught.md",
+      "source_location": "L66",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_things_taught_things_taught_owner_s_notebook",
+      "target": "docs_things_taught_file_truth_that_never_renders_is_decoration_oct_4_2026",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/things-taught.md",
       "source_location": "L7",
+      "weight": 1.0
+    },
+    {
+      "source": "docs_things_taught_things_taught_owner_s_notebook",
+      "target": "docs_things_taught_audit_every_line_not_every_intention_sep_26_2026",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/things-taught.md",
+      "source_location": "L77",
       "weight": 1.0
     },
     {
@@ -28915,18 +28949,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "docs/things-taught.md",
-      "source_location": "L79",
-      "weight": 1.0
-    },
-    {
-      "source": "docs_things_taught_things_taught_owner_s_notebook",
-      "target": "docs_things_taught_test_the_detector_before_blaming_it_sep_26_2026",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "docs/things-taught.md",
-      "source_location": "L91",
+      "source_location": "L88",
       "weight": 1.0
     },
     {
@@ -36829,134 +36852,13 @@
     },
     {
       "source": "src_philosophers_thinking_types",
-      "target": "src_philosophers_thinking_types_loadbearingdistinction",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "src/philosophers/thinking-types.ts",
-      "source_location": "L11",
-      "weight": 1.0
-    },
-    {
-      "source": "src_philosophers_thinking_types",
       "target": "src_philosophers_thinking_types_triomodes",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/philosophers/thinking-types.ts",
-      "source_location": "L120",
-      "weight": 1.0
-    },
-    {
-      "source": "src_philosophers_thinking_types",
-      "target": "src_philosophers_thinking_types_thinkerfiles",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "src/philosophers/thinking-types.ts",
-      "source_location": "L136",
-      "weight": 1.0
-    },
-    {
-      "source": "src_philosophers_thinking_types",
-      "target": "src_philosophers_thinking_types_lifefile",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "src/philosophers/thinking-types.ts",
-      "source_location": "L147",
-      "weight": 1.0
-    },
-    {
-      "source": "src_philosophers_thinking_types",
-      "target": "src_philosophers_thinking_types_expressionmodel",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "src/philosophers/thinking-types.ts",
-      "source_location": "L154",
-      "weight": 1.0
-    },
-    {
-      "source": "src_philosophers_thinking_types",
-      "target": "src_philosophers_thinking_types_problemsensing",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "src/philosophers/thinking-types.ts",
-      "source_location": "L19",
-      "weight": 1.0
-    },
-    {
-      "source": "src_philosophers_thinking_types",
-      "target": "src_philosophers_thinking_types_thinkingoperation",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "src/philosophers/thinking-types.ts",
-      "source_location": "L33",
-      "weight": 1.0
-    },
-    {
-      "source": "src_philosophers_thinking_types",
-      "target": "src_philosophers_thinking_types_judgmentpatterns",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "src/philosophers/thinking-types.ts",
-      "source_location": "L49",
-      "weight": 1.0
-    },
-    {
-      "source": "src_philosophers_thinking_types",
-      "target": "src_philosophers_thinking_types_concessionstructure",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "src/philosophers/thinking-types.ts",
-      "source_location": "L55",
-      "weight": 1.0
-    },
-    {
-      "source": "src_philosophers_thinking_types",
-      "target": "src_philosophers_thinking_types_intellectualdebt",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "src/philosophers/thinking-types.ts",
-      "source_location": "L61",
-      "weight": 1.0
-    },
-    {
-      "source": "src_philosophers_thinking_types",
-      "target": "src_philosophers_thinking_types_faultline",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "src/philosophers/thinking-types.ts",
-      "source_location": "L69",
-      "weight": 1.0
-    },
-    {
-      "source": "src_philosophers_thinking_types",
-      "target": "src_philosophers_thinking_types_calibrationcase",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "src/philosophers/thinking-types.ts",
-      "source_location": "L83",
+      "source_location": "L131",
       "weight": 1.0
     },
     {
@@ -36967,7 +36869,128 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/philosophers/thinking-types.ts",
-      "source_location": "L9",
+      "source_location": "L14",
+      "weight": 1.0
+    },
+    {
+      "source": "src_philosophers_thinking_types",
+      "target": "src_philosophers_thinking_types_thinkerfiles",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/philosophers/thinking-types.ts",
+      "source_location": "L147",
+      "weight": 1.0
+    },
+    {
+      "source": "src_philosophers_thinking_types",
+      "target": "src_philosophers_thinking_types_lifefile",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/philosophers/thinking-types.ts",
+      "source_location": "L158",
+      "weight": 1.0
+    },
+    {
+      "source": "src_philosophers_thinking_types",
+      "target": "src_philosophers_thinking_types_loadbearingdistinction",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/philosophers/thinking-types.ts",
+      "source_location": "L16",
+      "weight": 1.0
+    },
+    {
+      "source": "src_philosophers_thinking_types",
+      "target": "src_philosophers_thinking_types_expressionmodel",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/philosophers/thinking-types.ts",
+      "source_location": "L165",
+      "weight": 1.0
+    },
+    {
+      "source": "src_philosophers_thinking_types",
+      "target": "src_philosophers_thinking_types_problemsensing",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/philosophers/thinking-types.ts",
+      "source_location": "L24",
+      "weight": 1.0
+    },
+    {
+      "source": "src_philosophers_thinking_types",
+      "target": "src_philosophers_thinking_types_thinkingoperation",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/philosophers/thinking-types.ts",
+      "source_location": "L38",
+      "weight": 1.0
+    },
+    {
+      "source": "src_philosophers_thinking_types",
+      "target": "src_philosophers_thinking_types_judgmentpatterns",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/philosophers/thinking-types.ts",
+      "source_location": "L54",
+      "weight": 1.0
+    },
+    {
+      "source": "src_philosophers_thinking_types",
+      "target": "src_philosophers_thinking_types_concessionstructure",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/philosophers/thinking-types.ts",
+      "source_location": "L60",
+      "weight": 1.0
+    },
+    {
+      "source": "src_philosophers_thinking_types",
+      "target": "src_philosophers_thinking_types_intellectualdebt",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/philosophers/thinking-types.ts",
+      "source_location": "L66",
+      "weight": 1.0
+    },
+    {
+      "source": "src_philosophers_thinking_types",
+      "target": "src_philosophers_thinking_types_faultline",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/philosophers/thinking-types.ts",
+      "source_location": "L74",
+      "weight": 1.0
+    },
+    {
+      "source": "src_philosophers_thinking_types",
+      "target": "src_philosophers_thinking_types_calibrationcase",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/philosophers/thinking-types.ts",
+      "source_location": "L88",
       "weight": 1.0
     },
     {
@@ -36978,7 +37001,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/philosophers/thinking-types.ts",
-      "source_location": "L91",
+      "source_location": "L96",
       "weight": 1.0
     },
     {
@@ -37907,5 +37930,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "5cc455e956c6595ce53f5547d9f0b4ce39485264"
+  "built_at_commit": "95f06c6afc209ec760d43a48d878362103cb6606"
 }
