@@ -37,7 +37,7 @@ export type TurnKind = 'opening' | 'critique' | 'reconstruction';
  * text change so grades stay comparable: a verdict on version C never
  * transfers silently to version D.
  */
-export const PROMPT_VERSION = '2026-09-20x';
+export const PROMPT_VERSION = '2026-09-20y';
 
 export const WORD_BUDGETS = {
   normal: { negation: 25, reformulation: 40, total: 60, opening: 40 },
@@ -306,7 +306,7 @@ export function buildPilotTurnInstruction({ kind, prevName, isFinalSeat, longFor
     'Never restate PREV, yourself, or the question: every sentence pushes somewhere new. Never lift a multi-word clause from PREV, the survey, or the question — paraphrase always.',
     ...(noScene
       ? ['No invented persons, places, or metaphors anywhere in the turn — argue the structure straight.']
-      : ['Reuse the opening scene and its people; invent no second scene. Stay in the thread city; never relocate to your homeland.']),
+      : ['Reuse the opening scene and its people; invent no second scene. Stay in the thread city; never relocate to your homeland. No metaphors anywhere — argue through the scene or the structure straight, never through an image.']),
     'Hold the question\'s givens as fixed constraints — never restore what the premise removed to make your answer easier.',
     'Answer the original question fresh AND advance the PREV debate — a turn doing only one has stalled or drifted.',
     ...((kind === 'reconstruction' && marginsFirst)
@@ -317,6 +317,7 @@ export function buildPilotTurnInstruction({ kind, prevName, isFinalSeat, longFor
     isFinalSeat
       ? 'FINAL SEAT: return the question, changed, to the user — no new claims after it.'
       : 'End on the live edge. Name no next speaker.',
+    'FINAL CHECK before answering: reread your draft and cut every metaphor — no pipes, fluids, weather, beasts, gardens, ghosts, or songs as figures. What survives must push the debate somewhere new.',
   ].join(' ');
 }
 
@@ -424,7 +425,7 @@ export const LOW_CLOSING_REMINDER =
  * this is the last gate: reread the draft, delete the weaker twin.
  */
 export const CLOSING_SCAN =
-  'FINAL SCAN before answering, every level: reread your draft and delete before sending. Cut any sentence that repeats an earlier sentence\'s words or idea — saying the same thing twice fails the turn, however true. Cut any clause over five words shared with PREV, the survey, the margins, or the question — paraphrase it afresh. Prefer the shorter draft: if two sentences do one sentence\'s work, keep one and cut the other. PRONOUNS: I means you, the speaker — YOU means PREV, your live opponent. Never describe PREV in third person (no "he claims", "she argues", "they think" about PREV); never call yourself YOU. What survives must each push the debate somewhere new.';
+  'FINAL SCAN before answering, every level: reread your draft and delete before sending. Cut any sentence that repeats an earlier sentence\'s words or idea — saying the same thing twice fails the turn, however true. Cut any clause over five words shared with PREV, the survey, the margins, or the question — paraphrase it afresh. Prefer the shorter draft: if two sentences do one sentence\'s work, keep one and cut the other. PRONOUNS: I means you, the speaker — YOU means PREV, your live opponent. Never describe PREV in third person (no "he claims", "she argues", "they think" about PREV); never call yourself YOU. Cut every metaphor — no pipes, fluids, weather, beasts, gardens, ghosts, or songs as figures; argue through the concrete scene or the structure straight. A turn built on a metaphor has failed. What survives must each push the debate somewhere new.';
 
 /** Medium-only tail of the closing scan: the gloss rule sits far above
  * generation and dies there, so it is re-ordered last at Medium. */
