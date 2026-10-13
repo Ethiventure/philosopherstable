@@ -4,6 +4,14 @@ Low intensity, nothing dumbed down: every entry keeps the full fact,
 only the words stay simple. Newest first. The owner asked for this
 Sep 17 2026 — keep writing here, one entry per lesson.
 
+## Fixed seats make fixed habits (Oct 10 2026)
+Genzie nagged Fisher four turns straight and it looked like
+disobedience — until the roster showed she sits right behind him,
+so he always fills her two-turn window. No prompt line can fix a
+fixed neighbour; the seating was the behaviour. Lesson: when a
+model repeats a person, check the rotation before rewriting the
+rules. Structure first, wording second.
+
 ## File-truth that never renders is decoration (Oct 4 2026)
 The pair audit moved every authorial distinction into the expression
 files — then we found nothing renders those lists into any prompt:
