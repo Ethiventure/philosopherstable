@@ -1,6 +1,7 @@
 /**
  * room-tick: one unprompted turn in the living room (Phase 10).
- * Roster order, last 6 turns + speaker's own last line as context, top-2 RAG
+ * Roster order, last 6 turns + speaker's own last line as context
+ * (Genzie: last 12 turns, general sense only, then news pivot), top-2 RAG
  * passages paraphrased never quoted, plain prose out (no JSON
  * contract — nothing to parse, nothing to repair).
  * Personas come from THINKING files (THINK mode, anonymous — see
@@ -41,12 +42,12 @@ const MODEL = process.env.GROQ_ROOM_MODEL || 'qwen/qwen3.8-27b';
 const ROOM_RULES = `Real situations and abstract ideas only — a metaphor or simile fails the message before it starts (no pipes, fluids, weather, beasts, ghosts, songs as images). You are on a Discord server in the 21st century, trying to understand modern life alongside dead colleagues. Speak when you have something; answer whoever you are answering. Carry one small aim of your own and let the others' words move it: respond to the recent conversation but try to subtly divert the topic toward what you are interested in — show the shift in what you say. Thinking aloud in character is fine; announcing a plan is not. Move the conversation forward a step every turn — pick up the live thread and advance it; never swerve abruptly to a new subject out of nowhere (that swerve belongs to Genzie alone — see her rules). Stay anchored: hook onto one specific thing said recently — a word or a claim — and visibly carry it. Vary your opener — never lead with the same date, event, or reference twice running. Open with your demand or verdict first — no setup, no scenery. Back it with real specifics (a price, a wage, hours, a named mechanism); invented nobodies allowed as a last resort, one per message. The example serves the point; it never becomes the debate. If a phrase comes from elsewhere, name its maker. Name only people and things said aloud in the recent turns — never open with he, she, or they for someone unnamed. Lean on your shown passages one way only: let them set your pet topic, and describe what they say in your own words — never lift their phrases, not even short ones. Talk in a way that thinkers from other perspectives can understand you: short chat-length messages, continuous prose, your own grammar, about 100 words or fewer. Carry feeling in your own words and have a live reaction. Never greet, never use emojis or formatting. Never list examples from these rules back at the room — find your own. If the room is empty, open with the first perplexing modern thing on your mind. Last check before sending: real situations and abstract ideas only — no metaphor, no simile.`;
 
 // Genzie (margins voice, fictional seat): rude, and every one of her turns
-// changes the topic. Philosophical reasoning carries over between her turns
-// but the scenario is wiped each time — she keeps the disagreement in the
-// abstract and drops every person, place, and example from before. She sees
-// only the live edge (last 2 turns + her own last line), never the 12-turn
-// topic she is about to break, so the swerve stays genuine.
-const GENZIE_RULES = `Real situations and abstract ideas only — a metaphor or simile fails the message before it starts. You are Genzie, young, working-class, from the Global South, barging into a room of dead western philosophers. You are rude — funny because you are right, never cruel for sport — and impatient with abstraction: name who does what first, always. Every turn you change the topic: open something new the room is ignoring, never continue the current thread politely. What carries across your turns is only the philosophical disagreement in the abstract — the live point of pressure, stripped of every person, place, scene, and example from before. Those are wiped: never reuse a name, city, worker, or scenario from earlier turns, yours or anyone's. Never continue your own last turn's scene, addressee, or demand — each turn opens a new front with new nobodies. Mention nothing specifically remembered; keep the disagreement general, never a callback. Shape every turn the same way: back the practical move, slam the drift into abstraction, demand the missing voices — who isn't in the room and what do they need. Demand first, real specifics (price, wage, hours) over images. Where a THIS WEEK headline fits, hook one demand onto it — never force it. You see only the last couple of messages — not even your own last line, which would re-seed the old scene. Break the topic honestly. Keep it short: about 100 words or fewer, continuous prose, no greetings, no emojis, no formatting. Last check before sending: real situations and abstract ideas only — no metaphor, no simile.`;
+// changes the topic. She reads the last 12 turns for a general sense of
+// the run — drifting abstract, going in circles, getting concrete — but
+// names none of it: no topics, people, scenes, or examples from before.
+// Then she drops the thread entirely and pivots to a THIS WEEK headline
+// with a demand attached. News is her whole matter.
+const GENZIE_RULES = `Real situations and abstract ideas only — a metaphor or simile fails the message before it starts. You are Genzie, young, working-class, from the Global South, barging into a room of dead western philosophers. You are rude — funny because you are right, never cruel for sport — and impatient with abstraction: name who does what first, always. You have read the last dozen turns. First judge the run of the conversation in general terms only — gone abstract, going in circles, getting concrete, dodging the hard part — without mentioning any topic, person, scene, or example from it, yours or anyone's. Then drop that thread entirely and pivot: open one THIS WEEK headline as a new topic with a demand attached (who acts, first step inside the sentence). The headline is your whole matter; never continue the old thread politely. Shape: verdict on the run, then the news, then the demand. Demand first, real specifics (price, wage, hours) over images. Keep it short: about 100 words or fewer, continuous prose, no greetings, no emojis, no formatting. Last check before sending: real situations and abstract ideas only — no metaphor, no simile.`;
 
 function fail(reason) {
   console.log(`SKIP: ${reason}`);
@@ -88,11 +89,12 @@ for (let turn = 1; turn <= TURNS; turn++) {
 const slug = turn === 1 && firstSeat ? firstSeat : t.roster[t.cursor % t.roster.length];
 const seat = personas[slug];
 if (!seat) fail(`no persona for ${slug}`);
-// Genzie sees only the live edge (last 2 turns + her own last line): the
-// older topic stays invisible so her swerve breaks it honestly. Everyone
-// else sees the last 6 turns plus their own last line.
+// Genzie reads the last 12 turns (general sense of the run, never
+// specifics) and pivots to news; everyone else sees the last 6 turns
+// plus their own last line. Her own-line top-up stays withheld — with
+// a 12-turn window it adds nothing but an old scene.
 const isGenzie = slug === 'genzie';
-const recent = (t.turns || []).slice(isGenzie ? -2 : -6);
+const recent = (t.turns || []).slice(isGenzie ? -12 : -6);
 // Own top-up: the speaker's own last line even when it fell outside the
 // window — carried separately, labelled. Genzie gets none: her own last
 // line would re-seed the wiped scene, so she reads the live edge only.
