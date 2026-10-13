@@ -15,7 +15,7 @@
  * ground. Nightly ledger (Oct 4): one BEST + NEXT line per day in
  * public/room/ledger.json (one extra call/day, fail-soft).
  *
-  *   GROQ_API_KEY=... node scripts/room-tick.mjs [--dry-run] [--no-grounding] [--seat genzie] [--turns 3]
+  *   GROQ_API_KEY=... node scripts/room-tick.mjs [--dry-run] [--no-grounding] [--news-focus] [--seat genzie] [--turns 3]
   *
   * Experiments: --no-grounding disables RAG passages for a run (default on);
   * use it for controlled A/B runs, but do not change the cron default
@@ -97,6 +97,7 @@ const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 const T_PATH = join(root, 'public', 'room', 'transcript.json');
 const DRY = process.argv.includes('--dry-run');
 const NO_GROUNDING = process.argv.includes('--no-grounding');
+const NEWS_FOCUS = process.argv.includes('--news-focus');
 const MAX_TURNS = 200;
 
 const MODEL = process.env.GROQ_ROOM_MODEL || 'qwen/qwen3.8-27b';
@@ -259,7 +260,11 @@ const userMessage = [
 const resetLine = (!isGenzie && (t.turns || []).length > 0 && t.cursor % t.roster.length === 0)
   ? '\nROTATION RESET: open a topic the room has not touched in the last dozen turns — new question, new nobodies. Do not continue the current thread.'
   : '';
-const systemPrompt = `${seat.persona}\n\n${isGenzie ? GENZIE_RULES : ROOM_RULES}${resetLine}`;
+// News-focus arm (Oct 2026 A/B): answer only the news story plus the
+// room's takes on it — diagnosis, what you would do/say, no metaphors,
+// no other examples. Non-Genzie seats only; Genzie brings the news.
+const NEWS_FOCUS_BLOCK = '\nNEWS FOCUS: stay on the news story. Diagnose what is wrong in it, say what you would do or say about it, and answer what others here said about it. No metaphors, no similes, no other examples — only this story and this room\u2019s takes on it.';
+const systemPrompt = `${seat.persona}\n\n${isGenzie ? GENZIE_RULES : ROOM_RULES}${resetLine}${(!isGenzie && NEWS_FOCUS) ? NEWS_FOCUS_BLOCK : ''}`;
 
 const inEst = Math.round((systemPrompt.length + userMessage.length) / 4);
 console.log(`tick ${turn}/${TURNS}: ${seat.name} (${slug}) after ${recent.length} turns · ~${inEst} in-tokens · model ${MODEL}`);
