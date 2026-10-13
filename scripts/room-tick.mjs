@@ -15,8 +15,12 @@
  * ground. Nightly ledger (Oct 4): one BEST + NEXT line per day in
  * public/room/ledger.json (one extra call/day, fail-soft).
  *
- *   GROQ_API_KEY=... node scripts/room-tick.mjs [--dry-run] [--seat genzie] [--turns 3]
- *
+  *   GROQ_API_KEY=... node scripts/room-tick.mjs [--dry-run] [--no-grounding] [--seat genzie] [--turns 3]
+  *
+  * Experiments: --no-grounding disables RAG passages for a run (default on);
+  * use it for controlled A/B runs, but do not change the cron default
+  * without a logged owner verdict.
+  *
  * Budget per tick (~4k input tokens, well inside Groq's 7k wall):
  * persona ~1300 + 6 recent turns + own top-up ~600 + 2 passages ~400 + rules ~450.
  * Groq free: 30 RPM / 1K RPD — one tick per 20 min is 72/day, and the
@@ -92,6 +96,7 @@ loadTestEnv();
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 const T_PATH = join(root, 'public', 'room', 'transcript.json');
 const DRY = process.argv.includes('--dry-run');
+const NO_GROUNDING = process.argv.includes('--no-grounding');
 const MAX_TURNS = 200;
 
 const MODEL = process.env.GROQ_ROOM_MODEL || 'qwen/qwen3.8-27b';
@@ -155,7 +160,9 @@ const recent = (t.turns || []).slice(isGenzie ? -12 : -6);
 const own = isGenzie ? [] : (t.turns || []).filter((x) => x.seat === slug).slice(-1).filter((x) => !recent.includes(x));
 
 let grounding = '';
-try {
+if (NO_GROUNDING) {
+  console.log('(grounding off for this run: --no-grounding)');
+} else try {
   const shardPath = join(root, 'public', 'rag', `author-${slug}.json`);
   if (existsSync(shardPath)) {
     const shard = JSON.parse(readFileSync(shardPath, 'utf8'));
