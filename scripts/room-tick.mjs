@@ -4,8 +4,11 @@
  * (Genzie: last 12 turns, general sense only, then news pivot), top-2 RAG
  * passages paraphrased never quoted, plain prose out (no JSON
  * contract — nothing to parse, nothing to repair).
- * Personas come from THINKING files (THINK mode, anonymous — see
- * export-personas); Genzie keeps her old-style entry (no corpus).
+ * Single source of truth (Oct 2026): personas render LIVE from the
+ * thinking dossiers every tick — table, room, and desk all read the
+ * same files, so one dossier edit lands everywhere. No exported copy,
+ * nothing to re-run. Genzie keeps a short static entry (fictional
+ * seat, no corpus, no thinking file — rude margins voice).
  * Loops forever: seat = roster[cursor % roster.length], then cursor + 1.
  * No end state, no backfill — a missed tick is simply skipped.
  * Rotation reset (Oct 4): every full cycle the speaker opens fresh
@@ -29,12 +32,65 @@ import { prepareIndex, searchIndex } from '../src/lib/rag-search.ts';
 import { joinShard } from '../src/lib/rag-shard.ts';
 import { smartCut } from '../src/lib/rag-text.ts';
 import { relationshipLine } from '../src/philosophers/influences.ts';
+import { renderThinkingPersona, ANONYMOUS_LEAD } from '../src/philosophers/thinking-select.ts';
+import { SPINOZA_THINKING } from '../src/philosophers/spinoza.thinking.ts';
+import { KANT_THINKING } from '../src/philosophers/kant.thinking.ts';
+import { HEGEL_THINKING } from '../src/philosophers/hegel.thinking.ts';
+import { MARX_THINKING } from '../src/philosophers/marx.thinking.ts';
+import { LENIN_THINKING } from '../src/philosophers/lenin.thinking.ts';
+import { BOGDANOV_THINKING } from '../src/philosophers/bogdanov.thinking.ts';
+import { BLOCH_THINKING } from '../src/philosophers/bloch.thinking.ts';
+import { WEIL_THINKING } from '../src/philosophers/weil.thinking.ts';
+import { BOOKCHIN_THINKING } from '../src/philosophers/bookchin.thinking.ts';
+import { DELEUZE_THINKING } from '../src/philosophers/deleuze.thinking.ts';
+import { ROSE_THINKING } from '../src/philosophers/rose.thinking.ts';
+import { FISHER_THINKING } from '../src/philosophers/fisher.thinking.ts';
+
+// Display names (stable; the dossiers carry no names by design).
+const NAMES = {
+  spinoza: ['Baruch Spinoza', 'Spinoza'], kant: ['Immanuel Kant', 'Kant'],
+  hegel: ['Georg Wilhelm Friedrich Hegel', 'Hegel'], marx: ['Karl Marx', 'Marx'],
+  lenin: ['Vladimir Ilyich Lenin', 'Lenin'], bogdanov: ['Alexander Bogdanov', 'Bogdanov'],
+  bloch: ['Ernst Bloch', 'Bloch'], weil: ['Simone Weil', 'Weil'],
+  bookchin: ['Murray Bookchin', 'Bookchin'], deleuze: ['Gilles Deleuze', 'Deleuze'],
+  rose: ['Gillian Rose', 'Rose'], fisher: ['Mark Fisher', 'Fisher'],
+  genzie: ['Genzie', 'Genzie'],
+};
+const THINKING = {
+  spinoza: SPINOZA_THINKING, kant: KANT_THINKING, hegel: HEGEL_THINKING,
+  marx: MARX_THINKING, lenin: LENIN_THINKING, bogdanov: BOGDANOV_THINKING,
+  bloch: BLOCH_THINKING, weil: WEIL_THINKING, bookchin: BOOKCHIN_THINKING,
+  deleuze: DELEUZE_THINKING, rose: ROSE_THINKING, fisher: FISHER_THINKING,
+};
+// Full roster in rotation order (Genzie last — her window always holds
+// the previous seat; see Oct 2026 seating lesson before "fixing" that).
+const SLUGS = ['spinoza', 'kant', 'hegel', 'marx', 'lenin', 'bogdanov', 'bloch', 'weil', 'bookchin', 'deleuze', 'rose', 'fisher', 'genzie'];
+// Genzie's static room entry (fictional seat — no dossier to render from).
+const GENZIE_PERSONA = `You are Genzie.
+ANALYTICAL CENTRE: action over interpretation, concrete demands, first steps, absence-naming, plain translation, personal rudeness, premise honesty, Gen Z action.
+EMOTIONAL TONE: Comically rude working-class affection; funny because right, never cruel for sport — personal where the sitting earns it, furious at abstraction, jargon, and evasion.
+
+CHARACTERISTIC MOVEMENT: Name what the room skipped → translate its hardest idea into plain words → demand one concrete action with its first step
+REGISTER: Write like the rude reader in the margins: young, working-class, Global South, online left, well-read in queer, crip, feminist, and decolonial thought, using theory as tools for action. Blunt plain English, full sentences, funny because right. Demand concrete action with first steps; translate everything hard; insult only the present for what they just did.`;
+
+/** Room persona, rendered live from the dossier each tick (THINK mode,
+ * anonymous — moves must identify, names never ride). All ops ship; the
+ * prompt says use what fits. */
+function roomPersona(slug) {
+  if (slug === 'genzie') return { name: 'Genzie', short: 'Genzie', persona: GENZIE_PERSONA };
+  const t = THINKING[slug];
+  if (!t) fail(`no thinking file for ${slug}`);
+  return {
+    name: NAMES[slug][0],
+    short: NAMES[slug][1],
+    persona: renderThinkingPersona(t, 'think', { operations: t.operations, faultLine: null }, null, null, ANONYMOUS_LEAD),
+  };
+}
 
 loadTestEnv();
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 const T_PATH = join(root, 'public', 'room', 'transcript.json');
-const P_PATH = join(root, 'public', 'room', 'personas.json');
 const DRY = process.argv.includes('--dry-run');
 const MAX_TURNS = 200;
 
@@ -55,16 +111,14 @@ function fail(reason) {
 }
 
 if (!existsSync(T_PATH)) fail('no transcript.json (seed it first)');
-if (!existsSync(P_PATH)) fail('no personas.json (run export-personas first)');
 const t = JSON.parse(readFileSync(T_PATH, 'utf8'));
-const personas = JSON.parse(readFileSync(P_PATH, 'utf8')).seats;
 if (!t.roster?.length) fail('empty roster');
 // Seat-keeping (Sep 24 2026): the roster follows the exported personas —
 // any persona missing from it is appended, so a newly added seat joins
 // the rotation through code, never a hand-edited transcript (which would
 // fight the cron's own commits on every rebase). A roster seat that has
 // never spoken jumps the queue once, then takes normal turns.
-for (const slug of Object.keys(personas)) {
+for (const slug of SLUGS) {
   if (!t.roster.includes(slug)) t.roster.push(slug);
 }
 const spoken = new Set((t.turns || []).map((x) => x.seat));
@@ -82,12 +136,12 @@ const turnsArg = Number(process.argv[process.argv.indexOf('--turns') + 1]);
 const TURNS = process.argv.includes('--turns') ? Math.min(5, Math.max(1, Math.floor(turnsArg) || 1)) : 1;
 const seatFlag = process.argv.indexOf('--seat');
 const firstSeat = seatFlag !== -1 && process.argv[seatFlag + 1] ? process.argv[seatFlag + 1] : null;
-if (firstSeat && !personas[firstSeat]) fail(`no persona for ${firstSeat}`);
+if (firstSeat && !SLUGS.includes(firstSeat)) fail(`no persona for ${firstSeat}`);
 const key = (process.env.GROQ_API_KEY || process.env.TEST_GROQ_KEY || '').trim();
 if (!DRY && !key) fail('no GROQ_API_KEY (or TEST_GROQ_KEY) in env');
 for (let turn = 1; turn <= TURNS; turn++) {
 const slug = turn === 1 && firstSeat ? firstSeat : t.roster[t.cursor % t.roster.length];
-const seat = personas[slug];
+const seat = roomPersona(slug);
 if (!seat) fail(`no persona for ${slug}`);
 // Genzie reads the last 12 turns (general sense of the run, never
 // specifics) and pivots to news; everyone else sees the last 6 turns
@@ -174,7 +228,7 @@ const userMessage = [
       return y && ((x.seat === slug && y.seat === prev.seat) || (x.seat === prev.seat && y.seat === slug));
     });
     if (met) return [];
-    const prevShort = personas[prev.seat]?.short ?? prev.name;
+    const prevShort = (NAMES[prev.seat] || [])[1] ?? prev.name;
     const line = relationshipLine(slug, prev.seat, prevShort, true);
     return line ? [line] : [];
   })(),

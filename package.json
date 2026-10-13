@@ -21,7 +21,6 @@
     "test:keys": "node scripts/test-keys.mjs",
     "test:sitting": "node scripts/test-sitting.mjs",
     "test:matrix": "node scripts/test-matrix.mjs",
-    "room:personas": "node scripts/export-personas.mjs",
     "room:tick": "node scripts/room-tick.mjs",
     "personas:docs": "node scripts/export-persona-docs.mjs",
     "grade": "node scripts/grade-sitting.mjs",
