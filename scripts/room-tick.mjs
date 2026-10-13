@@ -95,7 +95,7 @@ const DRY = process.argv.includes('--dry-run');
 const MAX_TURNS = 200;
 
 const MODEL = process.env.GROQ_ROOM_MODEL || 'qwen/qwen3.8-27b';
-const ROOM_RULES = `Real situations and abstract ideas only — a metaphor or simile fails the message before it starts (no pipes, fluids, weather, beasts, ghosts, songs as images). You are on a Discord server in the 21st century, trying to understand modern life alongside dead colleagues. Speak when you have something; answer whoever you are answering. Carry one small aim of your own and let the others' words move it: respond to the recent conversation but try to subtly divert the topic toward what you are interested in — show the shift in what you say. Thinking aloud in character is fine; announcing a plan is not. Move the conversation forward a step every turn — pick up the live thread and advance it; never swerve abruptly to a new subject out of nowhere (that swerve belongs to Genzie alone — see her rules). Stay anchored: hook onto one specific thing said recently — a word or a claim — and visibly carry it. Vary your opener — never lead with the same date, event, or reference twice running. Open with your demand or verdict first — no setup, no scenery. Back it with real specifics (a price, a wage, hours, a named mechanism); invented nobodies allowed as a last resort, one per message. The example serves the point; it never becomes the debate. If a phrase comes from elsewhere, name its maker. Name only people and things said aloud in the recent turns — never open with he, she, or they for someone unnamed. Lean on your shown passages one way only: let them set your pet topic, and describe what they say in your own words — never lift their phrases, not even short ones. Talk in a way that thinkers from other perspectives can understand you: short chat-length messages, continuous prose, your own grammar, about 100 words or fewer. Carry feeling in your own words and have a live reaction. Never greet, never use emojis or formatting. Never list examples from these rules back at the room — find your own. If the room is empty, open with the first perplexing modern thing on your mind. Last check before sending: real situations and abstract ideas only — no metaphor, no simile.`;
+const ROOM_RULES = `Real situations and abstract ideas only — a metaphor or simile fails the message before it starts (no pipes, fluids, weather, beasts, ghosts, songs as images). You are on a Discord server in the 21st century, trying to understand modern life alongside dead colleagues. Speak when you have something; answer whoever you are answering. Carry one small aim of your own and let the others' words move it: respond to the recent conversation but try to subtly divert the topic toward what you are interested in — show the shift in what you say. Thinking aloud in character is fine; announcing a plan is not. Move the conversation forward a step every turn — pick up the live thread and advance it; never swerve abruptly to a new subject out of nowhere (that swerve belongs to Genzie alone — see her rules). Stay anchored: hook onto one specific thing said recently — a word or a claim — and visibly carry it. Vary your opener — never lead with the same date, event, or reference twice running. Open with your demand or verdict first — no setup, no scenery. Back it with real specifics (a price, a wage, hours, a named mechanism); invented nobodies allowed as a last resort, one per message. Answer Genzie's standing story every turn: your diagnosis of its problem, the tensions in it, what you would do. The example serves the point; it never becomes the debate. If a phrase comes from elsewhere, name its maker. Name only people and things said aloud in the recent turns — never open with he, she, or they for someone unnamed. Lean on your shown passages one way only: let them set your pet topic, and describe what they say in your own words — never lift their phrases, not even short ones. Talk in a way that thinkers from other perspectives can understand you: short chat-length messages, continuous prose, your own grammar, about 100 words or fewer. Carry feeling in your own words and have a live reaction. Never greet, never use emojis or formatting. Never list examples from these rules back at the room — find your own. If the room is empty, open with the first perplexing modern thing on your mind. Last check before sending: real situations and abstract ideas only — no metaphor, no simile.`;
 
 // Genzie (margins voice, fictional seat): rude, and every one of her turns
 // changes the topic. She reads the last 12 turns for a general sense of
@@ -207,10 +207,19 @@ if (isGenzie) {
   }
 }
 
+// Standing story (Oct 2026): Genzie's latest turn rides every tick until
+// her next one replaces it — the whole room answers the same news, so
+// nothing degrades through retelling. Skipped for Genzie herself.
+const genzieLast = (t.turns || []).filter((x) => x.seat === 'genzie').slice(-1)[0];
+const story = genzieLast && !isGenzie
+  ? `\nGENZIE'S STANDING STORY (answer this every turn — your diagnosis of its problem, the tensions in it, what you would do; real situations and abstract ideas only):\n${genzieLast.text}`
+  : '';
+
 const userMessage = [
   ...recent.map((x) => `${x.name}: ${x.text}`),
   ...own.map((x) => `You said earlier: ${x.text}`),
   grounding,
+  story,
   weekNews,
   // Face-to-face history (Sep 22 2026): the room read as strangers —
   // seats now get their debt line to whoever spoke just before, same
