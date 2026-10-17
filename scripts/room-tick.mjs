@@ -1,6 +1,6 @@
 /**
  * room-tick: one unprompted turn in the living room (Phase 10).
- * Roster order, last 6 turns + speaker's own last line as context
+ * Roster order, last 6 turns + speaker's own last 3 lines as context
  * (Genzie: last 12 turns, general sense only, then news pivot), top-2 RAG
  * passages paraphrased never quoted, plain prose out (no JSON
  * contract — nothing to parse, nothing to repair).
@@ -15,15 +15,16 @@
  * ground. Nightly ledger (Oct 4): one BEST + NEXT line per day in
  * public/room/ledger.json (one extra call/day, fail-soft).
  *
-  *   GROQ_API_KEY=... node scripts/room-tick.mjs [--dry-run] [--no-grounding] [--news-focus] [--seat genzie] [--turns 3]
+  *   GROQ_API_KEY=... node scripts/room-tick.mjs [--dry-run] [--no-grounding] [--seat genzie] [--turns 3]
   *
   * Experiments: --no-grounding disables RAG passages for a run (default on);
   * use it for controlled A/B runs, but do not change the cron default
   * without a logged owner verdict.
   *
  * Budget per tick (~4k input tokens, well inside Groq's 7k wall):
- * persona ~1300 + 6 recent turns + own top-up ~600 + 2 passages ~400 + rules ~450.
- * Groq free: 30 RPM / 1K RPD — one tick per 20 min is 72/day, and the
+ * persona ~1300 + 6 recent turns + own top-up (3 lines) ~500 + 2 passages ~400
+ * + rules ~550. Anti-echo rewrite adds one call only when a draft repeats.
+ * Groq free: 30 RPM / 1K RPD — a tick every 90 min is 16/day, and the
  * 1-at-a-time cadence never trips concurrency. RAG uses the repo's own
  * scorer over shipped shards (offline, no quota). Reasoning flags are
  * NOT sent (Groq returns empty with them — Sep 21 2026).
@@ -97,19 +98,18 @@ const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 const T_PATH = join(root, 'public', 'room', 'transcript.json');
 const DRY = process.argv.includes('--dry-run');
 const NO_GROUNDING = process.argv.includes('--no-grounding');
-const NEWS_FOCUS = process.argv.includes('--news-focus');
 const MAX_TURNS = 200;
 
 const MODEL = process.env.GROQ_ROOM_MODEL || 'qwen/qwen3.8-27b';
-const ROOM_RULES = `Real situations and abstract ideas only — a metaphor or simile fails the message before it starts (no pipes, fluids, weather, beasts, ghosts, songs as images). You are on a Discord server in the 21st century, trying to understand modern life alongside dead colleagues. Speak when you have something; answer whoever you are answering. Carry one small aim of your own and let the others' words move it: respond to the recent conversation but try to subtly divert the topic toward what you are interested in — show the shift in what you say. Thinking aloud in character is fine; announcing a plan is not. Move the conversation forward a step every turn — pick up the live thread and advance it; never swerve abruptly to a new subject out of nowhere (that swerve belongs to Genzie alone — see her rules). Stay anchored: hook onto one specific thing said recently — a word or a claim — and visibly carry it. Vary your opener — never lead with the same date, event, or reference twice running. Open with your demand or verdict first — no setup, no scenery. Back it with real specifics (a price, a wage, hours, a named mechanism); invented nobodies allowed as a last resort, one per message. Answer Genzie's standing story every turn: your diagnosis of its problem, the tensions in it, what you would do. The example serves the point; it never becomes the debate. If a phrase comes from elsewhere, name its maker. Name only people and things said aloud in the recent turns — never open with he, she, or they for someone unnamed. Lean on your shown passages one way only: let them set your pet topic, and describe what they say in your own words — never lift their phrases, not even short ones. Talk in a way that thinkers from other perspectives can understand you: short chat-length messages, continuous prose, your own grammar, about 100 words or fewer. Carry feeling in your own words and have a live reaction. Never greet, never use emojis or formatting. Never list examples from these rules back at the room — find your own. If the room is empty, open with the first perplexing modern thing on your mind. Last check before sending: real situations and abstract ideas only — no metaphor, no simile.`;
+const ROOM_RULES = `No invented people, no invented events, no extra examples, no analogies, no metaphors, no similes. Stay on the story Genzie raised and only that story — diagnose it, say what you would do, answer the room's takes on it. Name one specific fact from that story before your own point. You are on a Discord server in the 21st century, trying to understand modern life alongside dead colleagues. Answer whoever you are answering. Stay anchored: hook onto one specific thing said recently — a word or a claim — and visibly carry it. Every turn advances the argument: add a claim that is not already on the table — if your idea is already said, sharpen it or split it, never restate it. You are shown your own last lines: build on your own thinking, but never reuse your own phrasing or anyone else's, not even a short phrase. Watch your habits: vary your opener — never the same date, event, or reference twice running, and never begin by naming the previous speaker. Open with your demand or verdict first — no setup, no scenery. Back it with real specifics (a price, a wage, hours, a named mechanism) taken straight from the story. If a phrase comes from elsewhere, name its maker. Name only people and things said aloud in the recent turns — never open with he, she, or they for someone unnamed. Lean on your shown passages one way only: let them set your pet topic, and describe what they say in your own words — never lift their phrases, not even short ones. Talk in a way that thinkers from other perspectives can understand you: short chat-length messages, continuous prose, your own grammar, about 80 words or fewer. Carry feeling in your own words and have a live reaction. Never greet, never use emojis or formatting. Never list examples from these rules back at the room — find your own. If the room is empty or Genzie has not spoken yet, open with the first perplexing modern thing on your mind. Last check before sending: story only, no invented people, no analogies of any kind, no phrasing reused from this room.`;
 
 // Genzie (margins voice, fictional seat): rude, and every one of her turns
-// changes the topic. She reads the last 12 turns for a general sense of
-// the run — drifting abstract, going in circles, getting concrete — but
-// names none of it: no topics, people, scenes, or examples from before.
-// Then she drops the thread entirely and pivots to a THIS WEEK headline
-// with a demand attached. News is her whole matter.
-const GENZIE_RULES = `Real situations and abstract ideas only — a metaphor or simile fails the message before it starts. You are Genzie, young, working-class, from the Global South, barging into a room of dead western philosophers. You are rude — funny because you are right, never cruel for sport — and impatient with abstraction: name who does what first, always. You have read the last dozen turns. First judge the run of the conversation in general terms only — gone abstract, going in circles, getting concrete, dodging the hard part — without mentioning any topic, person, scene, or example from it, yours or anyone's. Then drop that thread entirely and pivot: open one THIS WEEK headline as a new topic with a demand attached (who acts, first step inside the sentence). The headline is your whole matter; never continue the old thread politely. Shape: verdict on the run, then the news, then the demand. Demand first, real specifics (price, wage, hours) over images. Keep it short: about 100 words or fewer, continuous prose, no greetings, no emojis, no formatting. Last check before sending: real situations and abstract ideas only — no metaphor, no simile.`;
+// changes the topic. She reads the last 12 turns for a general sense of the
+// run's manner — drifting abstract, going in circles, getting concrete — and
+// opens with one rude true remark about it that names no topic, person,
+// scene, or example from before. Then she drops the thread entirely and
+// pivots to a THIS WEEK headline with a demand attached. News is her matter.
+const GENZIE_RULES = `Real situations only — one news story, no analogy, no metaphor, no simile, ever. You are Genzie, young, working-class, from the Global South, barging into a room of dead western philosophers. You are rude — funny because you are right, never cruel for sport — and impatient with abstraction: name who does what first, always. You have read the last dozen turns. Open with one short rude remark that is plainly true of the run — about the manner of the talk (gone abstract, going in circles, dodging the hard part), never about its topic: name no topic, person, scene, or example from it, and do not reuse any phrase from it. Then drop it entirely and pivot to one THIS WEEK headline: a new story with a demand attached — who acts, first step inside the sentence. The headline is your whole matter; never continue the old thread. Shape: one rude true remark, then the news, then the demand. Real specifics (price, wage, hours) over images. About 80 words or fewer, continuous prose, no greetings, no emojis, no formatting. Last check before sending: one story only, no analogy of any kind, no topic from the old thread.`;
 
 function fail(reason) {
   console.log(`SKIP: ${reason}`);
@@ -145,6 +145,45 @@ const firstSeat = seatFlag !== -1 && process.argv[seatFlag + 1] ? process.argv[s
 if (firstSeat && !SLUGS.includes(firstSeat)) fail(`no persona for ${firstSeat}`);
 const key = (process.env.GROQ_API_KEY || process.env.TEST_GROQ_KEY || '').trim();
 if (!DRY && !key) fail('no GROQ_API_KEY (or TEST_GROQ_KEY) in env');
+
+// Anti-echo guard (Oct 17 2026): verbatim self-copies appeared hours apart
+// because a speaker never saw its older lines. Bigram overlap (Dice) against
+// own and recent lines; one rewrite when it crosses the threshold.
+function bigrams(s) {
+  const w = String(s).toLowerCase().replace(/[^a-z0-9\s']/g, ' ').split(/\s+/).filter(Boolean);
+  const set = new Set();
+  for (let i = 0; i < w.length - 1; i++) set.add(`${w[i]} ${w[i + 1]}`);
+  return set;
+}
+function dice(a, b) {
+  if (!a.size || !b.size) return 0;
+  let inter = 0;
+  for (const g of a) if (b.has(g)) inter += 1;
+  return (2 * inter) / (a.size + b.size);
+}
+async function runModel(sys, usr) {
+  const ctrl = new AbortController();
+  const timer = setTimeout(() => ctrl.abort(), 90000);
+  let res;
+  try {
+    res = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${key}` },
+      signal: ctrl.signal,
+      body: JSON.stringify({ model: MODEL, messages: [{ role: 'system', content: sys }, { role: 'user', content: usr }], max_tokens: 380 }),
+    });
+  } catch (e) {
+    throw new Error(e.name === 'AbortError' ? 'Groq timeout' : `network: ${String(e).slice(0, 80)}`);
+  } finally {
+    clearTimeout(timer);
+  }
+  if (!res.ok) throw new Error(`Groq ${res.status}: ${(await res.text()).slice(0, 150)}`);
+  const data = await res.json().catch(() => null);
+  const text = data?.choices?.[0]?.message?.content?.trim();
+  if (!text) throw new Error('Groq returned no text');
+  return { text, usage: data?.usage ?? {} };
+}
+
 for (let turn = 1; turn <= TURNS; turn++) {
 const slug = turn === 1 && firstSeat ? firstSeat : t.roster[t.cursor % t.roster.length];
 const seat = roomPersona(slug);
@@ -155,10 +194,11 @@ if (!seat) fail(`no persona for ${slug}`);
 // a 12-turn window it adds nothing but an old scene.
 const isGenzie = slug === 'genzie';
 const recent = (t.turns || []).slice(isGenzie ? -12 : -6);
-// Own top-up: the speaker's own last line even when it fell outside the
-// window — carried separately, labelled. Genzie gets none: her own last
-// line would re-seed the wiped scene, so she reads the live edge only.
-const own = isGenzie ? [] : (t.turns || []).filter((x) => x.seat === slug).slice(-1).filter((x) => !recent.includes(x));
+// Own top-up (Oct 17 2026): the speaker's own last 3 lines even when they
+// fell outside the window — carried separately, labelled, with a
+// build-don't-repeat instruction. Genzie gets none: her own lines would
+// re-seed the wiped scene, so she reads the live edge only.
+const own = isGenzie ? [] : (t.turns || []).filter((x) => x.seat === slug).slice(-3).filter((x) => !recent.includes(x));
 
 let grounding = '';
 if (NO_GROUNDING) {
@@ -225,7 +265,7 @@ const story = genzieLast && !isGenzie
 
 const userMessage = [
   ...recent.map((x) => `${x.name}: ${x.text}`),
-  ...own.map((x) => `You said earlier: ${x.text}`),
+  ...(own.length ? ['YOUR OWN LAST LINES (build on your thinking, never reuse your phrasing):', ...own.map((x) => `- ${x.text}`)] : []),
   grounding,
   story,
   weekNews,
@@ -260,11 +300,11 @@ const userMessage = [
 const resetLine = (!isGenzie && (t.turns || []).length > 0 && t.cursor % t.roster.length === 0)
   ? '\nROTATION RESET: open a topic the room has not touched in the last dozen turns — new question, new nobodies. Do not continue the current thread.'
   : '';
-// News-focus arm (Oct 2026 A/B): answer only the news story plus the
-// room's takes on it — diagnosis, what you would do/say, no metaphors,
-// no other examples. Non-Genzie seats only; Genzie brings the news.
-const NEWS_FOCUS_BLOCK = '\nNEWS FOCUS: stay on the news story. Diagnose what is wrong in it, say what you would do or say about it, and answer what others here said about it. No metaphors, no similes, no other examples — only this story and this room\u2019s takes on it.';
-const systemPrompt = `${seat.persona}\n\n${isGenzie ? GENZIE_RULES : ROOM_RULES}${resetLine}${(!isGenzie && NEWS_FOCUS) ? NEWS_FOCUS_BLOCK : ''}`;
+// Story-only rule (Oct 17 2026, was the news-focus A/B): folded into
+// ROOM_RULES — every non-Genzie seat stays on Genzie's story. Fisher's
+// ghost diction is his one licensed exception (hauntology is his register).
+const fisherLine = slug === 'fisher' ? '\nYours alone: ghost and haunting words are your own register — the no-analogy ban bends for those words only.' : '';
+const systemPrompt = `${seat.persona}\n\n${isGenzie ? GENZIE_RULES : ROOM_RULES}${resetLine}${fisherLine}`;
 
 const inEst = Math.round((systemPrompt.length + userMessage.length) / 4);
 console.log(`tick ${turn}/${TURNS}: ${seat.name} (${slug}) after ${recent.length} turns · ~${inEst} in-tokens · model ${MODEL}`);
@@ -274,27 +314,24 @@ if (DRY) {
 }
 
 const t0 = Date.now();
-const ctrl = new AbortController();
-const timer = setTimeout(() => ctrl.abort(), 90000);
-let res;
-try {
-  res = await fetch('https://api.groq.com/openai/v1/chat/completions', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${key}` },
-    signal: ctrl.signal,
-    body: JSON.stringify({ model: MODEL, messages: [{ role: 'system', content: systemPrompt }, { role: 'user', content: userMessage }], max_tokens: 300 }),
-  });
-} catch (e) {
-  fail(e.name === 'AbortError' ? 'Groq timeout' : `network: ${String(e).slice(0, 80)}`);
-} finally {
-  clearTimeout(timer);
+let out;
+try { out = await runModel(systemPrompt, userMessage); } catch (e) { fail(String(e.message)); }
+console.log(`out: ${out.usage.completion_tokens ?? '?'} tokens in ${((Date.now() - t0) / 1000).toFixed(1)}s`);
+let text = out.text;
+// Anti-echo guard: one rewrite when the draft repeats phrasing already on
+// the table; fail-soft — the first draft stays if the rewrite fails.
+const refs = [...(t.turns ?? []).filter((x) => x.seat === slug).slice(-3), ...recent].map((x) => bigrams(x.text));
+const worst = refs.reduce((m, r) => Math.max(m, dice(bigrams(text), r)), 0);
+if (worst >= 0.4) {
+  console.log(`anti-echo: ${(worst * 100).toFixed(0)}% phrase overlap — one rewrite`);
+  try {
+    const r2 = await runModel(`${systemPrompt}\nREWRITE: your draft repeated phrasing already used here. Keep the point, use completely fresh words — share no phrase with the earlier lines.`, userMessage);
+    text = r2.text;
+    console.log(`rewrite out: ${r2.usage.completion_tokens ?? '?'} tokens`);
+  } catch (e) {
+    console.log(`rewrite skipped (${String(e.message).slice(0, 80)})`);
+  }
 }
-if (!res.ok) fail(`Groq ${res.status}: ${(await res.text()).slice(0, 150)}`);
-const data = await res.json().catch(() => null);
-const text = data?.choices?.[0]?.message?.content?.trim();
-if (!text) fail('Groq returned no text');
-const usage = data?.usage ?? {};
-console.log(`out: ${usage.completion_tokens ?? '?'} tokens in ${((Date.now() - t0) / 1000).toFixed(1)}s`);
 
 t.turns.push({ id: `r${Date.now()}`, ts: new Date().toISOString(), seat: slug, name: seat.name, text, model: MODEL });
 let dropped = t.dropped ?? 0;

@@ -4,6 +4,34 @@ Low intensity, nothing dumbed down: every entry keeps the full fact,
 only the words stay simple. Newest first. The owner asked for this
 Sep 17 2026 — keep writing here, one entry per lesson.
 
+## Show a speaker its own words (Oct 17 2026)
+The room repeated itself — Kant re-sent a twelve-hour-old paragraph,
+Weil reused Lenin's exact closing lines — because each tick showed a
+speaker only its own newest line, never the older ones. A model cannot
+avoid repeating words it cannot see. Two fixes landed together: every
+seat now gets its own last three lines with "build on this, never reuse
+its words" attached, and a machine check measures word-pair overlap
+between a new turn and earlier ones — over 40% triggers one rewrite.
+Measured on the live transcript before switching it on: normal turns
+scored 6–35% overlap, the one true copy scored 97%, so the gate is set
+by evidence, not by feel. Lesson about instructions: hard bans obey
+best as the first and last lines of a rules block (said twice, at the
+two strongest positions), but no wording alone stops copying — the fix
+is visibility plus a check that runs after writing.
+
+## One story on the table (Oct 17 2026)
+The room kept turning Genzie's news into a prop for its own favourite
+argument, and invented people and analogies crept back in through the
+side door. New default: every dead seat answers only the story Genzie
+raised — one named fact from it before their own point — no invented
+nobodies, no extra examples, no analogies. Fisher alone keeps his ghost
+words, because they are his own register; a silent collision would
+just lose. Genzie's side changed too: she now opens with one rude
+remark about how the talk is going (never about its topic), then the
+news, then the demand. Lesson: when a room-wide ban collides with a
+seat whose whole style is built on the banned thing, name the single
+exception in code — the exception is a decision, not a leak.
+
 ## Fixed seats make fixed habits (Oct 10 2026)
 Genzie nagged Fisher four turns straight and it looked like
 disobedience — until the roster showed she sits right behind him,

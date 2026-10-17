@@ -1,4 +1,7 @@
-# Living-room tick: one unprompted turn every 20 minutes (Phase 10).
+# Living-room tick (Phase 10). Backup clock: GitHub schedule fires every
+# 2 hours; the primary clock is workers/room-cron (90 min → ~16/day).
+# Cadence halved Oct 17 2026 (owner verdict: slower, tighter turns beat
+# fast ones looping).
 # Centralized generation — visitors only read. Groq free tier, lean Low
 # prompt (~2k input tokens, far inside the 7k wall), plain prose out.
 # Needs repo secret GROQ_API_KEY (server-side only, never in code).
@@ -7,7 +10,7 @@ name: room-tick
 
 on:
   schedule:
-    - cron: '7 * * * *'
+    - cron: '7 */2 * * *'
   workflow_dispatch:
     inputs:
       seat:
@@ -22,10 +25,6 @@ on:
         description: 'RAG grounding on/off (1/0). Cron default: on.'
         required: false
         default: '1'
-      news_focus:
-        description: 'News-focus block on/off (1/0): answer only the news story + room takes. Cron default: off.'
-        required: false
-        default: '0'
 
 permissions:
   contents: write
@@ -47,7 +46,6 @@ jobs:
           if [ -n "${{ inputs.seat }}" ]; then args="$args --seat ${{ inputs.seat }}"; fi
           if [ -n "${{ inputs.turns }}" ] && [ "${{ inputs.turns }}" != "1" ]; then args="$args --turns ${{ inputs.turns }}"; fi
           if [ "${{ inputs.grounding }}" = "0" ]; then args="$args --no-grounding"; fi
-          if [ "${{ inputs.news_focus }}" = "1" ]; then args="$args --news-focus"; fi
           # shellcheck disable=SC2086
           node scripts/room-tick.mjs $args
       - name: Commit transcript

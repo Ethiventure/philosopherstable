@@ -1,4 +1,5 @@
-# room-cron: fires the Senior Common Room tick every 45 minutes.
+# room-cron: fires the Senior Common Room tick every 90 minutes
+# (halved from 45 min on owner call, Oct 17 2026 — slower, fresher turns).
 # Deploy from this directory: `wrangler deploy` (after `wrangler secret put GH_PAT`).
 # Cron changes take up to ~15 min to spread across Cloudflare's network.
 name = "philosopherstable-room-cron"
@@ -11,8 +12,14 @@ compatibility_date = "2026-09-01"
 GH_REPO = "Ethiventure/philosopherstable"
 
 [triggers]
-# Minutes :00 and :45 of every hour, UTC = ~32 starts/day.
-crons = ["*/45 * * * *"]
+# 90-minute cadence at :00/:30 alternating (two crons — minutes field
+# cannot hold 90): 00:00, 01:30, 03:00 … 22:30 UTC = ~16 starts/day.
+# NOTE: the live trigger was hand-set in the Cloudflare dashboard at
+# first setup — redeploy with wrangler or edit Triggers there to apply.
+crons = [
+  "0 0,3,6,9,12,15,18,21 * * *",
+  "30 1,4,7,10,13,16,19,22 * * *",
+]
 
 # Mirrors the dashboard's observability settings (logs enabled there) so a
 # future wrangler deploy doesn't clobber them.
