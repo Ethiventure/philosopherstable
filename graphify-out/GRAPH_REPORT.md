@@ -1,16 +1,16 @@
-# Graph Report - philosopherstable  (2026-10-10)
+# Graph Report - philosopherstable  (2026-10-17)
 
 ## Corpus Check
-- 241 files · ~5,083,481 words
+- 239 files · ~5,082,455 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 1432 nodes · 1861 edges · 168 communities (89 shown, 74 thin omitted)
+- 1437 nodes · 1896 edges · 154 communities (79 shown, 70 thin omitted)
 - Extraction: 100% EXTRACTED · 0% INFERRED · 0% AMBIGUOUS · INFERRED: 4 edges (avg confidence: 0.85)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `141504c7`
+- Built from commit: `ad8d7608`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -27,12 +27,12 @@
 - settings.ts
 - tts.ts
 - cabinet.js
-- dialectic/prompts.ts
+- test-sitting.mjs
 - groq.ts
 - preferences.ts
 - philosophers/index.ts
 - lib/prompts.ts
-- thinking-types.ts
+- pilot-slice-demo.mjs
 - Thinking diversity — the meta view (Sep 30 2026)
 - The Dialectical Cabinet
 - shared.ts
@@ -42,22 +42,19 @@
 - extract.js
 - footnotes.ts
 - extract.ts
-- ThinkingEngine
+- room-tick.mjs
 - Models tried
-- bogdanov.ts
+- kant.ts
 - bookchin.ts
 - graphify.js
 - tsconfig.json
 - split_philosophers.py
 - corpus-sources.ts
-- deleuze.ts
-- fisher.ts
-- test-sitting.mjs
-- rag-ground.ts
+- bloch.ts
+- rag-search.ts
 - lenin.ts
 - Rollback map (rebuild-thinking → main)
 - spinoza.ts
-- weil.ts
 - opencode.json
 - verify.ts
 - dev-keepalive.sh
@@ -65,7 +62,7 @@
 - service-chat.ts
 - scripts
 - Language levels (Low / Medium / High)
-- rag-ingest.mjs
+- bench-rag.mjs
 - rag-inspect.mjs
 - rag-manifest.mjs
 - manifest.json
@@ -75,8 +72,6 @@
 - Family A/B eval — Qwen-first or DeepSeek-first (Phase 7)
 - check-diagram-contrast.mjs
 - THINKING — spec
-- pilot-slice-demo.mjs
-- bloch.ts
 - Influence grid (generated)
 - Things taught (owner's notebook)
 - rag-translate-once.mjs
@@ -92,7 +87,6 @@
 - genzie.ts
 - rag-eval.mjs
 - Blind grading sheet B (9 turns, 3 voices: P, Q and R)
-- rag-search.ts
 - rose.ts
 - Blind grading sheet A (6 turns, 2 voices: P and Q)
 - Morning
@@ -103,13 +97,9 @@
 - deepinfra-deepseek-v4-flash-medium-v19ak-belgrade-partial.md
 - deepinfra-llama-3.3-70b-aiagents-v1-spinoza.md
 - deepinfra-llama-3.3-70b-aiagents-v2-bogdanov.md
-- bench-rag.mjs
-- grade-sitting.mjs
-- room-tick.mjs
 - groq-qwen3.8-27b-low-2030-v1.md
 - webapp-commons-template (staging doc)
 - groq-qwen3.8-27b-low-2030-v2.md
-- devDependencies
 - groq-qwen3.8-27b-low-agi-owner-notes.md
 - groq-qwen3.8-27b-low-agi-v2.md
 - openrouter-deepseek-v4.1-flash-low-2030-istanbul.md
@@ -120,13 +110,11 @@
 - openrouter-glm-5.3-flash-high-bristol-subq-v20h-partial.md
 - Model selection funnel (fewer tests, decided faster)
 - openrouter-glm-5.3-flash-high-cairo-v19am.md
-- export-personas.mjs
 - Rotation & recovery
 - openrouter-glm-5.3-flash-low-dhaka-v17b.md
 - openrouter-glm-5.3-flash-low-nocity-noversion.md
 - openrouter-glm-5.3-flash-medium-joburg-v19am.md
 - rag-search.mjs
-- dependencies
 - openrouter-glm-5.3-flash-medium-prague-v18d.md
 - openrouter-mistral-small-3.2-low-2030-partial.md
 - openrouter-qwen3-14b-medium-v19am-bristol.md
@@ -147,7 +135,6 @@
 - openrouter-qwen3-30b-a3b-medium-v19ai-manila.md
 - openrouter-qwen3-30b-a3b-medium-v19aj-jakarta.md
 - openrouter-qwen3-30b-a3b-medium-v19ak-athens.md
-- supabase.ts
 - worker.js
 - openrouter-qwen3-30b-a3b-medium-v19am-buenosaires.md
 - openrouter-qwen3-30b-a3b-medium-v19d-lisbon.md
@@ -177,40 +164,39 @@
 - openrouter-qwen3.8-27b-low-naples-v17b.md
 - openrouter-qwen3.8-27b-low-naples-v17b-partial.md
 - marx.ts
-- vite
 
 ## God Nodes (most connected - your core abstractions)
-1. `Things taught (owner's notebook)` - 48 edges
-2. `scripts` - 22 edges
-3. `Alibaba 27B High, visitor key — v1 (São Paulo, education question)` - 22 edges
-4. `GLM 5.3 High, OpenRouter paid — v2 (Seoul, education question)` - 22 edges
-5. `Qwen 14B High, OpenRouter paid — v1 (Buenos Aires, education question)` - 22 edges
-6. `Qwen 30B High, OpenRouter paid — v2 (São Paulo, education question)` - 22 edges
+1. `Things taught (owner's notebook)` - 51 edges
+2. `Alibaba 27B High, visitor key — v1 (São Paulo, education question)` - 22 edges
+3. `GLM 5.3 High, OpenRouter paid — v2 (Seoul, education question)` - 22 edges
+4. `Qwen 14B High, OpenRouter paid — v1 (Buenos Aires, education question)` - 22 edges
+5. `Qwen 30B High, OpenRouter paid — v2 (São Paulo, education question)` - 22 edges
+6. `scripts` - 21 edges
 7. `compilerOptions` - 18 edges
 8. `ThinkingEngine` - 16 edges
 9. `LifeFile` - 16 edges
 10. `ExpressionModel` - 16 edges
 
 ## Surprising Connections (you probably didn't know these)
+- `vol` --calls--> `detectVolatility()`  [EXTRACTED]
+  scripts/grade-sitting.mjs → src/lib/llm.ts
 - `deriveQuery()` --calls--> `queryTerms()`  [EXTRACTED]
   scripts/bench-rag.mjs → src/lib/rag-text.ts
 - `loadIndex()` --calls--> `joinShard()`  [EXTRACTED]
   scripts/rag-search.mjs → src/lib/rag-shard.ts
+- `groundAuthor()` --calls--> `joinShard()`  [EXTRACTED]
+  scripts/test-sitting.mjs → src/lib/rag-shard.ts
 - `shardStopwords()` --calls--> `queryTerms()`  [EXTRACTED]
   scripts/bench-rag.mjs → src/lib/rag-text.ts
-- `vol` --calls--> `detectVolatility()`  [EXTRACTED]
-  scripts/grade-sitting.mjs → src/lib/llm.ts
-- `groundAuthor()` --calls--> `searchIndex()`  [EXTRACTED]
-  scripts/test-sitting.mjs → src/lib/rag-search.ts
 
 ## Import Cycles
 - None detected.
 
-## Communities (168 total, 74 thin omitted)
+## Communities (154 total, 70 thin omitted)
 
 ### Community 0 - "package.json"
-Cohesion: 0.12
-Nodes (18): license, name, private, type, version, autoprefixer, eslint, @eslint/js (+10 more)
+Cohesion: 0.05
+Nodes (44): dependencies, lucide-react, react, react-dom, @supabase/supabase-js, devDependencies, autoprefixer, eslint (+36 more)
 
 ### Community 1 - "check-links.mjs"
 Cohesion: 0.20
@@ -241,8 +227,8 @@ Cohesion: 0.23
 Nodes (13): ALIBABA_FALLBACKS, ALIBABA_MAX_TOKENS, alibabaError(), AlibabaTextArgs, AlibabaTurnArgs, extractDetail(), generateTextAlibaba(), generateTurnAlibaba() (+5 more)
 
 ### Community 8 - "llm.ts"
-Cohesion: 0.09
-Nodes (14): ECHO_REPAIR_SUFFIX, GLOSS_REPAIR_SUFFIX, LlmError, LlmErrorCode, parseTurnOutput(), RATE_TABLE, RateRow, RATES_AS_OF (+6 more)
+Cohesion: 0.05
+Nodes (33): clusters, file, level, lines, md, METAPHOR_NOUNS, metaphorHits, over (+25 more)
 
 ### Community 9 - "settings.ts"
 Cohesion: 0.10
@@ -256,9 +242,9 @@ Nodes (14): chunkText(), createTtsController(), finish(), speakItemChunks(), def
 Cohesion: 0.27
 Nodes (12): clientIp(), DEFAULT_ALIBABA_MODELS, DEFAULT_MODELS, handler(), isModelFault(), json(), perIp, resetIfNewDay() (+4 more)
 
-### Community 12 - "dialectic/prompts.ts"
-Cohesion: 0.11
-Nodes (11): buildPilotTurnInstruction(), CLOSING_SCAN, CODA_REPAIR_SUFFIX, CODA_SYSTEM, MARGINS_WRITER_NAME, MEDIUM_GLOSS_SCAN, PILOT_LAST_WORD, THREAD_CITIES (+3 more)
+### Community 12 - "test-sitting.mjs"
+Cohesion: 0.08
+Nodes (25): runProbe(), stripFences(), wordCount(), buildClosingScan(), buildPilotTurnInstruction(), buildTurnInstruction(), CLOSING_SCAN, CODA_REPAIR_SUFFIX (+17 more)
 
 ### Community 13 - "groq.ts"
 Cohesion: 0.29
@@ -269,16 +255,16 @@ Cohesion: 0.32
 Nodes (5): clamp(), DEFAULT_DISPLAY, DisplayPreferences, loadDisplay(), prefersReducedMotion()
 
 ### Community 15 - "philosophers/index.ts"
-Cohesion: 0.09
-Nodes (24): HEGEL, HEGEL_STYLE, DEFAULT_SEATING_ORDER, DEFINITIONS, PHILOSOPHER_BY_SLUG, PHILOSOPHER_DATA, renderPersona(), THINKING_PILOT (+16 more)
+Cohesion: 0.07
+Nodes (28): BOGDANOV, BOGDANOV_STYLE, DELEUZE, DELEUZE_STYLE, HEGEL, HEGEL_STYLE, DEFAULT_SEATING_ORDER, DEFINITIONS (+20 more)
 
 ### Community 16 - "lib/prompts.ts"
 Cohesion: 0.52
 Nodes (6): buildExportPrompt(), buildPrompt(), findPhilosopher(), interventionSummary(), philosopherProfileBlock(), PromptContext
 
-### Community 17 - "thinking-types.ts"
-Cohesion: 0.08
-Nodes (21): BLOCH_LIFE, BOGDANOV_LIFE, BOOKCHIN_LIFE, DELEUZE_LIFE, FISHER_LIFE, HEGEL_LIFE, ThinkingPilotEntry, KANT_LIFE (+13 more)
+### Community 17 - "pilot-slice-demo.mjs"
+Cohesion: 0.07
+Nodes (36): anon, BLOCH_EXPRESSION, BLOCH_LIFE, BOGDANOV_EXPRESSION, BOGDANOV_LIFE, BOOKCHIN_EXPRESSION, BOOKCHIN_LIFE, DELEUZE_EXPRESSION (+28 more)
 
 ### Community 18 - "Thinking diversity — the meta view (Sep 30 2026)"
 Cohesion: 0.29
@@ -293,8 +279,8 @@ Cohesion: 0.43
 Nodes (6): generateTextShared(), generateTurnShared(), postShared(), SHARED_MAX_TOKENS, SharedTurnArgs, stripFences()
 
 ### Community 21 - "AGENTS.md"
-Cohesion: 0.29
-Nodes (6): free TTS recipe (Web Speech, no key), genealogy diagram, graphify, graphify workflow, RAG runbook (this repo), working rules (shared project norms)
+Cohesion: 0.25
+Nodes (7): free TTS recipe (Web Speech, no key), genealogy diagram, graphify, graphify workflow, Netlify legacy free (do not lose it), RAG runbook (this repo), working rules (shared project norms)
 
 ### Community 22 - "deepinfra.ts"
 Cohesion: 0.22
@@ -316,25 +302,21 @@ Nodes (6): distinctive(), footnoteNumbers(), manifestNumber(), normalise(), spli
 Cohesion: 0.25
 Nodes (4): ExtractReason, GroundedPassage, SKIP_EXTENSIONS, SKIP_HOSTS
 
-### Community 27 - "ThinkingEngine"
-Cohesion: 0.13
-Nodes (8): BLOCH_THINKING, BOGDANOV_THINKING, BOOKCHIN_THINKING, FISHER_THINKING, HEGEL_THINKING, MARX_THINKING, ThinkingEngine, WEIL_THINKING
+### Community 27 - "room-tick.mjs"
+Cohesion: 0.07
+Nodes (26): DRY, key, NAMES, newcomer, NO_GROUNDING, root, seatFlag, SLUGS (+18 more)
 
 ### Community 28 - "Models tried"
 Cohesion: 0.12
 Nodes (16): Costs + restrictions (Sep 20 2026 — trial quotas bill $0 to Dec 16; paid rates re-verify at provider pages before quoting), Current ranks (Sep 19 2026, owner-graded live sessions only), Current standing (Sep 17 2026, owner-graded, Low, 2030 question), DECISION (Sep 21 2026 — FINAL: testing stops here. Z.ai + Together, Elimination plan (Sep 20 2026 — owner: start cutting, different models per level allowed), Free-provider shelf (awesome-free-llm-apis, evaluated Sep 17 2026 — NOT tested), Liked, best first (summary Sep 24 2026 — detail below; prices re-verify before quoting), Models tried (+8 more)
 
-### Community 30 - "bookchin.ts"
-Cohesion: 0.29
-Nodes (4): BOOKCHIN, BOOKCHIN_STYLE, KANT, KANT_STYLE
+### Community 39 - "bloch.ts"
+Cohesion: 0.18
+Nodes (6): BLOCH, BLOCH_STYLE, FISHER, FISHER_STYLE, WEIL_STYLE, WEIL
 
-### Community 40 - "test-sitting.mjs"
-Cohesion: 0.20
-Nodes (12): runProbe(), stripFences(), wordCount(), buildClosingScan(), buildTurnInstruction(), GLOSSARY_SHAPE, LOW_CLOSING_REMINDER, MAX_OUTPUT_TOKENS (+4 more)
-
-### Community 41 - "rag-ground.ts"
-Cohesion: 0.26
-Nodes (12): groundAuthor(), cache, CachedAuthor, loadThinker(), manifestNumberForUrl(), RagGrounding, searchThinkerPassages(), ShardHit (+4 more)
+### Community 41 - "rag-search.ts"
+Cohesion: 0.15
+Nodes (18): groundAuthor(), cache, CachedAuthor, loadThinker(), manifestNumberForUrl(), RagGrounding, searchThinkerPassages(), ShardHit (+10 more)
 
 ### Community 43 - "Rollback map (rebuild-thinking → main)"
 Cohesion: 0.50
@@ -353,16 +335,16 @@ Cohesion: 0.25
 Nodes (4): SERVICE_LIMIT_MESSAGE, SERVICE_MAX_QUESTIONS, ServiceHistoryItem, ServiceUserMessageArgs
 
 ### Community 51 - "scripts"
-Cohesion: 0.09
-Nodes (22): scripts, bench:rag, build, check-links, check-links:fix, dev, grade, lint (+14 more)
+Cohesion: 0.10
+Nodes (21): scripts, bench:rag, build, check-links, check-links:fix, dev, grade, lint (+13 more)
 
 ### Community 52 - "Language levels (Low / Medium / High)"
 Cohesion: 0.29
 Nodes (6): How to make trios (worked procedure), How to set difficulty levels, Language levels (Low / Medium / High), Reference: verified prompt order (Bookchin, Low, critique turn), Rollback points (read before changing anything below), Trio-creation instructions that did NOT work
 
-### Community 53 - "rag-ingest.mjs"
-Cohesion: 0.14
-Nodes (28): CHUNK_SOFT_MAX, CHUNK_SOFT_MIN, CHUNK_TARGET_WORDS, chunkParagraphs(), splitLongParagraph(), authorSlug(), DB_PATH, exportJson() (+20 more)
+### Community 53 - "bench-rag.mjs"
+Cohesion: 0.07
+Nodes (48): combinedAuthor, deriveQuery(), files, get(), K, N, noisePool, overall (+40 more)
 
 ### Community 54 - "rag-inspect.mjs"
 Cohesion: 0.22
@@ -400,13 +382,9 @@ Nodes (4): luminance(), pairs, ratio(), NOTE: muted rgba() entries above are pre
 Cohesion: 0.07
 Nodes (26): 0. Identity + boundary → LIFE file (facts allowed, short), 10. Response to cabinet (how they meet PREV), 11. Evidence map + calibration + neighbour test, 12. Quality test, 1. Philosophical architecture (reframed, compact), 2. Problem-sensing questions (the core — lead with this), 3. Operations (5–8, repertoire not sequence), 4. Judgment patterns (+18 more)
 
-### Community 63 - "pilot-slice-demo.mjs"
-Cohesion: 0.09
-Nodes (20): anon, BLOCH_EXPRESSION, BOGDANOV_EXPRESSION, BOOKCHIN_EXPRESSION, DELEUZE_EXPRESSION, DELEUZE_THINKING, FISHER_EXPRESSION, HEGEL_EXPRESSION (+12 more)
-
 ### Community 67 - "Things taught (owner's notebook)"
 Cohesion: 0.04
-Nodes (48): A generic grader punishes your best moves (Sep 25 2026), A guardrail that flags everything guards nothing (Sep 25 2026), A schedule is a request, not a promise (Sep 23 2026), A summary of reactions is not a summary of positions (Sep 20 2026), A token's permissions freeze at birth (Sep 24 2026), Ask when they stop, not just how they start (Sep 30 2026), Audit every line, not every intention (Sep 26 2026), Borrowed words are not copying (Sep 20 2026) (+40 more)
+Nodes (51): A generic grader punishes your best moves (Sep 25 2026), A guardrail that flags everything guards nothing (Sep 25 2026), A schedule is a request, not a promise (Sep 23 2026), A summary of reactions is not a summary of positions (Sep 20 2026), A token's permissions freeze at birth (Sep 24 2026), Ask when they stop, not just how they start (Sep 30 2026), Audit every line, not every intention (Sep 26 2026), Borrowed words are not copying (Sep 20 2026) (+43 more)
 
 ### Community 68 - "rag-translate-once.mjs"
 Cohesion: 0.29
@@ -417,8 +395,8 @@ Cohesion: 0.09
 Nodes (22): Alibaba 27B High, visitor key — v1 (São Paulo, education question), MODELS USED, NOTES FROM THE MARGINS (after pass 1), NOTES FROM THE MARGINS (before pass 3), NOTES FROM THE MARGINS (closing summary), PASS 1 — Bloch, PASS 1 — Bogdanov, PASS 1 — Bookchin (+14 more)
 
 ### Community 71 - "thinking-select.ts"
-Cohesion: 0.14
-Nodes (19): FAULT_LINES, resolveFaultLine(), ANONYMOUS_LEAD, buildExpressionText(), ComposeOpts, composePersona(), identityFor(), MODE_LINES (+11 more)
+Cohesion: 0.12
+Nodes (21): fail(), roomPersona(), FAULT_LINES, resolveFaultLine(), ANONYMOUS_LEAD, buildExpressionText(), ComposeOpts, composePersona() (+13 more)
 
 ### Community 72 - "GLM 5.3 High, OpenRouter paid — v2 (Seoul, education question)"
 Cohesion: 0.09
@@ -452,10 +430,6 @@ Nodes (11): byCategory, failures, index, lat, latencies, passages, pos, prepared
 Cohesion: 0.18
 Nodes (10): B1 (voice R), B2 (voice Q), B3 (voice P), B4 (voice Q), B5 (voice R), B6 (voice P), B7 (voice Q), B8 (voice R) (+2 more)
 
-### Community 81 - "rag-search.ts"
-Cohesion: 0.26
-Nodes (10): bm25Term(), ScoredPassage, SearchDebug, searchIndex(), SearchOptions, STOP, queryTerms(), STOP (+2 more)
-
 ### Community 83 - "Blind grading sheet A (6 turns, 2 voices: P and Q)"
 Cohesion: 0.25
 Nodes (7): A1 (voice Q), A2 (voice P), A3 (voice Q), A4 (voice P), A5 (voice P), A6 (voice Q), Blind grading sheet A (6 turns, 2 voices: P and Q)
@@ -464,49 +438,21 @@ Nodes (7): A1 (voice Q), A2 (voice P), A3 (voice Q), A4 (voice P), A5 (voice P),
 Cohesion: 0.33
 Nodes (5): 1. Recall where things stand (evidence, not memory), 2. Redo the after-shutdown setup, 3. Compare with `PLAN.md`, then start the day, Morning, Rules
 
-### Community 92 - "bench-rag.mjs"
-Cohesion: 0.11
-Nodes (17): combinedAuthor, deriveQuery(), files, get(), K, N, noisePool, overall (+9 more)
-
-### Community 93 - "grade-sitting.mjs"
-Cohesion: 0.10
-Nodes (19): clusters, file, level, lines, md, over, p2, p3 (+11 more)
-
-### Community 94 - "room-tick.mjs"
-Cohesion: 0.17
-Nodes (10): DRY, key, newcomer, P_PATH, root, seatFlag, spoken, t (+2 more)
-
 ### Community 96 - "webapp-commons-template (staging doc)"
 Cohesion: 0.13
 Nodes (14): Aesthetic options (one fully specified, rest later), Module 1 — Access + display layer, Module 2 — Settings + BYOK + quota honesty, Module 3 — LLM plumbing + eval discipline, Module 4 — Service-desk chat, Module 5 — Backend-free RAG, Module 6 — Diagram + generated views, Module 7 — Export + provenance (+6 more)
 
-### Community 98 - "devDependencies"
-Cohesion: 0.13
-Nodes (15): devDependencies, autoprefixer, eslint, @eslint/js, eslint-plugin-react-hooks, eslint-plugin-react-refresh, globals, postcss (+7 more)
-
 ### Community 107 - "Model selection funnel (fewer tests, decided faster)"
 Cohesion: 0.25
 Nodes (7): Model selection funnel (fewer tests, decided faster), Re-verify rhythm, Stage 0 — desk research (zero spend, one sitting of reading), Stage 1 — key checks (~10 cents of effort, ~$0), Stage 2 — probes (~1 call each, fractions of a cent), Stage 3 — sittings (max 4, then stop), Stage 4 — crowns (one model per slot across ALL levels)
-
-### Community 109 - "export-personas.mjs"
-Cohesion: 0.29
-Nodes (6): data, out, raw, root, tmp, work
 
 ### Community 110 - "Rotation & recovery"
 Cohesion: 0.29
 Nodes (6): Quota caps (shared path), Recovery scenarios, Rollback markers, Rotation (leak or expiry — no code change, ever), Rotation & recovery, Secrets (names only)
 
 ### Community 114 - "rag-search.mjs"
-Cohesion: 0.15
-Nodes (10): args, debug, loadIndex(), { manifest, passages }, prepared, query, IndexPassage, AuthorShard (+2 more)
-
-### Community 115 - "dependencies"
-Cohesion: 0.40
-Nodes (5): dependencies, lucide-react, react, react-dom, @supabase/supabase-js
-
-### Community 136 - "supabase.ts"
-Cohesion: 0.40
-Nodes (4): @supabase/supabase-js, supabase, supabaseAnonKey, supabaseUrl
+Cohesion: 0.16
+Nodes (11): args, debug, loadIndex(), { manifest, passages }, prepared, query, IndexPassage, AuthorShard (+3 more)
 
 ### Community 140 - "export-persona-docs.mjs"
 Cohesion: 0.25
@@ -565,24 +511,24 @@ Cohesion: 0.33
 Nodes (6): 1. Identity card, 2. Persona prompt (paste s1+s2 as Instructions), 3. Knowledge (in-prompt, keep whole), 4. Key works (curator notes), 5. Writings (attach as knowledge), Karl Marx (1818–1883)
 
 ## Knowledge Gaps
-- **780 isolated node(s):** `$schema`, `plugin`, `DEFAULT_MODELS`, `DEFAULT_ALIBABA_MODELS`, `usageDay` (+775 more)
-  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 937 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
-- **74 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
+- **781 isolated node(s):** `$schema`, `plugin`, `DEFAULT_MODELS`, `DEFAULT_ALIBABA_MODELS`, `usageDay` (+776 more)
+  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 940 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
+- **70 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `searchIndex()` connect `rag-search.ts` to `test-sitting.mjs`, `rag-ground.ts`, `porter.ts`, `rag-eval.mjs`, `rag-search.mjs`, `bench-rag.mjs`, `room-tick.mjs`?**
-  _High betweenness centrality (0.009) - this node is a cross-community bridge._
-- **Why does `prepareIndex()` connect `rag-ground.ts` to `test-sitting.mjs`, `porter.ts`, `rag-eval.mjs`, `rag-search.ts`, `rag-search.mjs`, `bench-rag.mjs`, `room-tick.mjs`?**
-  _High betweenness centrality (0.007) - this node is a cross-community bridge._
-- **Why does `detectVolatility()` connect `grade-sitting.mjs` to `test-sitting.mjs`, `llm.ts`?**
+- **Why does `detectVolatility()` connect `test-sitting.mjs` to `llm.ts`?**
   _High betweenness centrality (0.006) - this node is a cross-community bridge._
+- **Why does `searchIndex()` connect `rag-search.ts` to `test-sitting.mjs`, `porter.ts`, `rag-eval.mjs`, `rag-search.mjs`, `bench-rag.mjs`, `room-tick.mjs`?**
+  _High betweenness centrality (0.005) - this node is a cross-community bridge._
 - **What connects `$schema`, `plugin`, `DEFAULT_MODELS` to the rest of the system?**
-  _780 weakly-connected nodes found - possible documentation gaps or missing edges._
+  _781 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `package.json` be split into smaller, more focused modules?**
-  _Cohesion score 0.12105263157894737 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.04609929078014184 - nodes in this community are weakly interconnected._
 - **Should `types/index.ts` be split into smaller, more focused modules?**
   _Cohesion score 0.07407407407407407 - nodes in this community are weakly interconnected._
 - **Should `App.tsx` be split into smaller, more focused modules?**
   _Cohesion score 0.056910569105691054 - nodes in this community are weakly interconnected._
+- **Should `compilerOptions` be split into smaller, more focused modules?**
+  _Cohesion score 0.1 - nodes in this community are weakly interconnected._
