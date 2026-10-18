@@ -3,14 +3,13 @@
     "date": "2026-10-18",
     "model": "qwen/qwen3.8-27b",
     "summary": {
-      "turns": 46,
+      "turns": 43,
       "meanWords": 121,
       "meanOverlap": 0.17,
       "meanNovelty": 0.68,
       "meanStory": 0.12,
       "guardRewrites": 1,
       "flags": [
-        "long:spinoza",
         "long:bloch",
         "long:weil",
         "long:bookchin",
@@ -31,35 +30,6 @@
       ]
     },
     "turns": [
-      {
-        "ts": "2026-10-17T19:46:07.940Z",
-        "seat": "spinoza",
-        "words": 130,
-        "overlap": 0.1,
-        "novelty": 0.78,
-        "story": 0.14,
-        "flags": [
-          "long"
-        ]
-      },
-      {
-        "ts": "2026-10-17T19:59:29.694Z",
-        "seat": "kant",
-        "words": 109,
-        "overlap": 0.21,
-        "novelty": 0.73,
-        "story": 0.14,
-        "flags": []
-      },
-      {
-        "ts": "2026-10-17T20:00:30.550Z",
-        "seat": "hegel",
-        "words": 120,
-        "overlap": 0.25,
-        "novelty": 0.73,
-        "story": 0.21,
-        "flags": []
-      },
       {
         "ts": "2026-10-17T20:59:31.058Z",
         "seat": "marx",
