@@ -162,7 +162,7 @@ function renderOperation(op: ThinkingOperation, index: number): string {
   ].join('\n');
 }
 
-const MODE_LINES: Record<ThinkMode, string> = {
+export const MODE_LINES: Record<ThinkMode, string> = {
   think:
     'THINK MODE: reason only, no added expression style. No signature terms at all — vocabulary gives no clues here; identity comes from move structure alone. No linguistic tics, no temper performance, no quotations. Keep the full complexity of the move — clarity comes from the reasoning, never from simplifying. Your thinking move must carry your identity alone.',
   teach:

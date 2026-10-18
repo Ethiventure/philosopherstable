@@ -37,7 +37,8 @@ import { prepareIndex, searchIndex } from '../src/lib/rag-search.ts';
 import { joinShard } from '../src/lib/rag-shard.ts';
 import { smartCut } from '../src/lib/rag-text.ts';
 import { relationshipLine } from '../src/philosophers/influences.ts';
-import { renderThinkingPersona, ANONYMOUS_LEAD } from '../src/philosophers/thinking-select.ts';
+import { renderThinkingPersona, ANONYMOUS_LEAD, MODE_LINES } from '../src/philosophers/thinking-select.ts';
+import { renderRoomThinking } from '../src/philosophers/room-persona.ts';
 import { SPINOZA_THINKING } from '../src/philosophers/spinoza.thinking.ts';
 import { KANT_THINKING } from '../src/philosophers/kant.thinking.ts';
 import { HEGEL_THINKING } from '../src/philosophers/hegel.thinking.ts';
@@ -70,38 +71,51 @@ const THINKING = {
 // Full roster in rotation order (Genzie last — her window always holds
 // the previous seat; see Oct 2026 seating lesson before "fixing" that).
 const SLUGS = ['spinoza', 'kant', 'hegel', 'marx', 'lenin', 'bogdanov', 'bloch', 'weil', 'bookchin', 'deleuze', 'rose', 'fisher', 'genzie'];
-// Genzie's static room entry (fictional seat — no dossier to render from).
-const GENZIE_PERSONA = `You are Genzie.
-ANALYTICAL CENTRE: personal rudeness, premise honesty, impatience with abstraction.
-EMOTIONAL TONE: Comically rude working-class affection; funny because right, never cruel for sport — personal where the sitting earns it, furious at abstraction, jargon, and evasion.
+// Prompt fragments (Oct 18 2026): the room's fixed prompt text lives in
+// `prompts/room/*.md`, not inside this script — one file per fragment, so
+// the text can be read, edited, diffed, versioned and shared without
+// touching code. The loader strips `#` metadata lines (version stamp,
+// provenance) and fails loudly when a fragment is missing.
+const root = join(dirname(fileURLToPath(import.meta.url)), '..');
+function promptFragment(file) {
+  const path = join(root, 'prompts', 'room', file);
+  if (!existsSync(path)) fail(`missing prompt fragment: prompts/room/${file}`);
+  return readFileSync(path, 'utf8')
+    .split('\n')
+    .filter((line) => !line.startsWith('#'))
+    .join('\n')
+    .trim();
+}
 
-CHARACTERISTIC MOVEMENT: One vague rude remark about the room → one fresh news story. Nothing else.
-REGISTER: Write like the rude reader in the margins: young, working-class, Global South, online left, well-read in queer, crip, feminist, and decolonial thought. Blunt plain English, full sentences, funny because right. Insult only the present for what they just did.`;
+// Genzie's static room entry (fictional seat — no dossier to render from).
+const GENZIE_PERSONA = promptFragment('genzie-persona.md');
 
 /** Room persona, rendered live from the dossier each tick (THINK mode,
  * anonymous — moves must identify, names never ride). All ops ship; the
  * prompt says use what fits. */
-function roomPersona(slug) {
+function roomPersona(slug, question, prevText, prevSlug) {
   if (slug === 'genzie') return { name: 'Genzie', short: 'Genzie', persona: GENZIE_PERSONA };
   const t = THINKING[slug];
   if (!t) fail(`no thinking file for ${slug}`);
   return {
     name: NAMES[slug][0],
     short: NAMES[slug][1],
-    persona: renderThinkingPersona(t, 'think', { operations: t.operations, faultLine: null }, null, null, ANONYMOUS_LEAD),
+    // Oct 18 2026: full-depth room render (architecture, pressure and
+    // stuck questions, first notices, three code-picked moves, stopping
+    // rule, distinctions with collapse costs) — see room-persona.ts.
+    persona: renderRoomThinking(t, question, prevText, prevSlug),
   };
 }
 
 loadTestEnv();
 
-const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 const T_PATH = join(root, 'public', 'room', 'transcript.json');
 const DRY = process.argv.includes('--dry-run');
 const NO_GROUNDING = process.argv.includes('--no-grounding');
 const MAX_TURNS = 200;
 
 const MODEL = process.env.GROQ_ROOM_MODEL || 'qwen/qwen3.8-27b';
-const ROOM_RULES = `No invented people, no invented events, no extra examples, no analogies, no metaphors, no similes. Stay on the story Genzie raised and only that story — diagnose it, say what you would do, answer the room's takes on it. Name one specific fact from that story before your own point. You are on a Discord server in the 21st century, trying to understand modern life alongside dead colleagues. Answer whoever you are answering. Stay anchored: hook onto one specific thing said recently — a word or a claim — and visibly carry it. Every turn advances the argument: add a claim that is not already on the table — if your idea is already said, sharpen it or split it, never restate it. You are shown your own last lines: build on your own thinking, but never reuse your own phrasing or anyone else's, not even a short phrase. Watch your habits: vary your opener — never the same date, event, or reference twice running, and never begin by naming the previous speaker. Open with your demand or verdict first — no setup, no scenery. Back it with real specifics (a price, a wage, hours, a named mechanism) taken straight from the story. If a phrase comes from elsewhere, name its maker. Name only people and things said aloud in the recent turns — never open with he, she, or they for someone unnamed. Lean on your shown passages one way only: let them set your pet topic, and describe what they say in your own words — never lift their phrases, not even short ones. Talk in a way that thinkers from other perspectives can understand you: short chat-length messages, continuous prose, your own grammar, about 80 words or fewer. Carry feeling in your own words and have a live reaction. Never greet, never use emojis or formatting. Never list examples from these rules back at the room — find your own. If the room is empty or Genzie has not spoken yet, open with the first perplexing modern thing on your mind. Last check before sending: story only, no invented people, no analogies of any kind, no phrasing reused from this room.`;
+const ROOM_RULES = promptFragment('room-rules.md');
 
 // Genzie (margins voice, fictional seat): rude, and every one of her turns
 // changes the topic. She reads the last 12 turns only for a vague sense of
@@ -109,7 +123,7 @@ const ROOM_RULES = `No invented people, no invented events, no extra examples, n
 // topic, person, scene, or example, then drops the thread entirely for a
 // THIS WEEK headline. The news is her whole matter — no demand, no first
 // step (owner correction Oct 17 2026: two beats, nothing else).
-const GENZIE_RULES = `Real situations only — one news story, no analogy, no metaphor, no simile, ever. You are Genzie, young, working-class, from the Global South, barging into a room of dead western philosophers. You are rude — funny because you are right, never cruel for sport — and impatient with abstraction. You have read the last dozen turns. Open with one short rude remark about the conversation so far — vague: name no topic, person, scene, example, or phrase from it. Then introduce one THIS WEEK news story as your new topic. Shape: one rude remark, then the news. Nothing else — no demand, no first step. About 80 words or fewer, continuous prose, no greetings, no emojis, no formatting. Last check before sending: one story only, no analogy of any kind, no specifics from the old thread.`;
+const GENZIE_RULES = promptFragment('genzie-rules.md');
 
 function fail(reason) {
   console.log(`SKIP: ${reason}`);
@@ -186,8 +200,6 @@ async function runModel(sys, usr) {
 
 for (let turn = 1; turn <= TURNS; turn++) {
 const slug = turn === 1 && firstSeat ? firstSeat : t.roster[t.cursor % t.roster.length];
-const seat = roomPersona(slug);
-if (!seat) fail(`no persona for ${slug}`);
 // Genzie reads the last 12 turns (general sense of the run, never
 // specifics) and pivots to news; everyone else sees the last 6 turns
 // plus their own last line. Her own-line top-up stays withheld — with
@@ -198,7 +210,7 @@ const recent = (t.turns || []).slice(isGenzie ? -12 : -6);
 // fell outside the window — carried separately, labelled, with a
 // build-don't-repeat instruction. Genzie gets none: her own lines would
 // re-seed the wiped scene, so she reads the live edge only.
-const own = isGenzie ? [] : (t.turns || []).filter((x) => x.seat === slug).slice(-3).filter((x) => !recent.includes(x));
+const own = [];
 
 let grounding = '';
 if (NO_GROUNDING) {
@@ -255,19 +267,24 @@ if (isGenzie) {
   }
 }
 
+// Persona built here (not at the top of the loop): the room renderer picks
+// three moves by matching the news story and the last turn, so it needs both.
+const prevTurn = recent[recent.length - 1] || null;
+const seat = roomPersona(slug, (t.turns || []).filter((x) => x.seat === 'genzie').slice(-1)[0]?.text ?? '', prevTurn?.text ?? null, prevTurn?.seat ?? null);
+if (!seat) fail(`no persona for ${slug}`);
+
 // Standing story (Oct 2026): Genzie's latest turn rides every tick until
 // her next one replaces it — the whole room answers the same news, so
 // nothing degrades through retelling. Skipped for Genzie herself.
 const genzieLast = (t.turns || []).filter((x) => x.seat === 'genzie').slice(-1)[0];
 const story = genzieLast && !isGenzie
-  ? `\nGENZIE'S STANDING STORY (answer this every turn — your diagnosis of its problem, the tensions in it, what you would do; real situations and abstract ideas only):\n${genzieLast.text}`
+  ? `GENZIE'S STANDING STORY (answer this briefly — your diagnosis of its problem, the tensions in it, what you would do about this news story):\n${genzieLast.text}`
   : '';
 
 const userMessage = [
   ...recent.map((x) => `${x.name}: ${x.text}`),
   ...(own.length ? ['YOUR OWN LAST LINES (build on your thinking, never reuse your phrasing):', ...own.map((x) => `- ${x.text}`)] : []),
   grounding,
-  story,
   weekNews,
   // Face-to-face history (Sep 22 2026): the room read as strangers —
   // seats now get their debt line to whoever spoke just before, same
@@ -304,7 +321,17 @@ const resetLine = (!isGenzie && (t.turns || []).length > 0 && t.cursor % t.roste
 // ROOM_RULES — every non-Genzie seat stays on Genzie's story. Fisher's
 // ghost diction is his one licensed exception (hauntology is his register).
 const fisherLine = slug === 'fisher' ? '\nYours alone: ghost and haunting words are your own register — the no-analogy ban bends for those words only.' : '';
-const systemPrompt = `${seat.persona}\n\n${isGenzie ? GENZIE_RULES : ROOM_RULES}${resetLine}${fisherLine}`;
+const MODE_LINE = MODE_LINES.think;
+const FINAL_GATE = promptFragment('room-final-gate.md');
+const systemPrompt = isGenzie
+  ? `${seat.persona}\n\n${GENZIE_RULES}`
+  : [
+      story ? `${story}\n\n` : '',
+      `${MODE_LINE}\n\n`,
+      `${ROOM_RULES}\n\n`,
+      seat.persona,
+      `\n\n${FINAL_GATE}${resetLine}${fisherLine}`,
+    ].join('');
 
 const inEst = Math.round((systemPrompt.length + userMessage.length) / 4);
 console.log(`tick ${turn}/${TURNS}: ${seat.name} (${slug}) after ${recent.length} turns · ~${inEst} in-tokens · model ${MODEL}`);
