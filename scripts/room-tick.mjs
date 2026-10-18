@@ -33,9 +33,6 @@ import { readFileSync, writeFileSync, existsSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { loadTestEnv } from './test-env.mjs';
-import { prepareIndex, searchIndex } from '../src/lib/rag-search.ts';
-import { joinShard } from '../src/lib/rag-shard.ts';
-import { smartCut } from '../src/lib/rag-text.ts';
 import { relationshipLine } from '../src/philosophers/influences.ts';
 import { renderThinkingPersona, ANONYMOUS_LEAD, MODE_LINES } from '../src/philosophers/thinking-select.ts';
 import { renderRoomThinking } from '../src/philosophers/room-persona.ts';
@@ -111,7 +108,7 @@ loadTestEnv();
 
 const T_PATH = join(root, 'public', 'room', 'transcript.json');
 const DRY = process.argv.includes('--dry-run');
-const NO_GROUNDING = process.argv.includes('--no-grounding');
+const NO_GROUNDING = process.argv.includes('--no-grounding'); // accepted, ignored: grounding retired
 const MAX_TURNS = 200;
 
 const MODEL = process.env.GROQ_ROOM_MODEL || 'qwen/qwen3.8-27b';
@@ -212,27 +209,11 @@ const recent = (t.turns || []).slice(isGenzie ? -12 : -6);
 // re-seed the wiped scene, so she reads the live edge only.
 const own = [];
 
-let grounding = '';
-if (NO_GROUNDING) {
-  console.log('(grounding off for this run: --no-grounding)');
-} else try {
-  const shardPath = join(root, 'public', 'rag', `author-${slug}.json`);
-  if (existsSync(shardPath)) {
-    const shard = JSON.parse(readFileSync(shardPath, 'utf8'));
-    const index = prepareIndex(joinShard(shard));
-    const queryBits = [
-      ...recent.filter((x) => x.seat === slug).map((x) => x.text),
-      ...recent.slice(-1).map((x) => x.text),
-    ].join(' ').slice(0, 800) || 'freedom power labour';
-    const hits = searchIndex(index, queryBits, { limit: 2 }).selected;
-    if (hits.length) {
-      grounding = `\nPASSAGES from your own works — read them for ideas, then describe what they say in your own plain words. Never lift their phrases, not even short ones:\n${hits.map((h, i) => `[${i + 1}] ${smartCut(h.passage.text, 650)}`).join('\n')}`;
-    }
-  }
-} catch (e) {
-  console.log(`(grounding skipped: ${String(e).slice(0, 100)})`);
-}
-
+// Grounding (Oct 18 2026): RETIRED from the room. The shard lookup used the
+// slug (`author-bloch.json`) while shards ship named by full name
+// (`author-ernst-bloch.json`), so passages silently never loaded; the room
+// reads better without them and the diet asks for less, not more. The
+// sittings' RAG is untouched. `--no-grounding` is now accepted and ignored.
 // This week in the world (Oct 10 2026, Genzie turns only): real current
 // headlines give her fresh matter no prompt can stale-date. Keyless
 // Hacker News API, Genzie turns only (~3/day), fail-soft — a failed
@@ -284,7 +265,6 @@ const story = genzieLast && !isGenzie
 const userMessage = [
   ...recent.map((x) => `${x.name}: ${x.text}`),
   ...(own.length ? ['YOUR OWN LAST LINES (build on your thinking, never reuse your phrasing):', ...own.map((x) => `- ${x.text}`)] : []),
-  grounding,
   weekNews,
   // Face-to-face history (Sep 22 2026): the room read as strangers —
   // seats now get their debt line to whoever spoke just before, same
