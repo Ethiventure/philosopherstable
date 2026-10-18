@@ -112,6 +112,10 @@ const NO_GROUNDING = process.argv.includes('--no-grounding'); // accepted, ignor
 const MAX_TURNS = 200;
 
 const MODEL = process.env.GROQ_ROOM_MODEL || 'qwen/qwen3.8-27b';
+// Hard length cap in TOKENS (Oct 18 2026): 380 (≈285w) was read and
+// ignored — turns ran 200-300w. Tokens obey where word counts did not.
+// 150 ≈ 110 words; raise to 170 if turns start ending mid-sentence.
+const MAX_TOKENS = Number(process.env.GROQ_ROOM_MAX_TOKENS) || 150;
 const ROOM_RULES = promptFragment('room-rules.md');
 
 // Genzie (margins voice, fictional seat): rude, and every one of her turns
@@ -181,7 +185,7 @@ async function runModel(sys, usr) {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${key}` },
       signal: ctrl.signal,
-      body: JSON.stringify({ model: MODEL, messages: [{ role: 'system', content: sys }, { role: 'user', content: usr }], max_tokens: 380 }),
+      body: JSON.stringify({ model: MODEL, messages: [{ role: 'system', content: sys }, { role: 'user', content: usr }], max_tokens: MAX_TOKENS }),
     });
   } catch (e) {
     throw new Error(e.name === 'AbortError' ? 'Groq timeout' : `network: ${String(e).slice(0, 80)}`);
