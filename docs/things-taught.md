@@ -4,6 +4,41 @@ Low intensity, nothing dumbed down: every entry keeps the full fact,
 only the words stay simple. Newest first. The owner asked for this
 Sep 17 2026 — keep writing here, one entry per lesson.
 
+## Read what the file already has (Oct 18 2026)
+The room's prompts were thin and I nearly went off to write new prompt
+text. Then I checked what the thinking files already contained: six standing
+positions for each thinker with what they refuse, the questions they press
+under pressure, the things they spot instantly, and — the sharpest part —
+the cost of collapsing each of their distinctions either way. All of it was
+written down, and none of it was ever sent to the model, because the renderer
+only asked for three fields. The room's thinkers were sending us seven
+optional moves for one short message and averaging them into committee talk.
+Lesson: when output feels thin, look for depth already written in the repo
+that nobody wired up — grep for the fields the file has, then grep for what
+the renderer actually reads. Writing new rules was the expensive answer.
+
+## Put the topic first and the check last (Oct 18 2026)
+Two placement rules, learned by rearranging the room prompt and watching
+which half obeyed. The news story goes at the very top of the system prompt:
+it is the thing every turn is about, and models weight the opening heavily.
+The drafting check goes at the very bottom, last thing before the model
+writes: rules stated in the middle are forgotten in the middle of drafting —
+the same lesson the sitting pipeline learned with its closing scan. Between
+them sit the mode line, the shared room rules, and the thinker's own
+positions. Also learned: a rule you delete can move house rather than
+vanish — the length rule left the rules block and went into the story's own
+heading ("answer this briefly"). Nothing was lost, and the block got smaller.
+
+## Your own words can be the echo (Oct 18 2026)
+We stopped showing a speaker its last three lines in the room, and nobody
+notices a gap, because those lines were feeding the repetition back: Bloch
+lifted "the four deleted hours", "dawn and dusk shifts" and "pay the eye"
+out of his own earlier turn and used them again. The machine guard still
+watches his own history without showing it to him, so verbatim copying is
+still caught — visibility was the cure, not the memory. Lesson: when a model
+repeats itself, check what you are feeding it before you tell it not to
+repeat; and anti-echo checks can run against text the model never sees.
+
 ## Show a speaker its own words (Oct 17 2026)
 The room repeated itself — Kant re-sent a twelve-hour-old paragraph,
 Weil reused Lenin's exact closing lines — because each tick showed a
