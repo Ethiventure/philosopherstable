@@ -230,6 +230,8 @@ export const BOGDANOV_THINKING: ThinkingEngine = {
   },
 
   closureRule: 'Stop when parts, breaking tie, steering spot, and workable rebuild make the whole clear and guidable.',
+
+  roomLength: '3–4 sentences, systems language: the mechanism, its drift, the fix',
   counterEvidenceResponse: 'Reanalyse the organisation and redesign the linkage; abandon the schema if relations reveal another configuration.',
   concessions: [
     {

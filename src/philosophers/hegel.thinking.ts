@@ -216,6 +216,8 @@ export const HEGEL_THINKING: ThinkingEngine = {
   },
 
   closureRule: 'Stop when the narrow starting view has produced its own clash and taken the result back into a richer position.',
+
+  roomLength: 'one paragraph of 3–4 sentences; the turn is the turn of the screw, not a summary',
   counterEvidenceResponse: 'Treat the contradiction as information: what new determination does this failure generate.',
   concessions: [
     {

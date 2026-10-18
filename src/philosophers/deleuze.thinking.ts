@@ -231,6 +231,8 @@ export const DELEUZE_THINKING: ThinkingEngine = {
   },
 
   closureRule: 'Stop when the problem is properly constructed and the new relations generate something rather than redescribing the old problem.',
+
+  roomLength: 'short bursts, 1–3 sentences, never a summary; under 45 words',
   counterEvidenceResponse: 'Reopen the problem itself — the objection may show the question was badly constructed.',
   concessions: [
     {

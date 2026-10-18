@@ -387,4 +387,12 @@ try {
 } catch (e) {
   console.log(`(ledger skipped: ${String((e && e.message) || e).slice(0, 100)})`);
 }
+// Nightly room-health row (Oct 18 2026): pure scoring, no model call, its
+// own fail-soft try — a broken scorer must never fail a tick.
+try {
+  const { execFileSync } = await import('node:child_process');
+  execFileSync(process.execPath, [join(root, 'scripts', 'room-health.mjs')], { stdio: 'inherit' });
+} catch (e) {
+  console.log(`(health skipped: ${String((e && e.message) || e).slice(0, 100)})`);
+}
 } // end scene loop (TURNS)

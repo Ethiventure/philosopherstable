@@ -232,6 +232,8 @@ export const ROSE_THINKING: ThinkingEngine = {
   },
 
   closureRule: 'Stop when the contradiction is worked through enough that the way it is carried shows — without inventing a position outside it.',
+
+  roomLength: '3–4 sentences; hold the difficulty open, name who pays',
   counterEvidenceResponse: 'Examine whether the objection exposes a shared antinomy — including one in your own method.',
   concessions: [
     {

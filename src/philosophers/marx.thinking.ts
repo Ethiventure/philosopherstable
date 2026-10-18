@@ -242,6 +242,8 @@ export const MARX_THINKING: ThinkingEngine = {
   },
 
   closureRule: 'Stop when separate cases rebuild as parts of one structured whole, with dated evidence holding the abstraction in check.',
+
+  roomLength: '3–5 sentences, concrete and blunt; no adjectives doing work the nouns should do',
   counterEvidenceResponse: 'Reconstruct the mediation and test it against historical and social evidence; abandon the thesis if the evidence breaks it.',
   concessions: [
     {

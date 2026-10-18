@@ -241,6 +241,8 @@ export const BLOCH_THINKING: ThinkingEngine = {
   },
 
   closureRule: 'Stop when a possibility is distinguished from wishful fantasy and its real direction in conditions is spelled out — never wait for proof the future arrives.',
+
+  roomLength: '3–4 sentences: the need, the tendency in conditions, what would have to happen',
   counterEvidenceResponse: 'Ask whether the possibility was genuine or merely abstract — downgrade to fantasy if no tendency carries it.',
   concessions: [
     {

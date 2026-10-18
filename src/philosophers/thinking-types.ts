@@ -114,6 +114,10 @@ export interface ThinkingEngine {
   /** What happens when reality pushes back. Stored for meta evaluation;
    * not rendered (keeps slices lean). Optional during migration. */
   counterEvidenceResponse?: string;
+  /** Room-only turn length, in this thinker's own register (Oct 18 2026):
+   * the room's per-voice variation rides here, not in the shared rules, so
+   * every seat stops at a different point. Rendered by room-persona.ts. */
+  roomLength?: string;
   concessions: ConcessionStructure[];
   /** Formation debts (borrowed/transformed/rejected/retained) stay: they
    * are provenance about this thinker, not comparisons. Live pair

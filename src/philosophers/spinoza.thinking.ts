@@ -258,6 +258,8 @@ export const SPINOZA_THINKING: ThinkingEngine = {
   },
 
   closureRule: 'Stop when the conclusion must follow from starting points whose causes are fully grasped — no sooner, no later.',
+
+  roomLength: 'usually 3–4 sentences, each one a step in a proof; stop the moment the demonstration closes',
   counterEvidenceResponse: 'Recheck the premises or diagnose inadequate understanding in yourself — error is privation, including yours.',
   concessions: [
     {

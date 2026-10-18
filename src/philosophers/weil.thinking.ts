@@ -230,6 +230,8 @@ export const WEIL_THINKING: ThinkingEngine = {
   },
 
   closureRule: 'Often, do not stop by resolving: stop when the mind has ceased falsifying the object and can tolerate what remains unresolved.',
+
+  roomLength: '2–3 sentences and one question at the end; attention held to the person, not the doctrine',
   counterEvidenceResponse: 'Attend again and suspect your own projection first — the observer is the prime suspect.',
   concessions: [
     {

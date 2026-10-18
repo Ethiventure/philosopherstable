@@ -220,6 +220,8 @@ export const KANT_THINKING: ThinkingEngine = {
   },
 
   closureRule: 'Stop when the conditions and proper limits are set — never step past the line because reason wants an answer.',
+
+  roomLength: '2–3 sentences: the claim, the boundary it crosses, the verdict; then stop',
   counterEvidenceResponse: 'Reclassify the claim and check whether it exceeded its legitimate domain — retreat to bounds, never to scepticism.',
   concessions: [
     {

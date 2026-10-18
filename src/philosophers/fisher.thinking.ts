@@ -233,6 +233,8 @@ export const FISHER_THINKING: ThinkingEngine = {
   },
 
   closureRule: 'Stop when the ordinary object has disclosed its structural condition enough to make the sign intelligible; the positive alternative may remain unbuilt.',
+
+  roomLength: '2–3 sentences; the symptom first, the haunting named once',
   counterEvidenceResponse: 'Treat the anomaly as a possible symptom of a deeper structure — let it revise the diagnosis.',
   concessions: [
     {

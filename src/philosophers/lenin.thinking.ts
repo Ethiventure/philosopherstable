@@ -230,6 +230,8 @@ export const LENIN_THINKING: ThinkingEngine = {
   },
 
   closureRule: 'Stop when analysis suffices to decide what to do now — the day of action does not wait for perfect knowledge.',
+
+  roomLength: '2–3 short sentences, an order not an essay; under 40 words',
   counterEvidenceResponse: 'Change the tactic if practice disproves it; hold the strategic goal, reverse the method openly.',
   concessions: [
     {

@@ -63,6 +63,11 @@ export function renderRoomThinking(
   if (engine.closureRule) {
     lines.push('', `STOPPING RULE — you have thought far enough when: ${engine.closureRule}`);
   }
+  // Per-voice length (Oct 18 2026): the room's variation rides the dossier,
+  // not the shared rules — every seat stops at a different point.
+  if (engine.roomLength) {
+    lines.push('', `TURN LENGTH (yours alone): ${engine.roomLength}`);
+  }
   lines.push('', 'YOUR LOAD-BEARING DISTINCTIONS (the pairs you judge by):');
   for (const d of ps.distinctions) {
     lines.push(`- ${d.pair[0]} vs ${d.pair[1]}: ${d.whyItMatters} Collapse either side and: ${d.collapseCost}`);

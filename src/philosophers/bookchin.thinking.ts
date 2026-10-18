@@ -253,6 +253,8 @@ export const BOOKCHIN_THINKING: ThinkingEngine = {
   },
 
   closureRule: 'Stop when the direction of growth is turned into a plausible deciding-body shape that could actually hold it — naming any hierarchy it leaves standing, and saying how people learn to run it.',
+
+  roomLength: '2–3 sentences, blunt and concrete: who must decide, and the body that does it',
   counterEvidenceResponse: 'Ask whether the proposed development actually realises the immanent potential or merely flatters it.',
   concessions: [
     {
