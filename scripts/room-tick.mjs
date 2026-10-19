@@ -114,8 +114,8 @@ const MAX_TURNS = 200;
 const MODEL = process.env.GROQ_ROOM_MODEL || 'qwen/qwen3.8-27b';
 // Hard length cap in TOKENS (Oct 18 2026): 380 (≈285w) was read and
 // ignored — turns ran 200-300w. Tokens obey where word counts did not.
-// 150 ≈ 110 words; raise to 170 if turns start ending mid-sentence.
-const MAX_TOKENS = Number(process.env.GROQ_ROOM_MAX_TOKENS) || 150;
+// 150 clipped 4 of 12 turns mid-word on Oct 19; 170 ≈ 130 words.
+const MAX_TOKENS = Number(process.env.GROQ_ROOM_MAX_TOKENS) || 170;
 const ROOM_RULES = promptFragment('room-rules.md');
 
 // Genzie (margins voice, fictional seat): rude, and every one of her turns
