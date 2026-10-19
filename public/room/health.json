@@ -435,15 +435,13 @@
     "date": "2026-10-19",
     "model": "qwen/qwen3.8-27b",
     "summary": {
-      "turns": 29,
-      "meanWords": 124,
-      "meanOverlap": 0.15,
-      "meanNovelty": 0.73,
-      "meanStory": 0.11,
-      "guardRewrites": 1,
+      "turns": 26,
+      "meanWords": 121,
+      "meanOverlap": 0.13,
+      "meanNovelty": 0.74,
+      "meanStory": 0.1,
+      "guardRewrites": 0,
       "flags": [
-        "long:hegel",
-        "long:lenin",
         "long:bookchin",
         "shout:deleuze",
         "long:deleuze",
@@ -460,46 +458,6 @@
       ]
     },
     "turns": [
-      {
-        "ts": "2026-10-18T07:59:29.255Z",
-        "seat": "kant",
-        "words": 103,
-        "overlap": 0.11,
-        "novelty": 0.63,
-        "story": 0.07,
-        "flags": []
-      },
-      {
-        "ts": "2026-10-18T08:00:28.700Z",
-        "seat": "hegel",
-        "words": 122,
-        "overlap": 0.25,
-        "novelty": 0.76,
-        "story": 0.21,
-        "flags": [
-          "long"
-        ]
-      },
-      {
-        "ts": "2026-10-18T08:59:28.935Z",
-        "seat": "marx",
-        "words": 96,
-        "overlap": 0.14,
-        "novelty": 0.54,
-        "story": 0.07,
-        "flags": []
-      },
-      {
-        "ts": "2026-10-18T09:00:29.748Z",
-        "seat": "lenin",
-        "words": 174,
-        "overlap": 0.68,
-        "novelty": 0.77,
-        "story": 0.07,
-        "flags": [
-          "long"
-        ]
-      },
       {
         "ts": "2026-10-18T09:59:29.202Z",
         "seat": "bogdanov",
@@ -749,6 +707,15 @@
         "flags": [
           "long"
         ]
+      },
+      {
+        "ts": "2026-10-19T09:00:55.927Z",
+        "seat": "lenin",
+        "words": 53,
+        "overlap": 0.08,
+        "novelty": 0.83,
+        "story": 0,
+        "flags": []
       }
     ]
   }
