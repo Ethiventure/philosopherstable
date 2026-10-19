@@ -4,6 +4,20 @@ Low intensity, nothing dumbed down: every entry keeps the full fact,
 only the words stay simple. Newest first. The owner asked for this
 Sep 17 2026 — keep writing here, one entry per lesson.
 
+## A word count is a wish; a token cap is a wall (Oct 19 2026)
+The room asks for short turns in words — "under 40", "about 55" — and the
+model read those numbers politely and wrote 200-300 words anyway. Words are
+an instruction the model can talk itself past. The same length written as a
+token cap (the model's own currency — the budget it stops at when writing)
+was obeyed on the first try: overnight the mean dropped from 201 to 107
+words with no nagging. The cap has an edge, though: set it too tight and
+the model is cut off mid-word, so Oct 19 opened with 4 of 12 turns ending
+half a sentence. Two numbers now balance the room: the cap at 170 tokens
+for the hard stop, the word rules in each thinker's file for the taste.
+Rule: when a length rule keeps being ignored, express it as a budget the
+tool enforces, not a sentence the model reads — then tune the budget until
+endings stop clipping.
+
 ## Read what the file already has (Oct 18 2026)
 The room's prompts were thin and I nearly went off to write new prompt
 text. Then I checked what the thinking files already contained: six standing
