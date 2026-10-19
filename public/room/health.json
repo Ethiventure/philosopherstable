@@ -436,13 +436,12 @@
     "model": "qwen/qwen3.8-27b",
     "summary": {
       "turns": 21,
-      "meanWords": 120,
+      "meanWords": 114,
       "meanOverlap": 0.09,
       "meanNovelty": 0.77,
-      "meanStory": 0.08,
+      "meanStory": 0.07,
       "guardRewrites": 0,
       "flags": [
-        "long:kant",
         "long:lenin",
         "long:bogdanov",
         "long:weil",
@@ -454,17 +453,6 @@
       ]
     },
     "turns": [
-      {
-        "ts": "2026-10-18T15:00:57.050Z",
-        "seat": "kant",
-        "words": 160,
-        "overlap": 0.15,
-        "novelty": 0.73,
-        "story": 0.21,
-        "flags": [
-          "long"
-        ]
-      },
       {
         "ts": "2026-10-18T15:46:42.800Z",
         "seat": "hegel",
@@ -660,6 +648,15 @@
         "flags": [
           "long"
         ]
+      },
+      {
+        "ts": "2026-10-19T15:00:57.394Z",
+        "seat": "deleuze",
+        "words": 40,
+        "overlap": 0.1,
+        "novelty": 0.67,
+        "story": 0,
+        "flags": []
       }
     ]
   }
