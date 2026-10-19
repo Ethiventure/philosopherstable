@@ -435,11 +435,11 @@
     "date": "2026-10-19",
     "model": "qwen/qwen3.8-27b",
     "summary": {
-      "turns": 32,
+      "turns": 33,
       "meanWords": 119,
       "meanOverlap": 0.15,
       "meanNovelty": 0.72,
-      "meanStory": 0.12,
+      "meanStory": 0.11,
       "guardRewrites": 1,
       "flags": [
         "long:hegel",
@@ -770,6 +770,15 @@
         "flags": [
           "long"
         ]
+      },
+      {
+        "ts": "2026-10-19T04:31:09.556Z",
+        "seat": "kant",
+        "words": 105,
+        "overlap": 0.12,
+        "novelty": 0.74,
+        "story": 0.07,
+        "flags": []
       }
     ]
   }
