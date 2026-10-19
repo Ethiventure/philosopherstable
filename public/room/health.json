@@ -435,8 +435,8 @@
     "date": "2026-10-19",
     "model": "qwen/qwen3.8-27b",
     "summary": {
-      "turns": 19,
-      "meanWords": 105,
+      "turns": 20,
+      "meanWords": 107,
       "meanOverlap": 0.08,
       "meanNovelty": 0.78,
       "meanStory": 0.07,
@@ -448,7 +448,8 @@
         "long:hegel",
         "long:marx",
         "long:bookchin",
-        "long:rose"
+        "long:rose",
+        "long:spinoza"
       ]
     },
     "turns": [
@@ -636,6 +637,17 @@
         "novelty": 0.95,
         "story": null,
         "flags": []
+      },
+      {
+        "ts": "2026-10-19T19:48:20.235Z",
+        "seat": "spinoza",
+        "words": 152,
+        "overlap": 0.08,
+        "novelty": 0.84,
+        "story": 0,
+        "flags": [
+          "long"
+        ]
       }
     ]
   }
