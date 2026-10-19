@@ -435,8 +435,8 @@
     "date": "2026-10-19",
     "model": "qwen/qwen3.8-27b",
     "summary": {
-      "turns": 21,
-      "meanWords": 114,
+      "turns": 20,
+      "meanWords": 119,
       "meanOverlap": 0.09,
       "meanNovelty": 0.77,
       "meanStory": 0.07,
@@ -449,28 +449,11 @@
         "long:spinoza",
         "long:hegel",
         "long:marx",
-        "long:bookchin"
+        "long:bookchin",
+        "long:rose"
       ]
     },
     "turns": [
-      {
-        "ts": "2026-10-18T15:46:42.800Z",
-        "seat": "hegel",
-        "words": 87,
-        "overlap": 0.18,
-        "novelty": 0.78,
-        "story": 0,
-        "flags": []
-      },
-      {
-        "ts": "2026-10-18T16:31:04.446Z",
-        "seat": "marx",
-        "words": 84,
-        "overlap": 0.14,
-        "novelty": 0.61,
-        "story": 0.14,
-        "flags": []
-      },
       {
         "ts": "2026-10-18T18:01:01.474Z",
         "seat": "lenin",
@@ -657,6 +640,17 @@
         "novelty": 0.67,
         "story": 0,
         "flags": []
+      },
+      {
+        "ts": "2026-10-19T16:31:06.277Z",
+        "seat": "rose",
+        "words": 144,
+        "overlap": 0.12,
+        "novelty": 0.74,
+        "story": 0.07,
+        "flags": [
+          "long"
+        ]
       }
     ]
   }
