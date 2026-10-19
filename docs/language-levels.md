@@ -1,5 +1,14 @@
 # Language levels (Low / Medium / High)
 
+> **Status (Oct 19 2026).** The Settings UI no longer shows Low/Med/High:
+> the picker says **Think / Teach / Think & sound** (same plumbing —
+> `intensity: low|medium|high`, mapped by `intensityToThinkMode`). The
+> language-level machinery below still feeds `renderPersona` (service-desk
+> path); sittings take `renderThinkingPersona` + MODE_LINES from
+> `src/philosophers/thinking-select.ts` — every seat now has a thinking
+> file. Expression files ride Teach (trio) and Think & sound only, never
+> Think.
+
 ## Rollback points (read before changing anything below)
 
 - **Deployed (Netlify live app):** `origin/main` at `0f604ae` (PR #18 merge).

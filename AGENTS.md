@@ -90,9 +90,13 @@ full edge-list fallback. Content-agnostic: substitute any entities.
   — one plain line each), rendered as visible text, never tooltip-only. The
   export names the model behind each turn. Source of truth lives in
   `DEEPINFRA_PRIMARIES`-style structures so UI copy and code cannot drift.
-- Difficulty levels that hold (Low/Medium/High): define ALL levels, govern
-  the simple one by removing difficulty machinery (not adding rules), every
-  level gets a reader test + worked example + failure condition.
+- Three sitting modes (Think / Teach / Think & sound; plumbing is still
+  `intensity: low|medium|high` via `intensityToThinkMode`): define ALL
+  three, govern the basic one (Think) by removing style machinery rather
+  than adding rules, every mode gets a reader test + worked example +
+  failure condition. Expression files ride Teach (trio) and Think & sound
+  only — never Think. UI labels are modes since Sep 2026; the older
+  level system's record stays in `docs/language-levels.md`.
 - First-run card: modal on first visit (what it is, honest quota picture,
   keys-never-leave-browser), "don't show again" default checked, Esc
   dismisses, header button reopens.
