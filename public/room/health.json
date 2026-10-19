@@ -435,17 +435,13 @@
     "date": "2026-10-19",
     "model": "qwen/qwen3.8-27b",
     "summary": {
-      "turns": 25,
-      "meanWords": 123,
-      "meanOverlap": 0.11,
-      "meanNovelty": 0.75,
+      "turns": 21,
+      "meanWords": 121,
+      "meanOverlap": 0.1,
+      "meanNovelty": 0.78,
       "meanStory": 0.09,
       "guardRewrites": 0,
       "flags": [
-        "long:bookchin",
-        "shout:deleuze",
-        "long:deleuze",
-        "long:fisher",
         "long:spinoza",
         "long:kant",
         "long:lenin",
@@ -458,58 +454,6 @@
       ]
     },
     "turns": [
-      {
-        "ts": "2026-10-18T10:54:46.751Z",
-        "seat": "weil",
-        "words": 117,
-        "overlap": 0.13,
-        "novelty": 0.69,
-        "story": 0.21,
-        "flags": []
-      },
-      {
-        "ts": "2026-10-18T10:59:28.360Z",
-        "seat": "bookchin",
-        "words": 122,
-        "overlap": 0.17,
-        "novelty": 0.61,
-        "story": 0,
-        "flags": [
-          "long"
-        ]
-      },
-      {
-        "ts": "2026-10-18T11:00:29.749Z",
-        "seat": "deleuze",
-        "words": 161,
-        "overlap": 0.2,
-        "novelty": 0.55,
-        "story": 0.14,
-        "flags": [
-          "shout",
-          "long"
-        ]
-      },
-      {
-        "ts": "2026-10-18T11:59:28.471Z",
-        "seat": "rose",
-        "words": 113,
-        "overlap": 0.15,
-        "novelty": 0.71,
-        "story": 0.07,
-        "flags": []
-      },
-      {
-        "ts": "2026-10-18T12:00:29.745Z",
-        "seat": "fisher",
-        "words": 136,
-        "overlap": 0.2,
-        "novelty": 0.62,
-        "story": 0,
-        "flags": [
-          "long"
-        ]
-      },
       {
         "ts": "2026-10-18T12:59:29.991Z",
         "seat": "genzie",
@@ -703,6 +647,15 @@
         "ts": "2026-10-19T10:31:06.474Z",
         "seat": "bogdanov",
         "words": 120,
+        "overlap": 0.07,
+        "novelty": 0.83,
+        "story": 0,
+        "flags": []
+      },
+      {
+        "ts": "2026-10-19T12:00:58.344Z",
+        "seat": "bloch",
+        "words": 117,
         "overlap": 0.07,
         "novelty": 0.83,
         "story": 0,
