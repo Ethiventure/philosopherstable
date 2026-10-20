@@ -661,8 +661,8 @@
     "date": "2026-10-20",
     "model": "qwen/qwen3.8-27b",
     "summary": {
-      "turns": 20,
-      "meanWords": 117,
+      "turns": 21,
+      "meanWords": 115,
       "meanOverlap": 0.08,
       "meanNovelty": 0.8,
       "meanStory": 0.04,
@@ -879,6 +879,15 @@
         "overlap": 0.05,
         "novelty": 0.88,
         "story": null,
+        "flags": []
+      },
+      {
+        "ts": "2026-10-20T11:25:05.890Z",
+        "seat": "spinoza",
+        "words": 84,
+        "overlap": 0.06,
+        "novelty": 0.88,
+        "story": 0.07,
         "flags": []
       }
     ]
