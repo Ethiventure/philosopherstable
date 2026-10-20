@@ -661,10 +661,10 @@
     "date": "2026-10-20",
     "model": "qwen/qwen3.8-27b",
     "summary": {
-      "turns": 21,
-      "meanWords": 120,
+      "turns": 22,
+      "meanWords": 118,
       "meanOverlap": 0.07,
-      "meanNovelty": 0.82,
+      "meanNovelty": 0.81,
       "meanStory": 0.04,
       "guardRewrites": 0,
       "flags": [
@@ -895,6 +895,15 @@
         "flags": [
           "long"
         ]
+      },
+      {
+        "ts": "2026-10-20T19:31:05.654Z",
+        "seat": "weil",
+        "words": 83,
+        "overlap": 0.07,
+        "novelty": 0.74,
+        "story": 0.07,
+        "flags": []
       }
     ]
   }
