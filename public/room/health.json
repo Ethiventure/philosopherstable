@@ -661,11 +661,11 @@
     "date": "2026-10-20",
     "model": "qwen/qwen3.8-27b",
     "summary": {
-      "turns": 21,
-      "meanWords": 116,
+      "turns": 20,
+      "meanWords": 117,
       "meanOverlap": 0.08,
-      "meanNovelty": 0.79,
-      "meanStory": 0.05,
+      "meanNovelty": 0.8,
+      "meanStory": 0.04,
       "guardRewrites": 0,
       "flags": [
         "long:spinoza",
@@ -677,28 +677,11 @@
         "long:kant",
         "long:hegel",
         "long:marx",
-        "long:bogdanov"
+        "long:bogdanov",
+        "long:bloch"
       ]
     },
     "turns": [
-      {
-        "ts": "2026-10-19T01:31:06.645Z",
-        "seat": "fisher",
-        "words": 120,
-        "overlap": 0.12,
-        "novelty": 0.67,
-        "story": 0.21,
-        "flags": []
-      },
-      {
-        "ts": "2026-10-19T03:00:56.251Z",
-        "seat": "genzie",
-        "words": 104,
-        "overlap": 0.05,
-        "novelty": 0.83,
-        "story": null,
-        "flags": []
-      },
       {
         "ts": "2026-10-19T04:29:34.834Z",
         "seat": "spinoza",
@@ -886,6 +869,17 @@
         "overlap": 0.07,
         "novelty": 0.76,
         "story": 0.07,
+        "flags": [
+          "long"
+        ]
+      },
+      {
+        "ts": "2026-10-20T03:00:57.646Z",
+        "seat": "bloch",
+        "words": 127,
+        "overlap": 0.07,
+        "novelty": 0.76,
+        "story": 0,
         "flags": [
           "long"
         ]
