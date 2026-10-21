@@ -908,8 +908,8 @@
     "date": "2026-10-21",
     "model": "qwen/qwen3.8-27b",
     "summary": {
-      "turns": 20,
-      "meanWords": 117,
+      "turns": 21,
+      "meanWords": 118,
       "meanOverlap": 0.09,
       "meanNovelty": 0.8,
       "meanStory": 0.07,
@@ -924,7 +924,8 @@
         "long:hegel",
         "long:marx",
         "long:bloch",
-        "long:deleuze"
+        "long:deleuze",
+        "long:rose"
       ]
     },
     "turns": [
@@ -1124,6 +1125,17 @@
         "overlap": 0.08,
         "novelty": 0.77,
         "story": 0.21,
+        "flags": [
+          "long"
+        ]
+      },
+      {
+        "ts": "2026-10-21T13:42:21.090Z",
+        "seat": "rose",
+        "words": 147,
+        "overlap": 0.1,
+        "novelty": 0.8,
+        "story": 0.07,
         "flags": [
           "long"
         ]
