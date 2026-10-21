@@ -335,7 +335,7 @@ const systemPrompt = isGenzie
       `${MODE_LINE}\n\n`,
       `${ROOM_RULES}\n\n`,
       seat.persona,
-      ...(VOICE && !isGenzie && EXPRESSIONS[slug] ? [`\n\n${buildExpressionText(EXPRESSIONS[slug], 'thinkAndSound', true)}`] : []),
+      ...(VOICE && !isGenzie && EXPRESSIONS[slug] ? [`\n\n${buildExpressionText(EXPRESSIONS[slug], 'thinkAndSound', true)}\n\nROOM TERMS (overrides the fences in this block for this room only): your core terms and signature distinctions belong IN your judgments here whenever they carry the point — "voice only, never thinking terms" does not apply in this room. What stays fenced: voice flourishes never write a claim the thinking files do not support.`] : []),
       `\n\n${FINAL_GATE}${resetLine}${fisherLine}`,
     ].join('');
 
