@@ -114,8 +114,10 @@ const MAX_TURNS = 200;
 const MODEL = process.env.GROQ_ROOM_MODEL || 'qwen/qwen3.8-27b';
 // Hard length cap in TOKENS (Oct 18 2026): 380 (≈285w) was read and
 // ignored — turns ran 200-300w. Tokens obey where word counts did not.
-// 150 clipped 4 of 12 turns mid-word on Oct 19; 170 ≈ 130 words.
-const MAX_TOKENS = Number(process.env.GROQ_ROOM_MAX_TOKENS) || 170;
+// Oct 19: 150 clipped 4/12. Oct 21: 170 still clipped 14/47 — measured,
+// 170 tokens = 147 words for this text, and natural turns finish by ~150w.
+// 200 ≈ 174w ceiling: lets sentences end, still far under essay length.
+const MAX_TOKENS = Number(process.env.GROQ_ROOM_MAX_TOKENS) || 200;
 const ROOM_RULES = promptFragment('room-rules.md');
 
 // Genzie (margins voice, fictional seat): rude, and every one of her turns
