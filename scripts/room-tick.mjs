@@ -34,7 +34,26 @@ import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { loadTestEnv } from './test-env.mjs';
 import { relationshipLine } from '../src/philosophers/influences.ts';
-import { renderThinkingPersona, ANONYMOUS_LEAD, MODE_LINES } from '../src/philosophers/thinking-select.ts';
+import { renderThinkingPersona, ANONYMOUS_LEAD, MODE_LINES, buildExpressionText } from '../src/philosophers/thinking-select.ts';
+import { SPINOZA_EXPRESSION } from '../src/philosophers/spinoza.expression.ts';
+import { KANT_EXPRESSION } from '../src/philosophers/kant.expression.ts';
+import { HEGEL_EXPRESSION } from '../src/philosophers/hegel.expression.ts';
+import { MARX_EXPRESSION } from '../src/philosophers/marx.expression.ts';
+import { LENIN_EXPRESSION } from '../src/philosophers/lenin.expression.ts';
+import { BOGDANOV_EXPRESSION } from '../src/philosophers/bogdanov.expression.ts';
+import { BLOCH_EXPRESSION } from '../src/philosophers/bloch.expression.ts';
+import { WEIL_EXPRESSION } from '../src/philosophers/weil.expression.ts';
+import { BOOKCHIN_EXPRESSION } from '../src/philosophers/bookchin.expression.ts';
+import { DELEUZE_EXPRESSION } from '../src/philosophers/deleuze.expression.ts';
+import { ROSE_EXPRESSION } from '../src/philosophers/rose.expression.ts';
+import { FISHER_EXPRESSION } from '../src/philosophers/fisher.expression.ts';
+// Voice A/B (Oct 21 2026, tag room-tick-baseline-2026-10-21): ONE variable —
+// "voice in the room". The think-mode line banned signature vocabulary, so
+// turning expression on also swaps the line to thinkAndSound; the two edits
+// are one change (the line and the block contradict each other otherwise).
+// ROOM_VOICE=off is the revert knob. Rocks: version 2026-10-21a.
+const EXPRESSIONS = { spinoza: SPINOZA_EXPRESSION, kant: KANT_EXPRESSION, hegel: HEGEL_EXPRESSION, marx: MARX_EXPRESSION, lenin: LENIN_EXPRESSION, bogdanov: BOGDANOV_EXPRESSION, bloch: BLOCH_EXPRESSION, weil: WEIL_EXPRESSION, bookchin: BOOKCHIN_EXPRESSION, deleuze: DELEUZE_EXPRESSION, rose: ROSE_EXPRESSION, fisher: FISHER_EXPRESSION };
+const VOICE = (process.env.ROOM_VOICE || 'on') !== 'off';
 import { renderRoomThinking } from '../src/philosophers/room-persona.ts';
 import { SPINOZA_THINKING } from '../src/philosophers/spinoza.thinking.ts';
 import { KANT_THINKING } from '../src/philosophers/kant.thinking.ts';
@@ -307,7 +326,7 @@ const resetLine = (!isGenzie && (t.turns || []).length > 0 && t.cursor % t.roste
 // ROOM_RULES — every non-Genzie seat stays on Genzie's story. Fisher's
 // ghost diction is his one licensed exception (hauntology is his register).
 const fisherLine = slug === 'fisher' ? '\nYours alone: ghost and haunting words are your own register — the no-analogy ban bends for those words only.' : '';
-const MODE_LINE = MODE_LINES.think;
+const MODE_LINE = VOICE ? MODE_LINES.thinkAndSound : MODE_LINES.think;
 const FINAL_GATE = promptFragment('room-final-gate.md');
 const systemPrompt = isGenzie
   ? `${seat.persona}\n\n${GENZIE_RULES}`
@@ -316,6 +335,7 @@ const systemPrompt = isGenzie
       `${MODE_LINE}\n\n`,
       `${ROOM_RULES}\n\n`,
       seat.persona,
+      ...(VOICE && !isGenzie && EXPRESSIONS[slug] ? [`\n\n${buildExpressionText(EXPRESSIONS[slug], 'thinkAndSound', true)}`] : []),
       `\n\n${FINAL_GATE}${resetLine}${fisherLine}`,
     ].join('');
 
