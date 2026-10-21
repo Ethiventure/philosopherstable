@@ -4,6 +4,18 @@ Low intensity, nothing dumbed down: every entry keeps the full fact,
 only the words stay simple. Newest first. The owner asked for this
 Sep 17 2026 — keep writing here, one entry per lesson.
 
+## A block borrowed from another context carries its fences (Oct 21 2026)
+When the room wanted the thinkers' voices, I reached for the sittings'
+ready-made voice block — it existed, it was proven, it fit in one line.
+But it rode in with a fence written for a different customer: the desk
+must not give away who is speaking, so the block ordered "voice only,
+never thinking terms". In the sitting that order protects the blind grade;
+in the room it banned exactly what the owner wanted (the thinkers' own
+vocabulary inside the argument). The rule: when you borrow a pre-rendered
+block, list every guardrail in it and ask which contract wrote it — one
+contract's safety rail is another contract's locked door. Same block, two
+customers: check the fences, not just the furniture.
+
 ## A word count is a wish; a token cap is a wall (Oct 19 2026)
 The room asks for short turns in words — "under 40", "about 55" — and the
 model read those numbers politely and wrote 200-300 words anyway. Words are
