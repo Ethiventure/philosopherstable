@@ -909,13 +909,12 @@
     "model": "qwen/qwen3.8-27b",
     "summary": {
       "turns": 21,
-      "meanWords": 119,
+      "meanWords": 121,
       "meanOverlap": 0.09,
       "meanNovelty": 0.8,
       "meanStory": 0.08,
       "guardRewrites": 0,
       "flags": [
-        "long:bloch",
         "long:rose",
         "long:spinoza",
         "long:kant",
@@ -924,21 +923,11 @@
         "long:bloch",
         "long:deleuze",
         "long:rose",
-        "long:spinoza"
+        "long:spinoza",
+        "long:kant"
       ]
     },
     "turns": [
-      {
-        "ts": "2026-10-20T18:01:02.192Z",
-        "seat": "bloch",
-        "words": 146,
-        "overlap": 0.09,
-        "novelty": 0.79,
-        "story": 0.07,
-        "flags": [
-          "long"
-        ]
-      },
       {
         "ts": "2026-10-20T19:31:05.654Z",
         "seat": "weil",
@@ -1133,6 +1122,17 @@
         "overlap": 0.07,
         "novelty": 0.79,
         "story": 0.07,
+        "flags": [
+          "long"
+        ]
+      },
+      {
+        "ts": "2026-10-21T18:33:21.655Z",
+        "seat": "kant",
+        "words": 172,
+        "overlap": 0.08,
+        "novelty": 0.8,
+        "story": 0,
         "flags": [
           "long"
         ]
