@@ -908,11 +908,11 @@
     "date": "2026-10-21",
     "model": "qwen/qwen3.8-27b",
     "summary": {
-      "turns": 21,
-      "meanWords": 109,
+      "turns": 22,
+      "meanWords": 111,
       "meanOverlap": 0.08,
       "meanNovelty": 0.81,
-      "meanStory": 0.04,
+      "meanStory": 0.05,
       "guardRewrites": 0,
       "flags": [
         "long:bloch",
@@ -923,7 +923,8 @@
         "long:bogdanov",
         "long:bloch",
         "long:rose",
-        "long:spinoza"
+        "long:spinoza",
+        "long:kant"
       ]
     },
     "turns": [
@@ -1130,6 +1131,17 @@
         "overlap": 0.11,
         "novelty": 0.83,
         "story": 0.14,
+        "flags": [
+          "long"
+        ]
+      },
+      {
+        "ts": "2026-10-21T03:00:56.174Z",
+        "seat": "kant",
+        "words": 150,
+        "overlap": 0.12,
+        "novelty": 0.78,
+        "story": 0.07,
         "flags": [
           "long"
         ]
