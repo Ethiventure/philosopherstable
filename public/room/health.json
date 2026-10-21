@@ -908,14 +908,13 @@
     "date": "2026-10-21",
     "model": "qwen/qwen3.8-27b",
     "summary": {
-      "turns": 21,
-      "meanWords": 128,
+      "turns": 20,
+      "meanWords": 127,
       "meanOverlap": 0.09,
       "meanNovelty": 0.8,
-      "meanStory": 0.07,
+      "meanStory": 0.08,
       "guardRewrites": 0,
       "flags": [
-        "long:rose",
         "long:spinoza",
         "long:kant",
         "long:hegel",
@@ -930,26 +929,6 @@
       ]
     },
     "turns": [
-      {
-        "ts": "2026-10-20T21:32:23.673Z",
-        "seat": "deleuze",
-        "words": 57,
-        "overlap": 0.05,
-        "novelty": 0.88,
-        "story": 0,
-        "flags": []
-      },
-      {
-        "ts": "2026-10-20T22:31:04.899Z",
-        "seat": "rose",
-        "words": 147,
-        "overlap": 0.09,
-        "novelty": 0.84,
-        "story": 0,
-        "flags": [
-          "long"
-        ]
-      },
       {
         "ts": "2026-10-21T00:01:03.764Z",
         "seat": "fisher",
@@ -1142,6 +1121,15 @@
         "flags": [
           "long"
         ]
+      },
+      {
+        "ts": "2026-10-21T22:31:06.304Z",
+        "seat": "lenin",
+        "words": 61,
+        "overlap": 0.07,
+        "novelty": 0.88,
+        "story": 0,
+        "flags": []
       }
     ]
   }
