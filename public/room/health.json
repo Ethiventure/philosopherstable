@@ -1150,10 +1150,10 @@
     "model": "qwen/qwen3.8-27b",
     "summary": {
       "turns": 22,
-      "meanWords": 131,
+      "meanWords": 128,
       "meanOverlap": 0.09,
-      "meanNovelty": 0.79,
-      "meanStory": 0.07,
+      "meanNovelty": 0.78,
+      "meanStory": 0.06,
       "guardRewrites": 0,
       "flags": [
         "long:deleuze",
@@ -1173,15 +1173,6 @@
       ]
     },
     "turns": [
-      {
-        "ts": "2026-10-21T12:00:58.179Z",
-        "seat": "bookchin",
-        "words": 115,
-        "overlap": 0.08,
-        "novelty": 0.77,
-        "story": 0.07,
-        "flags": []
-      },
       {
         "ts": "2026-10-21T13:31:08.561Z",
         "seat": "deleuze",
@@ -1398,6 +1389,15 @@
         "flags": [
           "long"
         ]
+      },
+      {
+        "ts": "2026-10-22T13:31:07.255Z",
+        "seat": "lenin",
+        "words": 50,
+        "overlap": 0.06,
+        "novelty": 0.76,
+        "story": 0,
+        "flags": []
       }
     ]
   }
