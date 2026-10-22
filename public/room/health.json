@@ -1149,8 +1149,8 @@
     "date": "2026-10-22",
     "model": "qwen/qwen3.8-27b",
     "summary": {
-      "turns": 21,
-      "meanWords": 127,
+      "turns": 22,
+      "meanWords": 126,
       "meanOverlap": 0.09,
       "meanNovelty": 0.77,
       "meanStory": 0.04,
@@ -1385,6 +1385,15 @@
         "overlap": 0.07,
         "novelty": 0.81,
         "story": 0,
+        "flags": []
+      },
+      {
+        "ts": "2026-10-22T18:00:58.777Z",
+        "seat": "bookchin",
+        "words": 102,
+        "overlap": 0.09,
+        "novelty": 0.81,
+        "story": 0.07,
         "flags": []
       }
     ]
