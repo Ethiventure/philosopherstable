@@ -1156,7 +1156,6 @@
       "meanStory": 0.07,
       "guardRewrites": 0,
       "flags": [
-        "long:bloch",
         "long:deleuze",
         "long:rose",
         "long:spinoza",
@@ -1167,21 +1166,11 @@
         "long:bookchin",
         "long:rose",
         "long:fisher",
-        "figure:genzie"
+        "figure:genzie",
+        "long:spinoza"
       ]
     },
     "turns": [
-      {
-        "ts": "2026-10-21T09:00:56.581Z",
-        "seat": "bloch",
-        "words": 122,
-        "overlap": 0.05,
-        "novelty": 0.84,
-        "story": 0.14,
-        "flags": [
-          "long"
-        ]
-      },
       {
         "ts": "2026-10-21T10:31:06.573Z",
         "seat": "weil",
@@ -1373,6 +1362,17 @@
         "story": null,
         "flags": [
           "figure"
+        ]
+      },
+      {
+        "ts": "2026-10-22T09:00:59.219Z",
+        "seat": "spinoza",
+        "words": 133,
+        "overlap": 0.07,
+        "novelty": 0.8,
+        "story": 0,
+        "flags": [
+          "long"
         ]
       }
     ]
