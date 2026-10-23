@@ -47,13 +47,16 @@ import { BOOKCHIN_EXPRESSION } from '../src/philosophers/bookchin.expression.ts'
 import { DELEUZE_EXPRESSION } from '../src/philosophers/deleuze.expression.ts';
 import { ROSE_EXPRESSION } from '../src/philosophers/rose.expression.ts';
 import { FISHER_EXPRESSION } from '../src/philosophers/fisher.expression.ts';
-// Voice A/B (Oct 21 2026, tag room-tick-baseline-2026-10-21): ONE variable —
-// "voice in the room". The think-mode line banned signature vocabulary, so
-// turning expression on also swaps the line to thinkAndSound; the two edits
-// are one change (the line and the block contradict each other otherwise).
-// ROOM_VOICE=off is the revert knob. Rocks: version 2026-10-21a.
+// Room presentation knob, Oct 23 2026: ROOM_MODE = voice | teach | off.
+// - voice (tag room-tick-voice-2026-10-23, ran Oct 22-23 as 2026-10-21b):
+//   thinkAndSound line + full expression block + ROOM TERMS override.
+// - teach (owner proposal Oct 23: one day before any IELTS decision):
+//   teach line (keep every term, gloss each term in plain words) +
+//   sentenceBehaviour-only voice block. Vocabulary kept; comprehension
+//   added inline; expect longer turns — glossing costs words by design.
+// - off: old think line, no expression (the pre-diet room's mind, plain).
 const EXPRESSIONS = { spinoza: SPINOZA_EXPRESSION, kant: KANT_EXPRESSION, hegel: HEGEL_EXPRESSION, marx: MARX_EXPRESSION, lenin: LENIN_EXPRESSION, bogdanov: BOGDANOV_EXPRESSION, bloch: BLOCH_EXPRESSION, weil: WEIL_EXPRESSION, bookchin: BOOKCHIN_EXPRESSION, deleuze: DELEUZE_EXPRESSION, rose: ROSE_EXPRESSION, fisher: FISHER_EXPRESSION };
-const VOICE = (process.env.ROOM_VOICE || 'on') !== 'off';
+const ROOM_MODE = process.env.ROOM_MODE || 'teach'; // default = the Oct 23 teach-day experiment
 import { renderRoomThinking } from '../src/philosophers/room-persona.ts';
 import { SPINOZA_THINKING } from '../src/philosophers/spinoza.thinking.ts';
 import { KANT_THINKING } from '../src/philosophers/kant.thinking.ts';
@@ -327,7 +330,7 @@ const resetLine = (!isGenzie && (t.turns || []).length > 0 && t.cursor % t.roste
 // ROOM_RULES — every non-Genzie seat stays on Genzie's story. Fisher's
 // ghost diction is his one licensed exception (hauntology is his register).
 const fisherLine = slug === 'fisher' ? '\nYours alone: ghost and haunting words are your own register — the no-analogy ban bends for those words only.' : '';
-const MODE_LINE = VOICE ? MODE_LINES.thinkAndSound : MODE_LINES.think;
+const MODE_LINE = ROOM_MODE === 'teach' ? MODE_LINES.teach : ROOM_MODE === 'voice' ? MODE_LINES.thinkAndSound : MODE_LINES.think;
 const FINAL_GATE = promptFragment('room-final-gate.md');
 const systemPrompt = isGenzie
   ? `${seat.persona}\n\n${GENZIE_RULES}`
@@ -336,7 +339,11 @@ const systemPrompt = isGenzie
       `${MODE_LINE}\n\n`,
       `${ROOM_RULES}\n\n`,
       seat.persona,
-      ...(VOICE && !isGenzie && EXPRESSIONS[slug] ? [`\n\n${buildExpressionText(EXPRESSIONS[slug], 'thinkAndSound', true)}\n\nROOM TERMS (overrides the fences in this block for this room only): your core terms and signature distinctions belong IN your judgments here whenever they carry the point — "voice only, never thinking terms" does not apply in this room. What stays fenced: voice flourishes never write a claim the thinking files do not support.`] : []),
+      ...(ROOM_MODE !== 'off' && !isGenzie && EXPRESSIONS[slug] ? [
+        ROOM_MODE === 'teach'
+          ? `\n\n${buildExpressionText(EXPRESSIONS[slug], 'teach', true)}\n\nROOM TERMS (this room): use these terms inside your judgments; every hard term carries its plain meaning once, woven into the sentence that uses it — term, then meaning, then the short concrete sentence showing what it does.`
+          : `\n\n${buildExpressionText(EXPRESSIONS[slug], 'thinkAndSound', true)}\n\nROOM TERMS (overrides the fences in this block for this room only): your core terms and signature distinctions belong IN your judgments here whenever they carry the point — "voice only, never thinking terms" does not apply in this room. What stays fenced: voice flourishes never write a claim the thinking files do not support.`,
+      ] : []),
       `\n\n${FINAL_GATE}${resetLine}${fisherLine}`,
     ].join('');
 
