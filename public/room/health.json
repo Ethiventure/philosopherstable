@@ -1385,7 +1385,7 @@
     "model": "qwen/qwen3.8-27b",
     "summary": {
       "turns": 21,
-      "meanWords": 133,
+      "meanWords": 138,
       "meanOverlap": 0.09,
       "meanNovelty": 0.79,
       "meanStory": 0.08,
@@ -1405,19 +1405,11 @@
         "long:kant",
         "long:hegel",
         "figure:marx",
-        "long:marx"
+        "long:marx",
+        "long:lenin"
       ]
     },
     "turns": [
-      {
-        "ts": "2026-10-22T19:31:06.823Z",
-        "seat": "deleuze",
-        "words": 55,
-        "overlap": 0.04,
-        "novelty": 0.89,
-        "story": 0,
-        "flags": []
-      },
       {
         "ts": "2026-10-22T21:01:01.587Z",
         "seat": "rose",
@@ -1623,6 +1615,17 @@
         "story": 0,
         "flags": [
           "figure",
+          "long"
+        ]
+      },
+      {
+        "ts": "2026-10-23T19:31:07.205Z",
+        "seat": "lenin",
+        "words": 144,
+        "overlap": 0.07,
+        "novelty": 0.84,
+        "story": 0.07,
+        "flags": [
           "long"
         ]
       }
