@@ -1384,10 +1384,10 @@
     "date": "2026-10-23",
     "model": "qwen/qwen3.8-27b",
     "summary": {
-      "turns": 20,
-      "meanWords": 118,
+      "turns": 21,
+      "meanWords": 119,
       "meanOverlap": 0.09,
-      "meanNovelty": 0.78,
+      "meanNovelty": 0.79,
       "meanStory": 0.05,
       "guardRewrites": 0,
       "flags": [
@@ -1402,7 +1402,8 @@
         "long:hegel",
         "figure:marx",
         "long:marx",
-        "long:bogdanov"
+        "long:bogdanov",
+        "long:bloch"
       ]
     },
     "turns": [
@@ -1605,6 +1606,17 @@
         "overlap": 0.08,
         "novelty": 0.78,
         "story": 0,
+        "flags": [
+          "long"
+        ]
+      },
+      {
+        "ts": "2026-10-23T06:07:47.774Z",
+        "seat": "bloch",
+        "words": 132,
+        "overlap": 0.1,
+        "novelty": 0.87,
+        "story": 0.14,
         "flags": [
           "long"
         ]
