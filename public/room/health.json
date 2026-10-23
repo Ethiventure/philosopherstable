@@ -1385,10 +1385,10 @@
     "model": "qwen/qwen3.8-27b",
     "summary": {
       "turns": 21,
-      "meanWords": 138,
-      "meanOverlap": 0.09,
-      "meanNovelty": 0.8,
-      "meanStory": 0.09,
+      "meanWords": 141,
+      "meanOverlap": 0.1,
+      "meanNovelty": 0.77,
+      "meanStory": 0.08,
       "guardRewrites": 0,
       "flags": [
         "long:spinoza",
@@ -1406,19 +1406,11 @@
         "figure:marx",
         "long:marx",
         "long:lenin",
-        "long:bloch"
+        "long:bloch",
+        "long:weil"
       ]
     },
     "turns": [
-      {
-        "ts": "2026-10-22T22:31:07.036Z",
-        "seat": "genzie",
-        "words": 79,
-        "overlap": 0.06,
-        "novelty": 0.88,
-        "story": null,
-        "flags": []
-      },
       {
         "ts": "2026-10-23T00:00:56.190Z",
         "seat": "spinoza",
@@ -1624,6 +1616,17 @@
         "words": 139,
         "overlap": 0.08,
         "novelty": 0.77,
+        "story": 0.07,
+        "flags": [
+          "long"
+        ]
+      },
+      {
+        "ts": "2026-10-23T23:04:06.289Z",
+        "seat": "weil",
+        "words": 141,
+        "overlap": 0.31,
+        "novelty": 0.41,
         "story": 0.07,
         "flags": [
           "long"
