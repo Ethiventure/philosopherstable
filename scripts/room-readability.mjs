@@ -39,11 +39,12 @@ for (const seat of [...new Set(transcript.turns.map((x) => x.seat))]) {
   const grade = 0.39 * aw / as + 11.8 * (syll / words) - 15.59;
   const ease = 206.835 - 1.015 * aw / as - 84.6 * (syll / words);
   const ielts = grade <= 7 ? '~6' : grade <= 10 ? '~6.5-7' : grade <= 13 ? '~7.5-8' : '~8+';
-  rows.push({ seat, n: turns.length, grade: +grade.toFixed(1), ease: +ease.toFixed(0), ielts, aw: +aw.toFixed(0) });
+  const longw = turns.reduce((a, t) => a + t.text.split(/\s+/).filter(Boolean).filter((x) => syl(x) >= 3).length, 0) / words;
+  rows.push({ seat, n: turns.length, grade: +grade.toFixed(1), ease: +ease.toFixed(0), ielts, aw: +aw.toFixed(0), wps: +aw / as, longw: +longw.toFixed(2) });
 }
 rows.sort((a, b) => b.grade - a.grade);
 console.log(`per-thinker reading level, last ${n} room turns each (${transcript.turns[transcript.turns.length - 1].ts.slice(0, 10)} file):`);
-console.log('seat        n  FK-grade  read-ease  ~IELTS   avg words');
-for (const r of rows) console.log(r.seat.padEnd(10), String(r.n).padStart(2), String(r.grade).padStart(8), String(r.ease).padStart(9), r.ielts.padStart(9), String(r.aw).padStart(9));
+console.log('seat        n  FK-grade  read-ease  ~IELTS  words/sent  3+-syl ratio  avg words');
+for (const r of rows) console.log(r.seat.padEnd(10), String(r.n).padStart(2), String(r.grade).padStart(8), String(r.ease).padStart(9), r.ielts.padStart(9), '   ' + r.wps.toFixed(1).padStart(8), r.longw.toFixed(2).padStart(10), String(r.aw).padStart(9));
 const mean = rows.reduce((a, r) => a + r.grade, 0) / rows.length;
 console.log('', `room mean FK grade: ${mean.toFixed(1)}`);
