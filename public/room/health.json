@@ -1384,11 +1384,11 @@
     "date": "2026-10-23",
     "model": "qwen/qwen3.8-27b",
     "summary": {
-      "turns": 21,
-      "meanWords": 119,
+      "turns": 22,
+      "meanWords": 118,
       "meanOverlap": 0.09,
-      "meanNovelty": 0.79,
-      "meanStory": 0.05,
+      "meanNovelty": 0.78,
+      "meanStory": 0.06,
       "guardRewrites": 0,
       "flags": [
         "figure:genzie",
@@ -1620,6 +1620,15 @@
         "flags": [
           "long"
         ]
+      },
+      {
+        "ts": "2026-10-23T07:22:31.443Z",
+        "seat": "weil",
+        "words": 107,
+        "overlap": 0.09,
+        "novelty": 0.7,
+        "story": 0.14,
+        "flags": []
       }
     ]
   }
