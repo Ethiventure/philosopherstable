@@ -1639,13 +1639,12 @@
     "model": "qwen/qwen3.8-27b",
     "summary": {
       "turns": 20,
-      "meanWords": 133,
+      "meanWords": 136,
       "meanOverlap": 0.1,
       "meanNovelty": 0.77,
       "meanStory": 0.07,
       "guardRewrites": 0,
       "flags": [
-        "long:bookchin",
         "long:rose",
         "long:spinoza",
         "long:kant",
@@ -1659,21 +1658,11 @@
         "long:fisher",
         "figure:genzie",
         "figure:kant",
-        "long:kant"
+        "long:kant",
+        "long:hegel"
       ]
     },
     "turns": [
-      {
-        "ts": "2026-10-23T07:31:07.493Z",
-        "seat": "bookchin",
-        "words": 157,
-        "overlap": 0.1,
-        "novelty": 0.82,
-        "story": 0.07,
-        "flags": [
-          "long"
-        ]
-      },
       {
         "ts": "2026-10-23T09:01:10.048Z",
         "seat": "deleuze",
@@ -1868,6 +1857,17 @@
         "story": 0.21,
         "flags": [
           "figure",
+          "long"
+        ]
+      },
+      {
+        "ts": "2026-10-24T09:00:56.725Z",
+        "seat": "hegel",
+        "words": 212,
+        "overlap": 0.11,
+        "novelty": 0.78,
+        "story": 0.07,
+        "flags": [
           "long"
         ]
       }
