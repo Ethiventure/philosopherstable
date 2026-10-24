@@ -1638,9 +1638,9 @@
     "date": "2026-10-24",
     "model": "qwen/qwen3.8-27b",
     "summary": {
-      "turns": 20,
+      "turns": 21,
       "meanWords": 136,
-      "meanOverlap": 0.11,
+      "meanOverlap": 0.1,
       "meanNovelty": 0.77,
       "meanStory": 0.08,
       "guardRewrites": 0,
@@ -1659,7 +1659,9 @@
         "figure:kant",
         "long:kant",
         "long:hegel",
-        "long:marx"
+        "long:marx",
+        "figure:bogdanov",
+        "long:bogdanov"
       ]
     },
     "turns": [
@@ -1870,6 +1872,18 @@
         "novelty": 0.71,
         "story": 0,
         "flags": []
+      },
+      {
+        "ts": "2026-10-24T12:00:57.153Z",
+        "seat": "bogdanov",
+        "words": 140,
+        "overlap": 0.06,
+        "novelty": 0.8,
+        "story": 0.21,
+        "flags": [
+          "figure",
+          "long"
+        ]
       }
     ]
   }
