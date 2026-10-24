@@ -1639,13 +1639,12 @@
     "model": "qwen/qwen3.8-27b",
     "summary": {
       "turns": 20,
-      "meanWords": 142,
+      "meanWords": 136,
       "meanOverlap": 0.11,
       "meanNovelty": 0.77,
       "meanStory": 0.08,
       "guardRewrites": 0,
       "flags": [
-        "long:rose",
         "long:spinoza",
         "long:kant",
         "long:hegel",
@@ -1664,17 +1663,6 @@
       ]
     },
     "turns": [
-      {
-        "ts": "2026-10-23T10:31:07.472Z",
-        "seat": "rose",
-        "words": 167,
-        "overlap": 0.12,
-        "novelty": 0.7,
-        "story": 0.14,
-        "flags": [
-          "long"
-        ]
-      },
       {
         "ts": "2026-10-23T12:00:57.586Z",
         "seat": "fisher",
@@ -1873,6 +1861,15 @@
         "flags": [
           "long"
         ]
+      },
+      {
+        "ts": "2026-10-24T10:49:12.906Z",
+        "seat": "lenin",
+        "words": 51,
+        "overlap": 0.12,
+        "novelty": 0.71,
+        "story": 0,
+        "flags": []
       }
     ]
   }
