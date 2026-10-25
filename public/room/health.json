@@ -1911,14 +1911,12 @@
     "model": "qwen/qwen3.8-27b",
     "summary": {
       "turns": 21,
-      "meanWords": 130,
+      "meanWords": 133,
       "meanOverlap": 0.1,
       "meanNovelty": 0.77,
-      "meanStory": 0.06,
+      "meanStory": 0.04,
       "guardRewrites": 0,
       "flags": [
-        "figure:bogdanov",
-        "long:bogdanov",
         "long:bloch",
         "long:deleuze",
         "long:rose",
@@ -1930,22 +1928,11 @@
         "long:bloch",
         "thin:deleuze",
         "long:rose",
-        "long:fisher"
+        "long:fisher",
+        "long:spinoza"
       ]
     },
     "turns": [
-      {
-        "ts": "2026-10-24T12:00:57.153Z",
-        "seat": "bogdanov",
-        "words": 140,
-        "overlap": 0.06,
-        "novelty": 0.8,
-        "story": 0.21,
-        "flags": [
-          "figure",
-          "long"
-        ]
-      },
       {
         "ts": "2026-10-24T13:31:03.458Z",
         "seat": "bloch",
@@ -2149,6 +2136,17 @@
         "novelty": 0.91,
         "story": null,
         "flags": []
+      },
+      {
+        "ts": "2026-10-25T12:00:57.726Z",
+        "seat": "spinoza",
+        "words": 201,
+        "overlap": 0.06,
+        "novelty": 0.86,
+        "story": 0,
+        "flags": [
+          "long"
+        ]
       }
     ]
   }
