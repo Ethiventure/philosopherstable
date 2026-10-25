@@ -1911,13 +1911,12 @@
     "model": "qwen/qwen3.8-27b",
     "summary": {
       "turns": 21,
-      "meanWords": 137,
+      "meanWords": 130,
       "meanOverlap": 0.1,
       "meanNovelty": 0.78,
       "meanStory": 0.05,
       "guardRewrites": 0,
       "flags": [
-        "long:deleuze",
         "long:rose",
         "long:spinoza",
         "long:kant",
@@ -1932,21 +1931,11 @@
         "long:kant",
         "figure:hegel",
         "long:hegel",
-        "long:marx"
+        "long:marx",
+        "thin:lenin"
       ]
     },
     "turns": [
-      {
-        "ts": "2026-10-24T16:31:05.728Z",
-        "seat": "deleuze",
-        "words": 162,
-        "overlap": 0.1,
-        "novelty": 0.74,
-        "story": 0.07,
-        "flags": [
-          "long"
-        ]
-      },
       {
         "ts": "2026-10-24T18:01:02.444Z",
         "seat": "rose",
@@ -2154,6 +2143,17 @@
         "story": 0.07,
         "flags": [
           "long"
+        ]
+      },
+      {
+        "ts": "2026-10-25T16:31:06.535Z",
+        "seat": "lenin",
+        "words": 18,
+        "overlap": 0.09,
+        "novelty": 0.82,
+        "story": 0,
+        "flags": [
+          "thin"
         ]
       }
     ]
