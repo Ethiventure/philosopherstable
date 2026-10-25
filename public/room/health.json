@@ -1910,11 +1910,11 @@
     "date": "2026-10-25",
     "model": "qwen/qwen3.8-27b",
     "summary": {
-      "turns": 21,
-      "meanWords": 134,
+      "turns": 22,
+      "meanWords": 133,
       "meanOverlap": 0.1,
       "meanNovelty": 0.78,
-      "meanStory": 0.09,
+      "meanStory": 0.08,
       "guardRewrites": 0,
       "flags": [
         "long:rose",
@@ -2154,6 +2154,15 @@
         "flags": [
           "long"
         ]
+      },
+      {
+        "ts": "2026-10-25T01:31:04.728Z",
+        "seat": "lenin",
+        "words": 105,
+        "overlap": 0.12,
+        "novelty": 0.79,
+        "story": 0,
+        "flags": []
       }
     ]
   }
