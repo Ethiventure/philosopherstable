@@ -1911,7 +1911,7 @@
     "model": "qwen/qwen3.8-27b",
     "summary": {
       "turns": 21,
-      "meanWords": 138,
+      "meanWords": 140,
       "meanOverlap": 0.11,
       "meanNovelty": 0.76,
       "meanStory": 0.08,
@@ -1935,15 +1935,6 @@
       ]
     },
     "turns": [
-      {
-        "ts": "2026-10-24T06:00:56.107Z",
-        "seat": "spinoza",
-        "words": 84,
-        "overlap": 0.09,
-        "novelty": 0.82,
-        "story": 0.07,
-        "flags": []
-      },
       {
         "ts": "2026-10-24T07:31:06.516Z",
         "seat": "kant",
@@ -2150,6 +2141,15 @@
         "overlap": 0.09,
         "novelty": 0.66,
         "story": 0.07,
+        "flags": []
+      },
+      {
+        "ts": "2026-10-25T06:00:56.426Z",
+        "seat": "bookchin",
+        "words": 116,
+        "overlap": 0.15,
+        "novelty": 0.68,
+        "story": 0,
         "flags": []
       }
     ]
