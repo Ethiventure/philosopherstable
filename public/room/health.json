@@ -1912,12 +1912,11 @@
     "summary": {
       "turns": 21,
       "meanWords": 138,
-      "meanOverlap": 0.1,
-      "meanNovelty": 0.77,
-      "meanStory": 0.09,
+      "meanOverlap": 0.11,
+      "meanNovelty": 0.76,
+      "meanStory": 0.08,
       "guardRewrites": 0,
       "flags": [
-        "figure:genzie",
         "figure:kant",
         "long:kant",
         "long:hegel",
@@ -1936,17 +1935,6 @@
       ]
     },
     "turns": [
-      {
-        "ts": "2026-10-24T04:31:03.904Z",
-        "seat": "genzie",
-        "words": 77,
-        "overlap": 0.04,
-        "novelty": 0.91,
-        "story": null,
-        "flags": [
-          "figure"
-        ]
-      },
       {
         "ts": "2026-10-24T06:00:56.107Z",
         "seat": "spinoza",
@@ -2154,6 +2142,15 @@
         "flags": [
           "long"
         ]
+      },
+      {
+        "ts": "2026-10-25T04:31:05.327Z",
+        "seat": "weil",
+        "words": 95,
+        "overlap": 0.09,
+        "novelty": 0.66,
+        "story": 0.07,
+        "flags": []
       }
     ]
   }
