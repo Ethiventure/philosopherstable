@@ -1910,9 +1910,9 @@
     "date": "2026-10-25",
     "model": "qwen/qwen3.8-27b",
     "summary": {
-      "turns": 21,
-      "meanWords": 140,
-      "meanOverlap": 0.11,
+      "turns": 22,
+      "meanWords": 134,
+      "meanOverlap": 0.1,
       "meanNovelty": 0.76,
       "meanStory": 0.08,
       "guardRewrites": 0,
@@ -1931,7 +1931,8 @@
         "long:hegel",
         "long:marx",
         "long:bogdanov",
-        "long:bloch"
+        "long:bloch",
+        "thin:deleuze"
       ]
     },
     "turns": [
@@ -2151,6 +2152,17 @@
         "novelty": 0.68,
         "story": 0,
         "flags": []
+      },
+      {
+        "ts": "2026-10-25T07:31:04.928Z",
+        "seat": "deleuze",
+        "words": 7,
+        "overlap": 0.01,
+        "novelty": 0.83,
+        "story": 0,
+        "flags": [
+          "thin"
+        ]
       }
     ]
   }
