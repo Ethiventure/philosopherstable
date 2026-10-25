@@ -103,5 +103,10 @@
     "date": "2026-10-24",
     "best": "Bookchin's move to place algorithmic control in local neighborhood meetings, deciding immediately who operates it for collective need.",
     "next": "Genzie applies this rule to her own rent dispute, shifting from abstract debate to a concrete local decision about housing access."
+  },
+  {
+    "date": "2026-10-25",
+    "best": "Genzie identifies a live security hole, Node2Shell, proving that checking code before updates is a practical necessity, not a theory.",
+    "next": "The group should drop abstract debates and immediately review the specific Node2Shell vulnerability to guide users on safe verification steps."
   }
 ]
