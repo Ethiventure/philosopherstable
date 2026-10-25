@@ -1913,7 +1913,7 @@
       "turns": 21,
       "meanWords": 135,
       "meanOverlap": 0.1,
-      "meanNovelty": 0.78,
+      "meanNovelty": 0.77,
       "meanStory": 0.06,
       "guardRewrites": 0,
       "flags": [
@@ -1933,19 +1933,11 @@
         "long:marx",
         "thin:lenin",
         "long:bogdanov",
-        "long:bloch"
+        "long:bloch",
+        "figure:weil"
       ]
     },
     "turns": [
-      {
-        "ts": "2026-10-24T19:31:04.539Z",
-        "seat": "genzie",
-        "words": 93,
-        "overlap": 0.07,
-        "novelty": 0.85,
-        "story": null,
-        "flags": []
-      },
       {
         "ts": "2026-10-24T21:00:59.475Z",
         "seat": "spinoza",
@@ -2157,6 +2149,17 @@
         "story": 0.36,
         "flags": [
           "long"
+        ]
+      },
+      {
+        "ts": "2026-10-25T19:31:05.272Z",
+        "seat": "weil",
+        "words": 85,
+        "overlap": 0.1,
+        "novelty": 0.71,
+        "story": 0.07,
+        "flags": [
+          "figure"
         ]
       }
     ]
