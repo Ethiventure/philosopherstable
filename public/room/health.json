@@ -1910,8 +1910,8 @@
     "date": "2026-10-25",
     "model": "qwen/qwen3.8-27b",
     "summary": {
-      "turns": 21,
-      "meanWords": 135,
+      "turns": 22,
+      "meanWords": 134,
       "meanOverlap": 0.1,
       "meanNovelty": 0.77,
       "meanStory": 0.06,
@@ -1934,7 +1934,8 @@
         "thin:lenin",
         "long:bogdanov",
         "long:bloch",
-        "figure:weil"
+        "figure:weil",
+        "long:bookchin"
       ]
     },
     "turns": [
@@ -2160,6 +2161,17 @@
         "story": 0.07,
         "flags": [
           "figure"
+        ]
+      },
+      {
+        "ts": "2026-10-25T21:00:56.752Z",
+        "seat": "bookchin",
+        "words": 132,
+        "overlap": 0.08,
+        "novelty": 0.77,
+        "story": 0,
+        "flags": [
+          "long"
         ]
       }
     ]
