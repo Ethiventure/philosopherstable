@@ -2166,13 +2166,12 @@
     "model": "qwen/qwen3.8-27b",
     "summary": {
       "turns": 21,
-      "meanWords": 134,
+      "meanWords": 129,
       "meanOverlap": 0.09,
       "meanNovelty": 0.79,
-      "meanStory": 0.12,
+      "meanStory": 0.13,
       "guardRewrites": 0,
       "flags": [
-        "long:spinoza",
         "long:kant",
         "figure:hegel",
         "long:hegel",
@@ -2193,17 +2192,6 @@
       ]
     },
     "turns": [
-      {
-        "ts": "2026-10-25T12:00:57.726Z",
-        "seat": "spinoza",
-        "words": 201,
-        "overlap": 0.06,
-        "novelty": 0.86,
-        "story": 0,
-        "flags": [
-          "long"
-        ]
-      },
       {
         "ts": "2026-10-25T13:31:06.816Z",
         "seat": "kant",
@@ -2416,6 +2404,15 @@
         "flags": [
           "long"
         ]
+      },
+      {
+        "ts": "2026-10-26T12:48:30.789Z",
+        "seat": "bookchin",
+        "words": 93,
+        "overlap": 0.08,
+        "novelty": 0.77,
+        "story": 0.21,
+        "flags": []
       }
     ]
   }
