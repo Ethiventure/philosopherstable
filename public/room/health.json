@@ -2165,8 +2165,8 @@
     "date": "2026-10-26",
     "model": "qwen/qwen3.8-27b",
     "summary": {
-      "turns": 19,
-      "meanWords": 141,
+      "turns": 20,
+      "meanWords": 136,
       "meanOverlap": 0.09,
       "meanNovelty": 0.79,
       "meanStory": 0.15,
@@ -2389,6 +2389,15 @@
         "flags": [
           "long"
         ]
+      },
+      {
+        "ts": "2026-10-26T23:46:24.369Z",
+        "seat": "lenin",
+        "words": 43,
+        "overlap": 0.04,
+        "novelty": 0.76,
+        "story": 0,
+        "flags": []
       }
     ]
   }
