@@ -2166,10 +2166,10 @@
     "model": "qwen/qwen3.8-27b",
     "summary": {
       "turns": 21,
-      "meanWords": 124,
+      "meanWords": 122,
       "meanOverlap": 0.09,
-      "meanNovelty": 0.77,
-      "meanStory": 0.05,
+      "meanNovelty": 0.78,
+      "meanStory": 0.06,
       "guardRewrites": 0,
       "flags": [
         "long:bogdanov",
@@ -2192,15 +2192,6 @@
       ]
     },
     "turns": [
-      {
-        "ts": "2026-10-25T01:31:04.728Z",
-        "seat": "lenin",
-        "words": 105,
-        "overlap": 0.12,
-        "novelty": 0.79,
-        "story": 0,
-        "flags": []
-      },
       {
         "ts": "2026-10-25T03:00:55.773Z",
         "seat": "bogdanov",
@@ -2413,6 +2404,15 @@
         "flags": [
           "long"
         ]
+      },
+      {
+        "ts": "2026-10-26T01:31:05.495Z",
+        "seat": "genzie",
+        "words": 70,
+        "overlap": 0.04,
+        "novelty": 0.87,
+        "story": null,
+        "flags": []
       }
     ]
   }
