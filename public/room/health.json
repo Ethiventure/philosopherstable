@@ -2166,10 +2166,10 @@
     "model": "qwen/qwen3.8-27b",
     "summary": {
       "turns": 21,
-      "meanWords": 123,
+      "meanWords": 127,
       "meanOverlap": 0.09,
-      "meanNovelty": 0.79,
-      "meanStory": 0.07,
+      "meanNovelty": 0.8,
+      "meanStory": 0.08,
       "guardRewrites": 0,
       "flags": [
         "thin:deleuze",
@@ -2188,19 +2188,11 @@
         "long:rose",
         "long:fisher",
         "long:spinoza",
-        "long:hegel"
+        "long:hegel",
+        "long:marx"
       ]
     },
     "turns": [
-      {
-        "ts": "2026-10-25T06:00:56.426Z",
-        "seat": "bookchin",
-        "words": 116,
-        "overlap": 0.15,
-        "novelty": 0.68,
-        "story": 0,
-        "flags": []
-      },
       {
         "ts": "2026-10-25T07:31:04.928Z",
         "seat": "deleuze",
@@ -2410,6 +2402,17 @@
         "overlap": 0.12,
         "novelty": 0.76,
         "story": 0.07,
+        "flags": [
+          "long"
+        ]
+      },
+      {
+        "ts": "2026-10-26T06:00:59.768Z",
+        "seat": "marx",
+        "words": 197,
+        "overlap": 0.14,
+        "novelty": 0.82,
+        "story": 0.29,
         "flags": [
           "long"
         ]
