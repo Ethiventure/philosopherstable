@@ -2165,11 +2165,11 @@
     "date": "2026-10-26",
     "model": "qwen/qwen3.8-27b",
     "summary": {
-      "turns": 19,
-      "meanWords": 133,
+      "turns": 20,
+      "meanWords": 135,
       "meanOverlap": 0.09,
       "meanNovelty": 0.79,
-      "meanStory": 0.14,
+      "meanStory": 0.13,
       "guardRewrites": 0,
       "flags": [
         "long:bookchin",
@@ -2185,7 +2185,8 @@
         "long:deleuze",
         "long:rose",
         "figure:fisher",
-        "long:spinoza"
+        "long:spinoza",
+        "long:kant"
       ]
     },
     "turns": [
@@ -2383,6 +2384,17 @@
         "overlap": 0.11,
         "novelty": 0.74,
         "story": 0.07,
+        "flags": [
+          "long"
+        ]
+      },
+      {
+        "ts": "2026-10-26T19:51:55.793Z",
+        "seat": "kant",
+        "words": 157,
+        "overlap": 0.06,
+        "novelty": 0.88,
+        "story": 0,
         "flags": [
           "long"
         ]
