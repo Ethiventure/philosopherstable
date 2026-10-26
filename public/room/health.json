@@ -2165,11 +2165,11 @@
     "date": "2026-10-26",
     "model": "qwen/qwen3.8-27b",
     "summary": {
-      "turns": 21,
-      "meanWords": 129,
+      "turns": 22,
+      "meanWords": 131,
       "meanOverlap": 0.09,
       "meanNovelty": 0.79,
-      "meanStory": 0.13,
+      "meanStory": 0.14,
       "guardRewrites": 0,
       "flags": [
         "long:kant",
@@ -2188,7 +2188,9 @@
         "long:marx",
         "long:bogdanov",
         "long:bloch",
-        "long:weil"
+        "long:weil",
+        "figure:deleuze",
+        "long:deleuze"
       ]
     },
     "turns": [
@@ -2413,6 +2415,18 @@
         "novelty": 0.77,
         "story": 0.21,
         "flags": []
+      },
+      {
+        "ts": "2026-10-26T13:31:05.355Z",
+        "seat": "deleuze",
+        "words": 178,
+        "overlap": 0.09,
+        "novelty": 0.84,
+        "story": 0.21,
+        "flags": [
+          "figure",
+          "long"
+        ]
       }
     ]
   }
