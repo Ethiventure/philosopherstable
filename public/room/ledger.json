@@ -108,5 +108,10 @@
     "date": "2026-10-25",
     "best": "Genzie identifies a live security hole, Node2Shell, proving that checking code before updates is a practical necessity, not a theory.",
     "next": "The group should drop abstract debates and immediately review the specific Node2Shell vulnerability to guide users on safe verification steps."
+  },
+  {
+    "date": "2026-10-26",
+    "best": "Rose insists vendors legally owe users proof of safety; she defines this as a binding contract against proprietary silence.",
+    "next": "Genzie drafts a specific legal clause forcing public release of audit logs, shifting the burden of proof onto the vendor."
   }
 ]
