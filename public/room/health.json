@@ -2405,8 +2405,8 @@
     "date": "2026-10-27",
     "model": "qwen/qwen3.8-27b",
     "summary": {
-      "turns": 20,
-      "meanWords": 140,
+      "turns": 21,
+      "meanWords": 142,
       "meanOverlap": 0.09,
       "meanNovelty": 0.79,
       "meanStory": 0.11,
@@ -2426,7 +2426,8 @@
         "long:weil",
         "long:deleuze",
         "long:rose",
-        "long:fisher"
+        "long:fisher",
+        "long:spinoza"
       ]
     },
     "turns": [
@@ -2638,6 +2639,17 @@
         "novelty": 0.87,
         "story": null,
         "flags": []
+      },
+      {
+        "ts": "2026-10-27T10:31:06.572Z",
+        "seat": "spinoza",
+        "words": 183,
+        "overlap": 0.1,
+        "novelty": 0.84,
+        "story": 0.07,
+        "flags": [
+          "long"
+        ]
       }
     ]
   }
