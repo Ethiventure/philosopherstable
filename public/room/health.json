@@ -2405,8 +2405,8 @@
     "date": "2026-10-27",
     "model": "qwen/qwen3.8-27b",
     "summary": {
-      "turns": 22,
-      "meanWords": 143,
+      "turns": 23,
+      "meanWords": 141,
       "meanOverlap": 0.09,
       "meanNovelty": 0.79,
       "meanStory": 0.09,
@@ -2426,7 +2426,8 @@
         "long:weil",
         "long:bookchin",
         "long:rose",
-        "long:fisher"
+        "long:fisher",
+        "figure:genzie"
       ]
     },
     "turns": [
@@ -2656,6 +2657,17 @@
         "story": 0.07,
         "flags": [
           "long"
+        ]
+      },
+      {
+        "ts": "2026-10-27T22:31:06.019Z",
+        "seat": "genzie",
+        "words": 115,
+        "overlap": 0.07,
+        "novelty": 0.82,
+        "story": null,
+        "flags": [
+          "figure"
         ]
       }
     ]
