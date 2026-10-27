@@ -2405,11 +2405,11 @@
     "date": "2026-10-27",
     "model": "qwen/qwen3.8-27b",
     "summary": {
-      "turns": 21,
+      "turns": 22,
       "meanWords": 143,
       "meanOverlap": 0.09,
       "meanNovelty": 0.79,
-      "meanStory": 0.1,
+      "meanStory": 0.09,
       "guardRewrites": 0,
       "flags": [
         "long:marx",
@@ -2425,7 +2425,8 @@
         "long:bloch",
         "long:weil",
         "long:bookchin",
-        "long:rose"
+        "long:rose",
+        "long:fisher"
       ]
     },
     "turns": [
@@ -2642,6 +2643,17 @@
         "overlap": 0.11,
         "novelty": 0.79,
         "story": 0.14,
+        "flags": [
+          "long"
+        ]
+      },
+      {
+        "ts": "2026-10-27T22:06:55.813Z",
+        "seat": "fisher",
+        "words": 139,
+        "overlap": 0.1,
+        "novelty": 0.77,
+        "story": 0.07,
         "flags": [
           "long"
         ]
