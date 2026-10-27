@@ -2406,13 +2406,12 @@
     "model": "qwen/qwen3.8-27b",
     "summary": {
       "turns": 20,
-      "meanWords": 140,
+      "meanWords": 141,
       "meanOverlap": 0.09,
       "meanNovelty": 0.79,
       "meanStory": 0.12,
       "guardRewrites": 0,
       "flags": [
-        "long:hegel",
         "long:marx",
         "long:bogdanov",
         "long:bloch",
@@ -2426,21 +2425,11 @@
         "long:hegel",
         "long:marx",
         "long:bogdanov",
-        "long:weil"
+        "long:weil",
+        "long:deleuze"
       ]
     },
     "turns": [
-      {
-        "ts": "2026-10-26T04:33:54.355Z",
-        "seat": "hegel",
-        "words": 185,
-        "overlap": 0.12,
-        "novelty": 0.76,
-        "story": 0.07,
-        "flags": [
-          "long"
-        ]
-      },
       {
         "ts": "2026-10-26T06:00:59.768Z",
         "seat": "marx",
@@ -2638,6 +2627,17 @@
         "novelty": 0.78,
         "story": 0,
         "flags": []
+      },
+      {
+        "ts": "2026-10-27T04:52:06.499Z",
+        "seat": "deleuze",
+        "words": 196,
+        "overlap": 0.08,
+        "novelty": 0.79,
+        "story": 0,
+        "flags": [
+          "long"
+        ]
       }
     ]
   }
