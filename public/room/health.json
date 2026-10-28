@@ -2676,11 +2676,11 @@
     "date": "2026-10-28",
     "model": "qwen/qwen3.8-27b",
     "summary": {
-      "turns": 22,
-      "meanWords": 145,
+      "turns": 23,
+      "meanWords": 148,
       "meanOverlap": 0.09,
       "meanNovelty": 0.79,
-      "meanStory": 0.1,
+      "meanStory": 0.11,
       "guardRewrites": 0,
       "flags": [
         "long:weil",
@@ -2699,7 +2699,8 @@
         "figure:genzie",
         "long:spinoza",
         "figure:kant",
-        "long:kant"
+        "long:kant",
+        "long:hegel"
       ]
     },
     "turns": [
@@ -2931,6 +2932,17 @@
         "story": 0.29,
         "flags": [
           "figure",
+          "long"
+        ]
+      },
+      {
+        "ts": "2026-10-28T01:31:05.863Z",
+        "seat": "hegel",
+        "words": 205,
+        "overlap": 0.1,
+        "novelty": 0.83,
+        "story": 0.21,
+        "flags": [
           "long"
         ]
       }
