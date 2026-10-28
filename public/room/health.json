@@ -2677,13 +2677,12 @@
     "model": "qwen/qwen3.8-27b",
     "summary": {
       "turns": 23,
-      "meanWords": 144,
+      "meanWords": 143,
       "meanOverlap": 0.09,
-      "meanNovelty": 0.79,
+      "meanNovelty": 0.78,
       "meanStory": 0.13,
       "guardRewrites": 0,
       "flags": [
-        "long:spinoza",
         "long:kant",
         "long:hegel",
         "long:marx",
@@ -2701,21 +2700,11 @@
         "figure:bogdanov",
         "long:bogdanov",
         "long:bloch",
-        "long:bookchin"
+        "long:bookchin",
+        "long:rose"
       ]
     },
     "turns": [
-      {
-        "ts": "2026-10-27T10:31:06.572Z",
-        "seat": "spinoza",
-        "words": 183,
-        "overlap": 0.1,
-        "novelty": 0.84,
-        "story": 0.07,
-        "flags": [
-          "long"
-        ]
-      },
       {
         "ts": "2026-10-27T12:01:01.678Z",
         "seat": "kant",
@@ -2947,6 +2936,17 @@
         "novelty": 0.79,
         "story": 0,
         "flags": []
+      },
+      {
+        "ts": "2026-10-28T12:00:58.255Z",
+        "seat": "rose",
+        "words": 161,
+        "overlap": 0.09,
+        "novelty": 0.76,
+        "story": 0.07,
+        "flags": [
+          "long"
+        ]
       }
     ]
   }
