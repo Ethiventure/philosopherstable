@@ -2677,9 +2677,9 @@
     "model": "qwen/qwen3.8-27b",
     "summary": {
       "turns": 23,
-      "meanWords": 148,
+      "meanWords": 151,
       "meanOverlap": 0.09,
-      "meanNovelty": 0.79,
+      "meanNovelty": 0.8,
       "meanStory": 0.11,
       "guardRewrites": 0,
       "flags": [
@@ -2700,19 +2700,11 @@
         "long:spinoza",
         "figure:kant",
         "long:kant",
-        "long:hegel"
+        "long:hegel",
+        "long:marx"
       ]
     },
     "turns": [
-      {
-        "ts": "2026-10-27T01:31:09.274Z",
-        "seat": "bloch",
-        "words": 108,
-        "overlap": 0.09,
-        "novelty": 0.81,
-        "story": 0.07,
-        "flags": []
-      },
       {
         "ts": "2026-10-27T03:00:56.860Z",
         "seat": "weil",
@@ -2940,6 +2932,17 @@
         "seat": "hegel",
         "words": 205,
         "overlap": 0.1,
+        "novelty": 0.83,
+        "story": 0.21,
+        "flags": [
+          "long"
+        ]
+      },
+      {
+        "ts": "2026-10-28T03:00:56.338Z",
+        "seat": "marx",
+        "words": 188,
+        "overlap": 0.09,
         "novelty": 0.83,
         "story": 0.21,
         "flags": [
