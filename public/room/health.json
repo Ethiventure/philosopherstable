@@ -2676,15 +2676,13 @@
     "date": "2026-10-28",
     "model": "qwen/qwen3.8-27b",
     "summary": {
-      "turns": 22,
+      "turns": 21,
       "meanWords": 147,
       "meanOverlap": 0.09,
       "meanNovelty": 0.78,
       "meanStory": 0.12,
       "guardRewrites": 0,
       "flags": [
-        "long:bloch",
-        "long:weil",
         "long:bookchin",
         "long:rose",
         "long:fisher",
@@ -2700,32 +2698,11 @@
         "long:bookchin",
         "long:rose",
         "long:spinoza",
-        "long:kant"
+        "long:kant",
+        "long:hegel"
       ]
     },
     "turns": [
-      {
-        "ts": "2026-10-27T17:54:43.193Z",
-        "seat": "bloch",
-        "words": 181,
-        "overlap": 0.09,
-        "novelty": 0.83,
-        "story": 0.07,
-        "flags": [
-          "long"
-        ]
-      },
-      {
-        "ts": "2026-10-27T18:00:57.337Z",
-        "seat": "weil",
-        "words": 146,
-        "overlap": 0.06,
-        "novelty": 0.8,
-        "story": 0.14,
-        "flags": [
-          "long"
-        ]
-      },
       {
         "ts": "2026-10-27T18:15:57.816Z",
         "seat": "bookchin",
@@ -2932,6 +2909,17 @@
         "overlap": 0.07,
         "novelty": 0.82,
         "story": 0.07,
+        "flags": [
+          "long"
+        ]
+      },
+      {
+        "ts": "2026-10-28T18:00:59.200Z",
+        "seat": "hegel",
+        "words": 182,
+        "overlap": 0.08,
+        "novelty": 0.79,
+        "story": 0.14,
         "flags": [
           "long"
         ]
