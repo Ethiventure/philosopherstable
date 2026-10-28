@@ -2676,15 +2676,13 @@
     "date": "2026-10-28",
     "model": "qwen/qwen3.8-27b",
     "summary": {
-      "turns": 23,
-      "meanWords": 147,
+      "turns": 21,
+      "meanWords": 146,
       "meanOverlap": 0.09,
-      "meanNovelty": 0.79,
-      "meanStory": 0.11,
+      "meanNovelty": 0.8,
+      "meanStory": 0.13,
       "guardRewrites": 0,
       "flags": [
-        "long:deleuze",
-        "long:rose",
         "long:fisher",
         "long:spinoza",
         "long:kant",
@@ -2700,41 +2698,12 @@
         "figure:kant",
         "long:kant",
         "long:hegel",
-        "long:marx"
+        "long:marx",
+        "figure:bogdanov",
+        "long:bogdanov"
       ]
     },
     "turns": [
-      {
-        "ts": "2026-10-27T04:31:07.756Z",
-        "seat": "bookchin",
-        "words": 115,
-        "overlap": 0.09,
-        "novelty": 0.78,
-        "story": 0,
-        "flags": []
-      },
-      {
-        "ts": "2026-10-27T04:52:06.499Z",
-        "seat": "deleuze",
-        "words": 196,
-        "overlap": 0.08,
-        "novelty": 0.79,
-        "story": 0,
-        "flags": [
-          "long"
-        ]
-      },
-      {
-        "ts": "2026-10-27T06:00:58.564Z",
-        "seat": "rose",
-        "words": 193,
-        "overlap": 0.12,
-        "novelty": 0.72,
-        "story": 0.14,
-        "flags": [
-          "long"
-        ]
-      },
       {
         "ts": "2026-10-27T07:31:04.993Z",
         "seat": "fisher",
@@ -2945,6 +2914,18 @@
         "novelty": 0.74,
         "story": 0,
         "flags": []
+      },
+      {
+        "ts": "2026-10-28T06:00:59.592Z",
+        "seat": "bogdanov",
+        "words": 188,
+        "overlap": 0.07,
+        "novelty": 0.83,
+        "story": 0.14,
+        "flags": [
+          "figure",
+          "long"
+        ]
       }
     ]
   }
