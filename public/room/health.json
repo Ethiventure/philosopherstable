@@ -2918,11 +2918,11 @@
     "date": "2026-10-29",
     "model": "qwen/qwen3.8-27b",
     "summary": {
-      "turns": 19,
-      "meanWords": 145,
+      "turns": 20,
+      "meanWords": 140,
       "meanOverlap": 0.09,
       "meanNovelty": 0.77,
-      "meanStory": 0.13,
+      "meanStory": 0.12,
       "guardRewrites": 0,
       "flags": [
         "long:marx",
@@ -3139,6 +3139,15 @@
         "flags": [
           "long"
         ]
+      },
+      {
+        "ts": "2026-10-29T03:00:55.810Z",
+        "seat": "deleuze",
+        "words": 38,
+        "overlap": 0.09,
+        "novelty": 0.81,
+        "story": 0,
+        "flags": []
       }
     ]
   }
