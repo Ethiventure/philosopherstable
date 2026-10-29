@@ -2919,8 +2919,8 @@
     "model": "qwen/qwen3.8-27b",
     "summary": {
       "turns": 21,
-      "meanWords": 142,
-      "meanOverlap": 0.08,
+      "meanWords": 143,
+      "meanOverlap": 0.09,
       "meanNovelty": 0.8,
       "meanStory": 0.09,
       "guardRewrites": 0,
@@ -2938,19 +2938,11 @@
         "long:fisher",
         "long:kant",
         "long:hegel",
-        "long:marx"
+        "long:marx",
+        "long:bloch"
       ]
     },
     "turns": [
-      {
-        "ts": "2026-10-28T13:31:10.131Z",
-        "seat": "fisher",
-        "words": 104,
-        "overlap": 0.16,
-        "novelty": 0.58,
-        "story": 0.14,
-        "flags": []
-      },
       {
         "ts": "2026-10-28T15:00:58.580Z",
         "seat": "genzie",
@@ -3157,6 +3149,17 @@
         "novelty": 0.81,
         "story": 0.07,
         "flags": []
+      },
+      {
+        "ts": "2026-10-29T15:00:57.292Z",
+        "seat": "bloch",
+        "words": 131,
+        "overlap": 0.38,
+        "novelty": 0.57,
+        "story": 0.07,
+        "flags": [
+          "long"
+        ]
       }
     ]
   }
