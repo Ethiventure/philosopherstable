@@ -1,3 +1,12 @@
+## A rule describes; a worked example shows (Oct 27 2026)
+
+The teach-day room prompt said "gloss every hard term". 84 turns later,
+15 had any explanation at all — and the wordiest seat got wordier, not
+clearer. The sittings' Teach mode works because it carries a worked
+example: the same idea rendered at the target level, right in the
+prompt. Rules tell a model what to do; examples show it what it looks
+like. Now every mode carries its own exemplar, labelled with its style.
+
 # Things taught (owner's notebook)
 Plain-words record of technical lessons from building this cabinet.
 Low intensity, nothing dumbed down: every entry keeps the full fact,
