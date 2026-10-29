@@ -2918,11 +2918,11 @@
     "date": "2026-10-29",
     "model": "qwen/qwen3.8-27b",
     "summary": {
-      "turns": 19,
-      "meanWords": 135,
+      "turns": 20,
+      "meanWords": 133,
       "meanOverlap": 0.09,
       "meanNovelty": 0.8,
-      "meanStory": 0.08,
+      "meanStory": 0.07,
       "guardRewrites": 0,
       "flags": [
         "long:bogdanov",
@@ -3136,6 +3136,15 @@
         "flags": [
           "long"
         ]
+      },
+      {
+        "ts": "2026-10-29T19:32:29.810Z",
+        "seat": "rose",
+        "words": 97,
+        "overlap": 0.1,
+        "novelty": 0.77,
+        "story": 0,
+        "flags": []
       }
     ]
   }
