@@ -2918,10 +2918,10 @@
     "date": "2026-10-29",
     "model": "qwen/qwen3.8-27b",
     "summary": {
-      "turns": 20,
-      "meanWords": 148,
+      "turns": 21,
+      "meanWords": 144,
       "meanOverlap": 0.09,
-      "meanNovelty": 0.77,
+      "meanNovelty": 0.78,
       "meanStory": 0.12,
       "guardRewrites": 0,
       "flags": [
@@ -3153,6 +3153,15 @@
         "flags": [
           "long"
         ]
+      },
+      {
+        "ts": "2026-10-29T06:00:57.009Z",
+        "seat": "genzie",
+        "words": 57,
+        "overlap": 0.04,
+        "novelty": 0.93,
+        "story": null,
+        "flags": []
       }
     ]
   }
