@@ -2913,5 +2913,259 @@
         ]
       }
     ]
+  },
+  {
+    "date": "2026-10-29",
+    "model": "qwen/qwen3.8-27b",
+    "summary": {
+      "turns": 21,
+      "meanWords": 148,
+      "meanOverlap": 0.1,
+      "meanNovelty": 0.77,
+      "meanStory": 0.13,
+      "guardRewrites": 0,
+      "flags": [
+        "long:spinoza",
+        "figure:kant",
+        "long:kant",
+        "long:hegel",
+        "long:marx",
+        "figure:bogdanov",
+        "long:bogdanov",
+        "long:bloch",
+        "long:bookchin",
+        "long:rose",
+        "long:spinoza",
+        "long:kant",
+        "long:hegel",
+        "long:marx",
+        "long:bogdanov",
+        "long:bloch",
+        "long:weil"
+      ]
+    },
+    "turns": [
+      {
+        "ts": "2026-10-28T00:00:59.419Z",
+        "seat": "spinoza",
+        "words": 157,
+        "overlap": 0.12,
+        "novelty": 0.84,
+        "story": 0.07,
+        "flags": [
+          "long"
+        ]
+      },
+      {
+        "ts": "2026-10-28T01:17:25.398Z",
+        "seat": "kant",
+        "words": 192,
+        "overlap": 0.09,
+        "novelty": 0.78,
+        "story": 0.29,
+        "flags": [
+          "figure",
+          "long"
+        ]
+      },
+      {
+        "ts": "2026-10-28T01:31:05.863Z",
+        "seat": "hegel",
+        "words": 205,
+        "overlap": 0.1,
+        "novelty": 0.83,
+        "story": 0.21,
+        "flags": [
+          "long"
+        ]
+      },
+      {
+        "ts": "2026-10-28T03:00:56.338Z",
+        "seat": "marx",
+        "words": 188,
+        "overlap": 0.09,
+        "novelty": 0.83,
+        "story": 0.21,
+        "flags": [
+          "long"
+        ]
+      },
+      {
+        "ts": "2026-10-28T04:31:05.524Z",
+        "seat": "lenin",
+        "words": 35,
+        "overlap": 0.13,
+        "novelty": 0.74,
+        "story": 0,
+        "flags": []
+      },
+      {
+        "ts": "2026-10-28T06:00:59.592Z",
+        "seat": "bogdanov",
+        "words": 188,
+        "overlap": 0.07,
+        "novelty": 0.83,
+        "story": 0.14,
+        "flags": [
+          "figure",
+          "long"
+        ]
+      },
+      {
+        "ts": "2026-10-28T07:31:07.609Z",
+        "seat": "bloch",
+        "words": 207,
+        "overlap": 0.11,
+        "novelty": 0.66,
+        "story": 0.5,
+        "flags": [
+          "long"
+        ]
+      },
+      {
+        "ts": "2026-10-28T08:18:46.370Z",
+        "seat": "weil",
+        "words": 91,
+        "overlap": 0.07,
+        "novelty": 0.74,
+        "story": 0.07,
+        "flags": []
+      },
+      {
+        "ts": "2026-10-28T09:01:00.303Z",
+        "seat": "bookchin",
+        "words": 146,
+        "overlap": 0.11,
+        "novelty": 0.76,
+        "story": 0.07,
+        "flags": [
+          "long"
+        ]
+      },
+      {
+        "ts": "2026-10-28T10:31:05.140Z",
+        "seat": "deleuze",
+        "words": 64,
+        "overlap": 0.06,
+        "novelty": 0.79,
+        "story": 0,
+        "flags": []
+      },
+      {
+        "ts": "2026-10-28T12:00:58.255Z",
+        "seat": "rose",
+        "words": 161,
+        "overlap": 0.09,
+        "novelty": 0.76,
+        "story": 0.07,
+        "flags": [
+          "long"
+        ]
+      },
+      {
+        "ts": "2026-10-28T13:31:10.131Z",
+        "seat": "fisher",
+        "words": 104,
+        "overlap": 0.16,
+        "novelty": 0.58,
+        "story": 0.14,
+        "flags": []
+      },
+      {
+        "ts": "2026-10-28T15:00:58.580Z",
+        "seat": "genzie",
+        "words": 73,
+        "overlap": 0.09,
+        "novelty": 0.79,
+        "story": null,
+        "flags": []
+      },
+      {
+        "ts": "2026-10-28T16:31:06.273Z",
+        "seat": "spinoza",
+        "words": 201,
+        "overlap": 0.11,
+        "novelty": 0.8,
+        "story": 0.07,
+        "flags": [
+          "long"
+        ]
+      },
+      {
+        "ts": "2026-10-28T16:34:39.222Z",
+        "seat": "kant",
+        "words": 172,
+        "overlap": 0.07,
+        "novelty": 0.82,
+        "story": 0.07,
+        "flags": [
+          "long"
+        ]
+      },
+      {
+        "ts": "2026-10-28T18:00:59.200Z",
+        "seat": "hegel",
+        "words": 182,
+        "overlap": 0.08,
+        "novelty": 0.79,
+        "story": 0.14,
+        "flags": [
+          "long"
+        ]
+      },
+      {
+        "ts": "2026-10-28T19:31:06.194Z",
+        "seat": "marx",
+        "words": 179,
+        "overlap": 0.07,
+        "novelty": 0.85,
+        "story": 0.14,
+        "flags": [
+          "long"
+        ]
+      },
+      {
+        "ts": "2026-10-28T21:00:59.387Z",
+        "seat": "lenin",
+        "words": 64,
+        "overlap": 0.09,
+        "novelty": 0.79,
+        "story": 0.14,
+        "flags": []
+      },
+      {
+        "ts": "2026-10-28T22:29:49.941Z",
+        "seat": "bogdanov",
+        "words": 152,
+        "overlap": 0.09,
+        "novelty": 0.75,
+        "story": 0.14,
+        "flags": [
+          "long"
+        ]
+      },
+      {
+        "ts": "2026-10-28T22:31:08.034Z",
+        "seat": "bloch",
+        "words": 203,
+        "overlap": 0.13,
+        "novelty": 0.73,
+        "story": 0.14,
+        "flags": [
+          "long"
+        ]
+      },
+      {
+        "ts": "2026-10-29T00:00:57.303Z",
+        "seat": "weil",
+        "words": 145,
+        "overlap": 0.08,
+        "novelty": 0.72,
+        "story": 0,
+        "flags": [
+          "long"
+        ]
+      }
+    ]
   }
 ]
