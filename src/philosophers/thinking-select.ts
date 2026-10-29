@@ -55,9 +55,11 @@ export function composePersona(
   const expressionText = opts.mode === 'think'
     ? null
     : buildExpressionText(entry.expression, opts.mode, opts.feelings ?? true);
-  const trioLine = opts.mode === 'teach' || (opts.mode === 'thinkAndSound' && !anonymous)
-    ? trioFor(entry.expression, opts.mode)
-    : opts.mode === 'think' ? trioFor(entry.expression, 'think') : null;
+  // Worked example rides EVERY mode (owner verdict Oct 27 2026): one
+  // exemplar per seat, rendered at the mode's own style, in the block
+  // every prompt uses — never only in teach. Anonymous thinkAndSound
+  // stays bare (guest desk must not leak persona voice).
+  const trioLine = opts.mode === 'thinkAndSound' && anonymous ? null : trioFor(entry.expression, opts.mode);
   const system = renderThinkingPersona(
     entry.thinking, opts.mode, slice, expressionText, trioLine, identityFor(entry.life, anonymous),
   );
@@ -225,7 +227,14 @@ export function renderThinkingPersona(
     );
   }
   if (expressionText) lines.push(expressionText, '');
-  if (mode === 'teach' && trioLine) lines.push(`YOUR WORKED EXAMPLE (shape every kept term exactly like this — term kept, meaning woven beside it): “${trioLine}”`, '');
+  if (trioLine) {
+    const trioStyle = mode === 'teach'
+      ? 'teach style — every kept term carries its plain meaning woven beside it'
+      : mode === 'thinkAndSound'
+        ? 'think-&-sound style — full voice, terms carry the argument'
+        : 'think style — plain words, no style machinery';
+    lines.push(`YOUR WORKED EXAMPLE (${trioStyle}; shape your prose like this, do not quote it): “${trioLine}”`, '');
+  }
   lines.push(MODE_LINES[mode]);
   return lines.join('\n');
 }

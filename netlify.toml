@@ -5,6 +5,10 @@
   publish = "dist"
   command = "npm run build"
   functions = "netlify/functions"
+  # Second lock (Oct 27 2026): room ticks carry [skip ci], but a tick
+  # commit that ever forgets its tag still costs zero build minutes.
+  # Builds run only when something outside the room data/docs changes.
+  ignore = "git diff --quiet HEAD^ HEAD -- . ':!public/room' ':!docs' ':!graphify-out'"
 
 # SPA fallback — must come after any function/API routes (functions take precedence).
 [[redirects]]

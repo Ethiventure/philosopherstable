@@ -34,7 +34,7 @@ import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { loadTestEnv } from './test-env.mjs';
 import { relationshipLine } from '../src/philosophers/influences.ts';
-import { renderThinkingPersona, ANONYMOUS_LEAD, MODE_LINES, buildExpressionText } from '../src/philosophers/thinking-select.ts';
+import { renderThinkingPersona, ANONYMOUS_LEAD, MODE_LINES, buildExpressionText, trioFor } from '../src/philosophers/thinking-select.ts';
 import { SPINOZA_EXPRESSION } from '../src/philosophers/spinoza.expression.ts';
 import { KANT_EXPRESSION } from '../src/philosophers/kant.expression.ts';
 import { HEGEL_EXPRESSION } from '../src/philosophers/hegel.expression.ts';
@@ -140,7 +140,7 @@ const MODEL = process.env.GROQ_ROOM_MODEL || 'qwen/qwen3.8-27b';
 // here). Oct 22-23: 200 still clipped 7/38 under voice — 230 (~200w) owner
 // approved as the trade: cut sentences read as broken before length reads
 // as long. Mean is tracked in the nightly health row.
-const MAX_TOKENS = Number(process.env.GROQ_ROOM_MAX_TOKENS) || 230;
+const MAX_TOKENS = Number(process.env.GROQ_ROOM_MAX_TOKENS) || 200; // Oct 27: 230 → 200, owner call (words down; teach glossing overshot at 230)
 const ROOM_RULES = promptFragment('room-rules.md');
 
 // Genzie (margins voice, fictional seat): rude, and every one of her turns
@@ -344,6 +344,9 @@ const systemPrompt = isGenzie
           ? `\n\n${buildExpressionText(EXPRESSIONS[slug], 'teach', true)}\n\nROOM TERMS (this room): use these terms inside your judgments; every hard term carries its plain meaning once, woven into the sentence that uses it — term, then meaning, then the short concrete sentence showing what it does.`
           : `\n\n${buildExpressionText(EXPRESSIONS[slug], 'thinkAndSound', true)}\n\nROOM TERMS (overrides the fences in this block for this room only): your core terms and signature distinctions belong IN your judgments here whenever they carry the point — "voice only, never thinking terms" does not apply in this room. What stays fenced: voice flourishes never write a claim the thinking files do not support.`,
       ] : []),
+      // Worked example rides EVERY room mode (Oct 27 2026, owner verdict):
+      // the seat's own trio rendered at this room's style, always present.
+      ...(!isGenzie && EXPRESSIONS[slug] ? [`\n\nYOUR WORKED EXAMPLE (${ROOM_MODE === 'teach' ? 'teach style — every kept term carries its plain meaning woven beside it' : ROOM_MODE === 'voice' ? 'think-&-sound style — full voice, terms carry the argument' : 'think style — plain words, no style machinery'}; shape your prose like this, do not quote it): “${trioFor(EXPRESSIONS[slug], ROOM_MODE === 'teach' ? 'teach' : ROOM_MODE === 'voice' ? 'thinkAndSound' : 'think')}”`] : []),
       `\n\n${FINAL_GATE}${resetLine}${fisherLine}`,
     ].join('');
 
