@@ -2919,9 +2919,9 @@
     "model": "qwen/qwen3.8-27b",
     "summary": {
       "turns": 20,
-      "meanWords": 137,
+      "meanWords": 139,
       "meanOverlap": 0.09,
-      "meanNovelty": 0.78,
+      "meanNovelty": 0.79,
       "meanStory": 0.09,
       "guardRewrites": 0,
       "flags": [
@@ -2937,19 +2937,11 @@
         "long:bookchin",
         "figure:rose",
         "long:rose",
-        "long:fisher"
+        "long:fisher",
+        "long:kant"
       ]
     },
     "turns": [
-      {
-        "ts": "2026-10-28T08:18:46.370Z",
-        "seat": "weil",
-        "words": 91,
-        "overlap": 0.07,
-        "novelty": 0.74,
-        "story": 0.07,
-        "flags": []
-      },
       {
         "ts": "2026-10-28T09:01:00.303Z",
         "seat": "bookchin",
@@ -3145,6 +3137,17 @@
         "novelty": 0.87,
         "story": 0,
         "flags": []
+      },
+      {
+        "ts": "2026-10-29T09:00:56.958Z",
+        "seat": "kant",
+        "words": 128,
+        "overlap": 0.06,
+        "novelty": 0.86,
+        "story": 0,
+        "flags": [
+          "long"
+        ]
       }
     ]
   }
