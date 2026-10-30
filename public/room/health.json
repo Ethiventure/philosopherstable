@@ -3149,8 +3149,8 @@
     "date": "2026-10-30",
     "model": "qwen/qwen3.8-27b",
     "summary": {
-      "turns": 20,
-      "meanWords": 137,
+      "turns": 21,
+      "meanWords": 134,
       "meanOverlap": 0.11,
       "meanNovelty": 0.79,
       "meanStory": 0.07,
@@ -3374,6 +3374,15 @@
         "flags": [
           "long"
         ]
+      },
+      {
+        "ts": "2026-10-30T10:31:07.308Z",
+        "seat": "deleuze",
+        "words": 81,
+        "overlap": 0.05,
+        "novelty": 0.84,
+        "story": 0,
+        "flags": []
       }
     ]
   }
