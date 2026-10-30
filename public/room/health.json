@@ -3149,11 +3149,11 @@
     "date": "2026-10-30",
     "model": "qwen/qwen3.8-27b",
     "summary": {
-      "turns": 21,
-      "meanWords": 138,
-      "meanOverlap": 0.1,
+      "turns": 22,
+      "meanWords": 135,
+      "meanOverlap": 0.09,
       "meanNovelty": 0.79,
-      "meanStory": 0.07,
+      "meanStory": 0.06,
       "guardRewrites": 0,
       "flags": [
         "long:deleuze",
@@ -3386,6 +3386,15 @@
         "flags": [
           "long"
         ]
+      },
+      {
+        "ts": "2026-10-30T19:31:05.054Z",
+        "seat": "lenin",
+        "words": 64,
+        "overlap": 0.06,
+        "novelty": 0.82,
+        "story": 0,
+        "flags": []
       }
     ]
   }
