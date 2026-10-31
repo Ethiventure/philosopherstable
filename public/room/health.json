@@ -3399,11 +3399,11 @@
     "date": "2026-10-31",
     "model": "qwen/qwen3.8-27b",
     "summary": {
-      "turns": 20,
+      "turns": 21,
       "meanWords": 137,
-      "meanOverlap": 0.11,
-      "meanNovelty": 0.74,
-      "meanStory": 0.09,
+      "meanOverlap": 0.1,
+      "meanNovelty": 0.75,
+      "meanStory": 0.08,
       "guardRewrites": 0,
       "flags": [
         "long:weil",
@@ -3419,7 +3419,8 @@
         "long:deleuze",
         "figure:rose",
         "long:rose",
-        "long:spinoza"
+        "long:spinoza",
+        "long:kant"
       ]
     },
     "turns": [
@@ -3626,6 +3627,17 @@
         "overlap": 0.08,
         "novelty": 0.83,
         "story": 0.36,
+        "flags": [
+          "long"
+        ]
+      },
+      {
+        "ts": "2026-10-31T23:18:25.629Z",
+        "seat": "kant",
+        "words": 150,
+        "overlap": 0.08,
+        "novelty": 0.85,
+        "story": 0,
         "flags": [
           "long"
         ]
