@@ -3399,10 +3399,10 @@
     "date": "2026-10-31",
     "model": "qwen/qwen3.8-27b",
     "summary": {
-      "turns": 20,
-      "meanWords": 139,
+      "turns": 21,
+      "meanWords": 140,
       "meanOverlap": 0.11,
-      "meanNovelty": 0.74,
+      "meanNovelty": 0.75,
       "meanStory": 0.07,
       "guardRewrites": 0,
       "flags": [
@@ -3419,7 +3419,8 @@
         "long:spinoza",
         "long:kant",
         "long:hegel",
-        "long:marx"
+        "long:marx",
+        "long:bogdanov"
       ]
     },
     "turns": [
@@ -3630,6 +3631,17 @@
         "novelty": 0.65,
         "story": 0,
         "flags": []
+      },
+      {
+        "ts": "2026-10-31T12:12:35.349Z",
+        "seat": "bogdanov",
+        "words": 151,
+        "overlap": 0.11,
+        "novelty": 0.78,
+        "story": 0.07,
+        "flags": [
+          "long"
+        ]
       }
     ]
   }
