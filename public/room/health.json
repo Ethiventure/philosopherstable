@@ -3648,11 +3648,11 @@
     "date": "2026-11-01",
     "model": "qwen/qwen3.8-27b",
     "summary": {
-      "turns": 20,
-      "meanWords": 142,
-      "meanOverlap": 0.11,
+      "turns": 21,
+      "meanWords": 140,
+      "meanOverlap": 0.1,
       "meanNovelty": 0.75,
-      "meanStory": 0.09,
+      "meanStory": 0.08,
       "guardRewrites": 0,
       "flags": [
         "long:kant",
@@ -3883,6 +3883,15 @@
         "flags": [
           "long"
         ]
+      },
+      {
+        "ts": "2026-11-01T07:31:05.624Z",
+        "seat": "bookchin",
+        "words": 116,
+        "overlap": 0.06,
+        "novelty": 0.78,
+        "story": 0,
+        "flags": []
       }
     ]
   }
