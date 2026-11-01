@@ -3648,8 +3648,8 @@
     "date": "2026-11-01",
     "model": "qwen/qwen3.8-27b",
     "summary": {
-      "turns": 20,
-      "meanWords": 149,
+      "turns": 21,
+      "meanWords": 148,
       "meanOverlap": 0.1,
       "meanNovelty": 0.75,
       "meanStory": 0.09,
@@ -3672,7 +3672,8 @@
         "long:hegel",
         "long:marx",
         "long:bogdanov",
-        "long:bloch"
+        "long:bloch",
+        "long:weil"
       ]
     },
     "turns": [
@@ -3885,6 +3886,17 @@
         "words": 174,
         "overlap": 0.12,
         "novelty": 0.7,
+        "story": 0.07,
+        "flags": [
+          "long"
+        ]
+      },
+      {
+        "ts": "2026-11-01T22:31:05.287Z",
+        "seat": "weil",
+        "words": 128,
+        "overlap": 0.1,
+        "novelty": 0.71,
         "story": 0.07,
         "flags": [
           "long"
