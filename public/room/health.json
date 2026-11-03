@@ -4134,11 +4134,11 @@
     "date": "2026-11-03",
     "model": "qwen/qwen3.8-27b",
     "summary": {
-      "turns": 19,
-      "meanWords": 139,
+      "turns": 20,
+      "meanWords": 135,
       "meanOverlap": 0.1,
       "meanNovelty": 0.76,
-      "meanStory": 0.06,
+      "meanStory": 0.05,
       "guardRewrites": 0,
       "flags": [
         "long:spinoza",
@@ -4356,6 +4356,15 @@
         "flags": [
           "long"
         ]
+      },
+      {
+        "ts": "2026-11-03T03:01:00.388Z",
+        "seat": "lenin",
+        "words": 71,
+        "overlap": 0.1,
+        "novelty": 0.74,
+        "story": 0,
+        "flags": []
       }
     ]
   }
