@@ -4614,11 +4614,11 @@
     "date": "2026-11-05",
     "model": "qwen/qwen3.8-27b",
     "summary": {
-      "turns": 19,
+      "turns": 20,
       "meanWords": 135,
       "meanOverlap": 0.1,
       "meanNovelty": 0.78,
-      "meanStory": 0.2,
+      "meanStory": 0.19,
       "guardRewrites": 0,
       "flags": [
         "long:bookchin",
@@ -4634,7 +4634,8 @@
         "long:weil",
         "long:rose",
         "long:fisher",
-        "long:spinoza"
+        "long:spinoza",
+        "long:kant"
       ]
     },
     "turns": [
@@ -4831,6 +4832,17 @@
         "overlap": 0.08,
         "novelty": 0.83,
         "story": 0.29,
+        "flags": [
+          "long"
+        ]
+      },
+      {
+        "ts": "2026-11-05T16:31:05.189Z",
+        "seat": "kant",
+        "words": 153,
+        "overlap": 0.13,
+        "novelty": 0.79,
+        "story": 0,
         "flags": [
           "long"
         ]
