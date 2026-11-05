@@ -4615,10 +4615,10 @@
     "model": "qwen/qwen3.8-27b",
     "summary": {
       "turns": 19,
-      "meanWords": 144,
+      "meanWords": 140,
       "meanOverlap": 0.1,
-      "meanNovelty": 0.78,
-      "meanStory": 0.21,
+      "meanNovelty": 0.79,
+      "meanStory": 0.2,
       "guardRewrites": 0,
       "flags": [
         "long:spinoza",
@@ -4638,15 +4638,6 @@
       ]
     },
     "turns": [
-      {
-        "ts": "2026-11-04T21:00:59.856Z",
-        "seat": "fisher",
-        "words": 115,
-        "overlap": 0.1,
-        "novelty": 0.71,
-        "story": 0.07,
-        "flags": []
-      },
       {
         "ts": "2026-11-04T21:49:03.932Z",
         "seat": "genzie",
@@ -4835,6 +4826,15 @@
         "flags": [
           "long"
         ]
+      },
+      {
+        "ts": "2026-11-05T21:01:03.453Z",
+        "seat": "lenin",
+        "words": 43,
+        "overlap": 0.05,
+        "novelty": 0.86,
+        "story": 0,
+        "flags": []
       }
     ]
   }
