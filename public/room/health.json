@@ -4614,10 +4614,10 @@
     "date": "2026-11-05",
     "model": "qwen/qwen3.8-27b",
     "summary": {
-      "turns": 19,
-      "meanWords": 137,
+      "turns": 20,
+      "meanWords": 133,
       "meanOverlap": 0.1,
-      "meanNovelty": 0.75,
+      "meanNovelty": 0.76,
       "meanStory": 0.18,
       "guardRewrites": 0,
       "flags": [
@@ -4836,6 +4836,15 @@
         "overlap": 0.09,
         "novelty": 0.73,
         "story": 0.14,
+        "flags": []
+      },
+      {
+        "ts": "2026-11-05T10:31:07.219Z",
+        "seat": "deleuze",
+        "words": 60,
+        "overlap": 0.12,
+        "novelty": 0.76,
+        "story": 0.21,
         "flags": []
       }
     ]
