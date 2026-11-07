@@ -5089,11 +5089,11 @@
     "date": "2026-11-07",
     "model": "qwen/qwen3.8-27b",
     "summary": {
-      "turns": 20,
-      "meanWords": 137,
+      "turns": 21,
+      "meanWords": 136,
       "meanOverlap": 0.09,
-      "meanNovelty": 0.78,
-      "meanStory": 0.04,
+      "meanNovelty": 0.79,
+      "meanStory": 0.03,
       "guardRewrites": 0,
       "flags": [
         "long:spinoza",
@@ -5320,6 +5320,15 @@
         "flags": [
           "long"
         ]
+      },
+      {
+        "ts": "2026-11-07T06:00:55.276Z",
+        "seat": "bloch",
+        "words": 116,
+        "overlap": 0.12,
+        "novelty": 0.82,
+        "story": 0,
+        "flags": []
       }
     ]
   }
