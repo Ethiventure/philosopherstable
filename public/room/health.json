@@ -5089,8 +5089,8 @@
     "date": "2026-11-07",
     "model": "qwen/qwen3.8-27b",
     "summary": {
-      "turns": 19,
-      "meanWords": 132,
+      "turns": 20,
+      "meanWords": 131,
       "meanOverlap": 0.09,
       "meanNovelty": 0.78,
       "meanStory": 0.05,
@@ -5305,6 +5305,15 @@
         "flags": [
           "long"
         ]
+      },
+      {
+        "ts": "2026-11-07T12:51:46.810Z",
+        "seat": "fisher",
+        "words": 108,
+        "overlap": 0.09,
+        "novelty": 0.65,
+        "story": 0,
+        "flags": []
       }
     ]
   }
