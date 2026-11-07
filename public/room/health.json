@@ -5089,14 +5089,13 @@
     "date": "2026-11-07",
     "model": "qwen/qwen3.8-27b",
     "summary": {
-      "turns": 20,
-      "meanWords": 141,
-      "meanOverlap": 0.1,
-      "meanNovelty": 0.78,
+      "turns": 19,
+      "meanWords": 137,
+      "meanOverlap": 0.09,
+      "meanNovelty": 0.79,
       "meanStory": 0.04,
       "guardRewrites": 0,
       "flags": [
-        "long:rose",
         "long:spinoza",
         "long:hegel",
         "long:marx",
@@ -5113,26 +5112,6 @@
       ]
     },
     "turns": [
-      {
-        "ts": "2026-11-06T03:00:57.353Z",
-        "seat": "rose",
-        "words": 168,
-        "overlap": 0.11,
-        "novelty": 0.77,
-        "story": 0,
-        "flags": [
-          "long"
-        ]
-      },
-      {
-        "ts": "2026-11-06T04:31:06.392Z",
-        "seat": "fisher",
-        "words": 100,
-        "overlap": 0.08,
-        "novelty": 0.77,
-        "story": 0.14,
-        "flags": []
-      },
       {
         "ts": "2026-11-06T06:00:56.399Z",
         "seat": "genzie",
@@ -5320,6 +5299,15 @@
         "flags": [
           "long"
         ]
+      },
+      {
+        "ts": "2026-11-07T04:31:08.875Z",
+        "seat": "lenin",
+        "words": 66,
+        "overlap": 0.05,
+        "novelty": 0.86,
+        "story": 0,
+        "flags": []
       }
     ]
   }
