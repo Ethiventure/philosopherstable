@@ -5091,9 +5091,9 @@
     "summary": {
       "turns": 21,
       "meanWords": 125,
-      "meanOverlap": 0.09,
+      "meanOverlap": 0.08,
       "meanNovelty": 0.8,
-      "meanStory": 0.05,
+      "meanStory": 0.04,
       "guardRewrites": 0,
       "flags": [
         "figure:genzie",
@@ -5110,15 +5110,6 @@
       ]
     },
     "turns": [
-      {
-        "ts": "2026-11-06T21:00:57.368Z",
-        "seat": "fisher",
-        "words": 120,
-        "overlap": 0.12,
-        "novelty": 0.62,
-        "story": 0.14,
-        "flags": []
-      },
       {
         "ts": "2026-11-06T22:31:04.892Z",
         "seat": "genzie",
@@ -5320,6 +5311,15 @@
         "flags": [
           "long"
         ]
+      },
+      {
+        "ts": "2026-11-07T22:31:03.146Z",
+        "seat": "bloch",
+        "words": 117,
+        "overlap": 0.1,
+        "novelty": 0.72,
+        "story": 0,
+        "flags": []
       }
     ]
   }
