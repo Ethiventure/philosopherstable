@@ -5090,13 +5090,12 @@
     "model": "qwen/qwen3.8-27b",
     "summary": {
       "turns": 21,
-      "meanWords": 132,
+      "meanWords": 126,
       "meanOverlap": 0.09,
       "meanNovelty": 0.79,
       "meanStory": 0.06,
       "guardRewrites": 0,
       "flags": [
-        "long:deleuze",
         "long:rose",
         "figure:genzie",
         "long:spinoza",
@@ -5111,17 +5110,6 @@
       ]
     },
     "turns": [
-      {
-        "ts": "2026-11-06T19:16:29.597Z",
-        "seat": "deleuze",
-        "words": 160,
-        "overlap": 0.14,
-        "novelty": 0.78,
-        "story": 0,
-        "flags": [
-          "long"
-        ]
-      },
       {
         "ts": "2026-11-06T19:31:05.535Z",
         "seat": "rose",
@@ -5323,6 +5311,15 @@
         "flags": [
           "long"
         ]
+      },
+      {
+        "ts": "2026-11-07T19:31:03.969Z",
+        "seat": "lenin",
+        "words": 49,
+        "overlap": 0.05,
+        "novelty": 0.75,
+        "story": 0,
+        "flags": []
       }
     ]
   }
