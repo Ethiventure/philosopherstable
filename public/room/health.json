@@ -5327,15 +5327,13 @@
     "date": "2026-11-08",
     "model": "qwen/qwen3.8-27b",
     "summary": {
-      "turns": 21,
-      "meanWords": 130,
+      "turns": 20,
+      "meanWords": 123,
       "meanOverlap": 0.09,
       "meanNovelty": 0.79,
       "meanStory": 0.04,
       "guardRewrites": 0,
       "flags": [
-        "long:kant",
-        "long:hegel",
         "long:marx",
         "long:bogdanov",
         "long:rose",
@@ -5348,28 +5346,6 @@
       ]
     },
     "turns": [
-      {
-        "ts": "2026-11-07T00:04:04.642Z",
-        "seat": "kant",
-        "words": 164,
-        "overlap": 0.1,
-        "novelty": 0.83,
-        "story": 0.07,
-        "flags": [
-          "long"
-        ]
-      },
-      {
-        "ts": "2026-11-07T01:31:03.656Z",
-        "seat": "hegel",
-        "words": 167,
-        "overlap": 0.12,
-        "novelty": 0.81,
-        "story": 0,
-        "flags": [
-          "long"
-        ]
-      },
       {
         "ts": "2026-11-07T03:00:55.608Z",
         "seat": "marx",
@@ -5558,6 +5534,15 @@
         "flags": [
           "long"
         ]
+      },
+      {
+        "ts": "2026-11-08T01:31:04.972Z",
+        "seat": "deleuze",
+        "words": 51,
+        "overlap": 0.1,
+        "novelty": 0.78,
+        "story": 0,
+        "flags": []
       }
     ]
   }
