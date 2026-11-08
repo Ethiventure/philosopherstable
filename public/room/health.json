@@ -5328,9 +5328,9 @@
     "model": "qwen/qwen3.8-27b",
     "summary": {
       "turns": 19,
-      "meanWords": 124,
-      "meanOverlap": 0.1,
-      "meanNovelty": 0.78,
+      "meanWords": 123,
+      "meanOverlap": 0.09,
+      "meanNovelty": 0.79,
       "meanStory": 0.04,
       "guardRewrites": 0,
       "flags": [
@@ -5346,15 +5346,6 @@
       ]
     },
     "turns": [
-      {
-        "ts": "2026-11-07T06:00:55.276Z",
-        "seat": "bloch",
-        "words": 116,
-        "overlap": 0.12,
-        "novelty": 0.82,
-        "story": 0,
-        "flags": []
-      },
       {
         "ts": "2026-11-07T07:31:05.692Z",
         "seat": "weil",
@@ -5534,6 +5525,15 @@
         "flags": [
           "long"
         ]
+      },
+      {
+        "ts": "2026-11-08T06:00:57.844Z",
+        "seat": "genzie",
+        "words": 101,
+        "overlap": 0.06,
+        "novelty": 0.86,
+        "story": null,
+        "flags": []
       }
     ]
   }
