@@ -5327,9 +5327,9 @@
     "date": "2026-11-08",
     "model": "qwen/qwen3.8-27b",
     "summary": {
-      "turns": 19,
-      "meanWords": 140,
-      "meanOverlap": 0.1,
+      "turns": 20,
+      "meanWords": 142,
+      "meanOverlap": 0.09,
       "meanNovelty": 0.78,
       "meanStory": 0.02,
       "guardRewrites": 0,
@@ -5349,7 +5349,8 @@
         "long:bogdanov",
         "long:bloch",
         "figure:weil",
-        "long:weil"
+        "long:weil",
+        "long:bookchin"
       ]
     },
     "turns": [
@@ -5551,6 +5552,17 @@
         "story": 0,
         "flags": [
           "figure",
+          "long"
+        ]
+      },
+      {
+        "ts": "2026-11-08T18:00:56.509Z",
+        "seat": "bookchin",
+        "words": 179,
+        "overlap": 0.08,
+        "novelty": 0.81,
+        "story": 0,
+        "flags": [
           "long"
         ]
       }
