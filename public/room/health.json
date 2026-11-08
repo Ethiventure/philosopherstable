@@ -5328,10 +5328,10 @@
     "model": "qwen/qwen3.8-27b",
     "summary": {
       "turns": 19,
-      "meanWords": 123,
+      "meanWords": 127,
       "meanOverlap": 0.09,
       "meanNovelty": 0.79,
-      "meanStory": 0.04,
+      "meanStory": 0.03,
       "guardRewrites": 0,
       "flags": [
         "long:rose",
@@ -5342,19 +5342,11 @@
         "long:weil",
         "long:bookchin",
         "long:rose",
-        "long:fisher"
+        "long:fisher",
+        "long:spinoza"
       ]
     },
     "turns": [
-      {
-        "ts": "2026-11-07T07:31:05.692Z",
-        "seat": "weil",
-        "words": 110,
-        "overlap": 0.08,
-        "novelty": 0.77,
-        "story": 0.14,
-        "flags": []
-      },
       {
         "ts": "2026-11-07T09:00:55.996Z",
         "seat": "bookchin",
@@ -5534,6 +5526,17 @@
         "novelty": 0.86,
         "story": null,
         "flags": []
+      },
+      {
+        "ts": "2026-11-08T07:31:12.449Z",
+        "seat": "spinoza",
+        "words": 176,
+        "overlap": 0.07,
+        "novelty": 0.84,
+        "story": 0,
+        "flags": [
+          "long"
+        ]
       }
     ]
   }
