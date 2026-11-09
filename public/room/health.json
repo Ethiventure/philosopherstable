@@ -5560,13 +5560,12 @@
     "model": "qwen/qwen3.8-27b",
     "summary": {
       "turns": 19,
-      "meanWords": 148,
-      "meanOverlap": 0.11,
-      "meanNovelty": 0.76,
+      "meanWords": 145,
+      "meanOverlap": 0.1,
+      "meanNovelty": 0.77,
       "meanStory": 0.11,
       "guardRewrites": 0,
       "flags": [
-        "long:bloch",
         "figure:weil",
         "long:weil",
         "long:bookchin",
@@ -5583,21 +5582,11 @@
         "long:deleuze",
         "long:rose",
         "figure:fisher",
-        "long:fisher"
+        "long:fisher",
+        "long:genzie"
       ]
     },
     "turns": [
-      {
-        "ts": "2026-11-08T15:00:57.354Z",
-        "seat": "bloch",
-        "words": 177,
-        "overlap": 0.1,
-        "novelty": 0.78,
-        "story": 0,
-        "flags": [
-          "long"
-        ]
-      },
       {
         "ts": "2026-11-08T16:31:04.915Z",
         "seat": "weil",
@@ -5788,6 +5777,17 @@
         "story": 0.14,
         "flags": [
           "figure",
+          "long"
+        ]
+      },
+      {
+        "ts": "2026-11-09T15:00:57.933Z",
+        "seat": "genzie",
+        "words": 124,
+        "overlap": 0.03,
+        "novelty": 0.93,
+        "story": null,
+        "flags": [
           "long"
         ]
       }
