@@ -5560,14 +5560,12 @@
     "model": "qwen/qwen3.8-27b",
     "summary": {
       "turns": 19,
-      "meanWords": 142,
+      "meanWords": 140,
       "meanOverlap": 0.1,
       "meanNovelty": 0.79,
       "meanStory": 0.15,
       "guardRewrites": 0,
       "flags": [
-        "figure:fisher",
-        "long:fisher",
         "long:kant",
         "long:hegel",
         "long:marx",
@@ -5586,18 +5584,6 @@
       ]
     },
     "turns": [
-      {
-        "ts": "2026-11-08T21:00:56.433Z",
-        "seat": "fisher",
-        "words": 122,
-        "overlap": 0.11,
-        "novelty": 0.69,
-        "story": 0.14,
-        "flags": [
-          "figure",
-          "long"
-        ]
-      },
       {
         "ts": "2026-11-08T22:31:04.548Z",
         "seat": "genzie",
@@ -5788,6 +5774,15 @@
         "flags": [
           "long"
         ]
+      },
+      {
+        "ts": "2026-11-09T21:00:58.244Z",
+        "seat": "lenin",
+        "words": 81,
+        "overlap": 0.05,
+        "novelty": 0.81,
+        "story": 0,
+        "flags": []
       }
     ]
   }
