@@ -5559,14 +5559,13 @@
     "date": "2026-11-09",
     "model": "qwen/qwen3.8-27b",
     "summary": {
-      "turns": 20,
-      "meanWords": 139,
+      "turns": 19,
+      "meanWords": 142,
       "meanOverlap": 0.1,
-      "meanNovelty": 0.78,
-      "meanStory": 0.14,
+      "meanNovelty": 0.79,
+      "meanStory": 0.15,
       "guardRewrites": 0,
       "flags": [
-        "long:rose",
         "figure:fisher",
         "long:fisher",
         "long:kant",
@@ -5582,30 +5581,11 @@
         "long:fisher",
         "long:genzie",
         "long:kant",
-        "long:hegel"
+        "long:hegel",
+        "long:marx"
       ]
     },
     "turns": [
-      {
-        "ts": "2026-11-08T18:46:43.854Z",
-        "seat": "deleuze",
-        "words": 86,
-        "overlap": 0.06,
-        "novelty": 0.79,
-        "story": 0,
-        "flags": []
-      },
-      {
-        "ts": "2026-11-08T19:31:05.363Z",
-        "seat": "rose",
-        "words": 170,
-        "overlap": 0.18,
-        "novelty": 0.64,
-        "story": 0,
-        "flags": [
-          "long"
-        ]
-      },
       {
         "ts": "2026-11-08T21:00:56.433Z",
         "seat": "fisher",
@@ -5793,6 +5773,17 @@
         "words": 124,
         "overlap": 0.08,
         "novelty": 0.81,
+        "story": 0.14,
+        "flags": [
+          "long"
+        ]
+      },
+      {
+        "ts": "2026-11-09T19:31:07.228Z",
+        "seat": "marx",
+        "words": 180,
+        "overlap": 0.1,
+        "novelty": 0.76,
         "story": 0.14,
         "flags": [
           "long"
