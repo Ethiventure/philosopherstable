@@ -5560,13 +5560,12 @@
     "model": "qwen/qwen3.8-27b",
     "summary": {
       "turns": 19,
-      "meanWords": 140,
+      "meanWords": 143,
       "meanOverlap": 0.09,
       "meanNovelty": 0.79,
-      "meanStory": 0.05,
+      "meanStory": 0.06,
       "guardRewrites": 0,
       "flags": [
-        "long:rose",
         "long:fisher",
         "long:spinoza",
         "long:kant",
@@ -5582,21 +5581,11 @@
         "figure:fisher",
         "long:fisher",
         "long:kant",
-        "long:hegel"
+        "long:hegel",
+        "long:marx"
       ]
     },
     "turns": [
-      {
-        "ts": "2026-11-08T03:00:57.496Z",
-        "seat": "rose",
-        "words": 130,
-        "overlap": 0.1,
-        "novelty": 0.73,
-        "story": 0,
-        "flags": [
-          "long"
-        ]
-      },
       {
         "ts": "2026-11-08T05:51:10.014Z",
         "seat": "fisher",
@@ -5784,6 +5773,17 @@
         "overlap": 0.07,
         "novelty": 0.77,
         "story": 0.14,
+        "flags": [
+          "long"
+        ]
+      },
+      {
+        "ts": "2026-11-09T03:00:57.375Z",
+        "seat": "marx",
+        "words": 180,
+        "overlap": 0.09,
+        "novelty": 0.73,
+        "story": 0.29,
         "flags": [
           "long"
         ]
