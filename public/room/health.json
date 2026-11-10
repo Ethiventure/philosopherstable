@@ -5794,13 +5794,12 @@
     "model": "qwen/qwen3.8-27b",
     "summary": {
       "turns": 19,
-      "meanWords": 148,
-      "meanOverlap": 0.1,
+      "meanWords": 147,
+      "meanOverlap": 0.11,
       "meanNovelty": 0.77,
       "meanStory": 0.14,
       "guardRewrites": 0,
       "flags": [
-        "long:bogdanov",
         "long:bloch",
         "long:weil",
         "long:bookchin",
@@ -5816,21 +5815,12 @@
         "long:bloch",
         "long:weil",
         "long:bookchin",
-        "long:rose"
+        "long:rose",
+        "figure:fisher",
+        "long:fisher"
       ]
     },
     "turns": [
-      {
-        "ts": "2026-11-09T06:00:56.255Z",
-        "seat": "bogdanov",
-        "words": 179,
-        "overlap": 0.08,
-        "novelty": 0.81,
-        "story": 0.14,
-        "flags": [
-          "long"
-        ]
-      },
       {
         "ts": "2026-11-09T06:05:34.483Z",
         "seat": "bloch",
@@ -6021,6 +6011,18 @@
         "novelty": 0.77,
         "story": 0.07,
         "flags": [
+          "long"
+        ]
+      },
+      {
+        "ts": "2026-11-10T06:00:58.129Z",
+        "seat": "fisher",
+        "words": 173,
+        "overlap": 0.1,
+        "novelty": 0.78,
+        "story": 0.14,
+        "flags": [
+          "figure",
           "long"
         ]
       }
