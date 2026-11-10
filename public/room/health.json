@@ -5796,11 +5796,10 @@
       "turns": 19,
       "meanWords": 144,
       "meanOverlap": 0.09,
-      "meanNovelty": 0.79,
-      "meanStory": 0.12,
+      "meanNovelty": 0.78,
+      "meanStory": 0.11,
       "guardRewrites": 0,
       "flags": [
-        "long:rose",
         "figure:fisher",
         "long:fisher",
         "long:genzie",
@@ -5816,21 +5815,11 @@
         "long:fisher",
         "long:genzie",
         "long:spinoza",
-        "long:hegel"
+        "long:hegel",
+        "long:marx"
       ]
     },
     "turns": [
-      {
-        "ts": "2026-11-09T12:00:56.923Z",
-        "seat": "rose",
-        "words": 176,
-        "overlap": 0.12,
-        "novelty": 0.79,
-        "story": 0.14,
-        "flags": [
-          "long"
-        ]
-      },
       {
         "ts": "2026-11-09T13:31:09.795Z",
         "seat": "fisher",
@@ -6019,6 +6008,17 @@
         "overlap": 0.09,
         "novelty": 0.8,
         "story": 0.07,
+        "flags": [
+          "long"
+        ]
+      },
+      {
+        "ts": "2026-11-10T12:01:00.736Z",
+        "seat": "marx",
+        "words": 183,
+        "overlap": 0.15,
+        "novelty": 0.68,
+        "story": 0,
         "flags": [
           "long"
         ]
