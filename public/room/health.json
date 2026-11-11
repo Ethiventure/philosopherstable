@@ -6034,13 +6034,12 @@
     "model": "qwen/qwen3.8-27b",
     "summary": {
       "turns": 21,
-      "meanWords": 143,
+      "meanWords": 142,
       "meanOverlap": 0.1,
       "meanNovelty": 0.77,
       "meanStory": 0.03,
       "guardRewrites": 0,
       "flags": [
-        "long:genzie",
         "long:spinoza",
         "long:hegel",
         "long:marx",
@@ -6058,17 +6057,6 @@
       ]
     },
     "turns": [
-      {
-        "ts": "2026-11-10T07:31:05.825Z",
-        "seat": "genzie",
-        "words": 125,
-        "overlap": 0.04,
-        "novelty": 0.83,
-        "story": null,
-        "flags": [
-          "long"
-        ]
-      },
       {
         "ts": "2026-11-10T09:00:58.456Z",
         "seat": "spinoza",
@@ -6276,6 +6264,15 @@
         "flags": [
           "long"
         ]
+      },
+      {
+        "ts": "2026-11-11T09:00:55.476Z",
+        "seat": "weil",
+        "words": 110,
+        "overlap": 0.08,
+        "novelty": 0.79,
+        "story": 0,
+        "flags": []
       }
     ]
   }
