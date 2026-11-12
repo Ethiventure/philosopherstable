@@ -6266,13 +6266,12 @@
     "model": "qwen/qwen3.8-27b",
     "summary": {
       "turns": 20,
-      "meanWords": 133,
+      "meanWords": 136,
       "meanOverlap": 0.1,
       "meanNovelty": 0.77,
-      "meanStory": 0.04,
+      "meanStory": 0.05,
       "guardRewrites": 0,
       "flags": [
-        "long:kant",
         "long:hegel",
         "long:marx",
         "long:bogdanov",
@@ -6283,21 +6282,11 @@
         "long:hegel",
         "long:marx",
         "long:bogdanov",
-        "long:weil"
+        "long:weil",
+        "long:bookchin"
       ]
     },
     "turns": [
-      {
-        "ts": "2026-11-11T01:31:05.557Z",
-        "seat": "kant",
-        "words": 127,
-        "overlap": 0.09,
-        "novelty": 0.75,
-        "story": 0,
-        "flags": [
-          "long"
-        ]
-      },
       {
         "ts": "2026-11-11T03:00:55.864Z",
         "seat": "hegel",
@@ -6487,6 +6476,17 @@
         "overlap": 0.14,
         "novelty": 0.66,
         "story": 0.14,
+        "flags": [
+          "long"
+        ]
+      },
+      {
+        "ts": "2026-11-12T02:51:32.274Z",
+        "seat": "bookchin",
+        "words": 181,
+        "overlap": 0.12,
+        "novelty": 0.78,
+        "story": 0.07,
         "flags": [
           "long"
         ]
