@@ -6265,10 +6265,10 @@
     "date": "2026-11-12",
     "model": "qwen/qwen3.8-27b",
     "summary": {
-      "turns": 20,
-      "meanWords": 133,
-      "meanOverlap": 0.1,
-      "meanNovelty": 0.78,
+      "turns": 21,
+      "meanWords": 135,
+      "meanOverlap": 0.11,
+      "meanNovelty": 0.77,
       "meanStory": 0.04,
       "guardRewrites": 0,
       "flags": [
@@ -6282,7 +6282,8 @@
         "long:marx",
         "long:bogdanov",
         "long:weil",
-        "long:bookchin"
+        "long:bookchin",
+        "long:rose"
       ]
     },
     "turns": [
@@ -6487,6 +6488,17 @@
         "novelty": 0.87,
         "story": 0,
         "flags": []
+      },
+      {
+        "ts": "2026-11-12T04:31:04.624Z",
+        "seat": "rose",
+        "words": 169,
+        "overlap": 0.13,
+        "novelty": 0.75,
+        "story": 0,
+        "flags": [
+          "long"
+        ]
       }
     ]
   }
