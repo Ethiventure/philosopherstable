@@ -6498,15 +6498,13 @@
     "date": "2026-11-13",
     "model": "qwen/qwen3.8-27b",
     "summary": {
-      "turns": 20,
+      "turns": 19,
       "meanWords": 131,
       "meanOverlap": 0.09,
-      "meanNovelty": 0.8,
+      "meanNovelty": 0.81,
       "meanStory": 0.06,
       "guardRewrites": 0,
       "flags": [
-        "long:bloch",
-        "long:weil",
         "figure:deleuze",
         "long:rose",
         "figure:fisher",
@@ -6523,32 +6521,11 @@
         "figure:deleuze",
         "long:rose",
         "figure:fisher",
-        "long:fisher"
+        "long:fisher",
+        "long:spinoza"
       ]
     },
     "turns": [
-      {
-        "ts": "2026-11-12T16:31:08.505Z",
-        "seat": "bloch",
-        "words": 135,
-        "overlap": 0.19,
-        "novelty": 0.65,
-        "story": 0.21,
-        "flags": [
-          "long"
-        ]
-      },
-      {
-        "ts": "2026-11-12T18:00:58.128Z",
-        "seat": "weil",
-        "words": 179,
-        "overlap": 0.1,
-        "novelty": 0.75,
-        "story": 0,
-        "flags": [
-          "long"
-        ]
-      },
       {
         "ts": "2026-11-12T19:31:11.835Z",
         "seat": "bookchin",
@@ -6740,6 +6717,17 @@
         "novelty": 0.9,
         "story": null,
         "flags": []
+      },
+      {
+        "ts": "2026-11-13T18:00:58.186Z",
+        "seat": "spinoza",
+        "words": 176,
+        "overlap": 0.08,
+        "novelty": 0.82,
+        "story": 0.14,
+        "flags": [
+          "long"
+        ]
       }
     ]
   }
