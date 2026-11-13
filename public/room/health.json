@@ -6498,15 +6498,13 @@
     "date": "2026-11-13",
     "model": "qwen/qwen3.8-27b",
     "summary": {
-      "turns": 21,
-      "meanWords": 138,
+      "turns": 20,
+      "meanWords": 134,
       "meanOverlap": 0.09,
       "meanNovelty": 0.8,
       "meanStory": 0.08,
       "guardRewrites": 0,
       "flags": [
-        "figure:deleuze",
-        "long:rose",
         "figure:fisher",
         "long:fisher",
         "figure:genzie",
@@ -6529,28 +6527,6 @@
       ]
     },
     "turns": [
-      {
-        "ts": "2026-11-12T21:01:04.304Z",
-        "seat": "deleuze",
-        "words": 94,
-        "overlap": 0.07,
-        "novelty": 0.85,
-        "story": 0,
-        "flags": [
-          "figure"
-        ]
-      },
-      {
-        "ts": "2026-11-12T21:25:42.910Z",
-        "seat": "rose",
-        "words": 171,
-        "overlap": 0.08,
-        "novelty": 0.82,
-        "story": 0,
-        "flags": [
-          "long"
-        ]
-      },
       {
         "ts": "2026-11-12T22:31:07.098Z",
         "seat": "fisher",
@@ -6755,6 +6731,15 @@
         "flags": [
           "long"
         ]
+      },
+      {
+        "ts": "2026-11-13T22:31:05.265Z",
+        "seat": "lenin",
+        "words": 42,
+        "overlap": 0.09,
+        "novelty": 0.73,
+        "story": 0,
+        "flags": []
       }
     ]
   }
