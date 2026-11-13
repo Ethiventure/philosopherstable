@@ -6505,7 +6505,6 @@
       "meanStory": 0.07,
       "guardRewrites": 0,
       "flags": [
-        "long:hegel",
         "long:marx",
         "long:bogdanov",
         "long:bloch",
@@ -6521,21 +6520,11 @@
         "figure:marx",
         "long:marx",
         "figure:bogdanov",
-        "long:bogdanov"
+        "long:bogdanov",
+        "long:bookchin"
       ]
     },
     "turns": [
-      {
-        "ts": "2026-11-12T12:00:58.562Z",
-        "seat": "hegel",
-        "words": 164,
-        "overlap": 0.08,
-        "novelty": 0.81,
-        "story": 0.14,
-        "flags": [
-          "long"
-        ]
-      },
       {
         "ts": "2026-11-12T12:32:44.294Z",
         "seat": "marx",
@@ -6726,6 +6715,17 @@
         "novelty": 0.82,
         "story": 0,
         "flags": []
+      },
+      {
+        "ts": "2026-11-13T12:00:58.682Z",
+        "seat": "bookchin",
+        "words": 176,
+        "overlap": 0.06,
+        "novelty": 0.82,
+        "story": 0.07,
+        "flags": [
+          "long"
+        ]
       }
     ]
   }
