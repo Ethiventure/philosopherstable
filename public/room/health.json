@@ -6498,8 +6498,8 @@
     "date": "2026-11-13",
     "model": "qwen/qwen3.8-27b",
     "summary": {
-      "turns": 19,
-      "meanWords": 137,
+      "turns": 20,
+      "meanWords": 139,
       "meanOverlap": 0.09,
       "meanNovelty": 0.8,
       "meanStory": 0.05,
@@ -6521,7 +6521,8 @@
         "figure:fisher",
         "long:fisher",
         "figure:genzie",
-        "long:spinoza"
+        "long:spinoza",
+        "long:kant"
       ]
     },
     "turns": [
@@ -6723,6 +6724,17 @@
         "words": 181,
         "overlap": 0.12,
         "novelty": 0.77,
+        "story": 0,
+        "flags": [
+          "long"
+        ]
+      },
+      {
+        "ts": "2026-11-13T02:33:02.265Z",
+        "seat": "kant",
+        "words": 172,
+        "overlap": 0.1,
+        "novelty": 0.78,
         "story": 0,
         "flags": [
           "long"
