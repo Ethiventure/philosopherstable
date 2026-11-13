@@ -6501,7 +6501,7 @@
       "turns": 20,
       "meanWords": 137,
       "meanOverlap": 0.09,
-      "meanNovelty": 0.81,
+      "meanNovelty": 0.8,
       "meanStory": 0.08,
       "guardRewrites": 0,
       "flags": [
@@ -6528,15 +6528,6 @@
       ]
     },
     "turns": [
-      {
-        "ts": "2026-11-12T07:31:09.902Z",
-        "seat": "genzie",
-        "words": 105,
-        "overlap": 0.06,
-        "novelty": 0.86,
-        "story": null,
-        "flags": []
-      },
       {
         "ts": "2026-11-12T09:01:02.590Z",
         "seat": "spinoza",
@@ -6743,6 +6734,15 @@
           "figure",
           "long"
         ]
+      },
+      {
+        "ts": "2026-11-13T09:00:58.722Z",
+        "seat": "bloch",
+        "words": 95,
+        "overlap": 0.11,
+        "novelty": 0.63,
+        "story": 0,
+        "flags": []
       }
     ]
   }
