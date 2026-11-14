@@ -6747,15 +6747,13 @@
     "date": "2026-11-14",
     "model": "qwen/qwen3.8-27b",
     "summary": {
-      "turns": 21,
-      "meanWords": 136,
+      "turns": 20,
+      "meanWords": 128,
       "meanOverlap": 0.1,
-      "meanNovelty": 0.76,
+      "meanNovelty": 0.77,
       "meanStory": 0.09,
       "guardRewrites": 0,
       "flags": [
-        "long:kant",
-        "long:hegel",
         "long:marx",
         "long:bogdanov",
         "long:bloch",
@@ -6770,32 +6768,11 @@
         "long:bloch",
         "figure:weil",
         "long:weil",
-        "long:bookchin"
+        "long:bookchin",
+        "figure:deleuze"
       ]
     },
     "turns": [
-      {
-        "ts": "2026-11-13T19:31:07.062Z",
-        "seat": "kant",
-        "words": 162,
-        "overlap": 0.09,
-        "novelty": 0.79,
-        "story": 0.07,
-        "flags": [
-          "long"
-        ]
-      },
-      {
-        "ts": "2026-11-13T19:35:20.106Z",
-        "seat": "hegel",
-        "words": 177,
-        "overlap": 0.13,
-        "novelty": 0.7,
-        "story": 0.14,
-        "flags": [
-          "long"
-        ]
-      },
       {
         "ts": "2026-11-13T21:00:56.472Z",
         "seat": "marx",
@@ -6994,6 +6971,17 @@
         "story": 0,
         "flags": [
           "long"
+        ]
+      },
+      {
+        "ts": "2026-11-14T21:00:55.805Z",
+        "seat": "deleuze",
+        "words": 48,
+        "overlap": 0.07,
+        "novelty": 0.79,
+        "story": 0,
+        "flags": [
+          "figure"
         ]
       }
     ]
