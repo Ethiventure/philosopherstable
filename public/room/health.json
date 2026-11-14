@@ -6747,11 +6747,11 @@
     "date": "2026-11-14",
     "model": "qwen/qwen3.8-27b",
     "summary": {
-      "turns": 20,
-      "meanWords": 128,
+      "turns": 21,
+      "meanWords": 130,
       "meanOverlap": 0.09,
       "meanNovelty": 0.78,
-      "meanStory": 0.09,
+      "meanStory": 0.1,
       "guardRewrites": 0,
       "flags": [
         "long:bookchin",
@@ -6768,7 +6768,8 @@
         "long:bookchin",
         "long:rose",
         "long:fisher",
-        "long:genzie"
+        "long:genzie",
+        "long:spinoza"
       ]
     },
     "turns": [
@@ -6977,6 +6978,17 @@
         "overlap": 0.06,
         "novelty": 0.86,
         "story": null,
+        "flags": [
+          "long"
+        ]
+      },
+      {
+        "ts": "2026-11-14T09:00:56.351Z",
+        "seat": "spinoza",
+        "words": 170,
+        "overlap": 0.12,
+        "novelty": 0.73,
+        "story": 0.29,
         "flags": [
           "long"
         ]
