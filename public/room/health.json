@@ -6747,9 +6747,9 @@
     "date": "2026-11-14",
     "model": "qwen/qwen3.8-27b",
     "summary": {
-      "turns": 20,
-      "meanWords": 138,
-      "meanOverlap": 0.09,
+      "turns": 21,
+      "meanWords": 137,
+      "meanOverlap": 0.1,
       "meanNovelty": 0.79,
       "meanStory": 0.09,
       "guardRewrites": 0,
@@ -6987,6 +6987,15 @@
         "flags": [
           "long"
         ]
+      },
+      {
+        "ts": "2026-11-14T01:31:04.273Z",
+        "seat": "weil",
+        "words": 116,
+        "overlap": 0.16,
+        "novelty": 0.64,
+        "story": 0.14,
+        "flags": []
       }
     ]
   }
