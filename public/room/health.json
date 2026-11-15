@@ -6994,9 +6994,9 @@
     "model": "qwen/qwen3.8-27b",
     "summary": {
       "turns": 19,
-      "meanWords": 138,
+      "meanWords": 139,
       "meanOverlap": 0.1,
-      "meanNovelty": 0.78,
+      "meanNovelty": 0.77,
       "meanStory": 0.03,
       "guardRewrites": 0,
       "flags": [
@@ -7020,15 +7020,6 @@
       ]
     },
     "turns": [
-      {
-        "ts": "2026-11-14T10:31:13.762Z",
-        "seat": "kant",
-        "words": 88,
-        "overlap": 0.06,
-        "novelty": 0.87,
-        "story": 0,
-        "flags": []
-      },
       {
         "ts": "2026-11-14T12:00:56.769Z",
         "seat": "hegel",
@@ -7223,6 +7214,15 @@
         "flags": [
           "long"
         ]
+      },
+      {
+        "ts": "2026-11-15T10:31:14.354Z",
+        "seat": "weil",
+        "words": 111,
+        "overlap": 0.1,
+        "novelty": 0.74,
+        "story": 0,
+        "flags": []
       }
     ]
   }
