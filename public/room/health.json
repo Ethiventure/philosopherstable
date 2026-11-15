@@ -6993,9 +6993,9 @@
     "date": "2026-11-15",
     "model": "qwen/qwen3.8-27b",
     "summary": {
-      "turns": 19,
-      "meanWords": 134,
-      "meanOverlap": 0.09,
+      "turns": 20,
+      "meanWords": 135,
+      "meanOverlap": 0.1,
       "meanNovelty": 0.78,
       "meanStory": 0.03,
       "guardRewrites": 0,
@@ -7015,7 +7015,8 @@
         "thin:lenin",
         "long:bogdanov",
         "long:bloch",
-        "long:rose"
+        "long:rose",
+        "long:fisher"
       ]
     },
     "turns": [
@@ -7217,6 +7218,17 @@
         "overlap": 0.1,
         "novelty": 0.76,
         "story": 0.07,
+        "flags": [
+          "long"
+        ]
+      },
+      {
+        "ts": "2026-11-15T15:36:01.547Z",
+        "seat": "fisher",
+        "words": 165,
+        "overlap": 0.17,
+        "novelty": 0.65,
+        "story": 0.14,
         "flags": [
           "long"
         ]
