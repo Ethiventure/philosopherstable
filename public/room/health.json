@@ -7219,10 +7219,10 @@
     "date": "2026-11-16",
     "model": "qwen/qwen3.8-27b",
     "summary": {
-      "turns": 19,
-      "meanWords": 133,
-      "meanOverlap": 0.1,
-      "meanNovelty": 0.77,
+      "turns": 20,
+      "meanWords": 135,
+      "meanOverlap": 0.09,
+      "meanNovelty": 0.78,
       "meanStory": 0.11,
       "guardRewrites": 0,
       "flags": [
@@ -7240,7 +7240,8 @@
         "long:marx",
         "long:bogdanov",
         "long:bloch",
-        "long:weil"
+        "long:weil",
+        "long:bookchin"
       ]
     },
     "turns": [
@@ -7440,6 +7441,17 @@
         "overlap": 0.13,
         "novelty": 0.66,
         "story": 0,
+        "flags": [
+          "long"
+        ]
+      },
+      {
+        "ts": "2026-11-16T20:20:06.730Z",
+        "seat": "bookchin",
+        "words": 172,
+        "overlap": 0.07,
+        "novelty": 0.86,
+        "story": 0.07,
         "flags": [
           "long"
         ]
