@@ -7220,13 +7220,12 @@
     "model": "qwen/qwen3.8-27b",
     "summary": {
       "turns": 19,
-      "meanWords": 131,
+      "meanWords": 127,
       "meanOverlap": 0.09,
       "meanNovelty": 0.78,
       "meanStory": 0.1,
       "guardRewrites": 0,
       "flags": [
-        "long:bloch",
         "long:rose",
         "long:fisher",
         "long:spinoza",
@@ -7241,17 +7240,6 @@
       ]
     },
     "turns": [
-      {
-        "ts": "2026-11-15T09:00:56.976Z",
-        "seat": "bloch",
-        "words": 162,
-        "overlap": 0.08,
-        "novelty": 0.78,
-        "story": 0.07,
-        "flags": [
-          "long"
-        ]
-      },
       {
         "ts": "2026-11-15T10:31:14.354Z",
         "seat": "weil",
@@ -7435,6 +7423,15 @@
         "flags": [
           "long"
         ]
+      },
+      {
+        "ts": "2026-11-16T09:01:13.899Z",
+        "seat": "genzie",
+        "words": 77,
+        "overlap": 0.05,
+        "novelty": 0.88,
+        "story": null,
+        "flags": []
       }
     ]
   }
