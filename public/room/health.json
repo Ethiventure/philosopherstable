@@ -7219,7 +7219,7 @@
     "date": "2026-11-16",
     "model": "qwen/qwen3.8-27b",
     "summary": {
-      "turns": 20,
+      "turns": 21,
       "meanWords": 129,
       "meanOverlap": 0.09,
       "meanNovelty": 0.79,
@@ -7239,7 +7239,8 @@
         "long:fisher",
         "long:spinoza",
         "figure:kant",
-        "long:kant"
+        "long:kant",
+        "long:hegel"
       ]
     },
     "turns": [
@@ -7447,6 +7448,17 @@
         "story": 0.21,
         "flags": [
           "figure",
+          "long"
+        ]
+      },
+      {
+        "ts": "2026-11-16T12:00:56.863Z",
+        "seat": "hegel",
+        "words": 121,
+        "overlap": 0.09,
+        "novelty": 0.75,
+        "story": 0,
+        "flags": [
           "long"
         ]
       }
