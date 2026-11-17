@@ -7454,7 +7454,7 @@
     "model": "qwen/qwen3.8-27b",
     "summary": {
       "turns": 19,
-      "meanWords": 152,
+      "meanWords": 158,
       "meanOverlap": 0.11,
       "meanNovelty": 0.74,
       "meanStory": 0.11,
@@ -7477,19 +7477,11 @@
         "long:bloch",
         "long:weil",
         "long:bookchin",
-        "long:deleuze"
+        "long:deleuze",
+        "long:rose"
       ]
     },
     "turns": [
-      {
-        "ts": "2026-11-16T15:01:07.652Z",
-        "seat": "lenin",
-        "words": 48,
-        "overlap": 0.07,
-        "novelty": 0.83,
-        "story": 0,
-        "flags": []
-      },
       {
         "ts": "2026-11-16T16:31:22.103Z",
         "seat": "bogdanov",
@@ -7682,6 +7674,17 @@
         "overlap": 0.34,
         "novelty": 0.32,
         "story": 0.14,
+        "flags": [
+          "long"
+        ]
+      },
+      {
+        "ts": "2026-11-17T15:53:02.539Z",
+        "seat": "rose",
+        "words": 160,
+        "overlap": 0.08,
+        "novelty": 0.78,
+        "story": 0.07,
         "flags": [
           "long"
         ]
