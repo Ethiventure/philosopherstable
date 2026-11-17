@@ -7453,11 +7453,11 @@
     "date": "2026-11-17",
     "model": "qwen/qwen3.8-27b",
     "summary": {
-      "turns": 18,
-      "meanWords": 151,
-      "meanOverlap": 0.1,
-      "meanNovelty": 0.77,
-      "meanStory": 0.1,
+      "turns": 19,
+      "meanWords": 152,
+      "meanOverlap": 0.11,
+      "meanNovelty": 0.74,
+      "meanStory": 0.11,
       "guardRewrites": 0,
       "flags": [
         "long:bogdanov",
@@ -7476,7 +7476,8 @@
         "long:bogdanov",
         "long:bloch",
         "long:weil",
-        "long:bookchin"
+        "long:bookchin",
+        "long:deleuze"
       ]
     },
     "turns": [
@@ -7669,6 +7670,17 @@
         "words": 136,
         "overlap": 0.07,
         "novelty": 0.79,
+        "story": 0.14,
+        "flags": [
+          "long"
+        ]
+      },
+      {
+        "ts": "2026-11-17T15:00:58.887Z",
+        "seat": "deleuze",
+        "words": 158,
+        "overlap": 0.34,
+        "novelty": 0.32,
         "story": 0.14,
         "flags": [
           "long"
