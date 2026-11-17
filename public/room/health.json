@@ -7456,11 +7456,10 @@
       "turns": 18,
       "meanWords": 148,
       "meanOverlap": 0.11,
-      "meanNovelty": 0.75,
-      "meanStory": 0.13,
+      "meanNovelty": 0.74,
+      "meanStory": 0.14,
       "guardRewrites": 0,
       "flags": [
-        "long:rose",
         "long:fisher",
         "figure:spinoza",
         "long:spinoza",
@@ -7475,21 +7474,11 @@
         "long:deleuze",
         "long:rose",
         "long:spinoza",
-        "long:kant"
+        "long:kant",
+        "long:hegel"
       ]
     },
     "turns": [
-      {
-        "ts": "2026-11-16T22:31:08.823Z",
-        "seat": "rose",
-        "words": 173,
-        "overlap": 0.09,
-        "novelty": 0.81,
-        "story": 0.07,
-        "flags": [
-          "long"
-        ]
-      },
       {
         "ts": "2026-11-17T00:01:06.090Z",
         "seat": "fisher",
@@ -7667,6 +7656,17 @@
         "overlap": 0.15,
         "novelty": 0.72,
         "story": 0,
+        "flags": [
+          "long"
+        ]
+      },
+      {
+        "ts": "2026-11-17T22:31:20.858Z",
+        "seat": "hegel",
+        "words": 165,
+        "overlap": 0.12,
+        "novelty": 0.73,
+        "story": 0.29,
         "flags": [
           "long"
         ]
