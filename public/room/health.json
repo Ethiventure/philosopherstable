@@ -7453,11 +7453,11 @@
     "date": "2026-11-17",
     "model": "qwen/qwen3.8-27b",
     "summary": {
-      "turns": 19,
-      "meanWords": 150,
+      "turns": 20,
+      "meanWords": 149,
       "meanOverlap": 0.11,
       "meanNovelty": 0.75,
-      "meanStory": 0.11,
+      "meanStory": 0.12,
       "guardRewrites": 0,
       "flags": [
         "long:weil",
@@ -7476,7 +7476,8 @@
         "long:weil",
         "long:bookchin",
         "long:deleuze",
-        "long:rose"
+        "long:rose",
+        "long:spinoza"
       ]
     },
     "turns": [
@@ -7682,6 +7683,17 @@
         "novelty": 0.89,
         "story": null,
         "flags": []
+      },
+      {
+        "ts": "2026-11-17T19:31:15.436Z",
+        "seat": "spinoza",
+        "words": 128,
+        "overlap": 0.1,
+        "novelty": 0.84,
+        "story": 0.21,
+        "flags": [
+          "long"
+        ]
       }
     ]
   }
