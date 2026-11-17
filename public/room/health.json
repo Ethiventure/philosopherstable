@@ -7454,13 +7454,12 @@
     "model": "qwen/qwen3.8-27b",
     "summary": {
       "turns": 19,
-      "meanWords": 146,
-      "meanOverlap": 0.1,
-      "meanNovelty": 0.78,
+      "meanWords": 144,
+      "meanOverlap": 0.09,
+      "meanNovelty": 0.79,
       "meanStory": 0.1,
       "guardRewrites": 0,
       "flags": [
-        "long:fisher",
         "long:spinoza",
         "figure:kant",
         "long:kant",
@@ -7482,17 +7481,6 @@
       ]
     },
     "turns": [
-      {
-        "ts": "2026-11-16T07:31:16.445Z",
-        "seat": "fisher",
-        "words": 149,
-        "overlap": 0.17,
-        "novelty": 0.64,
-        "story": 0.07,
-        "flags": [
-          "long"
-        ]
-      },
       {
         "ts": "2026-11-16T09:01:13.899Z",
         "seat": "genzie",
@@ -7687,6 +7675,15 @@
           "figure",
           "long"
         ]
+      },
+      {
+        "ts": "2026-11-17T07:31:17.427Z",
+        "seat": "lenin",
+        "words": 101,
+        "overlap": 0.12,
+        "novelty": 0.66,
+        "story": 0,
+        "flags": []
       }
     ]
   }
