@@ -7689,11 +7689,11 @@
     "date": "2026-11-18",
     "model": "qwen/qwen3.8-27b",
     "summary": {
-      "turns": 18,
-      "meanWords": 138,
+      "turns": 19,
+      "meanWords": 132,
       "meanOverlap": 0.11,
       "meanNovelty": 0.75,
-      "meanStory": 0.12,
+      "meanStory": 0.11,
       "guardRewrites": 0,
       "flags": [
         "long:bogdanov",
@@ -7896,6 +7896,15 @@
         "flags": [
           "long"
         ]
+      },
+      {
+        "ts": "2026-11-18T07:11:55.562Z",
+        "seat": "deleuze",
+        "words": 34,
+        "overlap": 0.06,
+        "novelty": 0.76,
+        "story": 0,
+        "flags": []
       }
     ]
   }
