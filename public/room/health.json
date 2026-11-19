@@ -7927,10 +7927,10 @@
     "date": "2026-11-19",
     "model": "qwen/qwen3.8-27b",
     "summary": {
-      "turns": 18,
-      "meanWords": 131,
+      "turns": 19,
+      "meanWords": 125,
       "meanOverlap": 0.11,
-      "meanNovelty": 0.75,
+      "meanNovelty": 0.76,
       "meanStory": 0.04,
       "guardRewrites": 0,
       "flags": [
@@ -7945,7 +7945,8 @@
         "long:rose",
         "long:fisher",
         "long:hegel",
-        "long:marx"
+        "long:marx",
+        "thin:lenin"
       ]
     },
     "turns": [
@@ -8133,6 +8134,17 @@
         "story": 0,
         "flags": [
           "long"
+        ]
+      },
+      {
+        "ts": "2026-11-19T10:10:27.585Z",
+        "seat": "lenin",
+        "words": 12,
+        "overlap": 0.04,
+        "novelty": 0.91,
+        "story": 0,
+        "flags": [
+          "thin"
         ]
       }
     ]
