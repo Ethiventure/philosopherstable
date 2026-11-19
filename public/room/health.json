@@ -7927,10 +7927,10 @@
     "date": "2026-11-19",
     "model": "qwen/qwen3.8-27b",
     "summary": {
-      "turns": 18,
-      "meanWords": 119,
+      "turns": 19,
+      "meanWords": 117,
       "meanOverlap": 0.11,
-      "meanNovelty": 0.74,
+      "meanNovelty": 0.75,
       "meanStory": 0.02,
       "guardRewrites": 0,
       "flags": [
@@ -8130,6 +8130,15 @@
         "overlap": 0.1,
         "novelty": 0.75,
         "story": 0.07,
+        "flags": []
+      },
+      {
+        "ts": "2026-11-19T20:27:37.741Z",
+        "seat": "genzie",
+        "words": 86,
+        "overlap": 0.06,
+        "novelty": 0.88,
+        "story": null,
         "flags": []
       }
     ]
