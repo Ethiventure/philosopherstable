@@ -7927,10 +7927,10 @@
     "date": "2026-11-19",
     "model": "qwen/qwen3.8-27b",
     "summary": {
-      "turns": 19,
-      "meanWords": 125,
+      "turns": 20,
+      "meanWords": 127,
       "meanOverlap": 0.11,
-      "meanNovelty": 0.76,
+      "meanNovelty": 0.77,
       "meanStory": 0.04,
       "guardRewrites": 0,
       "flags": [
@@ -7946,7 +7946,8 @@
         "long:fisher",
         "long:hegel",
         "long:marx",
-        "thin:lenin"
+        "thin:lenin",
+        "long:bogdanov"
       ]
     },
     "turns": [
@@ -8145,6 +8146,17 @@
         "story": 0,
         "flags": [
           "thin"
+        ]
+      },
+      {
+        "ts": "2026-11-19T10:31:07.484Z",
+        "seat": "bogdanov",
+        "words": 175,
+        "overlap": 0.08,
+        "novelty": 0.82,
+        "story": 0,
+        "flags": [
+          "long"
         ]
       }
     ]
