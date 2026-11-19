@@ -7930,11 +7930,10 @@
       "turns": 18,
       "meanWords": 131,
       "meanOverlap": 0.11,
-      "meanNovelty": 0.76,
+      "meanNovelty": 0.75,
       "meanStory": 0.04,
       "guardRewrites": 0,
       "flags": [
-        "long:fisher",
         "long:spinoza",
         "long:kant",
         "long:hegel",
@@ -7945,21 +7944,11 @@
         "long:bookchin",
         "long:rose",
         "long:fisher",
-        "long:hegel"
+        "long:hegel",
+        "long:marx"
       ]
     },
     "turns": [
-      {
-        "ts": "2026-11-18T09:00:56.205Z",
-        "seat": "fisher",
-        "words": 173,
-        "overlap": 0.1,
-        "novelty": 0.8,
-        "story": 0.07,
-        "flags": [
-          "long"
-        ]
-      },
       {
         "ts": "2026-11-18T10:31:10.141Z",
         "seat": "genzie",
@@ -8130,6 +8119,17 @@
         "words": 169,
         "overlap": 0.12,
         "novelty": 0.77,
+        "story": 0,
+        "flags": [
+          "long"
+        ]
+      },
+      {
+        "ts": "2026-11-19T09:00:56.416Z",
+        "seat": "marx",
+        "words": 175,
+        "overlap": 0.11,
+        "novelty": 0.73,
         "story": 0,
         "flags": [
           "long"
