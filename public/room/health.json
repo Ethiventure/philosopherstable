@@ -8147,11 +8147,11 @@
     "date": "2026-11-20",
     "model": "qwen/qwen3.8-27b",
     "summary": {
-      "turns": 19,
-      "meanWords": 135,
+      "turns": 20,
+      "meanWords": 132,
       "meanOverlap": 0.1,
       "meanNovelty": 0.79,
-      "meanStory": 0.11,
+      "meanStory": 0.1,
       "guardRewrites": 0,
       "flags": [
         "long:kant",
@@ -8368,6 +8368,15 @@
         "flags": [
           "long"
         ]
+      },
+      {
+        "ts": "2026-11-20T22:31:06.925Z",
+        "seat": "weil",
+        "words": 85,
+        "overlap": 0.1,
+        "novelty": 0.84,
+        "story": 0,
+        "flags": []
       }
     ]
   }
