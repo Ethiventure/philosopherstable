@@ -233,5 +233,10 @@
     "date": "2026-11-19",
     "best": "Bogdanov says the break was a technical code flaw. He audits the specific software layer where the error-checking loop failed.",
     "next": "Mark Fisher shifts focus from legal blame to building a new shared tool. He designs a maintenance process that invites users to join."
+  },
+  {
+    "date": "2026-11-20",
+    "best": "Spinoza identifies unpaid labor as the cause behind the stock price, not a coincidence, linking value to human exertion.",
+    "next": "The group must agree on a legal structure for owning the infrastructure to test if fixing labor changes the stock."
   }
 ]
