@@ -8147,8 +8147,8 @@
     "date": "2026-11-20",
     "model": "qwen/qwen3.8-27b",
     "summary": {
-      "turns": 19,
-      "meanWords": 135,
+      "turns": 20,
+      "meanWords": 131,
       "meanOverlap": 0.1,
       "meanNovelty": 0.79,
       "meanStory": 0.11,
@@ -8365,6 +8365,15 @@
         "flags": [
           "long"
         ]
+      },
+      {
+        "ts": "2026-11-20T19:31:14.665Z",
+        "seat": "lenin",
+        "words": 57,
+        "overlap": 0.04,
+        "novelty": 0.88,
+        "story": 0.07,
+        "flags": []
       }
     ]
   }
