@@ -8385,13 +8385,12 @@
     "model": "qwen/qwen3.8-27b",
     "summary": {
       "turns": 20,
-      "meanWords": 124,
+      "meanWords": 122,
       "meanOverlap": 0.1,
       "meanNovelty": 0.79,
-      "meanStory": 0.12,
+      "meanStory": 0.11,
       "guardRewrites": 0,
       "flags": [
-        "long:marx",
         "long:bogdanov",
         "long:bloch",
         "long:deleuze",
@@ -8401,21 +8400,12 @@
         "long:kant",
         "long:hegel",
         "long:marx",
-        "long:bogdanov"
+        "long:bogdanov",
+        "figure:rose",
+        "long:rose"
       ]
     },
     "turns": [
-      {
-        "ts": "2026-11-20T18:01:13.264Z",
-        "seat": "marx",
-        "words": 173,
-        "overlap": 0.14,
-        "novelty": 0.73,
-        "story": 0.21,
-        "flags": [
-          "long"
-        ]
-      },
       {
         "ts": "2026-11-20T19:31:14.665Z",
         "seat": "lenin",
@@ -8605,6 +8595,18 @@
         "novelty": 0.88,
         "story": 0.07,
         "flags": []
+      },
+      {
+        "ts": "2026-11-21T19:31:08.475Z",
+        "seat": "rose",
+        "words": 126,
+        "overlap": 0.09,
+        "novelty": 0.73,
+        "story": 0,
+        "flags": [
+          "figure",
+          "long"
+        ]
       }
     ]
   }
