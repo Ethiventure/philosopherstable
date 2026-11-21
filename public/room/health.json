@@ -8386,13 +8386,11 @@
     "summary": {
       "turns": 19,
       "meanWords": 127,
-      "meanOverlap": 0.1,
-      "meanNovelty": 0.79,
-      "meanStory": 0.11,
+      "meanOverlap": 0.09,
+      "meanNovelty": 0.8,
+      "meanStory": 0.12,
       "guardRewrites": 0,
       "flags": [
-        "figure:marx",
-        "long:marx",
         "long:bogdanov",
         "long:bloch",
         "long:weil",
@@ -8402,22 +8400,11 @@
         "long:hegel",
         "long:marx",
         "long:bogdanov",
-        "long:bloch"
+        "long:bloch",
+        "long:deleuze"
       ]
     },
     "turns": [
-      {
-        "ts": "2026-11-20T01:31:04.047Z",
-        "seat": "marx",
-        "words": 157,
-        "overlap": 0.17,
-        "novelty": 0.69,
-        "story": 0.21,
-        "flags": [
-          "figure",
-          "long"
-        ]
-      },
       {
         "ts": "2026-11-20T03:01:07.424Z",
         "seat": "lenin",
@@ -8599,6 +8586,17 @@
         "novelty": 0.77,
         "story": 0.14,
         "flags": []
+      },
+      {
+        "ts": "2026-11-21T01:31:10.489Z",
+        "seat": "deleuze",
+        "words": 154,
+        "overlap": 0.04,
+        "novelty": 0.88,
+        "story": 0.36,
+        "flags": [
+          "long"
+        ]
       }
     ]
   }
