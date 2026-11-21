@@ -8385,9 +8385,9 @@
     "model": "qwen/qwen3.8-27b",
     "summary": {
       "turns": 20,
-      "meanWords": 122,
-      "meanOverlap": 0.1,
-      "meanNovelty": 0.79,
+      "meanWords": 125,
+      "meanOverlap": 0.11,
+      "meanNovelty": 0.77,
       "meanStory": 0.11,
       "guardRewrites": 0,
       "flags": [
@@ -8402,19 +8402,11 @@
         "long:marx",
         "long:bogdanov",
         "figure:rose",
-        "long:rose"
+        "long:rose",
+        "long:fisher"
       ]
     },
     "turns": [
-      {
-        "ts": "2026-11-20T19:31:14.665Z",
-        "seat": "lenin",
-        "words": 57,
-        "overlap": 0.04,
-        "novelty": 0.88,
-        "story": 0.07,
-        "flags": []
-      },
       {
         "ts": "2026-11-20T21:00:57.815Z",
         "seat": "bogdanov",
@@ -8605,6 +8597,17 @@
         "story": 0,
         "flags": [
           "figure",
+          "long"
+        ]
+      },
+      {
+        "ts": "2026-11-21T20:28:17.910Z",
+        "seat": "fisher",
+        "words": 121,
+        "overlap": 0.29,
+        "novelty": 0.43,
+        "story": 0.07,
+        "flags": [
           "long"
         ]
       }
