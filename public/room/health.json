@@ -8384,10 +8384,10 @@
     "date": "2026-11-21",
     "model": "qwen/qwen3.8-27b",
     "summary": {
-      "turns": 19,
-      "meanWords": 132,
+      "turns": 20,
+      "meanWords": 134,
       "meanOverlap": 0.09,
-      "meanNovelty": 0.8,
+      "meanNovelty": 0.79,
       "meanStory": 0.13,
       "guardRewrites": 0,
       "flags": [
@@ -8403,7 +8403,8 @@
         "long:rose",
         "long:spinoza",
         "long:kant",
-        "long:hegel"
+        "long:hegel",
+        "long:marx"
       ]
     },
     "turns": [
@@ -8599,6 +8600,17 @@
         "overlap": 0.08,
         "novelty": 0.82,
         "story": 0.14,
+        "flags": [
+          "long"
+        ]
+      },
+      {
+        "ts": "2026-11-21T10:31:04.998Z",
+        "seat": "marx",
+        "words": 173,
+        "overlap": 0.1,
+        "novelty": 0.74,
+        "story": 0.21,
         "flags": [
           "long"
         ]
