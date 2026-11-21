@@ -8384,10 +8384,10 @@
     "date": "2026-11-21",
     "model": "qwen/qwen3.8-27b",
     "summary": {
-      "turns": 19,
-      "meanWords": 127,
-      "meanOverlap": 0.09,
-      "meanNovelty": 0.8,
+      "turns": 20,
+      "meanWords": 128,
+      "meanOverlap": 0.1,
+      "meanNovelty": 0.79,
       "meanStory": 0.12,
       "guardRewrites": 0,
       "flags": [
@@ -8401,7 +8401,9 @@
         "long:marx",
         "long:bogdanov",
         "long:bloch",
-        "long:deleuze"
+        "long:deleuze",
+        "figure:rose",
+        "long:rose"
       ]
     },
     "turns": [
@@ -8595,6 +8597,18 @@
         "novelty": 0.88,
         "story": 0.36,
         "flags": [
+          "long"
+        ]
+      },
+      {
+        "ts": "2026-11-21T03:00:58.597Z",
+        "seat": "rose",
+        "words": 156,
+        "overlap": 0.23,
+        "novelty": 0.62,
+        "story": 0.14,
+        "flags": [
+          "figure",
           "long"
         ]
       }
