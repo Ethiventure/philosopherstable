@@ -8605,11 +8605,11 @@
     "date": "2026-11-22",
     "model": "qwen/qwen3.8-27b",
     "summary": {
-      "turns": 19,
+      "turns": 20,
       "meanWords": 124,
       "meanOverlap": 0.11,
       "meanNovelty": 0.76,
-      "meanStory": 0.21,
+      "meanStory": 0.2,
       "guardRewrites": 0,
       "flags": [
         "figure:rose",
@@ -8826,6 +8826,15 @@
         "flags": [
           "long"
         ]
+      },
+      {
+        "ts": "2026-11-22T16:31:12.224Z",
+        "seat": "kant",
+        "words": 116,
+        "overlap": 0.06,
+        "novelty": 0.81,
+        "story": 0,
+        "flags": []
       }
     ]
   }
