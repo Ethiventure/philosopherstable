@@ -8609,10 +8609,9 @@
       "meanWords": 119,
       "meanOverlap": 0.11,
       "meanNovelty": 0.76,
-      "meanStory": 0.17,
+      "meanStory": 0.18,
       "guardRewrites": 0,
       "flags": [
-        "long:marx",
         "long:bogdanov",
         "figure:rose",
         "long:rose",
@@ -8624,21 +8623,11 @@
         "long:bogdanov",
         "long:bloch",
         "long:weil",
-        "long:bookchin"
+        "long:bookchin",
+        "long:rose"
       ]
     },
     "turns": [
-      {
-        "ts": "2026-11-21T10:31:04.998Z",
-        "seat": "marx",
-        "words": 173,
-        "overlap": 0.1,
-        "novelty": 0.74,
-        "story": 0.21,
-        "flags": [
-          "long"
-        ]
-      },
       {
         "ts": "2026-11-21T12:00:56.164Z",
         "seat": "lenin",
@@ -8832,6 +8821,17 @@
         "novelty": 0.71,
         "story": 0.07,
         "flags": []
+      },
+      {
+        "ts": "2026-11-22T10:31:11.690Z",
+        "seat": "rose",
+        "words": 164,
+        "overlap": 0.15,
+        "novelty": 0.74,
+        "story": 0.36,
+        "flags": [
+          "long"
+        ]
       }
     ]
   }
