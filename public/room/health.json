@@ -8606,7 +8606,7 @@
     "model": "qwen/qwen3.8-27b",
     "summary": {
       "turns": 20,
-      "meanWords": 130,
+      "meanWords": 136,
       "meanOverlap": 0.1,
       "meanNovelty": 0.78,
       "meanStory": 0.22,
@@ -8625,19 +8625,11 @@
         "long:spinoza",
         "long:hegel",
         "long:marx",
-        "long:bogdanov"
+        "long:bogdanov",
+        "long:bloch"
       ]
     },
     "turns": [
-      {
-        "ts": "2026-11-21T21:01:08.046Z",
-        "seat": "genzie",
-        "words": 57,
-        "overlap": 0.04,
-        "novelty": 0.85,
-        "story": null,
-        "flags": []
-      },
       {
         "ts": "2026-11-21T22:31:12.681Z",
         "seat": "spinoza",
@@ -8832,6 +8824,17 @@
         "words": 149,
         "overlap": 0.08,
         "novelty": 0.84,
+        "story": 0.14,
+        "flags": [
+          "long"
+        ]
+      },
+      {
+        "ts": "2026-11-22T22:31:05.304Z",
+        "seat": "bloch",
+        "words": 171,
+        "overlap": 0.11,
+        "novelty": 0.81,
         "story": 0.14,
         "flags": [
           "long"
