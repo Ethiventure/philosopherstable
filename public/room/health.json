@@ -8847,7 +8847,7 @@
     "model": "qwen/qwen3.8-27b",
     "summary": {
       "turns": 19,
-      "meanWords": 138,
+      "meanWords": 140,
       "meanOverlap": 0.09,
       "meanNovelty": 0.77,
       "meanStory": 0.11,
@@ -8868,15 +8868,6 @@
       ]
     },
     "turns": [
-      {
-        "ts": "2026-11-22T13:31:13.932Z",
-        "seat": "genzie",
-        "words": 83,
-        "overlap": 0.06,
-        "novelty": 0.89,
-        "story": null,
-        "flags": []
-      },
       {
         "ts": "2026-11-22T15:01:04.326Z",
         "seat": "spinoza",
@@ -9060,6 +9051,15 @@
         "words": 68,
         "overlap": 0.12,
         "novelty": 0.7,
+        "story": 0,
+        "flags": []
+      },
+      {
+        "ts": "2026-11-23T13:31:14.442Z",
+        "seat": "bogdanov",
+        "words": 115,
+        "overlap": 0.06,
+        "novelty": 0.83,
         "story": 0,
         "flags": []
       }
