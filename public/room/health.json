@@ -9071,8 +9071,8 @@
     "date": "2026-11-24",
     "model": "qwen/qwen3.8-27b",
     "summary": {
-      "turns": 19,
-      "meanWords": 133,
+      "turns": 20,
+      "meanWords": 135,
       "meanOverlap": 0.08,
       "meanNovelty": 0.82,
       "meanStory": 0.06,
@@ -9091,7 +9091,8 @@
         "long:weil",
         "long:bookchin",
         "long:rose",
-        "long:fisher"
+        "long:fisher",
+        "long:kant"
       ]
     },
     "turns": [
@@ -9292,6 +9293,17 @@
         "novelty": 0.79,
         "story": 0.14,
         "flags": []
+      },
+      {
+        "ts": "2026-11-24T18:01:07.985Z",
+        "seat": "kant",
+        "words": 173,
+        "overlap": 0.1,
+        "novelty": 0.83,
+        "story": 0,
+        "flags": [
+          "long"
+        ]
       }
     ]
   }
