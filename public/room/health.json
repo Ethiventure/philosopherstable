@@ -9295,7 +9295,6 @@
       "meanStory": 0.05,
       "guardRewrites": 0,
       "flags": [
-        "long:weil",
         "long:bookchin",
         "long:rose",
         "long:fisher",
@@ -9307,21 +9306,11 @@
         "long:weil",
         "long:bookchin",
         "long:rose",
-        "long:fisher"
+        "long:fisher",
+        "long:genzie"
       ]
     },
     "turns": [
-      {
-        "ts": "2026-11-24T09:00:57.256Z",
-        "seat": "weil",
-        "words": 124,
-        "overlap": 0.04,
-        "novelty": 0.88,
-        "story": 0,
-        "flags": [
-          "long"
-        ]
-      },
       {
         "ts": "2026-11-24T10:31:06.241Z",
         "seat": "bookchin",
@@ -9495,6 +9484,17 @@
         "overlap": 0.09,
         "novelty": 0.77,
         "story": 0.07,
+        "flags": [
+          "long"
+        ]
+      },
+      {
+        "ts": "2026-11-25T09:01:06.101Z",
+        "seat": "genzie",
+        "words": 123,
+        "overlap": 0.04,
+        "novelty": 0.85,
+        "story": null,
         "flags": [
           "long"
         ]
