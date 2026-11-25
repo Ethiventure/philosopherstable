@@ -9295,7 +9295,6 @@
       "meanStory": 0.05,
       "guardRewrites": 0,
       "flags": [
-        "long:bookchin",
         "long:rose",
         "long:fisher",
         "long:kant",
@@ -9308,21 +9307,11 @@
         "long:rose",
         "long:fisher",
         "long:genzie",
-        "long:spinoza"
+        "long:spinoza",
+        "long:kant"
       ]
     },
     "turns": [
-      {
-        "ts": "2026-11-24T10:31:06.241Z",
-        "seat": "bookchin",
-        "words": 185,
-        "overlap": 0.07,
-        "novelty": 0.82,
-        "story": 0,
-        "flags": [
-          "long"
-        ]
-      },
       {
         "ts": "2026-11-24T12:01:08.090Z",
         "seat": "deleuze",
@@ -9506,6 +9495,17 @@
         "words": 183,
         "overlap": 0.07,
         "novelty": 0.84,
+        "story": 0,
+        "flags": [
+          "long"
+        ]
+      },
+      {
+        "ts": "2026-11-25T12:01:07.756Z",
+        "seat": "kant",
+        "words": 172,
+        "overlap": 0.08,
+        "novelty": 0.86,
         "story": 0,
         "flags": [
           "long"
