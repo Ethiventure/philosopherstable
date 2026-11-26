@@ -9514,11 +9514,11 @@
     "date": "2026-11-26",
     "model": "qwen/qwen3.8-27b",
     "summary": {
-      "turns": 18,
+      "turns": 19,
       "meanWords": 137,
       "meanOverlap": 0.1,
       "meanNovelty": 0.78,
-      "meanStory": 0.06,
+      "meanStory": 0.07,
       "guardRewrites": 0,
       "flags": [
         "long:kant",
@@ -9533,7 +9533,8 @@
         "long:kant",
         "long:hegel",
         "long:marx",
-        "long:bogdanov"
+        "long:bogdanov",
+        "long:bloch"
       ]
     },
     "turns": [
@@ -9720,6 +9721,17 @@
         "overlap": 0.12,
         "novelty": 0.72,
         "story": 0,
+        "flags": [
+          "long"
+        ]
+      },
+      {
+        "ts": "2026-11-26T10:44:40.235Z",
+        "seat": "bloch",
+        "words": 143,
+        "overlap": 0.12,
+        "novelty": 0.74,
+        "story": 0.21,
         "flags": [
           "long"
         ]
