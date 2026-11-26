@@ -9514,8 +9514,8 @@
     "date": "2026-11-26",
     "model": "qwen/qwen3.8-27b",
     "summary": {
-      "turns": 19,
-      "meanWords": 137,
+      "turns": 20,
+      "meanWords": 134,
       "meanOverlap": 0.09,
       "meanNovelty": 0.8,
       "meanStory": 0.04,
@@ -9738,6 +9738,15 @@
         "flags": [
           "long"
         ]
+      },
+      {
+        "ts": "2026-11-26T01:31:05.887Z",
+        "seat": "genzie",
+        "words": 69,
+        "overlap": 0.04,
+        "novelty": 0.91,
+        "story": null,
+        "flags": []
       }
     ]
   }
