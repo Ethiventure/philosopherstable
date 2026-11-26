@@ -9514,8 +9514,8 @@
     "date": "2026-11-26",
     "model": "qwen/qwen3.8-27b",
     "summary": {
-      "turns": 18,
-      "meanWords": 128,
+      "turns": 19,
+      "meanWords": 127,
       "meanOverlap": 0.1,
       "meanNovelty": 0.78,
       "meanStory": 0.11,
@@ -9717,6 +9717,15 @@
         "flags": [
           "long"
         ]
+      },
+      {
+        "ts": "2026-11-26T21:24:29.737Z",
+        "seat": "kant",
+        "words": 113,
+        "overlap": 0.08,
+        "novelty": 0.82,
+        "story": 0.07,
+        "flags": []
       }
     ]
   }
