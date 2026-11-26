@@ -9518,7 +9518,7 @@
       "meanWords": 132,
       "meanOverlap": 0.1,
       "meanNovelty": 0.78,
-      "meanStory": 0.09,
+      "meanStory": 0.1,
       "guardRewrites": 0,
       "flags": [
         "long:bloch",
@@ -9536,15 +9536,6 @@
       ]
     },
     "turns": [
-      {
-        "ts": "2026-11-25T16:31:06.836Z",
-        "seat": "bogdanov",
-        "words": 114,
-        "overlap": 0.09,
-        "novelty": 0.81,
-        "story": 0,
-        "flags": []
-      },
       {
         "ts": "2026-11-25T18:01:07.475Z",
         "seat": "bloch",
@@ -9719,6 +9710,15 @@
         "overlap": 0.14,
         "novelty": 0.79,
         "story": 0,
+        "flags": []
+      },
+      {
+        "ts": "2026-11-26T16:31:12.028Z",
+        "seat": "rose",
+        "words": 116,
+        "overlap": 0.09,
+        "novelty": 0.73,
+        "story": 0.29,
         "flags": []
       }
     ]
