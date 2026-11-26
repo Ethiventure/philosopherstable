@@ -9514,11 +9514,11 @@
     "date": "2026-11-26",
     "model": "qwen/qwen3.8-27b",
     "summary": {
-      "turns": 18,
-      "meanWords": 132,
+      "turns": 19,
+      "meanWords": 131,
       "meanOverlap": 0.1,
       "meanNovelty": 0.78,
-      "meanStory": 0.1,
+      "meanStory": 0.11,
       "guardRewrites": 0,
       "flags": [
         "long:bloch",
@@ -9719,6 +9719,15 @@
         "overlap": 0.09,
         "novelty": 0.73,
         "story": 0.29,
+        "flags": []
+      },
+      {
+        "ts": "2026-11-26T18:00:59.756Z",
+        "seat": "fisher",
+        "words": 111,
+        "overlap": 0.09,
+        "novelty": 0.73,
+        "story": 0.14,
         "flags": []
       }
     ]
