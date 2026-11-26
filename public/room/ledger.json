@@ -263,5 +263,10 @@
     "date": "2026-11-25",
     "best": "Genzie states Stalwart is a worker-owned tool running on a local server, replacing a corporate dependency with direct control.",
     "next": "Bogdanov asks Lenin to define the specific pre-built administrative forms that prevent the vanguard from becoming new managers."
+  },
+  {
+    "date": "2026-11-26",
+    "best": "Bogdanov: build hardware partitioning with isolated memory and clock domains to stop timing leaks between models.",
+    "next": "Rose: rewrite the server contract into a strict trustee charter so anyone can sue to enforce privacy boundaries."
   }
 ]
