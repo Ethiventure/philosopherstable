@@ -9745,11 +9745,11 @@
     "date": "2026-11-27",
     "model": "qwen/qwen3.8-27b",
     "summary": {
-      "turns": 18,
-      "meanWords": 143,
+      "turns": 19,
+      "meanWords": 140,
       "meanOverlap": 0.11,
       "meanNovelty": 0.78,
-      "meanStory": 0.06,
+      "meanStory": 0.05,
       "guardRewrites": 0,
       "flags": [
         "long:spinoza",
@@ -9960,6 +9960,15 @@
         "flags": [
           "long"
         ]
+      },
+      {
+        "ts": "2026-11-27T19:31:05.055Z",
+        "seat": "lenin",
+        "words": 75,
+        "overlap": 0.06,
+        "novelty": 0.78,
+        "story": 0,
+        "flags": []
       }
     ]
   }
