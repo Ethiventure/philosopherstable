@@ -9745,11 +9745,11 @@
     "date": "2026-11-27",
     "model": "qwen/qwen3.8-27b",
     "summary": {
-      "turns": 18,
-      "meanWords": 132,
+      "turns": 19,
+      "meanWords": 135,
       "meanOverlap": 0.1,
       "meanNovelty": 0.78,
-      "meanStory": 0.12,
+      "meanStory": 0.11,
       "guardRewrites": 0,
       "flags": [
         "long:kant",
@@ -9761,7 +9761,8 @@
         "long:spinoza",
         "long:hegel",
         "long:marx",
-        "long:bogdanov"
+        "long:bogdanov",
+        "long:bloch"
       ]
     },
     "turns": [
@@ -9942,6 +9943,17 @@
         "words": 153,
         "overlap": 0.09,
         "novelty": 0.81,
+        "story": 0.07,
+        "flags": [
+          "long"
+        ]
+      },
+      {
+        "ts": "2026-11-27T04:08:05.269Z",
+        "seat": "bloch",
+        "words": 172,
+        "overlap": 0.12,
+        "novelty": 0.84,
         "story": 0.07,
         "flags": [
           "long"
