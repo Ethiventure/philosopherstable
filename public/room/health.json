@@ -9745,11 +9745,11 @@
     "date": "2026-11-27",
     "model": "qwen/qwen3.8-27b",
     "summary": {
-      "turns": 19,
-      "meanWords": 132,
+      "turns": 20,
+      "meanWords": 134,
       "meanOverlap": 0.1,
-      "meanNovelty": 0.78,
-      "meanStory": 0.11,
+      "meanNovelty": 0.77,
+      "meanStory": 0.1,
       "guardRewrites": 0,
       "flags": [
         "long:hegel",
@@ -9762,7 +9762,8 @@
         "long:marx",
         "long:bogdanov",
         "long:bloch",
-        "long:weil"
+        "long:weil",
+        "long:bookchin"
       ]
     },
     "turns": [
@@ -9955,6 +9956,17 @@
         "overlap": 0.12,
         "novelty": 0.72,
         "story": 0,
+        "flags": [
+          "long"
+        ]
+      },
+      {
+        "ts": "2026-11-27T06:00:55.389Z",
+        "seat": "bookchin",
+        "words": 172,
+        "overlap": 0.1,
+        "novelty": 0.73,
+        "story": 0.07,
         "flags": [
           "long"
         ]
