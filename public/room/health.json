@@ -9959,13 +9959,12 @@
     "model": "qwen/qwen3.8-27b",
     "summary": {
       "turns": 17,
-      "meanWords": 136,
-      "meanOverlap": 0.1,
+      "meanWords": 137,
+      "meanOverlap": 0.11,
       "meanNovelty": 0.77,
-      "meanStory": 0.02,
+      "meanStory": 0.01,
       "guardRewrites": 0,
       "flags": [
-        "long:rose",
         "figure:genzie",
         "long:spinoza",
         "long:kant",
@@ -9977,21 +9976,11 @@
         "long:rose",
         "long:fisher",
         "figure:genzie",
-        "long:spinoza"
+        "long:spinoza",
+        "long:kant"
       ]
     },
     "turns": [
-      {
-        "ts": "2026-11-27T09:00:55.408Z",
-        "seat": "rose",
-        "words": 159,
-        "overlap": 0.13,
-        "novelty": 0.73,
-        "story": 0.21,
-        "flags": [
-          "long"
-        ]
-      },
       {
         "ts": "2026-11-27T10:31:05.971Z",
         "seat": "fisher",
@@ -10156,6 +10145,17 @@
         "overlap": 0.1,
         "novelty": 0.82,
         "story": 0.07,
+        "flags": [
+          "long"
+        ]
+      },
+      {
+        "ts": "2026-11-28T09:01:02.249Z",
+        "seat": "kant",
+        "words": 177,
+        "overlap": 0.15,
+        "novelty": 0.79,
+        "story": 0,
         "flags": [
           "long"
         ]
