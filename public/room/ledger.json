@@ -273,5 +273,10 @@
     "date": "2026-11-27",
     "best": "Spinoza explains the deletion stems from a missing logical link in the software, requiring specific code updates to stop future data loss.",
     "next": "The team must audit the save process to verify file integrity and create a manual backup protocol."
+  },
+  {
+    "date": "2026-11-28",
+    "best": "Genzie says companies skip backups to save on hard drive costs. This specific financial choice causes the actual file loss.",
+    "next": "Weil asks what duty the company owes users. The talk must decide if this cost-savings choice creates a legal debt."
   }
 ]
